@@ -1,5 +1,8 @@
 <title>Mugello Meteo &amp; Clima</title>
-<meta name="description" content="Mockup homepage di un portale meteo per il Mugello">
+<meta name="description" content="Meteo, dati in tempo reale e clima della vallata del Mugello">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f6b52">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
@@ -46,6 +49,9 @@
   }
 
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  .sec{scroll-margin-top:82px}
+  .heroband{scroll-margin-top:64px}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
     font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
   h1,h2,h3{font-family:var(--serif);margin:0;line-height:1.08;text-wrap:balance;letter-spacing:-.01em}
@@ -228,12 +234,10 @@
       <span>Mugello Meteo <span style="color:var(--sky)">&amp;</span> Clima<small>Meteo · dati · clima della vallata</small></span>
     </a>
     <nav class="main">
-      <a href="#" class="active">Previsioni</a>
-      <a href="#">Dati live</a>
-      <a href="#">Monitoraggio</a>
-      <a href="#">Cielo</a>
-      <a href="#">Webcam</a>
-      <a href="#">Notizie</a>
+      <a href="#comuni" class="active">Previsioni</a>
+      <a href="#radar">Radar &amp; dati</a>
+      <a href="#cielo">Cielo</a>
+      <a href="./fb-post.html">Crea post</a>
     </nav>
     <button class="menu-btn" aria-label="Menu">☰</button>
   </div>
@@ -288,7 +292,7 @@
   </section>
 
   <div class="wrap">
-  <section class="sec">
+  <section class="sec" id="comuni">
     <div class="sec-head">
       <h2>Previsione per i comuni</h2>
       <a href="#">Tutti i comuni →</a>
@@ -306,7 +310,7 @@
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" id="radar">
     <div class="sec-head"><h2>Radar e monitoraggio</h2><a href="#">Mappa a schermo intero →</a></div>
     <div class="feat">
       <div class="card">
@@ -325,23 +329,23 @@
           <div class="rows">
             <div class="row">
               <div class="ri" style="background:var(--sky-tint)">🌊</div>
-              <div class="rl"><b>Fiume Sieve</b><span>idrometro di Fornacina</span></div>
-              <div class="rv">0,38 m</div>
+              <div class="rl"><b>Fiume Sieve</b><span id="sieve-sub">idrometro di Fornacina</span></div>
+              <div class="rv" id="sieve-val">0,38 m</div>
             </div>
             <div class="row">
               <div class="ri" style="background:var(--sky-tint)">🏞️</div>
-              <div class="rl"><b>Lago di Bilancino</b><span>quota invaso</span></div>
-              <div><span class="chip info">248,9 m slm</span></div>
+              <div class="rl"><b>Lago di Bilancino</b><span id="bil-sub">quota invaso</span></div>
+              <div><span class="chip info" id="bil-val">248,9 m slm</span></div>
             </div>
             <div class="row">
               <div class="ri" style="background:var(--pine-tint)">🍃</div>
-              <div class="rl"><b>Qualità dell'aria</b><span>PM10 14 µg/m³ · PM2.5 8</span></div>
-              <div><span class="chip ok">Buona</span></div>
+              <div class="rl"><b>Qualità dell'aria</b><span id="aria-sub">PM10 14 µg/m³ · PM2.5 8</span></div>
+              <div><span class="chip ok" id="aria-chip">Buona</span></div>
             </div>
             <div class="row">
               <div class="ri" style="background:var(--amber-tint)">📳</div>
-              <div class="rl"><b>Sismicità</b><span>ultimo evento · 12 set, 03:14</span></div>
-              <div><span class="chip warn">M 1.9 Marradi</span></div>
+              <div class="rl"><b>Sismicità</b><span id="sism-sub">ultimo evento · 12 set, 03:14</span></div>
+              <div><span class="chip warn" id="sism-chip">M 1.9</span></div>
             </div>
           </div>
         </div>
@@ -367,7 +371,7 @@
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" id="cielo">
     <div class="sec-head"><h2>Cielo di stasera</h2><a href="#">Effemeridi complete →</a></div>
     <div class="sky3">
       <div class="card">
@@ -543,11 +547,51 @@
     document.getElementById('now-int').dataset.live='1';
   }
 
+
+  const MESI=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+  function setChip(id,txt,cls){const e=document.getElementById(id); if(e){e.textContent=txt; e.className='chip '+cls;}}
+
+  async function airQuality(){
+    const url='https://air-quality-api.open-meteo.com/v1/air-quality?latitude=44.00&longitude=11.36&current=pm10,pm2_5,european_aqi&timezone=Europe%2FRome';
+    const res=await fetch(url); if(!res.ok) throw new Error('http '+res.status);
+    const c=(await res.json()).current;
+    set('aria-sub','PM10 '+r(c.pm10)+' µg/m³ · PM2.5 '+r(c.pm2_5));
+    const a=c.european_aqi; let lab,cls;
+    if(a<=20){lab='Buona';cls='ok';} else if(a<=40){lab='Discreta';cls='ok';}
+    else if(a<=60){lab='Moderata';cls='info';} else if(a<=80){lab='Scarsa';cls='warn';}
+    else {lab='Pessima';cls='warn';}
+    setChip('aria-chip',lab,cls);
+  }
+
+  async function seismic(){
+    const start=new Date(Date.now()-90*864e5).toISOString().slice(0,19);
+    const url='https://webservices.ingv.it/fdsnws/event/1/query?starttime='+start+
+      '&latitude=44.02&longitude=11.35&maxradiuskm=45&minmag=1.0&orderby=time&limit=1&format=text';
+    const res=await fetch(url); if(!res.ok) throw new Error('http '+res.status);
+    const txt=await res.text();
+    const line=txt.split('\n').find(l=>l && !l.startsWith('#')); if(!line) return;
+    const f=line.split('|');
+    const mag=parseFloat(f[10]); const d=new Date(f[1]);
+    let place=f[12].replace(/\(.*\)/,'').trim(); if(place.length>26) place=place.slice(0,25)+'…';
+    set('sism-sub', d.getDate()+' '+MESI[d.getMonth()]+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+' · '+place);
+    setChip('sism-chip','M '+mag.toFixed(1), mag>=3?'warn':'info');
+  }
+
+  async function fiumi(){
+    const res=await fetch('./data/fiumi.json',{cache:'no-store'}); if(!res.ok) throw new Error('no file');
+    const j=await res.json();
+    if(j.sieve){ set('sieve-val', dec(j.sieve.livello_m)+' m'); if(j.sieve.ora) set('sieve-sub','idrometro '+(j.sieve.nome||'Sieve')+' · '+j.sieve.ora); }
+    if(j.bilancino){ const e=document.getElementById('bil-val'); if(e){e.textContent=dec(j.bilancino.quota_m_slm)+' m slm';} if(j.bilancino.ora) set('bil-sub','quota invaso · '+j.bilancino.ora); }
+  }
+
   async function cycle(){
     try{ await openMeteo(); }catch(e){ console.log('open-meteo offline:',e); }
     try{ await station(); }catch(e){ console.log('stazione offline:',e); }
+    try{ await airQuality(); }catch(e){ console.log('aria offline:',e); }
+    try{ await seismic(); }catch(e){ console.log('sismica offline:',e); }
+    try{ await fiumi(); }catch(e){ console.log('fiumi n/d:',e); }
   }
   document.addEventListener('DOMContentLoaded', ()=>{ cycle(); setInterval(cycle, REFRESH); });
 })();
 </script>
-
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
