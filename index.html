@@ -96,6 +96,15 @@
     border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);box-shadow:0 6px 18px -8px rgba(0,0,0,.35);
     color:var(--amber);border-radius:var(--r-pill);padding:7px 14px 7px 10px;font-size:13px;font-weight:600;width:max-content;max-width:100%}
   .allerta .pill{background:var(--amber);color:#fff;border-radius:var(--r-pill);padding:2px 9px;font-family:var(--mono);font-size:11px;letter-spacing:.05em}
+  .allerta[data-liv="verde"]{background:rgba(227,241,235,.92);border-color:rgba(15,107,82,.45);color:#0a4f3c}
+  .allerta[data-liv="verde"] .pill{background:#0f6b52}
+  .allerta[data-liv="gialla"]{background:rgba(250,243,214,.94);border-color:rgba(200,150,0,.55);color:#7a5c00}
+  .allerta[data-liv="gialla"] .pill{background:#c99700}
+  .allerta[data-liv="arancione"]{background:rgba(251,230,210,.95);border-color:rgba(200,110,30,.55);color:#8a4310}
+  .allerta[data-liv="arancione"] .pill{background:#d9791f}
+  .allerta[data-liv="rossa"]{background:rgba(251,224,221,.96);border-color:rgba(190,50,40,.55);color:#8f2015}
+  .allerta[data-liv="rossa"] .pill{background:#cf3b2b}
+  .allerta a{color:inherit}
   .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:4px}
 
   .now{background:linear-gradient(155deg,var(--pine-deep),var(--pine));color:#fff;border-radius:var(--r);
@@ -199,6 +208,23 @@
   /* sky/astro small grid */
   .sky3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
+  /* invaso chart */
+  .inv-chart{position:relative;width:100%}
+  .inv-chart svg{width:100%;height:auto;display:block;overflow:visible}
+  .inv-grid{stroke:var(--line);stroke-width:1}
+  .inv-area{fill:var(--sky);opacity:.13}
+  .inv-line{fill:none;stroke:var(--sky);stroke-width:2}
+  .inv-axis{fill:var(--ink-faint);font-family:var(--mono);font-size:10px}
+  .inv-dot{fill:var(--sky);stroke:var(--panel);stroke-width:2}
+  .inv-cross{stroke:var(--ink-faint);stroke-width:1;stroke-dasharray:3 3}
+  .inv-tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--panel);
+    font-size:11px;font-family:var(--mono);padding:5px 8px;border-radius:7px;
+    transform:translate(-50%,-135%);white-space:nowrap;opacity:0;transition:opacity .1s;z-index:5}
+  .inv-legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px;font-size:12px;color:var(--ink-faint)}
+  .inv-legend b{font-family:var(--serif);font-size:17px;color:var(--ink);margin-right:5px}
+  .inv-legend .inv-cap{margin-left:auto}
+  .inv-legend .inv-cap b{font-size:14px;font-family:var(--sans);font-weight:700}
+
   /* footer */
   footer{margin-top:44px;border-top:1px solid var(--line);background:var(--panel-2)}
   .foot{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:28px;padding-block:34px}
@@ -250,9 +276,10 @@
     <div class="scene-scrim"></div>
 
     <div class="wrap hero-inner">
-      <div class="allerta">
-        <span class="pill">AVVISO</span>
-        Codice giallo per temporali sul rilievo appenninico — valido fino alle 20:00 di oggi
+      <div class="allerta" id="allerta" data-liv="verde">
+        <span class="pill" id="allerta-pill">VERDE</span>
+        <span id="allerta-text">Nessuna criticità meteo in corso sul Mugello</span>
+        <a id="allerta-link" href="https://www.cfr.toscana.it/index.php?IDS=2&amp;IDSS=76" target="_blank" rel="noopener" style="margin-left:6px;text-decoration:underline;opacity:.8">bollettino →</a>
       </div>
 
       <h1 class="hero-title">Il tempo del Mugello, ora per ora</h1>
@@ -330,12 +357,12 @@
             <div class="row">
               <div class="ri" style="background:var(--sky-tint)">🌊</div>
               <div class="rl"><b>Fiume Sieve</b><span id="sieve-sub">idrometro di Fornacina</span></div>
-              <div class="rv" id="sieve-val">0,38 m</div>
+              <div class="rv" id="sieve-val">0,21 m</div>
             </div>
             <div class="row">
               <div class="ri" style="background:var(--sky-tint)">🏞️</div>
               <div class="rl"><b>Lago di Bilancino</b><span id="bil-sub">quota invaso</span></div>
-              <div><span class="chip info" id="bil-val">248,9 m slm</span></div>
+              <div><span class="chip info" id="bil-val">247,8 m slm</span></div>
             </div>
             <div class="row">
               <div class="ri" style="background:var(--pine-tint)">🍃</div>
@@ -357,16 +384,31 @@
     <div class="sec-head"><h2>Il mese in cifre</h2><a href="#">Archivio climatico →</a></div>
     <div class="clim">
       <div class="txt">
-        <span class="eyebrow">Report climatico · Agosto 2026</span>
-        <h3 style="font-size:22px;margin-top:8px">Un agosto caldo e asciutto, chiuso da un cambio deciso</h3>
-        <p>Il mese si è collocato circa <strong>1,6 °C sopra la media 1991–2020</strong> di Borgo San Lorenzo, con quindici giorni oltre i 32 °C in fondovalle. Le piogge sono rimaste ben sotto la norma fino all'ultima decade, quando il transito temporalesco del 28–29 ha riportato pioggia utile sull'Appennino.</p>
-        <p>La minima più bassa (<strong>9,4 °C</strong>) è stata registrata a Firenzuola; la massima assoluta a Dicomano.</p>
+        <span class="eyebrow" id="clim-eyebrow">Report climatico · Agosto 2026</span>
+        <h3 style="font-size:22px;margin-top:8px" id="clim-title">Un agosto caldo e asciutto</h3>
+        <p id="clim-text">Il mese si è collocato circa <strong>1,6 °C sopra la media 1991–2020</strong> di Borgo San Lorenzo. Dati archivio Open-Meteo (rianalisi ERA5).</p>
       </div>
       <div class="stats">
-        <div class="s"><div class="k">Temp. media</div><div class="v">24,1°</div><div class="d">+1,6° vs media</div></div>
-        <div class="s"><div class="k">Max assoluta</div><div class="v">36,8°</div><div class="d">30 ago · Dicomano</div></div>
-        <div class="s"><div class="k">Pioggia tot.</div><div class="v">41 mm</div><div class="d">−38% vs media</div></div>
-        <div class="s"><div class="k">Giorni &gt; 30°</div><div class="v">21</div><div class="d">di cui 4 &gt; 35°</div></div>
+        <div class="s"><div class="k">Temp. media</div><div class="v" id="clim-media-v">24,1°</div><div class="d" id="clim-media-d">+1,6° vs media</div></div>
+        <div class="s"><div class="k">Max assoluta</div><div class="v" id="clim-max-v">36,8°</div><div class="d" id="clim-max-d">30 ago · Borgo</div></div>
+        <div class="s"><div class="k">Pioggia tot.</div><div class="v" id="clim-rain-v">41 mm</div><div class="d" id="clim-rain-d">−38% vs media</div></div>
+        <div class="s"><div class="k">Giorni &gt; 30°</div><div class="v" id="clim-days-v">21</div><div class="d" id="clim-days-d">di cui 4 &gt; 35°</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="invaso">
+    <div class="sec-head"><h2>Andamento dell'invaso di Bilancino</h2><a href="#">OpenData Comune di Firenze →</a></div>
+    <div class="card">
+      <div class="ch"><span class="ei">💧</span><h3>Volume dell'invaso <span id="inv-year">2026</span> · milioni di m³</h3><span class="tag" id="inv-updated">agg. —</span></div>
+      <div class="cb">
+        <div class="inv-chart" id="inv-chart"></div>
+        <div class="inv-legend">
+          <span><b id="inv-cur">49,1</b>Mmc attuale</span>
+          <span><b id="inv-max">69,5</b>Mmc max</span>
+          <span><b id="inv-min">49,1</b>Mmc min</span>
+          <span class="inv-cap">quota <b id="inv-quota">247,8</b> m slm</span>
+        </div>
       </div>
     </div>
   </section>
@@ -551,6 +593,42 @@
   const MESI=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
   function setChip(id,txt,cls){const e=document.getElementById(id); if(e){e.textContent=txt; e.className='chip '+cls;}}
 
+
+  const NORM_T=[5.2,5.8,9.2,12.6,16.8,21.1,24.0,24.1,19.4,14.9,10.1,6.2];
+  const NORM_P=[61,76,76,88,76,60,41,39,71,94,114,91];
+  const MMESI=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+
+  async function climate(){
+    const d0=new Date(); let y=d0.getFullYear(), m=d0.getMonth()-1; if(m<0){m=11;y--;}
+    const mm=String(m+1).padStart(2,'0'); const last=new Date(y,m+1,0).getDate();
+    const url='https://archive-api.open-meteo.com/v1/archive?latitude=43.9547&longitude=11.3861'+
+      '&start_date='+y+'-'+mm+'-01&end_date='+y+'-'+mm+'-'+String(last).padStart(2,'0')+
+      '&daily=temperature_2m_mean,temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe%2FRome';
+    const res=await fetch(url); if(!res.ok) throw new Error('http '+res.status);
+    const d=(await res.json()).daily;
+    const mean=d.temperature_2m_mean.filter(x=>x!=null);
+    const media=mean.reduce((a,b)=>a+b,0)/mean.length;
+    let mxi=0; d.temperature_2m_max.forEach((v,i)=>{if(v!=null&&(d.temperature_2m_max[mxi]==null||v>d.temperature_2m_max[mxi]))mxi=i;});
+    const maxv=d.temperature_2m_max[mxi], maxday=parseInt(d.time[mxi].slice(8,10),10);
+    const rain=d.precipitation_sum.reduce((a,b)=>a+(b||0),0);
+    const g30=d.temperature_2m_max.filter(v=>v!=null&&v>30).length;
+    const g35=d.temperature_2m_max.filter(v=>v!=null&&v>35).length;
+    const anomT=media-NORM_T[m], anomP=Math.round((rain/NORM_P[m]-1)*100);
+    const caldo = anomT>=1?'caldo':(anomT<=-1?'fresco':'nella norma');
+    const piogg = anomP<=-20?'asciutto':(anomP>=20?'piovoso':'con piogge regolari');
+    set('clim-eyebrow','Report climatico · '+cap(MMESI[m])+' '+y);
+    set('clim-title','Un '+MMESI[m]+' '+caldo+(caldo==='nella norma'?'':' e '+piogg));
+    set('clim-text',
+      'Media mensile di '+dec(media)+' °C, '+(anomT>=0?'sopra':'sotto')+' la norma 1991–2020 di '+dec(Math.abs(anomT))+
+      ' °C. Precipitazioni '+Math.round(rain)+' mm, '+(anomP>=0?'superiori':'inferiori')+' alla media del '+Math.abs(anomP)+
+      '%. Punto di riferimento Borgo San Lorenzo, archivio Open-Meteo (ERA5).');
+    set('clim-media-v', dec(media)+'°'); set('clim-media-d',(anomT>=0?'+':'−')+dec(Math.abs(anomT))+'° vs media');
+    set('clim-max-v', dec(maxv)+'°'); set('clim-max-d', maxday+' '+MMESI[m].slice(0,3)+' · Borgo');
+    set('clim-rain-v', Math.round(rain)+' mm'); set('clim-rain-d',(anomP>=0?'+':'−')+Math.abs(anomP)+'% vs media');
+    set('clim-days-v', String(g30)); set('clim-days-d','di cui '+g35+' > 35°');
+  }
+
   async function airQuality(){
     const url='https://air-quality-api.open-meteo.com/v1/air-quality?latitude=44.00&longitude=11.36&current=pm10,pm2_5,european_aqi&timezone=Europe%2FRome';
     const res=await fetch(url); if(!res.ok) throw new Error('http '+res.status);
@@ -580,8 +658,77 @@
   async function fiumi(){
     const res=await fetch('./data/fiumi.json',{cache:'no-store'}); if(!res.ok) throw new Error('no file');
     const j=await res.json();
-    if(j.sieve){ set('sieve-val', dec(j.sieve.livello_m)+' m'); if(j.sieve.ora) set('sieve-sub','idrometro '+(j.sieve.nome||'Sieve')+' · '+j.sieve.ora); }
-    if(j.bilancino){ const e=document.getElementById('bil-val'); if(e){e.textContent=dec(j.bilancino.quota_m_slm)+' m slm';} if(j.bilancino.ora) set('bil-sub','quota invaso · '+j.bilancino.ora); }
+    const CH={normale:'ok',attenzione:'warn',allarme:'warn'};
+    if(j.sieve&&j.sieve.livello_m!=null){ set('sieve-val', dec(j.sieve.livello_m)+' m'); set('sieve-sub','idrometro Fornacina · '+(j.sieve.ora||'')); }
+    if(j.bilancino&&j.bilancino.quota_m_slm!=null){ setChip('bil-val', dec(j.bilancino.quota_m_slm)+' m slm', 'info'); set('bil-sub','invaso · '+dec(j.bilancino.volume_mmc)+' Mmc · '+(j.bilancino.data||'')); }
+  }
+
+
+  const INV_SAMPLE={"anno":2026,"serie":[{"d":"01/01","q":249.99,"v":59.99},{"d":"21/01","q":249.77,"v":58.59},{"d":"10/02","q":251.39,"v":66.0},{"d":"02/03","q":250.73,"v":67.75},{"d":"22/03","q":250.74,"v":62.88},{"d":"11/04","q":251.18,"v":64.92},{"d":"01/05","q":251.19,"v":64.97},{"d":"21/05","q":251.8,"v":68.11},{"d":"10/06","q":251.83,"v":68.26},{"d":"30/06","q":251.19,"v":64.97},{"d":"20/07","q":250.33,"v":61.13},{"d":"09/08","q":249.4,"v":56.8},{"d":"29/08","q":248.47,"v":52.28},{"d":"14/09","q":247.78,"v":49.12}]};
+  const CUMG=[0,31,59,90,120,151,181,212,243,273,304,334];
+  const MLAB=['G','F','M','A','M','G','L','A','S','O','N','D'];
+  const doyv=p=>{const a=p.d.split('/'); return CUMG[(+a[1])-1]+(+a[0]);};
+
+  function invasoChart(data){
+    const s=(data&&data.serie)||[]; if(!s.length) return;
+    const W=720,H=260,L=44,R=14,T=14,B=30, pw=W-L-R, ph=H-T-B;
+    const vs=s.map(p=>p.v); let vmin=Math.min.apply(0,vs), vmax=Math.max.apply(0,vs);
+    const pd=(vmax-vmin)*0.12||1; vmin=Math.floor(vmin-pd); vmax=Math.ceil(vmax+pd);
+    const X=d=>L+(d-1)/364*pw, Y=v=>T+(1-(v-vmin)/(vmax-vmin))*ph;
+    let line=s.map((p,i)=>(i?'L':'M')+X(doyv(p)).toFixed(1)+' '+Y(p.v).toFixed(1)).join(' ');
+    const x0=X(doyv(s[0])).toFixed(1), xn=X(doyv(s[s.length-1])).toFixed(1), yb=(T+ph).toFixed(1);
+    let area=line+' L'+xn+' '+yb+' L'+x0+' '+yb+' Z';
+    let yt=''; const NT=4;
+    for(let i=0;i<=NT;i++){const v=vmin+(vmax-vmin)*i/NT, y=Y(v);
+      yt+='<line class="inv-grid" x1="'+L+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>'
+        +'<text class="inv-axis" x="'+(L-6)+'" y="'+(y+3).toFixed(1)+'" text-anchor="end">'+Math.round(v)+'</text>';}
+    let xt=''; for(let m=0;m<12;m++){const x=X(CUMG[m]+1);
+      xt+='<text class="inv-axis" x="'+x.toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+MLAB[m]+'</text>';}
+    const last=s[s.length-1], ex=X(doyv(last)).toFixed(1), ey=Y(last.v).toFixed(1);
+    const svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Volume invaso Bilancino nel tempo">'
+      +yt+'<path class="inv-area" d="'+area+'"/><path class="inv-line" d="'+line+'"/>'+xt
+      +'<line class="inv-cross" id="inv-cross" x1="0" y1="'+T+'" x2="0" y2="'+(T+ph)+'" style="opacity:0"/>'
+      +'<circle class="inv-dot" id="inv-hdot" r="4" cx="0" cy="0" style="opacity:0"/>'
+      +'<circle class="inv-dot" r="4.5" cx="'+ex+'" cy="'+ey+'"/></svg>';
+    const box=document.getElementById('inv-chart'); if(!box) return;
+    box.innerHTML=svg+'<div class="inv-tip" id="inv-tip"></div>';
+    let mxi=0,mni=0; s.forEach((p,i)=>{if(p.v>s[mxi].v)mxi=i; if(p.v<s[mni].v)mni=i;});
+    set('inv-cur',dec(last.v)); set('inv-max',dec(s[mxi].v)); set('inv-min',dec(s[mni].v));
+    set('inv-quota',dec(last.q)); if(data.anno) set('inv-year',String(data.anno));
+    set('inv-updated','agg. '+last.d);
+    const svgEl=box.querySelector('svg'), tip=document.getElementById('inv-tip'),
+          cross=document.getElementById('inv-cross'), hd=document.getElementById('inv-hdot');
+    function mv(ev){const r=svgEl.getBoundingClientRect(), px=(ev.clientX-r.left)/r.width*W,
+      dd=1+(px-L)/pw*364; let bi=0,bd=1e9;
+      s.forEach((p,i)=>{const g=Math.abs(doyv(p)-dd); if(g<bd){bd=g;bi=i;}});
+      const p=s[bi], cx=X(doyv(p)), cy=Y(p.v);
+      cross.setAttribute('x1',cx); cross.setAttribute('x2',cx); cross.style.opacity=1;
+      hd.setAttribute('cx',cx); hd.setAttribute('cy',cy); hd.style.opacity=1;
+      tip.style.left=(cx/W*100)+'%'; tip.style.top=(cy/H*100)+'%'; tip.style.opacity=1;
+      tip.textContent=p.d+' · '+dec(p.v)+' Mmc · '+dec(p.q)+' m slm';}
+    function lv(){cross.style.opacity=0; hd.style.opacity=0; tip.style.opacity=0;}
+    svgEl.addEventListener('pointermove',mv); svgEl.addEventListener('pointerleave',lv);
+  }
+  async function invaso(){
+    try{ const r=await fetch('./data/bilancino.json',{cache:'no-store'}); if(!r.ok) throw 0; invasoChart(await r.json()); }
+    catch(e){ invasoChart(INV_SAMPLE); }
+  }
+
+  async function allerta(){
+    try{
+      const r=await fetch('./data/allerta.json',{cache:'no-store'}); if(!r.ok) throw 0;
+      const j=await r.json(); const box=document.getElementById('allerta'); if(!box) return;
+      const liv=(j.livello||'verde').toLowerCase();
+      const LAB={verde:'VERDE',gialla:'GIALLA',arancione:'ARANCIONE',rossa:'ROSSA'};
+      box.dataset.liv = (LAB[liv]?liv:'gialla');
+      set('allerta-pill', LAB[liv]||'AVVISO');
+      let txt = j.testo;
+      if(!txt){ txt = liv==='verde' ? 'Nessuna criticità in corso sul Mugello'
+        : 'Allerta '+liv+(j.rischio?' per '+j.rischio:'')+(j.validita?' — '+j.validita:''); }
+      set('allerta-text', txt);
+      const lk=document.getElementById('allerta-link'); if(lk&&j.link){ lk.href=j.link; }
+      if(j.link===false && lk){ lk.style.display='none'; }
+    }catch(e){ /* mantiene l'avviso di esempio */ }
   }
 
   async function cycle(){
@@ -591,7 +738,7 @@
     try{ await seismic(); }catch(e){ console.log('sismica offline:',e); }
     try{ await fiumi(); }catch(e){ console.log('fiumi n/d:',e); }
   }
-  document.addEventListener('DOMContentLoaded', ()=>{ cycle(); setInterval(cycle, REFRESH); });
+  document.addEventListener('DOMContentLoaded', ()=>{ cycle(); setInterval(cycle, REFRESH); climate().catch(e=>console.log('clima n/d:',e)); invaso().catch(function(){}); allerta().catch(function(){}); });
 })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>

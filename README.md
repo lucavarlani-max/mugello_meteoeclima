@@ -14,6 +14,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
 - **Radar** — mappa precipitazioni interattiva (Windy) centrata sul Mugello.
 - **Monitoraggio** — qualità dell'aria (Open-Meteo Air Quality) e sismicità (INGV,
   ultimo evento entro 45 km) in tempo reale. Livelli Sieve e Bilancino: vedi Action sotto.
+- **Andamento invaso di Bilancino** — grafico della serie giornaliera del volume
+  (milioni di m³) nell'anno, con tacche dei mesi e hover, da OpenData Comune di Firenze.
 - **Cielo** — alba, tramonto, ore di luce.
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
   e pubblicare su Facebook, con didascalia automatica.
@@ -27,7 +29,9 @@ fb-post.html                   generatore immagini per Facebook
 manifest.webmanifest           PWA
 sw.js                          service worker (cache offline)
 icon-192.png / icon-512.png / icon-maskable-512.png / favicon-64.png
-data/fiumi.json                livelli fiumi (aggiornato dall'Action)
+data/fiumi.json                livelli fiumi + invaso (aggiornato dall'Action)
+data/bilancino.json            serie giornaliera invaso Bilancino (grafico)
+data/allerta.json              avviso criticità meteo mostrato nel banner in alto
 scripts/fetch_fiumi.py         aggiorna data/fiumi.json
 .github/workflows/update-data.yml   esegue lo script ogni 30 min
 .nojekyll
@@ -37,10 +41,29 @@ scripts/fetch_fiumi.py         aggiorna data/fiumi.json
 
 `data/fiumi.json` viene aggiornato automaticamente da una GitHub Action ogni 30
 minuti (o a mano dal tab **Actions → Aggiorna dati fiumi → Run workflow**).
-Lo script `scripts/fetch_fiumi.py` individua le stazioni di Sieve e Bilancino
-tramite il WFS OpenData della Regione Toscana. **Da confermare** l'endpoint SIR
-dei valori correnti (funzione `livello_realtime`): finché non è impostato, lo
-script mantiene i valori precedenti e il sito mostra l'ultimo dato valido.
+Lo script `scripts/fetch_fiumi.py` raccoglie:
+- **Fiume Sieve** — livello a **Fornacina** (TOS01004641) dalla pagina idrometria
+  del Centro Funzionale Regione Toscana (CFR), con data/ora e stato
+  (normale/attenzione/allarme sulle soglie CFR).
+- **Invaso di Bilancino** — quota (m slm) e volume (milioni di m³) dal CSV OpenData
+  del Comune di Firenze (`datastore.comune.fi.it/od/livelli_bilancino_<anno>.csv`),
+  aggiornato ~quotidianamente.
+
+Se una fonte non risponde, lo script mantiene l'ultimo valore valido.
+
+## Banner allerta meteo
+
+Il banner in cima alla home legge `data/allerta.json`, aggiornato
+**automaticamente** dalla GitHub Action: `scripts/fetch_allerta.py` scarica il
+Bollettino di Valutazione delle Criticità del CFR Toscana (PDF), legge la
+sezione "DESCRIZIONE DELLE CRITICITÀ PREVISTE" e ne ricava il livello
+(`verde` | `gialla` | `arancione` | `rossa`) e il testo. Con `verde` il banner
+mostra "nessuna criticità".
+
+Si può anche forzare a mano modificando `data/allerta.json` (matita "Edit" su
+GitHub); alla successiva esecuzione dell'Action verrà rigenerato dal bollettino.
+Quando in futuro capiterà un bollettino con criticità, il parser può essere
+affinato per filtrare la sola zona "M - Mugello-Val di Sieve".
 
 ## Pubblicare / aggiornare
 
