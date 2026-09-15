@@ -1,5 +1,14 @@
 {
-  "aggiornato": null,
-  "sieve": { "nome": "Sieve", "livello_m": 0.38, "ora": "dato di esempio" },
-  "bilancino": { "nome": "Bilancino", "quota_m_slm": 248.9, "ora": "dato di esempio" }
+  "aggiornato": "2026-09-15T10:11",
+  "sieve": {
+    "nome": "Sieve a Fornacina",
+    "livello_m": 0.21,
+    "stato": "normale",
+    "ora": "15/09 11.00"
+  },
+  "bilancino": {
+    "data": "14/09/2026",
+    "quota_m_slm": 247.78,
+    "volume_mmc": 49.12
+  }
 }
