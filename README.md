@@ -10,7 +10,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
 - **Adesso** — dati in tempo reale dalla stazione personale **ISCARP2** (Scarperia)
   su Weather Underground: temperatura, vento, umidità, pressione, pioggia.
   Aggiornamento ogni 5 minuti; se la stazione è offline ripiega su Open-Meteo.
-- **Previsioni 9 comuni + 7 giorni** — Open-Meteo (modelli ICON + GFS), gratis, senza chiave.
+- **Previsioni 9 comuni + 7 giorni** — modello AI **WeatherNext 3** di Google
+  (DeepMind), tramite la Google Weather API, aggiornate dalla GitHub Action che
+  scrive `data/previsioni.json`. Se la chiave manca o l'API non risponde, ripiega
+  automaticamente su **Open-Meteo** (server e, in ultima istanza, lato browser).
 - **Radar** — mappa precipitazioni interattiva (Windy) centrata sul Mugello.
 - **Monitoraggio** — qualità dell'aria (Open-Meteo Air Quality) e sismicità (INGV,
   ultimo evento entro 45 km) in tempo reale. Livelli Sieve e Bilancino: vedi Action sotto.
@@ -29,11 +32,14 @@ fb-post.html                   generatore immagini per Facebook
 manifest.webmanifest           PWA
 sw.js                          service worker (cache offline)
 icon-192.png / icon-512.png / icon-maskable-512.png / favicon-64.png
+data/previsioni.json           previsioni 9 comuni + 7 giorni (WeatherNext/Open-Meteo)
 data/fiumi.json                livelli fiumi + invaso (aggiornato dall'Action)
 data/bilancino.json            serie giornaliera invaso Bilancino (grafico)
 data/allerta.json              avviso criticità meteo mostrato nel banner in alto
+scripts/fetch_previsioni.py    aggiorna data/previsioni.json (Google Weather API)
 scripts/fetch_fiumi.py         aggiorna data/fiumi.json
-.github/workflows/update-data.yml   esegue lo script ogni 30 min
+scripts/fetch_allerta.py       aggiorna data/allerta.json
+.github/workflows/update-data.yml   esegue gli script ogni 30 min
 .nojekyll
 ```
 
@@ -50,6 +56,32 @@ Lo script `scripts/fetch_fiumi.py` raccoglie:
   aggiornato ~quotidianamente.
 
 Se una fonte non risponde, lo script mantiene l'ultimo valore valido.
+
+## Previsioni WeatherNext (Google Weather API) — setup della chiave
+
+Le previsioni dei 9 comuni usano il modello AI **WeatherNext 3** di Google
+DeepMind tramite la **Google Weather API** (Google Maps Platform). La chiave NON
+sta nel sito statico: la legge solo la GitHub Action, da un *secret*.
+
+Da fare una volta sola:
+
+1. **Google Cloud** — crea (o scegli) un progetto su
+   `console.cloud.google.com` e attiva la **fatturazione** sul progetto
+   (la Weather API la richiede; c'è un credito mensile gratuito).
+2. **Abilita la Weather API** — in "APIs & Services → Library" cerca
+   *Weather API* e premi **Enable**.
+3. **Crea la chiave** — "APIs & Services → Credentials → Create credentials →
+   API key". Consigliato limitarla alla sola Weather API (Restrict key →
+   Restrict API → Weather API).
+4. **Aggiungi il secret su GitHub** — nel repo `mugello_meteoeclima`:
+   *Settings → Secrets and variables → Actions → New repository secret*,
+   nome esatto **`GMAPS_WEATHER_KEY`**, valore = la chiave.
+5. Lancia l'Action a mano (*Actions → Aggiorna dati → Run workflow*): scriverà
+   `data/previsioni.json` con fonte "WeatherNext 3 (Google)".
+
+Finché il secret non c'è, l'Action funziona lo stesso e scrive `previsioni.json`
+con **Open-Meteo** (così il sito non resta mai senza previsioni). Anche il
+browser, se `previsioni.json` mancasse, ripiega su Open-Meteo da solo.
 
 ## Banner allerta meteo
 
@@ -78,4 +110,4 @@ URL: `https://lucavarlani-max.github.io/mugello_meteoeclima/`
 
 ## Fonti dati
 
-Stazione ISCARP2 (Weather Underground) · Open-Meteo · INGV · SIR/CFR Toscana · Windy · elaborazioni L. Varlani.
+Stazione ISCARP2 (Weather Underground) · WeatherNext 3 / Google Weather API · Open-Meteo · INGV · SIR/CFR Toscana · Windy · elaborazioni L. Varlani.
