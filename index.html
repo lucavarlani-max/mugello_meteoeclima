@@ -149,8 +149,10 @@
   /* ---- comuni grid ---- */
   .comuni{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   .comune{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px;
-    box-shadow:var(--shadow);display:flex;align-items:center;gap:12px}
-  .comune:hover{box-shadow:var(--shadow-lift);transform:translateY(-1px);transition:.15s}
+    box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;cursor:pointer}
+  .comune:hover{box-shadow:var(--shadow-lift);transform:translateY(-1px);transition:.15s;border-color:var(--pine)}
+  .comune .go{margin-left:8px;color:var(--ink-faint);font-family:var(--mono);font-size:15px;flex:none;transition:.15s}
+  .comune:hover .go{color:var(--pine);transform:translateX(2px)}
   .comune .ci{font-size:30px;flex:none}
   .comune .nm{font-weight:600;font-size:14.5px}
   .comune .mt{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:1px}
@@ -984,7 +986,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
       <div class="today">
         <h3>I prossimi 7 giorni <span class="chip ok" id="live-badge" style="display:none;font-size:10px;vertical-align:middle">● live</span></h3>
-        <div class="sub">Borgo San Lorenzo · modello AI WeatherNext 3 (Google)</div>
+        <div class="sub">Borgo San Lorenzo · modello AI WeatherNext 3 (Google) · <a href="comune.html?c=6" style="color:var(--pine);font-weight:600;text-decoration:none">dettaglio orario →</a></div>
         <div class="week" id="week">
           <div class="day on"><div class="dow" id="d0-dow">Dom</div><div class="di" id="d0-di">⛅</div><div class="hi" id="d0-hi">25°</div><div class="lo" id="d0-lo">12°</div><div class="pp" id="d0-pp">20%</div></div>
           <div class="day"><div class="dow" id="d1-dow">Lun</div><div class="di" id="d1-di">⛈</div><div class="hi" id="d1-hi">23°</div><div class="lo" id="d1-lo">13°</div><div class="pp" id="d1-pp">70%</div></div>
@@ -1003,18 +1005,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <section class="sec" id="comuni">
     <div class="sec-head">
       <h2>Previsione per i comuni</h2>
-      <a href="#">Tutti i comuni →</a>
+      <span class="sec-hint" style="font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)">tocca un comune per il dettaglio →</span>
     </div>
     <div class="comuni">
-      <div class="comune"><span class="ci" id="c0-ico">🌦</span><div><div class="nm">Firenzuola</div><div class="mt">422 m · Appennino</div></div><div class="tt"><b id="c0-t">21°</b><s id="c0-sub">10° / 65%</s></div></div>
-      <div class="comune"><span class="ci" id="c1-ico">⛈</span><div><div class="nm">Palazzuolo sul Senio</div><div class="mt">437 m · alta valle</div></div><div class="tt"><b id="c1-t">20°</b><s id="c1-sub">11° / 70%</s></div></div>
-      <div class="comune"><span class="ci" id="c2-ico">⛈</span><div><div class="nm">Marradi</div><div class="mt">328 m · val di Lamone</div></div><div class="tt"><b id="c2-t">22°</b><s id="c2-sub">12° / 60%</s></div></div>
-      <div class="comune"><span class="ci" id="c3-ico">⛅</span><div><div class="nm">Barberino di Mugello</div><div class="mt">268 m · lago</div></div><div class="tt"><b id="c3-t">25°</b><s id="c3-sub">13° / 25%</s></div></div>
-      <div class="comune"><span class="ci" id="c4-ico">⛅</span><div><div class="nm">Scarperia e San Piero</div><div class="mt">292 m · autodromo</div></div><div class="tt"><b id="c4-t">25°</b><s id="c4-sub">12° / 20%</s></div></div>
-      <div class="comune"><span class="ci" id="c5-ico">🌤</span><div><div class="nm">San Piero a Sieve</div><div class="mt">210 m · fondovalle</div></div><div class="tt"><b id="c5-t">26°</b><s id="c5-sub">13° / 15%</s></div></div>
-      <div class="comune"><span class="ci" id="c6-ico">⛅</span><div><div class="nm">Borgo San Lorenzo</div><div class="mt">193 m · fondovalle</div></div><div class="tt"><b id="c6-t">25°</b><s id="c6-sub">12° / 20%</s></div></div>
-      <div class="comune"><span class="ci" id="c7-ico">🌦</span><div><div class="nm">Vicchio</div><div class="mt">203 m · media valle</div></div><div class="tt"><b id="c7-t">24°</b><s id="c7-sub">12° / 35%</s></div></div>
-      <div class="comune"><span class="ci" id="c8-ico">🌦</span><div><div class="nm">Dicomano</div><div class="mt">165 m · confluenza</div></div><div class="tt"><b id="c8-t">25°</b><s id="c8-sub">12° / 40%</s></div></div>
+      <a class="comune" href="comune.html?c=0"><span class="ci" id="c0-ico">🌦</span><div><div class="nm">Firenzuola</div><div class="mt">422 m · Appennino</div></div><div class="tt"><b id="c0-t">21°</b><s id="c0-sub">10° / 65%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=1"><span class="ci" id="c1-ico">⛈</span><div><div class="nm">Palazzuolo sul Senio</div><div class="mt">437 m · alta valle</div></div><div class="tt"><b id="c1-t">20°</b><s id="c1-sub">11° / 70%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=2"><span class="ci" id="c2-ico">⛈</span><div><div class="nm">Marradi</div><div class="mt">328 m · val di Lamone</div></div><div class="tt"><b id="c2-t">22°</b><s id="c2-sub">12° / 60%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=3"><span class="ci" id="c3-ico">⛅</span><div><div class="nm">Barberino di Mugello</div><div class="mt">268 m · lago</div></div><div class="tt"><b id="c3-t">25°</b><s id="c3-sub">13° / 25%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=4"><span class="ci" id="c4-ico">⛅</span><div><div class="nm">Scarperia e San Piero</div><div class="mt">292 m · autodromo</div></div><div class="tt"><b id="c4-t">25°</b><s id="c4-sub">12° / 20%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=5"><span class="ci" id="c5-ico">🌤</span><div><div class="nm">San Piero a Sieve</div><div class="mt">210 m · fondovalle</div></div><div class="tt"><b id="c5-t">26°</b><s id="c5-sub">13° / 15%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=6"><span class="ci" id="c6-ico">⛅</span><div><div class="nm">Borgo San Lorenzo</div><div class="mt">193 m · fondovalle</div></div><div class="tt"><b id="c6-t">25°</b><s id="c6-sub">12° / 20%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=7"><span class="ci" id="c7-ico">🌦</span><div><div class="nm">Vicchio</div><div class="mt">203 m · media valle</div></div><div class="tt"><b id="c7-t">24°</b><s id="c7-sub">12° / 35%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=8"><span class="ci" id="c8-ico">🌦</span><div><div class="nm">Dicomano</div><div class="mt">165 m · confluenza</div></div><div class="tt"><b id="c8-t">25°</b><s id="c8-sub">12° / 40%</s></div><span class="go">→</span></a>
     </div>
   </section>
 

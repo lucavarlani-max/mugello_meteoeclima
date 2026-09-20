@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Previsioni dettagliate · Mugello Meteo & Clima</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#7d8a82;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --rain:#3566b0;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --shadow-lift:0 2px 6px rgba(16,38,31,.07), 0 20px 44px -20px rgba(16,38,31,.28);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+      --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+      --line:#26332c; --line-soft:#1e2a24;
+      --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+      --sky:#67aef0; --sky-tint:#152634;
+      --amber:#e0975a; --amber-tint:#2e2115;
+      --rain:#6a9be0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+      --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 24px 50px -22px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#67aef0; --sky-tint:#152634;
+    --amber:#e0975a; --amber-tint:#2e2115; --rain:#6a9be0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 24px 50px -22px rgba(0,0,0,.8);
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  /* topbar */
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .back:hover{box-shadow:var(--shadow)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px;letter-spacing:-.01em}
+  .brand b{color:var(--pine)}
+  /* header comune */
+  .head{padding:26px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--pine);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:40px;margin:.12em 0 .05em}
+  .meta{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint)}
+  /* now card */
+  .now{display:flex;flex-wrap:wrap;align-items:center;gap:20px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--r);box-shadow:var(--shadow);padding:20px 22px;margin-top:16px}
+  .now .ico{font-size:60px;line-height:1;flex:none}
+  .now .big{font-family:var(--serif);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.02em}
+  .now .desc{font-size:15px;color:var(--ink-soft);margin-top:3px}
+  .now .desc b{color:var(--ink)}
+  .now .grid{margin-left:auto;display:grid;grid-template-columns:repeat(3,minmax(78px,1fr));gap:10px 22px}
+  .kv{display:flex;flex-direction:column}
+  .kv .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .kv .v{font-weight:600;font-size:16px;margin-top:1px}
+  /* sections */
+  section{margin:30px 0}
+  .sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .sh h2{font-family:var(--serif);font-weight:700;font-size:21px;margin:0;letter-spacing:-.01em}
+  .sh .src{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px}
+  /* hourly strip */
+  .hours{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+  .hr{flex:0 0 auto;width:70px;text-align:center;padding:10px 4px;border-right:1px solid var(--line-soft);scroll-snap-align:start}
+  .hr:last-child{border-right:0}
+  .hr .h{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .hr .i{font-size:24px;margin:6px 0 3px}
+  .hr .t{font-weight:700;font-size:16px;font-family:var(--serif)}
+  .hr .p{font-family:var(--mono);font-size:10.5px;color:var(--rain);margin-top:3px;min-height:14px}
+  .hr .w{font-family:var(--mono);font-size:10px;color:var(--ink-faint);margin-top:2px}
+  .hr.night{background:var(--panel-2)}
+  /* chart */
+  .chart-wrap{margin-top:4px}
+  svg .axl{font-family:var(--mono);font-size:10px;fill:var(--ink-faint)}
+  /* 7 giorni */
+  .days{display:flex;flex-direction:column}
+  .day{display:flex;align-items:center;gap:14px;padding:13px 4px;border-top:1px solid var(--line-soft)}
+  .day:first-child{border-top:0}
+  .day .dow{width:64px;font-weight:600;text-transform:capitalize}
+  .day .di{font-size:28px;width:40px;text-align:center;flex:none}
+  .day .dd{flex:1;color:var(--ink-soft);font-size:13.5px}
+  .day .pp{font-family:var(--mono);font-size:12px;color:var(--rain);width:58px;text-align:right}
+  .day .tp{width:96px;text-align:right;font-family:var(--serif);font-weight:700}
+  .day .tp s{color:var(--ink-faint);text-decoration:none;font-weight:600;margin-left:6px}
+  /* sun row */
+  .sun{display:flex;gap:26px;flex-wrap:wrap}
+  .sun .kv .v{font-size:18px}
+  .locmap{height:190px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);margin:16px 0 2px;position:relative;z-index:1}
+  .locmap .leaflet-container{height:100%;width:100%;background:var(--panel-2);font-family:var(--sans)}
+  .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
+  @media (max-width:640px){
+    h1{font-size:32px} .now .grid{margin-left:0;width:100%}
+    .now .big{font-size:46px} .now .ico{font-size:48px}
+  }
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <header class="head">
+      <div class="eyebrow" id="eyebrow">Previsione dettagliata</div>
+      <h1 id="nome">—</h1>
+      <div class="meta" id="meta">—</div>
+
+      <div class="locmap" id="map"></div>
+
+      <div class="now">
+        <div class="ico" id="now-ico">⛅</div>
+        <div>
+          <div class="big"><span id="now-t">—</span>°</div>
+          <div class="desc" id="now-desc">—</div>
+        </div>
+        <div class="grid">
+          <div class="kv"><span class="l">Percepita</span><span class="v" id="k-app">—</span></div>
+          <div class="kv"><span class="l">Vento</span><span class="v" id="k-wind">—</span></div>
+          <div class="kv"><span class="l">Raffiche</span><span class="v" id="k-gust">—</span></div>
+          <div class="kv"><span class="l">Umidità</span><span class="v" id="k-hum">—</span></div>
+          <div class="kv"><span class="l">Pressione</span><span class="v" id="k-press">—</span></div>
+          <div class="kv"><span class="l">Nuvole</span><span class="v" id="k-cloud">—</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Prossime 48 ore</h2><span class="src">dettaglio orario · Open-Meteo</span></div>
+      <div class="card"><div class="hours" id="hours"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura e pioggia</h2><span class="src">48 ore</span></div>
+      <div class="card chart-wrap" id="chart"></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Prossimi 7 giorni</h2><span class="src" id="days-src">WeatherNext 3 (Google)</span></div>
+      <div class="card"><div class="days" id="days"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Sole</h2><span class="src">oggi</span></div>
+      <div class="card sun">
+        <div class="kv"><span class="l">Alba</span><span class="v" id="sun-rise">—</span></div>
+        <div class="kv"><span class="l">Tramonto</span><span class="v" id="sun-set">—</span></div>
+        <div class="kv"><span class="l">Ore di luce</span><span class="v" id="sun-len">—</span></div>
+      </div>
+    </section>
+
+    <p class="note" id="note">Previsione giornaliera: WeatherNext 3 (Google) · Dettaglio orario: Open-Meteo · elaborazioni L. Varlani</p>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin=""></script>
+<script>
+(function(){
+  const COMUNI=[
+    {n:"Firenzuola",           lat:44.1206,lon:11.3789,elev:422,zona:"Appennino"},
+    {n:"Palazzuolo sul Senio", lat:44.1131,lon:11.5433,elev:437,zona:"alta valle"},
+    {n:"Marradi",              lat:44.0722,lon:11.6142,elev:328,zona:"val di Lamone"},
+    {n:"Barberino di Mugello", lat:43.9908,lon:11.2386,elev:268,zona:"lago"},
+    {n:"Scarperia e San Piero",lat:43.9928,lon:11.3549,elev:292,zona:"autodromo"},
+    {n:"San Piero a Sieve",    lat:43.9631,lon:11.3283,elev:210,zona:"fondovalle"},
+    {n:"Borgo San Lorenzo",    lat:43.9547,lon:11.3861,elev:193,zona:"fondovalle"},
+    {n:"Vicchio",              lat:43.9339,lon:11.4650,elev:203,zona:"media valle"},
+    {n:"Dicomano",             lat:43.8917,lon:11.5222,elev:165,zona:"confluenza"},
+  ];
+  const WM={0:['☀️','Sereno'],1:['🌤','Poco nuvoloso'],2:['⛅','Parz. nuvoloso'],3:['☁️','Coperto'],
+    45:['🌫','Nebbia'],48:['🌫','Nebbia'],51:['🌦','Pioviggine'],53:['🌦','Pioviggine'],55:['🌦','Pioviggine'],
+    56:['🌧','Piogg. gelata'],57:['🌧','Piogg. gelata'],61:['🌦','Pioggia debole'],63:['🌧','Pioggia'],65:['🌧','Pioggia forte'],
+    66:['🌧','Piogg. gelata'],67:['🌧','Piogg. gelata'],71:['🌨','Neve debole'],73:['🌨','Neve'],75:['❄️','Neve forte'],
+    77:['🌨','Nevischio'],80:['🌦','Rovesci'],81:['🌧','Rovesci'],82:['⛈','Rovesci forti'],85:['🌨','Rovesci di neve'],86:['🌨','Rovesci di neve'],
+    95:['⛈','Temporale'],96:['⛈','Temp. + grandine'],99:['⛈','Temp. + grandine']};
+  const wmo=c=>WM[c]||['⛅','—'];
+  const DOW=['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  const CARD=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+  const card=d=>CARD[Math.round(((d%360)/22.5))%16];
+  const r=n=>Math.round(n);
+  const set=(id,t)=>{const e=document.getElementById(id); if(e)e.textContent=t;};
+
+  const params=new URLSearchParams(location.search);
+  let ci=parseInt(params.get('c'),10);
+  if(isNaN(ci)||ci<0||ci>=COMUNI.length) ci=6; // default Borgo
+  const C=COMUNI[ci];
+
+  document.title=C.n+' · Previsioni · Mugello Meteo & Clima';
+  set('nome',C.n);
+  set('meta',C.elev+' m s.l.m. · '+C.zona+' · Mugello');
+
+  // ---- mappa della localita' (Leaflet + OpenStreetMap) ----
+  function initMap(){
+    try{
+      if(typeof L==='undefined'){ document.getElementById('map').style.display='none'; return; }
+      const map=L.map('map',{scrollWheelZoom:false,attributionControl:true}).setView([C.lat,C.lon],12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        maxZoom:18, attribution:'© OpenStreetMap'
+      }).addTo(map);
+      L.marker([C.lat,C.lon]).addTo(map).bindPopup('<b>'+C.n+'</b><br>'+C.elev+' m s.l.m.');
+      map.on('click',()=>map.scrollWheelZoom.enable());
+      setTimeout(()=>map.invalidateSize(),200);
+    }catch(e){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
+  }
+  initMap();
+
+  // ---- 7 giorni da previsioni.json (WeatherNext, con fallback Open-Meteo lato server) ----
+  async function giorni(){
+    try{
+      const res=await fetch('./data/previsioni.json',{cache:'no-store'});
+      if(!res.ok) throw 0;
+      const P=await res.json();
+      const rec=(P.comuni||[])[ci];
+      if(!rec||!rec.giorni||!rec.giorni.length) throw 0;
+      if(P.fonte) set('days-src',P.fonte);
+      renderDays(rec.giorni);
+      if(rec.now&&rec.now.t!=null){ set('now-t',r(rec.now.t)); set('now-ico',wmo(rec.now.code)[0]); }
+      return true;
+    }catch(e){ return false; }
+  }
+  function renderDays(g){
+    const box=document.getElementById('days'); box.innerHTML='';
+    g.slice(0,7).forEach((d,i)=>{
+      const dt=new Date(d.iso+'T12:00');
+      const w=wmo(d.code);
+      const el=document.createElement('div'); el.className='day';
+      el.innerHTML='<div class="dow">'+(i===0?'Oggi':DOW[dt.getDay()])+'</div>'+
+        '<div class="di">'+w[0]+'</div>'+
+        '<div class="dd">'+w[1]+' · '+dt.getDate()+'/'+(dt.getMonth()+1)+'</div>'+
+        '<div class="pp">💧 '+(d.pp??0)+'%</div>'+
+        '<div class="tp">'+r(d.tmax)+'°<s>'+r(d.tmin)+'°</s></div>';
+      box.appendChild(el);
+    });
+  }
+
+  // ---- dettaglio orario live (Open-Meteo) ----
+  async function orario(){
+    const url='https://api.open-meteo.com/v1/forecast?latitude='+C.lat+'&longitude='+C.lon+
+      '&current=temperature_2m,apparent_temperature,relative_humidity_2m,pressure_msl,wind_speed_10m,wind_gusts_10m,wind_direction_10m,cloud_cover,weather_code'+
+      '&hourly=temperature_2m,precipitation,precipitation_probability,weather_code,wind_speed_10m,is_day'+
+      '&daily=sunrise,sunset&timezone=Europe%2FRome&forecast_days=3';
+    const res=await fetch(url,{cache:'no-store'}); if(!res.ok) throw new Error('http '+res.status);
+    const d=await res.json();
+
+    // condizioni attuali
+    const cur=d.current;
+    if(!document.getElementById('now-t').textContent.match(/[0-9]/)) set('now-t',r(cur.temperature_2m));
+    set('now-ico',wmo(cur.weather_code)[0]);
+    set('now-desc',wmo(cur.weather_code)[1]);
+    set('k-app',r(cur.apparent_temperature)+'°');
+    set('k-wind',r(cur.wind_speed_10m)+' km/h '+card(cur.wind_direction_10m));
+    set('k-gust',r(cur.wind_gusts_10m)+' km/h');
+    set('k-hum',r(cur.relative_humidity_2m)+'%');
+    set('k-press',r(cur.pressure_msl)+' hPa');
+    set('k-cloud',r(cur.cloud_cover)+'%');
+
+    // trova l'indice dell'ora corrente
+    const H=d.hourly, now=new Date();
+    let start=0;
+    for(let i=0;i<H.time.length;i++){ if(new Date(H.time[i])>=now){ start=Math.max(0,i-1); break; } }
+    const idx=[]; for(let i=start;i<Math.min(start+48,H.time.length);i++) idx.push(i);
+
+    // strip orario
+    const hs=document.getElementById('hours'); hs.innerHTML='';
+    idx.forEach(i=>{
+      const t=new Date(H.time[i]); const hh=String(t.getHours()).padStart(2,'0');
+      const night=H.is_day[i]===0;
+      const pp=H.precipitation_probability?H.precipitation_probability[i]:null;
+      const mm=H.precipitation[i];
+      const el=document.createElement('div'); el.className='hr'+(night?' night':'');
+      el.innerHTML='<div class="h">'+(t.getHours()===0?(t.getDate()+'/'+(t.getMonth()+1)):hh)+'</div>'+
+        '<div class="i">'+wmo(H.weather_code[i])[0]+'</div>'+
+        '<div class="t">'+r(H.temperature_2m[i])+'°</div>'+
+        '<div class="p">'+(pp!=null&&pp>0?('💧'+pp+'%'):(mm>0?('💧'+mm.toFixed(1)):''))+'</div>'+
+        '<div class="w">'+r(H.wind_speed_10m[i])+'</div>';
+      hs.appendChild(el);
+    });
+
+    // grafico temp + pioggia
+    drawChart(idx.map(i=>({t:new Date(H.time[i]),temp:H.temperature_2m[i],
+      pp:H.precipitation_probability?H.precipitation_probability[i]:0, mm:H.precipitation[i]})));
+
+    // sole (oggi)
+    if(d.daily&&d.daily.sunrise){
+      set('sun-rise',d.daily.sunrise[0].slice(11,16));
+      set('sun-set',d.daily.sunset[0].slice(11,16));
+      const m=(new Date(d.daily.sunset[0])-new Date(d.daily.sunrise[0]))/60000;
+      set('sun-len',Math.floor(m/60)+'h '+r(m%60)+'m');
+    }
+  }
+
+  function drawChart(rows){
+    if(!rows.length) return;
+    const W=920,H=220, padL=34,padR=14,padT=16,padB=42;
+    const iw=W-padL-padR, ih=H-padT-padB;
+    const temps=rows.map(r=>r.temp);
+    let tmin=Math.min(...temps), tmax=Math.max(...temps);
+    if(tmax-tmin<4){ tmax+=2; tmin-=2; }
+    tmin=Math.floor(tmin/2)*2; tmax=Math.ceil(tmax/2)*2;
+    const x=i=>padL+ (rows.length<2?iw/2: iw*i/(rows.length-1));
+    const y=t=>padT+ ih*(1-(t-tmin)/(tmax-tmin));
+    const ppMax=Math.max(20,...rows.map(r=>r.pp||0));
+    let bars='';
+    const bw=Math.max(2, iw/rows.length*0.6);
+    rows.forEach((r,i)=>{ if(r.pp>0){ const bh=ih*(r.pp/100); bars+='<rect x="'+(x(i)-bw/2)+'" y="'+(padT+ih-bh)+'" width="'+bw+'" height="'+bh+'" rx="1.5" fill="var(--sky)" opacity=".22"/>'; }});
+    let dline='M'; rows.forEach((r,i)=>{ dline+= (i?'L':'')+x(i).toFixed(1)+' '+y(r.temp).toFixed(1)+' '; });
+    // griglia orizzontale + etichette temp
+    let grid=''; const steps=4;
+    for(let s=0;s<=steps;s++){ const tv=tmin+(tmax-tmin)*s/steps; const yy=y(tv);
+      grid+='<line x1="'+padL+'" y1="'+yy+'" x2="'+(W-padR)+'" y2="'+yy+'" stroke="var(--line-soft)"/>';
+      grid+='<text class="axl" x="'+(padL-6)+'" y="'+(yy+3)+'" text-anchor="end">'+r(tv)+'°</text>';
+    }
+    // etichette ore (ogni 6h)
+    let xl='';
+    rows.forEach((rw,i)=>{ const hr=rw.t.getHours(); if(hr%6===0){
+      xl+='<text class="axl" x="'+x(i)+'" y="'+(H-padB+16)+'" text-anchor="middle">'+String(hr).padStart(2,'0')+'</text>';
+      xl+='<line x1="'+x(i)+'" y1="'+padT+'" x2="'+x(i)+'" y2="'+(padT+ih)+'" stroke="var(--line-soft)"/>';
+      if(hr===0) xl+='<text class="axl" x="'+x(i)+'" y="'+(H-padB+30)+'" text-anchor="middle" opacity=".8">'+rw.t.getDate()+'/'+(rw.t.getMonth()+1)+'</text>';
+    }});
+    const svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Temperatura e probabilità di pioggia, 48 ore">'+
+      grid+bars+xl+
+      '<path d="'+dline+'" fill="none" stroke="var(--pine)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>'+
+      '</svg>'+
+      '<div style="display:flex;gap:18px;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:6px">'+
+      '<span><span style="display:inline-block;width:14px;height:3px;background:var(--pine);vertical-align:middle;border-radius:2px"></span> temperatura</span>'+
+      '<span><span style="display:inline-block;width:11px;height:11px;background:var(--sky);opacity:.35;vertical-align:middle;border-radius:2px"></span> prob. pioggia</span></div>';
+    document.getElementById('chart').innerHTML=svg;
+  }
+
+  giorni().then(function(){ return orario(); }).catch(function(e){
+    console.log('orario n/d',e);
+    document.getElementById('now-desc').textContent='Dati non disponibili al momento.';
+  });
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

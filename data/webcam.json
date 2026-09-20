@@ -1,0 +1,17 @@
+{
+  "webcam": [
+    { "nome": "Monte Giovi (722 m)", "luogo": "Vicchio", "lat": 43.9060, "lon": 11.4370, "img": "", "link": "https://vicchiometeo.it/webcam/", "fonte": "Vicchio Meteo" },
+    { "nome": "Palazzuolo sul Senio (437 m)", "luogo": "Palazzuolo sul Senio", "lat": 44.1131, "lon": 11.5433, "img": "https://stazioni.meteoproject.it/webcam/palazzuolo/palazzuolo.jpg", "link": "https://stazioni.meteoproject.it/webcam/palazzuolo/palazzuolo.jpg", "fonte": "Meteo-Project" },
+    { "nome": "Lago di Bilancino (252 m)", "luogo": "Barberino di Mugello", "lat": 43.9905, "lon": 11.2390, "img": "https://stazioni.meteoproject.it/webcam/lagobilancino/lagobilancino.jpg", "link": "https://stazioni.meteoproject.it/webcam/lagobilancino/lagobilancino.jpg", "fonte": "Meteo-Project" },
+    { "nome": "Passo della Futa (983 m) · LIVE", "luogo": "Firenzuola", "lat": 44.0980, "lon": 11.2930, "img": "https://stazioni.meteoproject.it/webcam/passofuta/futa.jpg", "link": "https://stream-meteoproject.eu/", "fonte": "Meteo-Project" },
+    { "nome": "Passo della Colla (913 m) · LIVE", "luogo": "Borgo San Lorenzo", "lat": 44.0190, "lon": 11.4700, "img": "https://meteo-pedemontanaforlivese.it/cam.php?cam=passocolla", "link": "https://stream-meteoproject.eu/", "fonte": "Meteo Pedemontana Forlivese" },
+    { "nome": "Passo del Muraglione (907 m) · LIVE", "luogo": "San Godenzo", "lat": 43.9840, "lon": 11.6320, "img": "https://meteo-pedemontanaforlivese.it/cam.php?cam=muraglione", "link": "https://stream-meteoproject.eu/", "fonte": "Meteo Pedemontana Forlivese" },
+    { "nome": "Passo della Raticosa (968 m)", "luogo": "Firenzuola", "lat": 44.1560, "lon": 11.3990, "img": "", "link": "https://stream-meteoproject.eu/", "fonte": "Meteo-Project" },
+    { "nome": "Valle del Diaterna (770 m)", "luogo": "Firenzuola", "lat": 44.1600, "lon": 11.4200, "img": "https://www.firenzemeteo.it/webcam/appennino/toscana/img/webcam-diaterna-firenzuola.webp", "link": "https://www.firenzemeteo.it/webcam/appennino/toscana/", "fonte": "FirenzeMeteo" },
+    { "nome": "Pietramala – Bar Lelli (847 m)", "luogo": "Firenzuola", "lat": 44.1710, "lon": 11.4010, "img": "https://www.firenzemeteo.it/webcam/appennino/toscana/img/webcam-pietramala-firenzuola-est.jpg", "link": "https://www.firenzemeteo.it/webcam/appennino/toscana/", "fonte": "FirenzeMeteo" },
+    { "nome": "Rifugio Monte Secchieta (1417 m)", "luogo": "Montemignaio (AR)", "lat": 43.6860, "lon": 11.5850, "img": "https://www.firenzemeteo.it/webcam/appennino/toscana/img/webcam-rifugio-secchieta.webp", "link": "https://www.firenzemeteo.it/webcam/appennino/toscana/", "fonte": "FirenzeMeteo" },
+    { "nome": "Passo della Consuma (1050 m)", "luogo": "Pelago", "lat": 43.7830, "lon": 11.6150, "img": "", "link": "http://www.passodellaconsuma.it/", "fonte": "passodellaconsuma.it" },
+    { "nome": "Montebonello (120 m)", "luogo": "Pontassieve", "lat": 43.8600, "lon": 11.5000, "img": "https://www.montebonello.it/webcam/webcamvolognano000M.jpg", "link": "https://www.montebonello.it/", "fonte": "montebonello.it" },
+    { "nome": "Molin del Piano (120 m)", "luogo": "Pontassieve", "lat": 43.8500, "lon": 11.4000, "img": "https://www.firenzemeteo.it/webcam/img_mdp/img_last_vista_1.jpg", "link": "https://www.firenzemeteo.it/webcam/", "fonte": "FirenzeMeteo" }
+  ]
+}
