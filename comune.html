@@ -114,8 +114,21 @@
   /* sun row */
   .sun{display:flex;gap:26px;flex-wrap:wrap}
   .sun .kv .v{font-size:18px}
-  .locmap{height:190px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);margin:16px 0 2px;position:relative;z-index:1}
+  .locmap{height:340px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);margin:16px 0 2px;position:relative;z-index:1}
   .locmap .leaflet-container{height:100%;width:100%;background:var(--panel-2);font-family:var(--sans)}
+  @media (max-width:640px){ .locmap{height:250px} }
+  /* radar */
+  .radar-card{padding:0;overflow:hidden}
+  .radar-card iframe{display:block;width:100%;height:440px;border:0}
+  @media (max-width:640px){ .radar-card iframe{height:340px} }
+  /* wikipedia */
+  .wiki{display:flex;gap:18px;align-items:flex-start}
+  .wiki img{width:150px;height:150px;object-fit:cover;border-radius:var(--r-sm);flex:none;border:1px solid var(--line)}
+  .wiki .body{flex:1;min-width:0}
+  .wiki p{margin:0 0 10px;color:var(--ink-soft);font-size:14px;line-height:1.6}
+  .wiki a.more{display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none;color:var(--pine);font-size:13px}
+  .wiki a.more:hover{text-decoration:underline}
+  @media (max-width:560px){ .wiki{flex-direction:column} .wiki img{width:100%;height:180px} }
   .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
   .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
   @media (max-width:640px){
@@ -171,6 +184,24 @@
     </section>
 
     <section>
+      <div class="sh"><h2>Radar precipitazioni</h2><span class="src">live · Windy</span></div>
+      <div class="card radar-card"><iframe id="radar" title="Radar precipitazioni" loading="lazy" allow="fullscreen"></iframe></div>
+    </section>
+
+    <section id="wiki-sec" hidden>
+      <div class="sh"><h2>La località</h2><span class="src">Wikipedia</span></div>
+      <div class="card">
+        <div class="wiki">
+          <img id="wiki-img" alt="" hidden>
+          <div class="body">
+            <p id="wiki-text">—</p>
+            <a class="more" id="wiki-link" href="#" target="_blank" rel="noopener">Leggi su Wikipedia →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <div class="sh"><h2>Sole</h2><span class="src">oggi</span></div>
       <div class="card sun">
         <div class="kv"><span class="l">Alba</span><span class="v" id="sun-rise">—</span></div>
@@ -188,15 +219,15 @@
 <script>
 (function(){
   const COMUNI=[
-    {n:"Firenzuola",           lat:44.1206,lon:11.3789,elev:422,zona:"Appennino"},
-    {n:"Palazzuolo sul Senio", lat:44.1131,lon:11.5433,elev:437,zona:"alta valle"},
-    {n:"Marradi",              lat:44.0722,lon:11.6142,elev:328,zona:"val di Lamone"},
-    {n:"Barberino di Mugello", lat:43.9908,lon:11.2386,elev:268,zona:"lago"},
-    {n:"Scarperia e San Piero",lat:43.9928,lon:11.3549,elev:292,zona:"autodromo"},
-    {n:"San Piero a Sieve",    lat:43.9631,lon:11.3283,elev:210,zona:"fondovalle"},
-    {n:"Borgo San Lorenzo",    lat:43.9547,lon:11.3861,elev:193,zona:"fondovalle"},
-    {n:"Vicchio",              lat:43.9339,lon:11.4650,elev:203,zona:"media valle"},
-    {n:"Dicomano",             lat:43.8917,lon:11.5222,elev:165,zona:"confluenza"},
+    {n:"Firenzuola",           lat:44.1206,lon:11.3789,elev:422,zona:"Appennino",     wiki:"Firenzuola"},
+    {n:"Palazzuolo sul Senio", lat:44.1131,lon:11.5433,elev:437,zona:"alta valle",    wiki:"Palazzuolo sul Senio"},
+    {n:"Marradi",              lat:44.0722,lon:11.6142,elev:328,zona:"val di Lamone",  wiki:"Marradi"},
+    {n:"Barberino di Mugello", lat:43.9908,lon:11.2386,elev:268,zona:"lago",          wiki:"Barberino di Mugello"},
+    {n:"Scarperia e San Piero",lat:43.9928,lon:11.3549,elev:292,zona:"autodromo",     wiki:"Scarperia e San Piero"},
+    {n:"San Piero a Sieve",    lat:43.9631,lon:11.3283,elev:210,zona:"fondovalle",    wiki:"San Piero a Sieve"},
+    {n:"Borgo San Lorenzo",    lat:43.9547,lon:11.3861,elev:193,zona:"fondovalle",    wiki:"Borgo San Lorenzo"},
+    {n:"Vicchio",              lat:43.9339,lon:11.4650,elev:203,zona:"media valle",   wiki:"Vicchio"},
+    {n:"Dicomano",             lat:43.8917,lon:11.5222,elev:165,zona:"confluenza",    wiki:"Dicomano"},
   ];
   const WM={0:['☀️','Sereno'],1:['🌤','Poco nuvoloso'],2:['⛅','Parz. nuvoloso'],3:['☁️','Coperto'],
     45:['🌫','Nebbia'],48:['🌫','Nebbia'],51:['🌦','Pioviggine'],53:['🌦','Pioviggine'],55:['🌦','Pioviggine'],
@@ -234,6 +265,35 @@
     }catch(e){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
   }
   initMap();
+
+  // ---- radar precipitazioni (Windy) ----
+  function initRadar(){
+    const f=document.getElementById('radar'); if(!f) return;
+    const q='lat='+C.lat+'&lon='+C.lon+'&detailLat='+C.lat+'&detailLon='+C.lon+
+      '&zoom=9&level=surface&overlay=rain&menu=&message=true&marker=true&calendar=now'+
+      '&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1';
+    f.src='https://embed.windy.com/embed2.html?'+q;
+  }
+  initRadar();
+
+  // ---- scheda Wikipedia ----
+  async function wiki(){
+    if(!C.wiki) return;
+    try{
+      const url='https://it.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(C.wiki);
+      const res=await fetch(url,{headers:{'accept':'application/json'}});
+      if(!res.ok) throw 0;
+      const j=await res.json();
+      const ex=j.extract||''; if(!ex) throw 0;
+      set('wiki-text', ex);
+      const link=document.getElementById('wiki-link');
+      link.href=(j.content_urls&&j.content_urls.desktop&&j.content_urls.desktop.page)||('https://it.wikipedia.org/wiki/'+encodeURIComponent(C.wiki));
+      const img=document.getElementById('wiki-img');
+      if(j.thumbnail&&j.thumbnail.source){ img.src=j.thumbnail.source; img.alt=C.n; img.hidden=false; }
+      document.getElementById('wiki-sec').hidden=false;
+    }catch(e){ /* scheda assente: sezione resta nascosta */ }
+  }
+  wiki();
 
   // ---- 7 giorni da previsioni.json (WeatherNext, con fallback Open-Meteo lato server) ----
   async function giorni(){
