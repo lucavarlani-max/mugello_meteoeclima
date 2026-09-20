@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clima di Firenze · Mugello Meteo & Clima</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F4EEE0;color:#2B2118;
+    font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  .site-top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+    padding:12px 20px;background:rgba(36,27,18,.94);backdrop-filter:blur(8px);border-bottom:1px solid #3a2f22}
+  .site-top a.back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;
+    color:#F4EEE0;font-size:13px;padding:7px 12px;border:1px solid #4A3F2E;border-radius:999px;background:#241B12}
+  .site-top a.back:hover{border-color:#C99A3B}
+  .site-top .brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;color:#F4EEE0}
+  .site-top .brand b{color:#C99A3B}
+  .page{padding:20px}
+  #root{max-width:1180px;margin:0 auto}
+  .loading{max-width:1180px;margin:60px auto;text-align:center;color:#8A7960;font-size:14px}
+</style>
+</head>
+<body>
+  <div class="site-top">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div>
+  <div class="page">
+    <div id="root"><div class="loading">Carico il cruscotto climatico…</div></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.7/Recharts.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="react">
+const { useState, useMemo, useRef } = React;
+const {
+  ComposedChart, Bar, Line, Area, Scatter,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ResponsiveContainer, ReferenceArea, ReferenceLine,
+} = Recharts;
+
+const FI_DATA = {months:["Gen","Feb","Mar","Apr","Mag","Giu","Lug","Ago","Set","Ott","Nov","Dic"],clima_media:{Tmin_media:[2.1,2.5,5.3,8,12.1,16,18.3,18.5,14.7,11,6.7,2.8],Tmax_media:[11.2,12.7,16.3,19.9,24.5,29.1,32.2,32.5,27.1,21.6,15.7,11.4],Tmed_media:[6.7,7.6,10.8,14,18.3,22.6,25.3,25.5,20.9,16.3,11.2,7.1],Pioggia_media:[64,64,62,67,66,48,26,40,74,104,118,88],Giorni_pioggia_media:[8,7.3,7.1,8.6,7.8,5.3,3,3.8,6.6,8.6,10.4,9.6],DevStd_Tmin:[1.8,2.2,1.4,1.1,1.1,1.2,1,1.2,1.3,1.5,1.4,1.9],DevStd_Tmax:[1.3,2.1,1.7,1.6,1.8,1.8,1.6,2,1.8,1.6,1.3,1.4],DevStd_Tmed:[1.5,2,1.4,1.2,1.4,1.4,1.2,1.5,1.5,1.3,1.2,1.6]},tmed_annual:{"1991":[7,5.3,13.2,11.7,14.4,20.9,25.5,26.3,22.1,13.3,8.5,2.6],"1992":[6.1,7.2,9.9,13.3,18.9,19.8,23.4,25.6,20.5,14.8,11.7,7.6],"1993":[6.5,5.5,7.7,12.9,19.1,23.2,23.6,25.9,20.3,16,8.7,7.4],"1994":[7.1,6.7,12.4,11.6,17.4,21.8,25.6,26.7,20.3,14,10.8,7.1],"1995":[6.5,9,9,13.2,17.2,19.3,25,22.7,17.4,16,9.9,8.9],"1996":[8.3,6.7,10,14.8,18.2,22.3,23.5,23.2,18,15.6,12,7.4],"1997":[8.3,9.7,12.4,12.4,18.9,22.4,24.2,25.3,22.5,16.5,11.5,7.8],"1998":[7.7,8.8,9.7,13.2,17.7,23,25.9,26.6,20.6,15.6,9.5,4.8],"1999":[6.2,5.6,10.2,13.8,20.1,22.9,25.7,26.5,22.6,17.2,10.2,7.5],"2000":[5.7,8.9,11.1,14.6,20.6,23.7,23.5,25.7,21.4,17.3,12.1,9.4],"2001":[8.8,9,13.6,12.5,19.6,22.2,25,26.4,18.3,18.6,9.8,4.6],"2002":[4.5,9.4,11.3,14.1,18.9,24.2,24.7,23.5,18.9,15.9,12.5,8.1],"2003":[5.9,3.9,10.4,13.1,20.3,27,27.5,29.1,21.2,15.7,12.7,7.7],"2004":[5.5,8.2,10,14,16.7,22.6,25,25.8,21.7,18.1,11,8.7],"2005":[5.5,4.2,10.2,13.4,19.4,23,25,23.3,20.5,16.1,9.9,5],"2006":[5.3,7.2,9.3,14.7,17.9,22.2,27.5,23.7,22.2,18,11.7,9.4],"2007":[9.1,10.3,11.7,16.9,19.2,22.7,25.6,24,19.8,16.5,10.4,6.8],"2008":[9,9.2,10.8,13.7,18.5,22.5,24.8,25.5,20.1,17.2,11.4,6.4],"2009":[6.5,6.3,10.5,15.3,20.1,22,25.8,27.6,22.3,15.4,11.9,6.8],"2010":[5,7.1,9.4,13.6,16.7,21.6,26.2,23.3,19.3,14.5,10.9,5.2],"2011":[5.6,7.2,10,15.2,19,22.6,23.7,25.8,23.4,15.5,10.8,8.5],"2012":[5.5,4.3,12.8,13.7,17.4,23.5,26,27.3,21.7,17.1,12.4,5.6],"2013":[5.9,5.7,9.6,15.2,16.6,21.2,25.3,25.6,21.6,18.3,12.4,7.3],"2014":[9.1,11.2,12.3,14.8,17.5,23.2,23.7,23.5,20.7,18,13.6,8.8],"2015":[7.3,7.6,10.8,13.8,18.3,23.1,27.8,25.4,20.5,16.1,11.6,7.6],"2016":[7.1,9.9,10.9,14.9,17.5,21.6,25.7,25,22,15.9,11.1,6.1],"2017":[4,9.2,12.4,14.1,18.6,24.2,25.6,26.9,19.6,15.9,9.9,6.3],"2018":[8.5,5.3,9.6,16.5,19.3,22.3,26,26,22.5,18.1,12.2,6.7],"2019":[4.5,9.2,11.8,13.5,15.7,24.2,26.3,26.7,21.9,17.4,12.5,8.7],"2020":[7.3,10.1,10.2,14.2,19,21.6,25.4,26.7,22.3,14.7,12.1,8]},tmin_annual:{"1991":[2.3,0.2,7.6,5.6,9.1,14.2,18,19.2,16,8.2,4.6,-3.1],"1992":[1.5,1.3,4.1,8.2,12.3,14.4,16.9,18.6,13.8,10.8,7.2,3.6],"1993":[2.4,-1.8,1.9,7.4,12.6,16.7,16.5,18.4,14.7,12,4.9,3.3],"1994":[2.9,2.4,6.2,6.2,11.3,15.5,18.5,19.4,14.9,8.3,6.6,3],"1995":[2.4,3.9,3.3,7.6,11.6,13.3,19,16.8,11.7,8.8,4.6,5.1],"1996":[3.9,2.3,5,9,12,16,16.9,16.7,12,10.1,7.5,3.3],"1997":[3.5,4.6,5.8,6.2,12.5,16.7,17.6,18.6,15.7,11.2,7.2,3.7],"1998":[3.8,2.8,3.6,8.2,11.5,16.2,19.1,19.8,14.5,10.6,5.9,0.6],"1999":[1.3,0.1,4.6,8.6,14.2,16.3,19.3,20.7,16.9,12.4,5.1,3.6],"2000":[1.2,3.1,5.9,9.7,14.4,17.2,17.2,18.6,15.2,12.7,8.4,5.6],"2001":[5.6,4.1,9.7,6.6,13.8,15.4,18.8,19.4,12,12.9,5.3,0.2],"2002":[-1.4,4.5,4.6,8.8,13.3,17.7,18.7,17.6,13.2,10.8,8.7,5.4],"2003":[1.9,-2,4.1,7.6,13.1,19.5,20.5,22.1,14.9,10.7,8.5,3.4],"2004":[1,4.3,4.7,8.5,10.9,16.4,18.1,19.6,15.7,14.1,6.2,4.6],"2005":[1.3,-0.7,4.8,7.6,12.7,16.4,17.5,16.5,14.9,11.3,5.4,0.7],"2006":[0.6,2.2,4.5,8.2,11.1,14.7,20.2,17.3,15.6,12.1,6.4,4.8],"2007":[4.8,5.4,7.1,9.3,12.7,16.7,17.7,17.7,13.6,11.2,5.5,1.9],"2008":[4.8,4.3,6.3,8.2,11.9,16.1,17.5,17.6,13.8,11.3,6.7,2.4],"2009":[2,0.7,4.9,9.7,12.5,15.8,18.4,19.9,16.4,9.7,6.9,2.6],"2010":[1.2,2.6,4.6,7.2,11.1,15.1,19.3,17.2,12.9,9.5,6.9,1.2],"2011":[2,3.3,5.4,9.3,12.5,16.9,17.7,17.9,16.7,9.6,5.2,4.3],"2012":[-0.7,0.3,6,8.5,11.1,16.6,18.9,19,15.9,11.9,8,1.4],"2013":[2.2,1,5.3,9.3,11.1,14.6,18.2,18.3,15.4,13.9,8.2,2.6],"2014":[5.2,7,6.7,9,11,16.1,17.8,17.4,14.7,12.4,9.6,4.6],"2015":[2.4,2.6,5.6,7,11.9,15.9,20.2,18,14.6,11.6,6.8,3.2],"2016":[2.5,5.6,5.8,8.1,11.4,15.5,18.2,17.9,15.2,10.5,6.3,-0.4],"2017":[-1.2,3.8,5.5,7,11.8,17,17.6,18.3,14.1,8.6,4.8,1.2],"2018":[3.8,1.2,5.2,9.8,13.6,15.8,18.7,18.2,15,12,7.9,1.6],"2019":[-0.8,2.5,5.7,6.9,10.7,16.2,18.9,18.8,15,11.3,8.7,4.1],"2020":[2,4.2,4.5,6.8,12.8,15,17.8,19.4,15.4,9.3,6.9,4.1]},tmax_annual:{"1991":[11.7,10.5,18.8,17.8,19.6,27.6,32.9,33.3,28.3,18.5,12.4,8.4],"1992":[10.7,13,15.6,18.4,25.5,25.2,30,32.5,27.2,18.9,16.1,11.5],"1993":[10.7,12.7,13.6,18.3,25.6,29.7,30.7,33.4,26,20,12.5,11.6],"1994":[11.3,11.1,18.6,17,23.5,28.1,32.6,34,25.6,19.6,15.1,11.3],"1995":[10.7,14.1,14.7,18.8,22.8,25.3,31,28.7,23.1,23.2,15.3,12.7],"1996":[12.7,11.2,15,20.5,24.5,28.6,30,29.7,24,21.1,16.4,11.5],"1997":[13.2,14.8,19,18.6,25.3,28,30.7,32,29.3,21.7,15.8,11.8],"1998":[11.7,14.7,15.8,18.1,23.9,29.8,32.7,33.3,26.7,20.5,13.1,9],"1999":[11.1,11.2,15.9,19,26.1,29.5,32.1,32.3,28.3,21.9,15.3,11.4],"2000":[10.2,14.7,16.3,19.5,26.8,30.2,29.8,32.8,27.6,22,15.9,13.1],"2001":[12,13.8,17.6,18.4,25.5,28.9,31.3,33.4,24.6,24.3,14.4,9],"2002":[10.4,14.2,18,19.4,24.6,30.8,30.6,29.4,24.5,20.9,16.4,10.7],"2003":[9.9,9.7,16.7,18.6,27.5,34.5,34.6,36.2,27.6,20.6,16.8,12],"2004":[10,12.2,15.3,19.6,22.6,28.8,31.8,31.9,27.8,22.1,15.9,12.8],"2005":[9.8,9.2,15.6,19.3,26.2,29.6,32.5,30.1,26.1,20.9,14.5,9.3],"2006":[9.9,12.3,14,21.1,24.7,29.6,34.9,30.2,28.8,23.9,17,13.9],"2007":[13.5,15.2,16.3,24.5,25.8,28.7,33.5,30.2,26.1,21.7,15.3,11.6],"2008":[13.1,14.1,15.4,19.2,25.1,28.9,32,33.4,26.4,23.1,16.1,10.4],"2009":[11,11.9,16.2,20.9,27.7,28.2,33.2,35.3,28.3,21.1,16.8,10.9],"2010":[8.9,11.6,14.2,20,22.2,28,33.1,29.5,25.8,19.5,14.8,9.2],"2011":[9.2,11.1,14.6,21.2,25.6,28.4,29.8,33.6,30.2,21.5,16.4,12.8],"2012":[11.8,8.3,19.6,18.9,23.6,30.5,33.1,35.5,27.4,22.4,16.7,9.7],"2013":[9.7,10.3,13.9,21.1,22.1,27.8,32.5,32.8,27.9,22.7,16.6,12.1],"2014":[13,15.4,17.9,20.7,24.1,30.2,29.5,29.6,26.7,23.5,17.7,13],"2015":[12.2,12.6,16.1,20.5,24.6,30.3,35.5,32.8,26.3,20.7,16.5,12],"2016":[11.7,14.2,16,21.7,23.5,27.7,33.2,32.1,28.9,21.4,15.9,12.5],"2017":[9.3,14.5,19.3,21.3,25.3,31.5,33.5,35.4,25.1,23.2,14.9,11.4],"2018":[13.1,9.4,13.9,23.1,25.1,28.9,33.4,33.8,30.1,24.2,16.5,11.8],"2019":[9.9,15.8,18,20.1,20.7,32.1,33.7,34.6,28.8,23.5,16.3,13.2],"2020":[12.5,15.9,15.9,21.5,25.2,28.3,33.1,34,29.3,20.1,17.2,12]},pioggia_annual:{"1991":[27.2,47.6,40.9,58.6,161.5,52.1,35.6,1.2,111.7,207.4,167.9,5.4],"1992":[24.6,29.3,60.3,55.4,32.5,27.3,44.5,48.5,38.1,415.4,118.3,113.6],"1993":[4.6,0.4,38.1,76.1,47.9,26.9,10.8,51.5,89.1,123,67.1,97],"1994":[40.6,23.4,0.8,129,68.6,62.2,6.4,2.6,134.8,107.8,96,27.8],"1995":[59.8,119.6,82.4,40.6,88.2,66,18.6,39.4,83.2,15.4,54.6,116],"1996":[98,135.6,14.8,140.8,97,55.8,88,52.8,171.4,86,168,87.4],"1997":[81.6,53.4,35.6,61.9,32.8,81.8,9,14.8,36.8,18.4,113.8,75.8],"1998":[37.8,40.4,35.2,115.2,74,130.3,21.6,0.8,119.8,142.4,74.2,46.5],"1999":[75.6,58.6,65.8,87.6,28.2,46,21.7,42,71.4,78.2,152.6,94.5],"2000":[17,17,72.4,76.4,10.4,59,76,26,39,101,268,140],"2001":[107.5,46,132.2,45.8,46,19.4,41,9.4,114,55.2,46.8,60.2],"2002":[15.4,41.2,2.2,61.2,88.8,25.4,42,114.4,70,97.6,80,94.8],"2003":[57.6,42.2,23,64.6,17,82,2,33,35.8,107.9,166.7,66.4],"2004":[71.1,88.4,42.4,78.1,100.7,23.5,2.4,17.2,67,78.2,72.1,122.6],"2005":[19.8,31.4,49.6,56.2,43,37.8,16.6,83,106.2,146.2,197.6,102.1],"2006":[63.3,63,55.5,20.2,91.2,31.3,31.3,57.7,64,37.9,83,62.3],"2007":[132.1,102.5,28.9,11.3,70.8,24.9,1.4,116.5,54.8,49.2,27.3,88.3],"2008":[98.3,33.3,76.6,113.6,77,46.1,25.9,9.1,24.1,35.8,149.4,92.2],"2009":[82.5,62.2,131.6,61.4,6,73.9,0.5,6.6,56,36.5,105.2,147.8],"2010":[109.9,81.1,36.3,95.5,120.6,82.1,55.9,88.1,66.2,146,253.3,140.3],"2011":[46.2,58.8,104,7.6,7.4,74,44.3,3.4,45.3,86.8,20,98.2],"2012":[20.2,4.8,20.4,130,93,40.8,0,26,98.2,125.2,130.8,164],"2013":[114.2,79.4,197.2,49.9,128,24.6,22.6,41.8,87.6,161.8,103.6,24.5],"2014":[198.4,175.6,41.2,58.6,37.2,61.6,82.7,28.6,93.5,60.7,177.9,51.1],"2015":[51.4,51.8,77.6,77,32.1,42.2,12,139.4,23.2,161.4,15.1,3.4],"2016":[104.6,190.7,56,58.8,77.2,48.6,7,28,58.6,145.3,109.6,3.8],"2017":[28.2,85.7,61.4,32.2,46.8,18.4,6,36.8,131.4,5.2,127,148.4],"2018":[71,85.8,207.6,42.4,82.2,32.6,7.6,47.4,2.6,70,69.2,70.2],"2019":[32.8,42.2,5.8,88,120.8,1,42,7.6,79.2,50.4,292.6,127],"2020":[43,38.8,61,27.2,50,40.8,9.6,24.8,38,158.4,27,162.6]},giorni_pioggia_annual:{"1991":[5,7,6,11,13,6,1,1,8,15,17,2],"1992":[2,4,7,7,5,6,8,5,4,24,9,7],"1993":[1,0,4,9,8,7,4,5,10,9,6,11],"1994":[8,7,0,13,3,6,1,1,8,7,6,5],"1995":[10,10,10,7,10,7,4,7,10,2,8,12],"1996":[9,9,3,13,9,8,3,5,12,7,14,10],"1997":[10,5,5,5,5,6,2,3,2,4,14,9],"1998":[5,5,3,13,8,4,2,0,10,11,6,8],"1999":[7,6,8,12,4,5,2,4,6,7,10,12],"2000":[4,3,11,9,4,9,8,4,6,12,21,12],"2001":[13,5,14,9,6,4,5,2,10,5,9,7],"2002":[2,8,1,6,10,4,5,9,5,9,15,13],"2003":[10,3,3,8,3,3,1,2,5,13,9,9],"2004":[10,8,7,10,8,3,1,5,4,11,7,14],"2005":[3,4,4,9,5,3,3,5,9,9,13,16],"2006":[6,9,10,6,10,1,4,7,5,4,5,6],"2007":[12,10,6,2,8,4,1,8,5,4,3,5],"2008":[12,5,13,14,9,9,2,2,4,5,12,11],"2009":[10,8,10,9,2,7,0,1,8,6,8,16],"2010":[9,11,7,8,14,7,2,5,8,9,18,14],"2011":[6,7,9,5,2,7,4,1,5,4,3,12],"2012":[5,2,3,15,8,4,0,3,7,11,12,12],"2013":[13,10,16,10,15,5,3,4,5,11,12,4],"2014":[15,18,5,7,7,6,12,3,7,7,16,10],"2015":[6,9,9,7,7,4,2,5,2,15,1,1],"2016":[12,18,10,4,12,10,2,4,5,11,12,2],"2017":[6,8,5,5,7,2,1,2,10,2,9,12],"2018":[13,10,16,6,12,4,2,7,2,6,12,10],"2019":[8,3,2,12,12,0,4,2,8,5,20,8],"2020":[7,7,6,6,9,7,2,3,9,14,4,18]},ondate_calore:{"1991":[0,0,0,0,0],"1992":[0,0,0,0,0],"1993":[0,0,0,0,0],"1994":[0,0,0,0,0],"1995":[0,0,0,0,1],"1996":[0,1,0,1,2],"1997":[0,0,1,1,1],"1998":[0,0,0,0,0],"1999":[0,0,0,0,0],"2000":[0,0,0,0,1],"2001":[1,0,1,2,3],"2002":[0,1,0,0,1],"2003":[0,5,0,1,6],"2004":[0,0,1,0,1],"2005":[0,0,0,0,0],"2006":[0,2,0,0,2],"2007":[2,0,0,1,3],"2008":[0,0,0,0,0],"2009":[2,2,0,0,4],"2010":[0,1,0,0,1],"2011":[1,0,2,0,3],"2012":[0,1,0,0,1],"2013":[0,0,1,0,1],"2014":[0,1,1,1,5],"2015":[0,2,0,2,2],"2016":[1,0,0,0,1],"2017":[1,0,0,0,1],"2018":[1,1,1,0,3],"2019":[0,1,0,0,2],"2020":[0,0,1,2,2]},ondate_freddo:{"1991":[2,0,2,1,6],"1992":[0,1,0,1,1],"1993":[2,0,1,0,3],"1994":[1,0,1,1,3],"1995":[0,1,1,0,2],"1996":[0,1,0,0,1],"1997":[1,0,0,0,1],"1998":[0,0,0,0,0],"1999":[0,0,0,0,0],"2000":[0,1,0,0,1],"2001":[0,0,0,0,0],"2002":[0,1,1,1,3],"2003":[0,0,0,2,2],"2004":[1,0,0,0,1],"2005":[1,1,0,0,2],"2006":[1,1,0,0,2],"2007":[0,0,0,0,0],"2008":[0,0,0,0,0],"2009":[0,0,0,1,1],"2010":[1,2,0,0,3],"2011":[0,1,0,0,1],"2012":[1,0,0,1,2],"2013":[0,1,0,0,1],"2014":[0,0,0,0,0],"2015":[0,0,0,0,0],"2016":[0,0,0,1,1],"2017":[0,0,0,0,0],"2018":[1,0,0,0,1],"2019":[1,0,0,1,2],"2020":[0,0,0,0,0]},estremi:{Tmin_assoluta:{val:-10.2,data:"30/12/2005"},Tmax_assoluta:{val:41.3,data:"01/08/2017"},giorni_ghiaccio_tot:3,giorni_ghiaccio_max:{val:2,anno:2012},giorni_gelo_medi:29,giorni_gelo_max:{val:54,anno:2005},giorni_T34_medi:24,giorni_T34_max:{val:69,anno:2003},indice_continentalita:18.9}};
+
+const CITY_NORMALS = {
+  "Roma": {
+    Tmed: [7.2,7.8,10.6,13.8,17.9,22.5,25.2,25.4,21.1,17.1,12.6,8.5],
+    Pioggia: [67,75,77,83,60,34,24,23,84,122,135,94],
+  },
+  "Milano": {
+    Tmed: [2.3,4.0,8.4,12.6,17.0,21.7,23.8,23.2,18.5,13.6,7.9,3.1],
+    Pioggia: [62,61,72,103,111,103,79,104,119,130,147,71],
+  },
+  "Torino": {
+    Tmed: [1.8,3.0,7.4,11.4,15.7,20.3,22.6,22.1,17.8,12.8,6.9,2.5],
+    Pioggia: [56,62,73,108,119,88,52,60,91,104,127,62],
+  },
+  "Bologna": {
+    Tmed: [3.8,4.9,9.3,13.3,18.0,22.8,25.5,24.9,19.8,15.0,9.5,4.7],
+    Pioggia: [49,68,66,82,79,62,48,54,71,82,95,69],
+  },
+  "Napoli": {
+    Tmed: [9.7,10.2,12.3,15.1,19.1,23.0,25.5,25.7,22.9,18.9,14.6,11.2],
+    Pioggia: [94,77,67,68,46,32,17,27,71,120,127,120],
+  },
+};
+
+const MONTHS = ["Gen","Feb","Mar","Apr","Mag","Giu","Lug","Ago","Set","Ott","Nov","Dic"];
+const MONTHS_FULL = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+
+const SEASONS = {
+  "Anno intero": [0,1,2,3,4,5,6,7,8,9,10,11],
+  "Primavera": [2,3,4],
+  "Estate": [5,6,7],
+  "Autunno": [8,9,10],
+  "Inverno": [11,0,1],
+};
+
+const YEARS = Array.from({length: 30}, (_, i) => 1991 + i);
+
+function avg(arr) {
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
+
+function sum(arr) {
+  return arr.reduce((a, b) => a + b, 0);
+}
+
+function linearRegression(xs, ys) {
+  const n = xs.length;
+  const mx = avg(xs), my = avg(ys);
+  let num = 0, den = 0;
+  for (let i = 0; i < n; i++) {
+    num += (xs[i] - mx) * (ys[i] - my);
+    den += (xs[i] - mx) ** 2;
+  }
+  const slope = den === 0 ? 0 : num / den;
+  const intercept = my - slope * mx;
+  const predict = (x) => slope * x + intercept;
+  let ssRes = 0, ssTot = 0;
+  for (let i = 0; i < n; i++) {
+    ssRes += (ys[i] - predict(xs[i])) ** 2;
+    ssTot += (ys[i] - my) ** 2;
+  }
+  const r2 = ssTot === 0 ? 0 : 1 - ssRes / ssTot;
+  const residualStd = Math.sqrt(ssRes / Math.max(1, n - 2));
+  return { slope, intercept, predict, r2, residualStd };
+}
+
+function fmt1(n) {
+  if (n === null || n === undefined || Number.isNaN(n)) return "-";
+  return n.toFixed(1).replace(".", ",");
+}
+
+function fmt0(n) {
+  if (n === null || n === undefined || Number.isNaN(n)) return "-";
+  return Math.round(n).toString();
+}
+
+function downloadBlob(filename, content, mime) {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function svgNodeToPng(svgEl, scale, bgColor) {
+  return new Promise((resolve, reject) => {
+    try {
+      const serializer = new XMLSerializer();
+      const clone = svgEl.cloneNode(true);
+      const bbox = svgEl.getBoundingClientRect();
+      const width = bbox.width || 800;
+      const height = bbox.height || 400;
+      clone.setAttribute("width", width);
+      clone.setAttribute("height", height);
+      clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+      const svgString = serializer.serializeToString(clone);
+      const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(svgBlob);
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = width * scale;
+        canvas.height = height * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = bgColor || "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.scale(scale, scale);
+        ctx.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+        canvas.toBlob((blob) => resolve(blob), "image/png");
+      };
+      img.onerror = (e) => { URL.revokeObjectURL(url); reject(e); };
+      img.src = url;
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+.wrap {
+  font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  color: #2B2118;
+  background: #F4EEE0;
+  max-width: 1180px;
+  margin: 0 auto;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 1px 0 #E4D9C3;
+}
+
+.hero {
+  background: #241B12;
+  color: #F4EEE0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 44px 40px;
+  flex-wrap: wrap;
+}
+.hero-text { max-width: 560px; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #C99A3B;
+  margin: 0 0 14px 0;
+}
+.hero h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.08;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.01em;
+}
+.lede {
+  font-size: 15px;
+  line-height: 1.55;
+  color: #D8CBB4;
+  margin: 0;
+  max-width: 46ch;
+}
+
+.spiral-wrap { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.spiral-svg { width: 220px; height: 220px; }
+.spiral-center-year { font-family: 'IBM Plex Mono', monospace; font-size: 10px; fill: #8A7960; }
+.spiral-caption {
+  font-size: 11px; color: #A99A82; text-align: center; max-width: 220px;
+  margin: 10px 0 0 0; line-height: 1.4;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-end;
+  padding: 20px 40px;
+  border-bottom: 1px solid #E4D9C3;
+  background: #FBF7EE;
+}
+.control-group { display: flex; flex-direction: column; gap: 8px; }
+.control-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #8A7960;
+  text-transform: none;
+}
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  font-family: inherit;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  border: 1px solid #C9BB9E;
+  background: transparent;
+  color: #5B4B39;
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.chip:hover { border-color: #B5502E; color: #B5502E; }
+.chip-active { background: #B5502E; border-color: #B5502E; color: #FFF8EE; }
+.chip-active:hover { color: #FFF8EE; }
+.chip-outline { border-style: dashed; }
+.selects { display: flex; align-items: center; gap: 8px; }
+.vs { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8A7960; }
+select {
+  font-family: inherit;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #C9BB9E;
+  background: #FFFDF8;
+  color: #2B2118;
+}
+.export-group { margin-left: auto; }
+.export-msg {
+  padding: 6px 40px; font-size: 12px; color: #7C8A5C; background: #FBF7EE;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: #E4D9C3;
+}
+@media (min-width: 860px) {
+  .main-grid { grid-template-columns: 2fr 1fr; }
+}
+.panel { background: #FFFDF8; padding: 28px 32px; }
+.panel-head { margin-bottom: 12px; }
+.panel-head-row { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
+.panel h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0 0 4px 0;
+  color: #241B12;
+}
+.panel-sub { font-size: 13px; color: #8A7960; margin: 0; }
+
+.kpi-stack { background: #FFFDF8; display: flex; flex-direction: column; }
+.kpi-row { padding: 18px 28px; border-bottom: 1px solid #EFE6D3; }
+.kpi-row:last-child { border-bottom: none; }
+.kpi-label { font-size: 12px; color: #8A7960; margin-bottom: 6px; font-family: 'IBM Plex Mono', monospace; }
+.kpi-values { display: flex; gap: 20px; align-items: baseline; }
+.kpi-val { display: flex; flex-direction: column; }
+.kpi-val span:last-child {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 26px;
+  font-weight: 600;
+}
+.kpi-val-a span:last-child { color: #B5502E; }
+.kpi-val-b span:last-child { color: #C99A3B; }
+.kpi-year { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #A99A82; }
+.kpi-note { font-size: 11px; color: #A99A82; margin-top: 6px; }
+
+.trend-panel, .extremes-panel { border-top: 1px solid #E4D9C3; }
+.proj-controls { display: flex; align-items: center; gap: 6px; }
+.footnote { font-size: 12px; color: #8A7960; margin-top: 10px; max-width: 70ch; line-height: 1.5; }
+
+.extremes-list { margin: 0; }
+.ext-row {
+  display: flex; justify-content: space-between; gap: 16px;
+  padding: 10px 0; border-bottom: 1px dashed #E4D9C3; font-size: 14px;
+}
+.ext-row:last-child { border-bottom: none; }
+.ext-row dt { color: #5B4B39; margin: 0; }
+.ext-row dd { margin: 0; font-family: 'IBM Plex Mono', monospace; color: #241B12; }
+
+.foot {
+  padding: 20px 40px 32px 40px;
+  font-size: 11px;
+  color: #A99A82;
+  line-height: 1.6;
+  background: #F4EEE0;
+}
+
+.tt {
+  background: #241B12;
+  color: #F4EEE0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 12px;
+  min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.tt-head { font-family: 'Fraunces', Georgia, serif; font-size: 14px; margin-bottom: 8px; }
+.tt-row { display: flex; align-items: center; gap: 6px; padding: 2px 0; flex-wrap: wrap; }
+.tt-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.tt-label { flex: 1; color: #D8CBB4; }
+.tt-value { font-family: 'IBM Plex Mono', monospace; }
+.tt-sub { width: 100%; padding-left: 14px; font-size: 10px; color: #A99A82; }
+.tt-sep { height: 1px; background: #4A3F2E; margin: 6px 0; }
+
+@media (max-width: 640px) {
+  .hero { flex-direction: column; align-items: flex-start; padding: 32px 20px; }
+  .hero h1 { font-size: 30px; }
+  .controls { padding: 16px 20px; }
+  .panel { padding: 20px; }
+  .export-group { margin-left: 0; }
+  .foot { padding: 16px 20px 24px 20px; }
+}
+`;
+
+function ClimaDashboard() {
+  const [seasonKey, setSeasonKey] = useState("Anno intero");
+  const [yearA, setYearA] = useState(2020);
+  const [yearB, setYearB] = useState(1991);
+  const [cityKey, setCityKey] = useState("");
+  const [projYears, setProjYears] = useState(10);
+  const [exportMsg, setExportMsg] = useState("");
+  const climoRef = useRef(null);
+  const trendRef = useRef(null);
+
+  const seasonMonths = SEASONS[seasonKey];
+  const D = FI_DATA;
+  const climaMedia = D.clima_media;
+
+  const climoData = useMemo(() => {
+    return MONTHS.map((m, i) => ({
+      i, month: m, monthFull: MONTHS_FULL[i],
+      tmedA: D.tmed_annual[yearA][i],
+      tmedB: D.tmed_annual[yearB][i],
+      tmedNorm: climaMedia.Tmed_media[i],
+      pioggiaA: D.pioggia_annual[yearA][i],
+      pioggiaB: D.pioggia_annual[yearB][i],
+      pioggiaNorm: climaMedia.Pioggia_media[i],
+      tmedCity: cityKey ? CITY_NORMALS[cityKey].Tmed[i] : null,
+      pioggiaCity: cityKey ? CITY_NORMALS[cityKey].Pioggia[i] : null,
+      inSeason: seasonMonths.includes(i),
+    }));
+  }, [yearA, yearB, cityKey, seasonKey]);
+
+  const kpi = useMemo(() => {
+    const pick = (arr) => seasonMonths.map((i) => arr[i]);
+    const avgOf = (arr) => pick(arr).reduce((a, b) => a + b, 0) / seasonMonths.length;
+    const sumOf = (arr) => pick(arr).reduce((a, b) => a + b, 0);
+    return {
+      tmedA: avgOf(D.tmed_annual[yearA]),
+      tmedB: avgOf(D.tmed_annual[yearB]),
+      tmedNorm: avgOf(climaMedia.Tmed_media),
+      tmedCity: cityKey ? avgOf(CITY_NORMALS[cityKey].Tmed) : null,
+      pioggiaA: sumOf(D.pioggia_annual[yearA]),
+      pioggiaB: sumOf(D.pioggia_annual[yearB]),
+      pioggiaNorm: sumOf(climaMedia.Pioggia_media),
+      pioggiaCity: cityKey ? sumOf(CITY_NORMALS[cityKey].Pioggia) : null,
+      giorniA: sumOf(D.giorni_pioggia_annual[yearA]),
+      giorniB: sumOf(D.giorni_pioggia_annual[yearB]),
+      giorniNorm: sumOf(climaMedia.Giorni_pioggia_media),
+    };
+  }, [yearA, yearB, cityKey, seasonKey]);
+
+  const trend = useMemo(() => {
+    const annualMeans = YEARS.map((y) => avg(D.tmed_annual[y]));
+    const reg = linearRegression(YEARS, annualMeans);
+    const historical = YEARS.map((y, idx) => ({
+      year: y, actual: annualMeans[idx], fit: reg.predict(y),
+    }));
+    const lastYear = YEARS[YEARS.length - 1];
+    const projection = Array.from({ length: projYears }, (_, k) => {
+      const y = lastYear + k + 1;
+      return { year: y, projected: reg.predict(y) };
+    });
+    return { annualMeans, reg, historical, projection, lastYear };
+  }, [projYears]);
+
+  const trendData = useMemo(() => {
+    const rows = trend.historical.map((r) => ({ year: r.year, actual: r.actual, fit: r.fit }));
+    const lastFit = trend.reg.predict(trend.lastYear);
+    const bridge = { year: trend.lastYear, projected: lastFit };
+    const projRows = trend.projection.map((r) => ({ year: r.year, projected: r.projected }));
+    return [...rows, bridge, ...projRows];
+  }, [trend]);
+
+  const extremes = useMemo(() => {
+    const annualTmed = YEARS.map((y) => ({ year: y, v: avg(D.tmed_annual[y]) }));
+    const annualPioggia = YEARS.map((y) => ({ year: y, v: sum(D.pioggia_annual[y]) }));
+    const hottest = annualTmed.reduce((a, b) => (b.v > a.v ? b : a));
+    const coldest = annualTmed.reduce((a, b) => (b.v < a.v ? b : a));
+    const wettest = annualPioggia.reduce((a, b) => (b.v > a.v ? b : a));
+    const driest = annualPioggia.reduce((a, b) => (b.v < a.v ? b : a));
+    return { hottest, coldest, wettest, driest };
+  }, []);
+
+  const wavesA = D.ondate_calore[String(yearA)] ? D.ondate_calore[String(yearA)][4] : 0;
+  const wavesAcold = D.ondate_freddo[String(yearA)] ? D.ondate_freddo[String(yearA)][4] : 0;
+  const wavesB = D.ondate_calore[String(yearB)] ? D.ondate_calore[String(yearB)][4] : 0;
+  const wavesBcold = D.ondate_freddo[String(yearB)] ? D.ondate_freddo[String(yearB)][4] : 0;
+
+  function handleExportCSV() {
+    const header = ["Mese", "Tmed " + yearA, "Tmed " + yearB, "Tmed normale 1991-2020"];
+    if (cityKey) header.push("Tmed " + cityKey);
+    header.push("Pioggia " + yearA + " (mm)", "Pioggia " + yearB + " (mm)", "Pioggia normale (mm)");
+    if (cityKey) header.push("Pioggia " + cityKey + " (mm)");
+    const lines = [header.join(";")];
+    climoData.forEach((row) => {
+      const cells = [row.monthFull, fmt1(row.tmedA), fmt1(row.tmedB), fmt1(row.tmedNorm)];
+      if (cityKey) cells.push(fmt1(row.tmedCity));
+      cells.push(fmt0(row.pioggiaA), fmt0(row.pioggiaB), fmt0(row.pioggiaNorm));
+      if (cityKey) cells.push(fmt0(row.pioggiaCity));
+      lines.push(cells.join(";"));
+    });
+    lines.push("");
+    lines.push("Riepilogo periodo selezionato: " + seasonKey);
+    lines.push(["Serie", "T media (°C)", "Pioggia totale (mm)", "Giorni di pioggia"].join(";"));
+    lines.push([yearA, fmt1(kpi.tmedA), fmt0(kpi.pioggiaA), fmt0(kpi.giorniA)].join(";"));
+    lines.push([yearB, fmt1(kpi.tmedB), fmt0(kpi.pioggiaB), fmt0(kpi.giorniB)].join(";"));
+    lines.push(["Normale 1991-2020", fmt1(kpi.tmedNorm), fmt0(kpi.pioggiaNorm), fmt0(kpi.giorniNorm)].join(";"));
+    if (cityKey) lines.push([cityKey + " (normale)", fmt1(kpi.tmedCity), fmt0(kpi.pioggiaCity), ""].join(";"));
+    downloadBlob(
+      "firenze-clima_" + yearA + "-vs-" + yearB + ".csv",
+      "﻿" + lines.join("\n"),
+      "text/csv;charset=utf-8"
+    );
+  }
+
+  async function handleExportPNG(ref, name) {
+    const container = ref.current;
+    if (!container) return;
+    const svg = container.querySelector("svg");
+    if (!svg) return;
+    setExportMsg("Esportazione in corso...");
+    try {
+      const blob = await svgNodeToPng(svg, 2, "#F4EEE0");
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      setExportMsg("Immagine esportata.");
+    } catch (e) {
+      setExportMsg("Esportazione non riuscita in questo browser.");
+    }
+    setTimeout(() => setExportMsg(""), 3000);
+  }
+
+  function ClimoTooltip({ active, payload, label }) {
+    if (!active || !payload || !payload.length) return null;
+    const row = payload[0].payload;
+    return (
+      <div className="tt">
+        <div className="tt-head">{row.monthFull}</div>
+        <TTRow color="#B5502E" label={"Temp. media " + yearA} value={fmt1(row.tmedA) + " °C"} sub={devLabel(row.tmedA, row.tmedNorm)} />
+        <TTRow color="#C99A3B" label={"Temp. media " + yearB} value={fmt1(row.tmedB) + " °C"} sub={devLabel(row.tmedB, row.tmedNorm)} />
+        <TTRow color="#8A7960" label="Normale 1991-2020" value={fmt1(row.tmedNorm) + " °C"} />
+        {cityKey && <TTRow color="#4A5A78" label={"Temp. " + cityKey} value={fmt1(row.tmedCity) + " °C"} />}
+        <div className="tt-sep" />
+        <TTRow color="#7C8A5C" label={"Pioggia " + yearA} value={fmt0(row.pioggiaA) + " mm"} />
+        <TTRow color="#B7C08E" label={"Pioggia " + yearB} value={fmt0(row.pioggiaB) + " mm"} />
+        {cityKey && <TTRow color="#9AA7C7" label={"Pioggia " + cityKey} value={fmt0(row.pioggiaCity) + " mm"} />}
+      </div>
+    );
+  }
+
+  function TrendTooltip({ active, payload, label }) {
+    if (!active || !payload || !payload.length) return null;
+    const row = payload[0].payload;
+    const isProjected = row.actual === undefined;
+    return (
+      <div className="tt">
+        <div className="tt-head">{row.year}{isProjected ? " · proiezione" : ""}</div>
+        {row.actual !== undefined && <TTRow color="#B5502E" label="T media annua" value={fmt1(row.actual) + " °C"} />}
+        {row.fit !== undefined && <TTRow color="#8A7960" label="Retta di tendenza" value={fmt1(row.fit) + " °C"} />}
+        {row.projected !== undefined && <TTRow color="#4A5A78" label="Valore proiettato" value={fmt1(row.projected) + " °C"} />}
+      </div>
+    );
+  }
+
+  return (
+    <div className="wrap">
+      <style>{CSS}</style>
+
+      <header className="hero">
+        <div className="hero-text">
+          <p className="eyebrow">Serie storica 1991&ndash;2020 &middot; stazione di Firenze</p>
+          <h1>Firenze, il clima<br />in trent&rsquo;anni di numeri</h1>
+          <p className="lede">
+            Confronta due anni, isola una stagione, proietta il trend di riscaldamento
+            e misura Firenze rispetto ad altre citt&agrave; italiane.
+          </p>
+        </div>
+        <AnomalySpiral years={YEARS} values={trend.annualMeans} />
+      </header>
+
+      <section className="controls">
+        <div className="control-group">
+          <span className="control-label">Periodo</span>
+          <div className="chips">
+            {Object.keys(SEASONS).map((s) => (
+              <button
+                key={s}
+                className={"chip" + (s === seasonKey ? " chip-active" : "")}
+                onClick={() => setSeasonKey(s)}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="control-group">
+          <span className="control-label">Confronta anni</span>
+          <div className="selects">
+            <select value={yearA} onChange={(e) => setYearA(Number(e.target.value))}>
+              {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
+            </select>
+            <span className="vs">vs</span>
+            <select value={yearB} onChange={(e) => setYearB(Number(e.target.value))}>
+              {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div className="control-group">
+          <span className="control-label">Confronta con citt&agrave;</span>
+          <select value={cityKey} onChange={(e) => setCityKey(e.target.value)}>
+            <option value="">Nessuna</option>
+            {Object.keys(CITY_NORMALS).map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+
+        <div className="control-group export-group">
+          <span className="control-label">Esporta</span>
+          <div className="chips">
+            <button className="chip chip-outline" onClick={handleExportCSV}>Dati (CSV)</button>
+            <button className="chip chip-outline" onClick={() => handleExportPNG(climoRef, "firenze-climografo.png")}>Climografo (PNG)</button>
+          </div>
+        </div>
+      </section>
+      {exportMsg && <div className="export-msg">{exportMsg}</div>}
+
+      <section className="main-grid">
+        <div className="panel climo-panel" ref={climoRef}>
+          <div className="panel-head">
+            <h2>Climografo comparativo</h2>
+            <p className="panel-sub">Barre = pioggia mensile &middot; linee = temperatura media. Periodo evidenziato: {seasonKey.toLowerCase()}.</p>
+          </div>
+          <ResponsiveContainer width="100%" height={380}>
+            <ComposedChart data={climoData} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
+              <CartesianGrid stroke="#E4D9C3" vertical={false} />
+              {seasonKey !== "Anno intero" && climoData.map((row, idx) =>
+                row.inSeason ? (
+                  <ReferenceArea key={idx} x1={row.month} x2={row.month} fill="#B5502E" fillOpacity={0.06} />
+                ) : null
+              )}
+              <XAxis dataKey="month" tick={{ fill: "#5B4B39", fontSize: 12 }} axisLine={{ stroke: "#C9BB9E" }} tickLine={false} />
+              <YAxis yAxisId="temp" tick={{ fill: "#5B4B39", fontSize: 12 }} axisLine={false} tickLine={false} width={34} unit="°" />
+              <YAxis yAxisId="rain" orientation="right" tick={{ fill: "#5B4B39", fontSize: 12 }} axisLine={false} tickLine={false} width={34} unit="mm" />
+              <Tooltip content={<ClimoTooltip />} />
+              <Legend wrapperStyle={{ fontSize: 12, color: "#5B4B39" }} />
+              <Bar yAxisId="rain" dataKey="pioggiaA" name={"Pioggia " + yearA} fill="#7C8A5C" radius={[3,3,0,0]} barSize={10} />
+              <Bar yAxisId="rain" dataKey="pioggiaB" name={"Pioggia " + yearB} fill="#B7C08E" radius={[3,3,0,0]} barSize={10} />
+              {cityKey && <Line yAxisId="rain" type="monotone" dataKey="pioggiaCity" name={"Pioggia " + cityKey} stroke="#9AA7C7" strokeWidth={1.5} strokeDasharray="2 3" dot={false} />}
+              <Line yAxisId="temp" type="monotone" dataKey="tmedNorm" name="Normale 1991-2020" stroke="#8A7960" strokeWidth={1.5} strokeDasharray="4 3" dot={false} />
+              <Line yAxisId="temp" type="monotone" dataKey="tmedA" name={"Temp. " + yearA} stroke="#B5502E" strokeWidth={2.5} dot={{ r: 3 }} />
+              <Line yAxisId="temp" type="monotone" dataKey="tmedB" name={"Temp. " + yearB} stroke="#C99A3B" strokeWidth={2.5} dot={{ r: 3 }} />
+              {cityKey && <Line yAxisId="temp" type="monotone" dataKey="tmedCity" name={"Temp. " + cityKey} stroke="#4A5A78" strokeWidth={1.5} strokeDasharray="1 3" dot={false} />}
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="kpi-stack">
+          <KpiRow label={"T media &middot; " + seasonKey} a={fmt1(kpi.tmedA) + "°"} b={fmt1(kpi.tmedB) + "°"} yearA={yearA} yearB={yearB}
+            note={"Normale: " + fmt1(kpi.tmedNorm) + "°" + (cityKey ? " &middot; " + cityKey + ": " + fmt1(kpi.tmedCity) + "°" : "")} />
+          <KpiRow label={"Pioggia totale &middot; " + seasonKey} a={fmt0(kpi.pioggiaA) + " mm"} b={fmt0(kpi.pioggiaB) + " mm"} yearA={yearA} yearB={yearB}
+            note={"Normale: " + fmt0(kpi.pioggiaNorm) + " mm" + (cityKey ? " &middot; " + cityKey + ": " + fmt0(kpi.pioggiaCity) + " mm" : "")} />
+          <KpiRow label={"Giorni di pioggia &middot; " + seasonKey} a={fmt0(kpi.giorniA)} b={fmt0(kpi.giorniB)} yearA={yearA} yearB={yearB}
+            note={"Normale: " + fmt0(kpi.giorniNorm) + " gg"} />
+          <KpiRow label="Ondate di calore (stagione)" a={String(wavesA)} b={String(wavesB)} yearA={yearA} yearB={yearB}
+            note="Somma episodi &gt;3 giorni consecutivi con Tmax elevata" />
+          <KpiRow label="Ondate di freddo (stagione)" a={String(wavesAcold)} b={String(wavesBcold)} yearA={yearA} yearB={yearB}
+            note="Somma episodi &gt;3 giorni consecutivi con Tmin rigida" />
+        </div>
+      </section>
+
+      <section className="panel trend-panel" ref={trendRef}>
+        <div className="panel-head panel-head-row">
+          <div>
+            <h2>Tendenza e proiezione</h2>
+            <p className="panel-sub">
+              Regressione lineare su T media annua 1991&ndash;2020: {trend.reg.slope >= 0 ? "+" : ""}{fmt1(trend.reg.slope * 10)}&nbsp;&deg;C/decennio
+              &middot; R&sup2;&nbsp;{trend.reg.r2.toFixed(2)}
+            </p>
+          </div>
+          <div className="proj-controls">
+            <span className="control-label">Proietta</span>
+            {[5, 10, 20].map((n) => (
+              <button key={n} className={"chip" + (n === projYears ? " chip-active" : "")} onClick={() => setProjYears(n)}>
+                +{n} anni
+              </button>
+            ))}
+            <button className="chip chip-outline" onClick={() => handleExportPNG(trendRef, "firenze-trend-proiezione.png")}>PNG</button>
+          </div>
+        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <ComposedChart data={trendData} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
+            <CartesianGrid stroke="#E4D9C3" vertical={false} />
+            <XAxis dataKey="year" tick={{ fill: "#5B4B39", fontSize: 12 }} axisLine={{ stroke: "#C9BB9E" }} tickLine={false} />
+            <YAxis tick={{ fill: "#5B4B39", fontSize: 12 }} axisLine={false} tickLine={false} width={34} unit="°" domain={["auto", "auto"]} />
+            <Tooltip content={<TrendTooltip />} />
+            <ReferenceLine x={trend.lastYear} stroke="#8A7960" strokeDasharray="3 3" label={{ value: "oggi", position: "insideTopRight", fill: "#8A7960", fontSize: 11 }} />
+            <Legend wrapperStyle={{ fontSize: 12, color: "#5B4B39" }} />
+            <Scatter dataKey="actual" name="T media osservata" fill="#B5502E" />
+            <Line dataKey="fit" name="Retta di tendenza" stroke="#8A7960" strokeWidth={2} dot={false} />
+            <Line dataKey="projected" name={"Proiezione (+" + projYears + " anni)"} stroke="#4A5A78" strokeWidth={2} strokeDasharray="6 4" dot={false} />
+          </ComposedChart>
+        </ResponsiveContainer>
+        <p className="footnote">
+          Proiezione statistica per estrapolazione lineare della serie storica, non una previsione meteorologica:
+          non tiene conto di eventuali cambi di regime climatico, variabilit&agrave; naturale o scenari di emissione.
+        </p>
+      </section>
+
+      <section className="panel extremes-panel">
+        <div className="panel-head">
+          <h2>Estremi e anni record</h2>
+          <p className="panel-sub">Calcolati sull&rsquo;intera serie 1991&ndash;2020, indipendentemente dal filtro stagionale.</p>
+        </div>
+        <dl className="extremes-list">
+          <div className="ext-row"><dt>Anno pi&ugrave; caldo</dt><dd>{extremes.hottest.year} &middot; {fmt1(extremes.hottest.v)} &deg;C medi</dd></div>
+          <div className="ext-row"><dt>Anno pi&ugrave; freddo</dt><dd>{extremes.coldest.year} &middot; {fmt1(extremes.coldest.v)} &deg;C medi</dd></div>
+          <div className="ext-row"><dt>Anno pi&ugrave; piovoso</dt><dd>{extremes.wettest.year} &middot; {fmt0(extremes.wettest.v)} mm</dd></div>
+          <div className="ext-row"><dt>Anno pi&ugrave; secco</dt><dd>{extremes.driest.year} &middot; {fmt0(extremes.driest.v)} mm</dd></div>
+          <div className="ext-row"><dt>Tmin assoluta</dt><dd>{D.estremi.Tmin_assoluta.val} &deg;C &middot; {D.estremi.Tmin_assoluta.data}</dd></div>
+          <div className="ext-row"><dt>Tmax assoluta</dt><dd>{D.estremi.Tmax_assoluta.val} &deg;C &middot; {D.estremi.Tmax_assoluta.data}</dd></div>
+          <div className="ext-row"><dt>Continentalit&agrave; di Gorczynski</dt><dd>{D.estremi.indice_continentalita}</dd></div>
+        </dl>
+      </section>
+
+      <footer className="foot">
+        <p>
+          Dati Firenze: serie climatica 1991&ndash;2020. Normali di confronto per
+          Roma, Milano, Torino, Bologna e Napoli: medie climatiche pubbliche, periodo 1991&ndash;2020, uso indicativo.
+        </p>
+      </footer>
+    </div>
+  );
+}
+
+function TTRow({ color, label, value, sub }) {
+  return (
+    <div className="tt-row">
+      <span className="tt-dot" style={{ background: color }} />
+      <span className="tt-label">{label}</span>
+      <span className="tt-value">{value}</span>
+      {sub && <span className="tt-sub">{sub}</span>}
+    </div>
+  );
+}
+
+function devLabel(v, norm) {
+  const d = v - norm;
+  if (Math.abs(d) < 0.05) return "in linea con la normale";
+  return (d > 0 ? "+" : "") + fmt1(d) + "° vs normale";
+}
+
+function KpiRow({ label, a, b, yearA, yearB, note }) {
+  return (
+    <div className="kpi-row">
+      <div className="kpi-label" dangerouslySetInnerHTML={{ __html: label }} />
+      <div className="kpi-values">
+        <div className="kpi-val kpi-val-a"><span className="kpi-year">{yearA}</span><span>{a}</span></div>
+        <div className="kpi-val kpi-val-b"><span className="kpi-year">{yearB}</span><span>{b}</span></div>
+      </div>
+      <div className="kpi-note" dangerouslySetInnerHTML={{ __html: note }} />
+    </div>
+  );
+}
+
+function AnomalySpiral({ years, values }) {
+  const mean = avg(values);
+  const maxAbs = Math.max(...values.map((v) => Math.abs(v - mean)), 0.5);
+  const cx = 130, cy = 130;
+  const rStart = 22, rStep = (118 - 22) / years.length;
+  const colorFor = (d) => {
+    const t = d / maxAbs;
+    if (t >= 0) {
+      return "rgb(" + (181 + Math.round(t*0)) + ", " + Math.round(80 - t*10) + ", " + Math.round(46 - t*10) + ")";
+    }
+    return "rgb(" + Math.round(124 + t*20) + ", " + Math.round(138 + t*10) + ", " + Math.round(92 + t*10) + ")";
+  };
+  return (
+    <div className="spiral-wrap">
+      <svg viewBox="0 0 260 260" className="spiral-svg" role="img" aria-label="Anomalia di temperatura media annua, 1991-2020, un anello per anno">
+        {years.map((y, i) => {
+          const r = rStart + i * rStep;
+          const anomaly = values[i] - mean;
+          return (
+            <circle key={y} cx={cx} cy={cy} r={r} fill="none"
+              stroke={colorFor(anomaly)} strokeWidth={rStep * 0.82} opacity={0.95} />
+          );
+        })}
+        <circle cx={cx} cy={cy} r={rStart - 6} fill="#F4EEE0" />
+        <text x={cx} y={cy - 4} textAnchor="middle" className="spiral-center-year">1991</text>
+        <text x={cx} y={cy + 12} textAnchor="middle" className="spiral-center-year">&rarr; 2020</text>
+      </svg>
+      <p className="spiral-caption">Ogni anello &egrave; un anno: rosso = pi&ugrave; caldo della media 1991&ndash;2020, verde = pi&ugrave; freddo.</p>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<ClimaDashboard />);
+  </script>
+  <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
