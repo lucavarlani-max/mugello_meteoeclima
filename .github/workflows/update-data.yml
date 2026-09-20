@@ -1,9 +1,9 @@
-name: Aggiorna dati (fiumi, invaso, allerta)
+name: Aggiorna dati (previsioni, fiumi, invaso, allerta)
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
-  workflow_dispatch:
+    - cron: "*/30 * * * *"   # ogni 30 minuti
+  workflow_dispatch:           # esecuzione manuale dal tab Actions
 
 permissions:
   contents: write
@@ -13,20 +13,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - name: Dipendenze
         run: pip install pdfplumber
+
+      - name: Aggiorna previsioni (WeatherNext / Google Weather API)
+        env:
+          GMAPS_WEATHER_KEY: ${{ secrets.GMAPS_WEATHER_KEY }}
+        run: python fetch_previsioni.py
+
       - name: Aggiorna fiumi e invaso
         run: python scripts/fetch_fiumi.py
+
       - name: Aggiorna allerta meteo
         run: python scripts/fetch_allerta.py
+
       - name: Commit se cambiato
         run: |
-          git config user.name "github-actions[bot]"
+          git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/fiumi.json data/bilancino.json data/allerta.json
+          git add data/previsioni.json data/fiumi.json data/bilancino.json data/allerta.json
           if ! git diff --cached --quiet; then
             git commit -m "dati: aggiornamento automatico"
             git push
