@@ -1,9 +1,10 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v2';
+const CACHE = 'mmc-v3';
 const SHELL = [
   './',
   './index.html',
   './comune.html',
+  './neve.html',
   './icon-192.png',
   './icon-512.png',
   './manifest.webmanifest'

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neve e quota zero termico · Mugello Meteo & Clima</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#7d8a82;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --rain:#3566b0; --snow:#5b8fc9; --snow-tint:#e8f0f9;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --shadow-lift:0 2px 6px rgba(16,38,31,.07), 0 20px 44px -20px rgba(16,38,31,.28);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+      --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+      --line:#26332c; --line-soft:#1e2a24;
+      --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+      --sky:#67aef0; --sky-tint:#152634;
+      --amber:#e0975a; --amber-tint:#2e2115;
+      --rain:#6a9be0; --snow:#7fb0e6; --snow-tint:#16273a;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+      --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 24px 50px -22px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#67aef0; --sky-tint:#152634;
+    --amber:#e0975a; --amber-tint:#2e2115; --rain:#6a9be0; --snow:#7fb0e6; --snow-tint:#16273a;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 24px 50px -22px rgba(0,0,0,.8);
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .back:hover{box-shadow:var(--shadow)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px;letter-spacing:-.01em}
+  .brand b{color:var(--pine)}
+  .head{padding:26px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--snow);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:40px;margin:.12em 0 .05em}
+  .lead{color:var(--ink-soft);font-size:15px;max-width:70ch}
+  /* headline zero termico */
+  .zero{display:flex;flex-wrap:wrap;align-items:center;gap:22px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--r);box-shadow:var(--shadow);padding:22px 24px;margin-top:18px}
+  .zero .ico{font-size:56px;line-height:1;flex:none}
+  .zero .big{font-family:var(--serif);font-weight:800;font-size:52px;line-height:1;letter-spacing:-.02em}
+  .zero .big s{font-size:22px;font-weight:600;text-decoration:none;color:var(--ink-faint);margin-left:4px}
+  .zero .lab{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .zero .msg{margin-left:auto;max-width:36ch;color:var(--ink-soft);font-size:14.5px}
+  .zero .msg b{color:var(--ink)}
+  section{margin:30px 0}
+  .sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .sh h2{font-family:var(--serif);font-weight:700;font-size:21px;margin:0;letter-spacing:-.01em}
+  .sh .src{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px}
+  svg .axl{font-family:var(--mono);font-size:10px;fill:var(--ink-faint)}
+  /* tabella località */
+  .loc{display:flex;flex-direction:column}
+  .lrow{display:flex;align-items:center;gap:14px;padding:13px 4px;border-top:1px solid var(--line-soft)}
+  .lrow:first-child{border-top:0}
+  .lrow .ln{flex:1;min-width:0}
+  .lrow .ln b{font-weight:600}
+  .lrow .ln s{display:block;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);text-decoration:none;margin-top:1px}
+  .lrow .lz{width:120px;text-align:right;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .lrow .lc{width:120px;text-align:right}
+  .chip{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.03em;padding:3px 9px;border-radius:var(--r-pill);white-space:nowrap}
+  .chip.none{background:var(--pine-tint);color:var(--pine-deep)}
+  .chip.snow{background:var(--snow-tint);color:var(--snow)}
+  .chip.warn{background:var(--amber-tint);color:var(--amber)}
+  .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
+  @media (max-width:640px){
+    h1{font-size:31px} .zero .big{font-size:42px} .zero .msg{margin-left:0;width:100%}
+    .lrow .lz{width:84px;font-size:11px} .lrow .lc{width:96px}
+  }
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <header class="head">
+      <div class="eyebrow">Montagna</div>
+      <h1>Neve e quota zero termico</h1>
+      <p class="lead">Lo zero termico è la quota a cui la temperatura scende a 0 °C: sopra quella quota la pioggia diventa neve. Qui trovi il valore attuale sui crinali del Mugello, l'andamento delle prossime ore e la neve prevista sui passi appenninici.</p>
+
+      <div class="zero">
+        <div class="ico" id="z-ico">🌡️</div>
+        <div>
+          <div class="lab">Quota zero termico · ora</div>
+          <div class="big"><span id="z-val">—</span><s>m s.l.m.</s></div>
+        </div>
+        <div class="msg" id="z-msg">Carico i dati…</div>
+      </div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Andamento dello zero termico · 72 ore</h2><span class="src">Open-Meteo</span></div>
+      <div class="card" id="chart"></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Neve prevista · 7 giorni</h2><span class="src">passi e comuni · Open-Meteo</span></div>
+      <div class="card"><div class="loc" id="loc"></div></div>
+    </section>
+
+    <p class="note">Dati Open-Meteo (modelli ICON + GFS). Zero termico e neve sono previsioni: in montagna possono variare rapidamente. · elaborazioni L. Varlani</p>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+(function(){
+  // riferimento per zero termico + grafico (crinali centrali del Mugello)
+  const REF={n:"Crinali del Mugello", lat:44.02, lon:11.37};
+  // passi e comuni, ordinati per quota decrescente
+  const POINTS=[
+    {n:"Monte Secchieta",        q:1417, lat:43.686, lon:11.585},
+    {n:"Passo della Consuma",    q:1050, lat:43.783, lon:11.615},
+    {n:"Passo della Futa",       q:983,  lat:44.098, lon:11.293},
+    {n:"Passo della Raticosa",   q:968,  lat:44.156, lon:11.399},
+    {n:"Passo della Colla",      q:913,  lat:44.019, lon:11.470},
+    {n:"Passo del Muraglione",   q:907,  lat:43.984, lon:11.632},
+    {n:"Firenzuola",             q:422,  lat:44.1206,lon:11.3789},
+    {n:"Barberino di Mugello",   q:268,  lat:43.9908,lon:11.2386},
+    {n:"Borgo San Lorenzo",      q:193,  lat:43.9547,lon:11.3861},
+  ];
+  const ALL=[REF].concat(POINTS);
+  const r=n=>Math.round(n);
+  const r100=n=>Math.round(n/50)*50;
+  const set=(id,t)=>{const e=document.getElementById(id); if(e)e.textContent=t;};
+
+  async function load(){
+    const lats=ALL.map(p=>p.lat).join(',');
+    const lons=ALL.map(p=>p.lon).join(',');
+    const url='https://api.open-meteo.com/v1/forecast?latitude='+lats+'&longitude='+lons+
+      '&current=freezing_level_height,snow_depth'+
+      '&hourly=freezing_level_height,snowfall'+
+      '&daily=snowfall_sum&timezone=Europe%2FRome&forecast_days=7';
+    const res=await fetch(url,{cache:'no-store'}); if(!res.ok) throw new Error('http '+res.status);
+    let data=await res.json(); if(!Array.isArray(data)) data=[data];
+
+    // ---- headline (REF) ----
+    const ref=data[0];
+    const zt=ref.current&&ref.current.freezing_level_height;
+    set('z-val', zt!=null? r100(zt).toLocaleString('it-IT') : '—');
+    // quota zero minima nelle prossime 72h (per capire se scende sui passi)
+    const fz=ref.hourly.freezing_level_height.slice(0,72).filter(x=>x!=null);
+    const zmin=fz.length?Math.min.apply(null,fz):zt;
+    let msg='';
+    if(zt>2200){ set('z-ico','☀️'); msg='<b>Nessuna nevicata in vista.</b> Lo zero termico è alto sopra i crinali: in quota la pioggia resta pioggia.'; }
+    else if(zt>1400){ set('z-ico','⛅'); msg='Zero termico medio-alto. Neve possibile solo sulle vette più alte ('+r100(zmin).toLocaleString('it-IT')+' m il minimo previsto).'; }
+    else if(zt>900){ set('z-ico','🌨️'); msg='<b>Neve possibile sui passi appenninici</b> più alti. Minimo previsto ~'+r100(zmin).toLocaleString('it-IT')+' m: occhio a Futa, Raticosa e Muraglione.'; }
+    else { set('z-ico','❄️'); msg='<b>Neve fino a quote basse.</b> Zero termico sotto i 900 m: possibili fiocchi anche in fondovalle. Minimo previsto ~'+r100(zmin).toLocaleString('it-IT')+' m.'; }
+    document.getElementById('z-msg').innerHTML=msg;
+
+    drawChart(ref.hourly.time.slice(0,72).map((t,i)=>({t:new Date(t), z:ref.hourly.freezing_level_height[i]})));
+
+    // ---- tabella località ----
+    const box=document.getElementById('loc'); box.innerHTML='';
+    POINTS.forEach((p,i)=>{
+      const d=data[i+1]; if(!d) return;
+      const neve=(d.daily.snowfall_sum||[]).reduce((a,b)=>a+(b||0),0); // cm somma 7gg
+      const depth=d.current&&d.current.snow_depth? d.current.snow_depth*100 : 0; // m -> cm
+      let chip, cls;
+      if(neve>=5){ chip='Neve '+r(neve)+' cm'; cls='warn'; }
+      else if(neve>0.2){ chip='Neve debole'; cls='snow'; }
+      else { chip='Nessuna neve'; cls='none'; }
+      const el=document.createElement('div'); el.className='lrow';
+      el.innerHTML='<div class="ln"><b>'+p.n+'</b><s>'+p.q.toLocaleString('it-IT')+' m s.l.m.'+(depth>=1?(' · '+r(depth)+' cm al suolo'):'')+'</s></div>'+
+        '<div class="lz">neve 7gg: '+(neve>0?(neve<1?neve.toFixed(1):r(neve))+' cm':'—')+'</div>'+
+        '<div class="lc"><span class="chip '+cls+'">'+chip+'</span></div>';
+      box.appendChild(el);
+    });
+  }
+
+  function drawChart(rows){
+    rows=rows.filter(x=>x.z!=null); if(rows.length<2){ document.getElementById('chart').textContent='Dati non disponibili.'; return; }
+    const W=920,H=240, padL=44,padR=14,padT=16,padB=42;
+    const iw=W-padL-padR, ih=H-padT-padB;
+    const zs=rows.map(x=>x.z);
+    let zmin=Math.min.apply(null,zs), zmax=Math.max.apply(null,zs);
+    if(zmax-zmin<300){ zmax+=200; zmin-=200; }
+    zmin=Math.floor(zmin/200)*200; zmax=Math.ceil(zmax/200)*200; if(zmin<0)zmin=0;
+    const x=i=>padL+iw*i/(rows.length-1);
+    const y=v=>padT+ih*(1-(v-zmin)/(zmax-zmin));
+    let grid=''; const steps=4;
+    for(let s=0;s<=steps;s++){ const v=zmin+(zmax-zmin)*s/steps; const yy=y(v);
+      grid+='<line x1="'+padL+'" y1="'+yy+'" x2="'+(W-padR)+'" y2="'+yy+'" stroke="var(--line-soft)"/>';
+      grid+='<text class="axl" x="'+(padL-6)+'" y="'+(yy+3)+'" text-anchor="end">'+Math.round(v).toLocaleString("it-IT")+'</text>';
+    }
+    let xl='';
+    rows.forEach((rw,i)=>{ const hr=rw.t.getHours(); if(hr%12===0){
+      xl+='<line x1="'+x(i)+'" y1="'+padT+'" x2="'+x(i)+'" y2="'+(padT+ih)+'" stroke="var(--line-soft)"/>';
+      xl+='<text class="axl" x="'+x(i)+'" y="'+(H-padB+16)+'" text-anchor="middle">'+String(hr).padStart(2,'0')+'</text>';
+      if(hr===0) xl+='<text class="axl" x="'+x(i)+'" y="'+(H-padB+30)+'" text-anchor="middle" opacity=".8">'+rw.t.getDate()+'/'+(rw.t.getMonth()+1)+'</text>';
+    }});
+    let d='M'; rows.forEach((rw,i)=>{ d+=(i?'L':'')+x(i).toFixed(1)+' '+y(rw.z).toFixed(1)+' '; });
+    let area=d+'L'+x(rows.length-1).toFixed(1)+' '+(padT+ih)+' L'+padL+' '+(padT+ih)+' Z';
+    const svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Zero termico prossime 72 ore">'+
+      grid+xl+
+      '<path d="'+area+'" fill="var(--snow)" opacity=".12"/>'+
+      '<path d="'+d+'" fill="none" stroke="var(--snow)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>'+
+      '</svg>'+
+      '<div style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:6px">quota (m s.l.m.) a cui la temperatura è 0 °C</div>';
+    document.getElementById('chart').innerHTML=svg;
+  }
+
+  load().catch(function(e){
+    console.log('neve n/d',e);
+    document.getElementById('z-msg').textContent='Dati non disponibili al momento.';
+  });
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
