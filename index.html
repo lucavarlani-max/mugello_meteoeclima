@@ -161,6 +161,16 @@
   .comune .tt s{display:block;text-decoration:none;font-size:12px;color:var(--ink-faint)}
 
   /* ---- feature grid ---- */
+  /* ---- confronto comuni ---- */
+  .rank{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .rankcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
+    padding:16px 18px;display:flex;flex-direction:column;gap:1px;position:relative;overflow:hidden}
+  .rankcard .rk-l{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .rankcard .rk-n{font-weight:600;font-size:15px;margin-top:3px}
+  .rankcard .rk-v{font-family:var(--serif);font-weight:800;font-size:28px;line-height:1.1}
+  .rankcard .rk-ico{position:absolute;right:14px;top:13px;font-size:22px;opacity:.55}
+  .rankcard.hot .rk-v{color:var(--amber)} .rankcard.cold .rk-v{color:var(--sky)} .rankcard.wet .rk-v{color:var(--rain)}
+  @media (max-width:640px){ .rank{grid-template-columns:1fr} }
   .feat{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
   .card .ch{display:flex;align-items:center;gap:9px;padding:15px 18px;border-bottom:1px solid var(--line-soft)}
@@ -1020,6 +1030,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
     </div>
   </section>
 
+  <section class="sec" id="confronto">
+    <div class="sec-head"><h2>Confronto tra i comuni · oggi</h2><span style="margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)">dai dati di previsione</span></div>
+    <div class="rank">
+      <div class="rankcard hot"><span class="rk-ico">🔥</span><div class="rk-l">Più caldo (massima)</div><div class="rk-n" id="rk-hot-n">Barberino di Mugello</div><div class="rk-v" id="rk-hot-v">26°</div></div>
+      <div class="rankcard cold"><span class="rk-ico">❄️</span><div class="rk-l">Più fresco (minima)</div><div class="rk-n" id="rk-cold-n">Firenzuola</div><div class="rk-v" id="rk-cold-v">10°</div></div>
+      <div class="rankcard wet"><span class="rk-ico">🌧</span><div class="rk-l">Più piovoso (prob.)</div><div class="rk-n" id="rk-wet-n">Palazzuolo sul Senio</div><div class="rk-v" id="rk-wet-v">70%</div></div>
+    </div>
+  </section>
+
   <section class="sec" id="radar">
     <div class="sec-head"><h2>Radar e monitoraggio</h2><a href="#">Mappa a schermo intero →</a></div>
     <div class="feat">
@@ -1034,7 +1053,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       </div>
 
       <div class="card">
-        <div class="ch"><span class="ei">💧</span><h3>Fiumi, invaso e aria</h3><span class="tag">SIR Toscana</span></div>
+        <div class="ch"><span class="ei">💧</span><h3>Fiumi, invaso, aria e pollini</h3><span class="tag">SIR · Open-Meteo</span></div>
         <div class="cb">
           <div class="rows">
             <div class="row">
@@ -1051,6 +1070,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
               <div class="ri" style="background:var(--pine-tint)">🍃</div>
               <div class="rl"><b>Qualità dell'aria</b><span id="aria-sub">PM10 14 µg/m³ · PM2.5 8</span></div>
               <div><span class="chip ok" id="aria-chip">Buona</span></div>
+            </div>
+            <div class="row">
+              <div class="ri" style="background:var(--amber-tint)">🌾</div>
+              <div class="rl"><b>Pollini</b><span id="poll-sub">graminacee, olivo</span></div>
+              <div><span class="chip info" id="poll-chip">Medi</span></div>
             </div>
             <div class="row">
               <div class="ri" style="background:var(--amber-tint)">📳</div>
@@ -1230,6 +1254,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       set('c'+i+'-sub', r(dl.temperature_2m_min[0])+'° / '+(dl.precipitation_probability_max[0]??0)+'%');
     });
 
+    // confronto tra comuni (oggi)
+    renderConfronto(COMUNI.map(function(c,i){var d=data[i]; if(!d)return{n:c.n}; var dl2=d.daily; return {n:c.n,tmax:dl2.temperature_2m_max[0],tmin:dl2.temperature_2m_min[0],pp:dl2.precipitation_probability_max[0]};}));
+
     // pannello "adesso": icona/desc/min-max da Scarperia (numeri li mette la stazione se disponibile)
     const s=data[STAZ], cur=s.current, dl=s.daily;
     set('now-ico', wmo(cur.weather_code)[0]);
@@ -1306,6 +1333,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const m=(new Date(P.sole.set)-new Date(P.sole.rise))/60000;
       set('sun-len',Math.floor(m/60)+'h '+r(m%60)+'m');
     }
+
+    // confronto tra comuni (oggi)
+    renderConfronto(cs.map(function(c){var g=(c.giorni&&c.giorni[0])||{}; return {n:c.n,tmax:g.tmax,tmin:g.tmin,pp:g.pp};}));
 
     const lb=document.getElementById('live-badge'); if(lb) lb.style.display='inline-block';
     const src=(P.fonte&&P.fonte.indexOf('WeatherNext')>=0)?'previsioni WeatherNext 3 (Google)':'previsioni '+(P.fonte||'Open-Meteo');
@@ -1385,6 +1415,35 @@ svg.leaflet-image-layer.leaflet-interactive path {
     else if(a<=60){lab='Moderata';cls='info';} else if(a<=80){lab='Scarsa';cls='warn';}
     else {lab='Pessima';cls='warn';}
     setChip('aria-chip',lab,cls);
+  }
+
+  async function pollen(){
+    const url='https://air-quality-api.open-meteo.com/v1/air-quality?latitude=43.9547&longitude=11.3861'+
+      '&current=alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&timezone=Europe%2FRome';
+    const res=await fetch(url); if(!res.ok) throw new Error('http '+res.status);
+    const c=(await res.json()).current;
+    const TYPES=[['grass_pollen','graminacee'],['olive_pollen','olivo'],['birch_pollen','betulla'],
+      ['alder_pollen','ontano'],['ragweed_pollen','ambrosia'],['mugwort_pollen','artemisia']];
+    const lvl=v=>{v=v||0; if(v<1)return 0; if(v<15)return 1; if(v<50)return 2; if(v<200)return 3; return 4;};
+    const LAB=['Assenti','Bassi','Medi','Alti','Molto alti'];
+    const CLS=['ok','ok','info','warn','warn'];
+    const items=TYPES.map(function(t){return {n:t[1], v:c[t[0]]==null?0:c[t[0]], L:lvl(c[t[0]])};})
+      .filter(function(x){return x.L>0;}).sort(function(a,b){return b.v-a.v;});
+    if(!items.length){ set('poll-sub','nessun polline rilevante ora'); setChip('poll-chip','Bassi','ok'); return; }
+    set('poll-sub', items.slice(0,3).map(function(x){return x.n;}).join(', '));
+    let maxL=0; items.forEach(function(x){ if(x.L>maxL)maxL=x.L; });
+    setChip('poll-chip', LAB[maxL], CLS[maxL]);
+  }
+
+  function renderConfronto(list){
+    const valid=(list||[]).filter(function(x){return x&&x.tmax!=null&&x.tmin!=null;});
+    if(valid.length<2) return;
+    const hot=valid.reduce(function(a,b){return b.tmax>a.tmax?b:a;});
+    const cold=valid.reduce(function(a,b){return b.tmin<a.tmin?b:a;});
+    const wet=valid.reduce(function(a,b){return (b.pp||0)>(a.pp||0)?b:a;});
+    set('rk-hot-n',hot.n); set('rk-hot-v',r(hot.tmax)+'°');
+    set('rk-cold-n',cold.n); set('rk-cold-v',r(cold.tmin)+'°');
+    set('rk-wet-n',wet.n); set('rk-wet-v',(wet.pp||0)+'%');
   }
 
   async function seismic(){
@@ -1512,6 +1571,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       if(pv){ try{ await openMeteo(); }catch(_){ } }
     }
     try{ await airQuality(); }catch(e){ console.log('aria offline:',e); }
+    try{ await pollen(); }catch(e){ console.log('pollini n/d:',e); }
     try{ await seismic(); }catch(e){ console.log('sismica offline:',e); }
     try{ await fiumi(); }catch(e){ console.log('fiumi n/d:',e); }
   }
