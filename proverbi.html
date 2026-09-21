@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Proverbi del cielo · Mugello Meteo &amp; Clima</title>
+<meta name="description" content="Proverbi e detti meteorologici della tradizione toscana e mugellana: un calendario contadino letto nei segni del cielo.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2040%2040%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M2%2018%20L11%208%20L18%2015%20L27%206%20L38%2018%22%20stroke%3D%22%230f6b52%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M4%2035%20C12%2027%2015%2035%2021%2030%20C27%2025%2031%2033%2037%2025%22%20stroke%3D%22%232f7cc4%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#7d8a82;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --serif:"Bricolage Grotesque",Georgia,serif;
+    --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --r:18px; --r-sm:13px; --r-pill:999px;
+    --shadow:0 1px 2px rgba(16,38,31,.05),0 1px 12px -6px rgba(16,38,31,.12);
+    --shadow-lift:0 10px 30px -14px rgba(16,38,31,.3);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0c1512; --panel:#111d19; --panel-2:#0f1a16;
+      --ink:#eaf1ec; --ink-soft:#b3c3ba; --ink-faint:#7f9188;
+      --line:#1e2c26; --line-soft:#182420;
+      --pine:#3fae8b; --pine-deep:#8fd9c1; --pine-tint:#132a22;
+      --sky:#6db0e6; --sky-tint:#132430;
+      --amber:#e08a3e; --amber-tint:#2a1d10;
+      --shadow-lift:0 12px 34px -16px rgba(0,0,0,.7);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;
+    -webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:var(--serif);letter-spacing:-.02em;line-height:1.08;margin:0}
+  em{font-style:italic;color:var(--pine)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pine);font-weight:600}
+
+  /* back bar */
+  .topbar{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);position:sticky;top:0;z-index:30}
+  .topbar .wrap{display:flex;align-items:center;gap:16px;height:58px}
+  .back{font-size:13.5px;font-weight:500;color:var(--ink-soft)}
+  .back:hover{color:var(--pine)}
+  .brandline{margin-left:auto;display:flex;align-items:center;gap:9px;font-family:var(--serif);font-weight:700;font-size:15px}
+  .brandline .mk{width:26px;height:26px;flex:none}
+  .brandline .amp{color:var(--sky)}
+
+  /* hero */
+  .hero{padding:52px 0 26px;position:relative;overflow:hidden}
+  .hero .wrap{position:relative;z-index:1}
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px}
+  .hero .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber)}
+  .hero h1{font-size:clamp(38px,6vw,68px);font-weight:800}
+  .hero p.intro{max-width:46ch;color:var(--ink-soft);font-size:16.5px;margin:18px 0 24px}
+  .hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--pine);color:#fff;font-weight:600;
+    font-size:14px;padding:11px 18px;border-radius:var(--r-pill);border:0;cursor:pointer;font-family:var(--sans)}
+  .btn:hover{background:var(--pine-deep)}
+  .tlink{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13.5px;color:var(--pine)}
+  .tlink:hover{text-decoration:underline}
+  .hero-sign{margin-top:26px;display:flex;align-items:center;gap:12px;color:var(--ink-faint);font-size:12.5px}
+  .hero-sign .ln{width:34px;height:1px;background:var(--line)}
+  .hero-cloud{position:absolute;right:-40px;top:10px;width:min(42vw,440px);opacity:.5;z-index:0;color:var(--pine)}
+  @media (max-width:720px){.hero-cloud{display:none}}
+
+  /* stat row */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr) 1.3fr;gap:14px;padding:8px 0 6px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px;box-shadow:var(--shadow)}
+  .stat strong{display:block;font-family:var(--serif);font-weight:800;font-size:34px;letter-spacing:-.03em;line-height:1}
+  .stat span{font-size:12px;color:var(--ink-faint);margin-top:5px;display:block}
+  .stat.note{background:var(--pine-tint);border-color:transparent;display:flex;align-items:center;gap:11px;color:var(--pine-deep)}
+  .stat.note svg{flex:none;width:22px;height:22px}
+  .stat.note span{color:var(--pine-deep);font-weight:600;font-size:12.5px;margin:0}
+  @media (max-width:720px){.stats{grid-template-columns:1fr 1fr}}
+
+  /* generic section */
+  section.blk{padding:34px 0}
+  .sec-kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}
+  .intro-grid h2{font-size:clamp(26px,3.4vw,38px);font-weight:700}
+  .intro-grid p{color:var(--ink-soft);font-size:15.5px;margin:0 0 12px}
+  @media (max-width:720px){.intro-grid{grid-template-columns:1fr;gap:14px}}
+
+  /* season calendar */
+  .season-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+  .season-head h2{font-size:clamp(24px,3vw,34px);font-weight:700}
+  .season-head .note{color:var(--ink-faint);font-size:13px;max-width:22ch;text-align:right}
+  .season-tabs{display:flex;gap:10px;flex-wrap:wrap}
+  .season-tabs button{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 16px;
+    cursor:pointer;font-family:var(--sans);color:var(--ink);font-weight:600;font-size:14px;text-align:left;
+    display:flex;flex-direction:column;gap:3px;transition:.15s;min-width:120px}
+  .season-tabs button span{font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--ink-faint);font-weight:500;text-transform:none}
+  .season-tabs button:hover{border-color:var(--pine)}
+  .season-tabs button.active{background:var(--pine);color:#fff;border-color:var(--pine)}
+  .season-tabs button.active span{color:rgba(255,255,255,.8)}
+  .season-feature{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:center;margin-top:22px;
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+  .season-feature .art{aspect-ratio:1;border-radius:14px;display:grid;place-items:center;background:var(--ac-tint,var(--pine-tint));color:var(--ac,var(--pine))}
+  .season-feature .art svg{width:64%;height:64%}
+  .season-feature .kick{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:6px}
+  .season-feature h3{font-size:24px;font-weight:700;margin-bottom:8px}
+  .season-feature p{color:var(--ink-soft);font-size:15px;margin:0 0 12px}
+  @media (max-width:640px){.season-feature{grid-template-columns:1fr}.season-feature .art{max-width:150px}}
+
+  /* archive */
+  .arch-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+  .arch-head h2{font-size:clamp(24px,3vw,34px);font-weight:700}
+  .search{display:flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--r-pill);padding:9px 16px;min-width:250px;box-shadow:var(--shadow)}
+  .search svg{width:17px;height:17px;color:var(--ink-faint);flex:none}
+  .search input{border:0;background:none;outline:none;font-family:var(--sans);font-size:14px;color:var(--ink);width:100%}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .filt{display:inline-flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--r-pill);padding:7px 13px;cursor:pointer;font-family:var(--sans);font-weight:600;
+    font-size:13px;color:var(--ink-soft);transition:.15s}
+  .filt span{font-family:var(--mono);font-size:11px;background:var(--panel-2);border-radius:20px;padding:1px 7px;color:var(--ink-faint)}
+  .filt:hover{border-color:var(--pine)}
+  .filt.selected{background:var(--pine);color:#fff;border-color:var(--pine)}
+  .filt.selected span{background:rgba(255,255,255,.2);color:#fff}
+  .arch-hint{display:flex;align-items:center;gap:7px;color:var(--ink-faint);font-size:12px;margin-bottom:18px}
+  .arch-hint svg{width:14px;height:14px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:600px){.grid{grid-template-columns:1fr}}
+  .card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:20px;cursor:pointer;transition:.16s;box-shadow:var(--shadow);overflow:hidden;
+    display:flex;flex-direction:column;min-height:186px;border-top:3px solid var(--ac,var(--pine))}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+  .card:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
+  .card .ct{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .card .wico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:var(--ac-tint,var(--pine-tint));color:var(--ac,var(--pine))}
+  .card .wico svg{width:20px;height:20px}
+  .card .cmonth{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--ink-faint);text-align:right;max-width:52%}
+  .card .qm{color:var(--ac,var(--pine));opacity:.28;margin-bottom:2px}
+  .card p.txt{font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.28;color:var(--ink);margin:0 0 auto}
+  .card .cb{display:flex;align-items:center;justify-content:space-between;margin-top:16px;
+    font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
+  .card .cb .idx{display:flex;align-items:center;gap:8px}
+  .card .cb .open{color:var(--ac,var(--pine));font-weight:600}
+  .empty{grid-column:1/-1;text-align:center;color:var(--ink-faint);padding:40px;font-size:14.5px}
+
+  /* accents */
+  .accent-blue{--ac:var(--sky);--ac-tint:var(--sky-tint)}
+  .accent-ochre{--ac:#b58318;--ac-tint:#f6eed6}
+  .accent-terracotta{--ac:#c0522e;--ac-tint:#f6e2d8}
+  .accent-sage{--ac:#4f8a5f;--ac-tint:#e5efe7}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    .accent-ochre{--ac:#d6a53f;--ac-tint:#2a2210}
+    .accent-terracotta{--ac:#e08154;--ac-tint:#2c170f}
+    .accent-sage{--ac:#6fb583;--ac-tint:#132a1c}
+  }}
+
+  /* field note */
+  .fnote{display:grid;grid-template-columns:1fr 1.2fr;gap:26px;align-items:center;
+    background:var(--pine);color:#eafaf3;border-radius:var(--r);padding:30px;box-shadow:var(--shadow-lift)}
+  .fnote .art{display:grid;place-items:center;color:rgba(255,255,255,.85)}
+  .fnote .art svg{width:120px;height:120px}
+  .fnote h2{font-size:clamp(24px,3vw,34px);font-weight:700;color:#fff;margin-bottom:12px}
+  .fnote em{color:#bfe9d8}
+  .fnote p{color:rgba(255,255,255,.86);font-size:15px;margin:0 0 14px}
+  .fnote .tlink{color:#fff}
+  @media (max-width:640px){.fnote{grid-template-columns:1fr;text-align:left}.fnote .art{display:none}}
+
+  /* modal */
+  .backdrop{position:fixed;inset:0;background:rgba(8,20,15,.55);backdrop-filter:blur(3px);z-index:80;
+    display:flex;align-items:flex-start;justify-content:center;padding:5vh 18px;overflow-y:auto}
+  .modal{position:relative;background:var(--panel);border-radius:22px;max-width:640px;width:100%;
+    padding:34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);border-top:4px solid var(--ac,var(--pine));animation:pop .22s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .modal .close{position:absolute;right:18px;top:18px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+    background:var(--panel-2);cursor:pointer;display:grid;place-items:center;color:var(--ink-soft)}
+  .modal .close:hover{color:var(--ink);border-color:var(--pine)}
+  .modal .mk-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.05em;color:var(--ink-faint);text-transform:uppercase}
+  .modal .mk-row .wico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:var(--ac-tint,var(--pine-tint));color:var(--ac,var(--pine))}
+  .modal .wico svg{width:20px;height:20px}
+  .modal .mquote{color:var(--ac,var(--pine));opacity:.3;margin:16px 0 4px}
+  .modal h2{font-family:var(--serif);font-size:clamp(22px,3.6vw,30px);font-weight:700;line-height:1.14;color:var(--ink);margin-bottom:20px}
+  .modal .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px}
+  @media (max-width:560px){.modal{padding:26px 20px}.modal .cols{grid-template-columns:1fr;gap:14px}}
+  .modal h3{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac,var(--pine));font-weight:600;margin-bottom:6px}
+  .modal p{color:var(--ink-soft);font-size:14.5px;margin:0}
+  .modal .reading{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+  .modal .mfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+    border-top:1px solid var(--line);padding-top:16px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+
+  .foot{border-top:1px solid var(--line);padding:26px 0 46px;color:var(--ink-faint);font-size:12.5px}
+  .foot .wrap{display:flex;gap:8px 18px;flex-wrap:wrap;align-items:center}
+  .foot a{color:var(--pine);font-weight:600}
+  .foot .src{margin-left:auto;font-family:var(--mono);font-size:11px}
+</style>
+</head>
+<body>
+
+  <div class="topbar"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brandline">
+      <span class="mk"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M2 18 L11 8 L18 15 L27 6 L38 18" stroke="var(--pine)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 35 C12 27 15 35 21 30 C27 25 31 33 37 25" stroke="var(--sky)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Mugello Meteo <span class="amp">&amp;</span> Clima
+    </span>
+  </div></div>
+
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="eyebrow">Atlante del cielo popolare</div>
+      <h1>Quando il cielo<br><em>parla</em> di noi.</h1>
+      <p class="intro">Proverbi, segni e piccole verità nate dall'osservazione del cielo toscano. Un calendario contadino tramandato di voce in voce, qui nel Mugello.</p>
+      <div class="hero-actions">
+        <a href="#archivio" class="btn">Sfoglia i proverbi
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg></a>
+        <a href="https://ripadiversilia.uoei.it/met/detti.htm" target="_blank" rel="noreferrer" class="tlink">Leggi la fonte
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+      </div>
+      <div class="hero-sign"><span class="ln"></span> Tradizione toscana · dal Mugello</div>
+    </div>
+    <svg class="hero-cloud" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="150" cy="46" r="20"/><path d="M150 8v8M150 76v8M188 46h-8M112 46h8M177 19l-6 6M129 63l6-6M177 73l-6-6M129 29l6 6"/>
+      <path d="M40 118a22 22 0 0 1 4-43 28 28 0 0 1 54 6 19 19 0 0 1-5 37H40z"/>
+      <path d="M56 132l-6 12M78 132l-6 12M100 132l-6 12"/>
+    </svg>
+  </section>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><strong>22</strong><span>detti raccolti</span></div>
+      <div class="stat"><strong>04</strong><span>stagioni osservate</span></div>
+      <div class="stat"><strong>∞</strong><span>generazioni in ascolto</span></div>
+      <div class="stat note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg>
+        <span>La meteorologia<br>prima dei bollettini</span></div>
+    </div>
+  </div>
+
+  <section class="blk" id="archivio-intro"><div class="wrap">
+    <div class="sec-kicker">01 / La raccolta</div>
+    <div class="intro-grid">
+      <h2>Un calendario<br><em>scritto nell'aria.</em></h2>
+      <div>
+        <p>Prima delle mappe e dei radar, il tempo si leggeva nei colori del tramonto, nell'alone della luna, nella direzione del vento.</p>
+        <p>Questi detti sono una memoria viva: non promettono certezze, ma allenano lo sguardo.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="season-head">
+      <div>
+        <div class="sec-kicker">01.5 / Il calendario contadino</div>
+        <h2>L'anno, <em>in quattro segni.</em></h2>
+      </div>
+      <div class="note">Scegli una stagione per attraversare la raccolta</div>
+    </div>
+    <div class="season-tabs" id="seasonTabs"></div>
+    <div id="seasonFeature"></div>
+  </div></section>
+
+  <section class="blk" id="archivio"><div class="wrap">
+    <div class="arch-head">
+      <div>
+        <div class="sec-kicker">02 / L'archivio</div>
+        <h2>I segni, <em>uno a uno.</em></h2>
+      </div>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="Cerca un proverbio…" aria-label="Cerca tra i proverbi">
+      </label>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="arch-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.9L18.7 9.7 14 12l-.9 5.3L10 13.5 5 15l2.6-4.5L5 6l4.9 1.4z"/></svg>
+      Seleziona una card per scoprire la sua storia
+    </div>
+    <div class="grid" id="grid"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="fnote">
+      <div class="art">
+        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 96c14-10 26-10 40 0M6 82c14-10 26-10 40 0"/>
+          <path d="M60 96c18-30 40-40 54-40"/>
+          <circle cx="90" cy="34" r="14"/><path d="M90 8v6M90 54v6M116 34h-6M64 34h6"/>
+          <path d="M74 108c12-8 22-8 34 0"/>
+        </svg>
+      </div>
+      <div>
+        <div class="sec-kicker" style="color:rgba(255,255,255,.7)">03 / Una nota a margine</div>
+        <h2>Memoria, non <em>previsione.</em></h2>
+        <p>I proverbi raccontano un modo attento e poetico di stare nel paesaggio. Sono patrimonio orale e culturale: per sapere che tempo farà oggi, affidati sempre ai dati e alle previsioni meteorologiche.</p>
+        <a class="tlink" href="index.html">Vai alle previsioni del Mugello
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div></section>
+
+  <footer class="foot"><div class="wrap">
+    <span>Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></span>
+    <span class="src">Proverbi: raccolta U.O.E.I. · Ripa di Versilia · elaborazione L. Varlani</span>
+  </div></footer>
+
+  <div id="modalRoot"></div>
+
+<script>
+const SAYINGS = [
+  {text:"Non nevica bene se dalla Corsica non viene",category:"Neve e freddo",month:"Inverno",icon:"snow",accent:"blue",explanation:"La neve più copiosa arriverebbe dalle perturbazioni che entrano da ovest e sud-ovest, dopo aver attraversato il Mediterraneo.",history:"Il detto appartiene alla meteorologia orale dell'Italia centrale: la Corsica funziona come un riferimento geografico concreto per indicare la provenienza delle correnti umide. Nel linguaggio contadino, osservare l'orizzonte occidentale significava capire se una nevicata avrebbe avuto davvero sostanza.",reading:"Oggi la relazione non è una regola assoluta: la neve dipende da temperatura, quota e traiettoria della perturbazione. Resta però un piccolo atlante dei venti costruito sul paesaggio."},
+  {text:"Rosso di sera bel tempo si spera",category:"Segnali del cielo",month:"Ogni stagione",icon:"sun",accent:"ochre",explanation:"Il rosso del tramonto può indicare che le nubi e l'umidità stanno lasciando il cielo verso occidente.",history:"È uno dei proverbi meteorologici più diffusi d'Europa. Nasce dall'osservazione quotidiana del tramonto, quando il contadino cercava un'indicazione semplice per organizzare il lavoro del giorno successivo.",reading:"Il colore dipende dalla diffusione della luce nell'atmosfera: nelle nostre latitudini le perturbazioni arrivano spesso da ovest, ma il segnale va sempre letto insieme a vento e nuvolosità."},
+  {text:"Aria rossa o piove o soffia",category:"Vento e pioggia",month:"Ogni stagione",icon:"wind",accent:"terracotta",explanation:"Un cielo rosso e carico può accompagnare l'arrivo di vento o di una perturbazione.",history:"La forma breve e ritmata è tipica dei detti tramandati a voce: due possibilità opposte, pioggia o vento, racchiuse in una sola immagine. Il rosso non è qui una promessa di bel tempo, ma un segnale di cambiamento.",reading:"L'alba o il tramonto molto colorati possono essere associati a particelle e nubi alte; il proverbio invita soprattutto a non considerare stabile un cielo dall'aspetto inquieto."},
+  {text:"Cielo a pecorelle acqua a catinelle",category:"Segnali del cielo",month:"Ogni stagione",icon:"rain",accent:"blue",explanation:"Le piccole nubi disposte a fiocchi, dette anche cielo a mackerel, possono precedere un peggioramento.",history:"Le 'pecorelle' sono una metafora pastorale: il cielo diventa un gregge ordinato di nuvole. Nelle campagne toscane questo disegno era un segnale da controllare prima di stendere il fieno o partire per i campi.",reading:"L'altocumulus può accompagnare l'avvicinamento di un fronte, ma non annuncia necessariamente pioggia intensa: il proverbio è più utile come invito all'osservazione che come previsione certa."},
+  {text:"Se nevica prima del ceppo (Natale) sette volte sul tetto",category:"Mesi e ricorrenze",month:"Dicembre",icon:"snow",accent:"blue",explanation:"Una nevicata prima di Natale viene trasformata in una conta simbolica: sette passaggi sul tetto durante l'inverno.",history:"Il ceppo, cioè il Natale, è un riferimento centrale del calendario rurale. Numeri come sette amplificano il carattere rituale del proverbio e collegano la neve al ritmo delle feste, della legna e delle provviste.",reading:"Non è una regola predittiva, ma una formula mnemonica che conserva la memoria degli inverni nevosi e del rapporto fra clima e vita domestica."},
+  {text:"Pioggia il terzo aprilante (3 aprile) quaranta giorni durante",category:"Mesi e ricorrenze",month:"Aprile",icon:"rain",accent:"ochre",explanation:"La pioggia del 3 aprile, secondo il detto, inaugurerebbe un lungo periodo umido.",history:"I giorni fissi erano punti di riferimento preziosi prima dei calendari meteorologici. Il 'terzo aprilante' lega una data agricola all'attesa di una primavera sufficientemente piovosa per pascoli e colture.",reading:"Quaranta giorni è un numero tradizionale, non una durata misurata: il proverbio registra la paura della primavera troppo bagnata e insieme il valore della pioggia per la terra."},
+  {text:"Tramontana d'estate e maestrale d'inverno sono due diavoli dell'inferno",category:"Vento e pioggia",month:"Estate / Inverno",icon:"wind",accent:"terracotta",explanation:"Venti percepiti come fuori stagione vengono descritti come particolarmente duri e fastidiosi.",history:"La rosa dei venti contadina nasce da esperienze fisiche: la tramontana porta aria secca e tagliente, il maestrale può spazzare le coste e le vallate. L'immagine dei diavoli rende memorabile il contrasto fra vento e stagione.",reading:"Il proverbio non misura la velocità, ma il disagio: insegna che lo stesso vento può essere benvenuto o temuto a seconda del momento dell'anno."},
+  {text:"Se rannuvola sulla brina prima di buio fa una piovutina",category:"Segnali del cielo",month:"Autunno",icon:"rain",accent:"sage",explanation:"Nuvole che si formano sopra una superficie brinata vengono lette come presagio di una pioggia leggera.",history:"È un proverbio da osservazione serale: la brina segnala aria fredda e calma, mentre il sopraggiungere delle nubi mostra che l'equilibrio sta cambiando. La 'piovutina' è volutamente una previsione misurata.",reading:"L'umidità e la copertura nuvolosa possono effettivamente accompagnare un peggioramento, ma l'esito dipende dalla struttura delle nubi e dal vento in quota."},
+  {text:"Febbrai corto e brutto",category:"Mesi e ricorrenze",month:"Febbraio",icon:"snow",accent:"blue",explanation:"Il mese breve viene associato a un clima incerto, freddo e poco indulgente.",history:"Febbraio è il mese più corto e, nel calendario agricolo, quello in cui l'inverno non è ancora finito. La frase condensata sfrutta la rima implicita fra 'corto' e 'brutto' per fissare una sensazione stagionale.",reading:"Più che una previsione, è un ritratto del mese: la primavera sembra vicina, ma gelate e ritorni del freddo restano possibili."},
+  {text:"Marzo pazzo",category:"Mesi e ricorrenze",month:"Marzo",icon:"wind",accent:"terracotta",explanation:"Marzo è considerato instabile, capace di alternare sole, vento, pioggia e freddo in poco tempo.",history:"La transizione fra inverno e primavera è difficile da governare per chi lavora all'aperto. 'Pazzo' descrive la rapidità dei cambiamenti più che un fenomeno preciso.",reading:"L'instabilità di marzo ha una base reale: il contrasto fra masse d'aria invernali e primi riscaldamenti primaverili favorisce giornate molto variabili."},
+  {text:"Cerchio lontano acqua vicina, cerchio vicino acqua lontana",category:"Segnali del cielo",month:"Ogni stagione",icon:"moon",accent:"ochre",explanation:"L'alone intorno alla luna viene interpretato in base alla sua ampiezza: grande e lontano, pioggia vicina; piccolo e vicino, pioggia più distante.",history:"L'alone lunare era uno degli strumenti notturni più accessibili. Il proverbio trasforma la dimensione apparente del cerchio in una misura intuitiva della distanza dal cambiamento del tempo.",reading:"Gli aloni sono prodotti da cristalli di ghiaccio nelle nubi alte: possono segnalare umidità in arrivo, ma non stabiliscono da soli quando pioverà."},
+  {text:"D'aprile ogni goccia un barile",category:"Mesi e ricorrenze",month:"Aprile",icon:"rain",accent:"blue",explanation:"In aprile ogni pioggia è preziosa perché alimenta la crescita della vegetazione e dei raccolti.",history:"Il 'barile' è un'immagine di abbondanza: una singola goccia sembra piccola, ma la somma delle piogge primaverili riempie la terra di riserve. Il detto nasce da un'economia attenta all'acqua.",reading:"La frase non parla solo di quantità: ricorda che il momento della pioggia conta quanto la pioggia stessa, soprattutto per germinazione e pascoli."},
+  {text:"Di marzo chi non ha scarpe vada scalzo",category:"Mesi e ricorrenze",month:"Marzo",icon:"sun",accent:"sage",explanation:"Il proverbio scherza sulla mitezza improvvisa di alcune giornate di marzo, che sembrano invitare a liberarsi delle scarpe.",history:"L'umorismo è una forma di memoria: dopo i rigori invernali, il primo tepore viene celebrato con un'immagine esagerata. La battuta conserva il desiderio contadino di una stagione nuova.",reading:"Il calore può però essere ingannevole: marzo resta un mese di passaggio, e il proverbio vive proprio nella tensione fra entusiasmo e prudenza."},
+  {text:"Sotto la neve pane sotto la pioggia fame",category:"Neve e freddo",month:"Inverno",icon:"snow",accent:"blue",explanation:"La neve protegge il terreno e può promettere un buon raccolto; una pioggia persistente può invece danneggiare le colture.",history:"La neve era vista come una coperta: proteggeva i semi dal gelo più intenso e, sciogliendosi lentamente, restituiva acqua alla terra. La pioggia fuori stagione poteva invece impedire semine, raccolti e lavori nei campi.",reading:"Il detto distingue la qualità dell'acqua e il suo tempo: non tutta la precipitazione è ugualmente utile all'agricoltura."},
+  {text:"Neve aspetta neve",category:"Neve e freddo",month:"Inverno",icon:"snow",accent:"ochre",explanation:"Una prima nevicata può lasciare al suolo condizioni favorevoli perché ne seguano altre.",history:"La neve persistente modifica il terreno e l'aria vicina: il paesaggio imbiancato diventa un segnale di un inverno che ha preso possesso della stagione. La ripetizione rende il detto quasi una filastrocca.",reading:"La copertura nevosa può raffreddare il suolo e conservare la neve successiva, ma il proverbio va inteso come memoria di sequenze invernali, non come legge fisica."},
+  {text:"Per tutti i santi manicotti e guanti",category:"Mesi e ricorrenze",month:"Novembre",icon:"snow",accent:"terracotta",explanation:"Per la festa di Ognissanti, il 1° novembre, è prudente preparare gli abiti per il freddo.",history:"Le ricorrenze religiose scandivano il lavoro e il guardaroba. Ognissanti cade all'inizio del periodo più umido e freddo, quando nelle case di collina si iniziavano a sentire le prime vere necessità invernali.",reading:"Il proverbio suggerisce una data di passaggio: non dice che farà gelo, ma che il tempo di farsi trovare pronti è arrivato."},
+  {text:"La prima rondine non fa primavera",category:"Mesi e ricorrenze",month:"Primavera",icon:"sun",accent:"sage",explanation:"Un singolo segnale positivo non basta per dichiarare iniziata una stagione stabile.",history:"La rondine è stata per secoli un calendario vivente: il suo ritorno segnava la bella stagione. La frase aggiunge prudenza all'entusiasmo, ricordando che la natura non cambia tutta insieme.",reading:"È anche una metafora universale contro le conclusioni affrettate, nata però da una precisa osservazione fenologica."},
+  {text:"Se per la candelora nevica o fa gragnola dall'inverno siamo fuori; se invece c'è sole o solicello siamo sempre dentro all'inverno",category:"Mesi e ricorrenze",month:"2 febbraio",icon:"sun",accent:"ochre",explanation:"Il tempo del 2 febbraio viene usato come soglia simbolica: brutto tempo annuncerebbe la fine dell'inverno, sole e calma il suo prolungamento.",history:"La Candelora è una delle date meteorologiche più ricche della tradizione europea. La formula toscana rovescia l'intuizione moderna e costruisce un piccolo paradosso facile da ricordare.",reading:"Il proverbio non è coerente in tutte le regioni: proprio questa varietà mostra come le comunità adattassero il calendario alla propria esperienza locale."},
+  {text:"Sole di marzo o ti tingo o ti ammazzo",category:"Mesi e ricorrenze",month:"Marzo",icon:"sun",accent:"terracotta",explanation:"Il sole di marzo può abbronzare o scottare, ma anche illudere con un calore che non esclude il freddo.",history:"La frase usa un tono volutamente drammatico per ricordare che la luce primaverile torna forte prima che l'aria sia davvero mite. È un avvertimento rivolto a chi lavora all'aperto.",reading:"Le giornate più lunghe aumentano rapidamente l'energia solare, mentre il terreno e l'atmosfera restano freddi: da qui il contrasto fra sole e temperatura."},
+  {text:"Neve marzolina dalla sera alla mattina",category:"Mesi e ricorrenze",month:"Marzo",icon:"snow",accent:"blue",explanation:"La neve di marzo può apparire improvvisa la sera e scomparire entro il mattino.",history:"Il detto conserva la memoria delle nevicate tardive, comuni nelle zone collinari e appenniniche. La brevità del fenomeno viene contrapposta alla neve pienamente invernale.",reading:"Con temperature al limite, basta un cambio di irraggiamento o di vento perché la neve attecchisca o si sciolga rapidamente: è una frase sorprendentemente concreta."},
+  {text:"Spogliati quando lo 'zizzolo' si veste",category:"Segnali del cielo",month:"Primavera",icon:"leaf",accent:"sage",explanation:"Quando una pianta o un albero indicato localmente come 'zizzolo' mette le foglie, è tempo di alleggerire l'abbigliamento.",history:"I proverbi rurali usano spesso piante e animali come indicatori stagionali. Il nome può cambiare da valle a valle; ciò che conta è il gesto osservabile della vegetazione che si veste di verde.",reading:"La fenologia resta un indicatore utile: il risveglio delle piante integra temperatura, luce e umidità, anche se non garantisce l'assenza di ritorni freddi."},
+  {text:"Se marzo non marzeggia c'è april che lo pareggia",category:"Mesi e ricorrenze",month:"Marzo / Aprile",icon:"rain",accent:"ochre",explanation:"Se marzo è insolitamente tranquillo, aprile potrebbe recuperare con vento, pioggia e sbalzi di temperatura.",history:"La personificazione dei mesi è tipica del calendario contadino. 'Marzeggia' significa comportarsi da marzo: il proverbio immagina un equilibrio ritardato fra due mesi di passaggio.",reading:"È un modo elegante per ricordare che la variabilità non scompare: può semplicemente spostarsi nel calendario."}
+];
+
+const SEASON_NOTES = {
+  Primavera:{months:"marzo · aprile · maggio",title:"Il risveglio",text:"La terra si veste, le rondini ritornano e il cielo alterna pioggia e sole: la stagione più mutevole dell'anno contadino."},
+  Estate:{months:"giugno · luglio · agosto",title:"Il respiro caldo",text:"Tramontana, maestrale e cieli rossi insegnano a leggere il vento anche quando il sole sembra padrone."},
+  Autunno:{months:"settembre · ottobre · novembre",title:"La svolta",text:"Brina, foglie e aloni della luna accompagnano il passaggio verso il freddo e la stagione delle provviste."},
+  Inverno:{months:"dicembre · gennaio · febbraio",title:"La coperta bianca",text:"Neve, guanti e cieli bassi: l'inverno si osserva nella persistenza del freddo e nella promessa del raccolto."}
+};
+const SEASON_ICON = {Primavera:"leaf",Estate:"sun",Autunno:"rain",Inverno:"snow"};
+
+const ICONS = {
+  sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1l-1.6 1.6M6.7 17.3l-1.6 1.6"/></svg>',
+  rain:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15a4 4 0 0 1 .6-7.96 5 5 0 0 1 9.6 1.2A3.5 3.5 0 0 1 17 15z"/><path d="M8 19l-1 2M12 19l-1 2M16 19l-1 2"/></svg>',
+  snow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14a4 4 0 0 1 .6-7.96 5 5 0 0 1 9.6 1.2A3.5 3.5 0 0 1 17 14z"/><path d="M9 18.5h.01M12 20.5h.01M15 18.5h.01M12 17.5h.01"/></svg>',
+  wind:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a2.5 2.5 0 1 0-2.5-2.5"/><path d="M3 12h15a2.5 2.5 0 1 1-2.5 2.5"/><path d="M3 16h8.5a2 2 0 1 1-2 2"/></svg>',
+  moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8 8 0 1 1 10.2 3.7a6.2 6.2 0 0 0 10.3 10.8z"/></svg>',
+  leaf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20C3 12 8 4 20 4c0 12-8 17-16 16z"/><path d="M4 20c4-6 8-9 12-11"/></svg>'
+};
+const QUOTE = '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M7.5 6C5 6 3 8 3 10.8 3 13.4 4.9 15 7 15c.2 0 .5 0 .7-.1-.5 1.6-1.9 2.9-3.7 3.5l.8 1.6c3.3-1 5.7-3.9 5.7-7.6C10.5 8 9.2 6 7.5 6zm9 0C14 6 12 8 12 10.8c0 2.6 1.9 4.2 4 4.2.2 0 .5 0 .7-.1-.5 1.6-1.9 2.9-3.7 3.5l.8 1.6c3.3-1 5.7-3.9 5.7-7.6C19.5 8 18.2 6 16.5 6z"/></svg>';
+
+function seasonFor(s){
+  const m=s.month;
+  if(m.includes("Marzo")||m.includes("Aprile")||m.includes("Primavera")) return "Primavera";
+  if(m.includes("Estate")) return "Estate";
+  if(m.includes("Autunno")||m.includes("Novembre")) return "Autunno";
+  if(m==="Ogni stagione"){ if(s.icon==="sun") return "Estate"; if(s.icon==="rain") return "Autunno"; if(s.icon==="wind") return "Primavera"; }
+  return "Inverno";
+}
+
+const CATS = ["Tutti","Segnali del cielo","Mesi e ricorrenze","Neve e freddo","Vento e pioggia"];
+let activeCat="Tutti", activeSeason="Tutte", query="";
+
+const $=s=>document.querySelector(s);
+function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function renderFilters(){
+  $("#filters").innerHTML = CATS.map(c=>{
+    const n = c==="Tutti"?SAYINGS.length:SAYINGS.filter(s=>s.category===c).length;
+    return `<button class="filt ${c===activeCat?"selected":""}" data-cat="${esc(c)}">${esc(c)}<span>${n}</span></button>`;
+  }).join("");
+  $("#filters").querySelectorAll("button").forEach(b=>b.onclick=()=>{activeCat=b.dataset.cat;renderFilters();renderGrid();});
+}
+
+function renderSeasonTabs(){
+  const seasons=["Primavera","Estate","Autunno","Inverno"];
+  let html=`<button class="${activeSeason==="Tutte"?"active":""}" data-s="Tutte">Tutto l'anno<span>l'intera raccolta</span></button>`;
+  html+=seasons.map(s=>`<button class="${activeSeason===s?"active":""}" data-s="${s}">${s}<span>${SEASON_NOTES[s].months}</span></button>`).join("");
+  $("#seasonTabs").innerHTML=html;
+  $("#seasonTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{activeSeason=b.dataset.s;renderSeasonTabs();renderSeasonFeature();renderGrid();});
+}
+
+function renderSeasonFeature(){
+  const el=$("#seasonFeature");
+  if(activeSeason==="Tutte"){el.innerHTML="";return;}
+  const n=SEASON_NOTES[activeSeason], ic=SEASON_ICON[activeSeason];
+  const acc = ic==="snow"?"blue":ic==="rain"?"blue":ic==="leaf"?"sage":"ochre";
+  el.innerHTML=`<div class="season-feature accent-${acc}">
+    <div class="art">${ICONS[ic]}</div>
+    <div>
+      <div class="kick">${n.months}</div>
+      <h3>${n.title}</h3>
+      <p>${n.text}</p>
+      <a class="tlink" href="#archivio">Vedi i proverbi di ${activeSeason.toLowerCase()}
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg></a>
+    </div></div>`;
+}
+
+function filtered(){
+  const nq=query.trim().toLowerCase();
+  return SAYINGS.filter(s=>{
+    const cm=activeCat==="Tutti"||s.category===activeCat;
+    const sm=activeSeason==="Tutte"||seasonFor(s)===activeSeason;
+    const qm=!nq||`${s.text} ${s.month} ${s.category}`.toLowerCase().includes(nq);
+    return cm&&sm&&qm;
+  });
+}
+
+function renderGrid(){
+  const list=filtered();
+  if(!list.length){$("#grid").innerHTML=`<div class="empty">Nessun proverbio trovato. Prova con "neve", "marzo" o "luna".</div>`;return;}
+  $("#grid").innerHTML=list.map(s=>{
+    const i=SAYINGS.indexOf(s);
+    return `<article class="card accent-${s.accent}" tabindex="0" role="button" data-i="${i}" aria-label="Apri spiegazione: ${esc(s.text)}">
+      <div class="ct"><span class="wico">${ICONS[s.icon]}</span><span class="cmonth">${esc(s.month)}</span></div>
+      <span class="qm">${QUOTE}</span>
+      <p class="txt">${esc(s.text)}</p>
+      <div class="cb"><span>${esc(s.category)}</span><span class="idx">${String(i+1).padStart(2,"0")} <span class="open">Leggi</span></span></div>
+    </article>`;
+  }).join("");
+  $("#grid").querySelectorAll(".card").forEach(c=>{
+    const open=()=>openModal(+c.dataset.i);
+    c.onclick=open;
+    c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}};
+  });
+}
+
+function openModal(i){
+  const s=SAYINGS[i];
+  $("#modalRoot").innerHTML=`<div class="backdrop" id="backdrop">
+    <section class="modal accent-${s.accent}" role="dialog" aria-modal="true" aria-label="${esc(s.text)}">
+      <button class="close" aria-label="Chiudi">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="mk-row"><span class="wico">${ICONS[s.icon]}</span><span>${esc(s.category)} · ${esc(s.month)}</span></div>
+      <span class="mquote">${QUOTE}</span>
+      <h2>${esc(s.text)}</h2>
+      <div class="cols">
+        <div><h3>Il significato</h3><p>${esc(s.explanation)}</p></div>
+        <div><h3>La storia del detto</h3><p>${esc(s.history)}</p></div>
+      </div>
+      <div class="reading"><h3>Come leggerlo oggi</h3><p>${esc(s.reading)}</p></div>
+      <div class="mfoot"><span>Archivio dei proverbi toscani · ${String(i+1).padStart(2,"0")}/${SAYINGS.length}</span>
+        <button class="tlink" id="nextP" style="background:none;border:0;cursor:pointer;font-family:var(--sans)">Proverbio successivo
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg></button>
+      </div>
+    </section></div>`;
+  const close=()=>{$("#modalRoot").innerHTML="";document.removeEventListener("keydown",onEsc);};
+  const onEsc=e=>{if(e.key==="Escape")close();};
+  document.addEventListener("keydown",onEsc);
+  $("#backdrop").onclick=e=>{if(e.target.id==="backdrop")close();};
+  $("#modalRoot .close").onclick=close;
+  $("#nextP").onclick=()=>openModal((i+1)%SAYINGS.length);
+}
+
+$("#q").addEventListener("input",e=>{query=e.target.value;renderGrid();});
+renderFilters();renderSeasonTabs();renderSeasonFeature();renderGrid();
+
+if("serviceWorker" in navigator){navigator.serviceWorker.getRegistration&&navigator.serviceWorker.register("sw.js").catch(()=>{});}
+</script>
+</body>
+</html>

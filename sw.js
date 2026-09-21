@@ -1,10 +1,13 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v3';
+const CACHE = 'mmc-v10';
 const SHELL = [
   './',
   './index.html',
   './comune.html',
   './neve.html',
+  './clima-firenze.html',
+  './mappe.html',
+  './proverbi.html',
   './icon-192.png',
   './icon-512.png',
   './manifest.webmanifest'
