@@ -73,6 +73,14 @@
   nav.main a{padding:8px 12px;border-radius:var(--r-pill);font-weight:500;font-size:13.5px;color:var(--ink-soft)}
   nav.main a:hover{background:var(--pine-tint);color:var(--pine-deep)}
   nav.main a.active{background:var(--pine);color:#fff}
+  nav.main .dd{position:relative}
+  nav.main .dd>button{font:inherit;padding:8px 12px;border-radius:var(--r-pill);font-weight:500;font-size:13.5px;color:var(--ink-soft);background:none;border:0;cursor:pointer}
+  nav.main .dd>button:hover{background:var(--pine-tint);color:var(--pine-deep)}
+  nav.main .dd-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lift);padding:6px;min-width:190px;display:none;flex-direction:column;gap:2px;z-index:60}
+  nav.main .dd:hover .dd-menu,nav.main .dd.open .dd-menu{display:flex}
+  nav.main .dd-menu .dh{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);padding:6px 10px 3px}
+  nav.main .dd-menu a{padding:8px 10px;border-radius:8px;font-size:13.5px;color:var(--ink-soft);white-space:nowrap;display:flex;align-items:center;gap:8px}
+  nav.main .dd-menu a:hover{background:var(--pine-tint);color:var(--pine-deep)}
   .live-dot{width:7px;height:7px;border-radius:50%;background:#e23b3b;display:inline-block;
     box-shadow:0 0 0 0 rgba(226,59,59,.5);animation:pulse 2s infinite}
   @keyframes pulse{70%{box-shadow:0 0 0 7px rgba(226,59,59,0)}100%{box-shadow:0 0 0 0 rgba(226,59,59,0)}}
@@ -149,8 +157,10 @@
   /* ---- comuni grid ---- */
   .comuni{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   .comune{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px;
-    box-shadow:var(--shadow);display:flex;align-items:center;gap:12px}
-  .comune:hover{box-shadow:var(--shadow-lift);transform:translateY(-1px);transition:.15s}
+    box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;cursor:pointer}
+  .comune:hover{box-shadow:var(--shadow-lift);transform:translateY(-1px);transition:.15s;border-color:var(--pine)}
+  .comune .go{margin-left:8px;color:var(--ink-faint);font-family:var(--mono);font-size:15px;flex:none;transition:.15s}
+  .comune:hover .go{color:var(--pine);transform:translateX(2px)}
   .comune .ci{font-size:30px;flex:none}
   .comune .nm{font-weight:600;font-size:14.5px}
   .comune .mt{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:1px}
@@ -159,6 +169,16 @@
   .comune .tt s{display:block;text-decoration:none;font-size:12px;color:var(--ink-faint)}
 
   /* ---- feature grid ---- */
+  /* ---- confronto comuni ---- */
+  .rank{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .rankcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
+    padding:16px 18px;display:flex;flex-direction:column;gap:1px;position:relative;overflow:hidden}
+  .rankcard .rk-l{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .rankcard .rk-n{font-weight:600;font-size:15px;margin-top:3px}
+  .rankcard .rk-v{font-family:var(--serif);font-weight:800;font-size:28px;line-height:1.1}
+  .rankcard .rk-ico{position:absolute;right:14px;top:13px;font-size:22px;opacity:.55}
+  .rankcard.hot .rk-v{color:var(--amber)} .rankcard.cold .rk-v{color:var(--sky)} .rankcard.wet .rk-v{color:var(--rain)}
+  @media (max-width:640px){ .rank{grid-template-columns:1fr} }
   .feat{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
   .card .ch{display:flex;align-items:center;gap:9px;padding:15px 18px;border-bottom:1px solid var(--line-soft)}
@@ -942,8 +962,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <nav class="main">
       <a href="#comuni" class="active">Previsioni</a>
       <a href="#radar">Radar &amp; dati</a>
+      <a href="./mappe.html">Mappe</a>
+      <a href="./neve.html">Neve</a>
+      <a href="./clima-firenze.html">Clima Firenze</a>
       <a href="#cielo">Cielo</a>
       <a href="#webcam">Webcam</a>
+      <div class="dd">
+        <button type="button" onclick="this.parentNode.classList.toggle('open')">Estremi Toscana ▾</button>
+        <div class="dd-menu">
+          <div class="dh">Estremi termici in Toscana</div>
+          <a href="./estremi-massime.html">🔴 Massime</a>
+          <a href="./estremi-minime.html">🔵 Minime</a>
+        </div>
+      </div>
       <a href="./fb-post.html">Crea post</a>
     </nav>
     <button class="menu-btn" aria-label="Menu">☰</button>
@@ -984,7 +1015,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
       <div class="today">
         <h3>I prossimi 7 giorni <span class="chip ok" id="live-badge" style="display:none;font-size:10px;vertical-align:middle">● live</span></h3>
-        <div class="sub">Borgo San Lorenzo · dati Open-Meteo (modelli ICON + GFS)</div>
+        <div class="sub">Borgo San Lorenzo · modello AI WeatherNext 3 (Google) · <a href="comune.html?c=6" style="color:var(--pine);font-weight:600;text-decoration:none">dettaglio orario →</a></div>
         <div class="week" id="week">
           <div class="day on"><div class="dow" id="d0-dow">Dom</div><div class="di" id="d0-di">⛅</div><div class="hi" id="d0-hi">25°</div><div class="lo" id="d0-lo">12°</div><div class="pp" id="d0-pp">20%</div></div>
           <div class="day"><div class="dow" id="d1-dow">Lun</div><div class="di" id="d1-di">⛈</div><div class="hi" id="d1-hi">23°</div><div class="lo" id="d1-lo">13°</div><div class="pp" id="d1-pp">70%</div></div>
@@ -1003,18 +1034,27 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <section class="sec" id="comuni">
     <div class="sec-head">
       <h2>Previsione per i comuni</h2>
-      <a href="#">Tutti i comuni →</a>
+      <span class="sec-hint" style="font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)">tocca un comune per il dettaglio →</span>
     </div>
     <div class="comuni">
-      <div class="comune"><span class="ci" id="c0-ico">🌦</span><div><div class="nm">Firenzuola</div><div class="mt">422 m · Appennino</div></div><div class="tt"><b id="c0-t">21°</b><s id="c0-sub">10° / 65%</s></div></div>
-      <div class="comune"><span class="ci" id="c1-ico">⛈</span><div><div class="nm">Palazzuolo sul Senio</div><div class="mt">437 m · alta valle</div></div><div class="tt"><b id="c1-t">20°</b><s id="c1-sub">11° / 70%</s></div></div>
-      <div class="comune"><span class="ci" id="c2-ico">⛈</span><div><div class="nm">Marradi</div><div class="mt">328 m · val di Lamone</div></div><div class="tt"><b id="c2-t">22°</b><s id="c2-sub">12° / 60%</s></div></div>
-      <div class="comune"><span class="ci" id="c3-ico">⛅</span><div><div class="nm">Barberino di Mugello</div><div class="mt">268 m · lago</div></div><div class="tt"><b id="c3-t">25°</b><s id="c3-sub">13° / 25%</s></div></div>
-      <div class="comune"><span class="ci" id="c4-ico">⛅</span><div><div class="nm">Scarperia e San Piero</div><div class="mt">292 m · autodromo</div></div><div class="tt"><b id="c4-t">25°</b><s id="c4-sub">12° / 20%</s></div></div>
-      <div class="comune"><span class="ci" id="c5-ico">🌤</span><div><div class="nm">San Piero a Sieve</div><div class="mt">210 m · fondovalle</div></div><div class="tt"><b id="c5-t">26°</b><s id="c5-sub">13° / 15%</s></div></div>
-      <div class="comune"><span class="ci" id="c6-ico">⛅</span><div><div class="nm">Borgo San Lorenzo</div><div class="mt">193 m · fondovalle</div></div><div class="tt"><b id="c6-t">25°</b><s id="c6-sub">12° / 20%</s></div></div>
-      <div class="comune"><span class="ci" id="c7-ico">🌦</span><div><div class="nm">Vicchio</div><div class="mt">203 m · media valle</div></div><div class="tt"><b id="c7-t">24°</b><s id="c7-sub">12° / 35%</s></div></div>
-      <div class="comune"><span class="ci" id="c8-ico">🌦</span><div><div class="nm">Dicomano</div><div class="mt">165 m · confluenza</div></div><div class="tt"><b id="c8-t">25°</b><s id="c8-sub">12° / 40%</s></div></div>
+      <a class="comune" href="comune.html?c=0"><span class="ci" id="c0-ico">🌦</span><div><div class="nm">Firenzuola</div><div class="mt">422 m · Appennino</div></div><div class="tt"><b id="c0-t">21°</b><s id="c0-sub">10° / 65%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=1"><span class="ci" id="c1-ico">⛈</span><div><div class="nm">Palazzuolo sul Senio</div><div class="mt">437 m · alta valle</div></div><div class="tt"><b id="c1-t">20°</b><s id="c1-sub">11° / 70%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=2"><span class="ci" id="c2-ico">⛈</span><div><div class="nm">Marradi</div><div class="mt">328 m · val di Lamone</div></div><div class="tt"><b id="c2-t">22°</b><s id="c2-sub">12° / 60%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=3"><span class="ci" id="c3-ico">⛅</span><div><div class="nm">Barberino di Mugello</div><div class="mt">268 m · lago</div></div><div class="tt"><b id="c3-t">25°</b><s id="c3-sub">13° / 25%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=4"><span class="ci" id="c4-ico">⛅</span><div><div class="nm">Scarperia e San Piero</div><div class="mt">292 m · autodromo</div></div><div class="tt"><b id="c4-t">25°</b><s id="c4-sub">12° / 20%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=5"><span class="ci" id="c5-ico">🌤</span><div><div class="nm">San Piero a Sieve</div><div class="mt">210 m · fondovalle</div></div><div class="tt"><b id="c5-t">26°</b><s id="c5-sub">13° / 15%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=6"><span class="ci" id="c6-ico">⛅</span><div><div class="nm">Borgo San Lorenzo</div><div class="mt">193 m · fondovalle</div></div><div class="tt"><b id="c6-t">25°</b><s id="c6-sub">12° / 20%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=7"><span class="ci" id="c7-ico">🌦</span><div><div class="nm">Vicchio</div><div class="mt">203 m · media valle</div></div><div class="tt"><b id="c7-t">24°</b><s id="c7-sub">12° / 35%</s></div><span class="go">→</span></a>
+      <a class="comune" href="comune.html?c=8"><span class="ci" id="c8-ico">🌦</span><div><div class="nm">Dicomano</div><div class="mt">165 m · confluenza</div></div><div class="tt"><b id="c8-t">25°</b><s id="c8-sub">12° / 40%</s></div><span class="go">→</span></a>
+    </div>
+  </section>
+
+  <section class="sec" id="confronto">
+    <div class="sec-head"><h2>Confronto tra i comuni · oggi</h2><span style="margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)">dai dati di previsione</span></div>
+    <div class="rank">
+      <div class="rankcard hot"><span class="rk-ico">🔥</span><div class="rk-l">Più caldo (massima)</div><div class="rk-n" id="rk-hot-n">Barberino di Mugello</div><div class="rk-v" id="rk-hot-v">26°</div></div>
+      <div class="rankcard cold"><span class="rk-ico">❄️</span><div class="rk-l">Più fresco (minima)</div><div class="rk-n" id="rk-cold-n">Firenzuola</div><div class="rk-v" id="rk-cold-v">10°</div></div>
+      <div class="rankcard wet"><span class="rk-ico">🌧</span><div class="rk-l">Più piovoso (prob.)</div><div class="rk-n" id="rk-wet-n">Palazzuolo sul Senio</div><div class="rk-v" id="rk-wet-v">70%</div></div>
     </div>
   </section>
 
@@ -1032,7 +1072,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       </div>
 
       <div class="card">
-        <div class="ch"><span class="ei">💧</span><h3>Fiumi, invaso e aria</h3><span class="tag">SIR Toscana</span></div>
+        <div class="ch"><span class="ei">💧</span><h3>Fiumi, invaso, aria e pollini</h3><span class="tag">SIR · Open-Meteo</span></div>
         <div class="cb">
           <div class="rows">
             <div class="row">
@@ -1049,6 +1089,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
               <div class="ri" style="background:var(--pine-tint)">🍃</div>
               <div class="rl"><b>Qualità dell'aria</b><span id="aria-sub">PM10 14 µg/m³ · PM2.5 8</span></div>
               <div><span class="chip ok" id="aria-chip">Buona</span></div>
+            </div>
+            <div class="row">
+              <div class="ri" style="background:var(--amber-tint)">🌾</div>
+              <div class="rl"><b>Pollini</b><span id="poll-sub">graminacee, olivo</span></div>
+              <div><span class="chip info" id="poll-chip">Medi</span></div>
             </div>
             <div class="row">
               <div class="ri" style="background:var(--amber-tint)">📳</div>
@@ -1203,6 +1248,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const card=d=>CARD[Math.round(((d%360)/22.5))%16];
 
   let omScarp=null; // cache Open-Meteo per Scarperia (per icona/min-max quando arriva la stazione)
+  let pvScarp=null; // cache previsioni.json per Scarperia (idem, fonte primaria)
 
   function setNowTemp(t){
     const s=dec(t).split(','); set('now-int',s[0]); set('now-dec',','+s[1]+'°');
@@ -1226,6 +1272,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       set('c'+i+'-t', r(cur.temperature_2m)+'°');
       set('c'+i+'-sub', r(dl.temperature_2m_min[0])+'° / '+(dl.precipitation_probability_max[0]??0)+'%');
     });
+
+    // confronto tra comuni (oggi)
+    renderConfronto(COMUNI.map(function(c,i){var d=data[i]; if(!d)return{n:c.n}; var dl2=d.daily; return {n:c.n,tmax:dl2.temperature_2m_max[0],tmin:dl2.temperature_2m_min[0],pp:dl2.precipitation_probability_max[0]};}));
 
     // pannello "adesso": icona/desc/min-max da Scarperia (numeri li mette la stazione se disponibile)
     const s=data[STAZ], cur=s.current, dl=s.daily;
@@ -1260,6 +1309,58 @@ svg.leaflet-image-layer.leaflet-interactive path {
     set('note','● Stazione ISCARP2 (Weather Underground) + previsioni Open-Meteo · aggiornamento automatico · elaborazioni L. Varlani');
   }
 
+  // Fonte primaria previsioni: data/previsioni.json (WeatherNext 3 di Google via
+  // GitHub Action; ripiega su Open-Meteo lato server). Se il file manca o è vuoto
+  // il ciclo usa openMeteo() come fallback lato browser.
+  async function previsioni(){
+    const res=await fetch('./data/previsioni.json',{cache:'no-store'});
+    if(!res.ok) throw new Error('http '+res.status);
+    const P=await res.json();
+    const cs=P.comuni||[];
+    if(!cs.length || !(cs[FCAST]&&cs[FCAST].giorni&&cs[FCAST].giorni.length)) throw new Error('previsioni vuote');
+
+    // card comuni
+    cs.forEach((c,i)=>{
+      const g0=(c.giorni&&c.giorni[0])||{};
+      set('c'+i+'-ico', wmo(c.now?c.now.code:g0.code)[0]);
+      if(c.now&&c.now.t!=null) set('c'+i+'-t', r(c.now.t)+'°');
+      if(g0.tmin!=null) set('c'+i+'-sub', r(g0.tmin)+'° / '+(g0.pp??0)+'%');
+    });
+
+    // pannello "adesso": icona/desc/min-max da Scarperia
+    const s=cs[STAZ]; if(s){
+      const g0=(s.giorni&&s.giorni[0])||{};
+      pvScarp={code:(s.now?s.now.code:g0.code), tmin:g0.tmin, tmax:g0.tmax};
+      set('now-ico', wmo(pvScarp.code)[0]);
+      set('now-desc', wmo(pvScarp.code)[1]+' · min '+r(pvScarp.tmin)+'° / max '+r(pvScarp.tmax)+'°');
+      if(!document.getElementById('now-int').dataset.live && s.now && s.now.t!=null) setNowTemp(s.now.t);
+    }
+
+    // 7 giorni (Borgo)
+    (cs[FCAST].giorni||[]).forEach((d,i)=>{ if(i>6)return;
+      const dt=new Date(d.iso+'T12:00');
+      set('d'+i+'-dow', i===0?'Oggi':DOW[dt.getDay()]);
+      set('d'+i+'-di', wmo(d.code)[0]);
+      set('d'+i+'-hi', r(d.tmax)+'°');
+      set('d'+i+'-lo', r(d.tmin)+'°');
+      set('d'+i+'-pp', (d.pp??0)+'%');
+    });
+
+    // sole
+    if(P.sole&&P.sole.rise&&P.sole.set){
+      set('sun-rise',P.sole.rise.slice(11,16)); set('sun-set',P.sole.set.slice(11,16));
+      const m=(new Date(P.sole.set)-new Date(P.sole.rise))/60000;
+      set('sun-len',Math.floor(m/60)+'h '+r(m%60)+'m');
+    }
+
+    // confronto tra comuni (oggi)
+    renderConfronto(cs.map(function(c){var g=(c.giorni&&c.giorni[0])||{}; return {n:c.n,tmax:g.tmax,tmin:g.tmin,pp:g.pp};}));
+
+    const lb=document.getElementById('live-badge'); if(lb) lb.style.display='inline-block';
+    const src=(P.fonte&&P.fonte.indexOf('WeatherNext')>=0)?'previsioni WeatherNext 3 (Google)':'previsioni '+(P.fonte||'Open-Meteo');
+    set('note','● Stazione ISCARP2 (Weather Underground) + '+src+' · aggiornamento automatico · elaborazioni L. Varlani');
+  }
+
   async function station(){
     const url='https://api.weather.com/v2/pws/observations/current?stationId='+WU_ID+
       '&format=json&units=m&apiKey='+WU_KEY;
@@ -1268,9 +1369,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const m=o.metric;
     setNowTemp(m.temp);
     const app = m.temp>=20 ? m.heatIndex : m.windChill;
-    // desc: usa condizione da Open-Meteo se disponibile, + percepita dalla stazione
-    const cond = omScarp ? wmo(omScarp.current.weather_code)[1] : 'Stazione';
-    const mm = omScarp ? (' · min '+r(omScarp.daily.temperature_2m_min[0])+'° / max '+r(omScarp.daily.temperature_2m_max[0])+'°') : '';
+    // desc: usa condizione/min-max dalle previsioni (WeatherNext o Open-Meteo) + percepita dalla stazione
+    let cond='Stazione', mm='';
+    if(pvScarp){ cond=wmo(pvScarp.code)[1]; mm=' · min '+r(pvScarp.tmin)+'° / max '+r(pvScarp.tmax)+'°'; }
+    else if(omScarp){ cond=wmo(omScarp.current.weather_code)[1]; mm=' · min '+r(omScarp.daily.temperature_2m_min[0])+'° / max '+r(omScarp.daily.temperature_2m_max[0])+'°'; }
     set('now-desc', cond+' · percepita '+r(app)+'°'+mm);
     set('st-wind', r(m.windSpeed)+' km/h '+card(o.winddir));
     set('st-hum', r(o.humidity)+'%');
@@ -1332,6 +1434,35 @@ svg.leaflet-image-layer.leaflet-interactive path {
     else if(a<=60){lab='Moderata';cls='info';} else if(a<=80){lab='Scarsa';cls='warn';}
     else {lab='Pessima';cls='warn';}
     setChip('aria-chip',lab,cls);
+  }
+
+  async function pollen(){
+    const url='https://air-quality-api.open-meteo.com/v1/air-quality?latitude=43.9547&longitude=11.3861'+
+      '&current=alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&timezone=Europe%2FRome';
+    const res=await fetch(url); if(!res.ok) throw new Error('http '+res.status);
+    const c=(await res.json()).current;
+    const TYPES=[['grass_pollen','graminacee'],['olive_pollen','olivo'],['birch_pollen','betulla'],
+      ['alder_pollen','ontano'],['ragweed_pollen','ambrosia'],['mugwort_pollen','artemisia']];
+    const lvl=v=>{v=v||0; if(v<1)return 0; if(v<15)return 1; if(v<50)return 2; if(v<200)return 3; return 4;};
+    const LAB=['Assenti','Bassi','Medi','Alti','Molto alti'];
+    const CLS=['ok','ok','info','warn','warn'];
+    const items=TYPES.map(function(t){return {n:t[1], v:c[t[0]]==null?0:c[t[0]], L:lvl(c[t[0]])};})
+      .filter(function(x){return x.L>0;}).sort(function(a,b){return b.v-a.v;});
+    if(!items.length){ set('poll-sub','nessun polline rilevante ora'); setChip('poll-chip','Bassi','ok'); return; }
+    set('poll-sub', items.slice(0,3).map(function(x){return x.n;}).join(', '));
+    let maxL=0; items.forEach(function(x){ if(x.L>maxL)maxL=x.L; });
+    setChip('poll-chip', LAB[maxL], CLS[maxL]);
+  }
+
+  function renderConfronto(list){
+    const valid=(list||[]).filter(function(x){return x&&x.tmax!=null&&x.tmin!=null;});
+    if(valid.length<2) return;
+    const hot=valid.reduce(function(a,b){return b.tmax>a.tmax?b:a;});
+    const cold=valid.reduce(function(a,b){return b.tmin<a.tmin?b:a;});
+    const wet=valid.reduce(function(a,b){return (b.pp||0)>(a.pp||0)?b:a;});
+    set('rk-hot-n',hot.n); set('rk-hot-v',r(hot.tmax)+'°');
+    set('rk-cold-n',cold.n); set('rk-cold-v',r(cold.tmin)+'°');
+    set('rk-wet-n',wet.n); set('rk-wet-v',(wet.pp||0)+'%');
   }
 
   async function seismic(){
@@ -1450,9 +1581,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   async function cycle(){
-    try{ await openMeteo(); }catch(e){ console.log('open-meteo offline:',e); }
-    try{ await station(); }catch(e){ console.log('stazione offline:',e); }
+    let pv=false;
+    try{ await previsioni(); pv=true; }catch(e){ console.log('previsioni.json n/d:',e); }
+    if(!pv){ try{ await openMeteo(); }catch(e){ console.log('open-meteo offline:',e); } }
+    try{ await station(); }catch(e){
+      console.log('stazione offline:',e);
+      // stazione giù: se avevo solo le previsioni, riempi i numeri del box da Open-Meteo
+      if(pv){ try{ await openMeteo(); }catch(_){ } }
+    }
     try{ await airQuality(); }catch(e){ console.log('aria offline:',e); }
+    try{ await pollen(); }catch(e){ console.log('pollini n/d:',e); }
     try{ await seismic(); }catch(e){ console.log('sismica offline:',e); }
     try{ await fiumi(); }catch(e){ console.log('fiumi n/d:',e); }
   }
