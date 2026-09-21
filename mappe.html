@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mappe meteo · Mugello Meteo & Clima</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#7d8a82;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#67aef0; --sky-tint:#152634;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);}}
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#67aef0; --sky-tint:#152634;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);}
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .back:hover{box-shadow:var(--shadow)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px}
+  .brand b{color:var(--pine)}
+  .head{padding:24px 0 6px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:38px;margin:.12em 0 .05em}
+  .lead{color:var(--ink-soft);font-size:14.5px;max-width:70ch;margin:0}
+  .ctrls{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;margin:18px 0 12px}
+  .cg{display:flex;flex-direction:column;gap:7px}
+  .cl{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-family:inherit;font-size:13px;padding:6px 12px;border-radius:var(--r-pill);border:1px solid var(--line);
+    background:var(--panel);color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--pine)}
+  .chip.on{background:var(--pine);border-color:var(--pine);color:#fff}
+  .src{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .mapcard{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);position:relative;z-index:1}
+  #map{height:520px;width:100%;background:var(--panel-2)}
+  @media (max-width:640px){ #map{height:420px} h1{font-size:30px} }
+  .leaflet-container{font-family:var(--sans)}
+  .bub{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;
+    border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 4px rgba(0,0,0,.35);color:#10241c;font-weight:700}
+  .bub b{font-family:var(--serif);font-size:15px;line-height:1}
+  .bub s{font-size:8.5px;text-decoration:none;font-weight:600;opacity:.75;margin-top:1px;white-space:nowrap}
+  .legend{display:flex;align-items:center;gap:12px;margin:14px 0 40px;flex-wrap:wrap}
+  .legend .bar{height:12px;width:min(360px,70vw);border-radius:6px;border:1px solid var(--line)}
+  .legend .lab{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .legend .ttl{font-weight:600;font-size:13px}
+  .foot{border-top:1px solid var(--line);padding:20px 0 40px;color:var(--ink-faint);font-size:12.5px}
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <header class="head">
+      <div class="eyebrow">Mappe</div>
+      <h1>Mappe meteo del Mugello</h1>
+      <p class="lead">La vallata colpo d'occhio: ogni comune è colorato secondo la previsione del modello AI <strong>WeatherNext 3 (Google)</strong>. Scegli il dato e il giorno.</p>
+
+      <div class="ctrls">
+        <div class="cg">
+          <span class="cl">Dato</span>
+          <div class="chips" id="metric">
+            <button class="chip on" data-m="tmax">Massime</button>
+            <button class="chip" data-m="tmin">Minime</button>
+            <button class="chip" data-m="pp">Pioggia</button>
+          </div>
+        </div>
+        <div class="cg">
+          <span class="cl">Giorno</span>
+          <div class="chips" id="days"></div>
+        </div>
+        <span class="src" id="src">WeatherNext 3 (Google)</span>
+      </div>
+    </header>
+
+    <div class="mapcard"><div id="map"></div></div>
+
+    <div class="legend">
+      <span class="ttl" id="leg-ttl">Temperatura massima</span>
+      <div class="bar" id="leg-bar"></div>
+      <span class="lab" id="leg-min">—</span>
+      <span class="lab" id="leg-max">—</span>
+    </div>
+
+    <p class="foot">Dati previsionali WeatherNext 3 (Google) via Google Weather API — aggiornati automaticamente. Se la chiave non è attiva, ripiega su Open-Meteo. · elaborazioni L. Varlani</p>
+  </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+(function(){
+  const COMUNI=[
+    {n:"Firenzuola",           lat:44.1206,lon:11.3789},
+    {n:"Palazzuolo sul Senio", lat:44.1131,lon:11.5433},
+    {n:"Marradi",              lat:44.0722,lon:11.6142},
+    {n:"Barberino di Mugello", lat:43.9908,lon:11.2386},
+    {n:"Scarperia e San Piero",lat:43.9928,lon:11.3549},
+    {n:"San Piero a Sieve",    lat:43.9631,lon:11.3283},
+    {n:"Borgo San Lorenzo",    lat:43.9547,lon:11.3861},
+    {n:"Vicchio",              lat:43.9339,lon:11.4650},
+    {n:"Dicomano",             lat:43.8917,lon:11.5222},
+  ];
+  const DOW=['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+  const r=n=>Math.round(n);
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+  // colore temperatura: blu(freddo) -> rosso(caldo), -5..35 °C
+  function tempColor(v){
+    if(v==null) return '#c9d2cc';
+    const t=clamp((v+5)/40,0,1);
+    const hue=220-220*t; // 220 blu -> 0 rosso
+    return 'hsl('+hue.toFixed(0)+',72%,52%)';
+  }
+  // colore pioggia: chiaro -> blu intenso, 0..100 %
+  function rainColor(p){
+    if(p==null) return '#c9d2cc';
+    const t=clamp(p/100,0,1);
+    return 'hsl(210,75%,'+(90-52*t).toFixed(0)+'%)';
+  }
+
+  let map, layer, P=null, metric='tmax', day=0;
+
+  function initMap(){
+    map=L.map('map',{scrollWheelZoom:false}).setView([43.99,11.44],10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:16,attribution:'© OpenStreetMap'}).addTo(map);
+    map.on('click',()=>map.scrollWheelZoom.enable());
+    layer=L.layerGroup().addTo(map);
+  }
+
+  function valFor(i){
+    const rec=(P.comuni||[])[i]; if(!rec) return null;
+    const g=(rec.giorni||[])[day]; if(!g) return null;
+    return g[metric];
+  }
+
+  function render(){
+    if(!P) return;
+    layer.clearLayers();
+    const isRain=(metric==='pp');
+    COMUNI.forEach((c,i)=>{
+      const v=valFor(i);
+      const col=isRain?rainColor(v):tempColor(v);
+      const txt=v==null?'–':(isRain?(v+'%'):(r(v)+'°'));
+      const size=isRain?42:40;
+      const light=isRain? (v!=null && v<45) : (v!=null && v>=8 && v<=30);
+      const icon=L.divIcon({className:'',iconSize:[size,size],iconAnchor:[size/2,size/2],
+        html:'<div class="bub" style="width:'+size+'px;height:'+size+'px;background:'+col+';color:'+(light?'#10241c':'#fff')+'">'+
+             '<b>'+txt+'</b><s>'+c.n.split(' ')[0]+'</s></div>'});
+      const m=L.marker([c.lat,c.lon],{icon:icon}).addTo(layer);
+      const rec=(P.comuni||[])[i], g=rec&&rec.giorni?rec.giorni[day]:null;
+      if(g) m.bindPopup('<b>'+c.n+'</b><br>Max '+r(g.tmax)+'° · Min '+r(g.tmin)+'°<br>Prob. pioggia '+(g.pp??0)+'%');
+    });
+    // legenda
+    const ttl=document.getElementById('leg-ttl'), bar=document.getElementById('leg-bar');
+    if(isRain){
+      ttl.textContent='Probabilità di pioggia';
+      bar.style.background='linear-gradient(90deg,'+rainColor(0)+','+rainColor(50)+','+rainColor(100)+')';
+      document.getElementById('leg-min').textContent='0%';
+      document.getElementById('leg-max').textContent='100%';
+    }else{
+      ttl.textContent=(metric==='tmax'?'Temperatura massima':'Temperatura minima');
+      bar.style.background='linear-gradient(90deg,'+tempColor(-5)+','+tempColor(5)+','+tempColor(15)+','+tempColor(25)+','+tempColor(35)+')';
+      document.getElementById('leg-min').textContent='-5°';
+      document.getElementById('leg-max').textContent='35°';
+    }
+    setTimeout(()=>map.invalidateSize(),100);
+  }
+
+  function buildDayChips(){
+    const box=document.getElementById('days'); box.innerHTML='';
+    const ref=(P.comuni&&P.comuni[6]&&P.comuni[6].giorni)||[];
+    ref.slice(0,7).forEach((g,i)=>{
+      const dt=new Date(g.iso+'T12:00');
+      const b=document.createElement('button');
+      b.className='chip'+(i===0?' on':'');
+      b.textContent=i===0?'Oggi':(DOW[dt.getDay()]+' '+dt.getDate());
+      b.onclick=()=>{ day=i; document.querySelectorAll('#days .chip').forEach(x=>x.classList.remove('on')); b.classList.add('on'); render(); };
+      box.appendChild(b);
+    });
+  }
+
+  document.querySelectorAll('#metric .chip').forEach(b=>{
+    b.onclick=()=>{ metric=b.dataset.m; document.querySelectorAll('#metric .chip').forEach(x=>x.classList.remove('on')); b.classList.add('on'); render(); };
+  });
+
+  async function load(){
+    initMap();
+    try{
+      const res=await fetch('./data/previsioni.json',{cache:'no-store'});
+      if(!res.ok) throw 0;
+      P=await res.json();
+      if(P.fonte) document.getElementById('src').textContent=P.fonte;
+      buildDayChips();
+      render();
+    }catch(e){
+      document.getElementById('src').textContent='dati non disponibili';
+    }
+  }
+  load();
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
