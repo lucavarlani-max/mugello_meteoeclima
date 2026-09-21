@@ -73,6 +73,14 @@
   nav.main a{padding:8px 12px;border-radius:var(--r-pill);font-weight:500;font-size:13.5px;color:var(--ink-soft)}
   nav.main a:hover{background:var(--pine-tint);color:var(--pine-deep)}
   nav.main a.active{background:var(--pine);color:#fff}
+  nav.main .dd{position:relative}
+  nav.main .dd>button{font:inherit;padding:8px 12px;border-radius:var(--r-pill);font-weight:500;font-size:13.5px;color:var(--ink-soft);background:none;border:0;cursor:pointer}
+  nav.main .dd>button:hover{background:var(--pine-tint);color:var(--pine-deep)}
+  nav.main .dd-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lift);padding:6px;min-width:190px;display:none;flex-direction:column;gap:2px;z-index:60}
+  nav.main .dd:hover .dd-menu,nav.main .dd.open .dd-menu{display:flex}
+  nav.main .dd-menu .dh{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);padding:6px 10px 3px}
+  nav.main .dd-menu a{padding:8px 10px;border-radius:8px;font-size:13.5px;color:var(--ink-soft);white-space:nowrap;display:flex;align-items:center;gap:8px}
+  nav.main .dd-menu a:hover{background:var(--pine-tint);color:var(--pine-deep)}
   .live-dot{width:7px;height:7px;border-radius:50%;background:#e23b3b;display:inline-block;
     box-shadow:0 0 0 0 rgba(226,59,59,.5);animation:pulse 2s infinite}
   @keyframes pulse{70%{box-shadow:0 0 0 7px rgba(226,59,59,0)}100%{box-shadow:0 0 0 0 rgba(226,59,59,0)}}
@@ -270,6 +278,13 @@
 
   @media (max-width:860px){
     nav.main{display:none} .menu-btn{display:block}
+    header.top.nav-open nav.main{display:flex;flex-direction:column;align-items:stretch;gap:2px;
+      position:absolute;left:0;right:0;top:100%;background:var(--panel);border-bottom:1px solid var(--line);
+      box-shadow:var(--shadow-lift);padding:10px 16px 14px;margin:0;z-index:70}
+    header.top.nav-open nav.main a{padding:11px 10px;border-radius:8px;font-size:15px}
+    header.top.nav-open nav.main .dd{position:static;width:100%}
+    header.top.nav-open nav.main .dd>button{width:100%;text-align:left;padding:11px 10px;font-size:15px}
+    header.top.nav-open nav.main .dd-menu{position:static;display:flex;box-shadow:none;border:0;padding:2px 0 4px 14px;min-width:0;background:none}
     .hero-grid,.feat,.clim{grid-template-columns:1fr}
     .comuni{grid-template-columns:1fr 1fr}
   }
@@ -959,6 +974,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <a href="./clima-firenze.html">Clima Firenze</a>
       <a href="#cielo">Cielo</a>
       <a href="#webcam">Webcam</a>
+      <div class="dd">
+        <button type="button" onclick="this.parentNode.classList.toggle('open')">Estremi Toscana ▾</button>
+        <div class="dd-menu">
+          <div class="dh">Estremi termici in Toscana</div>
+          <a href="./estremi-massime.html">🔴 Massime</a>
+          <a href="./estremi-minime.html">🔵 Minime</a>
+        </div>
+      </div>
       <a href="./fb-post.html">Crea post</a>
     </nav>
     <button class="menu-btn" aria-label="Menu">☰</button>
@@ -1579,6 +1602,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
     try{ await fiumi(); }catch(e){ console.log('fiumi n/d:',e); }
   }
   document.addEventListener('DOMContentLoaded', ()=>{ cycle(); setInterval(cycle, REFRESH); climate().catch(e=>console.log('clima n/d:',e)); invaso().catch(function(){}); allerta().catch(function(){}); webcam().catch(function(){}); });
+})();
+</script>
+<script>
+(function(){
+  var b=document.querySelector('.menu-btn'), h=document.querySelector('header.top');
+  if(b&&h){
+    b.addEventListener('click',function(e){ e.stopPropagation(); h.classList.toggle('nav-open'); });
+    h.querySelectorAll('nav.main a').forEach(function(a){ a.addEventListener('click',function(){ h.classList.remove('nav-open'); }); });
+    document.addEventListener('click',function(e){ if(!h.contains(e.target)) h.classList.remove('nav-open'); });
+  }
 })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
