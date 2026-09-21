@@ -178,7 +178,11 @@
   @media (max-width: 600px) {
     .hero h1 { font-size: 1.35rem; }
     .record-box .value { font-size: 2rem; }
-    nav { padding: 0.5rem; }
+    nav { padding: 0.5rem 0.5rem 0.5rem 92px; }
+    nav .logo { display: none; }
+    a.mmc-back .f { display: none; }
+    a.mmc-back .s { display: inline; }
+    .container, .intro p, .intro { overflow-wrap: anywhere; word-break: break-word; }
   }
 
   /* PRINT */
@@ -194,6 +198,7 @@
 body{font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif !important}
 h1,h2,h3,h4,nav .logo{font-family:'Bricolage Grotesque',Georgia,serif !important;letter-spacing:-.01em}
 .mmc-back{position:fixed;left:14px;top:14px;z-index:3000;font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:600;text-decoration:none;color:#fff;background:rgba(42,26,22,.92);border-radius:999px;padding:8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.mmc-back .s{display:none}
 .mmc-pdf{position:fixed;right:16px;bottom:16px;z-index:3000;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;color:#fff;background:var(--red);border:none;border-radius:999px;padding:11px 18px;box-shadow:0 6px 20px rgba(0,0,0,.28);cursor:pointer}
 .mmc-pdf:hover{filter:brightness(1.08)}
 @page{margin:12mm}
@@ -201,7 +206,7 @@ h1,h2,h3,h4,nav .logo{font-family:'Bricolage Grotesque',Georgia,serif !important
 </style>
 </head>
 <body>
-<a class="mmc-back" href="index.html">← Mugello Meteo &amp; Clima</a><button class="mmc-pdf" onclick="window.print()">⬇ Esporta PDF</button>
+<a class="mmc-back" href="index.html"><span class="f">← Mugello Meteo &amp; Clima</span><span class="s">← Home</span></a><button class="mmc-pdf" onclick="window.print()">⬇ Esporta PDF</button>
 
 <nav>
   <span class="logo">🌡️ Toscana Tmax</span>
