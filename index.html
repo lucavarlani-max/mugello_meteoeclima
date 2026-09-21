@@ -115,10 +115,11 @@
   .allerta a{color:inherit}
   .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:4px}
 
-  .now{background:linear-gradient(155deg,rgba(10,79,60,.80),rgba(15,107,82,.74));color:#fff;border-radius:var(--r);
+  .now{background:linear-gradient(155deg,rgba(10,79,60,.52),rgba(15,107,82,.44));color:#fff;border-radius:var(--r);
     padding:24px;box-shadow:var(--shadow-lift);position:relative;overflow:hidden;
-    -webkit-backdrop-filter:blur(9px) saturate(1.15);backdrop-filter:blur(9px) saturate(1.15);
-    border:1px solid rgba(255,255,255,.16)}
+    -webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);
+    border:1px solid rgba(255,255,255,.20);transition:opacity .4s}
+  .now.swap{opacity:.35}
   .now::after{content:"";position:absolute;right:-40px;top:-50px;width:220px;height:220px;border-radius:50%;
     background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.28),transparent 62%)}
   .now .place{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;opacity:.95}
@@ -1256,6 +1257,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   let omScarp=null; // cache Open-Meteo per Scarperia (per icona/min-max quando arriva la stazione)
   let pvScarp=null; // cache previsioni.json per Scarperia (idem, fonte primaria)
+  let pvComuni=null; // cache previsioni.json per tutti i comuni (per la stazione rotativa)
 
   function setNowTemp(t){
     const s=dec(t).split(','); set('now-int',s[0]); set('now-dec',','+s[1]+'°');
@@ -1323,7 +1325,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const res=await fetch('./data/previsioni.json',{cache:'no-store'});
     if(!res.ok) throw new Error('http '+res.status);
     const P=await res.json();
-    const cs=P.comuni||[];
+    const cs=P.comuni||[]; pvComuni=cs;
     if(!cs.length || !(cs[FCAST]&&cs[FCAST].giorni&&cs[FCAST].giorni.length)) throw new Error('previsioni vuote');
 
     // card comuni
@@ -1368,27 +1370,104 @@ svg.leaflet-image-layer.leaflet-interactive path {
     set('note','● Stazione ISCARP2 (Weather Underground) + '+src+' · aggiornamento automatico · elaborazioni L. Varlani');
   }
 
-  async function station(){
-    const url='https://api.weather.com/v2/pws/observations/current?stationId='+WU_ID+
+  // ---- stazioni Weather Underground: box rotativo tra i comuni ----
+  // ci = indice in COMUNI (per icona/desc/min-max dalle previsioni)
+  const STAZ_ROT=[
+    {n:"Scarperia e San Piero", short:"Scarperia", ci:4, lat:44.0172, lon:11.3333, sid:"ISCARP2"},
+    {n:"Borgo San Lorenzo",     short:"Borgo San Lorenzo", ci:6, lat:43.9547, lon:11.3861},
+    {n:"Vicchio",               short:"Vicchio",   ci:7, lat:43.9339, lon:11.4650},
+    {n:"Marradi",               short:"Marradi",   ci:2, lat:44.0722, lon:11.6142},
+    {n:"Firenzuola",            short:"Firenzuola",ci:0, lat:44.1206, lon:11.3789},
+    {n:"Dicomano",              short:"Dicomano",  ci:8, lat:43.8917, lon:11.5222},
+    {n:"Palazzuolo sul Senio",  short:"Palazzuolo",ci:1, lat:44.1131, lon:11.5433},
+    {n:"Barberino di Mugello",  short:"Barberino", ci:3, lat:43.9908, lon:11.2386},
+  ];
+  let rotIdx=0, rotResolved=false, rotBusy=false;
+
+  function hav(la1,lo1,la2,lo2){
+    const R=6371,p=Math.PI/180;
+    const x=Math.sin((la2-la1)*p/2)**2+Math.cos(la1*p)*Math.cos(la2*p)*Math.sin((lo2-lo1)*p/2)**2;
+    return 2*R*Math.asin(Math.min(1,Math.sqrt(x)));
+  }
+  // scegli SOLO una stazione locale (entro ~6 km) del comune; preferisci la più recente, poi la più vicina
+  async function resolveStation(loc){
+    if(loc.sid) return true;
+    try{
+      const url='https://api.weather.com/v3/location/near?geocode='+loc.lat+','+loc.lon+
+        '&product=pws&format=json&apiKey='+WU_KEY;
+      const res=await fetch(url); if(!res.ok) throw 0;
+      const L=(await res.json()).location; if(!L||!L.stationId) throw 0;
+      const now=Date.now()/1000, cand=[];
+      for(let i=0;i<L.stationId.length;i++){
+        const d=hav(loc.lat,loc.lon,L.latitude[i],L.longitude[i]);
+        if(d<=6) cand.push({sid:L.stationId[i], d:d, t:L.updateTimeUtc[i]||0});
+      }
+      if(!cand.length) return false;
+      const rec=cand.filter(c=>now-c.t<10800).sort((a,b)=>a.d-b.d);
+      const chosen = rec[0] || cand.sort((a,b)=>a.d-b.d)[0];
+      loc.sid=chosen.sid;
+      return true;
+    }catch(e){ return false; }
+  }
+
+  async function resolveAll(){
+    for(const loc of STAZ_ROT){ await resolveStation(loc); }
+    rotResolved=true;
+  }
+
+  async function showStation(loc){
+    if(!loc||!loc.sid) return false;
+    const url='https://api.weather.com/v2/pws/observations/current?stationId='+loc.sid+
       '&format=json&units=m&apiKey='+WU_KEY;
     const res=await fetch(url); if(!res.ok) throw new Error('http '+res.status);
     const j=await res.json(); const o=j.observations&&j.observations[0]; if(!o) throw new Error('no obs');
-    const m=o.metric;
-    setNowTemp(m.temp);
-    const app = m.temp>=20 ? m.heatIndex : m.windChill;
-    // desc: usa condizione/min-max dalle previsioni (WeatherNext o Open-Meteo) + percepita dalla stazione
+    const m=o.metric; if(!m||m.temp==null) throw new Error('no temp');
+    if(o.epoch && (Date.now()/1000 - o.epoch) > 21600) return false; // stazione ferma da >6h: salta
+    // icona/desc/min-max dal comune (previsioni)
+    const pc=pvComuni&&pvComuni[loc.ci]; const g0=pc&&pc.giorni?pc.giorni[0]:null;
     let cond='Stazione', mm='';
-    if(pvScarp){ cond=wmo(pvScarp.code)[1]; mm=' · min '+r(pvScarp.tmin)+'° / max '+r(pvScarp.tmax)+'°'; }
-    else if(omScarp){ cond=wmo(omScarp.current.weather_code)[1]; mm=' · min '+r(omScarp.daily.temperature_2m_min[0])+'° / max '+r(omScarp.daily.temperature_2m_max[0])+'°'; }
-    set('now-desc', cond+' · percepita '+r(app)+'°'+mm);
+    if(g0){ cond=wmo(pc.now?pc.now.code:g0.code)[1]; mm=' · min '+r(g0.tmin)+'° / max '+r(g0.tmax)+'°'; }
+    else if(loc.ci===STAZ && pvScarp){ cond=wmo(pvScarp.code)[1]; mm=' · min '+r(pvScarp.tmin)+'° / max '+r(pvScarp.tmax)+'°'; }
+    const app = m.temp>=20 ? m.heatIndex : m.windChill;
+    setNowTemp(m.temp);
+    set('now-ico', g0?wmo(pc.now?pc.now.code:g0.code)[0]:'⛅');
+    set('now-desc', cond+(app!=null?(' · percepita '+r(app)+'°'):'')+mm);
     set('st-wind', r(m.windSpeed)+' km/h '+card(o.winddir));
     set('st-hum', r(o.humidity)+'%');
     set('st-press', r(m.pressure));
-    let rain = (m.precipTotal!=null) ? m.precipTotal : (omScarp? (omScarp.daily.precipitation_sum[0]||0) : 0);
-    set('st-rain', dec(rain)+' mm');
-    set('now-place','Scarperia · staz. ISCARP2');
+    let rain = (m.precipTotal!=null)? m.precipTotal : (g0? 0 : 0);
+    set('st-rain', dec(rain||0)+' mm');
+    set('now-place', loc.short+' · staz. '+loc.sid);
     set('now-upd','agg. '+(o.obsTimeLocal? o.obsTimeLocal.slice(11,16) : ''));
     document.getElementById('now-int').dataset.live='1';
+    const lb=document.getElementById('live-badge'); if(lb) lb.style.display='inline-block';
+    return true;
+  }
+
+  // compat: cycle() chiama station() → mostra la stazione corrente (risolve al primo giro)
+  async function station(){
+    if(!rotResolved) await resolveAll();
+    await showStation(STAZ_ROT[rotIdx]);
+  }
+
+  // avanza alla prossima stazione valida, con dissolvenza
+  async function rotateNext(){
+    if(rotBusy || !rotResolved) return;
+    rotBusy=true;
+    try{
+      const box=document.querySelector('.now');
+      for(let k=0;k<STAZ_ROT.length;k++){
+        rotIdx=(rotIdx+1)%STAZ_ROT.length;
+        const loc=STAZ_ROT[rotIdx]; if(!loc.sid) continue;
+        try{
+          if(box) box.classList.add('swap');
+          await new Promise(r=>setTimeout(r,220));
+          const ok=await showStation(loc);
+          if(box) box.classList.remove('swap');
+          if(ok) break;
+        }catch(e){ if(box) box.classList.remove('swap'); }
+      }
+    }finally{ rotBusy=false; }
   }
 
 
@@ -1601,7 +1680,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     try{ await seismic(); }catch(e){ console.log('sismica offline:',e); }
     try{ await fiumi(); }catch(e){ console.log('fiumi n/d:',e); }
   }
-  document.addEventListener('DOMContentLoaded', ()=>{ cycle(); setInterval(cycle, REFRESH); climate().catch(e=>console.log('clima n/d:',e)); invaso().catch(function(){}); allerta().catch(function(){}); webcam().catch(function(){}); });
+  document.addEventListener('DOMContentLoaded', ()=>{ cycle(); setInterval(cycle, REFRESH); setInterval(rotateNext, 9000); climate().catch(e=>console.log('clima n/d:',e)); invaso().catch(function(){}); allerta().catch(function(){}); webcam().catch(function(){}); });
 })();
 </script>
 <script>
