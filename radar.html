@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Radar e dati · Mugello Meteo & Clima</title>
+<meta name="description" content="Tutto quello che succede ora sul Mugello: radar e satellite, pioggia nelle prossime 2 ore, fulmini, livelli della Sieve e di Bilancino, qualità dell'aria, pollini e terremoti.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/radar.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Radar e dati in tempo reale sul Mugello">
+<meta property="og:description" content="Tutto quello che succede ora sul Mugello: radar e satellite, pioggia nelle prossime 2 ore, fulmini, livelli della Sieve e di Bilancino, qualità dell&#x27;aria, pollini e terremoti.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/radar.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#6f7c74;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-deep:#1d4f80; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-deep:#7a3c10; --amber-tint:#fbeadc;
+    --red:#b3261e; --red-tint:#fbe4e1;
+    --ok:#1f8a5b; --neutral:#8a9a90; --ctx:#b9c2bc;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1240px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+      --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#8a998f;
+      --line:#26332c; --line-soft:#1e2a24;
+      --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+      --sky:#4f93d6; --sky-deep:#9cc6f0; --sky-tint:#152634;
+      --amber:#c97a36; --amber-deep:#f0b27a; --amber-tint:#2e2115;
+      --red:#e0685e; --red-tint:#3a1a17;
+      --ok:#3ba883; --neutral:#6b7a72; --ctx:#44534a;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#8a998f;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#4f93d6; --sky-deep:#9cc6f0; --sky-tint:#152634;
+    --amber:#c97a36; --amber-deep:#f0b27a; --amber-tint:#2e2115;
+    --red:#e0685e; --red-tint:#3a1a17;
+    --ok:#3ba883; --neutral:#6b7a72; --ctx:#44534a;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light dark;scroll-padding-top:120px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .top{background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px;letter-spacing:-.01em}
+  .brand b{color:var(--pine)}
+  .head{padding:26px 0 6px;display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+  .head>div:first-child{flex:1;min-width:260px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:44px;margin:.1em 0 .1em;line-height:1.05}
+  .lead{color:var(--ink-soft);font-size:15px;max-width:66ch;margin:.3em 0 0}
+  .upd{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:8px 13px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill)}
+  .upd i{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+  .tabs{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);padding:10px 0;margin-top:14px}
+  .tabs nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:5px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);width:max-content;max-width:100%}
+  .tabs nav::-webkit-scrollbar{display:none}
+  .tabs a{flex:none;font-size:13.5px;font-weight:600;color:var(--ink-soft);padding:8px 14px;border-radius:var(--r-pill);text-decoration:none;white-space:nowrap}
+  .tabs a.on{background:var(--pine-tint);color:var(--pine-deep)}
+  section{margin:26px 0 34px}
+  .sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+  .sh h2{font-family:var(--serif);font-weight:700;font-size:24px;margin:0;letter-spacing:-.01em}
+  .sh .src{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;min-width:0;position:relative}
+  .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .big{font-family:var(--serif);font-weight:800;font-size:26px;line-height:1.15;letter-spacing:-.01em}
+  .muted{color:var(--ink-soft)} .faint{color:var(--ink-faint)}
+  .mono{font-family:var(--mono)}
+  .chip{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.03em;padding:3px 9px;border-radius:var(--r-pill);white-space:nowrap}
+  .c-ok{background:var(--pine-tint);color:var(--pine-deep)} .c-info{background:var(--sky-tint);color:var(--sky-deep)}
+  .c-warn{background:var(--amber-tint);color:var(--amber-deep)} .c-alert{background:var(--red-tint);color:var(--red)}
+  .c-neutral{background:var(--line-soft);color:var(--ink-soft)}
+  .loading{color:var(--ink-faint);font-family:var(--mono);font-size:12px}
+
+  /* adesso */
+  .now{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+  .now a{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);border-top:4px solid var(--neutral);padding:14px 16px}
+  .now a:hover{transform:translateY(-1px)}
+  .now a[data-s="ok"]{border-top-color:var(--ok)} .now a[data-s="info"]{border-top-color:var(--sky)}
+  .now a[data-s="warn"]{border-top-color:var(--amber)} .now a[data-s="alert"]{border-top-color:var(--red)}
+  .now .sub{font-size:12.5px;color:var(--ink-soft)}
+
+  /* radar */
+  .two{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:14px}
+  .seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:3px;gap:2px;flex-wrap:wrap}
+  .seg button{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:none;border:0;border-radius:var(--r-pill);padding:7px 13px;cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--pine);color:#fff}
+  .frame{width:100%;height:470px;border:0;border-radius:12px;background:var(--line-soft);display:block;margin-top:12px}
+  .frame.short{height:400px}
+  .ext{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12.5px}
+  .ext a{font-weight:600}
+  select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:7px 10px}
+  .say{padding:12px 14px;border-radius:12px;font-size:14.5px;margin:12px 0}
+  .say.rain{background:var(--sky-tint);color:var(--sky-deep)} .say.dry{background:var(--pine-tint);color:var(--pine-deep)} .say.storm{background:var(--amber-tint);color:var(--amber-deep)}
+  .bars{display:flex;align-items:flex-end;gap:6px;height:150px;border-bottom:1px solid var(--line);padding:0 2px}
+  .bars .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%}
+  .bars .b i{display:block;width:100%;border-radius:4px 4px 0 0;background:var(--sky);min-height:2px}
+  .bars .b i.z{background:var(--ctx)}
+  .bars .b span{font-family:var(--mono);font-size:10px;color:var(--ink-faint)}
+  .bx{display:flex;gap:6px;padding:4px 2px 0}
+  .bx span{flex:1;text-align:center;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint)}
+
+  /* fiumi */
+  .rivers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .rv{display:flex;flex-direction:column;gap:6px}
+  .rv .t{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:600}
+  .rv svg{display:block;width:100%;height:64px}
+  .rv .ln{stroke:var(--sky);stroke-width:2;fill:none;vector-effect:non-scaling-stroke}
+  .rv .th{stroke:var(--amber);stroke-width:1.2;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+  .rv .th2{stroke:var(--red);stroke-width:1.2;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+  .rv .meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .trend{font-size:12.5px;color:var(--ink-soft)}
+
+  /* aria */
+  .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .kv{display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line-soft);font-size:14px}
+  .kv:first-of-type{border-top:0}
+  .pb{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:4px 0}
+  .pb span:first-child{width:92px}
+  .pb .tr{flex:1;height:8px;border-radius:4px;background:var(--line-soft);overflow:hidden}
+  .pb .tr i{display:block;height:8px;border-radius:4px;background:var(--amber)}
+  .pb .v{width:80px;text-align:right;font-size:12px;color:var(--ink-soft)}
+
+  /* terremoti */
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th,td{padding:9px 8px;text-align:right;border-top:1px solid var(--line-soft);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left;white-space:normal}
+  thead th{border-top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  td .s{display:block;font-size:11.5px;color:var(--ink-faint)}
+  .tbl{overflow-x:auto}
+
+  .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
+  @media (max-width:1000px){ .now{grid-template-columns:repeat(3,minmax(0,1fr))} .two{grid-template-columns:1fr} .rivers{grid-template-columns:repeat(2,minmax(0,1fr))} .three{grid-template-columns:1fr} }
+  @media (max-width:640px){
+    .wrap{padding:0 16px} h1{font-size:34px}
+    .now{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px} .now a{padding:12px}
+    .big{font-size:21px} .rivers{grid-template-columns:1fr}
+    .frame{height:380px} .frame.short{height:340px}
+    th.hm,td.hm{display:none}
+  }
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <header class="head">
+      <div>
+        <div class="eyebrow">Monitoraggio in tempo reale</div>
+        <h1>Radar e dati</h1>
+        <p class="lead">Tutto quello che succede ora sul Mugello: radar e satellite, pioggia in arrivo, fulmini, fiumi, aria e terremoti. La pagina si aggiorna da sola ogni 5 minuti.</p>
+      </div>
+      <span class="upd"><i></i><span id="upd">Carico i dati…</span></span>
+    </header>
+
+    <div class="tabs"><nav aria-label="Sezioni della pagina">
+      <a href="#adesso" class="on">Adesso</a><a href="#radar">Radar</a><a href="#pioggia">Pioggia in arrivo</a><a href="#fulmini">Fulmini</a><a href="#fiumi">Fiumi</a><a href="#aria">Aria e pollini</a><a href="#terremoti">Terremoti</a>
+    </nav></div>
+
+    <section id="adesso">
+      <div class="sh"><h2>Adesso sul Mugello</h2><span class="src">tocca un riquadro per i dettagli</span></div>
+      <div class="now">
+        <a class="card" href="#allerta-link" id="n-allerta"><span class="lab">Allerta meteo</span><span class="big">—</span><span class="sub">bollettino Regione Toscana</span></a>
+        <a class="card" href="#pioggia" id="n-pioggia"><span class="lab">Pioggia</span><span class="big">—</span><span class="sub"></span></a>
+        <a class="card" href="#fulmini" id="n-fulmini"><span class="lab">Temporali</span><span class="big">—</span><span class="sub"></span></a>
+        <a class="card" href="#fiumi" id="n-fiumi"><span class="lab">Fiumi</span><span class="big">—</span><span class="sub"></span></a>
+        <a class="card" href="#aria" id="n-aria"><span class="lab">Aria</span><span class="big">—</span><span class="sub"></span></a>
+        <a class="card" href="#terremoti" id="n-sisma"><span class="lab">Terremoti</span><span class="big">—</span><span class="sub"></span></a>
+      </div>
+      <p class="muted" id="allerta-txt" style="margin:12px 0 0;font-size:13.5px"></p>
+    </section>
+
+    <section id="radar">
+      <div class="sh"><h2>Radar e satellite</h2><span class="src">mappe interattive Windy</span></div>
+      <div class="card">
+        <div class="seg" id="seg-map" role="group" aria-label="Tipo di mappa">
+          <button data-v="radar" aria-pressed="true">Radar pioggia</button><button data-v="satellite" aria-pressed="false">Satellite</button><button data-v="rain" aria-pressed="false">Previsione pioggia</button><button data-v="wind" aria-pressed="false">Vento</button>
+        </div>
+        <iframe class="frame" id="map-frame" title="Mappa meteo interattiva del Mugello" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-src=""></iframe>
+        <div class="ext"><span class="faint">Altri radar:</span><a href="https://radar.protezionecivile.gov.it/" target="_blank" rel="noopener">Radar nazionale della Protezione Civile ↗</a><a href="https://www.lamma.toscana.it/" target="_blank" rel="noopener">LaMMA Toscana ↗</a></div>
+      </div>
+    </section>
+
+    <section id="pioggia">
+      <div class="sh"><h2>Pioggia nelle prossime 2 ore</h2><span class="src">previsione ogni 15 minuti · Open-Meteo</span></div>
+      <div class="card">
+        <label class="lab" for="sel-com" style="display:block;margin-bottom:6px">Comune</label>
+        <select id="sel-com"></select>
+        <div class="say" id="rain-say"><span class="loading">Carico la previsione…</span></div>
+        <div class="bars" id="rain-bars" aria-label="Pioggia prevista ogni 15 minuti"></div>
+        <div class="bx" id="rain-x"></div>
+        <p class="faint" style="margin:10px 0 0;font-size:12.5px">Sopra ogni barra i millimetri attesi nel quarto d'ora. È una previsione a brevissimo termine: i rovesci estivi possono spostarsi di qualche chilometro.</p>
+      </div>
+    </section>
+
+    <section id="fulmini">
+      <div class="sh"><h2>Fulmini</h2><span class="src">rete Blitzortung · fulmini degli ultimi minuti</span></div>
+      <div class="two">
+        <div class="card" style="padding:12px">
+          <iframe class="frame short" id="blitz-frame" style="margin-top:0" title="Mappa dei fulmini in tempo reale" loading="lazy" referrerpolicy="no-referrer" data-src="https://map.blitzortung.org/?interactive=0&amp;NavigationControl=0&amp;FullScreenControl=0&amp;Cookies=0&amp;InfoDiv=0&amp;MenuButtonDiv=0&amp;ScaleControl=1&amp;LinksCheckboxChecked=0&amp;LinksRangeValue=10&amp;MapStyle=0&amp;MapStyleRangeValue=0&amp;Advertisment=0#8.3/44.0/11.4"></iframe>
+        </div>
+        <div class="card">
+          <span class="lab">Temporali sul Mugello</span>
+          <div class="big" id="storm-big" style="margin-top:4px">—</div>
+          <div class="say storm" id="storm-say" hidden></div>
+          <div id="storm-hours"></div>
+          <p class="faint" style="font-size:12.5px;margin:10px 0 0">La mappa mostra i fulmini registrati dalla rete di volontari Blitzortung. La previsione dei temporali per le prossime ore è del modello Open-Meteo per Borgo San Lorenzo. <a href="https://www.lightningmaps.org/#m=oss;t=3;s=0;o=0;b=;ts=0;z=9;y=44.0;x=11.4;d=2;dl=2;dc=0;" target="_blank" rel="noopener">Mappa a schermo intero ↗</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="fiumi">
+      <div class="sh"><h2>Fiumi e Bilancino</h2><span class="src" id="fiumi-src">idrometri Centro Funzionale Regione Toscana</span></div>
+      <div class="rivers" id="rivers"><div class="loading">Carico i livelli…</div></div>
+    </section>
+
+    <section id="aria">
+      <div class="sh"><h2>Aria, pollini e raggi UV</h2><span class="src">Open-Meteo Air Quality (CAMS) · Borgo San Lorenzo</span></div>
+      <div class="three">
+        <div class="card"><div style="display:flex;justify-content:space-between"><span class="lab">Qualità dell'aria</span><span class="chip" id="aq-chip"></span></div><div class="big" id="aq-big" style="margin:4px 0 8px">—</div><div id="aq-list"></div></div>
+        <div class="card"><div style="display:flex;justify-content:space-between"><span class="lab">Pollini</span><span class="chip" id="pol-chip"></span></div><div id="pol-list" style="margin-top:8px"></div></div>
+        <div class="card"><div style="display:flex;justify-content:space-between"><span class="lab">Indice UV</span><span class="chip" id="uv-chip"></span></div><div class="big" id="uv-big" style="margin:4px 0 8px">—</div><p class="muted" id="uv-txt" style="margin:0"></p></div>
+      </div>
+    </section>
+
+    <section id="terremoti">
+      <div class="sh"><h2>Terremoti</h2><span class="src">INGV · ultimi 30 giorni entro 50 km dal Mugello, magnitudo 1 o più</span></div>
+      <div class="card"><div class="tbl"><table>
+        <thead><tr><th>Dove</th><th>Magnitudo</th><th class="hm">Profondità</th><th>Quando</th></tr></thead>
+        <tbody id="eq"><tr><td colspan="4" class="loading">Carico gli eventi…</td></tr></tbody>
+      </table></div></div>
+    </section>
+
+    <p class="note">Fonti: Windy · Blitzortung · Open-Meteo · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · elaborazioni L. Varlani</p>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const f1=v=>v==null||isNaN(v)?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−");
+  const f2=v=>v==null||isNaN(v)?"—":v.toFixed(2).replace(".",",").replace("-","−");
+  const hm=d=>String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+  const MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const COMUNI=[{n:"Borgo San Lorenzo",lat:43.9547,lon:11.3861},{n:"Barberino di Mugello",lat:43.9908,lon:11.2386},{n:"Scarperia e San Piero",lat:43.9928,lon:11.3549},
+    {n:"Vicchio",lat:43.9339,lon:11.465},{n:"Dicomano",lat:43.8917,lon:11.5222},{n:"Firenzuola",lat:44.1206,lon:11.3789},{n:"Marradi",lat:44.0722,lon:11.6142},
+    {n:"Palazzuolo sul Senio",lat:44.1131,lon:11.5433},{n:"San Piero a Sieve",lat:43.9631,lon:11.3283}];
+  async function getJSON(url,opt){const c=new AbortController();const t=setTimeout(()=>c.abort(),15000);try{const r=await fetch(url,{signal:c.signal,cache:"no-store",...opt});if(!r.ok)throw new Error("http "+r.status);return await r.json();}finally{clearTimeout(t);}}
+  function tile(id,big,sub,stato){const a=$(id);a.dataset.s=stato||"";a.querySelector(".big").textContent=big;a.querySelector(".sub").textContent=sub||"";}
+  function chip(id,txt,cls){const e=$(id);e.textContent=txt;e.className="chip c-"+cls;}
+
+  /* ---------- schede della pagina ---------- */
+  const tabs=[...document.querySelectorAll(".tabs a")];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){tabs.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id));}});},{rootMargin:"-45% 0px -50% 0px"});
+  document.querySelectorAll("main section[id]").forEach(s=>io.observe(s));
+
+  /* ---------- mappe Windy (caricate solo quando servono) ---------- */
+  const WINDY=ov=>"https://embed.windy.com/embed2.html?lat=44.00&lon=11.40&detailLat=43.95&detailLon=11.39&width=650&height=450&zoom=9&level=surface&overlay="+ov+"&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1";
+  $("map-frame").dataset.src=WINDY("radar");
+  const lazy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!e.target.src){e.target.src=e.target.dataset.src;lazy.unobserve(e.target);}});},{rootMargin:"300px"});
+  lazy.observe($("map-frame")); lazy.observe($("blitz-frame"));
+  $("seg-map").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+    $("seg-map").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));$("map-frame").src=WINDY(b.dataset.v);});
+
+  /* ---------- allerta ---------- */
+  async function allerta(){
+    try{const a=await getJSON("./data/allerta.json?t="+Date.now());
+      const L={verde:["Verde","ok"],gialla:["Gialla","warn"],arancione:["Arancione","alert"],rossa:["Rossa","alert"]}[a.livello]||["—",""];
+      tile("n-allerta",L[0],a.livello==="verde"?"nessuna criticità":(a.rischio||"criticità in corso"),L[1]);
+      const el=$("n-allerta"); el.href=a.link||"#"; el.target="_blank"; el.rel="noopener";
+      $("allerta-txt").innerHTML=esc(a.testo||"")+(a.link?` · <a href="${esc(a.link)}" target="_blank" rel="noopener">bollettino ufficiale ↗</a>`:"");
+    }catch(e){tile("n-allerta","—","dato non disponibile","");}
+  }
+
+  /* ---------- pioggia nelle prossime 2 ore + temporali ---------- */
+  const sel=$("sel-com"); sel.innerHTML=COMUNI.map((c,i)=>`<option value="${i}">${c.n}</option>`).join("");
+  try{const s=localStorage.getItem("radar-comune");if(s!==null&&COMUNI[+s])sel.value=s;}catch(e){}
+  sel.addEventListener("change",()=>{try{localStorage.setItem("radar-comune",sel.value);}catch(e){}pioggia();});
+  async function pioggia(){
+    const c=COMUNI[+sel.value];
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=precipitation,weather_code&minutely_15=precipitation&forecast_minutely_15=12&timezone=Europe%2FRome`;
+    try{
+      const d=await getJSON(url); const now=Date.now();
+      let T=d.minutely_15.time.map(t=>new Date(t)), P=d.minutely_15.precipitation;
+      const k=T.findIndex(t=>t.getTime()+15*60e3>now); T=T.slice(Math.max(0,k),Math.max(0,k)+8); P=P.slice(Math.max(0,k),Math.max(0,k)+8);
+      const max=Math.max(0.5,...P.map(v=>v||0)), first=P.findIndex(v=>v>=0.1), tot=P.reduce((a,b)=>a+(b||0),0), nowRain=(d.current.precipitation||0)>=0.1;
+      $("rain-bars").innerHTML=P.map(v=>`<div class="b"><span>${v>=0.1?f1(v):""}</span><i class="${v>=0.1?"":"z"}" style="height:${Math.max(2,(v||0)/max*120)}px"></i></div>`).join("");
+      $("rain-x").innerHTML=T.map((t,i)=>`<span>${i%2===0?hm(t):""}</span>`).join("");
+      const say=$("rain-say");
+      if(nowRain){say.className="say rain";say.innerHTML=`<b>Sta piovendo a ${esc(c.n)}</b>`+(tot>0?`: circa ${f1(tot)} mm nelle prossime 2 ore.`:", ma dovrebbe smettere a breve.");}
+      else if(first>=0){const pk=P.indexOf(Math.max(...P));say.className="say rain";say.innerHTML=`<b>Pioggia dalle ${hm(T[first])}</b> a ${esc(c.n)}, più intensa verso le ${hm(T[pk])} (${f1(P[pk])} mm in un quarto d'ora).`;}
+      else{say.className="say dry";say.innerHTML=`<b>Nessuna pioggia prevista</b> a ${esc(c.n)} nelle prossime 2 ore.`;}
+      if(+sel.value===0) tile("n-pioggia",nowRain?"Piove":"Non piove",nowRain?`circa ${f1(tot)} mm nelle prossime 2 ore`:(first>=0?`pioggia dalle ${hm(T[first])} a Borgo`:"niente nelle prossime 2 ore"),nowRain||first>=0?"info":"ok");
+    }catch(e){$("rain-say").className="say";$("rain-say").innerHTML='<span class="loading">Previsione non disponibile al momento.</span>';if(+sel.value===0)tile("n-pioggia","—","previsione non disponibile","");}
+  }
+  async function temporali(){
+    const c=COMUNI[0];
+    try{
+      const d=await getJSON(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&hourly=weather_code,precipitation_probability&forecast_hours=6&timezone=Europe%2FRome`);
+      const H=d.hourly.time.map((t,i)=>({t:new Date(t),wc:d.hourly.weather_code[i],pp:d.hourly.precipitation_probability[i]}));
+      const st=H.filter(h=>h.wc>=95);
+      $("storm-big").textContent=st.length?"Temporali possibili":"Nessun temporale previsto";
+      const say=$("storm-say"); say.hidden=!st.length; if(st.length) say.innerHTML=`Possibili temporali dalle <b>${hm(st[0].t)}</b>: guarda la mappa per i fulmini già in corso.`;
+      $("storm-hours").innerHTML=`<div class="lab" style="margin:12px 0 4px">Prossime 6 ore · Borgo San Lorenzo</div>`+H.map(h=>`<div class="kv"><span>${hm(h.t)}</span><span>${h.wc>=95?'<span class="chip c-warn">temporale</span>':(h.pp!=null?`pioggia ${h.pp}%`:"—")}</span></div>`).join("");
+      tile("n-fulmini",st.length?"Possibili":"Nessuno",st.length?`temporali dalle ${hm(st[0].t)}`:"previsto nelle prossime 6 ore",st.length?"warn":"ok");
+    }catch(e){$("storm-big").textContent="—";tile("n-fulmini","—","previsione non disponibile","");}
+  }
+
+  /* ---------- fiumi ---------- */
+  function spark(pts,att,all_){
+    const W=300,H=64; if(pts.length<3) return "";
+    const t0=new Date(pts[0][0]).getTime(), t1=new Date(pts[pts.length-1][0]).getTime();
+    const vs=pts.map(p=>p[1]); let lo=Math.min(...vs), hi=Math.max(...vs);
+    const showTh=att!=null&&att<=hi+(hi-lo+0.3)*2; if(showTh) hi=Math.max(hi,att);
+    if(hi-lo<0.2){const m=(hi+lo)/2;lo=m-0.1;hi=m+0.1;}
+    const X=t=>(t-t0)/Math.max(1,t1-t0)*W, Y=v=>H-4-(v-lo)/(hi-lo)*(H-8);
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${showTh?`<line class="th" x1="0" x2="${W}" y1="${Y(att)}" y2="${Y(att)}"/>`:""}<path class="ln" d="${pts.map((p,i)=>(i?"L":"M")+X(new Date(p[0]).getTime()).toFixed(1)+" "+Y(p[1]).toFixed(1)).join("")}"/></svg>`;
+  }
+  const trendTxt=s=>{const d=s.dh3;if(d==null)return "";if(Math.abs(d)<0.02)return "stabile nelle ultime 3 ore";return (d>0?"in crescita: ":"in calo: ")+(d>0?"+":"")+f2(d)+" m in 3 ore";};
+  async function fiumi(){
+    let html="", worst="ok", fornacina=null;
+    try{
+      const d=await getJSON("./data/idrometri.json?t="+Date.now());
+      d.stazioni.forEach(s=>{
+        const cls={normale:"ok",attenzione:"warn",allarme:"alert"}[s.stato]||"neutral";
+        if(cls==="alert"||(cls==="warn"&&worst==="ok"))worst=cls;
+        if(s.id==="TOS01004641")fornacina=s;
+        const t=s.ora?new Date(s.ora):null;
+        html+=`<div class="card rv"><div class="t"><span>${esc(s.nome)}</span><span class="chip c-${cls}">${esc(s.stato)}</span></div>
+          <div class="big">${f2(s.livello)} m</div>${spark(s.storia||[],s.attenzione,s.allarme)||`<div class="trend">${trendTxt(s)}</div>`}
+          <div class="meta">${(s.storia||[]).length>=3?trendTxt(s)+" · ":""}attenzione ${f2(s.attenzione)} m · allarme ${f2(s.allarme)} m${t?" · ore "+hm(t):""}</div></div>`;
+      });
+    }catch(e){html+=`<div class="card"><span class="loading">Livelli dei fiumi non disponibili al momento.</span></div>`;}
+    try{
+      const [f,b]=await Promise.all([getJSON("./data/fiumi.json?t="+Date.now()),getJSON("./data/bilancino.json?t="+Date.now()).catch(()=>null)]);
+      const bi=f.bilancino; let sp="";
+      if(b&&b.serie&&b.serie.length>3){const S=b.serie.slice(-60).map((p,i)=>[i,p.q]);const lo=Math.min(...S.map(p=>p[1])),hi=Math.max(...S.map(p=>p[1]))+0.01;
+        sp=`<svg viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="ln" d="${S.map((p,i)=>(i?"L":"M")+(p[0]/(S.length-1)*300).toFixed(1)+" "+(60-(p[1]-lo)/(hi-lo)*56).toFixed(1)).join("")}"/></svg>`;}
+      if(bi) html+=`<div class="card rv"><div class="t"><span>Lago di Bilancino</span><span class="chip c-info">quota</span></div>
+        <div class="big">${f1(bi.quota_m_slm)} m</div>${sp}<div class="meta">${bi.volume_mmc!=null?f1(bi.volume_mmc)+" milioni di m³ · ":""}ultimi 60 giorni · dato del ${esc(bi.data)}</div></div>`;
+    }catch(e){}
+    $("rivers").innerHTML=html;
+    const s=fornacina; tile("n-fiumi",s?f2(s.livello)+" m":"—",s?`Sieve a Fornacina · ${s.stato}`:"dato non disponibile",s?({normale:"ok",attenzione:"warn",allarme:"alert"}[s.stato]):"");
+    if(worst!=="ok"&&s) tile("n-fiumi",f2(s.livello)+" m","attenzione su almeno un idrometro",worst);
+  }
+
+  /* ---------- aria, pollini, UV ---------- */
+  async function aria(){
+    const c=COMUNI[0];
+    try{
+      const d=await getJSON(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${c.lat}&longitude=${c.lon}&current=european_aqi,pm10,pm2_5,ozone,nitrogen_dioxide,uv_index,grass_pollen,olive_pollen,birch_pollen,alder_pollen,ragweed_pollen,mugwort_pollen&timezone=Europe%2FRome`);
+      const k=d.current, aqi=k.european_aqi;
+      const A=aqi==null?["—","neutral"]:aqi<=20?["Buona","ok"]:aqi<=40?["Discreta","ok"]:aqi<=60?["Moderata","warn"]:aqi<=80?["Scadente","warn"]:["Pessima","alert"];
+      $("aq-big").textContent=aqi==null?"—":"Indice "+Math.round(aqi); chip("aq-chip",A[0],A[1]);
+      $("aq-list").innerHTML=[["PM10",k.pm10],["PM2.5",k.pm2_5],["Ozono",k.ozone],["Biossido di azoto",k.nitrogen_dioxide]].map(([n,v])=>`<div class="kv"><span>${n}</span><span class="mono">${v==null?"—":Math.round(v)+" µg/m³"}</span></div>`).join("");
+      tile("n-aria",A[0],aqi==null?"":"indice europeo "+Math.round(aqi),A[1]);
+      const P=[["Graminacee",k.grass_pollen],["Olivo",k.olive_pollen],["Betulla",k.birch_pollen],["Ontano",k.alder_pollen],["Ambrosia",k.ragweed_pollen],["Artemisia",k.mugwort_pollen]];
+      const lv=v=>v==null||v<1?0:v<15?1:v<50?2:v<200?3:4, LAB=["assenti","bassi","medi","alti","molto alti"];
+      const mx=Math.max(...P.map(p=>lv(p[1])));
+      chip("pol-chip",LAB[mx][0].toUpperCase()+LAB[mx].slice(1),mx<=1?"ok":mx===2?"warn":"alert");
+      $("pol-list").innerHTML=P.map(([n,v])=>`<div class="pb"><span>${n}</span><span class="tr"><i style="width:${Math.min(100,(lv(v)/4)*100)}%"></i></span><span class="v">${LAB[lv(v)]}</span></div>`).join("");
+      const uv=k.uv_index, U=uv==null?["—","neutral",""]:uv<3?["Basso","ok","Nessuna protezione necessaria."]:uv<6?["Moderato","warn","Crema solare se stai a lungo all'aperto nelle ore centrali."]:uv<8?["Alto","alert","Proteggiti: crema, cappello e occhiali tra le 11 e le 16."]:["Molto alto","alert","Evita il sole nelle ore centrali."];
+      $("uv-big").textContent=uv==null?"—":f1(uv); chip("uv-chip",U[0],U[1]); $("uv-txt").textContent=U[2];
+    }catch(e){$("aq-big").textContent="—";$("aq-list").innerHTML='<span class="loading">Dati non disponibili al momento.</span>';tile("n-aria","—","dato non disponibile","");}
+  }
+
+  /* ---------- terremoti ---------- */
+  const dist=(a,b,c,d)=>{const R=6371,r=Math.PI/180,x=(d-b)*r*Math.cos((a+c)/2*r),y=(c-a)*r;return Math.sqrt(x*x+y*y)*R;};
+  async function terremoti(){
+    const start=new Date(Date.now()-30*864e5).toISOString().slice(0,19);
+    try{
+      const c=new AbortController(); setTimeout(()=>c.abort(),15000);
+      const r=await fetch(`https://webservices.ingv.it/fdsnws/event/1/query?starttime=${start}&latitude=44.00&longitude=11.40&maxradiuskm=50&minmag=1.0&orderby=time&limit=12&format=text`,{signal:c.signal});
+      if(r.status===204){$("eq").innerHTML='<tr><td colspan="4">Nessun terremoto di magnitudo 1 o più negli ultimi 30 giorni.</td></tr>';tile("n-sisma","Nessuno","negli ultimi 30 giorni","ok");return;}
+      if(!r.ok) throw new Error();
+      const E=(await r.text()).split("\n").filter(l=>l&&!l.startsWith("#")).map(l=>{const f=l.split("|");return {t:new Date(f[1]+"Z"),lat:+f[2],lon:+f[3],dep:+f[4],mag:+f[10],luogo:f[12]};});
+      const near=e=>COMUNI.map(c=>({n:c.n,d:dist(e.lat,e.lon,c.lat,c.lon)})).sort((a,b)=>a.d-b.d)[0];
+      $("eq").innerHTML=E.map(e=>{const n=near(e);return `<tr><td><b>${Math.round(n.d)} km da ${esc(n.n)}</b><span class="s">${esc(e.luogo)}</span></td><td><b>${e.mag.toFixed(1).replace(".",",")}</b></td><td class="hm">${Math.round(e.dep)} km</td><td>${e.t.getDate()} ${MES[e.t.getMonth()]} ${hm(e.t)}</td></tr>`;}).join("");
+      const e=E[0], days=Math.floor((Date.now()-e.t)/864e5), n=near(e);
+      tile("n-sisma","M "+e.mag.toFixed(1).replace(".",","),`${days===0?"oggi":days===1?"ieri":days+" giorni fa"} · ${Math.round(n.d)} km da ${n.n}`,e.mag>=3?"warn":"neutral");
+    }catch(err){$("eq").innerHTML='<tr><td colspan="4" class="loading">Dati INGV non disponibili al momento.</td></tr>';tile("n-sisma","—","dato non disponibile","");}
+  }
+
+  function tutto(){ $("upd").textContent="Aggiornato alle "+hm(new Date()); allerta(); pioggia(); temporali(); fiumi(); aria(); terremoti(); }
+  tutto(); setInterval(()=>{ if(!document.hidden) tutto(); },5*60e3);
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
