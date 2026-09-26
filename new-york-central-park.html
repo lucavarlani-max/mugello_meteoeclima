@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Milano Brera 1763–2024 · Serie storiche · Mugello Meteo & Clima</title>
-<meta name="description" content="262 anni di osservazioni giornaliere all'osservatorio di Milano Brera, stazione centenaria OMM (dati ARPA Lombardia): riscaldamento, stagioni, giorni estremi, piogge, record e il meteo di ogni giorno dal 1763.">
-<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/milano-brera.html">
+<title>New York Central Park 1869–2026 · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="Oltre 150 anni di osservazioni giornaliere a Central Park, New York, stazione centenaria OMM (dati NOAA): riscaldamento, stagioni, giorni estremi, pioggia, neve, record e il meteo di ogni giorno dal 1869.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/new-york-central-park.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
-<meta property="og:title" content="Milano Brera, 262 anni di clima (1763–2024)">
-<meta property="og:description" content="262 anni di osservazioni giornaliere all&#x27;osservatorio di Milano Brera: riscaldamento, stagioni, giorni estremi, piogge, record e il meteo di ogni giorno dal 1763.">
-<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/milano-brera.html">
+<meta property="og:title" content="New York Central Park, oltre 150 anni di clima (1869–2026)">
+<meta property="og:description" content="Oltre 150 anni di osservazioni giornaliere a Central Park, New York, stazione centenaria OMM (dati NOAA): riscaldamento, stagioni, giorni estremi, pioggia, neve, record e il meteo di ogni giorno dal 1869.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/new-york-central-park.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -32,16 +32,16 @@
   </div></div>
 
   <main class="wrap">
-    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Milano Brera</div>
+    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / New York Central Park</div>
     <header class="head">
-      <div class="eyebrow">Stazione centenaria · dal 1763</div>
-      <h1>Milano Brera, 1763–2024</h1>
-      <p class="lead">Sul tetto dell'osservatorio astronomico di Brera si misura il tempo ogni giorno dal 1763: insieme a quella dell'osservatorio austriaco di Kremsmünster è la serie meteorologica continua più lunga del mondo. Nel giugno 2021 l'Organizzazione Meteorologica Mondiale l'ha riconosciuta <b>stazione centenaria</b>. <span id="lead-n"></span></p>
+      <div class="eyebrow">Stazione centenaria · dal 1869</div>
+      <h1>New York Central Park, 1869–2026</h1>
+      <p class="lead">Nel cuore di Manhattan, a Central Park, si misura il tempo ogni giorno dal 1° gennaio 1869: è la stazione meteorologica di riferimento di New York, gestita dal National Weather Service, e fa parte delle stazioni centenarie riconosciute dall'Organizzazione Meteorologica Mondiale. <span id="lead-n"></span></p>
       <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
     </header>
 
     <section>
-      <div class="sh"><h2>262 anni in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
+      <div class="sh"><h2>Oltre 150 anni in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
       <p class="sub">Ogni riga verticale è un anno: blu più freddo, rosso più caldo della media 1961–1990. Passa sopra per leggere il valore.</p>
       <div class="card">
         <div class="stripes" id="stripes"></div>
@@ -101,7 +101,7 @@
     </section>
 
     <section>
-      <div class="sh"><h2>Pioggia</h2><span class="src">dal 1901 · totale annuo e media mobile 11 anni</span></div>
+      <div class="sh"><h2>Precipitazioni</h2><span class="src">dal 1869 · totale annuo e media mobile 11 anni</span></div>
       <div class="two">
         <div class="card">
           <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Totale dell'anno</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 anni</span></div>
@@ -115,8 +115,23 @@
       </div>
     </section>
 
+    <section id="sec-neve" hidden>
+      <div class="sh"><h2>Neve</h2><span class="src">neve caduta per stagione invernale (luglio–giugno) · media mobile 11 stagioni</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Neve caduta nella stagione</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 stagioni</span><span><i class="dash"></i>Media 1991–2020</span></div>
+          <div class="chart" id="ch-neve"></div>
+          <p class="note" id="neve-note"></p>
+        </div>
+        <div class="card">
+          <h3>❄️ Le nevicate più abbondanti</h3><table id="r-neve"></table>
+          <h3 style="margin-top:16px">Gli inverni più nevosi</h3><table id="r-stag"></table>
+        </div>
+      </div>
+    </section>
+
     <section>
-      <div class="sh"><h2>I record</h2><span class="src">valori giornalieri 1763–2024</span></div>
+      <div class="sh"><h2>I record</h2><span class="src">valori giornalieri 1869–2026</span></div>
       <div class="three">
         <div class="card"><h3>🔥 I giorni più caldi</h3><table id="r-tx"></table></div>
         <div class="card"><h3>🧊 I giorni più freddi</h3><table id="r-tn"></table></div>
@@ -130,22 +145,10 @@
         <div class="pick">
           <select id="d-day" aria-label="Giorno"></select>
           <select id="d-mon" aria-label="Mese"></select>
-          <label>anno <input type="number" id="d-year" min="1763" max="2024" style="width:90px" aria-label="Anno"></label>
+          <label>anno <input type="number" id="d-year" min="1869" max="2026" style="width:90px" aria-label="Anno"></label>
           <button class="btn" id="d-go" type="button">Mostra</button>
         </div>
-        <div class="res" id="d-res"><span class="loading">Scegli giorno e mese: vedi come è andato quel giorno in tutti gli anni dal 1763.</span></div>
-      </div>
-    </section>
-
-    <section>
-      <div class="sh"><h2>Approfondimenti</h2></div>
-      <div class="card doc">
-        <span class="ico" aria-hidden="true">📄</span>
-        <div class="t">
-          <h3>Le estati a Milano, 1991–2026: l'estate 2026 contro il 2003</h3>
-          <p>Report climatologico sulle temperature estive (giugno–agosto) misurate dal sensore ARPA Lombardia 5897 di Milano: classifiche delle estati più calde, i giorni sopra i 35 °C del 2003 e il confronto con l'estate 2026, la più calda della serie. <b>Nota:</b> è una stazione diversa da Brera, con dati fino al 2026.</p>
-          <a class="btn" href="reports/estati-milano-1991-2026.pdf" target="_blank" rel="noopener">Apri il report (PDF, 7 pagine)</a>
-        </div>
+        <div class="res" id="d-res"><span class="loading">Scegli giorno e mese: vedi come è andato quel giorno in tutti gli anni dal 1869.</span></div>
       </div>
     </section>
 
@@ -153,17 +156,17 @@
       <div class="sh"><h2>Dati e metodo</h2></div>
       <div class="card">
         <ul class="note">
-          <li><b>Fonte:</b> ARPA Lombardia, Servizio Idrometeorologico, che gestisce la stazione di Milano Brera (<a href="https://www.arpalombardia.it/agenda/notizie/2022/brera-osservatorio-centenario-la-misura-del-clima-che-cambia/" target="_blank" rel="noopener">Brera osservatorio centenario, la misura del clima che cambia</a>). Serie giornaliera di temperatura massima, minima e precipitazione dal 1° gennaio 1763 al 31 dicembre 2024; le precipitazioni giornaliere sono disponibili dal 1901.</li>
-          <li>Temperatura media = (massima + minima) / 2. Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330.</li>
-          <li>Pulizia dei dati: 1.003 temperature massime erano registrate moltiplicate per 1000 (es. 38301 invece di 38,3 °C, un errore del separatore delle migliaia) e sono state riportate al valore corretto.</li>
-          <li>Anomalie calcolate rispetto al trentennio 1961–1990; normali climatiche 1961–1990 e 1991–2020.</li>
-          <li>Le misure sono sempre state fatte sullo stesso tetto, ma in oltre due secoli sono cambiati strumenti e ambiente urbano: dal 19 marzo 1990 alla stazione meccanica si è affiancata quella automatica di ARPA Lombardia, che poi l'ha sostituita. I confronti tra epoche molto lontane vanno letti come indicativi.</li>
+          <li><b>Fonte:</b> NOAA, National Centers for Environmental Information, archivio <a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily" target="_blank" rel="noopener">GHCN-Daily</a>, stazione USW00094728 "NY City Central Park" (40,78° N, 73,97° O, 43 m). Serie giornaliera di temperatura massima e minima, precipitazione e neve caduta dal 1° gennaio 1869 al 23 maggio 2026.</li>
+          <li>Temperatura media = (massima + minima) / 2. Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330: il 2026, ancora in corso, compare nei grafici mensili e in "Un giorno nella storia" ma non nelle statistiche annuali.</li>
+          <li>Pulizia dei dati: esclusi i 34 valori di temperatura che NOAA segnala come dubbi (flag di qualità).</li>
+          <li>Le precipitazioni comprendono la neve fusa. La neve è sommata per stagione invernale, da luglio a giugno (es. inverno 1995/96); gli inverni con misure incomplete sono esclusi.</li>
+          <li>Anomalie calcolate rispetto al trentennio 1961–1990; normali climatiche 1961–1990 e 1991–2020. In oltre 150 anni sono cambiati strumenti e ambiente urbano intorno al parco: i confronti tra epoche lontane vanno letti come indicativi.</li>
         </ul>
         <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn ghost" href="data/serie/milano-brera.csv" download>⬇ Serie giornaliera (CSV)</a>
-          <a class="btn ghost" href="data/serie/milano-brera.json" download>⬇ Aggregati annuali e mensili (JSON)</a>
+          <a class="btn ghost" href="data/serie/new-york-central-park.csv" download>⬇ Serie giornaliera (CSV)</a>
+          <a class="btn ghost" href="data/serie/new-york-central-park.json" download>⬇ Aggregati annuali e mensili (JSON)</a>
         </p>
-        <p class="note">Dati ARPA Lombardia · elaborazioni L. Varlani.</p>
+        <p class="note">Dati NOAA NCEI · elaborazioni L. Varlani.</p>
       </div>
     </section>
   </main>
@@ -171,8 +174,8 @@
   <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="serie-storiche.html">serie storiche</a> · <a href="index.html">torna alla home</a></div></footer>
 
 <script>
-window.SERIE={slug:"milano-brera",nome:"Milano Brera",citta:"Milano",luogo:"a Brera",
-  early:[1763,1850],epoche:[[1763,1849],[1850,1949],[1950,1999],[2000,2024]],tacche:[[1850,1950],[1800,1850,1900,1950,2000]]};
+window.SERIE={slug:"new-york-central-park",nome:"New York Central Park",citta:"New York",luogo:"a Central Park",precNome:"Precipitazioni",
+  early:[1869,1900],epoche:[[1869,1899],[1900,1949],[1950,1999],[2000,2025]],tacche:[[1900,1950,2000],[1900,1925,1950,1975,2000]]};
 </script>
 <script src="serie-storica.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>

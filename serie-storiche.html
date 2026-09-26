@@ -122,13 +122,23 @@
     </header>
 
     <div class="grid">
-      <a class="st" href="milano-brera.html" id="card-brera">
-        <div class="band" id="band-brera" aria-hidden="true"></div>
+      <a class="st" href="milano-brera.html" data-serie="milano-brera" data-early="1763-1850">
+        <div class="band" aria-hidden="true"></div>
         <div class="body">
           <div class="years">1763 – 2024 · LOMBARDIA</div>
           <h2>Milano Brera</h2>
           <p>Con Kremsmünster è la serie meteorologica continua più lunga del mondo, stazione centenaria OMM dal 2021: 262 anni di temperature giornaliere e oltre un secolo di piogge. Riscaldamento, stagioni, giorni estremi, record e il meteo di ogni giorno dal 1763.</p>
-          <div class="kpi" id="kpi-brera"></div>
+          <div class="kpi"></div>
+          <span class="go">Apri l'analisi →</span>
+        </div>
+      </a>
+      <a class="st" href="new-york-central-park.html" data-serie="new-york-central-park" data-early="1869-1900">
+        <div class="band" aria-hidden="true"></div>
+        <div class="body">
+          <div class="years">1869 – 2026 · STATI UNITI</div>
+          <h2>New York Central Park</h2>
+          <p>La stazione di riferimento di New York, nel cuore di Manhattan: oltre 150 anni di temperature, precipitazioni e neve giorno per giorno. Riscaldamento, stagioni, giorni estremi, nevicate storiche e record dal 1869.</p>
+          <div class="kpi"></div>
           <span class="go">Apri l'analisi →</span>
         </div>
       </a>
@@ -168,25 +178,30 @@
   const mix=(a,b,t)=>"rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";
   const f1=v=>(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−");
   const mean=xs=>xs.reduce((a,b)=>a+b,0)/xs.length;
-  let A=null;
+  const SERIE=[];
   function band(){
-    if(!A) return; const el=document.getElementById("band-brera"), W=el.clientWidth, H=el.clientHeight, bw=W/A.length;
-    const base=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a.tm)), c=hex(css("--cold")), n=hex(css("--neutral")), w=hex(css("--warm"));
-    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`+A.map((a,i)=>{const t=Math.max(-1,Math.min(1,(a.tm-base)/2));
-      return `<rect x="${(i*bw).toFixed(2)}" width="${(bw+.6).toFixed(2)}" height="${H}" fill="${t<0?mix(n,c,-t):mix(n,w,t)}"/>`;}).join("")+`</svg>`;
+    SERIE.forEach(({el,A})=>{
+      const b=el.querySelector(".band"), W=b.clientWidth, H=b.clientHeight, bw=W/A.length;
+      const base=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a.tm)), c=hex(css("--cold")), n=hex(css("--neutral")), w=hex(css("--warm"));
+      b.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`+A.map((a,i)=>{const t=Math.max(-1,Math.min(1,(a.tm-base)/2));
+        return `<rect x="${(i*bw).toFixed(2)}" width="${(bw+.6).toFixed(2)}" height="${H}" fill="${t<0?mix(n,c,-t):mix(n,w,t)}"/>`;}).join("")+`</svg>`;
+    });
   }
-  fetch("./data/serie/milano-brera.json").then(r=>r.json()).then(d=>{
-    A=d.anni.filter(a=>a.tm!=null); band();
-    const early=mean(A.filter(a=>a.y<=1850).map(a=>a.tm)), recent=mean(A.filter(a=>a.y>=1991&&a.y<=2020).map(a=>a.tm));
-    document.getElementById("kpi-brera").innerHTML=
-      `<div><b>+${f1(recent-early)} °C</b>riscaldamento dal 1763–1850</div><div><b>${f1(d.record.tmax[0].v)} °C</b>record di caldo</div><div><b>${f1(d.record.tmin[0].v)} °C</b>record di freddo</div>`;
-  }).catch(()=>{});
+  document.querySelectorAll("[data-serie]").forEach(el=>{
+    const [e0,e1]=el.dataset.early.split("-").map(Number);
+    fetch("./data/serie/"+el.dataset.serie+".json").then(r=>r.json()).then(d=>{
+      const A=d.anni.filter(a=>a.tm!=null); SERIE.push({el,A}); band();
+      const early=mean(A.filter(a=>a.y>=e0&&a.y<=e1).map(a=>a.tm)), recent=mean(A.filter(a=>a.y>=1991&&a.y<=2020).map(a=>a.tm));
+      el.querySelector(".kpi").innerHTML=
+        `<div><b>+${f1(recent-early)} °C</b>riscaldamento dal ${e0}–${e1}</div><div><b>${f1(d.record.tmax[0].v)} °C</b>record di caldo</div><div><b>${f1(d.record.tmin[0].v)} °C</b>record di freddo</div>`;
+    }).catch(()=>{});
+  });
   let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(band,150);});
   if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",band);
 })();
 </script>
 <script src="wmo-catalogo.js"></script>
-<script>WMOCat.mount({stats:"#wc-stats",map:"#wc-map",italia:"#wc-it",links:{"Osservatorio Astronomico di Brera-Milano":"milano-brera.html"}});</script>
+<script>WMOCat.mount({stats:"#wc-stats",map:"#wc-map",italia:"#wc-it",links:{"Osservatorio Astronomico di Brera-Milano":"milano-brera.html","New York City Central Park":"new-york-central-park.html"}});</script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
 </body>
 </html>

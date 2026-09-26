@@ -25,7 +25,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   classifiche, anomalie rispetto alla quota, grafico temperatura/quota, andamento giorno
   per giorno e download per Excel. Stazioni della zona M (Mugello-Val di Sieve) in evidenza.
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
-  una pagina per stazione. Prima stazione: **Milano Brera 1763–2024** (`milano-brera.html`):
+  una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
+  **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve).
+  Per ogni stazione:
   strisce del riscaldamento, temperatura annua, mese per mese e per stagione, giorni estremi,
   pioggia, normali climatiche, record e "un giorno nella storia". Approfondimento PDF sulle
   estati a Milano 1991–2026 (`reports/`).
@@ -133,11 +135,17 @@ Stazione ISCARP2 (Weather Underground) · WeatherNext 3 / Google Weather API · 
 
 ## Aggiungere una stazione centenaria
 
-1. Metti il CSV giornaliero (colonne `year,month,day,prec,tempMax,tempMin`, `-99.9` = mancante)
-   in `data/serie/`.
-2. Esegui `python scripts/build_serie.py data/serie/<file>.csv <slug>`: scrive
-   `data/serie/<slug>.csv` (ripulito) e `data/serie/<slug>.json` (aggregati, record, normali).
-3. Duplica `milano-brera.html` come `<slug>.html`, cambia titolo, testi e il nome del file dati,
-   e aggiungi la scheda in `serie-storiche.html`. Per evidenziarla su mappa e catalogo,
-   aggiungi il nome OMM della stazione e la pagina in `links` nelle chiamate a `WMOCat.mount`
-   (`serie-storiche.html` e `stazioni-centenarie.html`).
+1. Metti il CSV giornaliero in una cartella qualsiasi. Formati accettati: ARPA
+   (`year,month,day,prec,tempMax,tempMin`, `-99.9` = mancante) oppure export NOAA
+   GHCN-Daily in unità metriche (colonne `DATE, PRCP, TMAX, TMIN, SNOW`).
+2. Esegui `python scripts/build_serie.py <file>.csv <slug>`: scrive
+   `data/serie/<slug>.csv` (ripulito) e `data/serie/<slug>.json` (aggregati, record,
+   normali e, se c'è, la neve per stagione).
+3. Duplica `new-york-central-park.html` (o `milano-brera.html`) come `<slug>.html` e cambia
+   titoli, testi e l'oggetto `window.SERIE` in fondo alla pagina (slug, nome, periodo
+   iniziale per il confronto del riscaldamento, epoche della tabella, tacche delle strisce).
+   Grafici e tabelle sono in `serie-storica.js` / `serie-storica.css`, condivisi da tutte
+   le stazioni; la sezione neve compare da sola se i dati la contengono.
+4. Aggiungi la scheda in `serie-storiche.html` (attributi `data-serie` e `data-early`) e il
+   nome OMM della stazione in `links` nelle chiamate a `WMOCat.mount`
+   (`serie-storiche.html` e `stazioni-centenarie.html`) per evidenziarla sulla mappa.
