@@ -29,6 +29,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   strisce del riscaldamento, temperatura annua, mese per mese e per stagione, giorni estremi,
   pioggia, normali climatiche, record e "un giorno nella storia". Approfondimento PDF sulle
   estati a Milano 1991–2026 (`reports/`).
+  La pagina mostra anche un'anteprima del catalogo mondiale (numeri, mappa, 22 stazioni
+  italiane); il catalogo completo delle 474 stazioni centenarie OMM, con mappa Mondo/Europa,
+  filtri, tabella e scheda di ogni stazione, è in `stazioni-centenarie.html`
+  (componente `wmo-catalogo.js`, dati in `data/serie/wmo-centenarie.json`).
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
   e pubblicare su Facebook, con didascalia automatica.
 - **PWA** — installabile su telefono (icona in home, apertura a schermo intero, cache offline della struttura).
@@ -134,4 +138,6 @@ Stazione ISCARP2 (Weather Underground) · WeatherNext 3 / Google Weather API · 
 2. Esegui `python scripts/build_serie.py data/serie/<file>.csv <slug>`: scrive
    `data/serie/<slug>.csv` (ripulito) e `data/serie/<slug>.json` (aggregati, record, normali).
 3. Duplica `milano-brera.html` come `<slug>.html`, cambia titolo, testi e il nome del file dati,
-   e aggiungi la scheda in `serie-storiche.html`.
+   e aggiungi la scheda in `serie-storiche.html`. Per evidenziarla su mappa e catalogo,
+   aggiungi il nome OMM della stazione e la pagina in `links` nelle chiamate a `WMOCat.mount`
+   (`serie-storiche.html` e `stazioni-centenarie.html`).

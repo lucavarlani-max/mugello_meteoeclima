@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Serie storiche · Mugello Meteo & Clima</title>
-<meta name="description" content="Analisi delle stazioni meteorologiche centenarie: secoli di osservazioni giornaliere per capire come è cambiato il clima. Si parte da Milano Brera, 1763–2024.">
-<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/serie-storiche.html">
+<title>Stazioni centenarie OMM · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="Le 474 stazioni centenarie riconosciute dall'Organizzazione Meteorologica Mondiale: mappa, elenco completo con filtri e scheda di ogni stazione, 22 in Italia.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-centenarie.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
-<meta property="og:title" content="Serie storiche · Stazioni centenarie">
-<meta property="og:description" content="Analisi delle stazioni meteorologiche centenarie: secoli di osservazioni giornaliere per capire come è cambiato il clima. Si parte da Milano Brera, 1763–2024.">
-<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/serie-storiche.html">
+<meta property="og:title" content="Le 474 stazioni centenarie del mondo">
+<meta property="og:description" content="Le 474 stazioni centenarie riconosciute dall&#x27;Organizzazione Meteorologica Mondiale: mappa, elenco completo con filtri e scheda di ogni stazione, 22 in Italia.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-centenarie.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -102,91 +102,37 @@
   .sh .src{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
   .sub2{color:var(--ink-soft);margin:0 0 14px;max-width:80ch}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;min-width:0}
+  .twoc{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:14px;margin-top:14px}
   .card h3{font-family:var(--serif);font-size:17px;margin:0 0 8px}
   .more{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#fff;background:var(--pine);border-radius:var(--r-pill);padding:10px 18px;text-decoration:none;margin-top:14px}
+  @media (max-width:900px){ .twoc{grid-template-columns:1fr} }
   .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px;margin-top:30px}
   @media (max-width:640px){ .wrap{padding:0 16px} h1{font-size:32px} .grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
   <div class="top"><div class="wrap">
-    <a class="back" href="index.html">← Torna alla home</a>
+    <a class="back" href="serie-storiche.html">← Serie storiche</a>
     <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
   </div></div>
 
   <main class="wrap">
-    <header class="head">
-      <div class="eyebrow">Stazioni centenarie</div>
-      <h1>Serie storiche</h1>
-      <p class="lead">Alcune stazioni meteorologiche misurano il tempo da più di cento anni, qualcuna da oltre due secoli. Sono l'archivio più prezioso per capire come è cambiato il clima: qui raccolgo, una alla volta, le analisi delle loro serie di dati.</p>
+    <div style="font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:20px"><a href="index.html" style="color:var(--ink-faint)">Home</a> / <a href="serie-storiche.html" style="color:var(--ink-faint)">Serie storiche</a> / Stazioni centenarie OMM</div>
+    <header class="head" style="padding-top:8px">
+      <div class="eyebrow">Catalogo mondiale</div>
+      <h1>Le stazioni centenarie</h1>
+      <p class="lead">Dal 2017 l'Organizzazione Meteorologica Mondiale (OMM) riconosce le stazioni che osservano da almeno cento anni: sono 474 in 74 paesi. Cerca una stazione, filtra per paese, continente o tipo e apri la sua scheda.</p>
     </header>
-
-    <div class="grid">
-      <a class="st" href="milano-brera.html" id="card-brera">
-        <div class="band" id="band-brera" aria-hidden="true"></div>
-        <div class="body">
-          <div class="years">1763 – 2024 · LOMBARDIA</div>
-          <h2>Milano Brera</h2>
-          <p>Con Kremsmünster è la serie meteorologica continua più lunga del mondo, stazione centenaria OMM dal 2021: 262 anni di temperature giornaliere e oltre un secolo di piogge. Riscaldamento, stagioni, giorni estremi, record e il meteo di ogni giorno dal 1763.</p>
-          <div class="kpi" id="kpi-brera"></div>
-          <span class="go">Apri l'analisi →</span>
-        </div>
-      </a>
-      <div class="st soon">
-        <div class="band"></div>
-        <div class="body">
-          <div class="years">IN PREPARAZIONE</div>
-          <h2>Prossime stazioni</h2>
-          <p>Altre serie centenarie si aggiungeranno qui man mano che le analisi saranno pronte.</p>
-        </div>
-      </div>
-    </div>
-
-
-    <section class="sec" id="mondo">
-      <div class="sh"><h2>Le stazioni centenarie nel mondo</h2><span class="src">riconosciute dall'OMM</span></div>
-      <p class="sub2">Sono 474 in 74 paesi: osservatori meteorologici, idrometri sui fiumi e mareografi che misurano da oltre un secolo.</p>
-      <div id="wc-stats"></div>
-      <div class="card" style="margin-top:14px"><div id="wc-map"></div></div>
-      <div class="card" style="margin-top:14px"><h3>Le 22 stazioni italiane</h3><div id="wc-it"></div></div>
-      <a class="more" href="stazioni-centenarie.html">Esplora il catalogo completo delle 474 stazioni →</a>
-      <p class="sub2" style="font-size:12.5px">Fonte: <a href="https://wmo.maps.arcgis.com/apps/dashboards/e6dd822caea44eb8af768bd5465e3037" target="_blank" rel="noopener">OMM, Centennial Observing Stations</a> (elenco aggiornato al 2025). Clicca una stazione per la scheda.</p>
-    </section>
-    <div class="about">
-      <h3>Che cosa sono le stazioni centenarie</h3>
-      <p>L'Organizzazione Meteorologica Mondiale (OMM) riconosce come <b>stazioni centenarie</b> gli osservatori che misurano il tempo da almeno cento anni con continuità e buona qualità dei dati. Le loro serie sono fondamentali per studiare il clima sul lungo periodo, perché permettono di confrontare il presente con epoche in cui l'influenza umana sul clima era trascurabile.</p>
-      <p>Milano Brera ha ricevuto il riconoscimento nel giugno 2021. Ogni analisi riporta la fonte dei dati (per Brera, ARPA Lombardia), le eventuali correzioni applicate e i file scaricabili.</p>
-    </div>
+    <div id="wc-stats" style="margin-top:14px"></div>
+    <div class="card" style="margin-top:14px"><div id="wc-map"></div></div>
+    <div class="card" style="margin-top:14px"><h3>Elenco completo</h3><div id="wc-tab"></div></div>
+    <p class="sub2" style="font-size:12.5px;margin-top:14px">Fonte: <a href="https://wmo.maps.arcgis.com/apps/dashboards/e6dd822caea44eb8af768bd5465e3037" target="_blank" rel="noopener">OMM, Centennial Observing Stations</a> (elenco aggiornato al 2025). Nomi delle stazioni come nell'elenco ufficiale.</p>
   </main>
 
   <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · elaborazioni L. Varlani · <a href="index.html">torna alla home</a></div></footer>
 
-<script>
-(function(){
-  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const hex=c=>{c=c.replace("#","");return [0,2,4].map(i=>parseInt(c.slice(i,i+2),16));};
-  const mix=(a,b,t)=>"rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";
-  const f1=v=>(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−");
-  const mean=xs=>xs.reduce((a,b)=>a+b,0)/xs.length;
-  let A=null;
-  function band(){
-    if(!A) return; const el=document.getElementById("band-brera"), W=el.clientWidth, H=el.clientHeight, bw=W/A.length;
-    const base=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a.tm)), c=hex(css("--cold")), n=hex(css("--neutral")), w=hex(css("--warm"));
-    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`+A.map((a,i)=>{const t=Math.max(-1,Math.min(1,(a.tm-base)/2));
-      return `<rect x="${(i*bw).toFixed(2)}" width="${(bw+.6).toFixed(2)}" height="${H}" fill="${t<0?mix(n,c,-t):mix(n,w,t)}"/>`;}).join("")+`</svg>`;
-  }
-  fetch("./data/serie/milano-brera.json").then(r=>r.json()).then(d=>{
-    A=d.anni.filter(a=>a.tm!=null); band();
-    const early=mean(A.filter(a=>a.y<=1850).map(a=>a.tm)), recent=mean(A.filter(a=>a.y>=1991&&a.y<=2020).map(a=>a.tm));
-    document.getElementById("kpi-brera").innerHTML=
-      `<div><b>+${f1(recent-early)} °C</b>riscaldamento dal 1763–1850</div><div><b>${f1(d.record.tmax[0].v)} °C</b>record di caldo</div><div><b>${f1(d.record.tmin[0].v)} °C</b>record di freddo</div>`;
-  }).catch(()=>{});
-  let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(band,150);});
-  if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",band);
-})();
-</script>
 <script src="wmo-catalogo.js"></script>
-<script>WMOCat.mount({stats:"#wc-stats",map:"#wc-map",italia:"#wc-it",links:{"Osservatorio Astronomico di Brera-Milano":"milano-brera.html"}});</script>
+<script>WMOCat.mount({stats:"#wc-stats",map:"#wc-map",table:"#wc-tab",perPage:30,links:{"Osservatorio Astronomico di Brera-Milano":"milano-brera.html"}});</script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
 </body>
 </html>
