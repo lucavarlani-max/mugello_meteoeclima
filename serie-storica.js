@@ -13,8 +13,8 @@
   fetch("./data/serie/"+C.slug+".json").then(r=>r.json()).then(d=>{
     D=d; A=d.anni; AC=A.filter(a=>a.tm!=null);
     ["tm","tx","tn"].forEach(k=>{BASE[k]=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[k]));});
-    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); dayInit();
-    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();},150);});
+    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); fonti(); dayInit();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();fonti();},150);});
     if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",stripes);
   }).catch(()=>{$("tiles").innerHTML='<div class="loading">Dati non disponibili.</div>';});
 
@@ -28,14 +28,15 @@
     const L10=AC.slice(-10), last10=mean(L10.map(a=>a.tm));
     const rx=D.record.tmax.filter(r=>r.v===D.record.tmax[0].v), rn=D.record.tmin[0], rp=D.record.prec[0];
     const hot=[...AC].sort((a,b)=>b.tm-a.tm)[0], [y0,m0,d0]=D.dal.split("-").map(Number);
-    $("lead-n").textContent=`Qui trovi ${D.giorni.toLocaleString("it-IT")} giorni di dati: come è cambiato il clima di ${C.citta}, le stagioni, i giorni estremi, ${D.neve?"la pioggia, la neve":"la pioggia"} e i record.`;
+    const cosa=D.prec_dal==null?"":D.neve?"la pioggia, la neve, ":"la pioggia, ";
+    $("lead-n").textContent=`Qui trovi ${D.giorni.toLocaleString("it-IT")} giorni di dati: come è cambiato il clima di ${C.citta}, le stagioni, i giorni estremi, ${cosa}i record.`.replace(", i record"," e i record");
     const t=(lab,big,unit,who)=>`<div class="tile"><div class="lab">${lab}</div><div class="big">${big}<s>${unit}</s></div><div class="who">${who}</div></div>`;
     $("tiles").innerHTML=
       t("Anni di osservazioni",A[A.length-1].y-A[0].y+1,"",`dal ${d0===1?"1°":d0} ${MESI[m0-1]} ${y0}`)+
       t("Riscaldamento",sg(recent-early),"°C",`media 1991–2020 (${f1(recent)}°) contro ${C.early[0]}–${C.early[1]} (${f1(early)}°)`)+
       t("Anno più caldo",hot.y,"",`media ${f1(hot.tm)}°C · ultimi 10 anni ${f1(last10)}°`)+
       t("Record di caldo",f1(rx[0].v),"°C",rx.map(r=>dIt(r.d)).join(" e "))+
-      t("Record di freddo",f1(rn.v),"°C",dIt(rn.d)+` · pioggia record ${f1(rp.v)} mm il ${dIt(rp.d)}`);
+      t("Record di freddo",f1(rn.v),"°C",dIt(rn.d)+(rp?` · pioggia record ${f1(rp.v)} mm il ${dIt(rp.d)}`:""));
   }
 
   /* ---------- warming stripes ---------- */
@@ -107,7 +108,8 @@
     segInit("seg-mvar",v=>{mv=v;monthChart();}); monthChart();
   }
   const byY=()=>new Map(A.map(a=>[a.y,a]));
-  function perVal(y,M){const vals=per.ms.map(i=>{const a=M.get(i<0?y-1:y);if(!a)return null;const r=a.m[i<0?11:i];if(!r||r[0]==null)return null;return mv==="tx"?r[0]:mv==="tn"?r[1]:(r[0]+r[1])/2;});return vals.some(v=>v==null)?null:mean(vals);}
+  function perVal(y,M){const vals=per.ms.map(i=>{const a=M.get(i<0?y-1:y);if(!a)return null;const r=a.m[i<0?11:i];if(!r)return null;
+      if(mv==="tm"&&r[3]!=null)return r[3]; if(r[0]==null)return null; return mv==="tx"?r[0]:mv==="tn"?r[1]:(r[0]+r[1])/2;});return vals.some(v=>v==null)?null:mean(vals);}
   function monthChart(){
     if(!A.length) return; const M=byY();
     const pts=A.map(a=>[a.y,perVal(a.y,M)]), base=mean(pts.filter(p=>p[0]>=1961&&p[0]<=1990).map(p=>p[1])), avg=movAvg(pts,21);
@@ -129,27 +131,28 @@
     if(!A.length) return; const pts=A.map(a=>[a.y,a[ev]]), avg=movAvg(pts,11), cls=EX[ev].c;
     $("ex-leg").style.background=cls?"var(--sky)":"var(--amber)";
     lineChart($("ch-ex"),{pts,avg,bars:true,avgCls:cls,label:"Numero di "+EX[ev].n+" per anno",tip:(x,v,a)=>`<b>${x}</b><br><b>${v??"—"}</b> ${EX[ev].n}`+(a!=null?`<br><span class="m">media 11 anni ${f1(a)}</span>`:"")});
-    const e=mean(AC.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[ev])), L10=AC.slice(-10), l=mean(L10.map(a=>a[ev])), mx=[...AC].sort((a,b)=>b[ev]-a[ev])[0];
+    const e=mean(AC.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[ev])), L10=AC.slice(-10), l=mean(L10.map(a=>a[ev])), mx=AC.filter(a=>a[ev]!=null).sort((a,b)=>b[ev]-a[ev])[0];
     $("ex-note").textContent=`In media ${f1(e)} ${EX[ev].n} l'anno nel 1961–1990, ${f1(l)} negli ultimi dieci anni (${L10[0].y}–${L10[9].y}). L'anno con più ${EX[ev].n.split(" (")[0]}: ${mx.y}, con ${mx[ev]}.`;
   }
 
   /* ---------- pioggia ---------- */
   function precChart(){
-    if(!A.length) return; const pts=A.filter(a=>a.y>=D.prec_dal).map(a=>[a.y,a.p]), avg=movAvg(pts,11), base=mean(pts.filter(p=>p[0]>=1991&&p[0]<=2020).map(p=>p[1]));
+    if(!A.length||!$("ch-prec")||D.prec_dal==null) return; const pts=A.filter(a=>a.y>=D.prec_dal).map(a=>[a.y,a.p]), avg=movAvg(pts,11), base=mean(pts.filter(p=>p[0]>=1991&&p[0]<=2020).map(p=>p[1]));
     lineChart($("ch-prec"),{pts,avg,bars:true,barCls:"sky",avgCls:"sky",ref:{y:base},unit:"",label:(C.precNome||"Pioggia")+" annua a "+C.nome+" dal "+D.prec_dal,
       tip:(x,v,a)=>`<b>${x}</b><br>${C.precNome||"Pioggia"} <b>${v??"—"} mm</b>`+(a!=null?`<br><span class="m">media 11 anni ${Math.round(a)} mm · media 1991–2020 ${Math.round(base)} mm</span>`:"")});
   }
   function normTable(){
     const a=D.normali["1961-1990"], b=D.normali["1991-2020"];
     const d=(x,y)=>{const v=y-x;return `<span class="${v>0?"up":"down"}">${sg(v)}</span>`;};
-    $("norm").innerHTML=`<thead><tr><th>Mese</th><th>Max 91–20</th><th>Min 91–20</th><th>Δ media</th><th>Pioggia</th></tr></thead><tbody>`+
-      b.map((r,i)=>`<tr><td>${MES[i]}</td><td class="v">${f1(r[0])}°</td><td>${f1(r[1])}°</td><td>${d((a[i][0]+a[i][1])/2,(r[0]+r[1])/2)}°</td><td>${Math.round(r[2])} mm</td></tr>`).join("")+"</tbody>";
+    const pp=D.prec_dal!=null; if(!$("norm")) return;
+    $("norm").innerHTML=`<thead><tr><th>Mese</th><th>Max 91–20</th><th>Min 91–20</th><th>Δ media</th>${pp?"<th>Pioggia</th>":""}</tr></thead><tbody>`+
+      b.map((r,i)=>`<tr><td>${MES[i]}</td><td class="v">${f1(r[0])}°</td><td>${f1(r[1])}°</td><td>${d((a[i][0]+a[i][1])/2,(r[0]+r[1])/2)}°</td>${pp?`<td>${Math.round(r[2])} mm</td>`:""}</tr>`).join("")+"</tbody>";
   }
 
   /* ---------- record ---------- */
   function records(){
     const rows=(L,u,cls)=>"<tbody>"+L.slice(0,10).map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${dIt(r.d)}</td><td class="v ${cls}">${f1(r.v)}${u}</td></tr>`).join("")+"</tbody>";
-    $("r-tx").innerHTML=rows(D.record.tmax,"°","up"); $("r-tn").innerHTML=rows(D.record.tmin,"°","down"); $("r-p").innerHTML=rows(D.record.prec," mm","");
+    $("r-tx").innerHTML=rows(D.record.tmax,"°","up"); $("r-tn").innerHTML=rows(D.record.tmin,"°","down"); if($("r-p")&&D.record.prec.length) $("r-p").innerHTML=rows(D.record.prec," mm","");
   }
 
   /* ---------- neve (solo se la serie ce l'ha) ---------- */
@@ -172,6 +175,23 @@
       tip:(x,v,a)=>{const s=byY.get(x);return `<b>Inverno ${x-1}/${String(x).slice(2)}</b><br>Neve caduta <b>${v==null?"—":Math.round(v)+" cm"}</b>`+(s?`<br><span class="m">${s.g25} giorni con almeno 2,5 cm · massimo in un giorno ${f1(s.max)} cm</span>`:"")+(a!=null?`<br><span class="m">media 11 stagioni ${Math.round(a)} cm · media 1991–2020 ${Math.round(base)} cm</span>`:"");}});
   }
 
+  /* ---------- fonti della serie (solo se la serie le indica, es. Padova) ---------- */
+  function fonti(){
+    const el=$("fonti"); if(!el||!D.fonti||!C.fonti) return;
+    const F=D.fonti, y0=F[0][0], y1=F[F.length-1][0], n=y1-y0+1, W=el.clientWidth, H=34;
+    const seg=[]; F.forEach(([y,c])=>{const l=seg[seg.length-1]; if(l&&l.c===c&&l.b===y-1) l.b=y; else seg.push({c,a:y,b:y});});
+    const col=c=>(C.fonti[c]||{}).col||"var(--ctx)", X=y=>(y-y0)/n*W;
+    let g=seg.map(s=>`<rect x="${X(s.a).toFixed(2)}" y="0" width="${Math.max(1,X(s.b+1)-X(s.a)).toFixed(2)}" height="${H}" fill="${col(s.c)}"/>`).join("");
+    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Fonte dei dati anno per anno">${g}<rect id="fo-hl" x="-9" y="0" width="${Math.max(2,W/n)}" height="${H}" fill="none" stroke="${css("--ink")}" stroke-width="1.5"/></svg><div class="tip"></div>`;
+    const svg=el.querySelector("svg"),tip=el.querySelector(".tip"),hl=el.querySelector("#fo-hl"),by=new Map(F);
+    svg.addEventListener("pointermove",e=>{const r=svg.getBoundingClientRect();const y=Math.max(y0,Math.min(y1,y0+Math.floor((e.clientX-r.left)/r.width*n)));const f=C.fonti[by.get(y)]||{};
+      hl.setAttribute("x",X(y));tip.innerHTML=`<b>${y}</b> · ${f.nome||"—"}`+(f.nota?`<br><span class="m">${f.nota}</span>`:"");place(el,tip,X(y),10);});
+    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;hl.setAttribute("x",-9);});
+    const ax=$("fonti-ax"); if(ax) ax.innerHTML=[y0,...(W<560?C.tacche[0]:C.tacche[1]),y1].map(y=>`<span style="left:${((y-y0+(y===y1?1:0))/n*100).toFixed(2)}%">${y}</span>`).join("");
+    const leg=$("fonti-leg"); if(leg&&!leg.innerHTML){const usati=[...new Set(F.map(f=>f[1]))].sort((a,b)=>F.find(f=>f[1]===a)[0]-F.find(f=>f[1]===b)[0]);
+      leg.innerHTML=usati.map(c=>{const f=C.fonti[c]||{};const ys=F.filter(x=>x[1]===c).map(x=>x[0]);return `<span><i style="background:${col(c)}"></i>${f.nome||c} <s>${ys.length===1?ys[0]:ys[0]+"–"+ys[ys.length-1]}${ys.length<ys[ys.length-1]-ys[0]+1?", non continuo":""}</s></span>`;}).join("");}
+  }
+
   /* ---------- un giorno nella storia ---------- */
   let DAILY=null;
   function dayInit(){
@@ -182,7 +202,9 @@
   async function loadDaily(){
     if(DAILY) return DAILY; $("d-res").innerHTML='<span class="loading">Carico la serie giornaliera (circa 2 MB)…</span>';
     const txt=await (await fetch("./data/serie/"+C.slug+".csv")).text(); DAILY=new Map();
-    txt.split("\n").slice(1).forEach(l=>{if(!l)return;const [d,p,tx,tn,sn]=l.trim().split(",");const k=d.slice(5);if(!DAILY.has(k))DAILY.set(k,[]);DAILY.get(k).push({y:+d.slice(0,4),p:p===""?null:+p,tx:tx===""?null:+tx,tn:tn===""?null:+tn,sn:(sn===undefined||sn==="")?null:+sn});});
+    const L=txt.split("\n"), H=L[0].trim().split(","), ix=k=>H.indexOf(k), num=(c,i)=>{if(i<0)return null;const v=c[i];return v===undefined||v===""?null:+v;};
+    const iP=ix("prec"),iX=ix("tmax"),iN=ix("tmin"),iS=ix("neve"),iM=ix("tmedia");
+    L.slice(1).forEach(l=>{if(!l)return;const c=l.trim().split(","),d=c[0],k=d.slice(5);if(!DAILY.has(k))DAILY.set(k,[]);DAILY.get(k).push({y:+d.slice(0,4),p:num(c,iP),tx:num(c,iX),tn:num(c,iN),sn:num(c,iS),tm:num(c,iM)});});
     return DAILY;
   }
   async function showDay(){
@@ -203,16 +225,20 @@
       `</div>`;
     if(yy){const r=L.find(x=>x.y===yy);
       const pos=hi.findIndex(x=>x.y===yy)+1;
-      h+=r?`<p><b>${Il}${lab} ${yy}</b> ${C.luogo}: massima <b>${f1(r.tx)}°C</b>, minima <b>${f1(r.tn)}°C</b>${r.p!=null?`, pioggia <b>${f1(r.p)} mm</b>`:""}${r.sn?`, neve <b>${f1(r.sn/10)} cm</b>`:""}. ${pos===1?`È ${il}${lab} più caldo`:`È al ${pos}° posto tra ${il==="il "?"i":"gli"} ${lab} più caldi`} su ${nx.length} anni di misure.</p>`:`<p>Nessun dato per ${il}${lab} ${yy}.</p>`;}
-    h+=`<p class="note">Dal ${D.prec_dal} ${il}${lab} ha piovuto (almeno 1 mm) ${rainy} volte su ${np.length}, circa ${Math.round(rainy/np.length*100)} anni su 100. Il più piovoso è stato quello del ${wet[0].y}, con ${f1(wet[0].p)} mm.</p>`;
+      if(r&&r.tx==null&&r.tm!=null){const nm=L.filter(x=>x.tm!=null),posm=[...nm].sort((a,b)=>b.tm-a.tm).findIndex(x=>x.y===yy)+1;
+        h+=`<p><b>${Il}${lab} ${yy}</b> ${C.luogo}: temperatura media <b>${f1(r.tm)}°C</b> (per quegli anni si conosce solo la media del giorno). È al ${posm}° posto tra ${il==="il "?"i":"gli"} ${lab} più caldi su ${nm.length} anni.</p>`;}
+      else h+=r&&r.tx!=null?`<p><b>${Il}${lab} ${yy}</b> ${C.luogo}: massima <b>${f1(r.tx)}°C</b>, minima <b>${f1(r.tn)}°C</b>${r.p!=null?`, pioggia <b>${f1(r.p)} mm</b>`:""}${r.sn?`, neve <b>${f1(r.sn/10)} cm</b>`:""}. ${pos===1?`È ${il}${lab} più caldo`:`È al ${pos}° posto tra ${il==="il "?"i":"gli"} ${lab} più caldi`} su ${nx.length} anni di misure.</p>`:`<p>Nessun dato per ${il}${lab} ${yy}.</p>`;}
+    if(np.length) h+=`<p class="note">Dal ${D.prec_dal} ${il}${lab} ha piovuto (almeno 1 mm) ${rainy} volte su ${np.length}, circa ${Math.round(rainy/np.length*100)} anni su 100. Il più piovoso è stato quello del ${wet[0].y}, con ${f1(wet[0].p)} mm.</p>`;
     const ns=L.filter(r=>r.sn!=null);
     if(ns.length){const snowy=ns.filter(r=>r.sn>0).sort((a,b)=>b.sn-a.sn);
       h+=`<p class="note">${snowy.length?`Ha nevicato ${il}${lab} ${snowy.length} volte su ${ns.length}; la nevicata più abbondante in questa data è del ${snowy[0].y}, con ${f1(snowy[0].sn/10)} cm.`:`${Il}${lab} non ha mai nevicato in ${ns.length} anni di misure.`}</p>`;}
     const row=(r,v,u,c)=>`<tr><td>${r.y}</td><td class="v ${c}">${f1(v)}${u}</td></tr>`;
+    const nm=L.filter(r=>r.tm!=null), third=np.length?`<div><h3>🌧️ ${lab}: i più piovosi</h3><table><tbody>${wet.slice(0,5).map(r=>row(r,r.p," mm","")).join("")}</tbody></table></div>`
+      :nm.length>nx.length?`<div><h3>🌡️ ${lab}: le medie più alte</h3><table><tbody>${[...nm].sort((a,b)=>b.tm-a.tm).slice(0,5).map(r=>row(r,r.tm,"°","up")).join("")}</tbody></table></div>`:"";
     h+=`<div class="three" style="margin-top:12px">
       <div><h3>🔥 ${lab}: i più caldi</h3><table><tbody>${hi.slice(0,5).map(r=>row(r,r.tx,"°","up")).join("")}</tbody></table></div>
       <div><h3>🧊 ${lab}: i più freddi</h3><table><tbody>${lo.slice(0,5).map(r=>row(r,r.tn,"°","down")).join("")}</tbody></table></div>
-      <div><h3>🌧️ ${lab}: i più piovosi</h3><table><tbody>${wet.slice(0,5).map(r=>row(r,r.p," mm","")).join("")}</tbody></table></div></div>`;
+      ${third}</div>`;
     $("d-res").innerHTML=h;
   }
 })();

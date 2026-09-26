@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Padova 1725–2023 · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="Quasi tre secoli di temperature giornaliere a Padova, dal 1725 al 2023: la serie omogeneizzata che unisce le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, record e il tempo di ogni giorno.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/padova.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Padova, tre secoli di temperature (1725–2023)">
+<meta property="og:description" content="Quasi tre secoli di temperature giornaliere a Padova, dal 1725 al 2023: la serie omogeneizzata che unisce le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, record e il tempo di ogni giorno.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/padova.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  .fonti{position:relative;height:34px;border-radius:8px;overflow:hidden}
+  .fonti svg{display:block;width:100%;height:100%}
+  .fleg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft)}
+  .fleg span{display:inline-flex;align-items:center;gap:6px}
+  .fleg i{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .fleg s{text-decoration:none;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .who-list{margin:14px 0 0;padding-left:18px;color:var(--ink-soft);font-size:13.5px}
+  .who-list li{margin-bottom:5px}
+</style>
+<script src="analytics.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="serie-storiche.html">← Serie storiche</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Padova</div>
+    <header class="head">
+      <div class="eyebrow">Serie storica · dal 1725</div>
+      <h1>Padova, 1725–2023</h1>
+      <p class="lead">A Padova la temperatura si misura ogni giorno dal 1725, quando il fisico Giovanni Poleni iniziò a registrarla: è una delle serie di temperatura giornaliera più lunghe al mondo. Qui è ricostruita nella versione omogeneizzata, che collega le osservazioni di sette serie diverse, dagli strumenti del Settecento alle stazioni di oggi, e le rende confrontabili tra loro. <span id="lead-n"></span></p>
+      <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Quasi tre secoli in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
+      <p class="sub">Ogni riga verticale è un anno: blu più freddo, rosso più caldo della media 1961–1990. Passa sopra per leggere il valore. La riga più blu è il 1740, l'anno del grande freddo in tutta Europa.</p>
+      <div class="card">
+        <div class="stripes" id="stripes"></div>
+        <div class="axis-y" id="stripes-ax"></div>
+        <div class="scale"><span>−2 °C</span><i></i><span>+2 °C</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura anno per anno</h2><span class="src">media mobile su 21 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-var" role="group" aria-label="Variabile">
+            <button data-v="tm" aria-pressed="true">Media</button><button data-v="tx" aria-pressed="false">Massime</button><button data-v="tn" aria-pressed="false">Minime</button>
+          </div>
+        </div>
+        <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+        <div class="chart" id="ch-year"></div>
+        <p class="note" id="trend-note"></p>
+        <p class="note">La temperatura media c'è dal 1725; massime e minime dal 1774.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Mese per mese, stagione per stagione</h2><span class="src">scegli il periodo</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="ctrl">
+            <select id="sel-per" aria-label="Periodo"></select>
+            <div class="seg" id="seg-mvar" role="group" aria-label="Variabile">
+              <button data-v="tm" aria-pressed="true">Media</button><button data-v="tx" aria-pressed="false">Massime</button><button data-v="tn" aria-pressed="false">Minime</button>
+            </div>
+          </div>
+          <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+          <div class="chart" id="ch-month"></div>
+        </div>
+        <div class="card">
+          <h3 id="ep-title">Per epoca</h3>
+          <div class="tbl"><table id="ep"></table></div>
+          <h3 style="margin-top:16px">I più caldi e i più freddi</h3>
+          <div class="tbl"><table id="rk"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Giorni estremi</h2><span class="src">conteggio per anno dal 1774 · media mobile 11 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-ex" role="group" aria-label="Indicatore">
+            <button data-v="c30" aria-pressed="true">Giorni ≥ 30 °C</button><button data-v="c35" aria-pressed="false">Giorni ≥ 35 °C</button><button data-v="tr20" aria-pressed="false">Notti tropicali</button><button data-v="g0" aria-pressed="false">Giorni di gelo</button>
+          </div>
+        </div>
+        <div class="legend"><span><i class="th" style="background:var(--ctx)"></i>Giorni nell'anno</span><span><i class="th" id="ex-leg" style="background:var(--amber)"></i>Media mobile 11 anni</span></div>
+        <div class="chart" id="ch-ex"></div>
+        <p class="note" id="ex-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Sette serie, una sola storia</h2><span class="src">da quale osservatorio viene il dato di ogni anno</span></div>
+      <div class="card">
+        <p class="sub" style="margin-top:0">Nessuno strumento è rimasto al suo posto per tre secoli. La serie di Padova è stata ricostruita collegando le osservazioni di diversi osservatori e correggendole una per una, con formule mese per mese, perché risultino confrontabili con le misure di oggi. Dove un periodo mancava, i valori sono stati ricavati dalle serie di Milano, Mantova o Bologna. Passa sopra la barra per vedere la fonte di ogni anno.</p>
+        <div class="fonti" id="fonti"></div>
+        <div class="axis-y" id="fonti-ax"></div>
+        <div class="fleg" id="fonti-leg"></div>
+        <ul class="who-list">
+          <li><b>Giovanni Poleni</b>, fisico e matematico dell'Università di Padova, registra la temperatura dal 1725 con un termometro in casa: le letture sono state convertite in valori all'aperto.</li>
+          <li><b>Giovanni Battista Morgagni</b>, il padre dell'anatomia patologica, annota il tempo di Padova fino al 1768.</li>
+          <li><b>Giuseppe Toaldo</b> avvia le osservazioni che dal 1774 proseguono alla <b>Specola</b>, l'osservatorio astronomico dell'Università, per quasi due secoli.</li>
+          <li>Nel Novecento subentrano l'<b>Ufficio Idrografico</b>, la stazione dell'<b>Aeronautica Militare</b> e, dal 1980, la stazione che arriva fino ai giorni nostri.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>I record</h2><span class="src">valori giornalieri dal 1774</span></div>
+      <div class="three">
+        <div class="card"><h3>🔥 I giorni più caldi</h3><table id="r-tx"></table></div>
+        <div class="card"><h3>🧊 I giorni più freddi</h3><table id="r-tn"></table></div>
+        <div class="card"><h3>Il clima mese per mese</h3><div class="tbl"><table id="norm"></table></div><p class="note">Medie 1991–2020 e differenza della temperatura media rispetto al 1961–1990.</p></div>
+      </div>
+    </section>
+
+    <section class="day">
+      <div class="sh"><h2>Un giorno nella storia</h2><span class="src">scegli una data</span></div>
+      <div class="card">
+        <div class="pick">
+          <select id="d-day" aria-label="Giorno"></select>
+          <select id="d-mon" aria-label="Mese"></select>
+          <label>anno <input type="number" id="d-year" min="1725" max="2023" style="width:90px" aria-label="Anno"></label>
+          <button class="btn" id="d-go" type="button">Mostra</button>
+        </div>
+        <div class="res" id="d-res"><span class="loading">Scegli giorno e mese: vedi come è andato quel giorno in tutti gli anni dal 1725.</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> serie giornaliera omogeneizzata della temperatura di Padova, 12 gennaio 1725 – 31 dicembre 2023 (C. Stefanini e coautori, 2023, rivista <i>Climate</i>, <a href="https://doi.org/10.3390/cli11120244" target="_blank" rel="noopener">doi:10.3390/cli11120244</a>), che si basa sul lavoro di D. Camuffo e C. Bertolin sulle serie storiche padovane (<a href="https://doi.org/10.1016/j.pce.2010.02.002" target="_blank" rel="noopener">doi:10.1016/j.pce.2010.02.002</a>).</li>
+          <li>Dal 1725 al 1773 si conosce solo la temperatura media del giorno; dal 1774 anche massima e minima, e la media è (massima + minima) / 2. Le serie più antiche sono state corrette con la ricostruzione climatica europea ModE-RA; quelle dell'Ottocento e del Novecento con funzioni di trasferimento mese per mese tra una serie e la successiva.</li>
+          <li>Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330. Nessun giorno manca: i periodi senza misure a Padova sono stati ricostruiti dalle serie di Milano, Mantova e Bologna.</li>
+          <li>La serie non contiene la pioggia.</li>
+          <li>Anomalie calcolate rispetto al trentennio 1961–1990. In quasi tre secoli sono cambiati strumenti, posizioni e ambiente urbano: l'omogeneizzazione ne corregge gli effetti, ma i confronti con il Settecento vanno letti come indicativi.</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="data/serie/padova.csv" download>⬇ Serie giornaliera (CSV)</a>
+          <a class="btn ghost" href="data/serie/padova.json" download>⬇ Aggregati annuali e mensili (JSON)</a>
+        </p>
+        <p class="note">Elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="serie-storiche.html">serie storiche</a> · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+window.SERIE={slug:"padova",nome:"Padova",citta:"Padova",luogo:"a Padova",
+  early:[1725,1800],epoche:[[1725,1799],[1800,1899],[1900,1949],[1950,1999],[2000,2023]],tacche:[[1800,1900,2000],[1750,1800,1850,1900,1950,2000]],
+  fonti:{
+    1:{nome:"Giovanni Poleni",col:"#8c6a3f",nota:"letture in casa convertite all'aperto e corrette con ModE-RA"},
+    2:{nome:"G. B. Morgagni",col:"#b3884f",nota:"corretta con ModE-RA"},
+    4:{nome:"Giuseppe Toaldo",col:"#d2ab6f",nota:"letture all'alba, corrette con ModE-RA"},
+    5:{nome:"Specola",col:"#2f7cc4",nota:"osservatorio astronomico dell'Università, corretta mese per mese"},
+    3:{nome:"ricavata da Milano",col:"#9aa39e",nota:"periodo senza misure a Padova"},
+    6:{nome:"ricavata da Milano e Mantova",col:"#c3cac5",nota:"periodo senza misure a Padova"},
+    11:{nome:"ricavata da Bologna",col:"#7f8985",nota:"periodo senza misure a Padova"},
+    7:{nome:"Ufficio Idrografico",col:"#0f6b52",nota:"corretta mese per mese"},
+    8:{nome:"Aeronautica Militare",col:"#c9671f",nota:"corretta mese per mese"},
+    9:{nome:"stazione attuale",col:"#4fb38e",nota:"serie di riferimento, dal 1980"}
+  }};
+</script>
+<script src="serie-storica.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
