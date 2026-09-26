@@ -24,6 +24,11 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   termometrica del CFR Toscana: temperatura attuale, minime e massime di oggi e di ieri,
   classifiche, anomalie rispetto alla quota, grafico temperatura/quota, andamento giorno
   per giorno e download per Excel. Stazioni della zona M (Mugello-Val di Sieve) in evidenza.
+- **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
+  una pagina per stazione. Prima stazione: **Milano Brera 1763–2024** (`milano-brera.html`):
+  strisce del riscaldamento, temperatura annua, mese per mese e per stagione, giorni estremi,
+  pioggia, normali climatiche, record e "un giorno nella storia". Approfondimento PDF sulle
+  estati a Milano 1991–2026 (`reports/`).
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
   e pubblicare su Facebook, con didascalia automatica.
 - **PWA** — installabile su telefono (icona in home, apertura a schermo intero, cache offline della struttura).
@@ -46,6 +51,9 @@ scripts/fetch_previsioni.py    aggiorna data/previsioni.json (Google Weather API
 scripts/fetch_fiumi.py         aggiorna data/fiumi.json
 scripts/fetch_allerta.py       aggiorna data/allerta.json
 scripts/fetch_termo.py         aggiorna data/termo.json e data/termo_storico.json
+scripts/build_serie.py         prepara i dati di una stazione centenaria (data/serie/<slug>.csv/.json)
+data/serie/                    serie storiche giornaliere ripulite e aggregati per il sito
+reports/                       report PDF di approfondimento
 .github/workflows/update-data.yml   esegue gli script ogni 30 min
 .nojekyll
 ```
@@ -118,3 +126,12 @@ URL: `https://lucavarlani-max.github.io/mugello_meteoeclima/`
 ## Fonti dati
 
 Stazione ISCARP2 (Weather Underground) · WeatherNext 3 / Google Weather API · Open-Meteo · INGV · SIR/CFR Toscana · Windy · elaborazioni L. Varlani.
+
+## Aggiungere una stazione centenaria
+
+1. Metti il CSV giornaliero (colonne `year,month,day,prec,tempMax,tempMin`, `-99.9` = mancante)
+   in `data/serie/`.
+2. Esegui `python scripts/build_serie.py data/serie/<file>.csv <slug>`: scrive
+   `data/serie/<slug>.csv` (ripulito) e `data/serie/<slug>.json` (aggregati, record, normali).
+3. Duplica `milano-brera.html` come `<slug>.html`, cambia titolo, testi e il nome del file dati,
+   e aggiungi la scheda in `serie-storiche.html`.

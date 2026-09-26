@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Milano Brera 1763–2024 · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="262 anni di osservazioni giornaliere all'osservatorio di Milano Brera: riscaldamento, stagioni, giorni estremi, piogge, record e il meteo di ogni giorno dal 1763.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/milano-brera.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Milano Brera, 262 anni di clima (1763–2024)">
+<meta property="og:description" content="262 anni di osservazioni giornaliere all&#x27;osservatorio di Milano Brera: riscaldamento, stagioni, giorni estremi, piogge, record e il meteo di ogni giorno dal 1763.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/milano-brera.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#6f7c74;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --ctx:#b9c2bc;
+    --cold:#2a64a8; --neutral:#f3f0ea; --warm:#b8431f;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+      --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#8a998f;
+      --line:#26332c; --line-soft:#1e2a24;
+      --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+      --sky:#4f93d6; --sky-tint:#152634;
+      --amber:#c97a36; --amber-tint:#2e2115;
+      --ctx:#44534a;
+      --cold:#3d78c0; --neutral:#26302b; --warm:#c8552c;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#8a998f;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#4f93d6; --sky-tint:#152634;
+    --amber:#c97a36; --amber-tint:#2e2115;
+    --ctx:#44534a;
+    --cold:#3d78c0; --neutral:#26302b; --warm:#c8552c;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .back:hover{box-shadow:var(--shadow)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px;letter-spacing:-.01em}
+  .brand b{color:var(--pine)}
+  .crumb{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:20px}
+  .crumb a{color:var(--ink-faint)}
+  .head{padding:8px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:44px;margin:.1em 0 .05em;line-height:1.05}
+  .lead{color:var(--ink-soft);font-size:15px;max-width:74ch;margin:.5em 0}
+  section{margin:34px 0}
+  .sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+  .sh h2{font-family:var(--serif);font-weight:700;font-size:22px;margin:0;letter-spacing:-.01em}
+  .sh .src{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .sub{color:var(--ink-soft);margin:0 0 12px;max-width:80ch}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;position:relative;min-width:0}
+
+  .tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:20px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:15px 16px;min-width:0}
+  .tile .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint)}
+  .tile .big{font-family:var(--serif);font-weight:800;font-size:32px;line-height:1.1;letter-spacing:-.02em;margin-top:4px}
+  .tile .big s{font-size:16px;font-weight:600;text-decoration:none;color:var(--ink-faint);margin-left:2px}
+  .tile .who{color:var(--ink-soft);font-size:12.5px}
+
+  .stripes{height:110px;border-radius:12px;overflow:hidden;position:relative}
+  .stripes svg{display:block;width:100%;height:100%}
+  .axis-y{position:relative;height:16px;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:6px}
+  .axis-y span{position:absolute;top:0;transform:translateX(-50%)}
+  .axis-y span:first-child{transform:none} .axis-y span:last-child{transform:translateX(-100%)}
+  .scale{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:10px}
+  .scale i{flex:0 0 160px;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--cold),var(--neutral),var(--warm))}
+
+  .ctrl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  .seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:3px;gap:2px;flex-wrap:wrap}
+  .seg button{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:none;border:0;border-radius:var(--r-pill);padding:6px 12px;cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--pine);color:#fff}
+  select,input[type=number]{font:inherit;font-size:13px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:7px 10px}
+  .chart{width:100%;height:320px;position:relative}
+  .chart svg{display:block;width:100%;height:100%;overflow:visible}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .grid{stroke:var(--line);stroke-width:1}
+  svg .ref{stroke:var(--ink-faint);stroke-width:1.2;stroke-dasharray:5 4}
+  svg .reflab{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .annual{stroke:var(--ctx);stroke-width:1.2;fill:none}
+  svg .avg{stroke:var(--amber);stroke-width:2.5;fill:none;stroke-linejoin:round}
+  svg .avg.sky{stroke:var(--sky)}
+  svg .bar{fill:var(--ctx)}
+  svg .bar.sky{fill:color-mix(in srgb,var(--sky) 45%,var(--panel))}
+  svg .cross{stroke:var(--ink-faint);stroke-width:1}
+  svg .hp{fill:var(--amber);stroke:var(--panel);stroke-width:2}
+  svg .hp.sky{fill:var(--sky)}
+  svg .hp.ctx{fill:var(--ink-faint)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:2px 0 8px}
+  .legend i{display:inline-block;width:16px;height:2px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  .legend i.th{height:3px}
+  .legend i.dash{height:0;border-top:1.5px dashed var(--ink-faint)}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    box-shadow:var(--shadow);padding:8px 11px;font-size:12.5px;line-height:1.45;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .tip b{font-weight:600} .m{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+
+  .two{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
+  .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{padding:7px 6px;text-align:right;border-top:1px solid var(--line-soft);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  thead th{border-top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  td.v{font-weight:600}
+  .rank{font-family:var(--mono);font-size:11px;color:var(--ink-faint);width:22px}
+  .up{color:var(--warm)} .down{color:var(--cold)}
+  h3{font-family:var(--serif);font-size:16px;font-weight:700;margin:0 0 8px}
+  .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  .day .pick{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .day .res{min-height:60px}
+  .facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .fact{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:var(--r-sm);padding:10px 12px}
+  .fact .lab{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint)}
+  .fact b{font-family:var(--serif);font-size:22px;font-weight:800;display:block;line-height:1.2}
+  .fact span{font-size:12px;color:var(--ink-soft)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:13px;font-weight:600;color:#fff;background:var(--pine);border:0;border-radius:var(--r-pill);padding:9px 16px;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:var(--pine-tint);color:var(--pine-deep)}
+  .doc{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+  .doc .ico{font-size:34px;line-height:1}
+  .doc .t{flex:1;min-width:240px}
+  .doc h3{margin-bottom:4px}
+  .doc p{margin:0 0 10px;color:var(--ink-soft)}
+  .note{font-size:12.5px;color:var(--ink-soft);max-width:90ch}
+  .note li{margin:4px 0}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px;margin-top:30px}
+  .loading{color:var(--ink-faint);font-family:var(--mono);font-size:12px}
+  @media (max-width:980px){ .tiles{grid-template-columns:repeat(3,minmax(0,1fr))} .two{grid-template-columns:1fr} .three{grid-template-columns:1fr} }
+  @media (max-width:640px){
+    .wrap{padding:0 16px}
+    h1{font-size:32px} .tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px} .tile .big{font-size:26px}
+    .chart{height:260px} .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .stripes{height:80px}
+  }
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="serie-storiche.html">← Serie storiche</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Milano Brera</div>
+    <header class="head">
+      <div class="eyebrow">Stazione centenaria · dal 1763</div>
+      <h1>Milano Brera, 1763–2024</h1>
+      <p class="lead">Dall'osservatorio astronomico di Brera si misura il tempo ogni giorno dal 1763: è una delle serie meteorologiche continue più lunghe d'Europa. <span id="lead-n"></span></p>
+      <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>262 anni in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
+      <p class="sub">Ogni riga verticale è un anno: blu più freddo, rosso più caldo della media 1961–1990. Passa sopra per leggere il valore.</p>
+      <div class="card">
+        <div class="stripes" id="stripes"></div>
+        <div class="axis-y" id="stripes-ax"></div>
+        <div class="scale"><span>−2 °C</span><i></i><span>+2 °C</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura anno per anno</h2><span class="src">media mobile su 21 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-var" role="group" aria-label="Variabile">
+            <button data-v="tm" aria-pressed="true">Media</button><button data-v="tx" aria-pressed="false">Massime</button><button data-v="tn" aria-pressed="false">Minime</button>
+          </div>
+        </div>
+        <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+        <div class="chart" id="ch-year"></div>
+        <p class="note" id="trend-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Mese per mese, stagione per stagione</h2><span class="src">scegli il periodo</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="ctrl">
+            <select id="sel-per" aria-label="Periodo"></select>
+            <div class="seg" id="seg-mvar" role="group" aria-label="Variabile">
+              <button data-v="tm" aria-pressed="true">Media</button><button data-v="tx" aria-pressed="false">Massime</button><button data-v="tn" aria-pressed="false">Minime</button>
+            </div>
+          </div>
+          <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+          <div class="chart" id="ch-month"></div>
+        </div>
+        <div class="card">
+          <h3 id="ep-title">Per epoca</h3>
+          <div class="tbl"><table id="ep"></table></div>
+          <h3 style="margin-top:16px">I più caldi e i più freddi</h3>
+          <div class="tbl"><table id="rk"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Giorni estremi</h2><span class="src">conteggio per anno · media mobile 11 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-ex" role="group" aria-label="Indicatore">
+            <button data-v="c30" aria-pressed="true">Giorni ≥ 30 °C</button><button data-v="c35" aria-pressed="false">Giorni ≥ 35 °C</button><button data-v="tr20" aria-pressed="false">Notti tropicali</button><button data-v="g0" aria-pressed="false">Giorni di gelo</button>
+          </div>
+        </div>
+        <div class="legend"><span><i class="th" style="background:var(--ctx)"></i>Giorni nell'anno</span><span><i class="th" id="ex-leg" style="background:var(--amber)"></i>Media mobile 11 anni</span></div>
+        <div class="chart" id="ch-ex"></div>
+        <p class="note" id="ex-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Pioggia</h2><span class="src">dal 1901 · totale annuo e media mobile 11 anni</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Totale dell'anno</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 anni</span></div>
+          <div class="chart" id="ch-prec"></div>
+        </div>
+        <div class="card">
+          <h3>Il clima mese per mese</h3>
+          <div class="tbl"><table id="norm"></table></div>
+          <p class="note">Medie mensili nei due trentenni di riferimento; la differenza mostra quanto è cambiato.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>I record</h2><span class="src">valori giornalieri 1763–2024</span></div>
+      <div class="three">
+        <div class="card"><h3>🔥 I giorni più caldi</h3><table id="r-tx"></table></div>
+        <div class="card"><h3>🧊 I giorni più freddi</h3><table id="r-tn"></table></div>
+        <div class="card"><h3>🌧️ I giorni più piovosi</h3><table id="r-p"></table></div>
+      </div>
+    </section>
+
+    <section class="day">
+      <div class="sh"><h2>Un giorno nella storia</h2><span class="src">scegli una data</span></div>
+      <div class="card">
+        <div class="pick">
+          <select id="d-day" aria-label="Giorno"></select>
+          <select id="d-mon" aria-label="Mese"></select>
+          <label>anno <input type="number" id="d-year" min="1763" max="2024" style="width:90px" aria-label="Anno"></label>
+          <button class="btn" id="d-go" type="button">Mostra</button>
+        </div>
+        <div class="res" id="d-res"><span class="loading">Scegli giorno e mese: vedi come è andato quel giorno in tutti gli anni dal 1763.</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Approfondimenti</h2></div>
+      <div class="card doc">
+        <span class="ico" aria-hidden="true">📄</span>
+        <div class="t">
+          <h3>Le estati a Milano, 1991–2026: l'estate 2026 contro il 2003</h3>
+          <p>Report climatologico sulle temperature estive (giugno–agosto) misurate dal sensore ARPA Lombardia 5897 di Milano: classifiche delle estati più calde, i giorni sopra i 35 °C del 2003 e il confronto con l'estate 2026, la più calda della serie. <b>Nota:</b> è una stazione diversa da Brera, con dati fino al 2026.</p>
+          <a class="btn" href="reports/estati-milano-1991-2026.pdf" target="_blank" rel="noopener">Apri il report (PDF, 7 pagine)</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li>Serie giornaliera di temperatura massima, minima e precipitazione di Milano Brera, 1° gennaio 1763 – 31 dicembre 2024. Le precipitazioni giornaliere sono disponibili dal 1901.</li>
+          <li>Temperatura media = (massima + minima) / 2. Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330.</li>
+          <li>Pulizia dei dati: 1.003 temperature massime erano registrate moltiplicate per 1000 (es. 38301 invece di 38,3 °C, un errore del separatore delle migliaia) e sono state riportate al valore corretto.</li>
+          <li>Anomalie calcolate rispetto al trentennio 1961–1990; normali climatiche 1961–1990 e 1991–2020.</li>
+          <li>La serie storica comprende inevitabili cambiamenti di strumenti, posizione e ambiente urbano intorno all'osservatorio: i confronti tra epoche molto lontane vanno letti come indicativi.</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="data/serie/milano-brera.csv" download>⬇ Serie giornaliera (CSV)</a>
+          <a class="btn ghost" href="data/serie/milano-brera.json" download>⬇ Aggregati annuali e mensili (JSON)</a>
+        </p>
+        <p class="note">Elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="serie-storiche.html">serie storiche</a> · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  const MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const f1=v=>v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−");
+  const sg=v=>v==null?"—":(v>0?"+":"")+f1(v);
+  const dIt=iso=>{const [y,m,d]=iso.split("-").map(Number);return d+" "+MES[m-1]+" "+y;};
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  let D=null, A=[], BASE={};
+
+  fetch("./data/serie/milano-brera.json").then(r=>r.json()).then(d=>{
+    D=d; A=d.anni;
+    ["tm","tx","tn"].forEach(k=>{BASE[k]=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[k]));});
+    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); dayInit();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();},150);});
+    if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",stripes);
+  }).catch(()=>{$("tiles").innerHTML='<div class="loading">Dati non disponibili.</div>';});
+
+  function mean(xs){xs=xs.filter(v=>v!=null);return xs.length?xs.reduce((a,b)=>a+b,0)/xs.length:null;}
+  function movAvg(pts,w){const h=Math.floor(w/2);return pts.map((p,i)=>{if(i<h||i>=pts.length-h)return null;const s=pts.slice(i-h,i+h+1).map(q=>q[1]).filter(v=>v!=null);return s.length>=w*0.8?[p[0],mean(s)]:null;}).filter(Boolean);}
+  function slope(pts){const n=pts.length,mx=mean(pts.map(p=>p[0])),my=mean(pts.map(p=>p[1]));let a=0,b=0;pts.forEach(p=>{a+=(p[0]-mx)*(p[1]-my);b+=(p[0]-mx)**2;});return a/b;}
+
+  /* ---------- tiles ---------- */
+  function tiles(){
+    const early=mean(A.filter(a=>a.y<=1850).map(a=>a.tm)), recent=mean(A.filter(a=>a.y>=1991&&a.y<=2020).map(a=>a.tm));
+    const last10=mean(A.filter(a=>a.y>=2015).map(a=>a.tm));
+    const rx=D.record.tmax.filter(r=>r.v===D.record.tmax[0].v), rn=D.record.tmin[0], rp=D.record.prec[0];
+    const hot=[...A].sort((a,b)=>b.tm-a.tm)[0];
+    $("lead-n").textContent=`Qui trovi ${D.giorni.toLocaleString("it-IT")} giorni di dati: come è cambiato il clima di Milano, le stagioni, i giorni estremi, la pioggia e i record.`;
+    const t=(lab,big,unit,who)=>`<div class="tile"><div class="lab">${lab}</div><div class="big">${big}<s>${unit}</s></div><div class="who">${who}</div></div>`;
+    $("tiles").innerHTML=
+      t("Anni di osservazioni",A.length,"","dal 1° gennaio 1763")+
+      t("Riscaldamento",sg(recent-early),"°C",`media 1991–2020 (${f1(recent)}°) contro 1763–1850 (${f1(early)}°)`)+
+      t("Anno più caldo",hot.y,"",`media ${f1(hot.tm)}°C · ultimi 10 anni ${f1(last10)}°`)+
+      t("Record di caldo",f1(rx[0].v),"°C",rx.map(r=>dIt(r.d)).join(" e "))+
+      t("Record di freddo",f1(rn.v),"°C",dIt(rn.d)+` · pioggia record ${f1(rp.v)} mm il ${dIt(rp.d)}`);
+  }
+
+  /* ---------- warming stripes ---------- */
+  function hex(c){c=c.replace("#","");return [0,2,4].map(i=>parseInt(c.slice(i,i+2),16));}
+  function mix(a,b,t){return "rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";}
+  function stripeColor(an){const c=hex(css("--cold")),n=hex(css("--neutral")),w=hex(css("--warm"));const t=Math.max(-1,Math.min(1,an/2));return t<0?mix(n,c,-t):mix(n,w,t);}
+  function stripes(){
+    const el=$("stripes"), W=el.clientWidth, H=el.clientHeight, n=A.length, bw=W/n;
+    let g=""; A.forEach((a,i)=>{g+=`<rect x="${(i*bw).toFixed(2)}" y="0" width="${(bw+0.6).toFixed(2)}" height="${H}" fill="${stripeColor(a.tm-BASE.tm)}"/>`;});
+    $("stripes-ax").innerHTML=(W<560?[A[0].y,1850,1950,A[n-1].y]:[A[0].y,1800,1850,1900,1950,2000,A[n-1].y]).map(y=>`<span style="left:${((y-A[0].y+(y===A[n-1].y?1:0))/n*100).toFixed(2)}%">${y}</span>`).join("");
+    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Strisce del riscaldamento: anomalia della temperatura media annua a Milano Brera dal 1763 al 2024">${g}<rect id="st-hl" x="-9" y="0" width="${Math.max(2,bw)}" height="${H}" fill="none" stroke="${css("--ink")}" stroke-width="1.5"/></svg><div class="tip"></div>`;
+    const svg=el.querySelector("svg"),tip=el.querySelector(".tip"),hl=el.querySelector("#st-hl");
+    svg.addEventListener("pointermove",e=>{const r=svg.getBoundingClientRect();const i=Math.max(0,Math.min(n-1,Math.floor((e.clientX-r.left)/r.width*n)));const a=A[i];
+      hl.setAttribute("x",i*bw);tip.innerHTML=`<b>${a.y}</b> · media ${f1(a.tm)}°C<br><span class="m">${sg(a.tm-BASE.tm)}° rispetto al 1961–1990</span>`;place(el,tip,i*bw,10);});
+    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;hl.setAttribute("x",-9);});
+  }
+
+  /* ---------- line chart generico ---------- */
+  function ticks(lo,hi,n){const s0=(hi-lo)/n,m=Math.pow(10,Math.floor(Math.log10(s0)));const st=[1,2,2.5,5,10].map(k=>k*m).find(s=>s>=s0);const o=[];for(let v=Math.floor(lo/st)*st;v<hi+st-1e-9;v+=st)o.push(+v.toFixed(6));return o;}
+  function place(el,tip,x,y){tip.style.opacity=1;const tw=tip.offsetWidth,W=el.clientWidth;let lx=x+14;if(lx+tw>W)lx=x-tw-14;if(lx<0)lx=0;tip.style.left=lx+"px";tip.style.top=Math.max(0,y-10)+"px";}
+  /* opts: {pts:[[x,y]], avg:[[x,y]], bars:bool, avgCls, barCls, ref:{y,lab}, unit, tip(x)} */
+  function lineChart(el,o){
+    const W=el.clientWidth,H=el.clientHeight,m={l:44,r:12,t:12,b:26},iw=W-m.l-m.r,ih=H-m.t-m.b;
+    const xs=o.pts.map(p=>p[0]), ys=o.pts.map(p=>p[1]).filter(v=>v!=null).concat(o.ref?[o.ref.y]:[]);
+    const x0=Math.min(...xs)-(o.bars?0.6:0),x1=Math.max(...xs)+(o.bars?0.6:0);
+    let lo=Math.min(...ys),hi=Math.max(...ys); if(o.bars) lo=0;
+    const yT=ticks(lo,hi,5),y0=yT[0],y1=yT[yT.length-1];
+    const X=x=>m.l+(x-x0)/(x1-x0)*iw, Y=v=>m.t+ih-(v-y0)/(y1-y0)*ih;
+    let g="";
+    yT.forEach(t=>{g+=`<line class="grid" x1="${m.l}" x2="${m.l+iw}" y1="${Y(t)}" y2="${Y(t)}"/><text class="axl" x="${m.l-8}" y="${Y(t)+3.5}" text-anchor="end">${String(t).replace(".",",").replace("-","−")}${o.unit||""}</text>`;});
+    const step=(x1-x0)>150?(W<520?100:50):(W<520?40:20);
+    for(let x=Math.ceil(x0/step)*step;x<=Math.floor(x1);x+=step) g+=`<text class="axl" x="${X(x)}" y="${m.t+ih+18}" text-anchor="middle">${x}</text>`;
+    if(o.bars){const bw=Math.max(1,iw/(x1-x0+1)-1.5);o.pts.forEach(p=>{if(p[1]!=null)g+=`<rect class="bar ${o.barCls||""}" x="${X(p[0])-bw/2}" y="${Y(p[1])}" width="${bw}" height="${Math.max(0,Y(y0)-Y(p[1]))}" rx="${Math.min(2,bw/2)}"/>`;});}
+    else{let d="",pen=false;o.pts.forEach(p=>{if(p[1]==null){pen=false;return;}d+=(pen?"L":"M")+X(p[0]).toFixed(1)+" "+Y(p[1]).toFixed(1);pen=true;});g+=`<path class="annual" d="${d}"/>`;}
+    if(o.ref) g+=`<line class="ref" x1="${m.l}" x2="${m.l+iw}" y1="${Y(o.ref.y)}" y2="${Y(o.ref.y)}"/>`;
+    if(o.avg&&o.avg.length) g+=`<path class="avg ${o.avgCls||""}" d="${o.avg.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+" "+Y(p[1]).toFixed(1)).join("")}"/>`;
+    g+=`<line class="cross" id="cx" x1="-9999" x2="-9999" y1="${m.t}" y2="${m.t+ih}"/><circle class="hp ctx" id="h1" r="4" cx="-99" cy="-99"/><circle class="hp ${o.avgCls||""}" id="h2" r="5" cx="-99" cy="-99"/>`;
+    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.label||""}">${g}</svg><div class="tip"></div>`;
+    const svg=el.querySelector("svg"),tip=el.querySelector(".tip"),cx=el.querySelector("#cx"),h1=el.querySelector("#h1"),h2=el.querySelector("#h2");
+    const byX=new Map(o.pts.map(p=>[p[0],p[1]])), avX=new Map((o.avg||[]).map(p=>[p[0],p[1]]));
+    svg.addEventListener("pointermove",e=>{const r=svg.getBoundingClientRect();let x=Math.round(x0+(e.clientX-r.left-m.l)/iw*(x1-x0));x=Math.max(Math.ceil(x0),Math.min(Math.floor(x1),x));
+      const v=byX.get(x),a=avX.get(x),px=X(x);cx.setAttribute("x1",px);cx.setAttribute("x2",px);
+      if(v!=null&&!o.bars){h1.setAttribute("cx",px);h1.setAttribute("cy",Y(v));}else h1.setAttribute("cx",-99);
+      if(a!=null){h2.setAttribute("cx",px);h2.setAttribute("cy",Y(a));}else h2.setAttribute("cx",-99);
+      tip.innerHTML=o.tip(x,v,a);place(el,tip,px,m.t);});
+    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;cx.setAttribute("x1",-9999);cx.setAttribute("x2",-9999);h1.setAttribute("cx",-99);h2.setAttribute("cx",-99);});
+  }
+  function segInit(id,cb){const s=$(id);s.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;s.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));cb(b.dataset.v);});}
+
+  /* ---------- temperatura annua ---------- */
+  const NOMEV={tm:"media",tx:"massima media",tn:"minima media"};
+  let yv="tm"; segInit("seg-var",v=>{yv=v;yearChart();});
+  function yearChart(){
+    const pts=A.map(a=>[a.y,a[yv]]), avg=movAvg(pts,21);
+    lineChart($("ch-year"),{pts,avg,ref:{y:BASE[yv]},unit:"°",label:"Temperatura "+NOMEV[yv]+" annua a Milano Brera 1763–2024",
+      tip:(x,v,a)=>`<b>${x}</b><br>Temperatura ${NOMEV[yv]} <b>${f1(v)}°C</b>`+(a!=null?`<br><span class="m">media 21 anni ${f1(a)}° · ${sg(v-BASE[yv])}° sul 1961–90</span>`:"")});
+    const s1=slope(pts.filter(p=>p[1]!=null))*100, s2=slope(pts.filter(p=>p[0]>=1981&&p[1]!=null))*10;
+    $("trend-note").textContent=`Tendenza della temperatura ${NOMEV[yv]}: ${sg(s1)} °C per secolo sull'intera serie, ${sg(s2)} °C per decennio dal 1981.`;
+  }
+
+  /* ---------- mese / stagione ---------- */
+  const PER=[...MESI.map((n,i)=>({k:"m"+i,lab:n[0].toUpperCase()+n.slice(1),ms:[i]})),
+    {k:"djf",lab:"Inverno (dic–feb)",ms:[-1,0,1]},{k:"mam",lab:"Primavera (mar–mag)",ms:[2,3,4]},{k:"jja",lab:"Estate (giu–ago)",ms:[5,6,7]},{k:"son",lab:"Autunno (set–nov)",ms:[8,9,10]},{k:"ann",lab:"Anno intero",ms:[0,1,2,3,4,5,6,7,8,9,10,11]}];
+  let mv="tm", per=PER[4];
+  function monthInit(){
+    $("sel-per").innerHTML=`<optgroup label="Mesi">${PER.slice(0,12).map(p=>`<option value="${p.k}">${p.lab}</option>`).join("")}</optgroup><optgroup label="Stagioni">${PER.slice(12).map(p=>`<option value="${p.k}">${p.lab}</option>`).join("")}</optgroup>`;
+    const cur=PER[new Date().getMonth()]; per=cur; $("sel-per").value=cur.k;
+    $("sel-per").addEventListener("change",e=>{per=PER.find(p=>p.k===e.target.value);monthChart();});
+    segInit("seg-mvar",v=>{mv=v;monthChart();}); monthChart();
+  }
+  const byY=()=>new Map(A.map(a=>[a.y,a]));
+  function perVal(y,M){const vals=per.ms.map(i=>{const a=M.get(i<0?y-1:y);if(!a)return null;const r=a.m[i<0?11:i];if(!r||r[0]==null)return null;return mv==="tx"?r[0]:mv==="tn"?r[1]:(r[0]+r[1])/2;});return vals.some(v=>v==null)?null:mean(vals);}
+  function monthChart(){
+    if(!A.length) return; const M=byY();
+    const pts=A.map(a=>[a.y,perVal(a.y,M)]), base=mean(pts.filter(p=>p[0]>=1961&&p[0]<=1990).map(p=>p[1])), avg=movAvg(pts,21);
+    const nome=per.lab.toLowerCase(), vv={tm:"media",tx:"massima",tn:"minima"}[mv];
+    lineChart($("ch-month"),{pts,avg,ref:{y:base},unit:"°",label:`Temperatura ${vv} di ${nome} a Milano Brera`,
+      tip:(x,v,a)=>`<b>${per.lab} ${x}</b><br>Temperatura ${vv} <b>${f1(v)}°C</b>`+(v!=null?`<br><span class="m">${sg(v-base)}° sul 1961–90${a!=null?" · media 21 anni "+f1(a)+"°":""}</span>`:"")});
+    const EP=[[1763,1849],[1850,1949],[1950,1999],[2000,2024]];
+    $("ep-title").textContent=`${per.lab}: temperatura ${vv} per epoca`;
+    $("ep").innerHTML=`<thead><tr><th>Periodo</th><th>Media</th><th>Più caldo</th><th>Più freddo</th></tr></thead><tbody>`+EP.map(([a,b])=>{const v=pts.filter(p=>p[0]>=a&&p[0]<=b&&p[1]!=null);const mx=v.reduce((p,q)=>q[1]>p[1]?q:p),mn=v.reduce((p,q)=>q[1]<p[1]?q:p);
+      return `<tr><td>${a}–${b}</td><td class="v">${f1(mean(v.map(p=>p[1])))}°</td><td>${f1(mx[1])}° <span class="m">(${mx[0]})</span></td><td>${f1(mn[1])}° <span class="m">(${mn[0]})</span></td></tr>`;}).join("")+"</tbody>";
+    const s=pts.filter(p=>p[1]!=null).sort((a,b)=>b[1]-a[1]), top=s.slice(0,5), bot=s.slice(-5).reverse();
+    $("rk").innerHTML=`<thead><tr><th></th><th>Più caldi</th><th></th><th>Più freddi</th><th></th></tr></thead><tbody>`+top.map((p,i)=>`<tr><td class="rank">${i+1}</td><td>${p[0]}</td><td class="v up">${f1(p[1])}°</td><td>${bot[i][0]}</td><td class="v down">${f1(bot[i][1])}°</td></tr>`).join("")+"</tbody>";
+  }
+
+  /* ---------- giorni estremi ---------- */
+  const EX={c30:{n:"giorni con massima ≥ 30 °C",c:""},c35:{n:"giorni con massima ≥ 35 °C",c:""},tr20:{n:"notti tropicali (minima ≥ 20 °C)",c:""},g0:{n:"giorni di gelo (minima < 0 °C)",c:"sky"}};
+  let ev="c30"; function exInit(){segInit("seg-ex",v=>{ev=v;exChart();});exChart();}
+  function exChart(){
+    if(!A.length) return; const pts=A.map(a=>[a.y,a[ev]]), avg=movAvg(pts,11), cls=EX[ev].c;
+    $("ex-leg").style.background=cls?"var(--sky)":"var(--amber)";
+    lineChart($("ch-ex"),{pts,avg,bars:true,avgCls:cls,label:"Numero di "+EX[ev].n+" per anno",tip:(x,v,a)=>`<b>${x}</b><br><b>${v??"—"}</b> ${EX[ev].n}`+(a!=null?`<br><span class="m">media 11 anni ${f1(a)}</span>`:"")});
+    const e=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[ev])), l=mean(A.filter(a=>a.y>=2015).map(a=>a[ev])), mx=[...A].sort((a,b)=>b[ev]-a[ev])[0];
+    $("ex-note").textContent=`In media ${f1(e)} ${EX[ev].n} l'anno nel 1961–1990, ${f1(l)} negli ultimi dieci anni (2015–2024). L'anno con più ${EX[ev].n.split(" (")[0]}: ${mx.y}, con ${mx[ev]}.`;
+  }
+
+  /* ---------- pioggia ---------- */
+  function precChart(){
+    if(!A.length) return; const pts=A.filter(a=>a.y>=D.prec_dal).map(a=>[a.y,a.p]), avg=movAvg(pts,11), base=mean(pts.filter(p=>p[0]>=1991&&p[0]<=2020).map(p=>p[1]));
+    lineChart($("ch-prec"),{pts,avg,bars:true,barCls:"sky",avgCls:"sky",ref:{y:base},unit:"",label:"Pioggia annua a Milano Brera dal 1901",
+      tip:(x,v,a)=>`<b>${x}</b><br>Pioggia <b>${v??"—"} mm</b>`+(a!=null?`<br><span class="m">media 11 anni ${Math.round(a)} mm · media 1991–2020 ${Math.round(base)} mm</span>`:"")});
+  }
+  function normTable(){
+    const a=D.normali["1961-1990"], b=D.normali["1991-2020"];
+    const d=(x,y)=>{const v=y-x;return `<span class="${v>0?"up":"down"}">${sg(v)}</span>`;};
+    $("norm").innerHTML=`<thead><tr><th>Mese</th><th>Max 91–20</th><th>Min 91–20</th><th>Δ media</th><th>Pioggia</th></tr></thead><tbody>`+
+      b.map((r,i)=>`<tr><td>${MES[i]}</td><td class="v">${f1(r[0])}°</td><td>${f1(r[1])}°</td><td>${d((a[i][0]+a[i][1])/2,(r[0]+r[1])/2)}°</td><td>${Math.round(r[2])} mm</td></tr>`).join("")+"</tbody>";
+  }
+
+  /* ---------- record ---------- */
+  function records(){
+    const rows=(L,u,cls)=>"<tbody>"+L.slice(0,10).map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${dIt(r.d)}</td><td class="v ${cls}">${f1(r.v)}${u}</td></tr>`).join("")+"</tbody>";
+    $("r-tx").innerHTML=rows(D.record.tmax,"°","up"); $("r-tn").innerHTML=rows(D.record.tmin,"°","down"); $("r-p").innerHTML=rows(D.record.prec," mm","");
+  }
+
+  /* ---------- un giorno nella storia ---------- */
+  let DAILY=null;
+  function dayInit(){
+    const t=new Date(); $("d-day").innerHTML=Array.from({length:31},(_,i)=>`<option>${i+1}</option>`).join(""); $("d-mon").innerHTML=MESI.map((n,i)=>`<option value="${i+1}">${n}</option>`).join("");
+    $("d-day").value=t.getDate(); $("d-mon").value=t.getMonth()+1; $("d-year").placeholder="es. 1985";
+    $("d-go").addEventListener("click",showDay);
+  }
+  async function loadDaily(){
+    if(DAILY) return DAILY; $("d-res").innerHTML='<span class="loading">Carico la serie giornaliera (circa 2 MB)…</span>';
+    const txt=await (await fetch("./data/serie/milano-brera.csv")).text(); DAILY=new Map();
+    txt.split("\n").slice(1).forEach(l=>{if(!l)return;const [d,p,tx,tn]=l.split(",");const k=d.slice(5);if(!DAILY.has(k))DAILY.set(k,[]);DAILY.get(k).push({y:+d.slice(0,4),p:p===""?null:+p,tx:tx===""?null:+tx,tn:tn===""?null:+tn});});
+    return DAILY;
+  }
+  async function showDay(){
+    const dd=+$("d-day").value, mm=+$("d-mon").value, yy=+$("d-year").value||null;
+    const k=String(mm).padStart(2,"0")+"-"+String(dd).padStart(2,"0");
+    let L; try{L=(await loadDaily()).get(k);}catch(e){$("d-res").innerHTML='<span class="loading">Serie giornaliera non disponibile.</span>';return;}
+    if(!L){$("d-res").innerHTML=`<span class="loading">Questa data non esiste.</span>`;return;}
+    const lab=dd+" "+MESI[mm-1], il=(dd===8||dd===11)?"l'":"il ", Il=il==="il "?"Il ":"L'";
+    const nx=L.filter(r=>r.tx!=null), nn=L.filter(r=>r.tn!=null), np=L.filter(r=>r.p!=null);
+    const hi=[...nx].sort((a,b)=>b.tx-a.tx), lo=[...nn].sort((a,b)=>a.tn-b.tn), wet=[...np].sort((a,b)=>b.p-a.p);
+    const n91=L.filter(r=>r.y>=1991&&r.y<=2020), rainy=np.filter(r=>r.p>=1).length;
+    const fact=(lab,v,s)=>`<div class="fact"><div class="lab">${lab}</div><b>${v}</b><span>${s}</span></div>`;
+    let h=`<div class="facts">`+
+      fact("Massima tipica",f1(mean(n91.map(r=>r.tx)))+"°","media 1991–2020")+
+      fact("Minima tipica",f1(mean(n91.map(r=>r.tn)))+"°","media 1991–2020")+
+      fact("Record di caldo",f1(hi[0].tx)+"°","nel "+hi[0].y)+
+      fact("Record di freddo",f1(lo[0].tn)+"°","nel "+lo[0].y)+
+      `</div>`;
+    if(yy){const r=L.find(x=>x.y===yy);
+      const pos=hi.findIndex(x=>x.y===yy)+1;
+      h+=r?`<p><b>${Il}${lab} ${yy}</b> a Brera: massima <b>${f1(r.tx)}°C</b>, minima <b>${f1(r.tn)}°C</b>${r.p!=null?`, pioggia <b>${f1(r.p)} mm</b>`:""}. ${pos===1?`È ${il}${lab} più caldo`:`È al ${pos}° posto tra ${il==="il "?"i":"gli"} ${lab} più caldi`} su ${nx.length} anni di misure.</p>`:`<p>Nessun dato per ${il}${lab} ${yy}.</p>`;}
+    h+=`<p class="note">Dal 1901 ${il}${lab} ha piovuto (almeno 1 mm) ${rainy} volte su ${np.length}, circa ${Math.round(rainy/np.length*100)} anni su 100. Il più piovoso è stato quello del ${wet[0].y}, con ${f1(wet[0].p)} mm.</p>`;
+    const row=(r,v,u,c)=>`<tr><td>${r.y}</td><td class="v ${c}">${f1(v)}${u}</td></tr>`;
+    h+=`<div class="three" style="margin-top:12px">
+      <div><h3>🔥 ${lab}: i più caldi</h3><table><tbody>${hi.slice(0,5).map(r=>row(r,r.tx,"°","up")).join("")}</tbody></table></div>
+      <div><h3>🧊 ${lab}: i più freddi</h3><table><tbody>${lo.slice(0,5).map(r=>row(r,r.tn,"°","down")).join("")}</tbody></table></div>
+      <div><h3>🌧️ ${lab}: i più piovosi</h3><table><tbody>${wet.slice(0,5).map(r=>row(r,r.p," mm","")).join("")}</tbody></table></div></div>`;
+    $("d-res").innerHTML=h;
+  }
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
