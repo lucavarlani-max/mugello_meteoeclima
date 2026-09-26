@@ -14,7 +14,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   (DeepMind), tramite la Google Weather API, aggiornate dalla GitHub Action che
   scrive `data/previsioni.json`. Se la chiave manca o l'API non risponde, ripiega
   automaticamente su **Open-Meteo** (server e, in ultima istanza, lato browser).
-- **Radar** — mappa precipitazioni interattiva (Windy) centrata sul Mugello.
+- **Radar e dati** (`radar.html`, voce "Radar & dati" del menu) — riquadri "Adesso sul
+  Mugello" (allerta, pioggia, temporali, fiumi, aria, terremoti); mappe Windy radar/satellite/
+  previsione pioggia/vento; pioggia nelle prossime 2 ore ogni 15 minuti per comune (Open-Meteo);
+  mappa fulmini Blitzortung e temporali previsti; 5 idrometri del Mugello con soglie e grafico
+  48 ore (`data/idrometri.json`, aggiornato dall'Action) e Bilancino; aria, pollini e UV;
+  terremoti INGV degli ultimi 30 giorni. Si aggiorna da sola ogni 5 minuti.
 - **Monitoraggio** — qualità dell'aria (Open-Meteo Air Quality) e sismicità (INGV,
   ultimo evento entro 45 km) in tempo reale. Livelli Sieve e Bilancino: vedi Action sotto.
 - **Andamento invaso di Bilancino** — grafico della serie giornaliera del volume
@@ -57,6 +62,7 @@ scripts/fetch_previsioni.py    aggiorna data/previsioni.json (Google Weather API
 scripts/fetch_fiumi.py         aggiorna data/fiumi.json
 scripts/fetch_allerta.py       aggiorna data/allerta.json
 scripts/fetch_termo.py         aggiorna data/termo.json e data/termo_storico.json
+scripts/fetch_idro.py          aggiorna data/idrometri.json (livelli + storico 48 ore)
 scripts/build_serie.py         prepara i dati di una stazione centenaria (data/serie/<slug>.csv/.json)
 data/serie/                    serie storiche giornaliere ripulite e aggregati per il sito
 reports/                       report PDF di approfondimento
