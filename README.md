@@ -40,6 +40,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
   **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve).
+  Analisi d'insieme **Italia, stazioni NOAA** (`italia-ghcn.html` + `italia-ghcn.js`): 100 stazioni
+  italiane del registro GHCN-Daily (mappa, cronologia, tabella) e trent'anni di dati 1996–2025
+  su 46 stazioni; dati in `data/serie/italia-ghcn.json`, file originali (CSV, riepilogo,
+  script Python) in `data/serie/italia/`.
   Per ogni stazione:
   strisce del riscaldamento, temperatura annua, mese per mese e per stagione, giorni estremi,
   pioggia, normali climatiche, record e "un giorno nella storia". Approfondimento PDF sulle

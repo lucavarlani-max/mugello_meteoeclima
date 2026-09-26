@@ -1,0 +1,114 @@
+STAZIONI METEO ITALIANE — GHCN-DAILY (NOAA)
+Riepilogo delle elaborazioni svolte
+=============================================================
+
+
+1. RACCOLTA STAZIONI (fetch_stazioni_italiane_cdo.py)
+-------------------------------------------------------------
+Script Python che interroga l'API NOAA CDO Web Services v2
+(endpoint /stations, locationid=FIPS:IT, dataset GHCND) e scarica
+l'elenco delle stazioni italiane con relativa copertura temporale
+(mindate/maxdate) e percentuale di completezza (datacoverage).
+
+Risultato: 100 stazioni trovate via API (di cui 3 in realta' oltre
+confine: Ratece Planica e Bilje in Slovenia, Col du Grand St Bernard
+in Svizzera — incluse dall'API per vicinanza geografica).
+
+Questi dati sono stati poi incrociati con il registro ufficiale NOAA
+(ghcnd-stations.txt, parsing a colonne fisse) per recuperare WMO ID
+e appartenenza alle reti GSN/HCN, non forniti dall'API CDO:
+- 97 stazioni su 100 hanno trovato corrispondenza nel registro ufficiale
+- 36 stazioni hanno un WMO ID assegnato
+- 4 stazioni fanno parte della rete GSN (GCOS Surface Network)
+- Il registro ufficiale conta in realta' 104 stazioni italiane totali,
+  di cui 7 non indicizzate dall'API CDO (probabilmente storiche/dismesse
+  senza dati digitalizzati recenti)
+
+>> Tabella completa: stazioni_italia_completo.csv
+>> Dashboard interattivo: dashboard_stazioni_italia.html
+   (cronologia di attivita' per stazione dal 1763 al 2026, grafici
+   di densita' per decennio, quota vs copertura dati, tabella ordinabile)
+
+
+2. DOWNLOAD DATI GIORNALIERI (download_dati_giornalieri.py)
+-------------------------------------------------------------
+Script Python che scarica i file .dly (formato a colonne fisse,
+pubblici via HTTPS da ncei.noaa.gov, nessun token richiesto) per
+tutte le 100 stazioni, filtra gli ultimi 30 anni (1996-2026) e
+converte i valori in unita' fisiche standard (gradi Celsius, mm).
+
+Elementi estratti: TMAX, TMIN, TAVG, PRCP, SNOW, SNWD
+
+Risultato effettivo: solo 46 delle 100 stazioni avevano un file .dly
+disponibile online (le altre risultano nel registro ma senza dati
+digitalizzati accessibili). Delle 46, 38 avevano dati sufficienti
+per l'elemento TAVG nel mese di giugno.
+
+Pulizia dati: rimossi i record con flag di qualita' NOAA (qflag)
+non vuoto — 56 osservazioni anomale su 1,28 milioni totali (una
+stazione, Brindisi, presentava letture palesemente errate a 999°C,
+correttamente segnalate dal controllo qualita' NOAA).
+
+
+3. ANALISI CLIMATICA GENERALE — 1996-2026, tutti i mesi
+-------------------------------------------------------------
+>> Dashboard interattivo: analisi_clima_italia_30anni.html
+
+Risultati principali (46 stazioni, 1,28 milioni di osservazioni
+giornaliere pulite):
+
+- Trend di riscaldamento: +0.37°C per decennio
+  (p=0.0035, statisticamente significativo, R2=0.28)
+- Confronto decadi: media 1996-2005 = valore base
+                     media 2016-2025 = +0.60°C rispetto alla prima decade
+- Record di caldo assoluto: 46.7°C — Sigonella, 3 luglio 1998
+- Record di freddo assoluto: -29.0°C — Pian Rosa (3488m), 23 dic. 2003
+- Giorni di gelo (TMIN<0°C): in calo, da ~29/anno (fine anni '90)
+  a ~15-23/anno (2023-2025) — media per stazione
+- Giorni di caldo estremo (TMAX>35°C): in aumento, da quasi zero
+  a 5-6 giorni/anno — media per stazione
+- Precipitazioni annuali: nessun trend significativo (p=0.69),
+  alta variabilita' interannuale
+- Gradiente altimetrico (lapse rate): -6.3°C ogni 1000m di quota
+  (R2=0.91) — coerente con la fisica atmosferica standard
+
+
+4. FOCUS SU GIUGNO — 1996-2025
+-------------------------------------------------------------
+>> Tabella per anno: giugno_per_anno.csv
+>> Tabella per stazione: giugno_per_stazione.csv
+>> Grafico a barre (ranking stazioni): grafico_giugno_per_stazione.html
+>> Grafico a linee (tutte le stazioni, tutti gli anni): 
+   grafico_giugno_linee_tutte_stazioni.html
+
+Statistiche (media su 46 stazioni per anno):
+- Media storica giugno (1996-2025): 20.67°C
+- Giugno piu' caldo: 2003 (23.54°C) — ondata di caldo europea
+- Giugno piu' freddo: 2004 (18.90°C)
+- Trend: +0.415°C/decennio, ma NON statisticamente significativo
+  (p=0.103) — un singolo mese ha molta piu' variabilita' anno su
+  anno rispetto alla media annuale, quindi il segnale del
+  riscaldamento e' piu' difficile da isolare dal rumore
+- Media 1996-2005: 20.51°C | Media 2016-2025: 21.13°C (+0.62°C)
+
+Ranking stazioni (38 con dati sufficienti per giugno), dalla piu'
+calda alla piu' fredda:
+- Top 3 piu' calde: Napoli (26.4°C), Boccadifalco/Palermo (25.7°C),
+  Marina di Ginosa (24.6°C)
+- Top 3 piu' fredde: Col du Grand St Bernard (6.9°C), Paganella
+  (9.8°C), Monte Cimone (10.4°C)
+- Il grafico a linee mostra chiaramente il 2003 come picco diffuso
+  su quasi tutte le stazioni contemporaneamente
+
+
+NOTE METODOLOGICHE
+-------------------------------------------------------------
+- Fonte dati: NOAA GHCN-Daily (Global Historical Climatology
+  Network), via API CDO Web Services v2 e file .dly pubblici
+- Filtro qualita': esclusi i record con quality flag (qflag) non
+  vuoto secondo la documentazione GHCN-Daily
+- 2026 escluso dalle medie annuali/decadali perche' l'anno e'
+  parziale (dati solo fino a inizio luglio)
+- I trend sono calcolati con regressione lineare semplice
+  (scipy.stats.linregress); p<0.05 considerato statisticamente
+  significativo
