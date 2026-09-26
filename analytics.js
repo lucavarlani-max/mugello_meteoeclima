@@ -3,7 +3,7 @@
    (es. "mugellometeo") e scrivilo qui sotto tra le virgolette. Le statistiche si vedono su
    https://CODICE.goatcounter.com */
 (function(){
-  var CODICE = "";
+  var CODICE = "mugellometeoeclima";
   if(!CODICE || location.protocol === "file:" || /^(localhost|127\.)/.test(location.hostname)) return;
   var s = document.createElement("script");
   s.async = true;
