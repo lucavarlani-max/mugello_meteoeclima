@@ -307,11 +307,13 @@
   @media (max-width:860px){
     .hero-grid,.feat,.clim{grid-template-columns:1fr}
     .comuni{grid-template-columns:1fr 1fr}
+    .foot{grid-template-columns:1fr 1fr;gap:24px} .foot>div:first-child{grid-column:1/-1}
   }
   @media (max-width:520px){
     .now-temp{font-size:72px} .comuni{grid-template-columns:1fr}
     .week{grid-template-columns:repeat(4,1fr)} .sky3{grid-template-columns:1fr}
     .now-stats{grid-template-columns:repeat(2,1fr)}
+    .foot{grid-template-columns:1fr}
   }
   @media (max-width:600px){
     .brand small{display:none}
