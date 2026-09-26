@@ -60,7 +60,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   se serve, `foto` (id in `data/notizie-foto.json`, foto di Wikimedia Commons con autore e
   licenza). Le ultime tre notizie compaiono anche in home.
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
-  senza cookie. Si attiva scrivendo il codice del proprio account nella variabile `CODICE`.
+  senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
+  visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
   e pubblicare su Facebook, con didascalia automatica.
 - **PWA** — installabile su telefono (icona in home, apertura a schermo intero, cache offline della struttura).
