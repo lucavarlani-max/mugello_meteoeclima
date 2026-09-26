@@ -2,18 +2,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Meteo, dati in tempo reale e clima della vallata del Mugello">
-<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
-<meta property="og:locale" content="it_IT">
-<meta property="og:title" content="Mugello Meteo &amp; Clima">
-<meta property="og:description" content="Previsioni per i 9 comuni del Mugello, stazione meteo in tempo reale, radar, livelli della Sieve e di Bilancino, allerte meteo.">
-<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/">
-<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0f6b52">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2040%2040%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M2%2018%20L11%208%20L18%2015%20L27%206%20L38%2018%22%20stroke%3D%22%230f6b52%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M4%2035%20C12%2027%2015%2035%2021%2030%20C27%2025%2031%2033%2037%2025%22%20stroke%3D%22%232f7cc4%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
@@ -79,12 +67,13 @@
   header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 84%,transparent);
     backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   .top-in{display:flex;align-items:center;gap:22px;height:64px}
-  .brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-weight:800;font-size:20px;letter-spacing:-.02em}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-weight:800;font-size:20px;letter-spacing:-.02em;white-space:nowrap}
   .brand .mark{width:37px;height:37px;flex:none;display:block}
   .brand .mark svg{width:100%;height:100%;display:block}
   .brand small{display:block;font-family:var(--mono);font-weight:500;font-size:9.5px;letter-spacing:.16em;
     color:var(--ink-faint);text-transform:uppercase;margin-top:1px}
-  nav.main{display:flex;gap:4px;margin-left:auto}
+  nav.main{display:flex;gap:4px;margin-left:auto;flex-wrap:nowrap}
+  nav.main>a,nav.main .dd>button{white-space:nowrap}
   nav.main a{padding:8px 12px;border-radius:var(--r-pill);font-weight:500;font-size:13.5px;color:var(--ink-soft)}
   nav.main a:hover{background:var(--pine-tint);color:var(--pine-deep)}
   nav.main a.active{background:var(--pine);color:#fff}
@@ -293,7 +282,7 @@
 
   .note{margin-top:26px;text-align:center;font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
 
-  @media (max-width:860px){
+  @media (max-width:1180px){
     nav.main{display:none} .menu-btn{display:block}
     header.top.nav-open nav.main{display:flex;flex-direction:column;align-items:stretch;gap:2px;
       position:absolute;left:0;right:0;top:100%;background:var(--panel);border-bottom:1px solid var(--line);
@@ -302,6 +291,8 @@
     header.top.nav-open nav.main .dd{position:static;width:100%}
     header.top.nav-open nav.main .dd>button{width:100%;text-align:left;padding:11px 10px;font-size:15px}
     header.top.nav-open nav.main .dd-menu{position:static;display:flex;box-shadow:none;border:0;padding:2px 0 4px 14px;min-width:0;background:none}
+  }
+  @media (max-width:860px){
     .hero-grid,.feat,.clim{grid-template-columns:1fr}
     .comuni{grid-template-columns:1fr 1fr}
   }
@@ -309,6 +300,10 @@
     .now-temp{font-size:72px} .comuni{grid-template-columns:1fr}
     .week{grid-template-columns:repeat(4,1fr)} .sky3{grid-template-columns:1fr}
     .now-stats{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:600px){
+    .brand small{display:none}
+    .brand{font-size:18px;white-space:nowrap}
   }
 </style>
 
@@ -1000,7 +995,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <a href="./estremi-minime.html">🔵 Minime</a>
         </div>
       </div>
-      <a href="./fb-post.html">Crea post</a>
     </nav>
     <button class="menu-btn" aria-label="Menu">☰</button>
   </div>
@@ -1224,6 +1218,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <li><a href="#">Monitoraggio fiumi</a></li>
         <li><a href="#">Report climatici</a></li>
         <li><a href="#">Webcam</a></li>
+        <li><a href="./fb-post.html">Crea post per Facebook</a></li>
       </ul>
     </div>
     <div>
@@ -1295,8 +1290,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     COMUNI.forEach((c,i)=>{
       const d=data[i]; if(!d) return; const cur=d.current, dl=d.daily;
       set('c'+i+'-ico', wmo(cur.weather_code)[0]);
-      set('c'+i+'-t', r(cur.temperature_2m)+'°');
-      set('c'+i+'-sub', r(dl.temperature_2m_min[0])+'° / '+(dl.precipitation_probability_max[0]??0)+'%');
+      set('c'+i+'-t', r(dl.temperature_2m_max[0])+'°');
+      set('c'+i+'-sub', 'min '+r(dl.temperature_2m_min[0])+'° · '+(dl.precipitation_probability_max[0]??0)+'%');
     });
 
     // confronto tra comuni (oggi)
@@ -1339,7 +1334,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   // GitHub Action; ripiega su Open-Meteo lato server). Se il file manca o è vuoto
   // il ciclo usa openMeteo() come fallback lato browser.
   async function previsioni(){
-    const res=await fetch('./data/previsioni.json',{cache:'no-store'});
+    const res=await fetch('./data/previsioni.json?t='+Date.now(),{cache:'no-store'});
     if(!res.ok) throw new Error('http '+res.status);
     const P=await res.json();
     const cs=P.comuni||[]; pvComuni=cs;
@@ -1349,8 +1344,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     cs.forEach((c,i)=>{
       const g0=(c.giorni&&c.giorni[0])||{};
       set('c'+i+'-ico', wmo(c.now?c.now.code:g0.code)[0]);
-      if(c.now&&c.now.t!=null) set('c'+i+'-t', r(c.now.t)+'°');
-      if(g0.tmin!=null) set('c'+i+'-sub', r(g0.tmin)+'° / '+(g0.pp??0)+'%');
+      if(g0.tmax!=null) set('c'+i+'-t', r(g0.tmax)+'°'); else if(c.now&&c.now.t!=null) set('c'+i+'-t', r(c.now.t)+'°');
+      if(g0.tmin!=null) set('c'+i+'-sub', 'min '+r(g0.tmin)+'° · '+(g0.pp??0)+'%');
     });
 
     // pannello "adesso": icona/desc/min-max da Scarperia

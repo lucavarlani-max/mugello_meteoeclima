@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v11';
+const CACHE = 'mmc-v14';
 const SHELL = [
   './',
   './index.html',
