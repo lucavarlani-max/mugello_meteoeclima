@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v14';
+const CACHE = 'mmc-v15';
 const SHELL = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const SHELL = [
   './clima-firenze.html',
   './mappe.html',
   './proverbi.html',
+  './temperature-toscana.html',
   './icon-192.png',
   './icon-512.png',
   './manifest.webmanifest'
