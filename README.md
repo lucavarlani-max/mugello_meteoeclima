@@ -39,7 +39,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   per giorno e download per Excel. Stazioni della zona M (Mugello-Val di Sieve) in evidenza.
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
-  **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve).
+  **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve) e
+  **Padova 1725–2023** (`padova.html`, serie omogeneizzata di sola temperatura, con la fonte di ogni anno).
   Analisi d'insieme **Italia, stazioni NOAA** (`italia-ghcn.html` + `italia-ghcn.js`): 100 stazioni
   italiane del registro GHCN-Daily (mappa, cronologia, tabella) e trent'anni di dati 1996–2025
   su 46 stazioni (temperatura, gelo e caldo, precipitazioni, quota, latitudine); dati in `data/serie/italia-ghcn.json`, file originali (CSV, riepilogo,
