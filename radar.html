@@ -174,6 +174,17 @@
   .sn-bands{display:block;height:12px;border-radius:3px}
   .sn-ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
   .sn-nota{margin:10px 0 0;font-size:13px;color:var(--ink-soft);max-width:90ch}
+  /* immagini Wetterzentrale */
+  .wz{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .wz-c{margin:0;display:flex;flex-direction:column;gap:8px;padding:12px}
+  .wz-c figcaption{display:flex;flex-direction:column;font-size:14px}
+  .wz-c figcaption .faint{font-size:12px}
+  .wz-img{display:block;border-radius:10px;overflow:hidden;background:var(--line-soft);min-height:120px}
+  .wz-img img{display:block;width:100%;height:auto}
+  .wz-img[hidden]{display:none}
+  .wz-err{margin:0;font-size:13px;color:var(--ink-soft)}
+  .wz-src{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint)}
+  @media (max-width:1000px){ .wz{grid-template-columns:1fr} }
   .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
   .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
   @media (max-width:1000px){ .now{grid-template-columns:repeat(3,minmax(0,1fr))} .two{grid-template-columns:1fr} .rivers{grid-template-columns:repeat(2,minmax(0,1fr))} .three{grid-template-columns:1fr} }
@@ -233,6 +244,29 @@
     <section id="carte">
       <div class="sh"><h2>Carte sinottiche</h2><span class="src">previsione fino a 5 giorni · dati Open-Meteo, elaborazione del sito</span></div>
       <div class="card" id="sinottica"><span class="loading">Carico le carte…</span></div>
+
+      <div class="sh" style="margin-top:22px"><h3 style="font-family:var(--serif);font-size:19px;margin:0">Analisi e satellite</h3><span class="src">immagini di Wetterzentrale · si aggiornano da sole</span></div>
+      <div class="wz">
+        <figure class="card wz-c" data-wz="sat">
+          <figcaption><b>Satellite</b><span class="faint" data-t>cerco l'ultima immagine…</span></figcaption>
+          <a class="wz-img" href="https://www.wetterzentrale.de/" target="_blank" rel="noopener"><img alt="Immagine satellitare dell'Europa" loading="lazy"></a>
+          <p class="wz-err" hidden>Immagine non disponibile in questo momento. <a href="https://www.wetterzentrale.de/" target="_blank" rel="noopener">Apri Wetterzentrale ↗</a></p>
+          <span class="wz-src">Fonte: Wetterzentrale · EUMETSAT</span>
+        </figure>
+        <figure class="card wz-c" data-wz="dwd">
+          <figcaption><b>Analisi al suolo DWD</b><span class="faint">servizio meteo tedesco</span></figcaption>
+          <a class="wz-img" href="https://www.wetterzentrale.de/maps/DWDEU_0.png" target="_blank" rel="noopener"><img alt="Carta di analisi al suolo del servizio meteorologico tedesco DWD" loading="lazy"></a>
+          <p class="wz-err" hidden>Immagine non disponibile in questo momento. <a href="https://www.wetterzentrale.de/maps/DWDEU_0.png" target="_blank" rel="noopener">Apri l'originale ↗</a></p>
+          <span class="wz-src">Fonte: Wetterzentrale · Deutscher Wetterdienst</span>
+        </figure>
+        <figure class="card wz-c" data-wz="bra">
+          <figcaption><b>Analisi al suolo Met Office</b><span class="faint">servizio meteo britannico (Bracknell)</span></figcaption>
+          <a class="wz-img" href="https://www.wetterzentrale.de/maps/BRAEU_0.png" target="_blank" rel="noopener"><img alt="Carta di analisi al suolo del Met Office britannico" loading="lazy"></a>
+          <p class="wz-err" hidden>Immagine non disponibile in questo momento. <a href="https://www.wetterzentrale.de/maps/BRAEU_0.png" target="_blank" rel="noopener">Apri l'originale ↗</a></p>
+          <span class="wz-src">Fonte: Wetterzentrale · UK Met Office</span>
+        </figure>
+      </div>
+      <p class="faint" style="font-size:12.5px;margin:10px 0 0">Tocca un'immagine per aprirla a grandezza piena. Le analisi al suolo mostrano la situazione osservata con fronti, isobare, alte e basse pressioni.</p>
     </section>
 
     <section id="pioggia">
@@ -285,7 +319,7 @@
       </table></div></div>
     </section>
 
-    <p class="note">Fonti: Windy · Blitzortung · Open-Meteo (modelli ECMWF e GFS) · Natural Earth · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · elaborazioni L. Varlani</p>
+    <p class="note">Fonti: Windy · Blitzortung · Wetterzentrale (EUMETSAT, DWD, UK Met Office) · Open-Meteo (modelli ECMWF e GFS) · Natural Earth · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · elaborazioni L. Varlani</p>
   </main>
 
   <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
@@ -437,7 +471,33 @@
     }catch(err){$("eq").innerHTML='<tr><td colspan="4" class="loading">Dati INGV non disponibili al momento.</td></tr>';tile("n-sisma","—","dato non disponibile","");}
   }
 
-  function tutto(){ $("upd").textContent="Aggiornato alle "+hm(new Date()); allerta(); pioggia(); temporali(); fiumi(); aria(); terremoti(); }
+  /* ---------- immagini Wetterzentrale ---------- */
+  const WZ_ORE=[0,1,2,3,4,5,6,8,10,12];
+  function wzErr(fig,on){fig.querySelector(".wz-err").hidden=!on;fig.querySelector(".wz-img").hidden=on;}
+  function wzFisse(){ // DWD e Met Office: indirizzo fisso, lo ricarichiamo con un parametro che cambia ogni 15 minuti
+    const q=Math.floor(Date.now()/9e5);
+    [["dwd","https://www.wetterzentrale.de/maps/DWDEU_0.png"],["bra","https://www.wetterzentrale.de/maps/BRAEU_0.png"]].forEach(([k,u])=>{
+      const fig=document.querySelector(`[data-wz="${k}"]`), img=fig.querySelector("img");
+      img.onload=()=>wzErr(fig,false); img.onerror=()=>wzErr(fig,true); img.src=u+"?v="+q;});
+  }
+  function wzSat(){ // il nome del file contiene data e ora (UTC): proviamo dall'ora attuale all'indietro
+    const fig=document.querySelector('[data-wz="sat"]'), img=fig.querySelector("img"), lab=fig.querySelector("[data-t]");
+    const p2=n=>String(n).padStart(2,"0"), base=new Date(); base.setUTCMinutes(0,0,0);
+    const url=d=>`https://www.wetterzentrale.de/maps/archive/${d.getUTCFullYear()}/sat/SAT_1_${d.getUTCFullYear()}${p2(d.getUTCMonth()+1)}${p2(d.getUTCDate())}${p2(d.getUTCHours())}00_413.jpg`;
+    let i=0;
+    (function prova(){
+      if(i>=WZ_ORE.length){wzErr(fig,true);lab.textContent="nessuna immagine recente";return;}
+      const d=new Date(base.getTime()-WZ_ORE[i++]*36e5), u=url(d), t=new Image();
+      t.onload=()=>{img.src=u;fig.querySelector(".wz-img").href=u;wzErr(fig,false);lab.textContent="immagine delle "+hm(d)+" (ora italiana)";};
+      t.onerror=prova; t.src=u;
+    })();
+  }
+  let wzOra=0;
+  function wz(){ if(Date.now()-wzOra<14*60e3) return; wzOra=Date.now(); wzFisse(); wzSat(); }
+  const wzObs=new IntersectionObserver(es=>{if(es[0].isIntersecting){wzObs.disconnect();wz();}},{rootMargin:"400px"});
+  wzObs.observe(document.querySelector(".wz"));
+
+  function tutto(){ $("upd").textContent="Aggiornato alle "+hm(new Date()); allerta(); pioggia(); temporali(); fiumi(); aria(); terremoti(); if(wzOra) wz(); }
   tutto(); setInterval(()=>{ if(!document.hidden) tutto(); },5*60e3);
 })();
 </script>

@@ -25,6 +25,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   conica di Lambert, ogni 12 ore fino a 5 giorni. Dati ECMWF/GFS via Open-Meteo scaricati ogni
   6 ore da `scripts/fetch_sinottica.py` in `data/sinottica.json`; base cartografica e griglia in
   `data/sinottica-mappa.json` (Natural Earth).
+  **Analisi e satellite**: immagini di Wetterzentrale richiamate dal loro sito (satellite
+  EUMETSAT, ultima immagine oraria trovata da sola; analisi al suolo DWD e UK Met Office),
+  ricaricate ogni 15 minuti; se non sono disponibili compare il link diretto.
 - **Monitoraggio** — qualità dell'aria (Open-Meteo Air Quality) e sismicità (INGV,
   ultimo evento entro 45 km) in tempo reale. Livelli Sieve e Bilancino: vedi Action sotto.
 - **Andamento invaso di Bilancino** — grafico della serie giornaliera del volume
