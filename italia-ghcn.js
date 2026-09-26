@@ -5,7 +5,9 @@
   const f1=v=>v==null||isNaN(v)?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−");
   const f2=v=>v==null||isNaN(v)?"—":v.toFixed(2).replace(".",",").replace("-","−");
   const sg=v=>(v>0?"+":"")+f2(v);
+  const smm=v=>(v>0?"+":v<0?"−":"")+Math.abs(Math.round(v));
   const MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
   const dIt=iso=>{const [y,m,d]=iso.split("-").map(Number);return d+" "+MES[m-1]+" "+y;};
   const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
   function fit(P){const mx=mean(P.map(p=>p[0])),my=mean(P.map(p=>p[1]));let a=0,b=0;P.forEach(p=>{a+=(p[0]-mx)*(p[1]-my);b+=(p[0]-mx)**2;});const s=a/b;return {s,q:my-s*mx};}
@@ -71,12 +73,13 @@
     barre($("ch-caldo"),C.map(a=>({x:a.year,v:a.hot_days_per_station})),{cls:"hi",label:"Giorni sopra 35 gradi per stazione",tip:s=>`<b>${s.x}</b><br><b>${f1(s.v)}</b> giorni sopra 35 °C per stazione`});
     const g0=mean(G.slice(0,5).map(a=>a.frost_days_per_station)),g1=mean(G.slice(-5).map(a=>a.frost_days_per_station)),c0=mean(C.slice(0,5).map(a=>a.hot_days_per_station)),c1=mean(C.slice(-5).map(a=>a.hot_days_per_station));
     $("ext-note").textContent=`Giorni di gelo: in media ${f1(g0)} all'anno nel 1996–2000, ${f1(g1)} nel 2021–2025. Giorni sopra i 35 °C: da ${f1(c0)} a ${f1(c1)} all'anno per stazione.`;
-    // mesi e pioggia
+    // mesi: temperatura e pioggia in percentuale dell'anno
     barre($("ch-mesi"),S.monthly_temp.map(m=>({x:m.month,v:m.value})),{cls:"hi",unit:"°",lo:0,xfmt:m=>MES[m-1],label:"Temperatura media per mese",tip:s=>`<b>${MES[s.x-1]}</b><br>Media <b>${f1(s.v)} °C</b>`});
-    const R=S.annual_prcp.filter(a=>a.year<=2025), rm=mean(R.map(a=>a.value));
-    barre($("ch-prec"),R.map(a=>({x:a.year,v:a.value})),{cls:"sky",label:"Pioggia annua media per stazione",
-      extra:(X,Y,c)=>`<line class="fitl" x1="${c.m.l}" x2="${c.m.l+c.iw}" y1="${Y(rm)}" y2="${Y(rm)}"/>`,tip:s=>`<b>${s.x}</b><br>Pioggia <b>${Math.round(s.v)} mm</b><br><span class="m">media 1996–2025 ${Math.round(rm)} mm</span>`});
-    $("prec-note").textContent=`Nessuna tendenza significativa nella pioggia annua: molto variabile da un anno all'altro (media ${Math.round(rm)} mm per stazione). La temperatura per mese è la media 1996–2025 di tutte le stazioni.`;
+    const tot=S.monthly_prcp.reduce((x,m)=>x+m.value,0), PM=S.monthly_prcp.map(m=>({x:m.month,v:m.value/tot*100}));
+    barre($("ch-pmesi"),PM,{cls:"lo",unit:"%",lo:0,xfmt:m=>MES[m-1],label:"Quota della pioggia annua caduta in ogni mese",tip:s=>`<b>${MES[s.x-1]}</b><br><b>${f1(s.v)}%</b> della pioggia dell'anno`});
+    const pOrd=[...PM].sort((x,y)=>y.v-x.v), aut=PM.filter(m=>m.x>=9).reduce((x,m)=>x+m.v,0), est=PM.filter(m=>m.x>=6&&m.x<=8).reduce((x,m)=>x+m.v,0);
+    $("mesi-note").textContent=`Il mese più piovoso è ${MESI[pOrd[0].x-1]} (${f1(pOrd[0].v)}% della pioggia dell'anno), il più secco ${MESI[pOrd[11].x-1]} (${f1(pOrd[11].v)}%). Da settembre a dicembre cade il ${Math.round(aut)}% della pioggia, in estate solo il ${Math.round(est)}%. La pioggia mensile è mostrata in percentuale del totale perché i valori assoluti del dashboard originale non sono medie per stazione.`;
+    pioggia();
     // quota
     const Q=S.station_ranking.filter(s=>s.elevation!=null), FQ=fit(Q.map(s=>[s.elevation,s.value]));
     chart($("ch-quota"),{xs:[0,Math.ceil(Math.max(...Q.map(s=>s.elevation))/500)*500],lo:Math.min(...Q.map(s=>s.value))-1,hi:Math.max(...Q.map(s=>s.value))+1,unit:"°",label:"Temperatura media e quota delle stazioni",xfmt:x=>x+" m",
@@ -84,31 +87,53 @@
       hit:(px,py,X,Y)=>{let b=null,bd=24*24;Q.forEach(s=>{const d=(X(s.elevation)-px)**2+(Y(s.value)-py)**2;if(d<bd){bd=d;b=s;}});if(!b)return null;
         return {dot:1,x:X(b.elevation),y:Y(b.value),html:`<b>${esc(b.nome)}</b> <span class="m">${Math.round(b.elevation)} m</span><br>Media <b>${f1(b.value)} °C</b>`};}});
     $("quota-note").textContent=`La temperatura cala di circa ${f1(-S.lapse_rate)} °C ogni 1.000 m di quota, in linea con il gradiente atmosferico standard (circa 6,5 °C/km). Le stazioni più calde sono in Sicilia e sulle coste del Sud, la più fredda è Plateau Rosa, a 3.488 m.`;
-    giugno();
+    geografia();
   }
 
-  function giugno(){
-    const GA=D.giugno_anno, m=mean(GA.map(a=>a.v));
-    barre($("ch-giu"),GA.map(a=>({x:a.y,v:a.v,cls:a.v>=m?"hi":"lo"})),{lo:Math.floor(Math.min(...GA.map(a=>a.v))-1),unit:"°",label:"Temperatura media di giugno per anno",
-      extra:(X,Y,c)=>`<line class="fitl" x1="${c.m.l}" x2="${c.m.l+c.iw}" y1="${Y(m)}" y2="${Y(m)}"/>`,tip:s=>`<b>Giugno ${s.x}</b><br>Media <b>${f1(s.v)} °C</b><br><span class="m">${sg(s.v-m)} °C sulla media 1996–2025</span>`});
-    const hot=[...GA].sort((a,b)=>b.v-a.v), F=fit(GA.map(a=>[a.y,a.v]));
-    $("giu-note").textContent=`Media di giugno 1996–2025: ${f1(m)} °C. Il più caldo è stato il ${hot[0].y} (${f1(hot[0].v)} °C, l'ondata di calore europea), poi ${hot[1].y} e ${hot[2].y}; il più fresco il ${hot[hot.length-1].y} (${f1(hot[hot.length-1].v)} °C). Tendenza ${sg(F.s*10)} °C per decennio, non statisticamente significativa: un singolo mese varia molto da un anno all'altro.`;
-    // classifica
-    const GS=D.giugno_stazione, mx=Math.max(...GS.map(s=>s.v));
-    $("rk").innerHTML=GS.map(s=>`<div class="r"><span class="n" title="${esc(s.nome)}">${esc(s.nome)}<s>${Math.round(s.quota)} m</s></span><span><i class="t" style="display:block;width:${Math.max(2,s.v/mx*100)}%"></i></span><span class="v">${f1(s.v)}°</span></div>`).join("");
-    // spaghetti
-    const L=D.giugno_linee, sel=$("sel-st");
-    if(!sel.options.length){sel.innerHTML=`<option value="">— nessuna —</option>`+[...L].sort((a,b)=>a.nome.localeCompare(b.nome,"it")).map(s=>`<option>${esc(s.nome)}</option>`).join("");sel.value=L.some(s=>s.nome==="Pisa")?"Pisa":"";sel.addEventListener("change",spag);}
-    spag();
+  /* ---------- precipitazioni ---------- */
+  const DUBBI={2025:"dato forse incompleto"};
+  function pioggia(){
+    const S=D.stats, R=S.annual_prcp.filter(a=>a.year<=2025), m=mean(R.map(a=>a.value)), ok=R.filter(a=>!DUBBI[a.year]);
+    const bag=[...ok].sort((x,y)=>y.value-x.value), wet=bag[0], dry=bag[bag.length-1], F2=fit(ok.map(a=>[a.year,a.value]));
+    const t=(l,b,u,w)=>`<div class="tile"><div class="lab">${l}</div><div class="big">${b}<s>${u}</s></div><div class="who">${w}</div></div>`;
+    $("ptiles").innerHTML=
+      t("Pioggia media annua",Math.round(m),"mm","per stazione · 1996–2025")+
+      t("Anno più piovoso",wet.year,"",`${Math.round(wet.value)} mm · ${Math.round(wet.value-m)>0?"+":""}${Math.round(wet.value-m)} mm sulla media`)+
+      t("Anno più secco",dry.year,"",`${Math.round(dry.value)} mm · il 2025 (${Math.round(R.find(a=>a.year===2025).value)} mm) è forse incompleto`)+
+      t("Tendenza","nessuna","",`${smm(S.trend_prcp_decade)} mm per decennio, non significativa (p = 0,69)`);
+    // scarti dalla media, con media mobile a 5 anni
+    const A=R.map(a=>({y:a.year,v:a.value,d:a.value-m,nd:!!DUBBI[a.year]})), lo=Math.min(...A.map(a=>a.d)), hi=Math.max(...A.map(a=>a.d));
+    const MM=A.map((a,i)=>{const w=A.slice(i-2,i+3);return i<2||w.length<5||w.some(x=>x.nd)?null:{i,v:mean(w.map(x=>x.d))};}).filter(Boolean);
+    const el=$("ch-prec");
+    chart(el,{xs:A.map(a=>a.y),cat:true,lo,hi,label:"Scarto della pioggia annua dalla media 1996-2025, in millimetri",
+      layers:(X,Y,c)=>{const bw=Math.max(2,c.iw/c.n-3);
+        return `<line class="zero" x1="${c.m.l}" x2="${c.m.l+c.iw}" y1="${Y(0)}" y2="${Y(0)}"/>`+
+          A.map((a,i)=>`<rect class="bar ${a.d>=0?"lo":"hi"}${a.nd?" nd":""}" x="${X(i)-bw/2}" y="${Math.min(Y(a.d),Y(0))}" width="${bw}" height="${Math.abs(Y(0)-Y(a.d))}" rx="${Math.min(3,bw/2)}"/>`).join("")+
+          `<path class="mean" d="${MM.map((p,k)=>(k?"L":"M")+X(p.i).toFixed(1)+" "+Y(p.v).toFixed(1)).join("")}"/>`;},
+      hit:(px,py,X,Y)=>{const i=Math.max(0,Math.min(A.length-1,Math.round(((px-46)/(el.clientWidth-60))*A.length-.5)));const a=A[i];
+        return {x:X(i),y:Y(a.d),html:`<b>${a.y}</b><br>Pioggia <b>${Math.round(a.v)} mm</b><br>${a.d>=0?"+":"−"}${Math.abs(Math.round(a.d))} mm rispetto alla media`+(a.nd?`<br><span class="m">${DUBBI[a.y]}</span>`:"")};}});
+    $("prec-note").textContent=`La pioggia cambia molto da un anno all'altro: in media ogni anno si scosta di ${Math.round(mean(ok.map(a=>Math.abs(a.value-m))))} mm dalla media. La tendenza di ${smm(S.trend_prcp_decade)} mm per decennio calcolata nell'analisi dipende quasi tutta dal 2025: senza quell'anno diventa ${smm(F2.s*10)} mm. In nessuno dei due casi è significativa. Il 2025 è in trasparenza perché il valore è molto più basso di tutti gli altri ed è probabile che per alcune stazioni i dati siano incompleti.`;
+    // decenni
+    const DEC=[1996,2006,2016].map(y=>({x:`${y}–${y+9}`,v:mean(R.filter(a=>a.year>=y&&a.year<=y+9).map(a=>a.value))}));
+    barre($("ch-pdec"),DEC,{cls:"lo",lo:0,label:"Pioggia media per decennio",tip:s=>`<b>${s.x}</b><br>Media <b>${Math.round(s.v)} mm</b> all'anno`+(s.x.startsWith("2016")?`<br><span class="m">con il 2025, forse incompleto</span>`:"")});
+    // classifica anni
+    const mx=Math.max(...R.map(a=>a.value)), riga=(a,c)=>`<div class="r"><span class="n">${a.year}${DUBBI[a.year]?"<s>forse incompleto</s>":""}</span><span><i class="t ${c}" style="display:block;width:${a.value/mx*100}%"></i></span><span class="v">${Math.round(a.value)} mm</span></div>`;
+    const ord=[...R].sort((x,y)=>y.value-x.value);
+    $("prk").innerHTML=`<div class="hd">Più piovosi</div>`+ord.slice(0,5).map(a=>riga(a,"sky")).join("")+`<div class="gap"></div><div class="hd">Più secchi</div>`+ord.slice(-5).reverse().map(a=>riga(a,"")).join("");
   }
-  function spag(){
-    const L=D.giugno_linee, on=$("sel-st").value, yrs=D.giugno_anno.map(a=>a.y), all=L.flatMap(s=>s.serie.map(p=>p[1]));
-    chart($("ch-spag"),{xs:[yrs[0],yrs[yrs.length-1]],lo:Math.min(...all)-1,hi:Math.max(...all)+1,unit:"°",label:"Temperatura di giugno di ogni stazione",
-      layers:(X,Y)=>{const path=s=>s.serie.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+" "+Y(p[1]).toFixed(1)).join("");
-        return L.filter(s=>s.nome!==on).map(s=>`<path class="spag" d="${path(s)}"/>`).join("")+`<path class="mean" d="${D.giugno_anno.map((a,i)=>(i?"L":"M")+X(a.y).toFixed(1)+" "+Y(a.v).toFixed(1)).join("")}"/>`+
-          L.filter(s=>s.nome===on).map(s=>`<path class="spag on" d="${path(s)}"/>`).join("");},
-      hit:(px,py,X,Y)=>{let b=null,bd=14*14;L.forEach(s=>s.serie.forEach(p=>{const d=(X(p[0])-px)**2+(Y(p[1])-py)**2;if(d<bd){bd=d;b={s,p};}}));
-        if(!b)return null;return {dot:1,x:X(b.p[0]),y:Y(b.p[1]),html:`<b>${esc(b.s.nome)}</b> <span class="m">${Math.round(b.s.quota)} m</span><br>Giugno ${b.p[0]}: <b>${f1(b.p[1])} °C</b>`};}});
+
+  /* ---------- nord, centro, sud ---------- */
+  function geografia(){
+    const Q=D.stats.station_ranking.filter(s=>s.latitude!=null), pia=Q.filter(s=>s.elevation<400), FL=fit(pia.map(s=>[s.latitude,s.value]));
+    const l0=Math.floor(Math.min(...Q.map(s=>s.latitude))), l1=Math.ceil(Math.max(...Q.map(s=>s.latitude))), p0=Math.min(...pia.map(s=>s.latitude)), p1=Math.max(...pia.map(s=>s.latitude));
+    chart($("ch-lat"),{xs:[l0,l1],lo:Math.min(...Q.map(s=>s.value))-1,hi:Math.max(...Q.map(s=>s.value))+1,unit:"°",xfmt:x=>x+"°N",label:"Temperatura media e latitudine delle stazioni",
+      layers:(X,Y)=>`<path class="fitl" d="M${X(p0)} ${Y(FL.q+FL.s*p0)} L${X(p1)} ${Y(FL.q+FL.s*p1)}"/>`+Q.map(s=>`<circle class="dot${s.elevation>=400?" cool":""}" cx="${X(s.latitude)}" cy="${Y(s.value)}" r="5"/>`).join(""),
+      hit:(px,py,X,Y)=>{let b=null,bd=24*24;Q.forEach(s=>{const d=(X(s.latitude)-px)**2+(Y(s.value)-py)**2;if(d<bd){bd=d;b=s;}});if(!b)return null;
+        return {dot:1,x:X(b.latitude),y:Y(b.value),html:`<b>${esc(b.nome)}</b> <span class="m">${Math.round(b.elevation)} m · ${f1(b.latitude)}°N</span><br>Media <b>${f1(b.value)} °C</b>`};}});
+    const R=[...D.stats.station_ranking].sort((a,b)=>b.value-a.value), lo=Math.min(...R.map(s=>s.value)), hi=Math.max(...R.map(s=>s.value));
+    $("rk").innerHTML=R.map(s=>`<div class="r"><span class="n" title="${esc(s.nome)}">${esc(s.nome)}<s>${Math.round(s.elevation)} m</s></span><span><i class="t${s.elevation>=400?" sky":""}" style="display:block;width:${Math.max(3,(s.value-lo)/(hi-lo)*100)}%"></i></span><span class="v">${f1(s.value)}°</span></div>`).join("");
+    const nord=pia.filter(s=>s.latitude>=44), sud=pia.filter(s=>s.latitude<41.5);
+    $("lat-note").textContent=`Nelle ${pia.length} stazioni sotto i 400 m la temperatura media scende di circa ${f1(-FL.s)} °C per ogni grado di latitudine verso nord: in media ${f1(mean(sud.map(s=>s.value)))} °C al Sud (sotto il 41,5° parallelo), ${f1(mean(nord.map(s=>s.value)))} °C in pianura al Nord (dal 44° parallelo). Le stazioni di montagna, in blu, sono molto più fredde di quanto direbbe la sola latitudine: conta di più la quota. La più calda è ${R[0].nome} (${f1(R[0].value)} °C), la più fredda ${R[R.length-1].nome} (${f1(R[R.length-1].value)} °C).`;
   }
 
   /* ---------- mappa, cronologia, tabella ---------- */
