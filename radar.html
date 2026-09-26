@@ -158,6 +158,22 @@
   td .s{display:block;font-size:11.5px;color:var(--ink-faint)}
   .tbl{overflow-x:auto}
 
+  /* carte sinottiche */
+  .sn-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .sn-map{position:relative;border-radius:12px;overflow:hidden;background:var(--line-soft)}
+  .sn-map canvas{display:block;width:100%;touch-action:pan-y}
+  .sn-empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px}
+  .sn-tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:7px 10px;font-size:12.5px;line-height:1.5;opacity:0;transition:opacity .12s;white-space:nowrap}
+  .sn-time{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+  .sn-time input{flex:1 1 200px;accent-color:var(--pine)}
+  .sn-play{width:44px;height:44px;border-radius:50%;border:0;background:var(--pine);color:#fff;display:grid;place-items:center;cursor:pointer;flex:none}
+  .sn-play.on{background:var(--amber)}
+  .sn-when{font-size:13.5px}
+  .sn-leg{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:12.5px}
+  .sn-scale{display:flex;flex-direction:column;gap:3px;flex:0 1 360px;min-width:200px}
+  .sn-bands{display:block;height:12px;border-radius:3px}
+  .sn-ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .sn-nota{margin:10px 0 0;font-size:13px;color:var(--ink-soft);max-width:90ch}
   .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
   .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
   @media (max-width:1000px){ .now{grid-template-columns:repeat(3,minmax(0,1fr))} .two{grid-template-columns:1fr} .rivers{grid-template-columns:repeat(2,minmax(0,1fr))} .three{grid-template-columns:1fr} }
@@ -187,7 +203,7 @@
     </header>
 
     <div class="tabs"><nav aria-label="Sezioni della pagina">
-      <a href="#adesso" class="on">Adesso</a><a href="#radar">Radar</a><a href="#pioggia">Pioggia in arrivo</a><a href="#fulmini">Fulmini</a><a href="#fiumi">Fiumi</a><a href="#aria">Aria e pollini</a><a href="#terremoti">Terremoti</a>
+      <a href="#adesso" class="on">Adesso</a><a href="#radar">Radar</a><a href="#carte">Carte sinottiche</a><a href="#pioggia">Pioggia in arrivo</a><a href="#fulmini">Fulmini</a><a href="#fiumi">Fiumi</a><a href="#aria">Aria e pollini</a><a href="#terremoti">Terremoti</a>
     </nav></div>
 
     <section id="adesso">
@@ -212,6 +228,11 @@
         <iframe class="frame" id="map-frame" title="Mappa meteo interattiva del Mugello" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-src=""></iframe>
         <div class="ext"><span class="faint">Altri radar:</span><a href="https://radar.protezionecivile.gov.it/" target="_blank" rel="noopener">Radar nazionale della Protezione Civile ↗</a><a href="https://www.lamma.toscana.it/" target="_blank" rel="noopener">LaMMA Toscana ↗</a></div>
       </div>
+    </section>
+
+    <section id="carte">
+      <div class="sh"><h2>Carte sinottiche</h2><span class="src">previsione fino a 5 giorni · dati Open-Meteo, elaborazione del sito</span></div>
+      <div class="card" id="sinottica"><span class="loading">Carico le carte…</span></div>
     </section>
 
     <section id="pioggia">
@@ -264,7 +285,7 @@
       </table></div></div>
     </section>
 
-    <p class="note">Fonti: Windy · Blitzortung · Open-Meteo · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · elaborazioni L. Varlani</p>
+    <p class="note">Fonti: Windy · Blitzortung · Open-Meteo (modelli ECMWF e GFS) · Natural Earth · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · elaborazioni L. Varlani</p>
   </main>
 
   <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
@@ -419,6 +440,11 @@
   function tutto(){ $("upd").textContent="Aggiornato alle "+hm(new Date()); allerta(); pioggia(); temporali(); fiumi(); aria(); terremoti(); }
   tutto(); setInterval(()=>{ if(!document.hidden) tutto(); },5*60e3);
 })();
+</script>
+<script src="sinottica.js"></script>
+<script>
+  (function(){const el=document.getElementById("sinottica");
+    const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){io.disconnect();Sinottica.mount(el);}},{rootMargin:"400px"});io.observe(el);})();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
 </body>

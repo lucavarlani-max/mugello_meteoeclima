@@ -1,9 +1,10 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v20';
+const CACHE = 'mmc-v21';
 const SHELL = [
   './',
   './index.html',
   './radar.html',
+  './sinottica.js',
   './comune.html',
   './neve.html',
   './clima-firenze.html',
