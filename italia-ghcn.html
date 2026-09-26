@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Italia, 30 anni di stazioni NOAA · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="Le stazioni meteorologiche italiane dell'archivio NOAA GHCN-Daily: 100 stazioni dal 1763, trent'anni di dati 1996–2025, riscaldamento, giorni di gelo e di caldo, quota e temperatura, e un focus sul mese di giugno.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/italia-ghcn.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Italia: trent'anni di clima dalle stazioni NOAA">
+<meta property="og:description" content="Le stazioni meteorologiche italiane dell&#x27;archivio NOAA GHCN-Daily: 100 stazioni dal 1763, trent&#x27;anni di dati 1996–2025, riscaldamento, giorni di gelo e di caldo, quota e temperatura, e un focus sul mese di giugno.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/italia-ghcn.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  .tiles.six{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .tile .big{font-size:28px}
+  .half{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .chart.short{height:240px}
+  .chart.tall{height:420px}
+  svg .dot{fill:var(--amber);stroke:var(--panel);stroke-width:1.5}
+  svg .dot.cool{fill:var(--sky)}
+  svg .fitl{stroke:var(--ink-faint);stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+  svg .bar{fill:var(--ctx)}
+  svg .bar.hi{fill:var(--amber)}
+  svg .bar.lo{fill:var(--sky)}
+  svg .bar.sky{fill:color-mix(in srgb,var(--sky) 55%,var(--panel))}
+  svg .spag{stroke:var(--ctx);stroke-width:1;fill:none;opacity:.8}
+  svg .spag.on{stroke:var(--amber);stroke-width:2.5;opacity:1}
+  svg .mean{stroke:var(--ink);stroke-width:2.5;fill:none}
+  svg .gantt{fill:color-mix(in srgb,var(--sky) 60%,var(--panel))}
+  svg .gantt.now{fill:var(--pine)}
+  svg .gantt.hl{fill:var(--amber)}
+  svg .yl{font-family:var(--sans);font-size:10.5px;fill:var(--ink-soft)}
+  .rk{display:flex;flex-direction:column;gap:3px;max-height:520px;overflow:auto;padding-right:6px}
+  .rk .r{display:grid;grid-template-columns:170px 1fr 56px;gap:10px;align-items:center;font-size:13px}
+  .rk .r .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rk .r .n s{text-decoration:none;color:var(--ink-faint);font-size:11.5px;margin-left:4px}
+  .rk .r .t{height:12px;border-radius:0 3px 3px 0;background:var(--amber)}
+  .rk .r .v{text-align:right;font-family:var(--mono);font-size:12px}
+  .map{position:relative;width:100%;max-width:560px;margin:0 auto;aspect-ratio:35.23/39.16;background:var(--wc-sea,#f7f9f6);border-radius:12px;overflow:hidden}
+  .map svg{display:block;width:100%;height:100%}
+  .map .land{fill:var(--line)} .map .brd{fill:none;stroke:var(--panel);stroke-width:.08}
+  .map .st{stroke:var(--panel);stroke-width:.12;cursor:pointer}
+  .map .st.now{fill:var(--pine)} .map .st.old{fill:var(--ctx)} .map .st.gsn{fill:var(--amber)}
+  .gw{max-height:560px;overflow:auto;border-radius:8px}
+  .f{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  .f input,.f select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:11px;padding:8px 11px}
+  .f input{flex:1 1 200px}
+  th button{all:unset;cursor:pointer}
+  th[aria-sort] button::after{content:" ↓"} th[aria-sort="ascending"] button::after{content:" ↑"}
+  .pill{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 7px;border-radius:999px;background:var(--pine-tint);color:var(--pine-deep);margin-left:4px}
+  #more[hidden]{display:none!important}
+  .dl{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  @media (max-width:1100px){ .tiles.six{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  @media (max-width:760px){ .half{grid-template-columns:1fr} .rk .r{grid-template-columns:120px 1fr 48px} }
+  @media (max-width:640px){ .tiles.six{grid-template-columns:repeat(2,minmax(0,1fr))} .chart.tall{height:320px} td.hm,th.hm{display:none} }
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="serie-storiche.html">← Serie storiche</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Italia, stazioni NOAA</div>
+    <header class="head">
+      <div class="eyebrow">Archivio NOAA GHCN-Daily · Italia</div>
+      <h1>Italia: trent'anni di clima dalle stazioni NOAA</h1>
+      <p class="lead">L'archivio mondiale GHCN-Daily della NOAA conserva i dati giornalieri di un centinaio di stazioni italiane, alcune attive dal Settecento. Qui ci sono l'elenco completo delle stazioni e un'analisi degli ultimi trent'anni (1996–2025) sulle 46 con dati disponibili: riscaldamento, giorni di gelo e di caldo, effetto della quota e un focus sul mese di giugno.</p>
+      <div class="tiles six" id="tiles"><div class="loading">Carico i dati…</div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>La temperatura media sale</h2><span class="src">media annua di tutte le stazioni con dati · 1996–2025</span></div>
+      <div class="card">
+        <div class="legend"><span><i class="th" style="background:var(--amber)"></i>Media dell'anno</span><span><i class="dash"></i>Tendenza lineare</span></div>
+        <div class="chart" id="ch-anno"></div>
+        <p class="note" id="anno-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Meno gelo, più caldo estremo</h2><span class="src">giorni all'anno per stazione, in media</span></div>
+      <div class="half">
+        <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Giorni di gelo (minima sotto 0 °C)</h3><div class="chart short" id="ch-gelo"></div></div>
+        <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Giorni di caldo estremo (massima sopra 35 °C)</h3><div class="chart short" id="ch-caldo"></div></div>
+      </div>
+      <p class="note" id="ext-note" style="margin-top:10px"></p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il clima mese per mese e la pioggia</h2><span class="src">media delle stazioni · 1996–2025</span></div>
+      <div class="half">
+        <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Temperatura media per mese</h3><div class="chart short" id="ch-mesi"></div></div>
+        <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Pioggia annua (media per stazione)</h3><div class="chart short" id="ch-prec"></div></div>
+      </div>
+      <p class="note" id="prec-note" style="margin-top:10px"></p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura e quota</h2><span class="src">temperatura media 1996–2025 di ogni stazione</span></div>
+      <div class="card">
+        <div class="legend"><span><i style="background:var(--amber);width:10px;height:10px;border-radius:50%"></i>Stazione</span><span><i class="dash"></i>Andamento con la quota</span></div>
+        <div class="chart tall" id="ch-quota"></div>
+        <p class="note" id="quota-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Focus su giugno</h2><span class="src">temperatura media di giugno · 1996–2025</span></div>
+      <div class="card">
+        <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Giugno anno per anno (media di tutte le stazioni)</h3>
+        <div class="legend"><span><i class="th" style="background:var(--amber)"></i>Più caldo della media</span><span><i class="th" style="background:var(--sky)"></i>Più fresco della media</span><span><i class="dash"></i>Media 1996–2025</span></div>
+        <div class="chart short" id="ch-giu"></div>
+        <p class="note" id="giu-note"></p>
+      </div>
+      <div class="two" style="margin-top:14px">
+        <div class="card">
+          <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Tutte le stazioni, anno per anno</h3>
+          <div class="f"><label class="faint" for="sel-st" style="font-size:12.5px">Evidenzia</label><select id="sel-st"></select></div>
+          <div class="legend"><span><i style="background:var(--ctx)"></i>Una stazione</span><span><i class="th" style="background:var(--amber)"></i>Stazione scelta</span><span><i class="th" style="background:var(--ink)"></i>Media</span></div>
+          <div class="chart tall" id="ch-spag"></div>
+        </div>
+        <div class="card">
+          <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 8px">Classifica di giugno</h3>
+          <div class="rk" id="rk"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Le stazioni</h2><span class="src">registro NOAA: dove sono e quando hanno misurato</span></div>
+      <div class="half">
+        <div class="card">
+          <div class="legend"><span><i style="background:var(--pine);width:10px;height:10px;border-radius:50%"></i>Dati fino al 2020 o dopo</span><span><i style="background:var(--ctx);width:10px;height:10px;border-radius:50%"></i>Solo dati storici</span><span><i style="background:var(--amber);width:10px;height:10px;border-radius:50%"></i>Rete GSN</span></div>
+          <div class="map" id="map"><div class="loading" style="padding:20px">Carico la mappa…</div></div>
+        </div>
+        <div class="card">
+          <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Cronologia: quando è attiva ogni stazione</h3>
+          <div class="gw" id="gantt"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="f">
+          <input type="search" id="q" placeholder="Cerca stazione, codice NOAA o WMO…" aria-label="Cerca stazione">
+          <select id="fq" aria-label="Filtra"><option value="">Tutte le stazioni</option><option value="now">Con dati recenti (dal 2020)</option><option value="old">Solo storiche</option><option value="wmo">Con codice WMO</option></select>
+        </div>
+        <div class="faint mono" id="cnt" style="font-size:11.5px;margin-bottom:6px"></div>
+        <div class="tbl"><table>
+          <thead><tr><th data-k="nome"><button>Stazione</button></th><th data-k="quota"><button>Quota</button></th><th data-k="dal"><button>Dal</button></th><th data-k="al"><button>Al</button></th><th data-k="anni" class="hm"><button>Anni</button></th><th data-k="cop" class="hm"><button>Completezza</button></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table></div>
+        <button type="button" class="btn ghost" id="more" style="margin:12px auto 0;display:flex" hidden></button>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note" style="text-align:left;margin:0;padding-left:18px">
+          <li><b>Fonte:</b> NOAA, archivio <a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily" target="_blank" rel="noopener">GHCN-Daily</a>. Elenco delle stazioni dall'API CDO Web Services v2 (100 stazioni, di cui 3 appena oltre confine: Rateče-Planica e Bilje in Slovenia, Gran San Bernardo in Svizzera), incrociato con il registro ufficiale per i codici WMO e le reti GSN/HCN.</li>
+          <li><b>Dati giornalieri:</b> file .dly pubblici della NOAA per gli ultimi 30 anni; solo 46 stazioni su 100 hanno dati digitalizzati disponibili, 38 con dati sufficienti per giugno. In tutto circa 1,28 milioni di osservazioni.</li>
+          <li><b>Pulizia:</b> esclusi i valori con flag di qualità NOAA (56 osservazioni, tra cui letture errate a 999 °C a Brindisi).</li>
+          <li><b>Tendenze</b> con regressione lineare semplice; statisticamente significative se p &lt; 0,05. Il 2026 è escluso dalle medie annuali perché incompleto.</li>
+          <li><b>Attenzione:</b> le medie "di tutte le stazioni" mescolano stazioni di pianura e di montagna, e non tutte hanno dati per ogni anno: se in un anno mancano alcune stazioni la media si sposta. Le tendenze vanno lette come indicative.</li>
+        </ul>
+        <div class="dl">
+          <a class="btn ghost" href="data/serie/italia/stazioni_italia_completo.csv" download>⬇ Elenco stazioni (CSV)</a>
+          <a class="btn ghost" href="data/serie/italia/giugno_per_anno.csv" download>⬇ Giugno per anno (CSV)</a>
+          <a class="btn ghost" href="data/serie/italia/giugno_per_stazione.csv" download>⬇ Giugno per stazione (CSV)</a>
+          <a class="btn ghost" href="data/serie/italia/commento_e_riepilogo.txt" download>⬇ Riepilogo dell'analisi (TXT)</a>
+          <a class="btn ghost" href="data/serie/italia/fetch_stazioni_italiane_cdo.py" download>⬇ Script elenco stazioni (Python)</a>
+          <a class="btn ghost" href="data/serie/italia/download_dati_giornalieri.py" download>⬇ Script dati giornalieri (Python)</a>
+        </div>
+        <p class="note" style="text-align:left">Elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="serie-storiche.html">serie storiche</a> · <a href="index.html">torna alla home</a></div></footer>
+
+<script src="italia-ghcn.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
