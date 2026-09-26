@@ -20,6 +20,11 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   mappa fulmini Blitzortung e temporali previsti; 5 idrometri del Mugello con soglie e grafico
   48 ore (`data/idrometri.json`, aggiornato dall'Action) e Bilancino; aria, pollini e UV;
   terremoti INGV degli ultimi 30 giorni. Si aggiorna da sola ogni 5 minuti.
+  **Carte sinottiche** disegnate dal sito (`sinottica.js`): geopotenziale 500 hPa con isobare,
+  temperatura 850 hPa con geopotenziale, pressione al suolo con A/B, sull'Europa in proiezione
+  conica di Lambert, ogni 12 ore fino a 5 giorni. Dati ECMWF/GFS via Open-Meteo scaricati ogni
+  6 ore da `scripts/fetch_sinottica.py` in `data/sinottica.json`; base cartografica e griglia in
+  `data/sinottica-mappa.json` (Natural Earth).
 - **Monitoraggio** — qualità dell'aria (Open-Meteo Air Quality) e sismicità (INGV,
   ultimo evento entro 45 km) in tempo reale. Livelli Sieve e Bilancino: vedi Action sotto.
 - **Andamento invaso di Bilancino** — grafico della serie giornaliera del volume
@@ -63,6 +68,7 @@ scripts/fetch_fiumi.py         aggiorna data/fiumi.json
 scripts/fetch_allerta.py       aggiorna data/allerta.json
 scripts/fetch_termo.py         aggiorna data/termo.json e data/termo_storico.json
 scripts/fetch_idro.py          aggiorna data/idrometri.json (livelli + storico 48 ore)
+scripts/fetch_sinottica.py     aggiorna data/sinottica.json (carte sinottiche, ogni 6 ore)
 scripts/build_serie.py         prepara i dati di una stazione centenaria (data/serie/<slug>.csv/.json)
 data/serie/                    serie storiche giornaliere ripulite e aggregati per il sito
 reports/                       report PDF di approfondimento
