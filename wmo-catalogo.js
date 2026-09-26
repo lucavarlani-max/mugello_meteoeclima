@@ -137,7 +137,7 @@
       const px=svg.clientWidth||1000, r=Math.max(eu?1.25:3.4,(eu?1.9:2.4)*vb[2]/px), pts=[...S].sort((a,b)=>(a.link?1:0)-(b.link?1:0));
       svg.innerHTML=`<path class="wc-land" d="${eu?EU.land:M.land}"/><path class="wc-brd" d="${eu?EU.borders:M.borders}"/>`+
         pts.map(s=>`<circle class="wc-pt ${TIPO[s.tipo].c}${s.link?" star":""}${visibile(s)?"":" dim"}" data-i="${s.i}" cx="${s.x}" cy="${s.y}" r="${s.link?r*1.6:r}"/>`).join("")+
-        pts.filter(s=>s.link).map(s=>`<text class="wc-lab" x="${s.x+r*2.2}" y="${s.y+r*0.9}" font-size="${fs}" style="stroke-width:${fs/3.6}px">${esc(s.nome.replace("Osservatorio Astronomico di ","").replace("-Milano"," · Milano"))}</text>`).join("")+
+        pts.filter(s=>s.link).map(s=>`<text class="wc-lab" x="${s.x+r*2.2}" y="${s.y+r*0.9}" font-size="${fs}" style="stroke-width:${fs/3.6}px">${esc(s.nome.replace("Osservatorio Astronomico di ","").replace("-Milano"," · Milano").replace("New York City Central Park","New York"))}</text>`).join("")+
         `<circle class="wc-hl" r="${r*2.2}" cx="-99" cy="-99"/>`;
       const hl=svg.querySelector(".wc-hl");
       svg.onpointermove=e=>{const t=e.target.closest(".wc-pt");if(!t){tip.style.opacity=0;hl.setAttribute("cx",-99);return;}
