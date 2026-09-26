@@ -94,6 +94,17 @@
   .st .kpi b{display:block;font-family:var(--serif);font-size:19px;white-space:nowrap;color:var(--ink);font-weight:800}
   .st .go{margin-top:auto;padding-top:12px;font-weight:600;color:var(--pine)}
   .st.soon{border-style:dashed;box-shadow:none;background:transparent}
+  /* foto della città come sfondo molto trasparente (se non si carica resta la scheda normale) */
+  .st .body.ph{position:relative;isolation:isolate}
+  .st .body.ph::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:var(--foto) center/cover no-repeat;opacity:.13;filter:grayscale(.55);transition:opacity .3s;
+    -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.15) 100%);
+            mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.15) 100%)}
+  a.st:hover .body.ph::before{opacity:.22}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .st .body.ph::before{opacity:.17;filter:grayscale(.55) brightness(.9)}}
+  :root[data-theme="dark"] .st .body.ph::before{opacity:.17;filter:grayscale(.55) brightness(.9)}
+  .crediti{font-size:12px;color:var(--ink-faint);margin:4px 0 0}
+  .crediti a{color:var(--ink-faint)}
   .st.soon .band{background:repeating-linear-gradient(135deg,var(--line-soft) 0 8px,transparent 8px 16px)}
   .about{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:26px 0 10px;max-width:880px}
   .about h3{font-family:var(--serif);font-size:18px;margin:0 0 6px}
@@ -127,7 +138,7 @@
     <div class="grid">
       <a class="st" href="milano-brera.html" data-serie="milano-brera" data-early="1763-1850">
         <div class="band" aria-hidden="true"></div>
-        <div class="body">
+        <div class="body ph" style="--foto:url('https://commons.wikimedia.org/wiki/Special:FilePath/Brera_-_cupole.jpg?width=800')">
           <div class="years">1763 – 2024 · LOMBARDIA</div>
           <h2>Milano Brera</h2>
           <p>Con Kremsmünster è la serie meteorologica continua più lunga del mondo, stazione centenaria OMM dal 2021: 262 anni di temperature giornaliere e oltre un secolo di piogge. Riscaldamento, stagioni, giorni estremi, record e il meteo di ogni giorno dal 1763.</p>
@@ -137,7 +148,7 @@
       </a>
       <a class="st" href="new-york-central-park.html" data-serie="new-york-central-park" data-early="1869-1900">
         <div class="band" aria-hidden="true"></div>
-        <div class="body">
+        <div class="body ph" style="--foto:url('https://commons.wikimedia.org/wiki/Special:FilePath/Manhattan_skyline_from_central_park.jpg?width=800')">
           <div class="years">1869 – 2026 · STATI UNITI</div>
           <h2>New York Central Park</h2>
           <p>La stazione di riferimento di New York, nel cuore di Manhattan: oltre 150 anni di temperature, precipitazioni e neve giorno per giorno. Riscaldamento, stagioni, giorni estremi, nevicate storiche e record dal 1869.</p>
@@ -147,7 +158,7 @@
       </a>
       <a class="st" href="padova.html" data-serie="padova" data-early="1725-1800">
         <div class="band" aria-hidden="true"></div>
-        <div class="body">
+        <div class="body ph" style="--foto:url('https://commons.wikimedia.org/wiki/Special:FilePath/La_Specola_-_Padua.jpg?width=800')">
           <div class="years">1725 – 2023 · VENETO</div>
           <h2>Padova</h2>
           <p>Quasi tre secoli di temperature giornaliere, dalle prime letture di Giovanni Poleni nel 1725 alle stazioni di oggi: una delle serie più lunghe al mondo, ricostruita collegando sette osservatori. Riscaldamento, stagioni, giorni estremi, record e il meteo di ogni giorno.</p>
@@ -157,7 +168,7 @@
       </a>
       <a class="st" href="italia-ghcn.html">
         <div class="band" aria-hidden="true"><svg viewBox="0 0 30 1" preserveAspectRatio="none"><rect x="0" width="1.02" height="1" fill="#2a64a8"/><rect x="1" width="1.02" height="1" fill="#5984b7"/><rect x="2" width="1.02" height="1" fill="#517fb5"/><rect x="3" width="1.02" height="1" fill="#8ba7c8"/><rect x="4" width="1.02" height="1" fill="#e9d2c7"/><rect x="5" width="1.02" height="1" fill="#dbdfe2"/><rect x="6" width="1.02" height="1" fill="#97b0cc"/><rect x="7" width="1.02" height="1" fill="#eee0d7"/><rect x="8" width="1.02" height="1" fill="#2a64a8"/><rect x="9" width="1.02" height="1" fill="#b8431f"/><rect x="10" width="1.02" height="1" fill="#e8d1c5"/><rect x="11" width="1.02" height="1" fill="#efe5dd"/><rect x="12" width="1.02" height="1" fill="#e2bdaf"/><rect x="13" width="1.02" height="1" fill="#c66c4f"/><rect x="14" width="1.02" height="1" fill="#c3cfda"/><rect x="15" width="1.02" height="1" fill="#d79e8a"/><rect x="16" width="1.02" height="1" fill="#dfb7a7"/><rect x="17" width="1.02" height="1" fill="#f3f0ea"/><rect x="18" width="1.02" height="1" fill="#bdcad8"/><rect x="19" width="1.02" height="1" fill="#e1e4e4"/><rect x="20" width="1.02" height="1" fill="#a1b7cf"/><rect x="21" width="1.02" height="1" fill="#abbed2"/><rect x="22" width="1.02" height="1" fill="#f0e7df"/><rect x="23" width="1.02" height="1" fill="#d9dee2"/><rect x="24" width="1.02" height="1" fill="#ebd9cf"/><rect x="25" width="1.02" height="1" fill="#adbfd3"/><rect x="26" width="1.02" height="1" fill="#cc7d64"/><rect x="27" width="1.02" height="1" fill="#d4947e"/><rect x="28" width="1.02" height="1" fill="#c15d3d"/><rect x="29" width="1.02" height="1" fill="#b8431f"/></svg></div>
-        <div class="body">
+        <div class="body ph" style="--foto:url('https://commons.wikimedia.org/wiki/Special:FilePath/ISS026-E-26425_-_View_of_Italy.jpg?width=800')">
           <div class="years">1996 – 2025 · ITALIA · 100 STAZIONI</div>
           <h2>Italia, stazioni NOAA</h2>
           <p>Le stazioni italiane dell'archivio mondiale GHCN-Daily: dove sono e da quando misurano, e trent'anni di dati su 46 stazioni. Riscaldamento, gelo e caldo estremo, precipitazioni, effetto della quota e differenze tra Nord e Sud.</p>
@@ -174,6 +185,7 @@
         </div>
       </div>
     </div>
+    <p class="crediti">Foto delle schede da Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Brera_-_cupole.jpg" target="_blank" rel="noopener">le cupole dell'Osservatorio di Brera</a> (pubblico dominio) · <a href="https://commons.wikimedia.org/wiki/File:Manhattan_skyline_from_central_park.jpg" target="_blank" rel="noopener">Manhattan da Central Park</a>, Ed Yourdon, CC BY-SA 2.0 · <a href="https://commons.wikimedia.org/wiki/File:La_Specola_-_Padua.jpg" target="_blank" rel="noopener">la Specola di Padova</a>, Jiří Dobrý, CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:ISS026-E-26425_-_View_of_Italy.jpg" target="_blank" rel="noopener">l'Italia dalla Stazione spaziale</a>, NASA (pubblico dominio).</p>
 
 
     <section class="sec" id="mondo">
