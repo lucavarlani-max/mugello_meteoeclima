@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Italia, 30 anni di stazioni NOAA · Serie storiche · Mugello Meteo & Clima</title>
-<meta name="description" content="Le stazioni meteorologiche italiane dell'archivio NOAA GHCN-Daily: 100 stazioni dal 1763, trent'anni di dati 1996–2025, riscaldamento, giorni di gelo e di caldo, quota e temperatura, e un focus sul mese di giugno.">
+<meta name="description" content="Le stazioni meteorologiche italiane dell'archivio NOAA GHCN-Daily: 100 stazioni dal 1763, trent'anni di dati 1996–2025, riscaldamento, giorni di gelo e di caldo, quota e temperatura, precipitazioni e differenze tra Nord e Sud.">
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/italia-ghcn.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="Italia: trent'anni di clima dalle stazioni NOAA">
-<meta property="og:description" content="Le stazioni meteorologiche italiane dell&#x27;archivio NOAA GHCN-Daily: 100 stazioni dal 1763, trent&#x27;anni di dati 1996–2025, riscaldamento, giorni di gelo e di caldo, quota e temperatura, e un focus sul mese di giugno.">
+<meta property="og:description" content="Le stazioni meteorologiche italiane dell&#x27;archivio NOAA GHCN-Daily: 100 stazioni dal 1763, trent&#x27;anni di dati 1996–2025, riscaldamento, giorni di gelo e di caldo, quota e temperatura, precipitazioni e differenze tra Nord e Sud.">
 <meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/italia-ghcn.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -37,9 +37,14 @@
   svg .bar.hi{fill:var(--amber)}
   svg .bar.lo{fill:var(--sky)}
   svg .bar.sky{fill:color-mix(in srgb,var(--sky) 55%,var(--panel))}
-  svg .spag{stroke:var(--ctx);stroke-width:1;fill:none;opacity:.8}
-  svg .spag.on{stroke:var(--amber);stroke-width:2.5;opacity:1}
   svg .mean{stroke:var(--ink);stroke-width:2.5;fill:none}
+  svg .bar.nd{opacity:.4}
+  svg .zero{stroke:var(--ink-soft);stroke-width:1}
+  .tiles.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .rk.plain{max-height:none;overflow:visible}
+  .rk .r .t.sky{background:var(--sky)}
+  .rk .gap{height:10px}
+  .rk .hd{font-size:11.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;margin:2px 0}
   svg .gantt{fill:color-mix(in srgb,var(--sky) 60%,var(--panel))}
   svg .gantt.now{fill:var(--pine)}
   svg .gantt.hl{fill:var(--amber)}
@@ -66,7 +71,7 @@
   .dl{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
   @media (max-width:1100px){ .tiles.six{grid-template-columns:repeat(3,minmax(0,1fr))} }
   @media (max-width:760px){ .half{grid-template-columns:1fr} .rk .r{grid-template-columns:120px 1fr 48px} }
-  @media (max-width:640px){ .tiles.six{grid-template-columns:repeat(2,minmax(0,1fr))} .chart.tall{height:320px} td.hm,th.hm{display:none} }
+  @media (max-width:640px){ .tiles.four{grid-template-columns:repeat(2,minmax(0,1fr))} .tiles.six{grid-template-columns:repeat(2,minmax(0,1fr))} .chart.tall{height:320px} td.hm,th.hm{display:none} }
 </style>
 </head>
 <body>
@@ -80,7 +85,7 @@
     <header class="head">
       <div class="eyebrow">Archivio NOAA GHCN-Daily · Italia</div>
       <h1>Italia: trent'anni di clima dalle stazioni NOAA</h1>
-      <p class="lead">L'archivio mondiale GHCN-Daily della NOAA conserva i dati giornalieri di un centinaio di stazioni italiane, alcune attive dal Settecento. Qui ci sono l'elenco completo delle stazioni e un'analisi degli ultimi trent'anni (1996–2025) sulle 46 con dati disponibili: riscaldamento, giorni di gelo e di caldo, effetto della quota e un focus sul mese di giugno.</p>
+      <p class="lead">L'archivio mondiale GHCN-Daily della NOAA conserva i dati giornalieri di un centinaio di stazioni italiane, alcune attive dal Settecento. Qui ci sono l'elenco completo delle stazioni e un'analisi degli ultimi trent'anni (1996–2025) sulle 46 con dati disponibili: riscaldamento, giorni di gelo e di caldo, precipitazioni, effetto della quota e differenze tra Nord e Sud.</p>
       <div class="tiles six" id="tiles"><div class="loading">Carico i dati…</div></div>
     </header>
 
@@ -103,12 +108,27 @@
     </section>
 
     <section>
-      <div class="sh"><h2>Il clima mese per mese e la pioggia</h2><span class="src">media delle stazioni · 1996–2025</span></div>
+      <div class="sh"><h2>Il clima mese per mese</h2><span class="src">media delle stazioni · 1996–2025</span></div>
       <div class="half">
         <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Temperatura media per mese</h3><div class="chart short" id="ch-mesi"></div></div>
-        <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Pioggia annua (media per stazione)</h3><div class="chart short" id="ch-prec"></div></div>
+        <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Come si distribuisce la pioggia nell'anno</h3><div class="chart short" id="ch-pmesi"></div></div>
       </div>
-      <p class="note" id="prec-note" style="margin-top:10px"></p>
+      <p class="note" id="mesi-note" style="margin-top:10px"></p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Precipitazioni</h2><span class="src">pioggia annua, media per stazione · 1996–2025</span></div>
+      <div class="tiles four" id="ptiles"></div>
+      <div class="card" style="margin-top:14px">
+        <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Anno per anno: scarto dalla media (mm)</h3>
+        <div class="legend"><span><i class="th" style="background:var(--sky)"></i>Più piovoso della media</span><span><i class="th" style="background:var(--amber)"></i>Più secco della media</span><span><i class="th" style="background:var(--ink)"></i>Media mobile 5 anni</span></div>
+        <div class="chart" id="ch-prec"></div>
+        <p class="note" id="prec-note"></p>
+      </div>
+      <div class="half" style="margin-top:14px">
+        <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Pioggia media per decennio</h3><div class="chart short" id="ch-pdec"></div></div>
+        <div class="card"><h3 style="font-family:var(--serif);font-size:17px;margin:0 0 8px">Gli anni più piovosi e più secchi</h3><div class="rk plain" id="prk"></div></div>
+      </div>
     </section>
 
     <section>
@@ -121,25 +141,19 @@
     </section>
 
     <section>
-      <div class="sh"><h2>Focus su giugno</h2><span class="src">temperatura media di giugno · 1996–2025</span></div>
-      <div class="card">
-        <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Giugno anno per anno (media di tutte le stazioni)</h3>
-        <div class="legend"><span><i class="th" style="background:var(--amber)"></i>Più caldo della media</span><span><i class="th" style="background:var(--sky)"></i>Più fresco della media</span><span><i class="dash"></i>Media 1996–2025</span></div>
-        <div class="chart short" id="ch-giu"></div>
-        <p class="note" id="giu-note"></p>
-      </div>
-      <div class="two" style="margin-top:14px">
+      <div class="sh"><h2>Nord, centro e sud</h2><span class="src">temperatura media 1996–2025 di ogni stazione</span></div>
+      <div class="half">
         <div class="card">
-          <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Tutte le stazioni, anno per anno</h3>
-          <div class="f"><label class="faint" for="sel-st" style="font-size:12.5px">Evidenzia</label><select id="sel-st"></select></div>
-          <div class="legend"><span><i style="background:var(--ctx)"></i>Una stazione</span><span><i class="th" style="background:var(--amber)"></i>Stazione scelta</span><span><i class="th" style="background:var(--ink)"></i>Media</span></div>
-          <div class="chart tall" id="ch-spag"></div>
+          <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 6px">Temperatura e latitudine</h3>
+          <div class="legend"><span><i style="background:var(--amber);width:10px;height:10px;border-radius:50%"></i>Sotto i 400 m</span><span><i style="background:var(--sky);width:10px;height:10px;border-radius:50%"></i>Montagna (400 m e oltre)</span><span><i class="dash"></i>Andamento in pianura</span></div>
+          <div class="chart tall" id="ch-lat"></div>
         </div>
         <div class="card">
-          <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 8px">Classifica di giugno</h3>
+          <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 8px">Classifica delle stazioni</h3>
           <div class="rk" id="rk"></div>
         </div>
       </div>
+      <p class="note" id="lat-note" style="margin-top:10px"></p>
     </section>
 
     <section>
@@ -173,15 +187,13 @@
       <div class="card">
         <ul class="note" style="text-align:left;margin:0;padding-left:18px">
           <li><b>Fonte:</b> NOAA, archivio <a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily" target="_blank" rel="noopener">GHCN-Daily</a>. Elenco delle stazioni dall'API CDO Web Services v2 (100 stazioni, di cui 3 appena oltre confine: Rateče-Planica e Bilje in Slovenia, Gran San Bernardo in Svizzera), incrociato con il registro ufficiale per i codici WMO e le reti GSN/HCN.</li>
-          <li><b>Dati giornalieri:</b> file .dly pubblici della NOAA per gli ultimi 30 anni; solo 46 stazioni su 100 hanno dati digitalizzati disponibili, 38 con dati sufficienti per giugno. In tutto circa 1,28 milioni di osservazioni.</li>
+          <li><b>Dati giornalieri:</b> file .dly pubblici della NOAA per gli ultimi 30 anni; solo 46 stazioni su 100 hanno dati digitalizzati disponibili, 38 con serie abbastanza complete per le medie di stazione. In tutto circa 1,28 milioni di osservazioni.</li>
           <li><b>Pulizia:</b> esclusi i valori con flag di qualità NOAA (56 osservazioni, tra cui letture errate a 999 °C a Brindisi).</li>
           <li><b>Tendenze</b> con regressione lineare semplice; statisticamente significative se p &lt; 0,05. Il 2026 è escluso dalle medie annuali perché incompleto.</li>
           <li><b>Attenzione:</b> le medie "di tutte le stazioni" mescolano stazioni di pianura e di montagna, e non tutte hanno dati per ogni anno: se in un anno mancano alcune stazioni la media si sposta. Le tendenze vanno lette come indicative.</li>
         </ul>
         <div class="dl">
           <a class="btn ghost" href="data/serie/italia/stazioni_italia_completo.csv" download>⬇ Elenco stazioni (CSV)</a>
-          <a class="btn ghost" href="data/serie/italia/giugno_per_anno.csv" download>⬇ Giugno per anno (CSV)</a>
-          <a class="btn ghost" href="data/serie/italia/giugno_per_stazione.csv" download>⬇ Giugno per stazione (CSV)</a>
           <a class="btn ghost" href="data/serie/italia/commento_e_riepilogo.txt" download>⬇ Riepilogo dell'analisi (TXT)</a>
           <a class="btn ghost" href="data/serie/italia/fetch_stazioni_italiane_cdo.py" download>⬇ Script elenco stazioni (Python)</a>
           <a class="btn ghost" href="data/serie/italia/download_dati_giornalieri.py" download>⬇ Script dati giornalieri (Python)</a>
