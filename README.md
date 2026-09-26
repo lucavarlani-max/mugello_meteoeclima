@@ -52,6 +52,15 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   italiane); il catalogo completo delle 474 stazioni centenarie OMM, con mappa Mondo/Europa,
   filtri, tabella e scheda di ogni stazione, è in `stazioni-centenarie.html`
   (componente `wmo-catalogo.js`, dati in `data/serie/wmo-centenarie.json`).
+- **Curiosità e notizie** (`notizie.html` + `notizie.js`) — i numeri della rassegna quotidiana
+  *Terra & Cielo*: in cima l'ultimo numero (apertura, numero del giorno, notizie, rubriche),
+  sotto l'archivio con ricerca e filtro per argomento. Dati in `data/notizie.json`, un elemento
+  per numero (`data`, `apertura`, `numero`, `storie`, `rubriche`); ogni notizia ha `cat`
+  (clima, oceani, vulcani, terremoti, uragani, ghiacci, ozono, cielo, temporali, mugello) e,
+  se serve, `foto` (id in `data/notizie-foto.json`, foto di Wikimedia Commons con autore e
+  licenza). Le ultime tre notizie compaiono anche in home.
+- **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
+  senza cookie. Si attiva scrivendo il codice del proprio account nella variabile `CODICE`.
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
   e pubblicare su Facebook, con didascalia automatica.
 - **PWA** — installabile su telefono (icona in home, apertura a schermo intero, cache offline della struttura).

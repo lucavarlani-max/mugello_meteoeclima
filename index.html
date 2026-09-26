@@ -986,6 +986,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 </style>
 
+<script src="analytics.js" defer></script>
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="#">
@@ -1012,6 +1013,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         </div>
       </div>
       <a href="./serie-storiche.html">Serie storiche</a>
+      <a href="./notizie.html">Notizie</a>
     </nav>
     <button class="menu-btn" aria-label="Menu">☰</button>
   </div>
@@ -1093,6 +1095,29 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="rankcard wet"><span class="rk-ico">🌧</span><div class="rk-l">Più piovoso (prob.)</div><div class="rk-n" id="rk-wet-n">Palazzuolo sul Senio</div><div class="rk-v" id="rk-wet-v">70%</div></div>
     </div>
   </section>
+
+  <section class="sec" id="notizie">
+    <div class="sec-head"><h2>Curiosità e notizie · Terra &amp; Cielo</h2><a href="./notizie.html">Tutte le notizie e l'archivio →</a></div>
+    <div class="tc-grid" id="tc-grid"><div class="card" style="color:var(--ink-faint)">Carico le ultime notizie…</div></div>
+  </section>
+  <style>
+    .tc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .tc-grid a.card{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;padding:16px 18px}
+    .tc-grid a.card:hover h3{text-decoration:underline}
+    .tc-grid .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);font-weight:600}
+    .tc-grid h3{font-size:17px;line-height:1.25;margin:0}
+    .tc-grid p{margin:0;font-size:13px;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    @media (max-width:860px){.tc-grid{grid-template-columns:1fr}}
+  </style>
+  <script>
+  fetch("./data/notizie.json").then(function(r){return r.json();}).then(function(d){
+    var n=d.numeri.slice().sort(function(a,b){return b.data.localeCompare(a.data);})[0]; if(!n)return;
+    var e=function(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
+    var gg=new Date(n.data+"T12:00:00").toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long"});
+    document.getElementById("tc-grid").innerHTML=[n.apertura].concat(n.storie.slice(0,2)).map(function(a,i){
+      return '<a class="card" href="./notizie.html"><span class="k">'+(i?"":"In apertura · ")+e(gg)+'</span><h3>'+e(a.titolo)+'</h3><p>'+e(a.testo)+'</p></a>';}).join("");
+  }).catch(function(){document.getElementById("notizie").hidden=true;});
+  </script>
 
   <section class="sec" id="radar">
     <div class="sec-head"><h2>Radar e monitoraggio</h2><a href="./radar.html">Apri radar e dati: fulmini, pioggia in arrivo, fiumi →</a></div>
@@ -1234,6 +1259,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <li><a href="#">Dati stazione live</a></li>
         <li><a href="#">Monitoraggio fiumi</a></li>
         <li><a href="#">Report climatici</a></li>
+        <li><a href="./notizie.html">Curiosità e notizie</a></li>
         <li><a href="#">Webcam</a></li>
         <li><a href="./fb-post.html">Crea post per Facebook</a></li>
       </ul>

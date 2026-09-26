@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Curiosità e notizie · Mugello Meteo & Clima</title>
+<meta name="description" content="Terra &amp; Cielo, la rassegna quotidiana di meteorologia, clima e scienze della Terra: vulcani, terremoti, uragani, ghiacci, record e curiosità, con le fonti primarie. Più l'archivio di tutti i numeri.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/notizie.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Curiosità e notizie · Terra &amp; Cielo">
+<meta property="og:description" content="La rassegna quotidiana di meteorologia, clima e scienze della Terra, con le fonti primarie e l'archivio di tutti i numeri.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/notizie.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  :root{--indigo:#4b5fb0;--indigo-tint:#e8ebf8}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--indigo:#8d9de0;--indigo-tint:#1c2138}}
+  :root[data-theme="dark"]{--indigo:#8d9de0;--indigo-tint:#1c2138}
+  .head .meta{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:6px}
+  .head .meta b{color:var(--ink);font-weight:600}
+
+  /* foto */
+  .ph{position:relative;overflow:hidden;background:var(--line-soft);border-radius:12px;aspect-ratio:16/9;margin:0}
+  .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+  .ph .fb{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:44px}
+  .ph.ko img{display:none} .ph.ko .fb{display:flex}
+  .ph figcaption{position:absolute;right:8px;bottom:8px;max-width:calc(100% - 16px);font-family:var(--mono);font-size:10px;line-height:1.3;
+    color:#fff;background:rgba(10,20,16,.55);backdrop-filter:blur(4px);padding:3px 7px;border-radius:6px;opacity:0;transition:opacity .2s}
+  .ph figcaption a{color:#fff}
+  .ph:hover figcaption,.ph:focus-within figcaption{opacity:1}
+  .ph.ko figcaption{display:none}
+  @media (hover:none){.ph figcaption{opacity:1}}
+
+  /* chip categoria */
+  .chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--c,var(--pine))}
+  .chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--pine))}
+  .chip .ap{color:var(--ink-faint);font-weight:500}
+
+  /* apertura */
+  .lead-art{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:center;margin-top:18px}
+  .lead-art .ph{aspect-ratio:16/10;border-radius:var(--r);box-shadow:var(--shadow)}
+  .lead-art h2{font-family:var(--serif);font-weight:800;font-size:34px;line-height:1.08;letter-spacing:-.02em;margin:10px 0 12px}
+  .lead-art h2 a,.st h3 a,.ar-lead a,.fl h4 a{color:inherit;text-decoration:none}
+  .lead-art h2 a:hover,.st h3 a:hover,.ar-lead a:hover,.fl h4 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+  .lead-art p{font-size:16px;color:var(--ink-soft);margin:0 0 14px;line-height:1.6}
+  .src-l{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
+  .src-l a{color:var(--pine);font-weight:600;text-decoration:none} .src-l a:hover{text-decoration:underline}
+  .ndg{margin-top:20px;display:flex;gap:16px;align-items:center;background:var(--amber-tint);border-radius:var(--r);padding:14px 18px}
+  .ndg .v{font-family:var(--serif);font-weight:800;font-size:34px;color:var(--amber);letter-spacing:-.02em;white-space:nowrap;line-height:1}
+  .ndg .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  .ndg p{margin:2px 0 0;font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+
+  /* griglia storie */
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .st{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s}
+  .st:hover{transform:translateY(-2px);box-shadow:0 2px 6px rgba(16,38,31,.07),0 20px 44px -20px rgba(16,38,31,.28)}
+  .st:hover .ph img{transform:scale(1.03)}
+  .st .ph{border-radius:0}
+  .st .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .st h3{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.2;margin:0;letter-spacing:-.01em}
+  .st p{margin:0;color:var(--ink-soft);font-size:14px;line-height:1.55}
+  .st .src-l{margin-top:auto;padding-top:6px}
+
+  /* rubriche */
+  .rub{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .rb{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--r);box-shadow:var(--shadow);padding:15px 16px}
+  .rb .hd{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--c);margin-bottom:8px}
+  .rb .ic{font-size:17px}
+  .rb p{margin:0 0 8px;font-size:13.5px;line-height:1.55;color:var(--ink)}
+
+  /* archivio */
+  .tool{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:4px 0 16px}
+  .tool input{flex:1 1 240px;font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:10px 16px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{font:inherit;font-size:12.5px;font-weight:500;color:var(--ink-soft);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:6px 12px;cursor:pointer}
+  .chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .chips button s{text-decoration:none;opacity:.6;margin-left:3px;font-family:var(--mono);font-size:11px}
+  .mese{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--ink-faint);margin:22px 0 10px;text-transform:capitalize}
+  .ar{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+  .ar-row{display:grid;grid-template-columns:78px 200px minmax(0,1fr) auto;gap:18px;align-items:center;padding:14px 16px}
+  .ar-d{text-align:center;line-height:1}
+  .ar-d b{display:block;font-family:var(--serif);font-weight:800;font-size:34px;letter-spacing:-.02em}
+  .ar-d span{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+  .ar .ph{border-radius:10px}
+  .ar-lead{font-family:var(--serif);font-weight:700;font-size:18px;line-height:1.22;margin:4px 0 6px}
+  .ar-t{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0;padding:0;list-style:none;font-size:12.5px;color:var(--ink-soft)}
+  .ar-t li{display:flex;align-items:center;gap:6px} .ar-t li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c)}
+  .ar-btn{font:inherit;font-size:12.5px;font-weight:600;color:var(--pine);background:var(--pine-tint);border:0;border-radius:var(--r-pill);padding:8px 14px;cursor:pointer;white-space:nowrap}
+  .ar-more{border-top:1px solid var(--line);padding:18px 16px;background:var(--panel-2)}
+  .ar-more[hidden]{display:none}
+  .ar-more .ndg{margin:0 0 16px}
+  .ar-more .rub{margin-top:16px}
+  .flat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .fl{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:10px;box-shadow:var(--shadow)}
+  .fl .ph{aspect-ratio:1;border-radius:9px}
+  .fl h4{font-family:var(--serif);font-size:16px;line-height:1.22;margin:4px 0}
+  .fl p{margin:0;font-size:12.5px;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .fl .src-l{font-size:10.5px;margin-top:4px}
+  .empty{padding:30px;text-align:center;color:var(--ink-faint)}
+  .about{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:18px}
+  .about p{margin:0 0 8px;color:var(--ink-soft)}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
+
+  @media (max-width:1000px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} .rub{grid-template-columns:repeat(2,minmax(0,1fr))} .ar-row{grid-template-columns:64px 150px minmax(0,1fr)} .ar-row .ar-btn{grid-column:1/-1;justify-self:start} }
+  @media (max-width:760px){ .lead-art{grid-template-columns:1fr;gap:16px} .lead-art h2{font-size:27px} .flat,.about{grid-template-columns:1fr} h1{font-size:34px} }
+  @media (max-width:560px){ .grid,.rub{grid-template-columns:1fr} .ar-row{grid-template-columns:56px minmax(0,1fr);gap:12px} .ar-row .ph{display:none} .ar-d b{font-size:28px} .fl{grid-template-columns:88px minmax(0,1fr)} }
+</style>
+<script src="analytics.js" defer></script>
+</head>
+<body>
+  <header class="top"><div class="wrap">
+    <a class="back" href="index.html">← Home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></header>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Curiosità e notizie</div>
+    <header class="head">
+      <div class="eyebrow">Terra &amp; Cielo · rassegna quotidiana</div>
+      <h1>Curiosità e notizie</h1>
+      <p class="lead">Ogni mattina dei giorni feriali le notizie più interessanti di meteorologia, clima e scienze della Terra: vulcani, terremoti, uragani, ghiacci, record e curiosità. Ogni notizia rimanda alla sua fonte primaria.</p>
+      <div class="meta" id="meta">Carico le notizie…</div>
+    </header>
+
+    <section id="oggi" aria-label="Ultimo numero"></section>
+
+    <section id="archivio">
+      <div class="sh"><h2>Archivio</h2><span class="src" id="ar-cnt"></span></div>
+      <div class="tool">
+        <input type="search" id="q" placeholder="Cerca tra le notizie: Etna, uragano, ghiaccio…" aria-label="Cerca nell'archivio">
+        <div class="chips" id="chips" role="group" aria-label="Filtra per argomento"></div>
+      </div>
+      <div id="ar-list"></div>
+    </section>
+
+    <section>
+      <div class="card about">
+        <div>
+          <h2 style="font-family:var(--serif);font-size:20px;margin:0 0 8px">Come nasce Terra &amp; Cielo</h2>
+          <p>Terra &amp; Cielo è la rassegna quotidiana curata da L. Varlani con l'aiuto dell'intelligenza artificiale. Le notizie vengono cercate e verificate su fonti primarie: Copernicus, Organizzazione meteorologica mondiale (WMO), NOAA, NASA, USGS, INGV, Smithsonian Global Volcanism Program, NSIDC. Ogni notizia rimanda alla sua fonte.</p>
+          <p>Le rubriche fisse: il tempo in Mugello, gli eventi meteo accaduti nella stessa data negli anni passati, un numero o una curiosità e l'almanacco del cielo.</p>
+        </div>
+        <div>
+          <h2 style="font-family:var(--serif);font-size:20px;margin:0 0 8px">Le foto</h2>
+          <p>Le immagini vengono da <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> e sono quasi tutte di NASA, NOAA e USGS (pubblico dominio), più alcune con licenza Creative Commons. Sono immagini d'archivio che illustrano l'argomento, non l'evento della notizia. Passando sopra una foto compaiono autore e licenza.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a> · <a href="serie-storiche.html">serie storiche</a></div></footer>
+  <script src="notizie.js"></script>
+</body>
+</html>
