@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="Analisi delle stazioni meteorologiche centenarie: secoli di osservazioni giornaliere per capire come è cambiato il clima. Si parte da Milano Brera, 1763–2024.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/serie-storiche.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Serie storiche · Stazioni centenarie">
+<meta property="og:description" content="Analisi delle stazioni meteorologiche centenarie: secoli di osservazioni giornaliere per capire come è cambiato il clima. Si parte da Milano Brera, 1763–2024.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/serie-storiche.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#6f7c74;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --amber:#c9671f;
+    --cold:#2a64a8; --neutral:#f3f0ea; --warm:#b8431f;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --shadow-lift:0 2px 6px rgba(16,38,31,.07), 0 20px 44px -20px rgba(16,38,31,.28);
+    --r:16px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+      --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#8a998f;
+      --line:#26332c; --line-soft:#1e2a24;
+      --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+      --amber:#c97a36;
+      --cold:#3d78c0; --neutral:#26302b; --warm:#c8552c;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+      --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 24px 50px -22px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#8a998f;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --amber:#c97a36;
+    --cold:#3d78c0; --neutral:#26302b; --warm:#c8552c;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 24px 50px -22px rgba(0,0,0,.8);
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px;letter-spacing:-.01em}
+  .brand b{color:var(--pine)}
+  .head{padding:28px 0 10px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:44px;margin:.1em 0 .1em;line-height:1.05}
+  .lead{color:var(--ink-soft);font-size:15.5px;max-width:72ch;margin:.5em 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin:26px 0 10px}
+  .st{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;
+    text-decoration:none;color:inherit;transition:box-shadow .15s,transform .15s}
+  a.st:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+  .st .band{height:74px;background:var(--line-soft)}
+  .st .band svg{display:block;width:100%;height:100%}
+  .st .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .st .years{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);letter-spacing:.04em}
+  .st h2{font-family:var(--serif);font-weight:800;font-size:24px;margin:0;letter-spacing:-.01em}
+  .st p{margin:0;color:var(--ink-soft)}
+  .st .kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}
+  .st .kpi div{font-size:12px;color:var(--ink-faint)}
+  .st .kpi b{display:block;font-family:var(--serif);font-size:19px;white-space:nowrap;color:var(--ink);font-weight:800}
+  .st .go{margin-top:auto;padding-top:12px;font-weight:600;color:var(--pine)}
+  .st.soon{border-style:dashed;box-shadow:none;background:transparent}
+  .st.soon .band{background:repeating-linear-gradient(135deg,var(--line-soft) 0 8px,transparent 8px 16px)}
+  .about{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:26px 0 10px;max-width:880px}
+  .about h3{font-family:var(--serif);font-size:18px;margin:0 0 6px}
+  .about p{margin:6px 0;color:var(--ink-soft)}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px;margin-top:30px}
+  @media (max-width:640px){ .wrap{padding:0 16px} h1{font-size:32px} .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <header class="head">
+      <div class="eyebrow">Stazioni centenarie</div>
+      <h1>Serie storiche</h1>
+      <p class="lead">Alcune stazioni meteorologiche misurano il tempo da più di cento anni, qualcuna da oltre due secoli. Sono l'archivio più prezioso per capire come è cambiato il clima: qui raccolgo, una alla volta, le analisi delle loro serie di dati.</p>
+    </header>
+
+    <div class="grid">
+      <a class="st" href="milano-brera.html" id="card-brera">
+        <div class="band" id="band-brera" aria-hidden="true"></div>
+        <div class="body">
+          <div class="years">1763 – 2024 · LOMBARDIA</div>
+          <h2>Milano Brera</h2>
+          <p>L'osservatorio di Brera: 262 anni di temperature giornaliere e oltre un secolo di piogge. Riscaldamento, stagioni, giorni estremi, record e il meteo di ogni giorno dal 1763.</p>
+          <div class="kpi" id="kpi-brera"></div>
+          <span class="go">Apri l'analisi →</span>
+        </div>
+      </a>
+      <div class="st soon">
+        <div class="band"></div>
+        <div class="body">
+          <div class="years">IN PREPARAZIONE</div>
+          <h2>Prossime stazioni</h2>
+          <p>Altre serie centenarie si aggiungeranno qui man mano che le analisi saranno pronte.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about">
+      <h3>Che cosa sono le stazioni centenarie</h3>
+      <p>L'Organizzazione Meteorologica Mondiale (OMM) riconosce come <b>stazioni centenarie</b> gli osservatori che misurano il tempo da almeno cento anni con continuità e buona qualità dei dati. Le loro serie sono fondamentali per studiare il clima sul lungo periodo, perché permettono di confrontare il presente con epoche in cui l'influenza umana sul clima era trascurabile.</p>
+      <p>Ogni analisi riporta la fonte dei dati, le eventuali correzioni applicate e i file scaricabili.</p>
+    </div>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · elaborazioni L. Varlani · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const hex=c=>{c=c.replace("#","");return [0,2,4].map(i=>parseInt(c.slice(i,i+2),16));};
+  const mix=(a,b,t)=>"rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";
+  const f1=v=>(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−");
+  const mean=xs=>xs.reduce((a,b)=>a+b,0)/xs.length;
+  let A=null;
+  function band(){
+    if(!A) return; const el=document.getElementById("band-brera"), W=el.clientWidth, H=el.clientHeight, bw=W/A.length;
+    const base=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a.tm)), c=hex(css("--cold")), n=hex(css("--neutral")), w=hex(css("--warm"));
+    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`+A.map((a,i)=>{const t=Math.max(-1,Math.min(1,(a.tm-base)/2));
+      return `<rect x="${(i*bw).toFixed(2)}" width="${(bw+.6).toFixed(2)}" height="${H}" fill="${t<0?mix(n,c,-t):mix(n,w,t)}"/>`;}).join("")+`</svg>`;
+  }
+  fetch("./data/serie/milano-brera.json").then(r=>r.json()).then(d=>{
+    A=d.anni.filter(a=>a.tm!=null); band();
+    const early=mean(A.filter(a=>a.y<=1850).map(a=>a.tm)), recent=mean(A.filter(a=>a.y>=1991&&a.y<=2020).map(a=>a.tm));
+    document.getElementById("kpi-brera").innerHTML=
+      `<div><b>+${f1(recent-early)} °C</b>riscaldamento dal 1763–1850</div><div><b>${f1(d.record.tmax[0].v)} °C</b>record di caldo</div><div><b>${f1(d.record.tmin[0].v)} °C</b>record di freddo</div>`;
+  }).catch(()=>{});
+  let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(band,150);});
+  if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",band);
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

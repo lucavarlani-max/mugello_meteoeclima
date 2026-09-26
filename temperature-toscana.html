@@ -401,7 +401,7 @@
     G.forEach((d,i)=>{const last=i===G.length-1;if((i%every===0&&G.length-1-i>=every/2)||last)g+=`<text class="axl" x="${X(i)}" y="${m.t+ih+18}" text-anchor="${last?"end":i?"middle":"start"}">${gm(d.data)}</text>`;});
     const path=k=>G.map((d,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(d[k]).toFixed(1)).join(" ");
     g+=`<path class="lmax" d="${path("media_max")}"/><path class="lmin" d="${path("media_min")}"/>`;
-    g+=`<line id="tr-x" class="cross" x1="-9" x2="-9" y1="${m.t}" y2="${m.t+ih}"/><circle id="tr-a" class="pmax" r="5" cx="-99" cy="-99"/><circle id="tr-b" class="pmin" r="5" cx="-99" cy="-99"/>`;
+    g+=`<line id="tr-x" class="cross" x1="-9999" x2="-9999" y1="${m.t}" y2="${m.t+ih}"/><circle id="tr-a" class="pmax" r="5" cx="-99" cy="-99"/><circle id="tr-b" class="pmin" r="5" cx="-99" cy="-99"/>`;
     el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Andamento giornaliero della media delle temperature massime e minime in Toscana">${g}</svg><div class="tip"></div>`;
     const svg=el.querySelector("svg"), tip=el.querySelector(".tip"), cx=el.querySelector("#tr-x"), pa=el.querySelector("#tr-a"), pb=el.querySelector("#tr-b");
     svg.addEventListener("pointermove",e=>{
@@ -413,7 +413,7 @@
         (d.max?`<br><span class="m">max ${deg(d.max.v)} ${esc(d.max.nome)} · min ${deg(d.min.v)} ${esc(d.min.nome)}</span>`:"")+
         (d.m_media_max!=null?`<br><span class="m">Mugello-Val di Sieve ${deg(d.m_media_min)} / ${deg(d.m_media_max)}</span>`:""));
     });
-    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;cx.setAttribute("x1",-9);cx.setAttribute("x2",-9);pa.setAttribute("cx",-99);pb.setAttribute("cx",-99);});
+    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;cx.setAttribute("x1",-9999);cx.setAttribute("x2",-9999);pa.setAttribute("cx",-99);pb.setAttribute("cx",-99);});
   }
 
   /* ---------- tabella ---------- */
