@@ -1,0 +1,217 @@
+{
+ "nota": "Foto da Wikimedia Commons, caricate al volo con Special:FilePath. Per aggiungerne una: nome esatto del file su Commons, descrizione, autore, licenza.",
+ "foto": {
+  "terra": {
+   "file": "The_Blue_Marble_(remastered).jpg",
+   "desc": "La Terra vista dall'Apollo 17, 1972",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:The_Blue_Marble_(remastered).jpg"
+  },
+  "terra2": {
+   "file": "ISS-42_Earth_from_the_ISS.jpg",
+   "desc": "La Terra dalla Stazione spaziale internazionale",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:ISS-42_Earth_from_the_ISS.jpg"
+  },
+  "oceano": {
+   "file": "Breaking_wave_NOAA_image.png",
+   "desc": "Onda oceanica",
+   "autore": "NOAA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Breaking_wave_NOAA_image.png"
+  },
+  "kilauea1": {
+   "file": "USGS_Kīlauea_multimediaFile-2175(2018-06-05).jpg",
+   "desc": "Fontana di lava al Kīlauea, Hawaii, 2018 (immagine d'archivio)",
+   "autore": "USGS",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:USGS_Kīlauea_multimediaFile-2175(2018-06-05).jpg"
+  },
+  "kilauea2": {
+   "file": "Lava_fountain_at_Kilauea.jpg",
+   "desc": "Fontana di lava al Kīlauea, Hawaii (immagine d'archivio)",
+   "autore": "USGS",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Lava_fountain_at_Kilauea.jpg"
+  },
+  "etna": {
+   "file": "Etna_eruption_seen_from_the_International_Space_Station.jpg",
+   "desc": "Eruzione dell'Etna vista dalla Stazione spaziale, 2002 (immagine d'archivio)",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Etna_eruption_seen_from_the_International_Space_Station.jpg"
+  },
+  "krakatau": {
+   "file": "Anak_Krakatau,_january_2016.jpg",
+   "desc": "L'Anak Krakatau nel 2016 (immagine d'archivio)",
+   "autore": "Wikimedia Commons",
+   "licenza": "CC BY-SA 4.0",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Anak_Krakatau,_january_2016.jpg"
+  },
+  "sismo1": {
+   "file": "2011_Oklahoma_earthquake_damage.jpg",
+   "desc": "Danni del terremoto dell'Oklahoma, 2011 (immagine d'archivio)",
+   "autore": "USGS",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:2011_Oklahoma_earthquake_damage.jpg"
+  },
+  "sismo2": {
+   "file": "Earthquake-_road_crack.jpg",
+   "desc": "Strada fratturata da un terremoto (immagine d'archivio)",
+   "autore": "Wikimedia Commons",
+   "licenza": "CC BY-SA 2.5",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Earthquake-_road_crack.jpg"
+  },
+  "uragano1": {
+   "file": "Hurricane_Isabel_from_ISS.jpg",
+   "desc": "L'uragano Isabel visto dalla Stazione spaziale, 2003",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Hurricane_Isabel_from_ISS.jpg"
+  },
+  "uragano2": {
+   "file": "ISS-53_Hurricane_Irma_(2).jpg",
+   "desc": "L'uragano Irma visto dalla Stazione spaziale, 2017",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:ISS-53_Hurricane_Irma_(2).jpg"
+  },
+  "uragano3": {
+   "file": "Hurricane_Ivan_ISS.jpg",
+   "desc": "L'uragano Ivan visto dalla Stazione spaziale, 2004",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Hurricane_Ivan_ISS.jpg"
+  },
+  "ghiaccio1": {
+   "file": "Arctic_Sea_Ice_(6151061573).jpg",
+   "desc": "Ghiaccio marino artico",
+   "autore": "NASA Goddard",
+   "licenza": "CC BY 2.0",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Arctic_Sea_Ice_(6151061573).jpg"
+  },
+  "ghiaccio2": {
+   "file": "Approaching_the_2015_Arctic_Sea_Ice_Minimum_(21327324915).jpg",
+   "desc": "Ghiaccio artico verso il minimo del 2015",
+   "autore": "NASA Goddard",
+   "licenza": "CC BY 2.0",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Approaching_the_2015_Arctic_Sea_Ice_Minimum_(21327324915).jpg"
+  },
+  "ozono": {
+   "file": "Ozone_Hole_Continues_Healing_in_2024_(153523).jpg",
+   "desc": "Il buco dell'ozono sull'Antartide, 2024",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Ozone_Hole_Continues_Healing_in_2024_(153523).jpg"
+  },
+  "tramonto": {
+   "file": "ISS-47_Earth_Sunset_From_the_International_Space_Station.jpg",
+   "desc": "Tramonto sulla Terra visto dalla Stazione spaziale",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:ISS-47_Earth_Sunset_From_the_International_Space_Station.jpg"
+  },
+  "tramonto2": {
+   "file": "ISS-43_Golden_sunset_on_the_Earth.jpg",
+   "desc": "Tramonto dorato sulla Terra, dalla Stazione spaziale",
+   "autore": "NASA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:ISS-43_Golden_sunset_on_the_Earth.jpg"
+  },
+  "fulmine": {
+   "file": "Lightning_NOAA.jpg",
+   "desc": "Fulmine nube-suolo",
+   "autore": "NOAA",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Lightning_NOAA.jpg"
+  },
+  "tornado": {
+   "file": "Alfalfa_Tornado_-_NOAA.jpg",
+   "desc": "Tornado in Oklahoma",
+   "autore": "NOAA / NSSL",
+   "licenza": "Pubblico dominio",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Alfalfa_Tornado_-_NOAA.jpg"
+  },
+  "bilancino": {
+   "file": "Lago_di_bilancino_-_Bilancino_lake.jpg",
+   "desc": "Il lago di Bilancino, Mugello",
+   "autore": "Wikimedia Commons",
+   "licenza": "CC BY-SA 4.0",
+   "pagina": "https://commons.wikimedia.org/wiki/File:Lago_di_bilancino_-_Bilancino_lake.jpg"
+  }
+ },
+ "categorie": {
+  "clima": {
+   "nome": "Clima",
+   "foto": [
+    "terra",
+    "terra2"
+   ]
+  },
+  "oceani": {
+   "nome": "Oceani",
+   "foto": [
+    "oceano",
+    "terra2"
+   ]
+  },
+  "vulcani": {
+   "nome": "Vulcani",
+   "foto": [
+    "kilauea1",
+    "kilauea2",
+    "etna"
+   ]
+  },
+  "terremoti": {
+   "nome": "Terremoti",
+   "foto": [
+    "sismo1",
+    "sismo2"
+   ]
+  },
+  "uragani": {
+   "nome": "Uragani",
+   "foto": [
+    "uragano1",
+    "uragano2",
+    "uragano3"
+   ]
+  },
+  "ghiacci": {
+   "nome": "Ghiacci",
+   "foto": [
+    "ghiaccio1",
+    "ghiaccio2"
+   ]
+  },
+  "ozono": {
+   "nome": "Atmosfera",
+   "foto": [
+    "ozono"
+   ]
+  },
+  "cielo": {
+   "nome": "Cielo",
+   "foto": [
+    "tramonto",
+    "tramonto2"
+   ]
+  },
+  "temporali": {
+   "nome": "Temporali",
+   "foto": [
+    "fulmine",
+    "tornado"
+   ]
+  },
+  "mugello": {
+   "nome": "Mugello",
+   "foto": [
+    "bilancino"
+   ]
+  }
+ }
+}

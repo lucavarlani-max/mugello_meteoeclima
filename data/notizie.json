@@ -1,0 +1,879 @@
+{
+ "testata": "Terra & Cielo",
+ "aggiornato": "2026-09-25",
+ "numeri": [
+  {
+   "data": "2026-09-25",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Agosto 2026, il mese più caldo mai registrato: si torna oltre 1,5 °C",
+    "testo": "La temperatura media globale dell'aria ad agosto è stata di 16,96 °C, con un'anomalia di +1,65 °C rispetto al periodo preindustriale: è il mese più caldo mai misurato, a pari merito con luglio 2023, e il primo sopra la soglia di 1,5 °C da novembre 2025.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+   },
+   "numero": {
+    "valore": "+1,65 °C",
+    "testo": "L'anomalia termica globale di agosto, che riporta il pianeta oltre la soglia di 1,5 °C."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Terra in movimento: forti scosse tra Pacifico e Alaska",
+     "testo": "Una settimana intensa sull'Anello di fuoco: magnitudo 6,4 in Papua Nuova Guinea il 20 settembre, 6,5 alle isole Aleutine il 17 e 5,7 a Tonga il 23.",
+     "fonte": "USGS",
+     "url": "https://earthquake.usgs.gov/earthquakes/map/"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, 54 fasi di fontane di lava",
+     "testo": "Il vulcano hawaiano continua la sua eruzione a episodi: dall'inizio dell'attività si contano 54 fasi di fontane di lava. Il livello di allerta resta WATCH.",
+     "fonte": "USGS – Hawaiian Volcano Observatory",
+     "url": "https://www.usgs.gov/observatories/hvo/news/kilauea-status-report",
+     "foto": "kilauea1"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico tranquillo, ma il ricordo del 1998",
+     "testo": "La stagione degli uragani atlantici resta sotto la norma. Il 25 settembre 1998, invece, nel bacino erano attivi contemporaneamente quattro uragani: Georges, Ivan, Jeanne e Karl.",
+     "fonte": "NOAA / NHC",
+     "url": "https://www.noaa.gov/news-release/noaa-maintains-prediction-for-below-normal-atlantic-hurricane-season"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Ghiaccio artico al minimo: 4,60 milioni di km²",
+     "testo": "Il minimo stagionale dell'estensione del ghiaccio marino artico è di 4,60 milioni di km², a pari merito il decimo valore più basso in 48 anni di osservazioni da satellite.",
+     "fonte": "NSIDC / NASA",
+     "url": "https://nsidc.org/sea-ice-today/analyses/arctic-sea-ice-minimum-ties-tenth-lowest-0"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Europa occidentale, l'estate più calda mai registrata",
+     "testo": "L'estate 2026 è la più calda mai misurata nell'Europa occidentale, con una siccità severa. La temperatura media della superficie degli oceani ad agosto ha raggiunto 21,07 °C.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/surface-air-temperature-august-2026"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Krakatau di nuovo attivo: 14 esplosioni stromboliane",
+     "testo": "L'Anak Krakatau, in Indonesia, ha prodotto 14 esplosioni stromboliane in una settimana, con un pennacchio di cenere fino a 2,1 km di quota.",
+     "fonte": "Smithsonian GVP / Watchers",
+     "url": "https://watchers.news/2026/09/19/the-weekly-volcanic-activity-report-september-10-16-2026/",
+     "foto": "krakatau"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi 15–26 °C, in prevalenza sereno (pioggia intorno al 5%). Domani sereno, 7–24 °C: tempo stabile fino a inizio ottobre.",
+     "fonte": "LaMMA",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1848: la «Great Gale» di Tampa Bay. 1998: quattro uragani attivi insieme nell'Atlantico (Georges, Ivan, Jeanne, Karl). 2017: grande tromba marina sullo Ionio, al largo di Gallipoli.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_25"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C: la temperatura dell'aria più alta mai registrata in modo attendibile sulla Terra (Furnace Creek, Death Valley, 10 luglio 1913).",
+     "fonte": "WMO",
+     "url": "https://en.wikipedia.org/wiki/Highest_temperature_recorded_on_Earth"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Dopo l'equinozio d'autunno del 23 settembre le giornate si accorciano: a circa 44° di latitudine il giorno dura ormai poco meno di 12 ore e cala di 2–3 minuti al giorno."
+    }
+   ]
+  },
+  {
+   "data": "2026-09-24",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Agosto 2026, il mese più caldo mai registrato (a pari merito)",
+    "testo": "Secondo Copernicus (C3S/ECMWF) la temperatura globale di agosto è stata di 16,96 °C: +0,85 °C sulla media 1991–2020 e +1,65 °C sul preindustriale. Gli oceani hanno toccato 21,07 °C in superficie.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+   },
+   "numero": {
+    "valore": "+1,65 °C",
+    "testo": "L'anomalia termica globale di agosto 2026 rispetto al preindustriale: mese più caldo mai registrato, a pari merito con luglio 2023."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Sismologia: le scosse più forti dell'estate",
+     "testo": "Magnitudo 7,8 a Ende, in Indonesia, il 14 agosto; 6,3 alle Aleutine e 5,4 in Cina il 3 settembre.",
+     "fonte": "USGS",
+     "url": "https://earthquake.usgs.gov/earthquakes/browse/significant.php"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Il Krakatau torna in attività stromboliana",
+     "testo": "Cenere fino a 2,1 km di quota e livello di allerta 3 su 4 per l'Anak Krakatau.",
+     "fonte": "Watchers / Smithsonian GVP",
+     "url": "https://watchers.news/2026/09/19/the-weekly-volcanic-activity-report-september-10-16-2026/",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico: zero uragani a stagione inoltrata",
+     "testo": "Mai così tardi nell'era dei satelliti senza un uragano atlantico. L'energia ciclonica accumulata (ACE) è appena 4,4.",
+     "fonte": "Wikipedia – stagione 2026",
+     "url": "https://en.wikipedia.org/wiki/2026_Atlantic_hurricane_season"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Oceani, temperatura record ad agosto",
+     "testo": "La temperatura media della superficie del mare, esclusi i poli, ha raggiunto 21,07 °C: il valore più alto mai registrato per il mese di agosto.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Hawaii: nuove fontane di lava al Kīlauea",
+     "testo": "Il Kīlauea prosegue con nuovi episodi di fontane di lava; il livello di allerta resta Watch.",
+     "fonte": "USGS",
+     "url": "https://www.usgs.gov/volcanoes/kilauea/volcano-updates",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Europa: l'estate più calda dal 2003",
+     "testo": "Un'estate da record in Europa, con siccità lungo il Reno, il Danubio e il Dnepr.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi 12–25 °C, poche nubi poi coperto, niente pioggia. Domani 13–24 °C; nel fine settimana temperature in rialzo fino a 27–28 °C.",
+     "fonte": "iLMeteo",
+     "url": "https://www.ilmeteo.it/meteo/borgo%2Bsan%2Blorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1926: gelo a Yellowstone (circa −23 °C). 1939: 164 mm di pioggia in 6 ore a Indio, in California. 2005: l'uragano Rita.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_24"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Zero uragani atlantici a fine settembre: non era mai successo così tardi nell'era dei satelliti. ACE a 4,4.",
+     "fonte": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/2026_Atlantic_hurricane_season"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "L'equinozio d'autunno è caduto il 23 settembre alle 02:05 ora italiana: da ora le giornate si accorciano.",
+     "fonte": "Geopop",
+     "url": "https://www.geopop.it/equinozio-autunno-2026-quando-inizia-cambia-23-settembre-perche-non-21-orario-data-astronomico/"
+    }
+   ]
+  },
+  {
+   "data": "2026-09-23",
+   "apertura": {
+    "cat": "cielo",
+    "titolo": "L'autunno entra in scena alle 02:05: oggi l'equinozio",
+    "testo": "L'equinozio d'autunno cade oggi alle 02:05 ora italiana (00:05 UTC). Quest'anno arriva il 23 e non il 21 settembre: per rivederlo il 21 bisognerà aspettare il 2092.",
+    "fonte": "Geopop",
+    "url": "https://www.geopop.it/equinozio-autunno-2026-quando-inizia-cambia-23-settembre-perche-non-21-orario-data-astronomico/"
+   },
+   "numero": {
+    "valore": "02:05",
+    "testo": "L'ora italiana dell'equinozio d'autunno 2026."
+   },
+   "storie": [
+    {
+     "cat": "uragani",
+     "titolo": "Un Atlantico da record: zero uragani a fine settembre",
+     "testo": "Cinque tempeste con nome ma nessun uragano, con un'energia ciclonica accumulata di appena 4,4.",
+     "fonte": "Wikipedia – stagione 2026",
+     "url": "https://en.wikipedia.org/wiki/2026_Atlantic_hurricane_season"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "El Niño verso un evento storico",
+     "testo": "L'anomalia nella regione Niño 3.4 del Pacifico ha raggiunto +1,8 °C: El Niño si avvia a diventare uno dei più intensi mai osservati.",
+     "fonte": "NOAA CPC",
+     "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_disc_sep2026/ensodisc.shtml",
+     "foto": "oceano"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Agosto 2026, il mese più caldo mai misurato",
+     "testo": "+1,65 °C rispetto al periodo preindustriale, a pari merito con luglio 2023.",
+     "fonte": "IBTimes / Copernicus",
+     "url": "https://www.ibtimes.co.uk/august-2026-earth-hottest-month-copernicus-record-1819062"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea non si ferma: 104 tracimazioni laviche",
+     "testo": "Continuano le tracimazioni di lava alle Hawaii; nel mondo si contano 18 vulcani in attività nella settimana.",
+     "fonte": "Watchers / Smithsonian GVP",
+     "url": "https://watchers.news/2026/09/19/the-weekly-volcanic-activity-report-september-10-16-2026/",
+     "foto": "kilauea1"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "La Terra trema nella norma: 11 sismi oltre magnitudo 7 nel 2026",
+     "testo": "Il numero di grandi terremoti del 2026 è in linea con la media degli ultimi decenni.",
+     "fonte": "Global News",
+     "url": "https://globalnews.ca/news/12023905/earthquakes-intensity-2026/"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Ghiaccio artico al minimo stagionale: 4,60 milioni di km²",
+     "testo": "L'estensione del ghiaccio marino artico ha toccato il minimo dell'anno.",
+     "fonte": "NSIDC",
+     "url": "https://nsidc.org/sea-ice-today"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi 12–24 °C, sereno al mattino. Domani 11–26 °C; venerdì pioggia solo al mattino.",
+     "fonte": "LaMMA",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1551: tromba marina a Malta, almeno 600 vittime. 1975: l'uragano Eloise (200 km/h, 955 hPa). 2009: tempesta di sabbia su Sydney.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_23"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "365,2422 giorni: la durata dell'anno tropico, cioè il tempo tra due equinozi di primavera.",
+     "fonte": "Geopop",
+     "url": "https://www.geopop.it/equinozio-autunno-2026-quando-inizia-cambia-23-settembre-perche-non-21-orario-data-astronomico/"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Da oggi la notte dura più del giorno, e sarà così fino al solstizio del 21 dicembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-09-22",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Agosto 2026 è il mese più caldo mai misurato",
+    "testo": "A pari merito con luglio 2023: media globale di 16,96 °C, +1,65 °C sul preindustriale. Gli oceani non erano mai stati così caldi (21,07 °C).",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+   },
+   "numero": {
+    "valore": "+1,65 °C",
+    "testo": "Di quanto agosto 2026 ha superato la media preindustriale: la temperatura globale è tornata oltre 1,5 °C."
+   },
+   "storie": [
+    {
+     "cat": "ozono",
+     "titolo": "Il buco dell'ozono cresce sopra la media",
+     "testo": "Circa 25 milioni di km², un'estensione superiore a quella dell'Antartide.",
+     "fonte": "Copernicus / EU Space",
+     "url": "https://eu-space.europa.eu/components/earth-observation-copernicus/image-of-the-day/tracking-antarctic-ozone-hole-second-half-2026"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Il respiro dei vulcani: Krakatau, 14 esplosioni stromboliane",
+     "testo": "Allerta di livello 3 per l'Anak Krakatau, in Indonesia.",
+     "fonte": "Watchers / Smithsonian GVP",
+     "url": "https://watchers.news/2026/09/19/the-weekly-volcanic-activity-report-september-10-16-2026/",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Scossa profonda alle Eolie, magnitudo 4,0",
+     "testo": "Il terremoto del 20 settembre è avvenuto a 284 km di profondità sotto il Tirreno meridionale, per questo è stato avvertito su un'area ampia senza causare danni.",
+     "fonte": "DirettaSicilia / INGV",
+     "url": "https://www.direttasicilia.it/2026/09/20/forte-scossa-di-terremoto-al-largo-della-sicilia-tremano-le-eolie/",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico fermo: 5 tempeste e nessun uragano",
+     "testo": "A metà settembre la stagione atlantica non ha ancora prodotto uragani, frenata da un forte El Niño.",
+     "fonte": "Wikipedia – stagione 2026",
+     "url": "https://en.wikipedia.org/wiki/2026_Atlantic_hurricane_season"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Il ghiaccio artico al minimo 2026: 4,60 milioni di km²",
+     "testo": "Tra i valori più bassi dal 1979, anche se lontano dal record del 2012.",
+     "fonte": "Alaska Climate",
+     "url": "https://alaskaclimate.substack.com/p/arctic-2026-sea-ice-minimum"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Europa occidentale: l'estate più calda di sempre",
+     "testo": "Battuto il primato del 2003.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/surface-air-temperature-august-2026"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi 14–24 °C, sereno, venti deboli da est. Mercoledì 10–22 °C e sereno; giovedì nuvoloso con possibili rovesci.",
+     "fonte": "LaMMA / iLMeteo",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1810: il tornado più largo mai osservato nel Regno Unito. 1936: caldo record di circa 39 °C negli Stati Uniti settentrionali. 2006: serie di tornado su tre stati americani.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_22"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C: la temperatura dell'aria più alta riconosciuta dall'Organizzazione meteorologica mondiale (Death Valley, 1913).",
+     "fonte": "WMO",
+     "url": "https://en.wikipedia.org/wiki/Highest_temperature_recorded_on_Earth"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "L'equinozio d'autunno 2026 cade il 23 settembre alle 00:05 UTC, le 02:05 in Italia.",
+     "fonte": "EarthSky",
+     "url": "https://earthsky.org/"
+    }
+   ]
+  },
+  {
+   "data": "2026-09-21",
+   "apertura": {
+    "cat": "oceani",
+    "titolo": "Un oceano in febbre spinge l'estate 2026 nei libri dei record",
+    "testo": "Agosto 2026 è stato il mese più caldo mai misurato a pari merito con luglio 2023: +1,65 °C sul preindustriale. Copernicus prevede che El Niño possa diventare uno dei più forti di sempre.",
+    "fonte": "IBTimes / Copernicus",
+    "url": "https://www.ibtimes.co.uk/august-2026-earth-hottest-month-copernicus-record-1819062",
+    "foto": "oceano"
+   },
+   "numero": {
+    "valore": "+1,65 °C",
+    "testo": "Agosto 2026 rispetto al livello preindustriale."
+   },
+   "storie": [
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico, la stagione degli uragani che non decolla",
+     "testo": "Zero uragani fino a metà settembre, un primato di tardività nell'era dei satelliti: il forte El Niño aumenta il wind shear, cioè la variazione del vento con la quota, che ostacola la formazione dei cicloni.",
+     "fonte": "Wikipedia – stagione 2026",
+     "url": "https://en.wikipedia.org/wiki/2026_Atlantic_hurricane_season"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "L'Etna accende l'estate",
+     "testo": "Dal 26 giugno una frattura alla base del Cratere di Nord-Est alimenta una colata verso la Valle del Leone, con attività stromboliana alla Voragine.",
+     "fonte": "Go Etna",
+     "url": "https://www.go-etna.com/blog/etna-lights-up-the-summer-of-2026-with-a-new-eruption/",
+     "foto": "etna"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Flores, il sisma di agosto e le migliaia di repliche",
+     "testo": "Terremoto di magnitudo 7,7 il 15 agosto, tsunami fino a 1,61 m, oltre 111 vittime e quasi 10.000 repliche in due settimane.",
+     "fonte": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/2026_Flores_earthquake"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Aleutine, sciame sismico sull'Anello di fuoco",
+     "testo": "Magnitudo 6,5 il 17 settembre vicino a Nikolski, seguita da repliche di 6,4 e 6,3; nessun danno nella zona, molto isolata.",
+     "fonte": "Watchers",
+     "url": "https://watchers.news/2026/09/17/strong-m6-5-earthquake-hits-fox-islands-aleutian-islands/",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Europa occidentale, l'estate più calda di sempre",
+     "testo": "Battuto il record del 2003, con ondate di calore precoci e persistenti già da maggio.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/climate-bulletin"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Oceani ai massimi, allerta incendi in Indonesia",
+     "testo": "Record di 21,11 °C per la temperatura media giornaliera della superficie degli oceani; El Niño alimenta una stagione degli incendi più intensa.",
+     "fonte": "Copernicus",
+     "url": "https://climate.copernicus.eu/copernicus-marine-and-copernicus-climate-change-daily-global-sea-surface-temperatures-break-records"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo 16–29 °C: giornata in prevalenza soleggiata, velature al mattino; verso sera nuvolosità in aumento con il 30% di probabilità di pioggia intorno alle 17. Domani 14–24 °C, poi più fresco e stabile.",
+     "fonte": "LaMMA / iLMeteo",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1938: il Grande uragano del New England, categoria 3, circa 600 vittime. 1989: l'uragano Hugo, categoria 4, colpisce la Carolina del Sud con raffiche a 174 km/h. 1894: serie di tornado F5 tra Iowa, Minnesota e Wisconsin.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_21"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C: la temperatura dell'aria più alta mai registrata in modo affidabile (Death Valley, 10 luglio 1913). È il primato ufficiale dopo che l'Organizzazione meteorologica mondiale ha invalidato il presunto record libico di 'Aziziya.",
+     "fonte": "WMO",
+     "url": "https://en.wikipedia.org/wiki/Highest_temperature_recorded_on_Earth"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Vigilia dell'equinozio d'autunno (23 settembre, 02:05 in Italia): il Sole attraversa l'equatore celeste. In Mugello il giorno dura ancora circa 12 ore e 10 minuti.",
+     "fonte": "Star Walk",
+     "url": "https://starwalk.space/en/news/autumnal-equinox-first-day-of-fall"
+    }
+   ]
+  },
+  {
+   "data": "2026-09-17",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Agosto 2026 è il mese più caldo mai registrato sulla Terra",
+    "testo": "Media globale di 16,96 °C, +1,65 °C rispetto al periodo preindustriale.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+   },
+   "numero": {
+    "valore": "+1,65 °C",
+    "testo": "L'anomalia della temperatura globale di agosto 2026 sul preindustriale."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Krakatau, 25 ore di eruzione e colonna alta 15 km",
+     "testo": "Terminata dopo 25 ore l'eruzione dell'Anak Krakatau; il vulcano resta in stato di allerta.",
+     "fonte": "Jakarta Globe",
+     "url": "https://jakartaglobe.id/news/anak-krakataus-25hour-eruption-ends-volcano-remains-on-alert",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Gli oceani mai così caldi ad agosto",
+     "testo": "Temperatura superficiale media di 21,07 °C, record per il mese.",
+     "fonte": "Watchers / Copernicus",
+     "url": "https://watchers.news/2026/09/10/copernicus-august-2026-sets-era5-temperature-record-as-extra-polar-ssts-hit-record-highs/"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "L'Etna torna alla calma: l'INGV abbassa l'allerta",
+     "testo": "Il livello di allerta per l'aviazione passa ad arancione.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_daily.cfm",
+     "foto": "etna"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Flores, il sisma più forte del 2026",
+     "testo": "Magnitudo 7,7 il 15 agosto in Indonesia, con 47 vittime nei primi bilanci.",
+     "fonte": "Al Jazeera",
+     "url": "https://www.aljazeera.com/news/2026/8/15/at-least-two-killed-as-magnitude-7-7-quake-hits-indonesia"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Europa occidentale: mai un'estate così calda",
+     "testo": "Anomalia di +2,54 °C sulla media.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/surface-air-temperature-august-2026"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Cile: il lago di lava del Villarrica torna a salire",
+     "testo": "Risale il livello del lago di lava nel cratere del vulcano cileno.",
+     "fonte": "Watchers / Smithsonian GVP",
+     "url": "https://watchers.news/2026/09/11/the-weekly-volcanic-activity-report-september-3-9-2026/",
+     "foto": "kilauea2"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi 18–25 °C, pioggia alternata a schiarite (probabilità 57%), vento da sud-ovest. Fine settimana più caldo, domenica 15–28 °C.",
+     "fonte": "LaMMA",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1989: l'uragano Hugo sulle Isole Vergini. 2004: i resti dell'uragano Ivan portano 151 mm di pioggia in 24 ore a Pittsburgh. 1911: grandinata a Pipestone, in Minnesota.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_17"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C, la temperatura dell'aria più alta mai registrata (Death Valley, 10 luglio 1913).",
+     "fonte": "WMO",
+     "url": "https://en.wikipedia.org/wiki/Highest_temperature_recorded_on_Earth"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Ci si avvicina all'equinozio d'autunno: il giorno dura poco più di 12 ore e si accorcia di circa 3 minuti al giorno."
+    }
+   ]
+  },
+  {
+   "data": "2026-09-16",
+   "apertura": {
+    "cat": "vulcani",
+    "titolo": "L'Anak Krakatau torna a ruggire e paralizza i cieli dell'Indonesia",
+    "testo": "Eruzione dal 6 settembre 2026: colonna di cenere fino a circa 15 km (50.000 piedi), scalo di Jakarta chiuso, centinaia di voli cancellati e 8 aeroporti coinvolti. Il Global Volcanism Program conferma che a metà settembre l'attività prosegue.",
+    "fonte": "Ambasciata USA in Indonesia",
+    "url": "https://id.usembassy.gov/natural-disaster-alert-mt-anak-krakatau-eruption-september-6-2026/",
+    "foto": "krakatau"
+   },
+   "numero": {
+    "valore": "15,2 km",
+    "testo": "L'altezza della colonna di cenere dell'Anak Krakatau del 6 settembre: dentro la quota di crociera degli aerei di linea. Ecco perché una sola eruzione può bloccare il traffico aereo di un'intera regione."
+   },
+   "storie": [
+    {
+     "cat": "oceani",
+     "titolo": "El Niño si rafforza: il Pacifico verso i +2,9 °C",
+     "testo": "Il bollettino stagionale dell'Organizzazione meteorologica mondiale per agosto–ottobre 2026 conferma il rafforzamento di El Niño.",
+     "fonte": "WMO",
+     "url": "https://wmo.int/resources/publication-series/global-seasonal-climate-update/gscu-aso2026",
+     "foto": "oceano"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Nuovi record in vista: 91% di probabilità di superare 1,5 °C",
+     "testo": "Secondo l'aggiornamento decennale WMO 2026–2035 c'è l'86% di probabilità che almeno un anno batta il record di caldo.",
+     "fonte": "WMO",
+     "url": "https://wmo.int/resources/publication-series/wmo-global-annual-decadal-climate-update/global-annual-decadal-climate-update-2026-2035"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Ghiaccio artico verso il minimo dell'anno",
+     "testo": "Media di agosto di 5,56 milioni di km², volume ai minimi e un calo di 69.100 km² all'anno.",
+     "fonte": "NSIDC",
+     "url": "https://nsidc.org/sea-ice-today"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, le fontane di lava non si fermano",
+     "testo": "Colate fino a 1 km all'interno della caldera, alle Hawaii.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Reventador: fino a 80 esplosioni al giorno",
+     "testo": "Blocchi incandescenti lanciati fino a 1,1 km dal cratere, in Ecuador.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Villarrica, allerta gialla: risale il lago di lava",
+     "testo": "Il livello di allerta del vulcano cileno è stato alzato a giallo.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Il respiro del Pacifico",
+     "testo": "Che cosa significa un El Niño intenso: il meccanismo ENSO, le teleconnessioni e le ricadute sul clima globale.",
+     "fonte": "WMO",
+     "url": "https://wmo.int/resources/publication-series/global-seasonal-climate-update/gscu-aso2026",
+     "tag": "Approfondimento"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "L'Artico che si assottiglia",
+     "testo": "Perché il volume del ghiaccio conta più dell'estensione: la stagione 2026, il confronto con il 2012 e l'effetto albedo.",
+     "fonte": "NSIDC",
+     "url": "https://nsidc.org/sea-ice-today",
+     "tag": "Approfondimento"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "parole",
+     "testo": "VEI, l'Indice di esplosività vulcanica: una scala logaritmica da 0 a 8. L'eruzione del Krakatoa del 1883 fu di grado 6."
+    },
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi 16–28 °C, sereno (pioggia al 5%). Giovedì 17 pioggia e schiarite, fino all'80% di probabilità nel pomeriggio e in serata; venerdì 18 nuvoloso poi schiarite.",
+     "fonte": "LaMMA",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1928: l'uragano di Okeechobee, categoria 4, oltre 4.000 vittime. 1961: l'uragano Esther, il primo individuato da un satellite. 2004: l'uragano Ivan sull'Alabama, venti a circa 200 km/h.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_16"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "A metà settembre in Mugello il giorno dura poco più di 12 ore e mezza; l'equinozio d'autunno cade il 23 settembre alle 02:05.",
+     "fonte": "Star Walk",
+     "url": "https://starwalk.space/en/news/autumnal-equinox-first-day-of-fall"
+    }
+   ]
+  },
+  {
+   "data": "2026-09-15",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Agosto 2026, il mese più caldo mai registrato: il pianeta torna sopra 1,5 °C",
+    "testo": "Media globale di 16,96 °C, +1,65 °C sul preindustriale: a pari merito con luglio 2023 è il mese più caldo di sempre.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+   },
+   "numero": {
+    "valore": "+1,65 °C",
+    "testo": "L'anomalia di agosto 2026 rispetto al periodo preindustriale."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Terremoto profondo di magnitudo 6,5 al largo di Giava",
+     "testo": "La scossa dell'11 settembre è avvenuta a 372 km di profondità.",
+     "fonte": "USGS",
+     "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tgrk/executive"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Krakatau, cenere fino a 15 km e circa 3.000 voli coinvolti",
+     "testo": "L'eruzione dell'Anak Krakatau ha avuto pesanti ricadute sul traffico aereo in Indonesia.",
+     "fonte": "Smithsonian GVP / USGS",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico quieto, Pacifico attivo",
+     "testo": "Nel Pacifico orientale la tempesta tropicale Norbert; la stagione atlantica resta sotto la norma.",
+     "fonte": "NOAA / NHC",
+     "url": "https://www.nhc.noaa.gov/gtwo.php"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna, un'estate di attività stromboliana alla Voragine",
+     "testo": "Colonna eruttiva fino a circa 6.000 m secondo l'INGV – Osservatorio Etneo.",
+     "fonte": "Geopop / INGV",
+     "url": "https://www.geopop.it/eruzione-etna-riprende-lattivita-stromboliana-al-cratere-voragine-il-resoconto-delle-ultime-settimane/",
+     "foto": "etna"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Artico verso il minimo stagionale",
+     "testo": "L'estensione del ghiaccio marino si avvicina ai livelli del 2012.",
+     "fonte": "NSIDC",
+     "url": "https://nsidc.org/sea-ice-today"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Oceani da primato: 21,07 °C ad agosto",
+     "testo": "La temperatura superficiale media degli oceani segna un nuovo record per il mese.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/climate-bulletin"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Dal Cile alle Hawaii: Villarrica, Kīlauea, Reventador",
+     "testo": "Il punto settimanale sui vulcani attivi del Pacifico.",
+     "fonte": "Smithsonian GVP / USGS",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea1"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo 12–28 °C, sole pieno, venti deboli da ovest-nord-ovest; tendenza stabile.",
+     "fonte": "3BMeteo / LaMMA",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1945: l'uragano di Homestead, in Florida (233 km/h). 2010: chicco di grandine record in Kansas, circa 19,7 cm. 1747: l'uragano del Rappahannock, in Virginia.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_15"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C, il record mondiale riconosciuto dalla WMO (Death Valley, 1913). È contestato: la lettura moderna più alta è di 54,4 °C.",
+     "fonte": "WMO",
+     "url": "https://en.wikipedia.org/wiki/Highest_temperature_recorded_on_Earth"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "In Mugello alba alle 06:52 e tramonto alle 19:27: il giorno dura 12 ore e 35 minuti. L'equinozio d'autunno è il 23 settembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-09-14",
+   "apertura": {
+    "cat": "vulcani",
+    "titolo": "L'Anak Krakatau erutta: cenere fino a 15 km e oltre 270.000 passeggeri a terra",
+    "testo": "L'eruzione del vulcano indonesiano ha costretto il principale aeroporto del paese a sospendere i voli.",
+    "fonte": "Al Jazeera",
+    "url": "https://www.aljazeera.com/news/2026/9/6/indonesias-main-airport-suspends-flights-due-to-anak-krakatoa-eruption",
+    "foto": "krakatau"
+   },
+   "numero": {
+    "valore": "+1,65 °C",
+    "testo": "L'anomalia della temperatura media globale di agosto 2026 sui livelli preindustriali."
+   },
+   "storie": [
+    {
+     "cat": "clima",
+     "titolo": "Agosto 2026, il mese più caldo mai registrato",
+     "testo": "+1,65 °C rispetto al periodo preindustriale.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+    },
+    {
+     "cat": "clima",
+     "titolo": "L'Europa occidentale ha vissuto l'estate più calda di sempre",
+     "testo": "Superato il primato del 2003.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Settimana intensa: quattro vulcani in nuova attività",
+     "testo": "Krakatau, Sinabung, Karangetang e Villarrica.",
+     "fonte": "Watchers / Smithsonian GVP",
+     "url": "https://watchers.news/2026/09/11/the-weekly-volcanic-activity-report-september-3-9-2026/",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Mari sempre più caldi, banchisa in affanno",
+     "testo": "Temperatura superficiale degli oceani a 21,07 °C.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Un 2026 «nella media» per i terremoti, ma dagli effetti gravi",
+     "testo": "In Italia, scossa di magnitudo 3,7 nel Cosentino.",
+     "fonte": "INGV",
+     "url": "https://terremoti.ingv.it/event/47073722",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Il Krakatau visto dallo spazio",
+     "testo": "Le immagini dei satelliti NASA sull'eruzione dell'Anak Krakatau.",
+     "fonte": "NASA Earth Observatory",
+     "url": "https://science.nasa.gov/earth/earth-observatory/anak-krakatau-rumbles-again/",
+     "foto": "krakatau"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo 13–28 °C, poco nuvoloso, vento debole da nord-est; bel tempo stabile fino a giovedì."
+    },
+    {
+     "tipo": "storia",
+     "testo": "1928: tornado F4 a Rockford, in Illinois (14 vittime). 1993: gelata precoce in South Dakota (−4 °C a Rapid City). 2005: l'uragano Ophelia sulle Carolinas.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_14"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "+1,65 °C: agosto 2026 è il mese più caldo mai registrato."
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "A metà settembre il giorno dura circa 12 ore e mezza e si accorcia verso l'equinozio d'autunno di mercoledì 23 settembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-09-11",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Agosto 2026, il mese più caldo mai registrato sul pianeta",
+    "testo": "Media globale dell'aria di 16,96 °C (+0,85 °C sul 1991–2020), pari a +1,65 °C sul preindustriale: torna sopra 1,5 °C per la prima volta da novembre 2025 e, a pari merito con luglio 2023, è il mese più caldo di sempre.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+   },
+   "numero": {
+    "valore": "56,7 °C",
+    "testo": "La temperatura dell'aria più alta mai omologata al mondo (Furnace Creek, Death Valley, 10 luglio 1913).",
+    "fonte": "WMO / UN News",
+    "url": "https://news.un.org/en/story/2020/08/1070442"
+   },
+   "storie": [
+    {
+     "cat": "clima",
+     "titolo": "L'Europa occidentale vive l'estate più calda di sempre",
+     "testo": "Superato il record del 2003.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Sinabung, colonna di cenere a 3,5 km",
+     "testo": "Eruzione del 31 agosto sopra Sumatra.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Pacifico attivo, Atlantico in pausa",
+     "testo": "Le tempeste Lowell e Norbert nel Pacifico e una depressione con l'80% di probabilità di diventare ciclone.",
+     "fonte": "NOAA / NHC",
+     "url": "https://www.nhc.noaa.gov/gtwo.php"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Flores, lo sciame sismico non si ferma",
+     "testo": "Oltre 8.700 repliche dopo il terremoto di magnitudo 7,7 del 15 agosto; il vulcano Ranakah è in allerta.",
+     "fonte": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/2026_Flores_earthquake"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Ghiaccio artico verso il minimo di metà settembre",
+     "testo": "Tra l'11° e il 12° valore più basso, lontano dal record del 2012.",
+     "fonte": "NSIDC",
+     "url": "https://nsidc.org/sea-ice-today"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Mari da record: 21,07 °C in superficie",
+     "testo": "Con picchi di temperatura nel Mediterraneo occidentale.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi 16–26 °C, parzialmente soleggiato con nubi al mattino; domani sereno, fine settimana soleggiato fino a 25–26 °C.",
+     "fonte": "LaMMA / 3BMeteo",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1992: l'uragano Iniki alle Hawaii. 1961: l'uragano Carla in Texas. 1900: la coda del Grande uragano di Galveston.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_11"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C, il record mondiale di temperatura dell'aria riconosciuto dalla WMO.",
+     "fonte": "WMO / UN News",
+     "url": "https://news.un.org/en/story/2020/08/1070442"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Nel Mugello il giorno dura 12 ore e 45 minuti (alba alle 06:48, tramonto alle 19:33). L'equinozio d'autunno è il 23 settembre."
+    }
+   ]
+  }
+ ]
+}
