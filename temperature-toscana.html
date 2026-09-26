@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Temperature in Toscana · Mugello Meteo & Clima</title>
+<meta name="description" content="Le temperature di oggi e di ieri nelle stazioni della rete regionale toscana: massime, minime, classifiche, anomalie e il confronto con il Mugello.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/temperature-toscana.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Temperature in Toscana, oggi e ieri">
+<meta property="og:description" content="Le temperature di oggi e di ieri nelle stazioni della rete regionale toscana: massime, minime, classifiche, anomalie e il confronto con il Mugello.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/temperature-toscana.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#6f7c74;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --ctx:#b9c2bc;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+      --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#8a998f;
+      --line:#26332c; --line-soft:#1e2a24;
+      --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+      --sky:#4f93d6; --sky-tint:#152634;
+      --amber:#c97a36; --amber-tint:#2e2115;
+      --ctx:#44534a;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#8a998f;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#4f93d6; --sky-tint:#152634;
+    --amber:#c97a36; --amber-tint:#2e2115;
+    --ctx:#44534a;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .back:hover{box-shadow:var(--shadow)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px;letter-spacing:-.01em}
+  .brand b{color:var(--pine)}
+  .head{padding:26px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:40px;margin:.12em 0 .05em}
+  .lead{color:var(--ink-soft);font-size:15px;max-width:70ch;margin:.4em 0}
+  .upd{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+  section{margin:30px 0}
+  .sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+  .sh h2{font-family:var(--serif);font-weight:700;font-size:21px;margin:0;letter-spacing:-.01em}
+  .sh .src{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;position:relative}
+
+  /* stat tiles */
+  .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;min-width:0}
+  .tile .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .tile .big{font-family:var(--serif);font-weight:800;font-size:40px;line-height:1.05;letter-spacing:-.02em;margin-top:4px}
+  .tile .big s{font-size:18px;font-weight:600;text-decoration:none;color:var(--ink-faint);margin-left:2px}
+  .tile .who{color:var(--ink-soft);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tile .ico{float:right;font-size:22px;line-height:1}
+  .tiles.ieri .big{font-size:30px}
+
+  /* avvisi */
+  .alerts{display:flex;flex-direction:column}
+  .al{display:flex;gap:12px;align-items:flex-start;padding:11px 2px;border-top:1px solid var(--line-soft)}
+  .al:first-child{border-top:0}
+  .al .i{flex:none;font-size:17px;line-height:1.3}
+  .al b{font-weight:600}
+  .al span{color:var(--ink-soft)}
+  .al small{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .empty{color:var(--ink-soft);padding:6px 2px}
+
+  /* grafici */
+  .chart{width:100%;height:340px;position:relative}
+  .chart svg{display:block;width:100%;height:100%;overflow:visible}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .grid{stroke:var(--line);stroke-width:1}
+  svg .base{stroke:var(--ink-faint);stroke-width:1}
+  svg .ctx{fill:var(--ctx)}
+  svg .foc{fill:var(--pine);stroke:var(--panel);stroke-width:2}
+  svg .fit{stroke:var(--ink-faint);stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+  svg .dlab{font-family:var(--sans);font-size:11.5px;font-weight:600;fill:var(--ink-soft)}
+  svg .lmax{stroke:var(--amber);stroke-width:2;fill:none}
+  svg .lmin{stroke:var(--sky);stroke-width:2;fill:none}
+  svg .pmax{fill:var(--amber);stroke:var(--panel);stroke-width:2}
+  svg .pmin{fill:var(--sky);stroke:var(--panel);stroke-width:2}
+  svg .cross{stroke:var(--ink-faint);stroke-width:1}
+  svg .hl{stroke:var(--ink);stroke-width:2;fill:none}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:2px 0 8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+  .legend i.ln{width:16px;height:2px;border-radius:2px;vertical-align:3px}
+  .legend i.dash{width:16px;height:0;border-radius:0;border-top:1.5px dashed var(--ink-faint);vertical-align:3px}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    box-shadow:var(--shadow);padding:8px 11px;font-size:12.5px;line-height:1.4;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .tip b{font-weight:600}
+  .tip .m{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .tip i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+  .chart.short{height:auto}
+  .wait{min-height:120px;display:flex;align-items:center;justify-content:center;height:100%;color:var(--ink-soft);text-align:center;padding:0 20px}
+
+  /* filtri + tabella */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .filters input,.filters select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);
+    border-radius:var(--r-sm);padding:8px 11px;min-width:0}
+  .filters input{flex:1 1 200px}
+  .filters label{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);cursor:pointer}
+  .btn{font:inherit;font-size:13px;font-weight:600;color:#fff;background:var(--pine);border:0;border-radius:var(--r-pill);padding:9px 15px;cursor:pointer;margin-left:auto}
+  .btn:hover{filter:brightness(1.08)}
+  .more{display:block;margin:12px auto 2px;font:inherit;font-size:13px;font-weight:600;color:var(--pine);background:var(--pine-tint);border:0;border-radius:var(--r-pill);padding:9px 18px;cursor:pointer}
+  .count{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-bottom:6px}
+  .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -18px;padding:0 18px}
+  table{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}
+  th,td{padding:9px 8px;text-align:right;border-top:1px solid var(--line-soft);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left;white-space:normal}
+  thead th{border-top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  thead tr.grp th{padding-bottom:0}
+  thead tr.grp th.g{text-align:center;border-bottom:1px solid var(--line)}
+  th button{all:unset;cursor:pointer}
+  th button:hover,th button:focus-visible{color:var(--ink)}
+  th[aria-sort] button::after{content:" ↓"}
+  th[aria-sort="ascending"] button::after{content:" ↑"}
+  td .st{font-weight:600}
+  td .sub{display:block;font-size:11.5px;color:var(--ink-faint)}
+  td.t{font-family:var(--serif);font-weight:700;font-size:15px}
+  td .h{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);font-weight:500}
+  td.sep,th.sep{border-left:1px solid var(--line)}
+  tr.m td:first-child{box-shadow:inset 3px 0 0 var(--pine)}
+  .tag{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 7px;border-radius:var(--r-pill);background:var(--pine-tint);color:var(--pine-deep);margin-left:6px;vertical-align:1px}
+  .muted{color:var(--ink-faint)}
+
+  .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
+  @media (max-width:860px){ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:640px){
+    .wrap{padding:0 16px}
+    h1{font-size:31px} .tile .big{font-size:32px} .tiles.ieri .big{font-size:26px}
+    .tiles{gap:10px} .tile{padding:14px} .tile .who{white-space:normal;font-size:12px}
+    .chart{height:280px}
+    .btn{margin-left:0}
+    .tbl{margin:0 -18px}
+  }
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <header class="head">
+      <div class="eyebrow">Toscana · rete regionale</div>
+      <h1>Temperature in Toscana</h1>
+      <p class="lead">Le temperature di adesso, di oggi e di ieri in tutte le stazioni della rete del Centro Funzionale della Regione Toscana, con le stazioni del Mugello in evidenza.</p>
+      <div class="upd" id="upd">Carico i dati…</div>
+
+      <div class="tiles" id="tiles-ora"></div>
+      <div class="tiles ieri" id="tiles-ieri"></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Anomalie e avvisi</h2><span class="src">calcolati sui dati di adesso</span></div>
+      <div class="card"><div class="alerts" id="alerts"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura e quota</h2><span class="src">una stazione = un punto</span></div>
+      <div class="card">
+        <div class="legend">
+          <span><i style="background:var(--pine)"></i>Zona M · Mugello-Val di Sieve</span>
+          <span><i style="background:var(--ctx)"></i>Altre stazioni</span>
+          <span><i class="dash"></i>Andamento medio con la quota</span>
+        </div>
+        <div class="chart" id="scatter"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Andamento giorno per giorno</h2><span class="src">media delle stazioni toscane</span></div>
+      <div class="card">
+        <div class="legend">
+          <span><i class="ln" style="background:var(--amber)"></i>Media delle massime</span>
+          <span><i class="ln" style="background:var(--sky)"></i>Media delle minime</span>
+        </div>
+        <div class="chart" id="trend"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Tutte le stazioni</h2><span class="src">clicca sull'intestazione per ordinare</span></div>
+      <div class="card">
+        <div class="filters">
+          <input id="q" type="search" placeholder="Cerca stazione…" aria-label="Cerca stazione">
+          <select id="prov" aria-label="Provincia"><option value="">Tutte le province</option></select>
+          <select id="zona" aria-label="Zona di allerta"><option value="">Tutte le zone</option></select>
+          <label><input type="checkbox" id="solom"> Solo Mugello-Val di Sieve</label>
+          <button class="btn" id="dl" type="button">⬇ Scarica per Excel</button>
+        </div>
+        <div class="count" id="count"></div>
+        <div class="tbl">
+          <table>
+            <thead>
+              <tr class="grp"><th></th><th></th><th></th><th class="g sep" colspan="3">Oggi</th><th class="g sep" colspan="2">Ieri</th></tr>
+              <tr>
+                <th data-k="nome"><button>Stazione</button></th>
+                <th data-k="quota"><button>Quota</button></th>
+                <th data-k="t"><button>Adesso</button></th>
+                <th data-k="min" class="sep"><button>Min</button></th>
+                <th data-k="max"><button>Max</button></th>
+                <th data-k="esc"><button>Escursione</button></th>
+                <th data-k="ieri_min" class="sep"><button>Min</button></th>
+                <th data-k="ieri_max"><button>Max</button></th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <button class="more" id="more" type="button" hidden></button>
+      </div>
+    </section>
+
+    <p class="note">Dati: Centro Funzionale Regione Toscana (rete termometrica regionale), orari in ora solare, aggiornati ogni 30 minuti. Dati grezzi non validati. · elaborazioni L. Varlani</p>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+(function(){
+  const ZONE={A1:"Arno-Casentino",A2:"Arno-Valdarno Sup.",A3:"Arno-Firenze",A4:"Valdarno Inf.",A5:"Valdelsa-Valdera",A6:"Arno-Costa",B:"Bisenzio e Ombrone Pt",C:"Valdichiana",E1:"Etruria",E2:"Etruria-Costa Nord",E3:"Etruria-Costa Sud",F1:"Fiora e Albegna",F2:"Fiora e Albegna-Costa e Giglio",I:"Isole",L:"Lunigiana",M:"Mugello-Val di Sieve",O1:"Ombrone Gr-Alto",O2:"Ombrone Gr-Medio",O3:"Ombrone Gr-Costa",R1:"Reno",R2:"Romagna-Toscana",S1:"Serchio-Garfagnana-Lima",S2:"Serchio-Lucca",S3:"Serchio-Costa",T:"Valtiberina",V:"Versilia"};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const f1=v=>v==null?"—":v.toFixed(1).replace(".",",");
+  const deg=v=>v==null?"—":f1(v)+"°";
+  const MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const gm=iso=>{const d=new Date(iso+"T12:00:00");return d.getDate()+" "+MESI[d.getMonth()];};
+
+  let S=[], RIF=null, sortK="t", sortDir=-1, tutte=false;
+  const LIMITE=30;
+  // "adesso" conta solo per i dati arrivati nelle ultime 3 ore
+  const fresco=s=>{if(s.t==null||!s.ora)return false;const d=minuti(RIF.slice(11))-minuti(s.ora);return d>=0&&d<=180;};
+
+  Promise.all([
+    fetch("./data/termo.json?t="+Date.now(),{cache:"no-store"}).then(r=>{if(!r.ok)throw 0;return r.json();}),
+    fetch("./data/termo_storico.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():{giorni:[]}).catch(()=>({giorni:[]}))
+  ]).then(([d,h])=>{
+    RIF=d.aggiornato;
+    S=d.stazioni.map(s=>({...s, esc:(s.min!=null&&s.max!=null)?+(s.max-s.min).toFixed(1):null}));
+    S.forEach(s=>{s.ok=fresco(s);});
+    const dt=new Date(RIF);
+    $("upd").textContent="Aggiornato al "+dt.getDate()+" "+MESI[dt.getMonth()]+" "+dt.getFullYear()+", ore "+RIF.slice(11)+" (ora solare) · "+S.filter(s=>s.ok).length+" stazioni con dati aggiornati";
+    tiles(); alerts(); filtersInit(); table();
+    scatter(); trend(h.giorni||[]);
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{scatter();trend(h.giorni||[]);},150);});
+  }).catch(()=>{ $("upd").textContent="Dati momentaneamente non disponibili: riprova tra qualche minuto."; });
+
+  /* ---------- tiles ---------- */
+  function ext(k,dir){const v=S.filter(s=>s[k]!=null);if(!v.length)return null;return v.reduce((a,b)=>dir>0?(b[k]>a[k]?b:a):(b[k]<a[k]?b:a));}
+  function mean(k,fn){const v=S.filter(s=>s[k]!=null&&(!fn||fn(s))).map(s=>s[k]);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;}
+  function extOk(dir){const v=S.filter(s=>s.ok);return v.length?v.reduce((a,b)=>dir>0?(b.t>a.t?b:a):(b.t<a.t?b:a)):null;}
+  function tile(ico,lab,val,who){return `<div class="tile"><span class="ico" aria-hidden="true">${ico}</span><div class="lab">${lab}</div><div class="big">${f1(val)}<s>°C</s></div><div class="who" title="${esc(who)}">${esc(who)}</div></div>`;}
+  function tiles(){
+    const hot=extOk(1), cold=extOk(-1);
+    const nM=S.filter(s=>s.zona==="M"&&s.ok).length;
+    $("tiles-ora").innerHTML=
+      tile("🔥","Più caldo adesso",hot&&hot.t,hot?hot.nome+" ("+hot.prov+") · "+hot.quota+" m":"")+
+      tile("🧊","Più freddo adesso",cold&&cold.t,cold?cold.nome+" ("+cold.prov+") · "+cold.quota+" m":"")+
+      tile("🌡️","Media Toscana adesso",mean("t",s=>s.ok),S.filter(s=>s.ok).length+" stazioni")+
+      tile("⛰️","Media Mugello-Val di Sieve",mean("t",s=>s.ok&&s.zona==="M"),nM+" stazioni della zona M");
+    const ih=ext("ieri_max",1), ic=ext("ieri_min",-1);
+    $("tiles-ieri").innerHTML=
+      tile("☀️","Massima di ieri",ih&&ih.ieri_max,ih?ih.nome+" ("+ih.prov+") · ore "+(ih.ieri_ora_max||"—"):"")+
+      tile("🌙","Minima di ieri",ic&&ic.ieri_min,ic?ic.nome+" ("+ic.prov+") · ore "+(ic.ieri_ora_min||"—"):"")+
+      tile("📈","Media massime ieri",mean("ieri_max"),"Mugello-Val di Sieve "+deg(mean("ieri_max",s=>s.zona==="M")))+
+      tile("📉","Media minime ieri",mean("ieri_min"),"Mugello-Val di Sieve "+deg(mean("ieri_min",s=>s.zona==="M")));
+  }
+
+  /* ---------- regressione temperatura/quota + anomalie ---------- */
+  function fit(){
+    const p=S.filter(s=>s.ok&&s.quota!=null);
+    const n=p.length, mx=p.reduce((a,s)=>a+s.quota,0)/n, my=p.reduce((a,s)=>a+s.t,0)/n;
+    let sxy=0,sxx=0; p.forEach(s=>{sxy+=(s.quota-mx)*(s.t-my);sxx+=(s.quota-mx)**2;});
+    const b=sxy/sxx, a=my-b*mx;
+    const res=p.map(s=>s.t-(a+b*s.quota)).sort((x,y)=>x-y);
+    const med=res[Math.floor(n/2)];
+    const mad=res.map(r=>Math.abs(r-med)).sort((x,y)=>x-y)[Math.floor(n/2)];
+    return {a,b,sigma:1.4826*mad};
+  }
+  function minuti(hhmm){const [h,m]=hhmm.split(":").map(Number);return h*60+m;}
+  function alerts(){
+    const F=fit(), out=[];
+    S.filter(s=>s.ok&&s.quota!=null).forEach(s=>{
+      const r=s.t-(F.a+F.b*s.quota);
+      if(Math.abs(r)>Math.max(4,3.5*F.sigma)) out.push({i:r>0?"🔺":"🔻",o:-Math.abs(r),
+        h:`<b>${esc(s.nome)}</b> (${s.prov}, ${s.quota} m) <span>segna ${deg(s.t)}, ${f1(Math.abs(r))}° ${r>0?"più caldo":"più freddo"} di quanto atteso alla sua quota</span><small>possibile inversione termica, esposizione particolare o sensore da verificare</small>`});
+    });
+    S.filter(s=>s.ok&&s.t>=35).forEach(s=>out.push({i:"🥵",o:-50+s.t*-1,h:`<b>${esc(s.nome)}</b> (${s.prov}) <span>caldo intenso: ${deg(s.t)}</span>`}));
+    S.filter(s=>s.min!=null&&s.min<=0).forEach(s=>out.push({i:"❄️",o:-40,h:`<b>${esc(s.nome)}</b> (${s.prov}, ${s.quota} m) <span>gelo: minima di oggi ${deg(s.min)} alle ${s.ora_min||"—"}</span>`}));
+    const vecchi=S.filter(s=>s.t!=null&&!s.ok);
+    const senza=S.filter(s=>s.t==null);
+    if(vecchi.length) out.push({i:"⏱️",o:0,h:`<b>${vecchi.length} stazion${vecchi.length>1?"i":"e"} con dato vecchio di oltre 3 ore</b> <span>(escluse dai valori di adesso)</span><small>${vecchi.slice(0,8).map(s=>esc(s.nome)+" ("+s.ora+")").join(" · ")}${vecchi.length>8?" …":""}</small>`});
+    if(senza.length) out.push({i:"⚪",o:1,h:`<b>${senza.length} stazion${senza.length>1?"i":"e"} senza dati</b><small>${senza.slice(0,8).map(s=>esc(s.nome)).join(" · ")}${senza.length>8?" …":""}</small>`});
+    out.sort((a,b)=>a.o-b.o);
+    $("alerts").innerHTML=out.length?out.map(x=>`<div class="al"><span class="i" aria-hidden="true">${x.i}</span><div>${x.h}</div></div>`).join("")
+      :`<div class="empty">✅ Nessuna anomalia: tutte le stazioni sono in linea con la loro quota.</div>`;
+  }
+
+  /* ---------- scatter temperatura/quota ---------- */
+  function niceTicks(lo,hi,n){const span=hi-lo,step0=span/n,mag=Math.pow(10,Math.floor(Math.log10(step0)));
+    const step=[1,2,5,10].map(m=>m*mag).find(s=>s>=step0);const out=[];for(let v=Math.floor(lo/step)*step;v<hi+step-1e-9;v+=step)out.push(+v.toFixed(6));return out;}
+  function frame(el){const w=el.clientWidth,h=el.clientHeight,m={l:40,r:14,t:10,b:32};return {w,h,m,iw:w-m.l-m.r,ih:h-m.t-m.b};}
+  function tipAt(el,tip,x,y,html){tip.innerHTML=html;tip.style.opacity=1;
+    const tw=tip.offsetWidth,th=tip.offsetHeight,W=el.clientWidth;
+    let lx=x+14; if(lx+tw>W) lx=x-tw-14; if(lx<0) lx=0;
+    tip.style.left=lx+"px"; tip.style.top=Math.max(0,y-th-10)+"px";}
+  function scatter(){
+    const el=$("scatter"); const P=S.filter(s=>s.ok&&s.quota!=null); if(!P.length){el.innerHTML="";return;}
+    const {w,h,m,iw,ih}=frame(el);
+    const qMax=Math.max(...P.map(s=>s.quota)), tMin=Math.min(...P.map(s=>s.t)), tMax=Math.max(...P.map(s=>s.t));
+    const xT=niceTicks(0,qMax,w<500?4:7), yT=niceTicks(Math.floor(tMin),Math.ceil(tMax),5);
+    const x0=0,x1=xT[xT.length-1], y0=yT[0], y1=yT[yT.length-1];
+    const X=q=>m.l+(q-x0)/(x1-x0)*iw, Y=t=>m.t+ih-(t-y0)/(y1-y0)*ih;
+    const F=fit();
+    let g="";
+    yT.forEach(t=>{g+=`<line class="grid" x1="${m.l}" x2="${m.l+iw}" y1="${Y(t)}" y2="${Y(t)}"/><text class="axl" x="${m.l-8}" y="${Y(t)+3.5}" text-anchor="end">${t}°</text>`;});
+    xT.forEach(q=>{g+=`<text class="axl" x="${X(q)}" y="${m.t+ih+18}" text-anchor="middle">${q}</text>`;});
+    g+=`<text class="axl" x="${m.l+iw}" y="${m.t+ih+30}" text-anchor="end">quota (m s.l.m.)</text>`;
+    g+=`<line class="fit" x1="${X(x0)}" y1="${Y(F.a+F.b*x0)}" x2="${X(x1)}" y2="${Y(F.a+F.b*x1)}"/>`;
+    const ctx=P.filter(s=>s.zona!=="M"), foc=P.filter(s=>s.zona==="M");
+    ctx.forEach(s=>{g+=`<circle class="ctx" cx="${X(s.quota)}" cy="${Y(s.t)}" r="4"/>`;});
+    foc.forEach(s=>{g+=`<circle class="foc" cx="${X(s.quota)}" cy="${Y(s.t)}" r="6"/>`;});
+    // etichette dirette: solo la stazione più calda e più fredda della zona M
+    if(foc.length&&iw>360){
+      const hi=foc.reduce((a,b)=>b.t>a.t?b:a), lo=foc.reduce((a,b)=>b.t<a.t?b:a);
+      [hi,lo].filter((s,i,arr)=>arr.indexOf(s)===i).forEach(s=>{const right=X(s.quota)<m.l+iw-140;
+        g+=`<text class="dlab" x="${X(s.quota)+(right?10:-10)}" y="${Y(s.t)+4}" text-anchor="${right?"start":"end"}">${esc(s.nome)} ${f1(s.t)}°</text>`;});
+    }
+    g+=`<circle id="sc-hl" class="hl" r="9" cx="-99" cy="-99"/>`;
+    el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Grafico a dispersione: temperatura attuale in funzione della quota per ${P.length} stazioni toscane">${g}</svg><div class="tip"></div>`;
+    const svg=el.querySelector("svg"), tip=el.querySelector(".tip"), hl=el.querySelector("#sc-hl");
+    const pts=P.map(s=>({s,x:X(s.quota),y:Y(s.t)}));
+    svg.addEventListener("pointermove",e=>{
+      const r=svg.getBoundingClientRect(), px=e.clientX-r.left, py=e.clientY-r.top;
+      let best=null,bd=24*24; pts.forEach(p=>{const d=(p.x-px)**2+(p.y-py)**2; if(d<bd){bd=d;best=p;}});
+      if(!best){tip.style.opacity=0;hl.setAttribute("cx",-99);return;}
+      hl.setAttribute("cx",best.x);hl.setAttribute("cy",best.y);
+      const s=best.s, att=F.a+F.b*s.quota;
+      tipAt(el,tip,best.x,best.y,`<b>${esc(s.nome)}</b> <span class="m">${s.prov} · ${s.quota} m</span><br>Adesso <b>${deg(s.t)}</b> <span class="m">ore ${s.ora||"—"}</span><br><span class="m">atteso per la quota ${deg(att)} · ${ZONE[s.zona]||s.zona}</span>`);
+    });
+    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;hl.setAttribute("cx",-99);});
+  }
+
+  /* ---------- trend giornaliero ---------- */
+  function trend(G){
+    const el=$("trend"); G=G.filter(g=>g.media_max!=null&&g.media_min!=null);
+    el.classList.toggle("short",G.length<2);
+    if(G.length<2){
+      el.innerHTML=`<div class="wait">📅 Lo storico è appena partito: il sito salva un riepilogo al giorno.<br>Il grafico compare da quando ci sono almeno due giorni di dati${G.length?` (primo giorno: ${gm(G[0].data)}, media massime ${deg(G[0].media_max)}, media minime ${deg(G[0].media_min)})`:""}.</div>`;return;}
+    const {w,h,m,iw,ih}=frame(el);
+    const lo=Math.min(...G.map(g=>g.media_min)), hi=Math.max(...G.map(g=>g.media_max));
+    const yT=niceTicks(Math.floor(lo),Math.ceil(hi),5), y0=yT[0], y1=yT[yT.length-1];
+    const X=i=>m.l+(G.length===1?iw/2:i/(G.length-1)*iw), Y=t=>m.t+ih-(t-y0)/(y1-y0)*ih;
+    let g="";
+    yT.forEach(t=>{g+=`<line class="grid" x1="${m.l}" x2="${m.l+iw}" y1="${Y(t)}" y2="${Y(t)}"/><text class="axl" x="${m.l-8}" y="${Y(t)+3.5}" text-anchor="end">${t}°</text>`;});
+    const every=Math.max(1,Math.ceil(G.length/(w<500?4:8)));
+    G.forEach((d,i)=>{const last=i===G.length-1;if((i%every===0&&G.length-1-i>=every/2)||last)g+=`<text class="axl" x="${X(i)}" y="${m.t+ih+18}" text-anchor="${last?"end":i?"middle":"start"}">${gm(d.data)}</text>`;});
+    const path=k=>G.map((d,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(d[k]).toFixed(1)).join(" ");
+    g+=`<path class="lmax" d="${path("media_max")}"/><path class="lmin" d="${path("media_min")}"/>`;
+    g+=`<line id="tr-x" class="cross" x1="-9" x2="-9" y1="${m.t}" y2="${m.t+ih}"/><circle id="tr-a" class="pmax" r="5" cx="-99" cy="-99"/><circle id="tr-b" class="pmin" r="5" cx="-99" cy="-99"/>`;
+    el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Andamento giornaliero della media delle temperature massime e minime in Toscana">${g}</svg><div class="tip"></div>`;
+    const svg=el.querySelector("svg"), tip=el.querySelector(".tip"), cx=el.querySelector("#tr-x"), pa=el.querySelector("#tr-a"), pb=el.querySelector("#tr-b");
+    svg.addEventListener("pointermove",e=>{
+      const r=svg.getBoundingClientRect(), px=e.clientX-r.left;
+      const i=Math.max(0,Math.min(G.length-1,Math.round((px-m.l)/iw*(G.length-1)))), d=G[i], x=X(i);
+      cx.setAttribute("x1",x);cx.setAttribute("x2",x);
+      pa.setAttribute("cx",x);pa.setAttribute("cy",Y(d.media_max));pb.setAttribute("cx",x);pb.setAttribute("cy",Y(d.media_min));
+      tipAt(el,tip,x,Y(d.media_max),`<b>${gm(d.data)}</b><br><i style="background:var(--amber)"></i>Media massime <b>${deg(d.media_max)}</b><br><i style="background:var(--sky)"></i>Media minime <b>${deg(d.media_min)}</b>`+
+        (d.max?`<br><span class="m">max ${deg(d.max.v)} ${esc(d.max.nome)} · min ${deg(d.min.v)} ${esc(d.min.nome)}</span>`:"")+
+        (d.m_media_max!=null?`<br><span class="m">Mugello-Val di Sieve ${deg(d.m_media_min)} / ${deg(d.m_media_max)}</span>`:""));
+    });
+    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;cx.setAttribute("x1",-9);cx.setAttribute("x2",-9);pa.setAttribute("cx",-99);pb.setAttribute("cx",-99);});
+  }
+
+  /* ---------- tabella ---------- */
+  function filtersInit(){
+    [...new Set(S.map(s=>s.prov))].sort().forEach(p=>$("prov").insertAdjacentHTML("beforeend",`<option>${esc(p)}</option>`));
+    [...new Set(S.map(s=>s.zona))].sort().forEach(z=>$("zona").insertAdjacentHTML("beforeend",`<option value="${esc(z)}">${esc(z)} · ${esc(ZONE[z]||z)}</option>`));
+    ["q","prov","zona","solom"].forEach(id=>$(id).addEventListener("input",table));
+    document.querySelectorAll("th[data-k] button").forEach(b=>b.addEventListener("click",()=>{
+      const k=b.parentNode.dataset.k; if(sortK===k) sortDir=-sortDir; else {sortK=k;sortDir=(k==="nome")?1:-1;} table();}));
+    $("dl").addEventListener("click",csv);
+    $("more").addEventListener("click",()=>{tutte=!tutte;table();});
+  }
+  function visibili(){
+    const q=$("q").value.trim().toLowerCase(), p=$("prov").value, z=$("zona").value, sm=$("solom").checked;
+    return S.filter(s=>(!q||s.nome.toLowerCase().includes(q))&&(!p||s.prov===p)&&(!z||s.zona===z)&&(!sm||s.zona==="M"))
+      .sort((a,b)=>{const va=a[sortK],vb=b[sortK];if(va==null&&vb==null)return 0;if(va==null)return 1;if(vb==null)return -1;
+        return (typeof va==="string"?va.localeCompare(vb,"it"):va-vb)*sortDir;});
+  }
+  function table(){
+    document.querySelectorAll("th[data-k]").forEach(th=>{if(th.dataset.k===sortK)th.setAttribute("aria-sort",sortDir>0?"ascending":"descending");else th.removeAttribute("aria-sort");});
+    const T=visibili(), V=tutte?T:T.slice(0,LIMITE);
+    $("count").textContent=T.length+" stazioni su "+S.length+(V.length<T.length?" · mostrate le prime "+V.length:"");
+    $("more").hidden=T.length<=LIMITE;
+    $("more").textContent=tutte?"Mostra meno":"Mostra tutte le "+T.length+" stazioni";
+    const cell=(v,h,cls)=>`<td class="${cls||""}">${deg(v)}${h?`<span class="h">${h}</span>`:""}</td>`;
+    $("rows").innerHTML=V.map(s=>`<tr class="${s.zona==="M"?"m":""}">
+      <td><span class="st">${esc(s.nome)}</span>${s.zona==="M"?'<span class="tag">Mugello</span>':""}<span class="sub">${[s.prov,s.bacino,"zona "+s.zona].filter(Boolean).map(esc).join(" · ")}</span></td>
+      <td class="muted">${s.quota!=null?s.quota+" m":"—"}</td>
+      ${cell(s.t,s.ora,"t")}
+      ${cell(s.min,s.ora_min,"sep")}${cell(s.max,s.ora_max)}<td class="muted">${s.esc!=null?f1(s.esc)+"°":"—"}</td>
+      ${cell(s.ieri_min,s.ieri_ora_min,"sep")}${cell(s.ieri_max,s.ieri_ora_max)}
+    </tr>`).join("")||`<tr><td colspan="8" class="muted">Nessuna stazione corrisponde ai filtri.</td></tr>`;
+  }
+  function csv(){
+    const n=v=>v==null?"":String(v).replace(".",","), q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+    const head=["Codice","Stazione","Provincia","Bacino","Zona","Quota (m)","Temperatura (°C)","Ora","Min oggi","Ora min","Max oggi","Ora max","Min ieri","Ora min ieri","Max ieri","Ora max ieri"];
+    const rows=visibili().map(s=>[q(s.id),q(s.nome),q(s.prov),q(s.bacino),q(s.zona),n(s.quota),n(s.t),q(s.ora),n(s.min),q(s.ora_min),n(s.max),q(s.ora_max),n(s.ieri_min),q(s.ieri_ora_min),n(s.ieri_max),q(s.ieri_ora_max)].join(";"));
+    const blob=new Blob(["﻿"+head.join(";")+"\r\n"+rows.join("\r\n")],{type:"text/csv;charset=utf-8"});
+    const d=RIF.slice(0,10).split("-"), a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download=`temperature-toscana_${d[2]}-${d[1]}-${d[0].slice(2)}.csv`;
+    document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+  }
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

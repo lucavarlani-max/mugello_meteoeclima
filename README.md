@@ -20,6 +20,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
 - **Andamento invaso di Bilancino** — grafico della serie giornaliera del volume
   (milioni di m³) nell'anno, con tacche dei mesi e hover, da OpenData Comune di Firenze.
 - **Cielo** — alba, tramonto, ore di luce.
+- **Temperature in Toscana** (`temperature-toscana.html`) — tutte le stazioni della rete
+  termometrica del CFR Toscana: temperatura attuale, minime e massime di oggi e di ieri,
+  classifiche, anomalie rispetto alla quota, grafico temperatura/quota, andamento giorno
+  per giorno e download per Excel. Stazioni della zona M (Mugello-Val di Sieve) in evidenza.
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
   e pubblicare su Facebook, con didascalia automatica.
 - **PWA** — installabile su telefono (icona in home, apertura a schermo intero, cache offline della struttura).
@@ -36,9 +40,12 @@ data/previsioni.json           previsioni 9 comuni + 7 giorni (WeatherNext/Open-
 data/fiumi.json                livelli fiumi + invaso (aggiornato dall'Action)
 data/bilancino.json            serie giornaliera invaso Bilancino (grafico)
 data/allerta.json              avviso criticità meteo mostrato nel banner in alto
+data/termo.json                temperature stazioni CFR Toscana (aggiornato dall'Action)
+data/termo_storico.json        riepilogo giornaliero delle temperature (una riga al giorno)
 scripts/fetch_previsioni.py    aggiorna data/previsioni.json (Google Weather API)
 scripts/fetch_fiumi.py         aggiorna data/fiumi.json
 scripts/fetch_allerta.py       aggiorna data/allerta.json
+scripts/fetch_termo.py         aggiorna data/termo.json e data/termo_storico.json
 .github/workflows/update-data.yml   esegue gli script ogni 30 min
 .nojekyll
 ```
