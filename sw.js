@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v28';
+const CACHE = 'mmc-v29';
 const SHELL = [
   './',
   './index.html',
@@ -15,6 +15,7 @@ const SHELL = [
   './milano-brera.html',
   './new-york-central-park.html',
   './padova.html',
+  './moncalieri.html',
   './webcam-panomax.html',
   './webcam-panomax.js',
   './italia-ghcn.html',
