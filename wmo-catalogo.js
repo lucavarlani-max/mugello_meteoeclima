@@ -12,7 +12,15 @@
   .wc-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
   .wc-map{position:relative;width:100%;aspect-ratio:1000/470;border-radius:12px;overflow:hidden;background:var(--wc-sea)}
   .wc-map.eu{aspect-ratio:1000/470}
-  .wc-map svg{display:block;width:100%;height:100%}
+  .wc-map svg{display:block;width:100%;height:100%;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+  .wc-map.zoomed svg{touch-action:none}
+  .wc-map.drag svg{cursor:grabbing}
+  .wc-map .wc-eud{display:none} .wc-map.zoomed .wc-eud{display:inline}
+  .wc-zoom{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:4px;z-index:4}
+  .wc-zoom button{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:600 17px/1 var(--sans);cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center}
+  .wc-zoom button:hover{background:var(--pine-tint);color:var(--pine-deep)}
+  .wc-zoom button:disabled{opacity:.4;cursor:default}
+  .wc-hint{position:absolute;left:10px;bottom:8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);background:color-mix(in srgb,var(--panel) 80%,transparent);padding:2px 7px;border-radius:6px;pointer-events:none}
   .wc-land{fill:var(--wc-land)} .wc-brd{fill:none;stroke:var(--wc-brd);stroke-width:.5;vector-effect:non-scaling-stroke}
   .wc-pt{fill:var(--c);stroke:var(--panel);stroke-width:1.2;vector-effect:non-scaling-stroke;cursor:pointer}
   .wc-pt.dim{opacity:.12;pointer-events:none}
@@ -123,21 +131,61 @@
         <div class="wc-seg" data-k="view"><button data-v="mondo" aria-pressed="true">Mondo</button><button data-v="europa" aria-pressed="false">Europa</button></div>
         <div class="wc-seg" data-k="tipo"><button data-v="" aria-pressed="true">Tutte</button>${Object.entries(TIPO).map(([k,t])=>`<button data-v="${k}" aria-pressed="false"><span class="wc-dot ${t.c}"></span>${t.n.replace(/a$/,"he").replace("Meteorologiche","Meteo")}</button>`).join("")}</div>
       </div>
-      <div class="wc-map"><svg role="img" aria-label="Mappa delle stazioni centenarie riconosciute dall'OMM"></svg><div class="wc-tip"></div></div>
+      <div class="wc-map"><svg role="img" aria-label="Mappa delle stazioni centenarie riconosciute dall'OMM"></svg><div class="wc-tip"></div>
+        <div class="wc-zoom"><button type="button" data-z="in" aria-label="Ingrandisci">+</button><button type="button" data-z="out" aria-label="Riduci">−</button><button type="button" data-z="reset" aria-label="Vista intera" style="font-size:14px">⟲</button></div>
+        <div class="wc-hint">rotella o pizzico per lo zoom · trascina per spostarti</div></div>
       <div class="wc-legend">${Object.values(TIPO).map(t=>`<span><span class="wc-dot ${t.c}"></span>Stazioni ${t.p}</span>`).join("")}${Object.keys(links).length?`<span><span class="star"></span>Con analisi su questo sito</span>`:""}</div>`;
     const svg=el.querySelector("svg"), box=el.querySelector(".wc-map"), tip=el.querySelector(".wc-tip");
     el.querySelectorAll(".wc-seg").forEach(sg=>sg.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
       sg.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));
-      if(sg.dataset.k==="view"){view=b.dataset.v;draw();}else setTipo(b.dataset.v);}));
+      if(sg.dataset.k==="view"){view=b.dataset.v;z=null;draw();}else setTipo(b.dataset.v);}));
+    /* zoom: z = viewBox corrente [x,y,w,h] dentro la vista di base */
+    let z=null, base=null;
+    const MAXZ=()=>view==="europa"?8:16;
+    function sizes(){ // raggi e testi a dimensione costante sullo schermo
+      const eu=view==="europa", px=svg.clientWidth||1000, f=z[2]/base[2];
+      return {r:Math.max((eu?1.25:3.4)*f,(eu?1.9:2.4)*z[2]/px), fs:Math.max((eu?4.2:11)*f,10.5*z[2]/px)};
+    }
+    function apply(){
+      svg.setAttribute("viewBox",z.join(" "));
+      const k=base[2]/z[2], {r,fs}=sizes();
+      box.classList.toggle("zoomed",k>1.01);
+      svg.querySelectorAll(".wc-pt").forEach(c=>c.setAttribute("r",c.classList.contains("star")?r*1.6:r));
+      svg.querySelectorAll(".wc-lab").forEach(t=>{const s=S[+t.dataset.i];t.setAttribute("x",s.x+r*2.2);t.setAttribute("y",s.y+r*0.9);t.setAttribute("font-size",fs);t.style.strokeWidth=(fs/3.6)+"px";});
+      const hl=svg.querySelector(".wc-hl"); if(hl) hl.setAttribute("r",r*2.2);
+      el.querySelector('[data-z="in"]').disabled=k>=MAXZ()-0.01; el.querySelector('[data-z="out"]').disabled=el.querySelector('[data-z="reset"]').disabled=k<=1.01;
+    }
+    function zoomAt(f,cx,cy){ // f>1 ingrandisce, (cx,cy) in coordinate della mappa
+      const k=base[2]/z[2], nk=Math.max(1,Math.min(MAXZ(),k*f)), w=base[2]/nk, h=base[3]/nk;
+      const x=cx-(cx-z[0])*(w/z[2]), y=cy-(cy-z[1])*(h/z[3]); z=clamp([x,y,w,h]); apply();
+    }
+    function clamp(v){const [bx,by,bw,bh]=base;v[0]=Math.max(bx,Math.min(bx+bw-v[2],v[0]));v[1]=Math.max(by,Math.min(by+bh-v[3],v[1]));return v;}
+    function toMap(cx,cy){const rb=svg.getBoundingClientRect();return [z[0]+(cx-rb.left)/rb.width*z[2], z[1]+(cy-rb.top)/rb.height*z[3]];}
+    el.querySelector(".wc-zoom").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+      if(b.dataset.z==="reset"){z=[...base];apply();return;} zoomAt(b.dataset.z==="in"?2:0.5,z[0]+z[2]/2,z[1]+z[3]/2);});
+    svg.addEventListener("wheel",e=>{e.preventDefault();const [x,y]=toMap(e.clientX,e.clientY);zoomAt(Math.exp(-e.deltaY*(e.deltaMode===1?0.05:0.0022)),x,y);},{passive:false});
+    svg.addEventListener("dblclick",e=>{e.preventDefault();const [x,y]=toMap(e.clientX,e.clientY);zoomAt(e.shiftKey?0.5:2,x,y);});
+    const ptr=new Map(); let moved=false, pinch=null;
+    svg.addEventListener("pointerdown",e=>{ptr.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=false;
+      if(ptr.size===2){const [a,b]=[...ptr.values()];pinch={d:Math.hypot(a.x-b.x,a.y-b.y)};}
+      if(e.pointerType==="mouse"||box.classList.contains("zoomed")||ptr.size===2){try{svg.setPointerCapture(e.pointerId);}catch(_){}}});
+    svg.addEventListener("pointermove",e=>{const p=ptr.get(e.pointerId);if(!p)return;
+      if(ptr.size===2&&pinch){p.x=e.clientX;p.y=e.clientY;const [a,b]=[...ptr.values()],d=Math.hypot(a.x-b.x,a.y-b.y);if(d>0&&pinch.d>0){const [mx,my]=toMap((a.x+b.x)/2,(a.y+b.y)/2);zoomAt(d/pinch.d,mx,my);pinch.d=d;moved=true;}return;}
+      const dx=e.clientX-p.x, dy=e.clientY-p.y; if(!moved&&Math.hypot(dx,dy)<4)return;
+      if(e.pointerType!=="mouse"&&!box.classList.contains("zoomed"))return; // a zoom 1 il dito scorre la pagina
+      moved=true; box.classList.add("drag"); const rb=svg.getBoundingClientRect();
+      z=clamp([z[0]-dx/rb.width*z[2],z[1]-dy/rb.height*z[3],z[2],z[3]]); svg.setAttribute("viewBox",z.join(" ")); p.x=e.clientX; p.y=e.clientY;});
+    const up=e=>{ptr.delete(e.pointerId);if(ptr.size<2)pinch=null;if(!ptr.size)box.classList.remove("drag");};
+    svg.addEventListener("pointerup",up); svg.addEventListener("pointercancel",up);
     function draw(){
-      const eu=view==="europa", vb=eu?EU.box:[0,0,M.w,M.h], k=vb[2]/M.w;
+      const eu=view==="europa", vb=eu?EU.box:[0,0,M.w,M.h];
       box.classList.toggle("eu",eu);
-      svg.setAttribute("viewBox",vb.join(" "));
-      const fs=Math.max(eu?4.2:11,10.5*vb[2]/(svg.clientWidth||1000));
-      const px=svg.clientWidth||1000, r=Math.max(eu?1.25:3.4,(eu?1.9:2.4)*vb[2]/px), pts=[...S].sort((a,b)=>(a.link?1:0)-(b.link?1:0));
-      svg.innerHTML=`<path class="wc-land" d="${eu?EU.land:M.land}"/><path class="wc-brd" d="${eu?EU.borders:M.borders}"/>`+
+      if(!z||!base||base[2]!==vb[2]||base[0]!==vb[0]){base=[...vb];z=[...vb];}
+      svg.setAttribute("viewBox",z.join(" "));
+      const {r,fs}=sizes(), pts=[...S].sort((a,b)=>(a.link?1:0)-(b.link?1:0));
+      svg.innerHTML=`<path class="wc-land" d="${eu?EU.land:M.land}"/><path class="wc-brd" d="${eu?EU.borders:M.borders}"/>`+(eu?"":`<g class="wc-eud"><path class="wc-land" d="${EU.land}"/><path class="wc-brd" d="${EU.borders}"/></g>`)+
         pts.map(s=>`<circle class="wc-pt ${TIPO[s.tipo].c}${s.link?" star":""}${visibile(s)?"":" dim"}" data-i="${s.i}" cx="${s.x}" cy="${s.y}" r="${s.link?r*1.6:r}"/>`).join("")+
-        pts.filter(s=>s.link).map(s=>`<text class="wc-lab" x="${s.x+r*2.2}" y="${s.y+r*0.9}" font-size="${fs}" style="stroke-width:${fs/3.6}px">${esc(s.nome.replace("Osservatorio Astronomico di ","").replace("-Milano"," · Milano").replace("New York City Central Park","New York"))}</text>`).join("")+
+        pts.filter(s=>s.link).map(s=>`<text class="wc-lab" data-i="${s.i}" x="${s.x+r*2.2}" y="${s.y+r*0.9}" font-size="${fs}" style="stroke-width:${fs/3.6}px">${esc(s.nome.replace("Osservatorio Astronomico di ","").replace("-Milano"," · Milano").replace("New York City Central Park","New York").replace("Moncalieri- Collegio Carlo Alberto","Moncalieri"))}</text>`).join("")+
         `<circle class="wc-hl" r="${r*2.2}" cx="-99" cy="-99"/>`;
       const hl=svg.querySelector(".wc-hl");
       svg.onpointermove=e=>{const t=e.target.closest(".wc-pt");if(!t){tip.style.opacity=0;hl.setAttribute("cx",-99);return;}
@@ -146,7 +194,8 @@
         tip.innerHTML=`<b>${esc(s.nome)}</b><br>${esc(s.paese)} · dal <b>${s.inizio}</b><br><span class="m">${TIPO[s.tipo].n}${s.quota!=null?" · "+s.quota+" m":""}${s.link?" · analisi disponibile":""}</span>`;
         tip.style.opacity=1;const tw=tip.offsetWidth;let lx=px+14;if(lx+tw>rb.width)lx=px-tw-14;tip.style.left=Math.max(0,lx)+"px";tip.style.top=Math.max(0,py-tip.offsetHeight-10)+"px";};
       svg.onpointerleave=()=>{tip.style.opacity=0;hl.setAttribute("cx",-99);};
-      svg.onclick=e=>{const t=e.target.closest(".wc-pt");if(t)openDrawer(S[+t.dataset.i]);};
+      svg.onclick=e=>{if(moved){moved=false;return;}const t=e.target.closest(".wc-pt");if(t)openDrawer(S[+t.dataset.i]);};
+      apply();
     }
     listeners.push(()=>{el.querySelectorAll('.wc-seg[data-k="tipo"] button').forEach(x=>x.setAttribute("aria-pressed",x.dataset.v===tipo));draw();});
     draw();
