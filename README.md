@@ -183,6 +183,10 @@ Stazione ISCARP2 (Weather Underground) · WeatherNext 3 / Google Weather API · 
    iniziale per il confronto del riscaldamento, epoche della tabella, tacche delle strisce).
    Grafici e tabelle sono in `serie-storica.js` / `serie-storica.css`, condivisi da tutte
    le stazioni; la sezione neve compare da sola se i dati la contengono.
-4. Aggiungi la scheda in `serie-storiche.html` (attributi `data-serie` e `data-early`) e il
-   nome OMM della stazione in `links` nelle chiamate a `WMOCat.mount`
-   (`serie-storiche.html` e `stazioni-centenarie.html`) per evidenziarla sulla mappa.
+4. Aggiungi la scheda in `serie-storiche.html` (attributi `data-serie` e `data-early`),
+   **con la foto della città in trasparenza** come le altre schede (classe `body ph`,
+   `style="--foto:url('https://commons.wikimedia.org/wiki/Special:FilePath/<file>.jpg?width=800')"`,
+   più la voce foto/autore/licenza nel paragrafo `.crediti` in fondo alla griglia — è una
+   regola fissa, non va saltata) e il nome OMM della stazione in `links` nelle chiamate a
+   `WMOCat.mount` (`serie-storiche.html` e `stazioni-centenarie.html`) per evidenziarla sulla
+   mappa, solo se è davvero una delle stazioni centenarie riconosciute (vedi `data/serie/wmo-centenarie.json`).
