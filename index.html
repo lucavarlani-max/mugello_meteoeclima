@@ -1002,7 +1002,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <a href="./neve.html">Neve</a>
       <a href="./clima-firenze.html">Clima Firenze</a>
       <a href="#cielo">Cielo</a>
-      <a href="#webcam">Webcam</a>
+      <div class="dd">
+        <button type="button" onclick="this.parentNode.classList.toggle('open')">Webcam ▾</button>
+        <div class="dd-menu">
+          <a href="#webcam">📷 Webcam Mugello</a>
+          <a href="./webcam-panomax.html">🌍 Webcam Panomax</a>
+        </div>
+      </div>
       <a href="./proverbi.html">Proverbi</a>
       <div class="dd">
         <button type="button" onclick="this.parentNode.classList.toggle('open')">Toscana ▾</button>
@@ -1233,7 +1239,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </section>
 
   <section class="sec" id="webcam">
-    <div class="sec-head"><h2>Webcam del Mugello</h2></div>
+    <div class="sec-head"><h2>Webcam del Mugello</h2><a href="./webcam-panomax.html">Webcam Panomax: 650 panorami a 360° →</a></div>
     <div class="card">
       <div class="ch"><span class="ei">📷</span><h3>Mappa delle webcam</h3><span class="tag" id="wc-count">—</span></div>
       <div class="cb">
@@ -1262,7 +1268,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <li><a href="#">Monitoraggio fiumi</a></li>
         <li><a href="#">Report climatici</a></li>
         <li><a href="./notizie.html">Curiosità e notizie</a></li>
-        <li><a href="#">Webcam</a></li>
+        <li><a href="#webcam">Webcam Mugello</a></li>
+        <li><a href="./webcam-panomax.html">Webcam Panomax</a></li>
         <li><a href="./fb-post.html">Crea post per Facebook</a></li>
       </ul>
     </div>
@@ -1745,7 +1752,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   var b=document.querySelector('.menu-btn'), h=document.querySelector('header.top');
   if(b&&h){
     b.addEventListener('click',function(e){ e.stopPropagation(); h.classList.toggle('nav-open'); });
-    h.querySelectorAll('nav.main a').forEach(function(a){ a.addEventListener('click',function(){ h.classList.remove('nav-open'); }); });
+    h.querySelectorAll('nav.main a').forEach(function(a){ a.addEventListener('click',function(){ h.classList.remove('nav-open'); h.querySelectorAll('.dd.open').forEach(function(d){d.classList.remove('open');}); }); });
     document.addEventListener('click',function(e){ if(!h.contains(e.target)) h.classList.remove('nav-open'); });
   }
 })();

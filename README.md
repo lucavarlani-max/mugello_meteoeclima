@@ -60,6 +60,11 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   (clima, oceani, vulcani, terremoti, uragani, ghiacci, ozono, cielo, temporali, mugello) e,
   se serve, `foto` (id in `data/notizie-foto.json`, foto di Wikimedia Commons con autore e
   licenza). Le ultime tre notizie compaiono anche in home.
+- **Webcam** — nel menu un sottomenu con *Webcam Mugello* (mappa delle webcam della vallata in
+  home, `data/webcam.json`) e *Webcam Panomax* (`webcam-panomax.html` + `webcam-panomax.js`):
+  le 668 webcam panoramiche pubbliche Panomax su mappa Leaflet con ricerca, filtri per paese e
+  tipo, ordinate per distanza dal Mugello. Elenco in `data/panomax.json`, ripreso dal progetto
+  webcam-panomax.
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
   senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
   visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).

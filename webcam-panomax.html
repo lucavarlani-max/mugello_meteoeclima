@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Webcam Panomax · Mugello Meteo & Clima</title>
+<meta name="description" content="Oltre 650 webcam panoramiche Panomax a 360° in 33 paesi, 173 in Italia: mappa interattiva, ricerca e filtri, con la distanza dal Mugello.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/webcam-panomax.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Webcam Panomax: 650 panorami a 360° in tempo reale">
+<meta property="og:description" content="Oltre 650 webcam panoramiche Panomax a 360° in 33 paesi, 173 in Italia: mappa interattiva, ricerca e filtri, con la distanza dal Mugello.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/webcam-panomax.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
+<style>
+  .tiles.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+  .bar input,.bar select{font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:9px 14px}
+  .bar input{flex:1 1 220px}
+  .bar .reset{font:inherit;font-size:13px;font-weight:600;color:var(--pine);background:var(--pine-tint);border:0;border-radius:var(--r-pill);padding:9px 14px;cursor:pointer}
+  .explorer{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:0;height:640px;padding:0;overflow:hidden}
+  #list{overflow-y:auto;border-right:1px solid var(--line)}
+  #map{min-height:0;background:var(--line-soft)}
+  .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--line-soft);cursor:pointer}
+  .row:hover{background:var(--panel-2)}
+  .row.sel{background:var(--pine-tint);box-shadow:inset 3px 0 0 var(--pine)}
+  .row .nm{font-weight:600;font-size:14px;line-height:1.25}
+  .row .meta{grid-column:1;font-size:12px;color:var(--ink-faint);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .row .km{font-family:var(--mono);font-size:11px}
+  .row .tag{font-family:var(--mono);font-size:10px;border:1px solid var(--line);border-radius:999px;padding:1px 7px}
+  .row .tag.ship{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 40%,var(--line))}
+  .row a.live{grid-column:2;grid-row:1/3;font-size:12.5px;font-weight:600;color:var(--pine);text-decoration:none;white-space:nowrap;background:var(--pine-tint);border-radius:999px;padding:6px 11px}
+  .row a.live:hover{background:var(--pine);color:#fff}
+  .more{padding:14px;text-align:center}
+  .empty{padding:30px;text-align:center;color:var(--ink-faint)}
+  .leaflet-container{font-family:var(--sans)}
+  .leaflet-popup-content{margin:10px 12px;font-size:13px}
+  .pop b{font-size:14px}.pop .c{color:#5b6b62;font-size:12px}.pop a{display:inline-block;margin-top:6px;font-weight:600;color:#0f6b52}
+  .pm i{display:block;width:14px;height:14px;border-radius:50%;background:#0f6b52;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+  .pm.nave i{background:#c9671f}
+  .me{width:18px;height:18px;border-radius:50%;background:#c9671f;border:3px solid #fff;box-shadow:0 0 0 2px #c9671f}
+  @media (max-width:900px){ .tiles.four{grid-template-columns:repeat(2,minmax(0,1fr))} .explorer{grid-template-columns:1fr;grid-template-rows:360px minmax(0,1fr);height:auto} #map{order:-1;height:360px} #list{border-right:0;max-height:520px} }
+</style>
+<script src="analytics.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html#webcam">← Webcam</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="index.html#webcam">Webcam</a> / Panomax</div>
+    <header class="head">
+      <div class="eyebrow">Webcam panoramiche a 360°</div>
+      <h1>Webcam Panomax</h1>
+      <p class="lead">Panomax è una rete di webcam panoramiche ad alta risoluzione: ogni immagine è un giro completo a 360° che si può esplorare e ingrandire, con l'archivio dei giorni passati. Qui trovi tutte le webcam pubbliche su una mappa, dalle Alpi al mare, con la distanza dal Mugello. Apri quella che ti interessa per vederla in diretta sul sito Panomax.</p>
+      <div class="tiles four" id="tiles"><div class="loading">Carico le webcam…</div></div>
+    </header>
+
+    <section>
+      <div class="bar">
+        <input type="search" id="q" placeholder="Cerca per nome o località: Cervinia, Garda, Dolomiti…" aria-label="Cerca webcam">
+        <select id="cty" aria-label="Paese"></select>
+        <div class="seg" id="typ" role="group" aria-label="Tipo">
+          <button type="button" data-t="all" aria-pressed="true">Tutte</button><button type="button" data-t="fix" aria-pressed="false">Fisse</button><button type="button" data-t="ship" aria-pressed="false">Navi</button>
+        </div>
+        <div class="seg" id="ord" role="group" aria-label="Ordine">
+          <button type="button" data-o="km" aria-pressed="true">Più vicine</button><button type="button" data-o="az" aria-pressed="false">A–Z</button>
+        </div>
+        <button type="button" class="reset" id="reset">Azzera</button>
+      </div>
+      <div class="faint mono" id="cnt" style="font-size:11.5px;margin-bottom:8px;color:var(--ink-faint);font-family:var(--mono)"></div>
+      <div class="card explorer">
+        <div id="list"></div>
+        <div id="map" role="region" aria-label="Mappa delle webcam Panomax"></div>
+      </div>
+      <p class="note">Il punto arancione grande è il Mugello; i punti verdi sono le webcam fisse, quelli arancioni le navi. Le webcam sulle navi da crociera si spostano: la loro posizione sulla mappa è indicativa. Le immagini si aprono sul sito <a href="https://www.panomax.com" target="_blank" rel="noopener">panomax.com</a>; l'elenco delle webcam è aggiornato a settembre 2026.</p>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html#webcam">webcam del Mugello</a> · <a href="index.html">torna alla home</a></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="webcam-panomax.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
