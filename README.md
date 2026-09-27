@@ -40,8 +40,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
   **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve) e
-  **Padova 1725–2023** (`padova.html`, serie omogeneizzata di sola temperatura, con la fonte di ogni anno) e
-  **Moncalieri 1865–2025** (`moncalieri.html`, Collegio Carlo Alberto, Società Meteorologica Italiana, sola temperatura).
+  **Padova 1725–2023** (`padova.html`, serie omogeneizzata di sola temperatura, con la fonte di ogni anno),
+  **Moncalieri 1865–2025** (`moncalieri.html`, Collegio Carlo Alberto, Società Meteorologica Italiana, sola temperatura) e
+  **San Francisco 1921–2026** (`san-francisco.html`, stazione San Francisco Downtown, dati NOAA trascritti dai moduli storici in PDF).
   Analisi d'insieme **Italia, stazioni NOAA** (`italia-ghcn.html` + `italia-ghcn.js`): 100 stazioni
   italiane del registro GHCN-Daily (mappa, cronologia, tabella) e trent'anni di dati 1996–2025
   su 46 stazioni (temperatura, gelo e caldo, precipitazioni, quota, latitudine); dati in `data/serie/italia-ghcn.json`, file originali (CSV, riepilogo,
