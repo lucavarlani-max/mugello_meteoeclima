@@ -10,12 +10,17 @@ Uscita:
   data/bsl/borgo.json  serie giornaliere dense (null = mancante) + metadati.
 I giorni dopo la fine dell'export SIR li aggiunge ogni giorno scripts/fetch_bsl.py
 dai dati in tempo reale del CFR (valori provvisori).
-Pulizia: si scartano i giorni con massima < minima.
+Pulizia: si scartano i giorni con massima < minima e i periodi in ESCLUSI
+(temperature non affidabili, per esempio per un guasto del sensore).
 """
 import json, os, datetime as dt
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D = os.path.join(HERE, "data", "bsl")
+# periodi di temperatura esclusi: (dal, al, motivo)
+ESCLUSI = [
+    (dt.date(1951, 9, 14), dt.date(1951, 9, 19), "malfunzionamento del sensore"),
+]
 
 
 def righe(path):
@@ -49,6 +54,8 @@ def main():
         if a is not None and b is not None and a < b:
             scartati += 1
             continue
+        if any(d0 <= d <= d1 for d0, d1, _ in ESCLUSI):
+            continue
         if a is not None: tx[d] = a
         if b is not None: tn[d] = b
     pr = {}
@@ -65,6 +72,7 @@ def main():
         "t": {"dal": t0.isoformat(), "tx": denso(tx, t0, t1), "tn": denso(tn, t0, t1)},
         "p": {"dal": p0.isoformat(), "mm": denso(pr, p0, p1)},
         "oggi": None,
+        "esclusi": [{"dal": a.isoformat(), "al": b.isoformat(), "motivo": m} for a, b, m in ESCLUSI],
     }
     with open(os.path.join(D, "borgo.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, separators=(",", ":"))
