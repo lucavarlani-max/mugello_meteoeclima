@@ -1,7 +1,91 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-09-25",
+ "aggiornato": "2026-09-28",
  "numeri": [
+  {
+   "data": "2026-09-28",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Agosto 2026, il mese più caldo mai registrato sulla Terra",
+    "testo": "Secondo il servizio europeo Copernicus, agosto 2026 è il mese più caldo mai misurato sul pianeta.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above"
+   },
+   "numero": {
+    "valore": "48,8 °C",
+    "testo": "Il record europeo di temperatura verificato dall'Organizzazione meteorologica mondiale, misurato vicino a Siracusa l'11 agosto 2021."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "La terra trema tra Romagna e Alpi",
+     "testo": "Scossa di magnitudo 3,2 sulla costa romagnola il 27 settembre e di 3,5 al confine tra Austria e Germania il 26.",
+     "fonte": "INGV",
+     "url": "https://terremoti.ingv.it/event/47257242",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Il Krakatau torna a eruttare",
+     "testo": "Cenere fino a 2,1 km di quota e livello di allerta 3 su 4 per l'Anak Krakatau, in Indonesia.",
+     "fonte": "Smithsonian / USGS GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico sotto tono",
+     "testo": "La NOAA conferma per il 2026 una stagione degli uragani atlantici sotto la media.",
+     "fonte": "NOAA",
+     "url": "https://www.noaa.gov/news-release/noaa-maintains-prediction-for-below-normal-atlantic-hurricane-season"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Oceani ancora con la febbre",
+     "testo": "Le temperature della superficie del mare restano tra le più alte mai osservate.",
+     "fonte": "Copernicus",
+     "url": "https://climate.copernicus.eu/copernicus-daily-global-sea-surface-temperature-breaks-2024-record"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Europa occidentale, l'estate più calda mai registrata",
+     "testo": "Il bollettino climatico di Copernicus conferma il primato dell'estate 2026 nell'Europa occidentale.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/climate-bulletin"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Nuova Caledonia, scossa di magnitudo 6,5",
+     "testo": "Forte terremoto nel Pacifico il 26 settembre, al largo della Nuova Caledonia.",
+     "fonte": "INGV",
+     "url": "https://terremoti.ingv.it/"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi sereno, 12–26 °C, venti deboli, nessuna allerta.",
+     "fonte": "LaMMA / iLMeteo",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1837: la «Racer's Storm» in Texas. 1929: tornado F2 a Fort Lauderdale, in Florida. 1998: l'uragano Georges colpisce Biloxi, nel Mississippi.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_28"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C: il record mondiale di temperatura riconosciuto dall'Organizzazione meteorologica mondiale (Death Valley, 10 luglio 1913).",
+     "fonte": "WMO",
+     "url": "https://en.wikipedia.org/wiki/Highest_temperature_recorded_on_Earth"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Circa 11 ore e 53 minuti di luce: dopo l'equinozio del 23 settembre le giornate si accorciano fino al solstizio del 21 dicembre."
+    }
+   ]
+  },
   {
    "data": "2026-09-25",
    "apertura": {
