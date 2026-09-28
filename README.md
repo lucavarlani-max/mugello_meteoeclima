@@ -59,7 +59,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve) e
   **Padova 1725–2023** (`padova.html`, serie omogeneizzata di sola temperatura, con la fonte di ogni anno),
   **Moncalieri 1865–2025** (`moncalieri.html`, Collegio Carlo Alberto, Società Meteorologica Italiana, sola temperatura),
-  **San Francisco 1921–2026** (`san-francisco.html`, stazione San Francisco Downtown, dati NOAA trascritti dai moduli storici in PDF) e
+  **San Francisco 1921–2026** (`san-francisco.html`, stazione San Francisco Downtown, dati NOAA trascritti dai moduli storici in PDF),
+  **Genova 1833–2025** (`genova.html`, Osservatorio Meteorologico Storico dell'Università di Genova, dati aperti HistObs UniGe, temperatura e pioggia) e
   **De Bilt 1901–2026** (`de-bilt.html`, stazione di riferimento del KNMI nei Paesi Bassi, stazione centenaria OMM).
   Analisi d'insieme **Italia, stazioni NOAA** (`italia-ghcn.html` + `italia-ghcn.js`): 100 stazioni
   italiane del registro GHCN-Daily (mappa, cronologia, tabella) e trent'anni di dati 1996–2025
@@ -69,6 +70,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   strisce del riscaldamento, temperatura annua, mese per mese e per stagione, giorni estremi,
   pioggia, normali climatiche, record e "un giorno nella storia". Approfondimento PDF sulle
   estati a Milano 1991–2026 (`reports/`).
+  In cima alla pagina, il grafico **Il riscaldamento nelle stazioni** (`serie-confronto.js`) confronta
+  l'anomalia annua rispetto al 1961–1990 di tutte le stazioni (media su 11 anni o valori annui), con tabella riassuntiva;
+  per aggiungere una stazione basta inserirla nell'elenco `ST` del file e dare un colore `--sN` nella pagina.
   La pagina mostra anche un'anteprima del catalogo mondiale (numeri, mappa, 22 stazioni
   italiane); il catalogo completo delle 474 stazioni centenarie OMM, con mappa Mondo/Europa,
   filtri, tabella e scheda di ogni stazione, è in `stazioni-centenarie.html`
