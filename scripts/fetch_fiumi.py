@@ -92,6 +92,8 @@ def main():
     except Exception as e:
         print(f"OpenData Bilancino non raggiungibile: {e}", file=sys.stderr); b = None
     out["bilancino"] = b if (b and b["quota_m_slm"] is not None) else prev.get("bilancino")
+    if b:
+        print("Bilancino: ultimo dato pubblicato dal Comune", b["data"])
 
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
