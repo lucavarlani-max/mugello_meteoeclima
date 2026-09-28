@@ -82,12 +82,27 @@
   const yearCol=(y,y0,y1)=>`color-mix(in srgb,var(--pine) ${Math.round(18+82*(y-y0)/Math.max(1,y1-y0))}%,var(--panel))`;
 
   /* ---------------- temperatura ---------------- */
+  /* scelta della data in formato europeo: giorno / mese / anno */
+  function dataInit(){
+    const d=$("t-day"), max=PART?PART.iso:LAST, min=B.t.dal, a0=+min.slice(0,4), a1=+max.slice(0,4);
+    $("d-m").innerHTML=MESI.map((n,i)=>`<option value="${i+1}">${n}</option>`).join("");
+    $("d-a").innerHTML=Array.from({length:a1-a0+1},(_,i)=>`<option>${a1-i}</option>`).join("");
+    const giorni=()=>{const n=new Date(Date.UTC(+$("d-a").value,+$("d-m").value,0)).getUTCDate(),g=Math.min(+$("d-g").value||1,n);
+      $("d-g").innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${String(i+1).padStart(2,"0")}</option>`).join("");$("d-g").value=g;};
+    const scrivi=s=>{if(s>max)s=max;if(s<min)s=min;d.value=s;$("d-a").value=+s.slice(0,4);$("d-m").value=+s.slice(5,7);giorni();$("d-g").value=+s.slice(8,10);
+      $("d-prev").disabled=s<=min;$("d-next").disabled=s>=max;};
+    const leggi=()=>{giorni();return `${$("d-a").value}-${String($("d-m").value).padStart(2,"0")}-${String($("d-g").value).padStart(2,"0")}`;};
+    const cambia=s=>{scrivi(s);$("t-val").value="";disegnaT();};
+    ["d-g","d-m","d-a"].forEach(id=>$(id).addEventListener("change",()=>cambia(leggi())));
+    const passo=k=>cambia(iso(new Date(ud(d.value).getTime()+k*DAY)));
+    $("d-prev").addEventListener("click",()=>passo(-1)); $("d-next").addEventListener("click",()=>passo(1));
+    d.imposta=scrivi; scrivi(max);
+  }
   function initT(){
-    const d=$("t-day"); d.max=PART?PART.iso:LAST; d.value=PART?PART.iso:LAST;
-    d.addEventListener("change",()=>{$("t-val").value="";disegnaT();});
+    const d=$("t-day"); dataInit();
     $("t-var").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("t-var").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));tv=b.dataset.v;disegnaT();});
     let t;$("t-val").addEventListener("input",()=>{clearTimeout(t);t=setTimeout(disegnaT,250);});
-    $("t-reset").addEventListener("click",()=>{d.value=PART?PART.iso:LAST;$("t-val").value="";disegnaT();});
+    $("t-reset").addEventListener("click",()=>{d.imposta(PART?PART.iso:LAST);$("t-val").value="";disegnaT();});
     disegnaT();
   }
   function scelto(){

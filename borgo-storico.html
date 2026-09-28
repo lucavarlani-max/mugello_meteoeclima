@@ -31,6 +31,11 @@
   .pick label{font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:8px}
   .pick input,.pick select{font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:8px 13px}
   .pick input[type=number]{width:110px}
+  .dpick{display:inline-flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:3px}
+  .dpick select{border:0;background:none;padding:6px 4px;font-weight:600;font-variant-numeric:tabular-nums;cursor:pointer}
+  .dpick select:focus-visible,.dpick .arr:focus-visible{outline:2px solid var(--pine);border-radius:8px}
+  .dpick .arr{font:inherit;font-size:18px;line-height:1;width:30px;height:30px;border:0;border-radius:50%;background:var(--pine-tint);color:var(--pine-deep);cursor:pointer}
+  .dpick .arr:disabled{opacity:.35;cursor:default}
   .pick .reset{font:inherit;font-size:12.5px;font-weight:600;color:var(--pine);background:var(--pine-tint);border:0;border-radius:var(--r-pill);padding:8px 13px;cursor:pointer}
   .hero{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:center}
   .big{font-family:var(--serif);font-weight:800;font-size:64px;line-height:1;letter-spacing:-.03em}
@@ -87,7 +92,12 @@
     <section id="sec-t">
       <div class="sh"><h2>La temperatura a confronto</h2><span class="src" id="t-src"></span></div>
       <div class="pick">
-        <label>Giorno <input type="date" id="t-day" min="1951-01-01"></label>
+        <div class="dpick" role="group" aria-label="Giorno">
+          <button type="button" class="arr" id="d-prev" aria-label="Giorno precedente">‹</button>
+          <select id="d-g" aria-label="Giorno"></select><select id="d-m" aria-label="Mese"></select><select id="d-a" aria-label="Anno"></select>
+          <button type="button" class="arr" id="d-next" aria-label="Giorno successivo">›</button>
+          <input type="hidden" id="t-day">
+        </div>
         <div class="seg" id="t-var" role="group" aria-label="Temperatura">
           <button type="button" data-v="tx" aria-pressed="true">Massima</button><button type="button" data-v="tn" aria-pressed="false">Minima</button><button type="button" data-v="tm" aria-pressed="false">Media</button>
         </div>
