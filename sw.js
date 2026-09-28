@@ -1,8 +1,9 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v32';
+const CACHE = 'mmc-v33';
 const SHELL = [
   './',
   './index.html',
+  './previsioni-allinea.js',
   './radar.html',
   './sinottica.js',
   './comune.html',

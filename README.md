@@ -14,6 +14,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   (DeepMind), tramite la Google Weather API, aggiornate dalla GitHub Action che
   scrive `data/previsioni.json`. Se la chiave manca o l'API non risponde, ripiega
   automaticamente su **Open-Meteo** (server e, in ultima istanza, lato browser).
+  Le pagine (`previsioni-allinea.js`) scartano i giorni già passati in ora italiana: le
+  esecuzioni programmate di GitHub possono partire con ore di ritardo e, prima delle 7,
+  Google conta ancora "oggi" il giorno precedente. Con meno di 3 giorni validi si passa a
+  Open-Meteo dal browser.
 - **Radar e dati** (`radar.html`, voce "Radar & dati" del menu) — riquadri "Adesso sul
   Mugello" (allerta, pioggia, temporali, fiumi, aria, terremoti); mappe Windy radar/satellite/
   previsione pioggia/vento; pioggia nelle prossime 2 ore ogni 15 minuti per comune (Open-Meteo);
