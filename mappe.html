@@ -96,6 +96,7 @@
   .foot{border-top:1px solid var(--line);padding:20px 0 40px;color:var(--ink-faint);font-size:12.5px}
 </style>
 <script src="analytics.js" defer></script>
+<script src="previsioni-allinea.js"></script>
 </head>
 <body>
   <div class="top"><div class="wrap">
@@ -240,7 +241,7 @@
     try{
       const res=await fetch('./data/previsioni.json',{cache:'no-store'});
       if(!res.ok) throw 0;
-      P=await res.json();
+      P=await res.json(); if(window.allineaPrevisioni) window.allineaPrevisioni(P);
       if(P.fonte) document.getElementById('src').textContent=P.fonte;
       buildDayChips();
       render();

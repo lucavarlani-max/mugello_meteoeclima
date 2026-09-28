@@ -989,6 +989,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </style>
 
 <script src="analytics.js" defer></script>
+<script src="previsioni-allinea.js"></script>
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="#">
@@ -1388,9 +1389,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   async function previsioni(){
     const res=await fetch('./data/previsioni.json?t='+Date.now(),{cache:'no-store'});
     if(!res.ok) throw new Error('http '+res.status);
-    const P=await res.json();
+    const P=window.allineaPrevisioni?window.allineaPrevisioni(await res.json()):await res.json();
     const cs=P.comuni||[]; pvComuni=cs;
-    if(!cs.length || !(cs[FCAST]&&cs[FCAST].giorni&&cs[FCAST].giorni.length)) throw new Error('previsioni vuote');
+    if(!cs.length || !(cs[FCAST]&&cs[FCAST].giorni&&cs[FCAST].giorni.length>=3)) throw new Error('previsioni vuote o vecchie');
 
     // card comuni
     cs.forEach((c,i)=>{

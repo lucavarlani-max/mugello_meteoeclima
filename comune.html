@@ -150,6 +150,7 @@
   }
 </style>
 <script src="analytics.js" defer></script>
+<script src="previsioni-allinea.js"></script>
 </head>
 <body>
   <div class="top"><div class="wrap">
@@ -314,7 +315,7 @@
     try{
       const res=await fetch('./data/previsioni.json',{cache:'no-store'});
       if(!res.ok) throw 0;
-      const P=await res.json();
+      const P=window.allineaPrevisioni?window.allineaPrevisioni(await res.json()):await res.json();
       const rec=(P.comuni||[])[ci];
       if(!rec||!rec.giorni||!rec.giorni.length) throw 0;
       if(P.fonte) set('days-src',P.fonte);

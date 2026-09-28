@@ -17,6 +17,12 @@ Output: data/previsioni.json
 
 import os, sys, json, time, urllib.parse, urllib.request
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+ROMA = ZoneInfo("Europe/Rome")
+
+def oggi():
+    return datetime.now(ROMA).strftime("%Y-%m-%d")
 
 KEY = os.environ.get("GMAPS_WEATHER_KEY", "").strip()
 
@@ -88,13 +94,13 @@ def google_days(c):
         "key": KEY,
         "location.latitude": c["lat"],
         "location.longitude": c["lon"],
-        "days": 7, "pageSize": 7,
+        "days": 8, "pageSize": 8,   # uno in più: prima delle 7 Google conta ancora "oggi" il giorno prima
         "unitsSystem": "METRIC", "languageCode": "it",
     })
     j = getjson("https://weather.googleapis.com/v1/forecast/days:lookup?" + q)
     days = []
     sole = None
-    for d in j.get("forecastDays", [])[:7]:
+    for d in j.get("forecastDays", [])[:8]:
         dd = d.get("displayDate", {})
         iso = "%04d-%02d-%02d" % (dd.get("year", 1970), dd.get("month", 1), dd.get("day", 1))
         day = d.get("daytimeForecast", {}) or {}
@@ -111,12 +117,15 @@ def google_days(c):
             "tmin": None if tmin is None else round(tmin),
             "pp": int(round(pp)),
         })
+        if iso < oggi():          # giorno già passato in Italia: si scarta
+            days.pop()
+            continue
         if sole is None:
             se = d.get("sunEvents") or {}
             sr, ss = se.get("sunriseTime"), se.get("sunsetTime")
             if sr and ss:
                 sole = {"rise": sr, "set": ss}
-    return days, sole
+    return days[:7], sole
 
 def google_now(c):
     q = urllib.parse.urlencode({
@@ -195,7 +204,7 @@ def from_openmeteo_all():
 
 # -------------------- main --------------------
 def main():
-    out = {"aggiornato": datetime.now().strftime("%Y-%m-%dT%H:%M"), "comuni": []}
+    out = {"aggiornato": datetime.now(ROMA).isoformat(timespec="minutes"), "comuni": []}   # ora italiana con fuso
     used_google = 0
 
     if not KEY:
