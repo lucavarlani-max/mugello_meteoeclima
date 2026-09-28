@@ -41,6 +41,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   termometrica del CFR Toscana: temperatura attuale, minime e massime di oggi e di ieri,
   classifiche, anomalie rispetto alla quota, grafico temperatura/quota, andamento giorno
   per giorno e download per Excel. Stazioni della zona M (Mugello-Val di Sieve) in evidenza.
+- **Borgo San Lorenzo nella storia** (`borgo-storico.html` + `borgo-storico.js`, menu Toscana) —
+  confronto di un giorno (o di una temperatura scritta dall'utente) con tutta la serie della
+  stazione CFR/SIR TOS01000999 dal 1951 (massima, minima, media) e della pioggia di un mese
+  con lo stesso mese degli altri anni dal 1991. Dati in `data/bsl/borgo.json`, generato da
+  `scripts/build_bsl.py` con gli export dell'archivio SIR (`data/bsl/*.csv`) e aggiornato
+  ogni giorno da `scripts/fetch_bsl.py` nell'Action con i dati in tempo reale del CFR.
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
   **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve) e

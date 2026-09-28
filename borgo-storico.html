@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Borgo San Lorenzo nella storia · Mugello Meteo & Clima</title>
+<meta name="description" content="Com'è la temperatura di oggi a Borgo San Lorenzo rispetto a 75 anni di misure? Confronta un giorno, o una temperatura a scelta, con tutta la serie della stazione CFR TOS01000999 dal 1951, e la pioggia del mese con quella degli ultimi 35 anni.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/borgo-storico.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Borgo San Lorenzo nella storia: oggi contro 75 anni di misure">
+<meta property="og:description" content="Com'è la temperatura di oggi a Borgo San Lorenzo rispetto a 75 anni di misure? Confronta un giorno, o una temperatura a scelta, con tutta la serie della stazione CFR TOS01000999 dal 1951, e la pioggia del mese con quella degli ultimi 35 anni.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/borgo-storico.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  .pick{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:4px 0 16px}
+  .pick label{font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:8px}
+  .pick input,.pick select{font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:8px 13px}
+  .pick input[type=number]{width:110px}
+  .dpick{display:inline-flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:3px}
+  .dpick select{border:0;background:none;padding:6px 4px;font-weight:600;font-variant-numeric:tabular-nums;cursor:pointer}
+  .dpick select:focus-visible,.dpick .arr:focus-visible{outline:2px solid var(--pine);border-radius:8px}
+  .dpick .arr{font:inherit;font-size:18px;line-height:1;width:30px;height:30px;border:0;border-radius:50%;background:var(--pine-tint);color:var(--pine-deep);cursor:pointer}
+  .dpick .arr:disabled{opacity:.35;cursor:default}
+  .pick .reset{font:inherit;font-size:12.5px;font-weight:600;color:var(--pine);background:var(--pine-tint);border:0;border-radius:var(--r-pill);padding:8px 13px;cursor:pointer}
+  .hero{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:center}
+  .big{font-family:var(--serif);font-weight:800;font-size:64px;line-height:1;letter-spacing:-.03em}
+  .big small{font-size:24px;font-weight:600;color:var(--ink-faint);margin-left:2px}
+  .big-lab{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
+  .big-sub{font-size:13px;color:var(--ink-soft);margin-top:6px}
+  .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .fact{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px}
+  .fact b{display:block;font-family:var(--serif);font-weight:800;font-size:24px;letter-spacing:-.02em;line-height:1.1}
+  .fact span{font-size:12.5px;color:var(--ink-soft);line-height:1.35;display:block;margin-top:2px}
+  .fact .up{color:var(--warm)} .fact .down{color:var(--cold)}
+  .meter{position:relative;height:12px;border-radius:999px;background:linear-gradient(90deg,var(--cold),var(--neutral) 50%,var(--warm));margin:14px 0 4px}
+  .meter i{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;background:var(--panel);border:4px solid var(--ink);transform:translate(-50%,-50%);box-shadow:var(--shadow)}
+  .meter-ax{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint)}
+  .meter.rain{background:linear-gradient(90deg,var(--amber-tint),var(--neutral) 50%,color-mix(in srgb,var(--sky) 70%,var(--panel)))}
+  .chart.swarm{height:230px} .chart.fan{height:340px} .chart.hist{height:220px} .chart.bars{height:300px} .chart.cum{height:300px}
+  svg .dot{stroke:var(--panel);stroke-width:1.2}
+  svg .dot.sel{fill:var(--amber);stroke:var(--ink);stroke-width:2}
+  svg .band0{fill:color-mix(in srgb,var(--ctx) 30%,transparent)}
+  svg .band1{fill:color-mix(in srgb,var(--pine) 22%,transparent)}
+  svg .med{stroke:var(--pine);stroke-width:1.6;fill:none;stroke-dasharray:4 3}
+  svg .yr{stroke:var(--amber);stroke-width:2;fill:none;stroke-linejoin:round}
+  svg .hb{fill:color-mix(in srgb,var(--ctx) 70%,var(--panel))} svg .hb.on{fill:color-mix(in srgb,var(--amber) 55%,var(--panel))}
+  svg .vline{stroke:var(--ink);stroke-width:2}
+  svg .vlab{font-family:var(--sans);font-size:12px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--panel);stroke-width:4px}
+  svg .zone{fill:var(--line-soft)} svg .zlab{font-family:var(--mono);font-size:10px;fill:var(--ink-faint)}
+  svg .pb{fill:color-mix(in srgb,var(--sky) 45%,var(--panel))} svg .pb.sel{fill:var(--amber)} svg .pb.part{fill:none;stroke:var(--amber);stroke-width:1.5;stroke-dasharray:3 2} svg .pb.part.sel{fill:color-mix(in srgb,var(--amber) 45%,var(--panel))}
+  svg .cband{fill:color-mix(in srgb,var(--sky) 20%,transparent)} svg .cmed{stroke:var(--sky);stroke-width:1.6;fill:none;stroke-dasharray:4 3}
+  svg .cyr{stroke:var(--amber);stroke-width:2.5;fill:none;stroke-linejoin:round}
+  .legend .sw{width:22px;height:10px;border-radius:3px;display:inline-block}
+  .ramp{display:inline-block;width:80px;height:10px;border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--pine) 18%,var(--panel)),var(--pine))}
+  .phrase{font-size:15px;line-height:1.55;margin:12px 0 0;color:var(--ink)}
+  .phrase b{font-weight:700}
+  .warn{font-size:12.5px;color:var(--ink-faint);margin-top:6px}
+  @media (max-width:820px){.hero{grid-template-columns:1fr}.big{font-size:52px}.facts{grid-template-columns:1fr 1fr}}
+  @media (max-width:480px){.facts{grid-template-columns:1fr}}
+</style>
+<script src="analytics.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Toscana / Borgo San Lorenzo nella storia</div>
+    <header class="head">
+      <div class="eyebrow">Stazione CFR TOS01000999 · 196 m · dal 1951</div>
+      <h1>Borgo San Lorenzo nella storia</h1>
+      <p class="lead">Com'è la giornata di oggi rispetto a tutte quelle misurate a Borgo San Lorenzo? Scegli un giorno, o scrivi una temperatura, e confrontala con oltre 70 anni di dati della stazione della rete regionale. Per la pioggia il confronto è mese per mese, con gli ultimi 35 anni. <span id="lead-n"></span></p>
+    </header>
+
+    <section id="sec-t">
+      <div class="sh"><h2>La temperatura a confronto</h2><span class="src" id="t-src"></span></div>
+      <div class="pick">
+        <div class="dpick" role="group" aria-label="Giorno">
+          <button type="button" class="arr" id="d-prev" aria-label="Giorno precedente">‹</button>
+          <select id="d-g" aria-label="Giorno"></select><select id="d-m" aria-label="Mese"></select><select id="d-a" aria-label="Anno"></select>
+          <button type="button" class="arr" id="d-next" aria-label="Giorno successivo">›</button>
+          <input type="hidden" id="t-day">
+        </div>
+        <div class="seg" id="t-var" role="group" aria-label="Temperatura">
+          <button type="button" data-v="tx" aria-pressed="true">Massima</button><button type="button" data-v="tn" aria-pressed="false">Minima</button><button type="button" data-v="tm" aria-pressed="false">Media</button>
+        </div>
+        <label>oppure una temperatura <input type="number" id="t-val" step="0.1" placeholder="es. 35,0" inputmode="decimal"> °C</label>
+        <button type="button" class="reset" id="t-reset">Oggi</button>
+      </div>
+      <div class="card hero">
+        <div>
+          <div class="big-lab" id="h-lab">—</div>
+          <div class="big" id="h-val">—</div>
+          <div class="big-sub" id="h-sub"></div>
+        </div>
+        <div>
+          <div class="facts" id="h-facts"></div>
+          <div class="meter" id="h-meter" aria-hidden="true"><i style="left:50%"></i></div>
+          <div class="meter-ax"><span>il più freddo</span><span>nella norma</span><span>il più caldo</span></div>
+        </div>
+      </div>
+      <p class="phrase" id="h-phrase"></p>
+
+      <div class="card" style="margin-top:14px">
+        <h3 id="sw-title" style="font-family:var(--serif);font-size:17px;margin:0 0 4px">Lo stesso giorno, anno per anno</h3>
+        <div class="legend"><span><span class="ramp"></span>un punto per anno: più tenue il 1951, più intenso oggi</span><span><i style="background:var(--amber);width:12px;height:12px;border-radius:50%;border:2px solid var(--ink)"></i>il valore scelto</span><span><i class="dash"></i>media 1991–2020</span></div>
+        <div class="chart swarm" id="ch-swarm"></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 id="fan-title" style="font-family:var(--serif);font-size:17px;margin:0 0 4px">Nell'anno</h3>
+        <div class="legend"><span><span class="sw" style="background:color-mix(in srgb,var(--ctx) 30%,transparent)"></span>record più alti e più bassi</span><span><span class="sw" style="background:color-mix(in srgb,var(--pine) 22%,transparent)"></span>8 anni su 10 cadono qui</span><span><i class="dash" style="border-color:var(--pine)"></i>valore tipico</span><span><i class="th" style="background:var(--amber)"></i><span id="fan-yr">l'anno scelto</span></span></div>
+        <div class="chart fan" id="ch-fan"></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 4px">Tra tutti i giorni misurati</h3>
+        <div class="chart hist" id="ch-hist"></div>
+        <p class="note" id="hist-note"></p>
+      </div>
+    </section>
+
+    <section id="sec-p">
+      <div class="sh"><h2>La pioggia del mese a confronto</h2><span class="src" id="p-src"></span></div>
+      <div class="pick">
+        <label>Mese <select id="p-mon"></select></label>
+        <label>Anno <select id="p-year"></select></label>
+        <button type="button" class="reset" id="p-reset">Questo mese</button>
+      </div>
+      <div class="card hero">
+        <div>
+          <div class="big-lab" id="ph-lab">—</div>
+          <div class="big" id="ph-val">—</div>
+          <div class="big-sub" id="ph-sub"></div>
+        </div>
+        <div>
+          <div class="facts" id="ph-facts"></div>
+          <div class="meter rain" id="ph-meter" aria-hidden="true"><i style="left:50%"></i></div>
+          <div class="meter-ax"><span>il più secco</span><span>nella norma</span><span>il più piovoso</span></div>
+        </div>
+      </div>
+      <div class="two" style="margin-top:14px">
+        <div class="card">
+          <h3 id="pb-title" style="font-family:var(--serif);font-size:17px;margin:0 0 4px">Lo stesso mese, anno per anno</h3>
+          <div class="legend"><span><span class="sw" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></span>totale del mese</span><span><span class="sw" style="background:var(--amber)"></span>il mese scelto</span><span><i class="dash"></i>valore tipico (mediana)</span></div>
+          <div class="chart bars" id="ch-pbars"></div>
+        </div>
+        <div class="card">
+          <h3 style="font-family:var(--serif);font-size:17px;margin:0 0 4px">Giorno per giorno</h3>
+          <div class="legend"><span><span class="sw" style="background:color-mix(in srgb,var(--sky) 20%,transparent)"></span>8 anni su 10</span><span><i class="dash" style="border-color:var(--sky)"></i>tipica</span><span><i class="th" style="background:var(--amber)"></i>il mese scelto</span></div>
+          <div class="chart cum" id="ch-pcum"></div>
+        </div>
+      </div>
+      <p class="phrase" id="p-phrase"></p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> archivio del <a href="https://www.sir.toscana.it/ricerca-dati/" target="_blank" rel="noopener">Servizio Idrologico Regionale (SIR)</a> della Toscana, stazione TOS01000999 Borgo S. Lorenzo (43,958° N, 11,391° E, 196 m): temperature massime e minime giornaliere dal 1951, pioggia giornaliera dal 1991. I giorni successivi all'ultimo export dell'archivio (<span id="m-sir"></span>) si aggiungono da soli ogni giorno dai dati in tempo reale del <a href="https://www.cfr.toscana.it" target="_blank" rel="noopener">Centro Funzionale</a> e sono provvisori.</li>
+          <li><b>Buchi nella serie delle temperature:</b> mancano gli anni 1955–1956, 1969, 1977 e 1990–1999, e parte del 1989 e del 2001. Esclusi 10 giorni con la massima più bassa della minima e il periodo dal 14 al 19 settembre 1951, per un malfunzionamento del sensore.</li>
+          <li><b>Temperatura media</b> = (massima + minima) / 2. Il giorno di oggi è in corso: si confrontano i valori raggiunti finora. La "norma" è la media 1991–2020 della settimana centrata sul giorno; le fasce del grafico annuale usano la stessa finestra di 7 giorni.</li>
+          <li><b>Pioggia:</b> un mese entra nel confronto se mancano al massimo 2 giorni. Il mese in corso è parziale: si confronta con i totali completi degli altri anni. Dati SIR validati, prevalidati e ricostruiti; i dati mancanti ("@") sono esclusi.</li>
+          <li>Le misure di una singola stazione risentono dei cambi di strumenti e di posizione: i confronti con i primi decenni vanno letti come indicativi.</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="data/bsl/temp_TOS01000999.csv" download>⬇ Temperature (CSV del SIR)</a>
+          <a class="btn ghost" href="data/bsl/prec_TOS01000999.csv" download>⬇ Pioggia (CSV del SIR)</a>
+        </p>
+        <p class="note">Dati SIR e CFR Regione Toscana · elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="temperature-toscana.html">temperature in Toscana</a> · <a href="index.html">torna alla home</a></div></footer>
+<script src="borgo-storico.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
