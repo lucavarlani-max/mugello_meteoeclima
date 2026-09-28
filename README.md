@@ -47,6 +47,13 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   con lo stesso mese degli altri anni dal 1991. Dati in `data/bsl/borgo.json`, generato da
   `scripts/build_bsl.py` con gli export dell'archivio SIR (`data/bsl/*.csv`) e aggiornato
   ogni giorno da `scripts/fetch_bsl.py` nell'Action con i dati in tempo reale del CFR.
+- **Effemeridi** (`effemeridi.html` + `effemeridi.js`, link dal box "Cielo di stasera") —
+  per qualsiasi giorno dal 1950 al 2050: alba, tramonto, mezzogiorno vero, crepuscoli, ora
+  d'oro e ora blu, altezza del Sole ora per ora, alba e tramonto nell'anno, fase e orari
+  della Luna con calendario lunare, pianeti visibili e prossimi eventi (equinozi, solstizi,
+  sciami meteorici, cambio dell'ora). Calcoli nel browser con `astro.js` (SunCalc, Meeus,
+  elementi orbitali JPL), sempre in ora italiana; `cielo.js` usa gli stessi calcoli per il box
+  della home.
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
   **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve) e

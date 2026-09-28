@@ -990,6 +990,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <script src="analytics.js" defer></script>
 <script src="previsioni-allinea.js"></script>
+<script src="astro.js"></script>
+<script src="cielo.js" defer></script>
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="#">
@@ -1212,33 +1214,34 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </section>
 
   <section class="sec" id="cielo">
-    <div class="sec-head"><h2>Cielo di stasera</h2><a href="#">Effemeridi complete →</a></div>
+    <div class="sec-head"><h2>Cielo di stasera</h2><a href="./effemeridi.html">Effemeridi complete →</a></div>
     <div class="sky3">
       <div class="card">
         <div class="ch"><span class="ei">🌅</span><h3>Sole</h3></div>
         <div class="cb"><div class="rows">
-          <div class="row"><div class="rl"><b>Alba</b></div><div class="rv mono" id="sun-rise">06:59</div></div>
-          <div class="row"><div class="rl"><b>Tramonto</b></div><div class="rv mono" id="sun-set">19:24</div></div>
-          <div class="row"><div class="rl"><b>Ore di luce</b></div><div class="rv mono" id="sun-len">12h 25m</div></div>
+          <div class="row"><div class="rl"><b>Alba</b></div><div class="rv mono" id="sun-rise">—</div></div>
+          <div class="row"><div class="rl"><b>Tramonto</b></div><div class="rv mono" id="sun-set">—</div></div>
+          <div class="row"><div class="rl"><b>Ore di luce</b><span id="sun-diff"></span></div><div class="rv mono" id="sun-len">—</div></div>
         </div></div>
       </div>
       <div class="card">
-        <div class="ch"><span class="ei">🌘</span><h3>Luna</h3></div>
+        <div class="ch"><span class="ei" id="moon-ic">🌙</span><h3>Luna</h3></div>
         <div class="cb"><div class="rows">
-          <div class="row"><div class="rl"><b>Fase</b></div><div><span class="chip info">Calante 8%</span></div></div>
-          <div class="row"><div class="rl"><b>Sorge</b></div><div class="rv mono">04:12</div></div>
-          <div class="row"><div class="rl"><b>Novilunio</b></div><div class="rv mono">21 set</div></div>
+          <div class="row"><div class="rl"><b>Fase</b></div><div><span class="chip info" id="moon-fase">—</span></div></div>
+          <div class="row"><div class="rl"><b>Sorge</b><span id="moon-set">tramonta —</span></div><div class="rv mono" id="moon-rise">—</div></div>
+          <div class="row"><div class="rl"><b id="moon-next-n">Prossima fase</b></div><div class="rv mono" id="moon-next">—</div></div>
         </div></div>
       </div>
       <div class="card">
-        <div class="ch"><span class="ei">🛰️</span><h3>ISS &amp; cielo</h3></div>
+        <div class="ch"><span class="ei">🪐</span><h3>Pianeti &amp; eventi</h3></div>
         <div class="cb"><div class="rows">
-          <div class="row"><div class="rl"><b>Passaggio ISS</b><span>visibile a NO</span></div><div class="rv mono">20:51</div></div>
-          <div class="row"><div class="rl"><b>Pianeta</b><span>Saturno, a SE</span></div><div><span class="chip ok">Visibile</span></div></div>
-          <div class="row"><div class="rl"><b>Trasparenza</b></div><div><span class="chip warn">Media</span></div></div>
+          <div class="row"><div class="rl"><b>Buio completo</b><span>fine crepuscolo astronomico</span></div><div class="rv mono" id="sky-buio">—</div></div>
+          <div class="row"><div class="rl"><b>Pianeti alle 22</b><span id="sky-pl-dir"></span></div><div class="rv" id="sky-pl" style="text-align:right;font-weight:600">—</div></div>
+          <div class="row"><div class="rl"><b id="sky-ev-n">Prossimo evento</b><span id="sky-ev-d"></span></div><div class="rv mono" id="sky-ev">—</div></div>
         </div></div>
       </div>
     </div>
+    <p style="margin:10px 0 0;font-size:12px;color:var(--ink-faint)">Calcolati per Borgo San Lorenzo, in ora italiana (legale o solare secondo la data).</p>
   </section>
 
   <section class="sec" id="webcam">
@@ -1375,12 +1378,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
       set('d'+i+'-lo', r(f.temperature_2m_min[i])+'°');
       set('d'+i+'-pp', (f.precipitation_probability_max[i]??0)+'%');
     });
-    // sole (Borgo)
-    if(f.sunrise&&f.sunset){
-      set('sun-rise',f.sunrise[0].slice(11,16)); set('sun-set',f.sunset[0].slice(11,16));
-      const m=(new Date(f.sunset[0])-new Date(f.sunrise[0]))/60000;
-      set('sun-len',Math.floor(m/60)+'h '+r(m%60)+'m');
-    }
     const lb=document.getElementById('live-badge'); if(lb) lb.style.display='inline-block';
     set('note','● Stazione ISCARP2 (Weather Underground) + previsioni Open-Meteo · aggiornamento automatico · elaborazioni L. Varlani');
   }
@@ -1421,13 +1418,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
       set('d'+i+'-lo', r(d.tmin)+'°');
       set('d'+i+'-pp', (d.pp??0)+'%');
     });
-
-    // sole
-    if(P.sole&&P.sole.rise&&P.sole.set){
-      set('sun-rise',P.sole.rise.slice(11,16)); set('sun-set',P.sole.set.slice(11,16));
-      const m=(new Date(P.sole.set)-new Date(P.sole.rise))/60000;
-      set('sun-len',Math.floor(m/60)+'h '+r(m%60)+'m');
-    }
 
     // confronto tra comuni (oggi)
     renderConfronto(cs.map(function(c){var g=(c.giorni&&c.giorni[0])||{}; return {n:c.n,tmax:g.tmax,tmin:g.tmin,pp:g.pp};}));

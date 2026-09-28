@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Effemeridi del Mugello · Mugello Meteo & Clima</title>
+<meta name="description" content="Alba, tramonto, crepuscoli, ora d'oro e ora blu, fasi e orari della Luna, pianeti visibili, equinozi, solstizi e sciami meteorici: le effemeridi calcolate per Borgo San Lorenzo e il Mugello, in ora italiana, per qualsiasi giorno.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/effemeridi.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Effemeridi del Mugello: Sole, Luna, pianeti ed eventi del cielo">
+<meta property="og:description" content="Alba, tramonto, crepuscoli, ora d'oro e ora blu, fasi e orari della Luna, pianeti visibili, equinozi, solstizi e sciami meteorici: le effemeridi calcolate per Borgo San Lorenzo e il Mugello, in ora italiana, per qualsiasi giorno.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/effemeridi.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  :root{--sk-day:#d7e8f6;--sk-gold:#f5d08a;--sk-civ:#9dbbe0;--sk-nau:#5f7fb4;--sk-ast:#3a5286;--sk-night:#1f2c4d;--moon-lit:#f4ecd2;--moon-dark:#2b3542}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sk-day:#3d6588;--sk-gold:#8a6a2e;--sk-civ:#26405f;--sk-nau:#22375a;--sk-ast:#1a2a47;--sk-night:#111b30;--moon-lit:#efe6c8;--moon-dark:#1d2530}}
+  :root[data-theme="dark"]{--sk-day:#3d6588;--sk-gold:#8a6a2e;--sk-civ:#26405f;--sk-nau:#22375a;--sk-ast:#1a2a47;--sk-night:#111b30;--moon-lit:#efe6c8;--moon-dark:#1d2530}
+  .pick{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0 4px}
+  .dpick{display:inline-flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:3px}
+  .dpick select{border:0;background:none;padding:6px 4px;font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;cursor:pointer}
+  .dpick select:focus-visible,.dpick .arr:focus-visible{outline:2px solid var(--pine);border-radius:8px}
+  .dpick .arr{font:inherit;font-size:18px;line-height:1;width:30px;height:30px;border:0;border-radius:50%;background:var(--pine-tint);color:var(--pine-deep);cursor:pointer}
+  .dpick .arr:disabled{opacity:.35;cursor:default}
+  .reset{font:inherit;font-size:12.5px;font-weight:600;color:var(--pine);background:var(--pine-tint);border:0;border-radius:var(--r-pill);padding:8px 13px;cursor:pointer}
+  .pick .quando{font-size:13px;color:var(--ink-soft)}
+  .tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tile .who b{color:var(--ink)}
+  .up{color:var(--pine)} .down{color:var(--amber)}
+  .chart.day{height:300px} .chart.year{height:320px} .chart.sky{height:250px}
+  svg .z{shape-rendering:crispEdges}
+  svg .sun{stroke:var(--amber);stroke-width:2.5;fill:none;stroke-linejoin:round}
+  svg .hz{stroke:var(--ink);stroke-width:1.2}
+  svg .now{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:3 3}
+  svg .zl{font-family:var(--mono);font-size:10px;fill:var(--ink-soft)}
+  svg .zl.inv{fill:#e8eefb}
+  svg .rise{stroke:var(--amber);stroke-width:2;fill:none} svg .set{stroke:var(--sky);stroke-width:2;fill:none}
+  svg .selv{stroke:var(--ink);stroke-width:1.5}
+  svg .pl{fill:var(--amber);stroke:var(--panel);stroke-width:2}
+  svg .pll{font-family:var(--sans);font-size:12px;font-weight:600;fill:var(--ink);paint-order:stroke;stroke:var(--panel);stroke-width:4px}
+  svg .ground{fill:color-mix(in srgb,var(--pine) 16%,var(--panel))}
+  .ztab{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+  .zr{display:flex;gap:10px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:10px 12px}
+  .zr i{flex:0 0 12px;height:34px;border-radius:4px;border:1px solid var(--line)}
+  .zr b{display:block;font-size:13px}
+  .zr .mono{font-family:var(--mono);font-size:13px;font-weight:600}
+  .zr span{display:block;font-size:12px;color:var(--ink-soft)}
+  .moonhero{display:grid;grid-template-columns:180px minmax(0,1fr);gap:22px;align-items:center}
+  .moonhero svg{width:100%;height:auto;display:block}
+  .facts4{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .f{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:10px 12px}
+  .f .lab{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint)}
+  .f b{font-family:var(--serif);font-size:22px;font-weight:800;display:block;line-height:1.2;letter-spacing:-.01em}
+  .f span{font-size:12px;color:var(--ink-soft)}
+  .phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+  .ph{display:flex;gap:10px;align-items:center;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:10px 12px}
+  .ph svg{flex:0 0 34px;width:34px;height:34px}
+  .ph b{display:block;font-size:13px} .ph span{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+  .cal .dw{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);text-align:center;padding-bottom:2px}
+  .cal button{font:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;padding:6px 2px;cursor:pointer;color:var(--ink);min-width:0}
+  .cal button:hover{border-color:var(--pine)}
+  .cal button.sel{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+  .cal button.today .n{background:var(--pine);color:#fff;border-radius:999px;padding:0 6px}
+  .cal .n{font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+  .cal svg{width:26px;height:26px}
+  .cal .p{font-family:var(--mono);font-size:10px;color:var(--ink-faint)}
+  .cal .ev{font-size:10px;font-weight:600;color:var(--amber);line-height:1.1;text-align:center}
+  .ptab td,.ptab th{padding:9px 6px}
+  .chip{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .chip.ok{background:var(--pine-tint);color:var(--pine-deep)} .chip.warn{background:var(--amber-tint);color:var(--amber)} .chip.off{background:var(--line-soft);color:var(--ink-faint)}
+  .evs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .ev{display:flex;gap:12px;align-items:flex-start}
+  .ev .ic{font-size:26px;line-height:1}
+  .ev .d{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  .ev h3{margin:2px 0 3px;font-size:16px}
+  .ev p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .ev .fra{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:4px}
+  @media (max-width:980px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.evs{grid-template-columns:1fr 1fr}.phases{grid-template-columns:1fr 1fr}}
+  @media (max-width:760px){.moonhero{grid-template-columns:1fr}.moonhero svg{max-width:160px;margin:0 auto}.ztab{grid-template-columns:1fr 1fr}.facts4{grid-template-columns:1fr 1fr}}
+  @media (max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.chart.day,.chart.year{height:260px}.evs{grid-template-columns:1fr}.cal{gap:3px}.cal svg{width:20px;height:20px}.cal .p{display:none}.ztab{grid-template-columns:1fr}}
+  @media (max-width:400px){.phases{grid-template-columns:1fr}}
+</style>
+<script src="analytics.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="index.html#cielo">Cielo</a> / Effemeridi</div>
+    <header class="head">
+      <div class="eyebrow">Borgo San Lorenzo · 43,96° N · 11,39° E · ora italiana</div>
+      <h1>Effemeridi del Mugello</h1>
+      <p class="lead">Quando sorge e tramonta il Sole, quanto dura la luce, a che ora finisce il crepuscolo e comincia il buio vero; la Luna, i pianeti e i prossimi appuntamenti del cielo. Tutto calcolato per Borgo San Lorenzo, in ora italiana, per il giorno che scegli.</p>
+      <div class="pick">
+        <div class="dpick" role="group" aria-label="Giorno">
+          <button type="button" class="arr" id="d-prev" aria-label="Giorno precedente">‹</button>
+          <select id="d-g" aria-label="Giorno"></select><select id="d-m" aria-label="Mese"></select><select id="d-a" aria-label="Anno"></select>
+          <button type="button" class="arr" id="d-next" aria-label="Giorno successivo">›</button>
+        </div>
+        <button type="button" class="reset" id="d-oggi">Oggi</button>
+        <span class="quando" id="quando"></span>
+      </div>
+    </header>
+
+    <section id="sole">
+      <div class="sh"><h2>☀️ Il Sole</h2><span class="src" id="s-src"></span></div>
+      <div class="tiles" style="margin-top:8px">
+        <div class="tile"><div class="lab">Alba</div><div class="big" id="t-alba">—</div><div class="who" id="t-alba-az"></div></div>
+        <div class="tile"><div class="lab">Tramonto</div><div class="big" id="t-tram">—</div><div class="who" id="t-tram-az"></div></div>
+        <div class="tile"><div class="lab">Ore di luce</div><div class="big" id="t-len">—</div><div class="who" id="t-len-d"></div></div>
+        <div class="tile"><div class="lab">Mezzogiorno vero</div><div class="big" id="t-noon">—</div><div class="who" id="t-noon-d"></div></div>
+        <div class="tile"><div class="lab">Altezza massima</div><div class="big" id="t-alt">—</div><div class="who" id="t-alt-d"></div></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3>La giornata del Sole</h3>
+        <div class="legend"><span><i class="th" style="background:var(--amber)"></i>altezza del Sole sull'orizzonte</span><span><span class="sw" style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-gold);vertical-align:-1px;margin-right:6px"></span>ora d'oro</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-civ);vertical-align:-1px;margin-right:6px"></span>crepuscolo civile</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-nau);vertical-align:-1px;margin-right:6px"></span>nautico</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-ast);vertical-align:-1px;margin-right:6px"></span>astronomico</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-night);vertical-align:-1px;margin-right:6px"></span>notte</span></div>
+        <div class="chart day" id="ch-day"></div>
+        <div class="ztab" id="ztab"></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 id="y-title">Alba e tramonto nell'anno</h3>
+        <div class="legend"><span><i class="th" style="background:var(--amber)"></i>alba</span><span><i class="th" style="background:var(--sky)"></i>tramonto</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-day);vertical-align:-1px;margin-right:6px"></span>ore di luce</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-civ);vertical-align:-1px;margin-right:6px"></span>crepuscolo civile</span><span><i style="background:var(--ink);width:2px;height:12px;vertical-align:-2px"></i>il giorno scelto</span></div>
+        <div class="chart year" id="ch-year"></div>
+        <p class="note" id="y-note"></p>
+      </div>
+    </section>
+
+    <section id="luna">
+      <div class="sh"><h2>🌙 La Luna</h2><span class="src" id="l-src"></span></div>
+      <div class="card moonhero">
+        <div id="l-disc"></div>
+        <div>
+          <div class="big-lab" id="l-lab" style="font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)">—</div>
+          <div id="l-nome" style="font-family:var(--serif);font-weight:800;font-size:36px;letter-spacing:-.02em;line-height:1.1;margin:2px 0 12px">—</div>
+          <div class="facts4" id="l-facts"></div>
+        </div>
+      </div>
+      <div class="phases" id="l-phases"></div>
+      <div class="card" style="margin-top:14px">
+        <h3 id="cal-title">Il calendario lunare</h3>
+        <p class="note" style="margin:0 0 10px">La Luna di ogni giorno alle 21, con la percentuale di disco illuminato. Tocca un giorno per vederne le effemeridi.</p>
+        <div class="cal" id="cal"></div>
+      </div>
+    </section>
+
+    <section id="pianeti">
+      <div class="sh"><h2>🪐 I pianeti a occhio nudo</h2><span class="src">posizioni per Borgo San Lorenzo</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="sky-t" role="group" aria-label="Ora">
+            <button type="button" data-t="sera" aria-pressed="true">Un'ora dopo il tramonto</button><button type="button" data-t="23" aria-pressed="false">Alle 23</button><button type="button" data-t="mattino" aria-pressed="false">Un'ora prima dell'alba</button>
+          </div>
+          <span class="m" id="sky-when"></span>
+        </div>
+        <div class="chart sky" id="ch-sky"></div>
+        <div class="tbl" style="margin-top:10px"><table class="ptab">
+          <thead><tr><th>Pianeta</th><th>Dopo il tramonto</th><th>Prima dell'alba</th><th>Distanza dal Sole</th><th>Quando cercarlo</th></tr></thead>
+          <tbody id="p-body"></tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <section id="eventi">
+      <div class="sh"><h2>📅 I prossimi appuntamenti</h2><span class="src" id="e-src"></span></div>
+      <div class="evs" id="evs"></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Come sono calcolate</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Luogo:</b> Borgo San Lorenzo (43,955° N, 11,386° E). Nel resto del Mugello gli orari cambiano di un paio di minuti al massimo; in montagna l'orizzonte libero anticipa l'alba e ritarda il tramonto, nelle valli strette avviene il contrario.</li>
+          <li><b>Ora:</b> tutti gli orari sono in ora italiana, legale (CEST, UTC+2) dall'ultima domenica di marzo all'ultima domenica di ottobre, solare (CET, UTC+1) nel resto dell'anno.</li>
+          <li><b>Alba e tramonto:</b> il bordo superiore del Sole tocca l'orizzonte astronomico, con la rifrazione atmosferica standard (−0,833°). <b>Crepuscoli:</b> il centro del Sole è 6° (civile), 12° (nautico) e 18° (astronomico) sotto l'orizzonte. <b>Ora d'oro:</b> Sole tra 6° sopra e 4° sotto l'orizzonte; <b>ora blu:</b> tra 4° e 6° sotto.</li>
+          <li><b>Mezzogiorno vero:</b> il Sole passa esattamente a sud. La differenza con il mezzogiorno "medio" di Borgo (12:14 in ora solare) è l'equazione del tempo, dovuta all'orbita ellittica della Terra e all'inclinazione del suo asse.</li>
+          <li><b>Metodi:</b> Sole con le formule di SunCalc (V. Agafonkin), Luna con la formula a bassa precisione dell'<i>Astronomical Almanac</i>, fasi lunari, equinozi e solstizi con gli algoritmi di J. Meeus (<i>Astronomical Algorithms</i>), pianeti con gli elementi orbitali del JPL. Precisione tipica: un minuto per il Sole, pochi minuti per la Luna e le fasi.</li>
+          <li><b>Sciami meteorici:</b> date di picco medie (International Meteor Organization); il numero di meteore è quello teorico sotto un cielo perfettamente buio, nella realtà se ne vedono molte meno, soprattutto con la Luna alta.</li>
+        </ul>
+        <p class="note">Calcoli eseguiti nel browser, nessun servizio esterno · elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html#cielo">cielo di stasera</a> · <a href="index.html">torna alla home</a></div></footer>
+<script src="astro.js"></script>
+<script src="effemeridi.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
