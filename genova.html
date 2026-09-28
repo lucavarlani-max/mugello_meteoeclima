@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Genova 1833–2025 · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="193 anni di osservazioni giornaliere all'osservatorio meteorologico dell'Università di Genova, stazione centenaria OMM: riscaldamento, stagioni, giorni estremi, piogge, record e il meteo di ogni giorno dal 1833.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/genova.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Genova, 193 anni di clima (1833–2025)">
+<meta property="og:description" content="193 anni di osservazioni giornaliere all'osservatorio dell'Università di Genova: riscaldamento, stagioni, giorni estremi, piogge, record e il meteo di ogni giorno dal 1833.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/genova.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="serie-storiche.html">← Serie storiche</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Genova</div>
+    <header class="head">
+      <div class="eyebrow">Stazione centenaria · dal 1833</div>
+      <h1>Genova, 1833–2025</h1>
+      <p class="lead">Nel centro storico di Genova, a 58 metri sul mare, l'osservatorio meteorologico dell'Università misura il tempo ogni giorno dal 1° gennaio 1833: è una delle serie più lunghe d'Italia e fa parte delle <b>stazioni centenarie</b> riconosciute dall'Organizzazione Meteorologica Mondiale. I suoi dati sono pubblicati dall'Università come open data. <span id="lead-n"></span></p>
+      <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>193 anni in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
+      <p class="sub">Ogni riga verticale è un anno: blu più freddo, rosso più caldo della media 1961–1990. Passa sopra per leggere il valore.</p>
+      <div class="card">
+        <div class="stripes" id="stripes"></div>
+        <div class="axis-y" id="stripes-ax"></div>
+        <div class="scale"><span>−2 °C</span><i></i><span>+2 °C</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura anno per anno</h2><span class="src">media mobile su 21 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-var" role="group" aria-label="Variabile">
+            <button data-v="tm" aria-pressed="true">Media</button><button data-v="tx" aria-pressed="false">Massime</button><button data-v="tn" aria-pressed="false">Minime</button>
+          </div>
+        </div>
+        <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+        <div class="chart" id="ch-year"></div>
+        <p class="note" id="trend-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Mese per mese, stagione per stagione</h2><span class="src">scegli il periodo</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="ctrl">
+            <select id="sel-per" aria-label="Periodo"></select>
+            <div class="seg" id="seg-mvar" role="group" aria-label="Variabile">
+              <button data-v="tm" aria-pressed="true">Media</button><button data-v="tx" aria-pressed="false">Massime</button><button data-v="tn" aria-pressed="false">Minime</button>
+            </div>
+          </div>
+          <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+          <div class="chart" id="ch-month"></div>
+        </div>
+        <div class="card">
+          <h3 id="ep-title">Per epoca</h3>
+          <div class="tbl"><table id="ep"></table></div>
+          <h3 style="margin-top:16px">I più caldi e i più freddi</h3>
+          <div class="tbl"><table id="rk"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Giorni estremi</h2><span class="src">conteggio per anno · media mobile 11 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-ex" role="group" aria-label="Indicatore">
+            <button data-v="c30" aria-pressed="true">Giorni ≥ 30 °C</button><button data-v="c35" aria-pressed="false">Giorni ≥ 35 °C</button><button data-v="tr20" aria-pressed="false">Notti tropicali</button><button data-v="g0" aria-pressed="false">Giorni di gelo</button>
+          </div>
+        </div>
+        <div class="legend"><span><i class="th" style="background:var(--ctx)"></i>Giorni nell'anno</span><span><i class="th" id="ex-leg" style="background:var(--amber)"></i>Media mobile 11 anni</span></div>
+        <div class="chart" id="ch-ex"></div>
+        <p class="note" id="ex-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Pioggia</h2><span class="src">dal 1833 · totale annuo e media mobile 11 anni</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Totale dell'anno</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 anni</span></div>
+          <div class="chart" id="ch-prec"></div>
+        </div>
+        <div class="card">
+          <h3>Il clima mese per mese</h3>
+          <div class="tbl"><table id="norm"></table></div>
+          <p class="note">Medie mensili nei due trentenni di riferimento; la differenza mostra quanto è cambiato.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>I record</h2><span class="src">valori giornalieri 1833–2025</span></div>
+      <div class="three">
+        <div class="card"><h3>🔥 I giorni più caldi</h3><table id="r-tx"></table></div>
+        <div class="card"><h3>🧊 I giorni più freddi</h3><table id="r-tn"></table></div>
+        <div class="card"><h3>🌧️ I giorni più piovosi</h3><table id="r-p"></table></div>
+      </div>
+    </section>
+
+    <section class="day">
+      <div class="sh"><h2>Un giorno nella storia</h2><span class="src">scegli una data</span></div>
+      <div class="card">
+        <div class="pick">
+          <select id="d-day" aria-label="Giorno"></select>
+          <select id="d-mon" aria-label="Mese"></select>
+          <label>anno <input type="number" id="d-year" min="1833" max="2025" style="width:90px" aria-label="Anno"></label>
+          <button class="btn" id="d-go" type="button">Mostra</button>
+        </div>
+        <div class="res" id="d-res"><span class="loading">Scegli giorno e mese: vedi come è andato quel giorno in tutti gli anni dal 1833.</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> <a href="https://distav.unige.it/meteo/index.php?lang=it" target="_blank" rel="noopener">Osservatorio Meteorologico Storico dell'Università di Genova</a> (DISTAV), dati aperti HistObs UniGe (44,42° N, 8,93° E, 58 m). Serie giornaliera di temperatura massima, minima e pioggia dal 1° gennaio 1833 al 31 dicembre 2025.</li>
+          <li>Temperatura media = (massima + minima) / 2. Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330.</li>
+          <li>Copertura quasi completa: 70.492 giorni. Mancano 10 minime (1854 e gennaio 1918) e 9 giorni di pioggia (estate 1854). Alcuni giorni del 1854 e del 1947 vengono da documenti di riferimento non noto; dal 1994 le poche lacune della stazione automatica sono state riempite dall'Università con le stazioni vicine.</li>
+          <li>La pioggia è misurata da 21 a 21 fino al 1932, da 19 a 19 fino al 1948 e da mezzanotte a mezzanotte dal 1949; gli orari delle letture sono cambiati nel 1903 e nel 1932. Dal 1994 le misure sono automatiche; sensore della temperatura sostituito nel 2021.</li>
+          <li>Anomalie calcolate rispetto al trentennio 1961–1990; normali climatiche 1961–1990 e 1991–2020. La serie non è omogeneizzata: nell'Ottocento strumenti, schermi e orari di lettura erano diversi e le temperature di quegli anni sembrano leggermente più alte di quanto ci si aspetterebbe, per cui i confronti con le epoche più lontane vanno letti come indicativi.</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="data/serie/genova.csv" download>⬇ Serie giornaliera (CSV)</a>
+          <a class="btn ghost" href="data/serie/genova.json" download>⬇ Aggregati annuali e mensili (JSON)</a>
+        </p>
+        <p class="note">Dati Università di Genova, Osservatorio Meteorologico Storico (DISTAV) · elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="serie-storiche.html">serie storiche</a> · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+window.SERIE={slug:"genova",nome:"Genova Università",citta:"Genova",luogo:"a Genova",
+  early:[1833,1900],epoche:[[1833,1899],[1900,1949],[1950,1999],[2000,2025]],tacche:[[1900,1950,2000],[1850,1900,1950,2000]]};
+</script>
+<script src="serie-storica.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

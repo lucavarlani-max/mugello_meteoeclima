@@ -3,7 +3,7 @@
 Prepara i dati delle serie storiche (stazioni centenarie) per il sito.
 
 Uso:
-  python scripts/build_serie.py <csv giornaliero> <slug>
+  python scripts/build_serie.py <csv giornaliero> <slug> [csv pioggia]
   es. python scripts/build_serie.py data/serie/milano-brera.csv milano-brera
 
 Formati accettati per il CSV giornaliero:
@@ -17,6 +17,10 @@ Formati accettati per il CSV giornaliero:
     ("NA" = mancante). Niente pioggia; la temperatura media giornaliera c'è
     anche negli anni senza massima e minima, e il codice tmean_metadata dice
     da quale fonte viene ogni giorno.
+  - Osservatorio dell'Università di Genova (HistObs UniGe): temperatura in
+    Year,Month,Day,H8,...,Max,Min,Average (24H),Notes e pioggia in un secondo
+    file Year,Month,Day,Daily rainfall (mm),Notes, da passare come terzo
+    argomento ("NA" = mancante). Si usano massima e minima.
 Scrive:
   data/serie/<slug>.csv   serie giornaliera ripulita (mancanti = campo vuoto)
   data/serie/<slug>.json  aggregati annuali e mensili, normali, record
@@ -74,6 +78,10 @@ def leggi(src):
                 giorni.append([datetime.date(a_, m_, g_), None, val(row["tmax"]), val(row["tmin"]), None,
                                val(row["tmean"]), int(fonte) if fonte not in (None, "", "NA") else None])
                 continue
+            if "Year" in row and "Max" in row:            # HistObs UniGe (Genova)
+                giorni.append([datetime.date(int(row["Year"]), int(row["Month"]), int(row["Day"])),
+                               None, val(row["Max"]), val(row["Min"]), None, None, None])
+                continue
             if "DATE" in row and "TMAX" in row:          # NOAA GHCN-Daily
                 def g(k):
                     a = (row.get(k + "_ATTRIBUTES") or "").split(",")
@@ -96,8 +104,20 @@ def leggi(src):
     return [tuple(g) for g in giorni], corretti
 
 
-def main(src, slug):
+def leggi_pioggia(src):
+    """Pioggia giornaliera da un file separato (HistObs UniGe): {data: mm}."""
+    out = {}
+    with open(src, encoding="utf-8-sig") as f:
+        for row in csv.DictReader(f):
+            out[datetime.date(int(row["Year"]), int(row["Month"]), int(row["Day"]))] = val(row["Daily rainfall (mm)"])
+    return out
+
+
+def main(src, slug, src_pioggia=None):
     giorni, corretti = leggi(src)
+    if src_pioggia:
+        pr = leggi_pioggia(src_pioggia)
+        giorni = [(g[0], pr.get(g[0])) + g[2:] for g in giorni]
     giorni.sort()
 
     # serie ripulita
@@ -218,6 +238,6 @@ def main(src, slug):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) not in (3, 4):
         sys.exit(__doc__)
-    main(sys.argv[1], sys.argv[2])
+    main(*sys.argv[1:])
