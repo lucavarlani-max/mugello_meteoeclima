@@ -1622,12 +1622,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
     setChip('sism-chip','M '+mag.toFixed(1), mag>=3?'warn':'info');
   }
 
+  // giorni trascorsi da una data "gg/mm/aaaa" (NaN se non leggibile)
+  function giorniFa(t){const a=String(t||'').split('/');if(a.length<3)return NaN;
+    return Math.floor((Date.now()-new Date(+a[2],+a[1]-1,+a[0]).getTime())/864e5);}
   async function fiumi(){
     const res=await fetch('./data/fiumi.json',{cache:'no-store'}); if(!res.ok) throw new Error('no file');
     const j=await res.json();
     const CH={normale:'ok',attenzione:'warn',allarme:'warn'};
     if(j.sieve&&j.sieve.livello_m!=null){ set('sieve-val', dec(j.sieve.livello_m)+' m'); set('sieve-sub','idrometro Fornacina · '+(j.sieve.ora||'')); }
-    if(j.bilancino&&j.bilancino.quota_m_slm!=null){ setChip('bil-val', dec(j.bilancino.quota_m_slm)+' m slm', 'info'); set('bil-sub','invaso · '+dec(j.bilancino.volume_mmc)+' Mmc · '+(j.bilancino.data||'')); }
+    if(j.bilancino&&j.bilancino.quota_m_slm!=null){ const gg=giorniFa(j.bilancino.data);
+      setChip('bil-val', dec(j.bilancino.quota_m_slm)+' m slm', gg>3?'warn':'info');
+      set('bil-sub','invaso · '+dec(j.bilancino.volume_mmc)+' Mmc · '+(gg>3?'ultimo dato '+(j.bilancino.data||'').slice(0,5)+', fonte in ritardo':(j.bilancino.data||''))); }
   }
 
 
@@ -1662,7 +1667,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     let mxi=0,mni=0; s.forEach((p,i)=>{if(p.v>s[mxi].v)mxi=i; if(p.v<s[mni].v)mni=i;});
     set('inv-cur',dec(last.v)); set('inv-max',dec(s[mxi].v)); set('inv-min',dec(s[mni].v));
     set('inv-quota',dec(last.q)); if(data.anno) set('inv-year',String(data.anno));
-    set('inv-updated','agg. '+last.d);
+    const rit=giorniFa(last.d+'/'+(data.anno||''));
+    set('inv-updated',rit>3?'ultimo dato '+last.d+' · fonte in ritardo':'agg. '+last.d);
     const svgEl=box.querySelector('svg'), tip=document.getElementById('inv-tip'),
           cross=document.getElementById('inv-cross'), hd=document.getElementById('inv-hdot');
     function mv(ev){const r=svgEl.getBoundingClientRect(), px=(ev.clientX-r.left)/r.width*W,
@@ -1677,8 +1683,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     svgEl.addEventListener('pointermove',mv); svgEl.addEventListener('pointerleave',lv);
   }
   async function invaso(){
-    try{ const r=await fetch('./data/bilancino.json',{cache:'no-store'}); if(!r.ok) throw 0; invasoChart(await r.json()); }
-    catch(e){ invasoChart(INV_SAMPLE); }
+    let d=null;
+    try{ const r=await fetch('./data/bilancino.json',{cache:'no-store'}); if(r.ok) d=await r.json(); }catch(e){}
+    if(d&&d.serie&&d.serie.length){ invasoChart(d); return; }
+    invasoChart(INV_SAMPLE); set('inv-updated','dati di esempio · file non disponibile');
   }
 
   async function allerta(){
