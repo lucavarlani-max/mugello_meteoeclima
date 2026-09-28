@@ -117,6 +117,46 @@
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;min-width:0}
   .card h3{font-family:var(--serif);font-size:17px;margin:0 0 8px}
   .more{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#fff;background:var(--pine);border-radius:var(--r-pill);padding:10px 18px;text-decoration:none;margin-top:14px}
+  /* confronto del riscaldamento tra le stazioni */
+  .rs{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rs{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300}}
+  :root[data-theme="dark"] .rs{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300}
+  .rs .ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  .seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:3px;gap:2px;flex-wrap:wrap}
+  .seg button{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:none;border:0;border-radius:var(--r-pill);padding:6px 12px;cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--pine);color:#fff}
+  .rs .leg{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+  .rs .leg button{font:inherit;font-size:12.5px;color:var(--ink-soft);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:4px 11px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .rs .leg button[aria-pressed="true"]{border-color:var(--ink-faint);color:var(--ink);font-weight:600}
+  .rs .leg i{display:inline-block;width:16px;height:3px;border-radius:2px}
+  .rs .chart{width:100%;height:380px;position:relative}
+  .rs .chart svg{display:block;width:100%;height:100%;overflow:visible}
+  .rs svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  .rs svg .grid{stroke:var(--line);stroke-width:1}
+  .rs svg .zero{stroke:var(--ink-faint);stroke-width:1.2}
+  .rs svg .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;transition:opacity .15s}
+  .rs svg .ln.an{stroke-width:1.2}
+  .rs svg .lab{font-size:11.5px;font-weight:600;fill:var(--ink-soft)}
+  .rs svg .cross{stroke:var(--ink-faint);stroke-width:1}
+  .rs svg .hp{stroke:var(--panel);stroke-width:2}
+  .rs .dim .ln:not(.on){opacity:.14}
+  .rs .dim .lab:not(.on),.rs .dim .hp:not(.on){opacity:.25}
+  .rs .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    box-shadow:var(--shadow);padding:8px 11px;font-size:12.5px;line-height:1.5;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .rs .tip i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  .rs .tip .v{font-family:var(--mono);font-size:12px;margin-left:10px;float:right}
+  .rs .note{font-size:12.5px;color:var(--ink-faint);margin:8px 0 0}
+  .rs .tw{overflow-x:auto;margin-top:14px}
+  .rs table{border-collapse:collapse;width:100%;font-size:13px}
+  .rs th,.rs td{padding:7px 8px;text-align:right;border-top:1px solid var(--line-soft);white-space:nowrap}
+  .rs th{font-weight:600;color:var(--ink-faint);font-size:11.5px;border-top:0}
+  .rs th:first-child,.rs td:first-child{text-align:left}
+  .rs td b{font-family:var(--mono);font-weight:600}
+  .rs td a{color:var(--ink);text-decoration:none;font-weight:600}
+  .rs td a:hover{color:var(--pine)}
+  .rs .per{color:var(--ink-faint);font-size:11px;font-family:var(--mono)}
+  .rs td i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+  @media (max-width:640px){ .rs .chart{height:300px} .rs th:nth-child(2),.rs td:nth-child(2),.rs th:nth-child(3),.rs td:nth-child(3),.rs .per{display:none} }
   .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px;margin-top:30px}
   @media (max-width:640px){ .wrap{padding:0 16px} h1{font-size:32px} .grid{grid-template-columns:1fr} }
 </style>
@@ -218,6 +258,21 @@
     <p class="crediti">Foto delle schede da Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Brera_-_cupole.jpg" target="_blank" rel="noopener">le cupole dell'Osservatorio di Brera</a> (pubblico dominio) · <a href="https://commons.wikimedia.org/wiki/File:Manhattan_skyline_from_central_park.jpg" target="_blank" rel="noopener">Manhattan da Central Park</a>, Ed Yourdon, CC BY-SA 2.0 · <a href="https://commons.wikimedia.org/wiki/File:La_Specola_-_Padua.jpg" target="_blank" rel="noopener">la Specola di Padova</a>, Jiří Dobrý, CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Castle_of_Moncalieri_2818.jpg" target="_blank" rel="noopener">il castello di Moncalieri</a>, Marrabbio2, CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/wiki/File:GoldenGateBridge-001.jpg" target="_blank" rel="noopener">il Golden Gate Bridge</a>, Rich Niewiroski Jr., CC BY 2.5 · <a href="https://commons.wikimedia.org/wiki/File:Domtoren_Utrecht.jpg" target="_blank" rel="noopener">il Domtoren di Utrecht</a>, Wikimedia Commons (foto e licenza da verificare) · <a href="https://commons.wikimedia.org/wiki/File:ISS026-E-26425_-_View_of_Italy.jpg" target="_blank" rel="noopener">l'Italia dalla Stazione spaziale</a>, NASA (pubblico dominio).</p>
 
 
+    <section class="sec rs" id="riscaldamento">
+      <div class="sh"><h2>Il riscaldamento nelle stazioni</h2><span class="src">anomalia rispetto al 1961–1990</span></div>
+      <p class="sub2" id="rs-lead">Le temperature medie annue delle stazioni analizzate qui, confrontate con la media di ciascuna nel trentennio 1961–1990: così si possono mettere sullo stesso grafico città con climi molto diversi.</p>
+      <div class="card">
+        <div class="ctl">
+          <div class="seg" id="rs-mode" role="group" aria-label="Tipo di curva"><button aria-pressed="true" data-v="m">Media su 11 anni</button><button aria-pressed="false" data-v="a">Valori annui</button></div>
+          <div class="seg" id="rs-from" role="group" aria-label="Periodo"><button aria-pressed="false" data-v="0">Tutta la serie</button><button aria-pressed="true" data-v="1850">Dal 1850</button><button aria-pressed="false" data-v="1950">Dal 1950</button></div>
+        </div>
+        <div class="leg" id="rs-leg" aria-label="Stazioni: clicca per evidenziare"></div>
+        <div class="chart" id="rs-chart"><div class="tip" id="rs-tip"></div></div>
+        <p class="note" id="rs-note">Scostamento in °C della temperatura media annua dalla media 1961–1990 della stessa stazione. La media mobile è centrata su 11 anni; agli estremi della serie usa gli anni disponibili (almeno 6). Clicca una stazione per evidenziarla.</p>
+        <div class="tw"><table id="rs-tab"></table></div>
+      </div>
+    </section>
+
     <section class="sec" id="mondo">
       <div class="sh"><h2>Le stazioni centenarie nel mondo</h2><span class="src">riconosciute dall'OMM</span></div>
       <p class="sub2">Sono 474 in 74 paesi: osservatori meteorologici, idrometri sui fiumi e mareografi che misurano da oltre un secolo.</p>
@@ -265,6 +320,7 @@
   if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",band);
 })();
 </script>
+<script src="serie-confronto.js"></script>
 <script src="wmo-catalogo.js"></script>
 <script>WMOCat.mount({stats:"#wc-stats",map:"#wc-map",italia:"#wc-it",links:{"Osservatorio Astronomico di Brera-Milano":"milano-brera.html","New York City Central Park":"new-york-central-park.html","Moncalieri- Collegio Carlo Alberto":"moncalieri.html","De Bilt":"de-bilt.html"}});</script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
