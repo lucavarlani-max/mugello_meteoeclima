@@ -1,7 +1,94 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-09-28",
+ "aggiornato": "2026-09-29",
  "numeri": [
+  {
+   "data": "2026-09-29",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Agosto 2026, il mese più caldo mai registrato sulla Terra",
+    "testo": "La temperatura media globale di agosto è stata di 16,96 °C, 1,65 °C sopra il livello pre-industriale. È il primo mese oltre la soglia di 1,5 °C dal novembre 2025.",
+    "fonte": "Euronews / Copernicus",
+    "url": "https://www.euronews.com/2026/09/10/august-2026-was-worlds-joint-hottest-month-on-record-according-to-copernicus"
+   },
+   "numero": {
+    "valore": "+1,65 °C",
+    "testo": "Lo scarto della temperatura media globale di agosto 2026 rispetto al periodo pre-industriale 1850–1900."
+   },
+   "storie": [
+    {
+     "cat": "oceani",
+     "titolo": "Oceani ai massimi storici, Mediterraneo caldissimo",
+     "testo": "La temperatura media della superficie del mare fuori dalle zone polari ha toccato 21,07 °C, nuovo record; il Mediterraneo è tra i mari più caldi.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above",
+     "foto": "oceano"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico: la depressione Fay e un'area sotto osservazione",
+     "testo": "Il Centro uragani statunitense segue la depressione Fay e una zona a est delle Bermuda con il 60% di probabilità di sviluppo entro 7 giorni. La stagione 2026 resta sotto la media.",
+     "fonte": "NOAA / NHC",
+     "url": "https://www.nhc.noaa.gov/text/MIATWOAT.shtml"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Nuova Caledonia, forte terremoto di magnitudo 7,0",
+     "testo": "La scossa è avvenuta il 25 settembre nella regione di Tadine, nel Pacifico.",
+     "fonte": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/List_of_earthquakes_in_2026",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Vulcani nel mondo: l'Etna resta attivo",
+     "testo": "Nel bollettino settimanale dal 17 al 23 settembre, attività da Ambrym (Vanuatu) a Chikurachki (isole Curili); in Italia l'Etna continua a essere attivo.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "etna"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Italia, sciame di micro-scosse",
+     "testo": "Piccole scosse in diverse zone d'Italia; un lieve terremoto di magnitudo 1,8 anche nel Senese, a San Casciano dei Bagni.",
+     "fonte": "3BMeteo",
+     "url": "https://www.3bmeteo.com/terremoti/italia"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Estate 2026 da record in Europa, fiumi in secca",
+     "testo": "Dopo l'estate record, molti grandi fiumi europei sono in secca: Po, Reno, Danubio, Rodano e Vistola.",
+     "fonte": "Euronews",
+     "url": "https://www.euronews.com/2026/09/10/august-2026-was-worlds-joint-hottest-month-on-record-according-to-copernicus"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi tra 9 e 27 °C, sole splendente per tutta la giornata e venti deboli; anche domani tempo stabile e soleggiato.",
+     "fonte": "3BMeteo",
+     "url": "https://www.3bmeteo.com/meteo/borgo%2Bsan%2Blorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1915: un uragano di categoria 4 colpisce New Orleans. 1927: un'ondata di tornado dall'Oklahoma all'Indiana fa 81 vittime. 1982: neve precoce sulle Black Hills, in Dakota del Sud.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_29"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C: la temperatura dell'aria più alta mai verificata dall'Organizzazione meteorologica mondiale (Death Valley, 10 luglio 1913).",
+     "fonte": "WMO",
+     "url": "https://wmo.int/world-records-weather-and-climate-extremes"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Firenze e nel Mugello il Sole sorge alle 7:09 e tramonta alle 19:02: circa 11 ore e 52 minuti di luce, in calo fino al solstizio del 21 dicembre.",
+     "fonte": "alba-tramonto.org",
+     "url": "https://alba-tramonto.org/it/florence"
+    }
+   ]
+  },
   {
    "data": "2026-09-28",
    "apertura": {
