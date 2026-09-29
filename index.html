@@ -296,7 +296,15 @@
 
   .note{margin-top:26px;text-align:center;font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
 
-  @media (max-width:1320px){
+  /* voci del menu compatte: il menu completo ci sta fino a 1180 px di finestra (portatili con
+     schermo 1280 o 1366, o Full HD con zoom 150%); sotto compare il menu ☰ */
+  nav.main{gap:0}
+  nav.main a,nav.main .dd>button{padding:7px 8px;font-size:13px}
+  header.top .brand{font-size:18px;gap:9px}
+  header.top .brand .mark{width:32px;height:32px}
+  header.top .brand small{letter-spacing:.1em}
+  .top-in{gap:14px}
+  @media (max-width:1180px){
     nav.main{display:none} .menu-btn{display:block}
     header.top.nav-open nav.main{display:flex;flex-direction:column;align-items:stretch;gap:2px;
       position:absolute;left:0;right:0;top:100%;background:var(--panel);border-bottom:1px solid var(--line);

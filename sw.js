@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v38';
+const CACHE = 'mmc-v39';
 const SHELL = [
   './',
   './index.html',
@@ -63,6 +63,15 @@ self.addEventListener('fetch', e => {
                      || url.pathname.endsWith('.json');
   if (isLiveData) {
     e.respondWith(fetch(req).catch(() => caches.match(req)));
+    return;
+  }
+
+  // Pagine HTML: prima la rete (così si vede sempre l'ultima versione), la cache solo offline
+  if (req.mode === 'navigate' && url.origin === location.origin) {
+    e.respondWith(fetch(req).then(res => {
+      if (res && res.status === 200) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
+      return res;
+    }).catch(() => caches.match(req).then(hit => hit || caches.match('./index.html'))));
     return;
   }
 
