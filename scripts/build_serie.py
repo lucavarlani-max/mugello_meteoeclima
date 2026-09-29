@@ -3,13 +3,16 @@
 Prepara i dati delle serie storiche (stazioni centenarie) per il sito.
 
 Uso:
-  python scripts/build_serie.py <csv giornaliero> <slug> [csv pioggia]
+  python scripts/build_serie.py <csv giornaliero> <slug> [csv pioggia] [--tavg]
   es. python scripts/build_serie.py data/serie/milano-brera.csv milano-brera
 
 Formati accettati per il CSV giornaliero:
   - year,month,day,prec,tempMax,tempMin (-99.9 = mancante), es. ARPA Lombardia
   - export NOAA GHCN-Daily (colonne DATE, PRCP, TMAX, TMIN, SNOW in unità
-    metriche); i valori con flag di qualità NOAA vengono scartati
+    metriche); i valori con flag di qualità NOAA vengono scartati.
+    Con --tavg si scrive anche la temperatura media del giorno: (TMAX + TMIN) / 2
+    se ci sono entrambe, altrimenti la media TAVG di NOAA (per le stazioni a cui
+    mancano molte massime o minime, es. Mont Aigoual dal 2000).
   - il formato ripulito prodotto da questo script, data,prec,tmax,tmin[,neve][,tmedia]
     (si può rigenerare).
   - serie omogeneizzata di Padova (Stefanini et al. 2023): separatore ";",
@@ -29,6 +32,9 @@ Scrive:
 Pulizia: alcuni valori di temperatura arrivano moltiplicati per 1000
 (es. 38301 invece di 38.3, errore del separatore delle migliaia): se
 |valore| >= 1000 lo si divide per 1000 e si arrotonda al decimo.
+Con --tavg si scartano anche massime e minime lontane più di 15 °C dalla
+media TAVG dello stesso giorno (es. Mont Aigoual, 32,7 °C il 25/7/2005 con
+media 16,1 °C). Il conteggio va in "valori_corretti".
 """
 import csv, json, os, sys, datetime
 from collections import defaultdict
@@ -36,6 +42,7 @@ from collections import defaultdict
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MIN_GIORNI_MESE = 25      # un mese conta se ha almeno 25 giorni validi
 MIN_GIORNI_ANNO = 330     # un anno conta se ha almeno 330 giorni validi
+SCARTO_TAVG = 15          # con --tavg: massima o minima scartata se dista più di 15 °C dalla media TAVG
 
 
 def val(x):
@@ -63,7 +70,7 @@ def r2(x):
     return None if x is None else round(x, 2)
 
 
-def leggi(src):
+def leggi(src, tavg=False):
     """Ritorna [(data, prec, tmax, tmin, neve_mm, tmedia, fonte)] e il numero di valori corretti x1000."""
     giorni, corretti = [], 0
     with open(src, encoding="utf-8-sig") as f:
@@ -87,7 +94,16 @@ def leggi(src):
                     a = (row.get(k + "_ATTRIBUTES") or "").split(",")
                     return None if len(a) > 1 and a[1].strip() else val(row.get(k))
                 d = datetime.date.fromisoformat(row["DATE"])
-                giorni.append([d, g("PRCP"), g("TMAX"), g("TMIN"), g("SNOW"), None, None])
+                tx, tn, tm = g("TMAX"), g("TMIN"), None
+                if tavg:
+                    ta = g("TAVG")
+                    if ta is not None:                   # valori impossibili rispetto alla media del giorno
+                        if tx is not None and tx - ta > SCARTO_TAVG:
+                            tx = None; corretti += 1
+                        if tn is not None and ta - tn > SCARTO_TAVG:
+                            tn = None; corretti += 1
+                    tm = round((tx + tn) / 2, 2) if tx is not None and tn is not None and tx >= tn else ta
+                giorni.append([d, g("PRCP"), tx, tn, g("SNOW"), tm, None])
                 continue
             if "data" in row:                            # formato già ripulito
                 row = dict(zip(("year", "month", "day"), row["data"].split("-")),
@@ -113,8 +129,8 @@ def leggi_pioggia(src):
     return out
 
 
-def main(src, slug, src_pioggia=None):
-    giorni, corretti = leggi(src)
+def main(src, slug, src_pioggia=None, tavg=False):
+    giorni, corretti = leggi(src, tavg)
     if src_pioggia:
         pr = leggi_pioggia(src_pioggia)
         giorni = [(g[0], pr.get(g[0])) + g[2:] for g in giorni]
@@ -234,10 +250,11 @@ def main(src, slug, src_pioggia=None):
     out_json = os.path.join(HERE, "data", "serie", f"{slug}.json")
     with open(out_json, "w", encoding="utf-8") as f:
         json.dump(dati, f, ensure_ascii=False, separators=(",", ":"))
-    print(f"{slug}: {len(giorni)} giorni, {len(serie)} anni, {corretti} valori corretti (x1000)")
+    print(f"{slug}: {len(giorni)} giorni, {len(serie)} anni, {corretti} valori corretti o scartati")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) not in (3, 4):
+    args = [a for a in sys.argv[1:] if a != "--tavg"]
+    if len(args) not in (2, 3):
         sys.exit(__doc__)
-    main(*sys.argv[1:])
+    main(*args, tavg="--tavg" in sys.argv)

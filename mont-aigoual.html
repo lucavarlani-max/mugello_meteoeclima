@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mont Aigoual 1896–2026 · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="L'osservatorio meteorologico del Mont Aigoual, a 1567 metri nelle Cevenne, stazione centenaria OMM (dati NOAA): pioggia dal 1896, temperatura dal 1949, riscaldamento in montagna, giorni estremi, record e il meteo di ogni giorno.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/mont-aigoual.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Mont Aigoual, il clima in cima alle Cevenne (1896–2026)">
+<meta property="og:description" content="L'osservatorio del Mont Aigoual, a 1567 metri nelle Cevenne: pioggia dal 1896, temperatura dal 1949, riscaldamento in montagna, giorni estremi, record e il meteo di ogni giorno.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/mont-aigoual.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-64.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="serie-storiche.html">← Serie storiche</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Mont Aigoual</div>
+    <header class="head">
+      <div class="eyebrow">Stazione centenaria · dal 1896 · 1567 m</div>
+      <h1>Mont Aigoual, 1896–2026</h1>
+      <p class="lead">In cima al Mont Aigoual, a 1567 metri nel massiccio delle Cevenne, nel sud della Francia, l'osservatorio di Météo-France misura il tempo dalla fine dell'Ottocento, tra venti violenti, nebbie e le piogge torrenziali degli «episodi cevenoli». È l'unica stazione di montagna di queste serie e fa parte delle <b>stazioni centenarie</b> riconosciute dall'Organizzazione Meteorologica Mondiale. Nell'archivio NOAA la pioggia giornaliera c'è dal 1896, la temperatura dal 1949. <span id="lead-n"></span></p>
+      <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Dal 1949 in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
+      <p class="sub">Ogni riga verticale è un anno: blu più freddo, rosso più caldo della media 1961–1990. Passa sopra per leggere il valore.</p>
+      <div class="card">
+        <div class="stripes" id="stripes"></div>
+        <div class="axis-y" id="stripes-ax"></div>
+        <div class="scale"><span>−2 °C</span><i></i><span>+2 °C</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura anno per anno</h2><span class="src">media mobile su 21 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-var" role="group" aria-label="Variabile">
+            <button data-v="tm" aria-pressed="true">Media</button><button data-v="tx" aria-pressed="false">Massime</button><button data-v="tn" aria-pressed="false">Minime</button>
+          </div>
+        </div>
+        <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+        <div class="chart" id="ch-year"></div>
+        <p class="note" id="trend-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Mese per mese, stagione per stagione</h2><span class="src">scegli il periodo</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="ctrl">
+            <select id="sel-per" aria-label="Periodo"></select>
+            <div class="seg" id="seg-mvar" role="group" aria-label="Variabile">
+              <button data-v="tm" aria-pressed="true">Media</button><button data-v="tx" aria-pressed="false">Massime</button><button data-v="tn" aria-pressed="false">Minime</button>
+            </div>
+          </div>
+          <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+          <div class="chart" id="ch-month"></div>
+        </div>
+        <div class="card">
+          <h3 id="ep-title">Per epoca</h3>
+          <div class="tbl"><table id="ep"></table></div>
+          <h3 style="margin-top:16px">I più caldi e i più freddi</h3>
+          <div class="tbl"><table id="rk"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Giorni estremi</h2><span class="src">conteggio per anno 1949–1999 · media mobile 11 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-ex" role="group" aria-label="Indicatore">
+            <button data-v="g0" aria-pressed="true">Giorni di gelo</button><button data-v="c30" aria-pressed="false">Giorni ≥ 30 °C</button>
+          </div>
+        </div>
+        <div class="legend"><span><i class="th" style="background:var(--ctx)"></i>Giorni nell'anno</span><span><i class="th" id="ex-leg" style="background:var(--sky)"></i>Media mobile 11 anni</span></div>
+        <div class="chart" id="ch-ex"></div>
+        <p class="note" id="ex-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Precipitazioni</h2><span class="src">dal 1896 · totale annuo e media mobile 11 anni</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Totale dell'anno</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 anni</span></div>
+          <div class="chart" id="ch-prec"></div>
+        </div>
+        <div class="card">
+          <h3>Il clima mese per mese</h3>
+          <div class="tbl"><table id="norm"></table></div>
+          <p class="note">Medie mensili nei due trentenni di riferimento; la differenza mostra quanto è cambiato.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>I record</h2><span class="src">temperatura dal 1949, pioggia dal 1896</span></div>
+      <div class="three">
+        <div class="card"><h3>🔥 I giorni più caldi</h3><table id="r-tx"></table></div>
+        <div class="card"><h3>🧊 I giorni più freddi</h3><table id="r-tn"></table></div>
+        <div class="card"><h3>🌧️ I giorni più piovosi</h3><table id="r-p"></table></div>
+      </div>
+    </section>
+
+    <section class="day">
+      <div class="sh"><h2>Un giorno nella storia</h2><span class="src">scegli una data</span></div>
+      <div class="card">
+        <div class="pick">
+          <select id="d-day" aria-label="Giorno"></select>
+          <select id="d-mon" aria-label="Mese"></select>
+          <label>anno <input type="number" id="d-year" min="1896" max="2026" style="width:90px" aria-label="Anno"></label>
+          <button class="btn" id="d-go" type="button">Mostra</button>
+        </div>
+        <div class="res" id="d-res"><span class="loading">Scegli giorno e mese: vedi come è andato quel giorno in tutti gli anni dal 1896 (temperatura dal 1949).</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> NOAA, National Centers for Environmental Information, archivio <a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily" target="_blank" rel="noopener">GHCN-Daily</a>, stazione FR000007560 «Mont Aigoual» di Météo-France (44,12° N, 3,58° E, 1567 m). Pioggia giornaliera dal 1° gennaio 1896, temperatura massima e minima dal 1949, dati fino al 19 settembre 2026.</li>
+          <li>Temperatura media = (massima + minima) / 2. Dal 2000 nell'archivio NOAA manca circa un giorno su tre di massima o minima: per quei giorni la media è la temperatura media giornaliera calcolata da NOAA (TAVG), che in media differisce di circa 0,1 °C. Per questo i giorni estremi (caldo, notti tropicali, gelo) e le massime e minime annue si fermano al 1999, mentre temperatura media, pioggia e record arrivano fino al 2024.</li>
+          <li>Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330: mancano il 1962, il 1965 e il 1970 per la temperatura, il 1915, il 1939 e il 1943 per la pioggia (anni di guerra), e il 2025, quasi assente nell'archivio NOAA. Il 2026, ancora in corso, compare nei grafici mensili e in "Un giorno nella storia".</li>
+          <li>Pulizia dei dati: scartati i valori segnalati come dubbi da NOAA e 2 temperature incompatibili con la media del giorno (32,7 °C il 25 luglio 2005, con una media di 16,1 °C).</li>
+          <li>Anomalie calcolate rispetto al trentennio 1961–1990; normali climatiche 1961–1990 e 1991–2020. In montagna le misure risentono di vento, neve e ghiaccio sugli strumenti: i confronti tra epoche lontane vanno letti come indicativi.</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="data/serie/mont-aigoual.csv" download>⬇ Serie giornaliera (CSV)</a>
+          <a class="btn ghost" href="data/serie/mont-aigoual.json" download>⬇ Aggregati annuali e mensili (JSON)</a>
+        </p>
+        <p class="note">Dati NOAA NCEI / Météo-France · elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="serie-storiche.html">serie storiche</a> · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+window.SERIE={slug:"mont-aigoual",nome:"Mont Aigoual",citta:"Mont Aigoual",luogo:"sul Mont Aigoual",precNome:"Precipitazioni",tdal:1949,ex:"g0",
+  early:[1949,1978],epoche:[[1949,1969],[1970,1989],[1990,2009],[2010,2026]],tacche:[[1975,2000],[1960,1980,2000,2020]]};
+</script>
+<script src="serie-storica.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

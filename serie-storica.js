@@ -1,5 +1,6 @@
 /* Pagina di una serie storica: grafici e tabelle da data/serie/<slug>.json.
-   Configurazione nella pagina: window.SERIE = {slug, nome, citta, luogo, early:[a,b], epoche:[[a,b],...], tacche:[[mobile],[desktop]]} */
+   Configurazione nella pagina: window.SERIE = {slug, nome, citta, luogo, early:[a,b], epoche:[[a,b],...], tacche:[[mobile],[desktop]]}
+   facoltativi: tdal (primo anno dei grafici di temperatura), ex (indicatore iniziale dei giorni estremi) */
 (function(){
   const $=id=>document.getElementById(id);
   const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
@@ -8,10 +9,11 @@
   const sg=v=>v==null?"—":(v>0?"+":"")+f1(v);
   const dIt=iso=>{const [y,m,d]=iso.split("-").map(Number);return d+" "+MES[m-1]+" "+y;};
   const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const C=window.SERIE; let D=null, A=[], AC=[], BASE={};
+  const C=window.SERIE; let D=null, A=[], AC=[], AT=[], BASE={};
 
   fetch("./data/serie/"+C.slug+".json").then(r=>r.json()).then(d=>{
     D=d; A=d.anni; AC=A.filter(a=>a.tm!=null);
+    AT=C.tdal?A.filter(a=>a.y>=C.tdal):A;   // anni dei grafici di temperatura (C.tdal se la temperatura parte dopo la pioggia)
     ["tm","tx","tn"].forEach(k=>{BASE[k]=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[k]));});
     tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); fonti(); dayInit();
     let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();fonti();},150);});
@@ -44,7 +46,7 @@
   function mix(a,b,t){return "rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";}
   function stripeColor(an){const c=hex(css("--cold")),n=hex(css("--neutral")),w=hex(css("--warm"));const t=Math.max(-1,Math.min(1,an/2));return t<0?mix(n,c,-t):mix(n,w,t);}
   function stripes(){
-    const el=$("stripes"), W=el.clientWidth, H=el.clientHeight, n=A.length, bw=W/n;
+    const A=AT, el=$("stripes"), W=el.clientWidth, H=el.clientHeight, n=A.length, bw=W/n;
     let g=""; A.forEach((a,i)=>{if(a.tm!=null)g+=`<rect x="${(i*bw).toFixed(2)}" y="0" width="${(bw+0.6).toFixed(2)}" height="${H}" fill="${stripeColor(a.tm-BASE.tm)}"/>`;});
     $("stripes-ax").innerHTML=[A[0].y,...(W<560?C.tacche[0]:C.tacche[1]),A[n-1].y].map(y=>`<span style="left:${((y-A[0].y+(y===A[n-1].y?1:0))/n*100).toFixed(2)}%">${y}</span>`).join("");
     el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Strisce del riscaldamento: anomalia della temperatura media annua a ${C.nome} dal ${A[0].y} al ${A[n-1].y}">${g}<rect id="st-hl" x="-9" y="0" width="${Math.max(2,bw)}" height="${H}" fill="none" stroke="${css("--ink")}" stroke-width="1.5"/></svg><div class="tip"></div>`;
@@ -90,7 +92,7 @@
   const NOMEV={tm:"media",tx:"massima media",tn:"minima media"};
   let yv="tm"; segInit("seg-var",v=>{yv=v;yearChart();});
   function yearChart(){
-    const pts=A.map(a=>[a.y,a[yv]]), avg=movAvg(pts,21);
+    const pts=AT.map(a=>[a.y,a[yv]]), avg=movAvg(pts,21);
     lineChart($("ch-year"),{pts,avg,ref:{y:BASE[yv]},unit:"°",label:"Temperatura "+NOMEV[yv]+" annua a "+C.nome,
       tip:(x,v,a)=>`<b>${x}</b><br>Temperatura ${NOMEV[yv]} <b>${f1(v)}°C</b>`+(a!=null?`<br><span class="m">media 21 anni ${f1(a)}° · ${sg(v-BASE[yv])}° sul 1961–90</span>`:"")});
     const s1=slope(pts.filter(p=>p[1]!=null))*100, s2=slope(pts.filter(p=>p[0]>=1981&&p[1]!=null))*10;
@@ -112,7 +114,7 @@
       if(mv==="tm"&&r[3]!=null)return r[3]; if(r[0]==null)return null; return mv==="tx"?r[0]:mv==="tn"?r[1]:(r[0]+r[1])/2;});return vals.some(v=>v==null)?null:mean(vals);}
   function monthChart(){
     if(!A.length) return; const M=byY();
-    const pts=A.map(a=>[a.y,perVal(a.y,M)]), base=mean(pts.filter(p=>p[0]>=1961&&p[0]<=1990).map(p=>p[1])), avg=movAvg(pts,21);
+    const pts=AT.map(a=>[a.y,perVal(a.y,M)]), base=mean(pts.filter(p=>p[0]>=1961&&p[0]<=1990).map(p=>p[1])), avg=movAvg(pts,21);
     const nome=per.lab.toLowerCase(), vv={tm:"media",tx:"massima",tn:"minima"}[mv];
     lineChart($("ch-month"),{pts,avg,ref:{y:base},unit:"°",label:`Temperatura ${vv} di ${nome} a ${C.nome}`,
       tip:(x,v,a)=>`<b>${per.lab} ${x}</b><br>Temperatura ${vv} <b>${f1(v)}°C</b>`+(v!=null?`<br><span class="m">${sg(v-base)}° sul 1961–90${a!=null?" · media 21 anni "+f1(a)+"°":""}</span>`:"")});
@@ -126,12 +128,12 @@
 
   /* ---------- giorni estremi ---------- */
   const EX={c30:{n:"giorni con massima ≥ 30 °C",c:""},c35:{n:"giorni con massima ≥ 35 °C",c:""},tr20:{n:"notti tropicali (minima ≥ 20 °C)",c:""},g0:{n:"giorni di gelo (minima < 0 °C)",c:"sky"}};
-  let ev="c30"; function exInit(){segInit("seg-ex",v=>{ev=v;exChart();});exChart();}
+  let ev=C.ex||"c30"; function exInit(){segInit("seg-ex",v=>{ev=v;exChart();});exChart();}
   function exChart(){
-    if(!A.length) return; const pts=A.map(a=>[a.y,a[ev]]), avg=movAvg(pts,11), cls=EX[ev].c;
+    if(!A.length) return; const pts=AT.map(a=>[a.y,a[ev]]), avg=movAvg(pts,11), cls=EX[ev].c;
     $("ex-leg").style.background=cls?"var(--sky)":"var(--amber)";
     lineChart($("ch-ex"),{pts,avg,bars:true,avgCls:cls,label:"Numero di "+EX[ev].n+" per anno",tip:(x,v,a)=>`<b>${x}</b><br><b>${v??"—"}</b> ${EX[ev].n}`+(a!=null?`<br><span class="m">media 11 anni ${f1(a)}</span>`:"")});
-    const e=mean(AC.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[ev])), L10=AC.slice(-10), l=mean(L10.map(a=>a[ev])), mx=AC.filter(a=>a[ev]!=null).sort((a,b)=>b[ev]-a[ev])[0];
+    const e=mean(AC.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[ev])), L10=AC.filter(a=>a[ev]!=null).slice(-10), l=mean(L10.map(a=>a[ev])), mx=AC.filter(a=>a[ev]!=null).sort((a,b)=>b[ev]-a[ev])[0];
     $("ex-note").textContent=`In media ${f1(e)} ${EX[ev].n} l'anno nel 1961–1990, ${f1(l)} negli ultimi dieci anni (${L10[0].y}–${L10[9].y}). L'anno con più ${EX[ev].n.split(" (")[0]}: ${mx.y}, con ${mx[ev]}.`;
   }
 
