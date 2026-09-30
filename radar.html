@@ -187,6 +187,26 @@
   .wz-err{margin:0;font-size:13px;color:var(--ink-soft)}
   .wz-src{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint)}
   @media (max-width:1000px){ .wz{grid-template-columns:1fr} }
+  /* estremi nel mondo */
+  .tk-row{margin:14px 0}
+  .tk-row:first-child{margin-top:0}
+  .tk-lab{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px;margin-bottom:8px}
+  .tk-lab .n{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink-faint)}
+  .tk{overflow:hidden}
+  .tk:has(.tk-item){-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+  .tk-track{display:flex;gap:10px;width:max-content;animation:tk-scroll 45s linear infinite}
+  .tk:hover .tk-track,.tk:focus-within .tk-track{animation-play-state:paused}
+  .tk-row[data-k="freddo"] .tk-track{animation-duration:38s}
+  .tk-row[data-k="pioggia"] .tk-track{animation-duration:52s}
+  @keyframes tk-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .tk-item{display:inline-flex;align-items:baseline;gap:7px;padding:8px 14px;border-radius:var(--r-pill);background:var(--panel-2);border:1px solid var(--line);white-space:nowrap;flex:none;font-size:13px}
+  .tk-item b{font-family:var(--serif);font-weight:800;font-size:15px}
+  .tk-row[data-k="caldo"] .tk-item b{color:var(--red)}
+  .tk-row[data-k="freddo"] .tk-item b{color:var(--sky)}
+  .tk-row[data-k="pioggia"] .tk-item b{color:var(--sky-deep)}
+  .tk-item .p{color:var(--ink-faint);font-size:12px}
+  .tk-item .r{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-right:1px}
+  @media (prefers-reduced-motion:reduce){ .tk-track{animation:none;overflow-x:auto;max-width:100%} }
   .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
   .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
   @media (max-width:1000px){ .now{grid-template-columns:repeat(3,minmax(0,1fr))} .two{grid-template-columns:1fr} .rivers{grid-template-columns:repeat(2,minmax(0,1fr))} .three{grid-template-columns:1fr} }
@@ -217,7 +237,7 @@
     </header>
 
     <div class="tabs"><nav aria-label="Sezioni della pagina">
-      <a href="#adesso" class="on">Adesso</a><a href="#radar">Radar</a><a href="#carte">Carte sinottiche</a><a href="#pioggia">Pioggia in arrivo</a><a href="#fulmini">Fulmini</a><a href="#fiumi">Fiumi</a><a href="#aria">Aria e pollini</a><a href="#terremoti">Terremoti</a>
+      <a href="#adesso" class="on">Adesso</a><a href="#radar">Radar</a><a href="#carte">Carte sinottiche</a><a href="#pioggia">Pioggia in arrivo</a><a href="#fulmini">Fulmini</a><a href="#fiumi">Fiumi</a><a href="#aria">Aria e pollini</a><a href="#terremoti">Terremoti</a><a href="#estremi">Estremi nel mondo</a>
     </nav></div>
 
     <section id="adesso">
@@ -231,6 +251,24 @@
         <a class="card" href="#terremoti" id="n-sisma"><span class="lab">Terremoti</span><span class="big">—</span><span class="sub"></span></a>
       </div>
       <p class="muted" id="allerta-txt" style="margin:12px 0 0;font-size:13.5px"></p>
+    </section>
+
+    <section id="estremi">
+      <div class="sh"><h2>Estremi nel mondo</h2><span class="src" id="estremi-src">stazioni sinottiche OGIMET · ultime 24 ore</span></div>
+      <div class="card" id="estremi-card">
+        <div class="tk-row" data-k="caldo">
+          <div class="tk-lab">🔥 Le temperature più alte <span class="n" id="estremi-upd"></span></div>
+          <div class="tk"><div class="tk-track" id="tk-caldo"><span class="loading">Carico i dati…</span></div></div>
+        </div>
+        <div class="tk-row" data-k="freddo">
+          <div class="tk-lab">🧊 Le temperature più basse</div>
+          <div class="tk"><div class="tk-track" id="tk-freddo"><span class="loading">Carico i dati…</span></div></div>
+        </div>
+        <div class="tk-row" data-k="pioggia">
+          <div class="tk-lab">🌧️ Più pioggia in 24 ore</div>
+          <div class="tk"><div class="tk-track" id="tk-pioggia"><span class="loading">Carico i dati…</span></div></div>
+        </div>
+      </div>
     </section>
 
     <section id="radar">
@@ -322,7 +360,7 @@
       </table></div></div>
     </section>
 
-    <p class="note">Fonti: Windy · Blitzortung · Wetterzentrale (EUMETSAT, DWD, UK Met Office) · Open-Meteo (modelli ECMWF e GFS) · Natural Earth · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · elaborazioni L. Varlani</p>
+    <p class="note">Fonti: Windy · Blitzortung · Wetterzentrale (EUMETSAT, DWD, UK Met Office) · Open-Meteo (modelli ECMWF e GFS) · Natural Earth · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · OGIMET (estremi nel mondo) · elaborazioni L. Varlani</p>
   </main>
 
   <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
@@ -474,6 +512,31 @@
     }catch(err){$("eq").innerHTML='<tr><td colspan="4" class="loading">Dati INGV non disponibili al momento.</td></tr>';tile("n-sisma","—","dato non disponibile","");}
   }
 
+  /* ---------- estremi nel mondo ----------
+     legge ./data/estremi.json, scritto da scripts/fetch_estremi.py (OGIMET) nella GitHub Action:
+     { "aggiornato": "2026-09-30T12:00:00Z",
+       "caldo":   [{ "staz":"Death Valley", "paese":"Stati Uniti", "v":47.2 }, ...10],
+       "freddo":  [{ "staz":"Vostok",       "paese":"Antartide",  "v":-62.1 }, ...10],
+       "pioggia": [{ "staz":"...",          "paese":"...",        "v":182.4 }, ...10] }
+     v in °C per caldo/freddo, in mm per pioggia (accumulo nelle 24 ore). */
+  function tkTrack(id,items,fmt,emoji){
+    const el=$(id);
+    if(!items||!items.length){el.innerHTML='<span class="loading">Dati in arrivo.</span>';return;}
+    const riga=(it,i)=>`<span class="tk-item"><span class="r">#${i+1}</span>${emoji} <b>${fmt(it.v)}</b> <span class="p">${esc(it.staz)}${it.paese?", "+esc(it.paese):""}</span></span>`;
+    el.innerHTML=items.concat(items).map((it,i)=>riga(it,i%items.length)).join("");
+  }
+  async function estremi(){
+    try{
+      const d=await getJSON("./data/estremi.json?t="+Date.now());
+      tkTrack("tk-caldo",d.caldo,v=>f1(v)+"°C","🔥");
+      tkTrack("tk-freddo",d.freddo,v=>f1(v)+"°C","🧊");
+      tkTrack("tk-pioggia",d.pioggia,v=>f1(v)+" mm","🌧️");
+      if(d.aggiornato){const t=new Date(d.aggiornato);$("estremi-upd").textContent="· aggiornato alle "+hm(t);}
+    }catch(e){
+      ["tk-caldo","tk-freddo","tk-pioggia"].forEach(id=>{$(id).innerHTML='<span class="loading">Dati in arrivo: stiamo collegando gli estremi mondiali in tempo reale.</span>';});
+    }
+  }
+
   /* ---------- immagini Wetterzentrale ---------- */
   const WZ_ORE=[0,1,2,3,4,5,6,8,10,12];
   function wzErr(fig,on){fig.querySelector(".wz-err").hidden=!on;fig.querySelector(".wz-img").hidden=on;}
@@ -500,7 +563,7 @@
   const wzObs=new IntersectionObserver(es=>{if(es[0].isIntersecting){wzObs.disconnect();wz();}},{rootMargin:"400px"});
   wzObs.observe(document.querySelector(".wz"));
 
-  function tutto(){ $("upd").textContent="Aggiornato alle "+hm(new Date()); allerta(); pioggia(); temporali(); fiumi(); aria(); terremoti(); if(wzOra) wz(); }
+  function tutto(){ $("upd").textContent="Aggiornato alle "+hm(new Date()); allerta(); pioggia(); temporali(); fiumi(); aria(); terremoti(); estremi(); if(wzOra) wz(); }
   tutto(); setInterval(()=>{ if(!document.hidden) tutto(); },5*60e3);
 })();
 </script>
