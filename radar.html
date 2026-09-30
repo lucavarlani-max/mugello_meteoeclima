@@ -254,7 +254,7 @@
     </section>
 
     <section id="estremi">
-      <div class="sh"><h2>Estremi nel mondo</h2><span class="src" id="estremi-src">stazioni sinottiche · ultime 24 ore</span></div>
+      <div class="sh"><h2>Estremi nel mondo</h2><span class="src" id="estremi-src">stazioni sinottiche OGIMET · ultime 24 ore</span></div>
       <div class="card" id="estremi-card">
         <div class="tk-row" data-k="caldo">
           <div class="tk-lab">🔥 Le temperature più alte <span class="n" id="estremi-upd"></span></div>
@@ -360,7 +360,7 @@
       </table></div></div>
     </section>
 
-    <p class="note">Fonti: Windy · Blitzortung · Wetterzentrale (EUMETSAT, DWD, UK Met Office) · Open-Meteo (modelli ECMWF e GFS) · Natural Earth · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · elaborazioni L. Varlani</p>
+    <p class="note">Fonti: Windy · Blitzortung · Wetterzentrale (EUMETSAT, DWD, UK Met Office) · Open-Meteo (modelli ECMWF e GFS) · Natural Earth · Centro Funzionale Regione Toscana · Comune di Firenze (Bilancino) · INGV · OGIMET (estremi nel mondo) · elaborazioni L. Varlani</p>
   </main>
 
   <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
@@ -513,7 +513,7 @@
   }
 
   /* ---------- estremi nel mondo ----------
-     legge ./data/estremi.json, scritto da uno script lato GitHub Action (non ancora collegato):
+     legge ./data/estremi.json, scritto da scripts/fetch_estremi.py (OGIMET) nella GitHub Action:
      { "aggiornato": "2026-09-30T12:00:00Z",
        "caldo":   [{ "staz":"Death Valley", "paese":"Stati Uniti", "v":47.2 }, ...10],
        "freddo":  [{ "staz":"Vostok",       "paese":"Antartide",  "v":-62.1 }, ...10],

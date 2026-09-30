@@ -32,6 +32,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **Analisi e satellite**: immagini di Wetterzentrale richiamate dal loro sito (satellite
   EUMETSAT, ultima immagine oraria trovata da sola; analisi al suolo DWD e UK Met Office),
   ricaricate ogni 15 minuti; se non sono disponibili compare il link diretto.
+  **Estremi nel mondo**: ticker scorrevole con le 10 temperature più alte, le 10 più basse e
+  le 10 stazioni con più pioggia nel mondo nelle ultime 24 ore, dal ranking sinottico di OGIMET;
+  dati in `data/estremi.json`, aggiornati dall'Action da `scripts/fetch_estremi.py`.
 - **Monitoraggio** — qualità dell'aria (Open-Meteo Air Quality) e sismicità (INGV,
   ultimo evento entro 45 km) in tempo reale. Livelli Sieve e Bilancino: vedi Action sotto.
 - **Andamento invaso di Bilancino** — grafico della serie giornaliera del volume
@@ -117,6 +120,7 @@ scripts/fetch_allerta.py       aggiorna data/allerta.json
 scripts/fetch_termo.py         aggiorna data/termo.json e data/termo_storico.json
 scripts/fetch_idro.py          aggiorna data/idrometri.json (livelli + storico 48 ore)
 scripts/fetch_sinottica.py     aggiorna data/sinottica.json (carte sinottiche, ogni 6 ore)
+scripts/fetch_estremi.py       aggiorna data/estremi.json (estremi meteo nel mondo, da OGIMET)
 scripts/build_serie.py         prepara i dati di una stazione centenaria (data/serie/<slug>.csv/.json)
 data/serie/                    serie storiche giornaliere ripulite e aggregati per il sito
 reports/                       report PDF di approfondimento
