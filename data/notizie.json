@@ -1,7 +1,175 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-09-29",
+ "aggiornato": "2026-10-01",
  "numeri": [
+  {
+   "data": "2026-10-01",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Il 2026 si avvia a essere il secondo anno più caldo mai registrato",
+    "testo": "L'anomalia media stimata è di +1,47 °C sopra i livelli preindustriali (tra 1,37 e 1,58 °C), con un El Niño forte in sviluppo.",
+    "fonte": "Carbon Brief",
+    "url": "https://www.carbonbrief.org/state-of-the-climate-strong-el-nino-puts-2026-on-track-for-second-warmest-year"
+   },
+   "numero": {
+    "valore": "+1,47 °C",
+    "testo": "Lo scarto medio stimato del 2026 rispetto all'era preindustriale (1850–1900)."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Etna, l'estate di fuoco",
+     "testo": "Quattro episodi eruttivi tra il 7 e il 17 agosto, 9 bocche attive, colonna fino a 7 km e tra 5,6 e 7,6 milioni di m³ di lava.",
+     "fonte": "INGV Osservatorio Etneo",
+     "url": "https://ingvvulcani.com/2026/08/22/etna-la-calda-estate-del-2026/",
+     "foto": "etna"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Giappone, il terremoto più forte del 2026",
+     "testo": "Magnitudo 6,8 a Kumamoto il 28 luglio, a 16 km di profondità: 38 vittime e circa 32.000 edifici danneggiati.",
+     "fonte": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/2026_Kumamoto_earthquake",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Il Krakatau torna a eruttare",
+     "testo": "14 eruzioni stromboliane e un pennacchio a 2,1 km; attivi anche il Kilauea, con 104 colate in 5 giorni, e il Merapi.",
+     "fonte": "Watchers / Smithsonian GVP",
+     "url": "https://watchers.news/2026/09/19/the-weekly-volcanic-activity-report-september-10-16-2026/",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico quieto",
+     "testo": "A fine settembre c'è solo la Depressione tropicale Sei, in mare aperto e senza impatti sulle coste.",
+     "fonte": "Wikipedia / NOAA NHC",
+     "url": "https://en.wikipedia.org/wiki/2026_Atlantic_hurricane_season"
+    },
+    {
+     "cat": "clima",
+     "titolo": "L'estate 2026 in Europa",
+     "testo": "Picco di 45,1 °C in Spagna, 40,1 °C a Bologna il 29 giugno e oltre 1.365 vittime stimate per il caldo.",
+     "fonte": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/2026_European_heatwaves"
+    },
+    {
+     "cat": "clima",
+     "titolo": "I prossimi cinque anni",
+     "testo": "86% di probabilità di un nuovo anno record entro il 2030 e 91% di superare almeno temporaneamente 1,5 °C.",
+     "fonte": "Met Office / WMO",
+     "url": "https://www.metoffice.gov.uk/about-us/news-and-media/media-centre/weather-and-climate-news/2026/new-report-suggests-more-global-temperature-records-ahead"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi tra 14 e 27 °C, poco nuvoloso, pioggia poco probabile (circa 5%), venti deboli; domani 15–26 °C e fine settimana sereno con massime di 26–27 °C.",
+     "fonte": "LaMMA Toscana / iLMeteo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1890: nasce lo U.S. Weather Bureau. 1893: l'uragano di Cheniere Caminada devasta la Louisiana, con circa 2.000 vittime. 1938: 40,6 °C in Arkansas, record di caldo per ottobre.",
+     "fonte": "NWS"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C: la temperatura dell'aria più alta mai registrata sulla Terra, nella Death Valley il 10 luglio 1913, primato convalidato dall'Organizzazione meteorologica mondiale.",
+     "fonte": "WMO"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo circa 11 ore e 45 minuti di luce; le giornate si accorciano di 2–3 minuti al giorno fino al solstizio d'inverno del 21 dicembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-09-30",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "L'Atlantico rompe un record lungo 60 anni: una stagione quasi senza uragani",
+    "testo": "A fine settembre, nel pieno della stagione, l'Atlantico non ha ancora prodotto un solo uragano: è l'attesa più lunga dal 1966. La causa è un El Niño intenso, che aumenta il vento in quota (wind shear) e smembra i sistemi in formazione.",
+    "fonte": "CBS News",
+    "url": "https://www.cbsnews.com/news/atlantic-hurricane-season-activity-record-low-el-nino/",
+    "foto": "uragano1"
+   },
+   "numero": {
+    "valore": "0",
+    "testo": "Gli uragani formati nell'Atlantico nel 2026, a fine settembre."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Etna, nube di cenere a 4 km e allerta rossa",
+     "testo": "Il 24 settembre una colonna vulcanica dai crateri sommitali ha portato l'avviso rosso per l'aviazione (VONA); l'aeroporto di Catania è rimasto operativo.",
+     "fonte": "AGI / INGV",
+     "url": "https://www.agi.it/cronaca/news/2026-09-24/etna-eruzione-allerta-rossa-39216925/",
+     "foto": "etna"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Cinque vulcani in nuova eruzione nel mondo",
+     "testo": "Ambrym, Chikurachki, Nevados de Chillán, Tokachidake e Krakatau, secondo il bollettino settimanale; altri 18 vulcani restano attivi.",
+     "fonte": "Smithsonian / USGS GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Ghiaccio artico, minimo 2026 tra i dieci più bassi",
+     "testo": "4,60 milioni di km² il 12 settembre, 1,62 milioni sotto la media 1981–2010. Il record resta quello del 2012, con 3,39 milioni.",
+     "fonte": "NSIDC",
+     "url": "https://nsidc.org/sea-ice-today/analyses/arctic-sea-ice-minimum-ties-tenth-lowest-0",
+     "foto": "ghiaccio1"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Antartide, ondata di calore fino a 20 °C sopra la media",
+     "testo": "Un'anomalia termica eccezionale in piena notte polare, con avvertimenti sulla stabilità dei ghiacci.",
+     "fonte": "Il Messaggero",
+     "url": "https://www.ilmessaggero.it/scienza/antartide_ondata_calore_record_20_gradi_sopra_media_scioglimento_ghiacci-9670207.html"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Agosto 2026, il mese più caldo mai registrato",
+     "testo": "Secondo la NOAA la temperatura globale è stata 1,32 °C sopra la media del Novecento, con gli oceani al valore superficiale più alto di sempre.",
+     "fonte": "Quotidiano.net / NOAA",
+     "url": "https://www.quotidiano.net/esteri/oceani-bollenti-el-nino-e-ghiacci-marini-ai-minimi-storici-agosto-2026-e-stato-il-mese-piu-caldo-di-sempre-c4fc2039"
+    },
+    {
+     "cat": "clima",
+     "titolo": "El Niño, il regista climatico del 2026",
+     "testo": "Riscalda il Pacifico, frena gli uragani atlantici e alimenta il caldo globale.",
+     "fonte": "CNN",
+     "url": "https://www.cnn.com/2026/09/12/weather/el-nino-hurricane-storm-atlantic-record-climate"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo tra 13 e 28 °C, cielo poco nuvoloso e stabile, venti deboli e nessuna pioggia; domani 14–27 °C, tempo mite fino all'inizio di ottobre.",
+     "fonte": "iLMeteo / LaMMA",
+     "url": "https://www.ilmeteo.it/meteo/borgo%2Bsan%2Blorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1896: un grande uragano sugli Stati Uniti orientali, con 507 mm a Glennville, in Georgia. 1992: il settembre più freddo mai registrato a Fairbanks, in Alaska. 2006: la siccità si ritira nel Dakota del Sud.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Sep_30"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "−89,2 °C: la temperatura più bassa mai misurata al suolo sulla Terra, a Vostok, in Antartide, il 21 luglio 1983.",
+     "fonte": "WMO",
+     "url": "https://wmo.asu.edu/content/world-lowest-temperature"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Il Sole sorge verso le 7:13 e tramonta verso le 18:56: circa 11 ore e 45 minuti di luce. Dopo l'equinozio d'autunno le giornate si accorciano di 2–3 minuti al giorno, fino al solstizio del 21 dicembre."
+    }
+   ]
+  },
   {
    "data": "2026-09-29",
    "apertura": {
