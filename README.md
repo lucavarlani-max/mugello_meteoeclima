@@ -40,6 +40,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
 - **Andamento invaso di Bilancino** — grafico della serie giornaliera del volume
   (milioni di m³) nell'anno, con tacche dei mesi e hover, da OpenData Comune di Firenze.
 - **Cielo** — alba, tramonto, ore di luce.
+- **Archivio climatico** (`archivio-climatico.html`, link "Archivio climatico" del riquadro "Il mese in cifre"
+  in home) — i report climatologici mensili di Borgo San Lorenzo (stazione SIR TOS01000999), da leggere online
+  (HTML interattivo) o scaricare in PDF. File in `reports/clima/AAAA-MM-<luogo>.html/.pdf`, elenco in
+  `data/report-clima.json`: per aggiungere un mese basta copiare i due file e inserire un elemento in cima a `report`.
 - **Temperature in Toscana** (`temperature-toscana.html`) — tutte le stazioni della rete
   termometrica del CFR Toscana: temperatura attuale, minime e massime di oggi e di ieri,
   classifiche, anomalie rispetto alla quota, grafico temperatura/quota, andamento giorno

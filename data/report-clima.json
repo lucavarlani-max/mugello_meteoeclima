@@ -1,0 +1,42 @@
+{
+ "nota": "Archivio dei report climatologici mensili. Per aggiungerne uno: copia HTML e PDF in reports/clima/AAAA-MM-<luogo>.html/.pdf e aggiungi un elemento IN CIMA a \"report\".",
+ "report": [
+  {
+   "mese": "2026-09",
+   "titolo": "Settembre 2026",
+   "luogo": "Borgo San Lorenzo",
+   "sottotitolo": "Un mese di due metà: l'ultimo respiro d'estate fino all'8, poi la rottura e un finale già autunnale.",
+   "stazione": "Stazione SIR TOS01000999 · 196 m",
+   "sintesi": "Più caldo della norma di 1,8 °C, il 6° settembre più caldo su 60 della serie: merito soprattutto delle massime. Otto giorni consecutivi sopra i 30 °C fino all'8, con 36,5 °C il 7; poi la rottura del 9–11 con 69,1 mm in tre giorni e un finale asciutto con notti fresche.",
+   "kpi": [
+    {
+     "k": "Temp. media",
+     "v": "21,3 °C",
+     "d": "+1,8 °C vs 1961–88 · 6° su 60",
+     "t": "caldo"
+    },
+    {
+     "k": "Massima assoluta",
+     "v": "36,5 °C",
+     "d": "7 settembre · 2° valore di sempre a settembre",
+     "t": "caldo"
+    },
+    {
+     "k": "Minima assoluta",
+     "v": "7,1 °C",
+     "d": "28 settembre",
+     "t": "freddo"
+    },
+    {
+     "k": "Pioggia totale",
+     "v": "85,5 mm",
+     "d": "+14% vs media 2004–25",
+     "t": "pioggia"
+    }
+   ],
+   "html": "reports/clima/2026-09-borgo-san-lorenzo.html",
+   "pdf": "reports/clima/2026-09-borgo-san-lorenzo.pdf",
+   "pdf_kb": 588
+  }
+ ]
+}
