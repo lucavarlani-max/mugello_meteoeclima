@@ -1,0 +1,359 @@
+{
+ "titolo": "Un secolo di precipitazioni estreme in Toscana",
+ "fonte": "Regione Toscana, Direzione Difesa del Suolo e Protezione Civile – Settore Idrologico e Geologico Regionale / Centro Funzionale Regionale",
+ "aggiornato": "2021-02-07",
+ "dati_fino_al": 2017,
+ "nota": "Massimi assoluti registrati ai pluviografi toscani per ogni durata (prime 5 stazioni). Dati in fase di validazione. L'intensità oraria è mm diviso la durata in ore.",
+ "record": [
+  {
+   "dur": 5,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 30.8
+  },
+  {
+   "dur": 5,
+   "cod": "TOS10000529",
+   "st": "Asciano (Acquedotto)",
+   "data": "1986-08-28",
+   "mm": 22.2
+  },
+  {
+   "dur": 5,
+   "cod": "TOS09001080",
+   "st": "Pontremoli",
+   "data": "1923-12-05",
+   "mm": 20.0
+  },
+  {
+   "dur": 5,
+   "cod": "TOS10000770",
+   "st": "Arezzo",
+   "data": "1989-08-06",
+   "mm": 20.0
+  },
+  {
+   "dur": 5,
+   "cod": "TOS10002590",
+   "st": "Grosseto",
+   "data": "1932-09-21",
+   "mm": 20.0
+  },
+  {
+   "dur": 10,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 52.2
+  },
+  {
+   "dur": 10,
+   "cod": "TOS10000529",
+   "st": "Asciano (Acquedotto)",
+   "data": "1986-08-28",
+   "mm": 35.0
+  },
+  {
+   "dur": 10,
+   "cod": "TOS10000250",
+   "st": "Isola Santa",
+   "data": "1997-09-13",
+   "mm": 34.2
+  },
+  {
+   "dur": 10,
+   "cod": "TOS11000020",
+   "st": "Monte Serra",
+   "data": "1968-07-24",
+   "mm": 32.0
+  },
+  {
+   "dur": 10,
+   "cod": "TOS10001170",
+   "st": "S. Quirico di Vernio",
+   "data": "1958-12-10",
+   "mm": 31.8
+  },
+  {
+   "dur": 15,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 68.2
+  },
+  {
+   "dur": 15,
+   "cod": "TOS10001970",
+   "st": "Quercianella",
+   "data": "2017-09-10",
+   "mm": 58.4
+  },
+  {
+   "dur": 15,
+   "cod": "TOS09000015",
+   "st": "Bagnone",
+   "data": "2013-10-20",
+   "mm": 51.6
+  },
+  {
+   "dur": 15,
+   "cod": "TOS10002580",
+   "st": "Acquisti",
+   "data": "2016-06-09",
+   "mm": 45.0
+  },
+  {
+   "dur": 15,
+   "cod": "TOS01005251",
+   "st": "Bocca d'Arno",
+   "data": "2004-10-26",
+   "mm": 41.6
+  },
+  {
+   "dur": 20,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 84.2
+  },
+  {
+   "dur": 20,
+   "cod": "TOS10000529",
+   "st": "Asciano (Acquedotto)",
+   "data": "1986-08-28",
+   "mm": 54.0
+  },
+  {
+   "dur": 20,
+   "cod": "TOS10000250",
+   "st": "Isola Santa",
+   "data": "1996-06-19",
+   "mm": 48.8
+  },
+  {
+   "dur": 20,
+   "cod": "TOS10001362",
+   "st": "Empoli",
+   "data": "1969-11-14",
+   "mm": 47.3
+  },
+  {
+   "dur": 20,
+   "cod": "TOS01000831",
+   "st": "Nusenna in Chianti",
+   "data": "1992-07-09",
+   "mm": 44.8
+  },
+  {
+   "dur": 30,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 112.8
+  },
+  {
+   "dur": 30,
+   "cod": "TOS10001970",
+   "st": "Quercianella",
+   "data": "2017-09-10",
+   "mm": 100.8
+  },
+  {
+   "dur": 30,
+   "cod": "TOS02000281",
+   "st": "Fornovolasco",
+   "data": "1996-06-19",
+   "mm": 84.1
+  },
+  {
+   "dur": 30,
+   "cod": "TOS02004045",
+   "st": "Ponte Tavole",
+   "data": "1997-11-15",
+   "mm": 77.8
+  },
+  {
+   "dur": 30,
+   "cod": "TOS01001961",
+   "st": "Valle Benedetta",
+   "data": "2017-09-10",
+   "mm": 74.8
+  },
+  {
+   "dur": 60,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 175.4
+  },
+  {
+   "dur": 60,
+   "cod": "TOS10001970",
+   "st": "Quercianella",
+   "data": "2017-09-10",
+   "mm": 159.0
+  },
+  {
+   "dur": 60,
+   "cod": "TOS02000281",
+   "st": "Fornovolasco",
+   "data": "1996-06-19",
+   "mm": 150.5
+  },
+  {
+   "dur": 60,
+   "cod": "TOS02000372",
+   "st": "Croce Arcana",
+   "data": "1999-12-26",
+   "mm": 129.1
+  },
+  {
+   "dur": 60,
+   "cod": "TOS02000332",
+   "st": "Fabbriche di Vallico",
+   "data": "1996-01-25",
+   "mm": 124.0
+  },
+  {
+   "dur": 180,
+   "cod": "TOS02000281",
+   "st": "Fornovolasco",
+   "data": "1996-06-19",
+   "mm": 322.1
+  },
+  {
+   "dur": 180,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 319.4
+  },
+  {
+   "dur": 180,
+   "cod": "TOS10002260",
+   "st": "Castelluccio",
+   "data": "1984-09-05",
+   "mm": 258.8
+  },
+  {
+   "dur": 180,
+   "cod": "TOS02000237",
+   "st": "Monte Macina",
+   "data": "1999-10-29",
+   "mm": 241.8
+  },
+  {
+   "dur": 180,
+   "cod": "TOS10001970",
+   "st": "Quercianella",
+   "data": "2017-09-10",
+   "mm": 240.4
+  },
+  {
+   "dur": 360,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 390.6
+  },
+  {
+   "dur": 360,
+   "cod": "TOS02000281",
+   "st": "Fornovolasco",
+   "data": "1996-06-19",
+   "mm": 387.5
+  },
+  {
+   "dur": 360,
+   "cod": "TOS02000241",
+   "st": "Campagrina",
+   "data": "1996-06-19",
+   "mm": 290.6
+  },
+  {
+   "dur": 360,
+   "cod": "TOS11000040",
+   "st": "Pieve S. Stefano",
+   "data": "1968-07-24",
+   "mm": 285.8
+  },
+  {
+   "dur": 360,
+   "cod": "TOS10000480",
+   "st": "Borgo a Mozzano",
+   "data": "1942-09-26",
+   "mm": 268.8
+  },
+  {
+   "dur": 720,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 474.4
+  },
+  {
+   "dur": 720,
+   "cod": "TOS10002162",
+   "st": "Micciano",
+   "data": "1930-09-28",
+   "mm": 440.0
+  },
+  {
+   "dur": 720,
+   "cod": "TOS10002180",
+   "st": "Sassa",
+   "data": "1930-09-28",
+   "mm": 410.0
+  },
+  {
+   "dur": 720,
+   "cod": "TOS02000281",
+   "st": "Fornovolasco",
+   "data": "1996-06-19",
+   "mm": 406.1
+  },
+  {
+   "dur": 720,
+   "cod": "TOS02000241",
+   "st": "Campagrina",
+   "data": "1996-06-19",
+   "mm": 333.2
+  },
+  {
+   "dur": 1440,
+   "cod": "TOS02000075",
+   "st": "Pomezzana",
+   "data": "1996-06-19",
+   "mm": 478.0
+  },
+  {
+   "dur": 1440,
+   "cod": "TOS10003150",
+   "st": "Portoferraio Città",
+   "data": "1951-09-24",
+   "mm": 427.0
+  },
+  {
+   "dur": 1440,
+   "cod": "TOS02000281",
+   "st": "Fornovolasco",
+   "data": "1996-06-18",
+   "mm": 406.1
+  },
+  {
+   "dur": 1440,
+   "cod": "TOS10000280",
+   "st": "Fornovolasco",
+   "data": "1952-11-18",
+   "mm": 394.0
+  },
+  {
+   "dur": 1440,
+   "cod": "TOS09001083",
+   "st": "S. Giustina",
+   "data": "2011-10-25",
+   "mm": 376.2
+  }
+ ]
+}

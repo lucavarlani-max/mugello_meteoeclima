@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Piogge estreme in Toscana · Mugello Meteo & Clima</title>
+<meta name="description" content="Un secolo di precipitazioni estreme in Toscana: i record di pioggia dai 5 minuti alle 24 ore registrati ai pluviografi regionali dal 1923, con il diluvio di Versilia e Garfagnana del 19 giugno 1996, Livorno 2017 e il Cecina nel 1930. Dati del Centro Funzionale Regionale.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/piogge-estreme.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Un secolo di piogge estreme in Toscana">
+<meta property="og:description" content="I record di pioggia dai 5 minuti alle 24 ore registrati in Toscana dal 1923: grafici interattivi, classifiche ed eventi storici.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/piogge-estreme.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  /* colori degli eventi: 1996 (Versilia-Garfagnana), 2017 (Livorno), 1930 (Cecina), altri */
+  :root{--e96:#c8452b;--e17:#2a78d6;--e30:#7a5bc0;--eot:#9aa79f}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--e96:#e0674c;--e17:#4f93d6;--e30:#9a85e0;--eot:#5d6c63}}
+  :root[data-theme="dark"]{--e96:#e0674c;--e17:#4f93d6;--e30:#9a85e0;--eot:#5d6c63}
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .chart{width:100%;height:380px;position:relative}
+  .chart svg{display:block;width:100%;height:100%;overflow:visible}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .grid{stroke:var(--line);stroke-width:1}
+  svg .env{fill:none;stroke:var(--ink-soft);stroke-width:2;stroke-dasharray:5 4}
+  svg .lab{font-size:11.5px;font-weight:600;fill:var(--ink-soft)}
+  svg .cross{stroke:var(--ink-faint);stroke-width:1}
+  svg .pt{stroke:var(--panel);stroke-width:2;transition:opacity .15s}
+  svg.dim .pt:not(.on){opacity:.15}
+  .seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:3px;gap:2px;flex-wrap:wrap}
+  .seg button{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:none;border:0;border-radius:var(--r-pill);padding:6px 11px;cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--pine);color:#fff}
+  .legend{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 8px}
+  .legend button{font:inherit;font-size:12.5px;color:var(--ink-soft);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:4px 11px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .legend button[aria-pressed="true"]{border-color:var(--ink-faint);color:var(--ink);font-weight:600}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+    padding:8px 11px;font-size:12.5px;line-height:1.5;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .tip i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+  .tip .v{font-family:var(--mono);font-size:12px;margin-left:12px;float:right}
+  .note{margin-top:8px}
+  /* classifica */
+  .bars{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+  .bar{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:center}
+  .bar .n{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-align:right}
+  .bar .t{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:3px;flex-wrap:wrap}
+  .bar .t b{font-weight:600} .bar .t span{color:var(--ink-faint);font-size:12px}
+  .bar .t .mm{font-family:var(--mono);font-weight:600;color:var(--ink);font-size:13px}
+  .bar .tr{height:12px;border-radius:0 4px 4px 0;background:var(--line-soft)}
+  .bar .fl{height:100%;border-radius:0 4px 4px 0}
+  .big-n{font-family:var(--serif);font-weight:800;font-size:40px;line-height:1;letter-spacing:-.02em}
+  /* stazioni */
+  .stz{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;font-size:13px}
+  .stz .tr{grid-column:1/-1;height:8px;border-radius:0 4px 4px 0;background:var(--line-soft);margin-bottom:6px}
+  .stz .fl{height:100%;border-radius:0 4px 4px 0;background:var(--sky)}
+  .stz b{font-family:var(--mono);font-size:12px}
+  /* eventi */
+  .ev{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .ev .card{border-top:4px solid var(--c)}
+  .ev .when{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .ev h3{font-size:19px;margin:4px 0 8px}
+  .ev p{margin:0 0 8px;color:var(--ink-soft)}
+  .ev .k{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+  .ev .k div{font-size:12px;color:var(--ink-faint)} .ev .k b{display:block;font-family:var(--serif);font-size:20px;color:var(--ink)}
+  .fl-tab{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  input[type=search]{font:inherit;font-size:13px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:8px 14px;min-width:220px}
+  td.st{text-align:left;white-space:normal}
+  td .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+  @media (max-width:980px){ .ev{grid-template-columns:1fr} }
+  @media (max-width:640px){ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))} .chart{height:300px} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Toscana / Piogge estreme</div>
+    <header class="head">
+      <div class="eyebrow">Toscana · record di pioggia 1923–2017</div>
+      <h1>Un secolo di piogge estreme</h1>
+      <p class="lead">Quanta pioggia può cadere in Toscana in 5 minuti, in un'ora, in un giorno? Il Centro Funzionale Regionale ha raccolto i massimi assoluti registrati ai pluviografi dal 1923, quando gli Annali Idrologici pubblicarono i primi dati. Qui li trovi in grafici interattivi: per ogni durata le cinque piogge più intense mai misurate, chi le detiene e gli eventi che le hanno prodotte.</p>
+      <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Il record per ogni durata</h2><span class="src">i 5 valori più alti per durata · scala logaritmica del tempo</span></div>
+      <p class="sub">Ogni punto è una delle cinque piogge più forti registrate per quella durata; la linea tratteggiata unisce i record. Il colore indica l'evento. Passa sopra il grafico per leggere la classifica, clicca un evento per evidenziarlo.</p>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-u" role="group" aria-label="Misura"><button data-v="mm" aria-pressed="true">Pioggia caduta (mm)</button><button data-v="ih" aria-pressed="false">Intensità (mm/h)</button></div>
+        </div>
+        <div class="legend" id="leg"></div>
+        <div class="chart" id="ch-env"><div class="tip"></div></div>
+        <p class="note" id="env-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>La classifica, durata per durata</h2><span class="src">scegli la durata</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="ctrl"><div class="seg" id="seg-d" role="group" aria-label="Durata"></div></div>
+          <div class="bars" id="bars"></div>
+        </div>
+        <div class="card" id="dur-box"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Quando sono cadute</h2><span class="src">anno di ogni record · una riga per durata</span></div>
+      <p class="sub">I 50 valori in classifica disposti nel tempo. I primi decenni hanno pochi pluviografi registratori; dal 1991 le stazioni in telemisura hanno moltiplicato le misure. Il punto grande è il primo posto.</p>
+      <div class="card"><div class="chart" id="ch-time" style="height:340px"><div class="tip"></div></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Le stazioni da record</h2><span class="src">quante volte compaiono nelle 10 classifiche</span></div>
+      <div class="two">
+        <div class="card"><div class="stz" id="stz"></div></div>
+        <div class="card">
+          <h3>Dove sono</h3>
+          <p class="note" style="margin-top:0">La maggior parte delle stazioni da record è nella Toscana nord-occidentale: le Alpi Apuane (Pomezzana, Fornovolasco, Campagrina, Isola Santa, Fabbriche di Vallico), la Lunigiana (Pontremoli, Bagnone, Santa Giustina) e la costa livornese (Quercianella, Valle Benedetta). Qui le correnti umide dal mare urtano i rilievi a pochi chilometri dalla costa e la pioggia si concentra. Nel Mugello e nell'Appennino fiorentino non c'è nessuna stazione in classifica; la più vicina è San Quirico di Vernio, in Val di Bisenzio, con 31,8 mm in 10 minuti il 10 dicembre 1958.</p>
+          <p class="note">Fornovolasco compare con due codici: TOS10000280 è la stazione storica (394 mm in 24 ore il 18 novembre 1952), TOS02000281 quella attuale.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Gli eventi più significativi</h2><span class="src">dal documento della Regione</span></div>
+      <div class="ev">
+        <div class="card" style="--c:var(--e96)">
+          <div class="when">19 giugno 1996</div>
+          <h3>Versilia e Garfagnana</h3>
+          <p>L'evento di riferimento dell'ultimo secolo. Le piogge registrate a Pomezzana e Fornovolasco sono le più alte mai misurate in Toscana su quasi tutte le durate, dai 5 minuti alle 24 ore. Intensità così elevate durarono per 10–12 ore e causarono le distruzioni e le vittime che tutti ricordano.</p>
+          <div class="k" id="k96"></div>
+        </div>
+        <div class="card" style="--c:var(--e17)">
+          <div class="when">9–10 settembre 2017</div>
+          <h3>Livorno</h3>
+          <p>Un evento recente non troppo diverso dal 1996: a Quercianella caddero 159 mm in un'ora, secondo valore di sempre in Toscana, e 100,8 mm in mezz'ora. Anche Valle Benedetta, sulle colline alle spalle della città, entra in classifica.</p>
+          <div class="k" id="k17"></div>
+        </div>
+        <div class="card" style="--c:var(--e30)">
+          <div class="when">28 settembre 1930</div>
+          <h3>Il bacino del Cecina</h3>
+          <p>A Sassa e Micciano tra le 15 e le 23 caddero 410 e 440 mm. Erano pluviometri totalizzatori, che danno solo il totale e non il grafico, per questo i valori compaiono solo nella durata di 12 ore. La piena distrusse il ponte ferroviario di Ponte di Monterufoli: un evento che anticipava quello di Versilia.</p>
+          <div class="k" id="k30"></div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:12px">E il novembre 1966? L'alluvione di Firenze non compare tra questi record: la sua eccezionalità fu l'estensione delle piogge su tutto il bacino dell'Arno e dell'Ombrone grossetano, non l'intensità in un singolo punto.</p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Tutti i dati</h2><span class="src" id="tab-n"></span></div>
+      <div class="card">
+        <div class="fl-tab">
+          <input type="search" id="q" placeholder="Cerca stazione, anno o codice…" aria-label="Cerca nella tabella">
+          <a class="btn ghost" id="csv" download="piogge-estreme-toscana.csv" href="#">⬇ Scarica CSV</a>
+        </div>
+        <div class="tbl"><table id="tab"></table></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Fonte e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> Regione Toscana, Direzione Difesa del Suolo e Protezione Civile, Settore Idrologico e Geologico Regionale / Centro Funzionale Regionale, «Un secolo di precipitazioni estreme in Toscana», aggiornamento del 7 febbraio 2021, con i dati fino al 2017.</li>
+          <li>Per ogni durata (5, 10, 15, 20 e 30 minuti; 1, 3, 6, 12 e 24 ore) sono riportati i cinque massimi assoluti registrati ai pluviografi della Toscana. L'intensità oraria è la pioggia divisa per la durata in ore.</li>
+          <li>I primi dati sono del 1923 (29 stazioni, con i 41 mm in 30 minuti al Passo della Cisa il 3 marzo, oggi fuori classifica). Il numero di stazioni con pluviografo registratore è cambiato molto nel tempo e, dal 1991, è cresciuto con le stazioni in telemisura: i record delle durate sotto l'ora dipendono molto da quante stazioni c'erano.</li>
+          <li>I dati sono ancora in fase di validazione da parte della Regione e possono contenere refusi.</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="reports/toscana/un-secolo-di-precipitazioni-estreme.pdf" download>⬇ Documento originale (PDF)</a>
+          <a class="btn ghost" href="data/piogge-estreme.json" download>⬇ Dati (JSON)</a>
+        </p>
+        <p class="note">Dati Regione Toscana – Centro Funzionale Regionale · elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
+<script src="piogge-estreme.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

@@ -13,8 +13,8 @@
     ["Cielo","effemeridi.html",["effemeridi"]],
     ["Webcam",[["📷 Webcam Mugello","index.html#webcam"],["🌍 Webcam Panomax","webcam-panomax.html"]],["webcam-panomax"]],
     ["Proverbi","proverbi.html",["proverbi"]],
-    ["Toscana",[["Temperature"],["🌡️ Oggi e ieri","temperature-toscana.html"],["Borgo S. Lorenzo"],["📊 Oggi nella storia","borgo-storico.html"],["📅 Archivio climatico","archivio-climatico.html"],["Record storici"],["🔴 Massime","estremi-massime.html"],["🔵 Minime","estremi-minime.html"]],
-      ["temperature-toscana","borgo-storico","archivio-climatico","estremi-massime","estremi-minime"]],
+    ["Toscana",[["Temperature"],["🌡️ Oggi e ieri","temperature-toscana.html"],["Borgo S. Lorenzo"],["📊 Oggi nella storia","borgo-storico.html"],["📅 Archivio climatico","archivio-climatico.html"],["Record storici"],["🔴 Massime","estremi-massime.html"],["🔵 Minime","estremi-minime.html"],["Piogge"],["🌧️ Piogge estreme","piogge-estreme.html"]],
+      ["temperature-toscana","borgo-storico","archivio-climatico","estremi-massime","estremi-minime","piogge-estreme"]],
     ["Serie storiche","serie-storiche.html",["serie-storiche","stazioni-centenarie","italia-ghcn","milano-brera","new-york-central-park","padova","moncalieri","de-bilt","san-francisco","genova","mont-aigoual"]],
     ["Notizie","notizie.html",["notizie"]]
   ];

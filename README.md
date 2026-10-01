@@ -40,6 +40,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
 - **Andamento invaso di Bilancino** — grafico della serie giornaliera del volume
   (milioni di m³) nell'anno, con tacche dei mesi e hover, da OpenData Comune di Firenze.
 - **Cielo** — alba, tramonto, ore di luce.
+- **Piogge estreme in Toscana** (`piogge-estreme.html` + `piogge-estreme.js`, menu Toscana) — report interattivo
+  sul documento regionale «Un secolo di precipitazioni estreme in Toscana» (Centro Funzionale Regionale, agg. 2021,
+  dati 1923–2017): i 5 massimi per 10 durate da 5 minuti a 24 ore, grafico durata/pioggia, classifiche, linea del
+  tempo, stazioni ed eventi (1996, 2017, 1930). Dati in `data/piogge-estreme.json`, PDF originale in `reports/toscana/`.
 - **Archivio climatico** (`archivio-climatico.html`, link "Archivio climatico" del riquadro "Il mese in cifre"
   in home) — i report climatologici mensili di Borgo San Lorenzo (stazione SIR TOS01000999), da leggere online
   (HTML interattivo) o scaricare in PDF. File in `reports/clima/AAAA-MM-<luogo>.html/.pdf`, elenco in
