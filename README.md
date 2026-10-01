@@ -97,6 +97,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   le 668 webcam panoramiche pubbliche Panomax su mappa Leaflet con ricerca, filtri per paese e
   tipo, ordinate per distanza dal Mugello. Elenco in `data/panomax.json`, ripreso dal progetto
   webcam-panomax.
+- **Menu principale nelle pagine interne** (`menu.js`, incluso in tutte le pagine tranne la home e
+  `fb-post.html`) — la stessa barra di navigazione della home, fissa in alto durante lo scorrimento, con la voce
+  della pagina evidenziata e il menu ☰ sotto i 1180 px. Le voci sono nell'elenco `VOCI` del file: se si aggiunge
+  una pagina al menu della home, va aggiunta anche lì.
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
   senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
   visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).
