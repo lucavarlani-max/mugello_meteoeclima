@@ -39,7 +39,8 @@
   .mm-dd{position:relative}
   .mm-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--panel,#fff);border:1px solid var(--line,#e3e8e1);border-radius:12px;
     box-shadow:0 2px 6px rgba(16,38,31,.07),0 20px 44px -20px rgba(16,38,31,.28);padding:6px;min-width:200px;display:none;flex-direction:column;gap:2px}
-  .mm-dd:hover .mm-menu,.mm-dd.open .mm-menu{display:flex}
+  .mm-dd.open .mm-menu{display:flex}
+  @media (hover:hover) and (min-width:1181px){ .mm-dd:hover .mm-menu{display:flex} }
   .mm-menu a{border-radius:8px;padding:8px 10px;display:flex;gap:8px}
   .mm-menu a.on{background:var(--pine-tint,#e3f1eb);color:var(--pine-deep,#0a4f3c)}
   .mm-menu .mm-h{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint,#6f7c74);padding:6px 10px 3px}
@@ -51,7 +52,9 @@
       background:var(--panel,#fff);border-bottom:1px solid var(--line,#e3e8e1);box-shadow:0 20px 44px -20px rgba(16,38,31,.35);
       padding:10px 16px 14px;max-height:calc(100vh - 70px);overflow:auto}
     .mm-top.open .mm-nav a,.mm-top.open .mm-dd>button{font-size:15px;padding:11px 10px;border-radius:8px;text-align:left;width:100%}
-    .mm-top.open .mm-menu{position:static;display:flex;box-shadow:none;border:0;padding:2px 0 4px 14px;min-width:0;background:none}
+    .mm-top.open .mm-menu{position:static;display:none;box-shadow:none;border:0;padding:2px 0 4px 14px;min-width:0;background:none}
+    .mm-top.open .mm-dd.open .mm-menu{display:flex}
+    .mm-top.open .mm-dd.open>button{background:var(--pine-tint,#e3f1eb);color:var(--pine-deep,#0a4f3c)}
   }
   @media (max-width:520px){ .mm-in{padding:0 16px} .mm-brand{font-size:16px} }
   @media print{ .mm-top{display:none} }`;
@@ -78,7 +81,9 @@
     });
     document.body.insertBefore(h,document.body.firstChild);
     const b=h.querySelector(".mm-btn");
-    b.addEventListener("click",()=>{const o=h.classList.toggle("open");b.setAttribute("aria-expanded",o);b.textContent=o?"✕":"☰";});
+    b.addEventListener("click",()=>{const o=h.classList.toggle("open");b.setAttribute("aria-expanded",o);b.textContent=o?"✕":"☰";
+      h.querySelectorAll(".mm-dd.open").forEach(y=>y.classList.remove("open"));
+      const cur=h.querySelector(".mm-dd.on"); if(o&&cur) cur.classList.add("open");});   // sottomenu chiusi, tranne quello della pagina
     h.querySelectorAll(".mm-dd>button").forEach(x=>x.addEventListener("click",e=>{e.stopPropagation();
       const d=x.parentNode, o=!d.classList.contains("open"); h.querySelectorAll(".mm-dd.open").forEach(y=>y.classList.remove("open")); if(o) d.classList.add("open");}));
     document.addEventListener("click",e=>{if(!h.contains(e.target)){h.querySelectorAll(".mm-dd.open").forEach(y=>y.classList.remove("open"));
