@@ -3,8 +3,14 @@
 Prepara i dati delle serie storiche (stazioni centenarie) per il sito.
 
 Uso:
-  python scripts/build_serie.py <csv giornaliero> <slug> [csv pioggia] [--tavg]
+  python scripts/build_serie.py <csv giornaliero> <slug> [csv pioggia] [--tavg] [--min-anno=N]
   es. python scripts/build_serie.py data/serie/milano-brera.csv milano-brera
+
+  --min-anno=N  giorni validi minimi perché un anno conti nelle statistiche annuali
+                (default 330). Utile per stazioni con molti anni quasi completi ma
+                sotto 330 giorni, es. Bangalore: con --tavg la media annua copre quasi
+                tutti gli anni dal 1977, ma massima e minima (serie separate, niente
+                TAVG a coprire i buchi) restano sotto soglia quasi ovunque.
 
 Formati accettati per il CSV giornaliero:
   - year,month,day,prec,tempMax,tempMin (-99.9 = mancante), es. ARPA Lombardia
@@ -129,7 +135,7 @@ def leggi_pioggia(src):
     return out
 
 
-def main(src, slug, src_pioggia=None, tavg=False):
+def main(src, slug, src_pioggia=None, tavg=False, min_anno=MIN_GIORNI_ANNO):
     giorni, corretti = leggi(src, tavg)
     if src_pioggia:
         pr = leggi_pioggia(src_pioggia)
@@ -173,10 +179,10 @@ def main(src, slug, src_pioggia=None, tavg=False):
         tn = [g[3] for g in gg if g[3] is not None]
         pr = [g[1] for g in gg if g[1] is not None]
         tmd = [g[5] for g in gg if g[5] is not None]
-        ok_t = len(tx) >= MIN_GIORNI_ANNO and len(tn) >= MIN_GIORNI_ANNO
-        ok_p = len(pr) >= MIN_GIORNI_ANNO
+        ok_t = len(tx) >= min_anno and len(tn) >= min_anno
+        ok_p = len(pr) >= min_anno
         if con_tm:
-            tm_anno = r2(media(tmd)) if len(tmd) >= MIN_GIORNI_ANNO else None
+            tm_anno = r2(media(tmd)) if len(tmd) >= min_anno else None
         else:
             tm_anno = r2((media(tx) + media(tn)) / 2) if ok_t else None
         m = [mesi.get((y, k)) for k in range(1, 13)]
@@ -254,7 +260,12 @@ def main(src, slug, src_pioggia=None, tavg=False):
 
 
 if __name__ == "__main__":
-    args = [a for a in sys.argv[1:] if a != "--tavg"]
+    opts = [a for a in sys.argv[1:] if a.startswith("--")]
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if len(args) not in (2, 3):
         sys.exit(__doc__)
-    main(*args, tavg="--tavg" in sys.argv)
+    min_anno = MIN_GIORNI_ANNO
+    for o in opts:
+        if o.startswith("--min-anno="):
+            min_anno = int(o.split("=", 1)[1])
+    main(*args, tavg="--tavg" in opts, min_anno=min_anno)
