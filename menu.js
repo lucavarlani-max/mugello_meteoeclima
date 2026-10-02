@@ -8,7 +8,7 @@
     ["Previsioni","index.html#comuni",["comune"]],
     ["Radar & dati","radar.html",["radar"]],
     ["Mappe","mappe.html",["mappe"]],
-    ["Neve","neve.html",["neve"]],
+    ["Neve",[["❄️ Neve oggi","neve.html"],["📜 La neve a Firenze","neve-firenze.html"]],["neve","neve-firenze"]],
     ["Clima Firenze","clima-firenze.html",["clima-firenze"]],
     ["Cielo","effemeridi.html",["effemeridi"]],
     ["Webcam",[["📷 Webcam Mugello","index.html#webcam"],["🌍 Webcam Panomax","webcam-panomax.html"]],["webcam-panomax"]],

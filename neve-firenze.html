@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La neve a Firenze · Mugello Meteo &amp; Clima</title>
+<meta name="description" content="Storia delle principali nevicate a Firenze dal Medioevo agli anni '90: dal gelo del 1493 al grande inverno del 1929 fino al -23 °C del gennaio 1985.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/neve-firenze.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="La neve a Firenze · Mugello Meteo &amp; Clima">
+<meta property="og:description" content="Storia delle principali nevicate a Firenze dal Medioevo agli anni '90: dal gelo del 1493 al grande inverno del 1929 fino al -23 °C del gennaio 1985.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/neve-firenze.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Firenze sotto la neve">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#7d8a82;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --serif:"Bricolage Grotesque",Georgia,serif;
+    --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --r:18px; --r-sm:13px; --r-pill:999px;
+    --shadow:0 1px 2px rgba(16,38,31,.05),0 1px 12px -6px rgba(16,38,31,.12);
+    --shadow-lift:0 10px 30px -14px rgba(16,38,31,.3);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0c1512; --panel:#111d19; --panel-2:#0f1a16;
+      --ink:#eaf1ec; --ink-soft:#b3c3ba; --ink-faint:#7f9188;
+      --line:#1e2c26; --line-soft:#182420;
+      --pine:#3fae8b; --pine-deep:#8fd9c1; --pine-tint:#132a22;
+      --sky:#6db0e6; --sky-tint:#132430;
+      --amber:#e08a3e; --amber-tint:#2a1d10;
+      --shadow-lift:0 12px 34px -16px rgba(0,0,0,.7);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;
+    -webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:var(--serif);letter-spacing:-.02em;line-height:1.08;margin:0}
+  em{font-style:italic;color:var(--pine)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pine);font-weight:600}
+
+  /* back bar */
+  .topbar{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);position:sticky;top:0;z-index:30}
+  .topbar .wrap{display:flex;align-items:center;gap:16px;height:58px}
+  .back{font-size:13.5px;font-weight:500;color:var(--ink-soft)}
+  .back:hover{color:var(--pine)}
+  .brandline{margin-left:auto;display:flex;align-items:center;gap:9px;font-family:var(--serif);font-weight:700;font-size:15px}
+  .brandline .mk{width:26px;height:26px;flex:none}
+  .brandline .amp{color:var(--sky)}
+
+  /* hero */
+  .hero{padding:52px 0 26px;position:relative;overflow:hidden}
+  .hero .wrap{position:relative;z-index:1}
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px}
+  .hero .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber)}
+  .hero h1{font-size:clamp(38px,6vw,68px);font-weight:800}
+  .hero p.intro{max-width:46ch;color:var(--ink-soft);font-size:16.5px;margin:18px 0 24px}
+  .hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--pine);color:#fff;font-weight:600;
+    font-size:14px;padding:11px 18px;border-radius:var(--r-pill);border:0;cursor:pointer;font-family:var(--sans)}
+  .btn:hover{background:var(--pine-deep)}
+  .tlink{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13.5px;color:var(--pine)}
+  .tlink:hover{text-decoration:underline}
+  .hero-sign{margin-top:26px;display:flex;align-items:center;gap:12px;color:var(--ink-faint);font-size:12.5px}
+  .hero-sign .ln{width:34px;height:1px;background:var(--line)}
+  .hero-cloud{position:absolute;right:-40px;top:10px;width:min(42vw,440px);opacity:.5;z-index:0;color:var(--pine)}
+  @media (max-width:720px){.hero-cloud{display:none}}
+
+  /* stat row */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr) 1.3fr;gap:14px;padding:8px 0 6px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px;box-shadow:var(--shadow)}
+  .stat strong{display:block;font-family:var(--serif);font-weight:800;font-size:34px;letter-spacing:-.03em;line-height:1}
+  .stat span{font-size:12px;color:var(--ink-faint);margin-top:5px;display:block}
+  .stat.note{background:var(--pine-tint);border-color:transparent;display:flex;align-items:center;gap:11px;color:var(--pine-deep)}
+  .stat.note svg{flex:none;width:22px;height:22px}
+  .stat.note span{color:var(--pine-deep);font-weight:600;font-size:12.5px;margin:0}
+  @media (max-width:720px){.stats{grid-template-columns:1fr 1fr}}
+
+  /* generic section */
+  section.blk{padding:34px 0}
+  .sec-kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}
+  .intro-grid h2{font-size:clamp(26px,3.4vw,38px);font-weight:700}
+  .intro-grid p{color:var(--ink-soft);font-size:15.5px;margin:0 0 12px}
+  @media (max-width:720px){.intro-grid{grid-template-columns:1fr;gap:14px}}
+
+  /* season calendar */
+  .season-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+  .season-head h2{font-size:clamp(24px,3vw,34px);font-weight:700}
+  .season-head .note{color:var(--ink-faint);font-size:13px;max-width:22ch;text-align:right}
+  .season-tabs{display:flex;gap:10px;flex-wrap:wrap}
+  .season-tabs button{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 16px;
+    cursor:pointer;font-family:var(--sans);color:var(--ink);font-weight:600;font-size:14px;text-align:left;
+    display:flex;flex-direction:column;gap:3px;transition:.15s;min-width:120px}
+  .season-tabs button span{font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--ink-faint);font-weight:500;text-transform:none}
+  .season-tabs button:hover{border-color:var(--pine)}
+  .season-tabs button.active{background:var(--pine);color:#fff;border-color:var(--pine)}
+  .season-tabs button.active span{color:rgba(255,255,255,.8)}
+  .season-feature{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:center;margin-top:22px;
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+  .season-feature .art{aspect-ratio:1;border-radius:14px;display:grid;place-items:center;background:var(--ac-tint,var(--pine-tint));color:var(--ac,var(--pine))}
+  .season-feature .art svg{width:64%;height:64%}
+  .season-feature .kick{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:6px}
+  .season-feature h3{font-size:24px;font-weight:700;margin-bottom:8px}
+  .season-feature p{color:var(--ink-soft);font-size:15px;margin:0 0 12px}
+  @media (max-width:640px){.season-feature{grid-template-columns:1fr}.season-feature .art{max-width:150px}}
+
+  /* archive */
+  .arch-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+  .arch-head h2{font-size:clamp(24px,3vw,34px);font-weight:700}
+  .search{display:flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--r-pill);padding:9px 16px;min-width:250px;box-shadow:var(--shadow)}
+  .search svg{width:17px;height:17px;color:var(--ink-faint);flex:none}
+  .search input{border:0;background:none;outline:none;font-family:var(--sans);font-size:14px;color:var(--ink);width:100%}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .filt{display:inline-flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--r-pill);padding:7px 13px;cursor:pointer;font-family:var(--sans);font-weight:600;
+    font-size:13px;color:var(--ink-soft);transition:.15s}
+  .filt span{font-family:var(--mono);font-size:11px;background:var(--panel-2);border-radius:20px;padding:1px 7px;color:var(--ink-faint)}
+  .filt:hover{border-color:var(--pine)}
+  .filt.selected{background:var(--pine);color:#fff;border-color:var(--pine)}
+  .filt.selected span{background:rgba(255,255,255,.2);color:#fff}
+  .arch-hint{display:flex;align-items:center;gap:7px;color:var(--ink-faint);font-size:12px;margin-bottom:18px}
+  .arch-hint svg{width:14px;height:14px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:600px){.grid{grid-template-columns:1fr}}
+  .card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:20px;cursor:pointer;transition:.16s;box-shadow:var(--shadow);overflow:hidden;
+    display:flex;flex-direction:column;min-height:186px;border-top:3px solid var(--ac,var(--pine))}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+  .card:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
+  .card .ct{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .card .wico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:var(--ac-tint,var(--pine-tint));color:var(--ac,var(--pine))}
+  .card .wico svg{width:20px;height:20px}
+  .card .cmonth{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--ink-faint);text-align:right;max-width:52%}
+  .card .qm{color:var(--ac,var(--pine));opacity:.28;margin-bottom:2px}
+  .card p.txt{font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.28;color:var(--ink);margin:0 0 auto}
+  .card .cb{display:flex;align-items:center;justify-content:space-between;margin-top:16px;
+    font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
+  .card .cb .idx{display:flex;align-items:center;gap:8px}
+  .card .cb .open{color:var(--ac,var(--pine));font-weight:600}
+  .empty{grid-column:1/-1;text-align:center;color:var(--ink-faint);padding:40px;font-size:14.5px}
+
+  /* accents */
+  .accent-blue{--ac:var(--sky);--ac-tint:var(--sky-tint)}
+  .accent-ochre{--ac:#b58318;--ac-tint:#f6eed6}
+  .accent-terracotta{--ac:#c0522e;--ac-tint:#f6e2d8}
+  .accent-sage{--ac:#4f8a5f;--ac-tint:#e5efe7}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    .accent-ochre{--ac:#d6a53f;--ac-tint:#2a2210}
+    .accent-terracotta{--ac:#e08154;--ac-tint:#2c170f}
+    .accent-sage{--ac:#6fb583;--ac-tint:#132a1c}
+  }}
+
+  /* field note */
+  .fnote{display:grid;grid-template-columns:1fr 1.2fr;gap:26px;align-items:center;
+    background:var(--pine);color:#eafaf3;border-radius:var(--r);padding:30px;box-shadow:var(--shadow-lift)}
+  .fnote .art{display:grid;place-items:center;color:rgba(255,255,255,.85)}
+  .fnote .art svg{width:120px;height:120px}
+  .fnote h2{font-size:clamp(24px,3vw,34px);font-weight:700;color:#fff;margin-bottom:12px}
+  .fnote em{color:#bfe9d8}
+  .fnote p{color:rgba(255,255,255,.86);font-size:15px;margin:0 0 14px}
+  .fnote .tlink{color:#fff}
+  @media (max-width:640px){.fnote{grid-template-columns:1fr;text-align:left}.fnote .art{display:none}}
+
+  /* modal */
+  .backdrop{position:fixed;inset:0;background:rgba(8,20,15,.55);backdrop-filter:blur(3px);z-index:80;
+    display:flex;align-items:flex-start;justify-content:center;padding:5vh 18px;overflow-y:auto}
+  .modal{position:relative;background:var(--panel);border-radius:22px;max-width:640px;width:100%;
+    padding:34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);border-top:4px solid var(--ac,var(--pine));animation:pop .22s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .modal .close{position:absolute;right:18px;top:18px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+    background:var(--panel-2);cursor:pointer;display:grid;place-items:center;color:var(--ink-soft)}
+  .modal .close:hover{color:var(--ink);border-color:var(--pine)}
+  .modal .mk-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.05em;color:var(--ink-faint);text-transform:uppercase}
+  .modal .mk-row .wico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:var(--ac-tint,var(--pine-tint));color:var(--ac,var(--pine))}
+  .modal .wico svg{width:20px;height:20px}
+  .modal .mquote{color:var(--ac,var(--pine));opacity:.3;margin:16px 0 4px}
+  .modal h2{font-family:var(--serif);font-size:clamp(22px,3.6vw,30px);font-weight:700;line-height:1.14;color:var(--ink);margin-bottom:20px}
+  .modal .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px}
+  @media (max-width:560px){.modal{padding:26px 20px}.modal .cols{grid-template-columns:1fr;gap:14px}}
+  .modal h3{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac,var(--pine));font-weight:600;margin-bottom:6px}
+  .modal p{color:var(--ink-soft);font-size:14.5px;margin:0}
+  .modal .reading{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+  .modal .mfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+    border-top:1px solid var(--line);padding-top:16px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+
+  .foot{border-top:1px solid var(--line);padding:26px 0 46px;color:var(--ink-faint);font-size:12.5px}
+  .foot .wrap{display:flex;gap:8px 18px;flex-wrap:wrap;align-items:center}
+  .foot a{color:var(--pine);font-weight:600}
+  .foot .src{margin-left:auto;font-family:var(--mono);font-size:11px}
+
+  /* articolo */
+  .art-wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:34px;align-items:start}
+  @media (max-width:900px){.art-wrap{grid-template-columns:1fr}}
+  .prose h2{font-size:clamp(24px,3vw,32px);font-weight:700;margin:38px 0 14px}
+  .prose h2:first-child{margin-top:0}
+  .prose p{color:var(--ink-soft);font-size:16px;margin:0 0 16px;max-width:68ch}
+  .prose p strong{color:var(--ink)}
+  blockquote.cron{margin:22px 0;padding:18px 22px;background:var(--panel);border:1px solid var(--line);
+    border-left:4px solid var(--sky);border-radius:var(--r-sm);box-shadow:var(--shadow);max-width:68ch}
+  blockquote.cron p{font-family:var(--serif);font-size:17px;line-height:1.45;color:var(--ink);margin:0 0 8px;font-weight:500}
+  blockquote.cron cite{font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.06em;color:var(--ink-faint);text-transform:uppercase}
+  .side{position:sticky;top:76px;display:flex;flex-direction:column;gap:14px}
+  @media (max-width:900px){.side{position:static}}
+  .toc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+  .toc ol{margin:8px 0 0;padding:0;list-style:none;counter-reset:t}
+  .toc li{counter-increment:t;font-size:13.5px;border-top:1px solid var(--line-soft)}
+  .toc li:first-child{border-top:0}
+  .toc a{display:flex;gap:10px;padding:8px 0;color:var(--ink-soft)}
+  .toc a::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--ink-faint);padding-top:2px}
+  .toc a:hover{color:var(--pine)}
+  .fig{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;box-shadow:var(--shadow)}
+  .fig img{display:block;width:100%;height:auto;cursor:zoom-in}
+  .fig figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink-faint);line-height:1.4}
+  .fig figcaption b{font-family:var(--mono);color:var(--pine);font-weight:600;margin-right:6px}
+  .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin:6px 0 22px}
+  .tabwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow);margin:6px 0 22px;max-width:640px}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th,td{padding:9px 14px;text-align:left;border-top:1px solid var(--line-soft);white-space:nowrap}
+  td.wrapc{white-space:normal}
+  thead th{border-top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);background:var(--panel-2)}
+  td.n{font-family:var(--mono);text-align:right}
+  th.n{text-align:right}
+  tr.hi td{background:var(--sky-tint);font-weight:600}
+  .neg{color:var(--sky)}
+  .tabnote{font-size:12.5px!important;color:var(--ink-faint)!important;margin:-12px 0 22px!important}
+  .lb{position:fixed;inset:0;background:rgba(8,20,15,.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;flex-direction:column;gap:10px}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:82vh;border-radius:10px}
+  .lb p{color:#fff;font-size:13.5px;margin:0;max-width:70ch;text-align:center}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+
+  <div class="topbar"><div class="wrap">
+    <a class="back" href="neve.html">← Torna a Neve</a>
+  </div></div>
+
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="eyebrow">Storia del clima · Firenze</div>
+      <h1>La neve<br><em>a Firenze.</em></h1>
+      <p class="intro">Storia delle principali nevicate dal Medioevo alla fine degli anni '90: dal gelo del 1493 all'inverno del 1929, fino ai −23 °C del gennaio 1985.</p>
+      <div class="hero-actions">
+        <a href="#testo" class="btn">Leggi l'articolo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+        <a href="https://web.archive.org/web/20110722055600/http://www.aeris.toscana.it/articles.asp?id=5" target="_blank" rel="noreferrer" class="tlink">Leggi la fonte
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+      </div>
+      <div class="hero-sign"><span class="ln"></span> David Gervasoni · Aeris · 10 gennaio 2011</div>
+    </div>
+    <svg class="hero-cloud" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M40 98a22 22 0 0 1 4-43 28 28 0 0 1 54 6 19 19 0 0 1-5 37H40z"/>
+      <path d="M56 116h.01M78 124h.01M100 116h.01M67 132h.01M89 138h.01M45 128h.01M112 128h.01"/>
+      <path d="M150 20v50M125 45h50M132 27l36 36M168 27l-36 36"/>
+    </svg>
+  </section>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><strong>−23°</strong><span>Peretola, 12 gennaio 1985</span></div>
+      <div class="stat"><strong>−45°</strong><span>Varsavia, febbraio 1929</span></div>
+      <div class="stat"><strong>−22°</strong><span>Borgo S. Lorenzo, 16/2/1929</span></div>
+      <div class="stat note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M4.5 7.5l15 9M19.5 7.5l-15 9"/></svg>
+        <span>Firenze e Mugello:<br>la memoria del gelo</span></div>
+    </div>
+  </div>
+
+  <section class="blk" id="testo"><div class="wrap"><div class="art-wrap">
+  <article class="prose">
+
+    <h2 id="medioevo">Dal Medioevo all'Ottocento</h2>
+    <p>Le nevicate per Firenze sono quasi eventi straordinari, ma in passato la neve è caduta più volte in città anche con abbondanza, sebbene sempre a molta distanza di anni tra una nevicata e l'altra; è forse per questo che molti fiorentini la vedono come un fatto veramente eccezionale e quasi la temono.</p>
+    <p>Tra le nevicate rimaste nella memoria della città ci sono quelle del <strong>1269</strong>, del <strong>1376</strong>, del <strong>1389</strong> e del <strong>1408</strong> che «bastò un mese e mezzo». Significativa è la cronaca di Bartolomeo Masi sull'ondata di freddo del 1493:</p>
+    <blockquote class="cron"><p>Ricordo come a dì 20 di gennaio 1493, il dì di Santo Bastiano, nevicò in Firenze in modo tale che gli alzò la neve per le vie presso a un braccio. E fu in detto anno un grandissimo freddo in modo tale che si vedeva gettare fuori dalle finestre un catino d'acqua calda e, mediato che l'era in sulle lastre, ell'era diacciata; e durò la sopraddetta neve in Firenze un mese e più; e diacciò Arno tra ponti di Firenze da banda a banda; et in detto anno si seccò, pel freddo grande che fu una gran cosa di vignie e di vite di questi nostri piani; e così fu di molti olivi, allori e melaranci de' quali ne campò molto poche. Dicono questi nostri antichi che a loro tempo non ricordano nevicare in Firenze mai per una volta sola tanta neve quanta fu questa di questo dì…</p><cite>Bartolomeo Masi · cronaca del 1493</cite></blockquote>
+    <p>E con tanta neve sul terreno non mancava certo la materia prima per i pupazzi che venivano costruiti dai più giovani e non solo: il Vasari racconta, ad esempio, che dopo la grande nevicata del 1493, Piero dei Medici, il figlio di Lorenzo il Magnifico, si rivolse niente meno che a Michelangelo per fargli fare, nel cortile del suo palazzo, «una statua che fu bellissima».</p>
+    <p>Un'altra nevicata di grande importanza fu quella del <strong>1510</strong> quando la neve venne giù fitta fitta per quattro giorni di fila e dopo sei giorni di sosta riattaccò a cadere con abbondanza su quella accumulatasi precedentemente, tanto «che ella si alzò per Firenze in molti luoghi un braccio». Inoltre fu così freddo che i fiorentini organizzarono partite di pallone e corse di cavalli sull'Arno ghiacciato.</p>
+    <p>Nel 1604, invece, sfilarono cortei e si tenne una Giostra del Saraceno.</p>
+    <p>Spesso la neve cade in periodi insoliti ed all'improvviso, aumentando lo stupore nella gente. Così accadde nel <strong>1883</strong> e nel <strong>1886</strong> quando le nevicate avvennero in maggio.</p>
+
+    <h2 id="novecento">I primi del Novecento</h2>
+    <p>Nel 1895 la neve cadde abbondante nei mesi di gennaio, febbraio e marzo per un totale di 14 cm. Nevicò spesso nel 1904 sia in gennaio, febbraio e marzo che in ottobre e novembre.</p>
+    <p>La fine dell'anno 1906 regalò una cospicua nevicata il 30 dicembre, ma anche i primi tre mesi di quell'anno insieme agli ultimi tre videro comparire la neve.</p>
+    <div class="gal">
+      <figure class="fig"><img src="img/neve-firenze/a.jpg" alt="Neve in Piazza Vittorio durante una nevicata dei primi anni del ’900" loading="lazy" data-cap="Primi ’900: Neve in Piazza Vittorio durante una nevicata dei primi anni del ’900"><figcaption><b>Primi ’900</b>Neve in Piazza Vittorio durante una nevicata dei primi anni del ’900</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/b.jpg" alt="Neve in Piazza della Signoria" loading="lazy" data-cap="1904: Neve in Piazza della Signoria"><figcaption><b>1904</b>Neve in Piazza della Signoria</figcaption></figure>
+    </div>
+    <p>Nel 1908 si segnala solo del nevischio, ma già sul Monte Morello le nevicate furono di ben altra portata. L'anno successivo due nevicate avvennero a gennaio e a febbraio.</p>
+    <p>Il <strong>2 febbraio 1915</strong> La Nazione scrive: «La neve ha arrecato ieri letizia nuova ai cittadini… i fiorentini hanno salutato con gioia la neve, assistendo con lieto animo alle battaglie giovanili sulle pubbliche piazze…»; di ben altre battaglie il giornale trattava in prima pagina e così il racconto della nevicata del giorno prima temperò le notizie di guerra provenienti dal mondo (purtroppo solo per poco tempo). La nevicata fu abbondante con circa 20 cm e nevicò anche il mese prima.</p>
+    <div class="gal">
+      <figure class="fig"><img src="img/neve-firenze/c.jpg" alt="Piazzale Michelangelo sotto la neve" loading="lazy" data-cap="Febbraio 1915: Piazzale Michelangelo sotto la neve"><figcaption><b>Febbraio 1915</b>Piazzale Michelangelo sotto la neve</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/d.jpg" alt="Veduta di Firenze dopo la nevicata" loading="lazy" data-cap="1915: Veduta di Firenze dopo la nevicata"><figcaption><b>1915</b>Veduta di Firenze dopo la nevicata</figcaption></figure>
+    </div>
+
+    <h2 id="1929">L'inverno del 1929</h2>
+    <p>Ma l'inverno più gelido e nevoso che si ricordi ai giorni nostri fu quello del <strong>1929</strong> quando nevicò per un giorno in gennaio, per quattro giorni in febbraio, accumulando una gran quantità di neve, per un giorno in marzo, per uno in aprile e per tre in dicembre.</p>
+    <p>La prima nevicata si ebbe il <strong>17 gennaio</strong> e fu abbondante. Il giorno dopo le strade e le pozze erano gelate, dato che già alla mezzanotte il termometro segnava −5 °C. Il 19 gennaio si raggiunsero i −7 °C; ma temperature come queste non furono da record per Firenze perché negli anni passati si toccarono punte inferiori: per esempio <strong>−10,6 °C</strong> (24 gennaio 1891) e <strong>−12,9 °C</strong> (30 dicembre 1849). Comunque nei dintorni di Firenze il freddo fu più intenso ed a Ponte a Signa la temperatura arrivò a −11 °C, mentre a Borgo San Lorenzo ci furono −15 °C. Nei giorni successivi il tempo restò freddo anche se la temperatura tese a risalire piano piano. Le notizie dal resto d'Europa erano ancor più eclatanti ed in molte città si oltrepassarono di gran lunga i −20 °C.</p>
+    <p>Il freddo tornò a farsi sentire con grande intensità domenica <strong>3 febbraio</strong> quando il termometro registrò una minima di −7 °C e una massima di appena 0,4 °C ed il vento ghiaccio di tramontana riprese a soffiare. La gente preferì chiudersi in casa e così le strade e le piazze della città rimasero deserte. In montagna aveva cominciato già a nevicare (80 cm all'Abetone), mentre notizie provenienti da est raccontavano di interi golfi gelati sul Mar Adriatico.</p>
+    <p>Il 4 febbraio il freddo continuò ad intensificarsi: a Firenze la minima restò sui −7 °C, ma già nelle campagne si registrarono −16 °C e fiumi come il Cecina e i laghi di Chiusi e Montepulciano gelarono del tutto. L'Arno era ghiacciato in parte. Dall'estero si segnalavano −37 °C in Boemia.</p>
+    <p>L'ondata di gelo proseguì: il 5 febbraio ci furono −7,5 °C a Firenze e sul Monte Morello la neve era già alta un metro.</p>
+    <p>Giorno dopo giorno ogni corso d'acqua più grosso veniva ricoperto da uno strato di ghiaccio. Il 6 febbraio toccò al lago di Massaciuccoli ed alla <strong>Sieve</strong> sulle cui rive, in località San Piero a Sieve, si toccarono i −15 °C. In Cecoslovacchia si scese a −40 °C a Budweis.</p>
+    <p>Le giornate si mantennero gelide fino a lunedì <strong>11 febbraio</strong> quando alle 9 cominciò anche a nevicare con vento di tramontana. Nel <strong>Mugello</strong> c'era già mezzo metro di neve. Ma ancora il peggio non era passato. A Firenze continuò a nevicare fino a giovedì 14; tutti i servizi erano interrotti o precari, cominciarono a scarseggiare i generi alimentari e, ancor peggio, la legna ed il combustibile per il riscaldamento. Con temperature vicine o uguali a −9 °C l'Arno congelò completamente e la neve si alzò di parecchi centimetri. Sull'Appennino Tosco-Emiliano, dopo giorni di intense bufere di neve, sul suolo rimase uno strato di 3 metri.</p>
+    <div class="gal">
+      <figure class="fig"><img src="img/neve-firenze/f.jpg" alt="Tetti del centro di Firenze sotto la neve; in basso Lungarno e Ponte alle Grazie" loading="lazy" data-cap="Febbraio 1929: Tetti del centro di Firenze sotto la neve; in basso Lungarno e Ponte alle Grazie"><figcaption><b>Febbraio 1929</b>Tetti del centro di Firenze sotto la neve; in basso Lungarno e Ponte alle Grazie</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/g.jpg" alt="Ponte alle Grazie" loading="lazy" data-cap="Febbraio 1929: Ponte alle Grazie"><figcaption><b>Febbraio 1929</b>Ponte alle Grazie</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/h.jpg" alt="Ponte Vecchio" loading="lazy" data-cap="Febbraio 1929: Ponte Vecchio"><figcaption><b>Febbraio 1929</b>Ponte Vecchio</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/i.jpg" alt="Neve scaricata in Arno presso Piazza dei Giudici" loading="lazy" data-cap="Febbraio 1929: Neve scaricata in Arno presso Piazza dei Giudici"><figcaption><b>Febbraio 1929</b>Neve scaricata in Arno presso Piazza dei Giudici</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/e.jpg" alt="«Una giornata siberiana», articolo de La Nazione" loading="lazy" data-cap="Febbraio 1929: «Una giornata siberiana», articolo de La Nazione"><figcaption><b>Febbraio 1929</b>«Una giornata siberiana», articolo de La Nazione</figcaption></figure>
+    </div>
+    <p>Il <strong>16 febbraio</strong> la temperatura in città scese a −10,5 °C (a Borgo San Lorenzo <strong>−22 °C</strong>) e Padre Guido Alfani dell'Osservatorio Ximeniano di Firenze confrontò le medie di questo freddissimo periodo con quelle normali del mese di febbraio:</p>
+    <div class="tabwrap"><table>
+      <thead><tr><th></th><th class="n">Febbraio 1929</th><th class="n">Febbraio, normale</th></tr></thead>
+      <tbody>
+        <tr><td>Minima</td><td class="n neg">−6,1 °C</td><td class="n">3,0 °C</td></tr>
+        <tr><td>Massima</td><td class="n neg">−0,4 °C</td><td class="n">10,8 °C</td></tr>
+        <tr class="hi"><td>Media</td><td class="n neg">−3,2 °C</td><td class="n">6,6 °C</td></tr>
+      </tbody></table></div>
+    <p>Per far capire l'eccezionalità di quell'inverno basterebbe soltanto dire che a Varsavia si raggiunsero i −45 °C, a Vienna −32 °C (misurazioni queste che non tutti i termometri riuscirono a compiere). Il ghiaccio sul Mar Nero si estese a perdita d'occhio. In Italia ci furono paesi appenninici sommersi da circa 8 metri di neve.</p>
+    <p>Ancora oggi qualche persona più attempata, vedendo magari il termometro scendere e ricordandosi quell'inverno da lupi (che in molte parti d'Europa scesero affamati nei villaggi), esclama, esagerando un po': «Fa più freddo del '29!».</p>
+
+    <h2 id="registro">Quarant'anni di neve, 1960–1993</h2>
+    <p>Per fare nevicare a Firenze non c'è certo bisogno di eventi così imponenti nella storia meteorologica come fu l'inverno del '29 o quello del '56. Anche i classici inverni possono portare nevicate più o meno consistenti. Negli ultimi 40 anni l'Osservatorio Ximeniano ha registrato i seguenti giorni con neve:</p>
+    <div class="tabwrap"><table>
+      <thead><tr><th>Anno</th><th>Giorno</th><th class="n">Neve</th></tr></thead>
+      <tbody><tr><td>1960</td><td>12 gennaio</td><td class="n">9,0 cm</td></tr><tr><td>1963</td><td>13 gennaio</td><td class="n">3,5 cm</td></tr><tr><td></td><td>17 gennaio</td><td class="n">1,0 cm</td></tr><tr class=hi><td></td><td>19 gennaio</td><td class="n">15,0 cm</td></tr><tr class=hi><td></td><td>3 febbraio</td><td class="n">18,0 cm</td></tr><tr><td>1966</td><td>9 gennaio</td><td class="n">5,0 cm</td></tr><tr><td></td><td>15 gennaio</td><td class="n">1,0 cm</td></tr><tr><td></td><td>20 gennaio</td><td class="n">1,5 cm</td></tr><tr><td>1967</td><td>10 dicembre</td><td class="n">neve, nevischio</td></tr><tr class=hi><td>1968</td><td>9 gennaio</td><td class="n">19,0 cm</td></tr><tr><td>1973</td><td>29 novembre</td><td class="n">5,0 cm</td></tr><tr class=hi><td></td><td>1 dicembre</td><td class="n">19,0 cm</td></tr><tr><td>1976</td><td>8 marzo</td><td class="n">3,0 cm</td></tr><tr><td>1979</td><td>4 gennaio</td><td class="n">4,0 cm</td></tr><tr><td></td><td>26 febbraio</td><td class="n">fiocchi</td></tr><tr><td></td><td>31 dicembre</td><td class="n">fiocchi</td></tr><tr><td>1980</td><td>3 dicembre</td><td class="n">0,5 cm</td></tr><tr><td>1982</td><td>26 febbraio</td><td class="n">fiocchi</td></tr><tr><td>1983</td><td>8 febbraio</td><td class="n">fiocchi</td></tr><tr><td></td><td>12 febbraio</td><td class="n">fiocchi</td></tr><tr><td>1984</td><td>27 dicembre</td><td class="n">fiocchi</td></tr><tr><td>1985</td><td>5 gennaio</td><td class="n">3,5 cm</td></tr><tr class=hi><td></td><td>8 gennaio</td><td class="n">16,0 cm</td></tr><tr class=hi><td></td><td>9 gennaio</td><td class="n">21,0 cm</td></tr><tr><td></td><td>13 gennaio</td><td class="n">8,0 cm</td></tr><tr><td>1986</td><td>11 febbraio</td><td class="n">2,0 cm</td></tr><tr><td></td><td>17 febbraio</td><td class="n">neve breve</td></tr><tr><td></td><td>25 febbraio</td><td class="n">fiocchi</td></tr><tr><td>1987</td><td>11 gennaio</td><td class="n">neve breve</td></tr><tr><td></td><td>12 gennaio</td><td class="n">neve breve</td></tr><tr><td></td><td>13 gennaio</td><td class="n">neve breve</td></tr><tr><td></td><td>16 marzo</td><td class="n">12,0 cm</td></tr><tr><td>1991</td><td>4 febbraio</td><td class="n">fiocchi</td></tr><tr><td></td><td>6 febbraio</td><td class="n">3,0 cm</td></tr><tr><td></td><td>7 febbraio</td><td class="n">5,0 cm</td></tr><tr><td></td><td>12 febbraio</td><td class="n">fiocchi</td></tr><tr><td>1992</td><td>22 gennaio</td><td class="n">nevischio</td></tr><tr><td>1993</td><td>21 febbraio</td><td class="n">nevischio</td></tr></tbody></table></div>
+    <p class="tabnote">In evidenza le nevicate di almeno 15 cm. Altre situazioni nevose non hanno fatto rimanere la neve al suolo.</p>
+
+    <h2 id="1985">Il gennaio 1985, −23 °C</h2>
+    <p>Come non soffermarci sull'ultimo grande inverno che si ricordi a Firenze? Quel gennaio del 1985 fece registrare temperature record soprattutto per Firenze che arrivò a <strong>−23 °C</strong>.</p>
+    <p>Il grande freddo di quel periodo cominciò da una situazione dell'anno precedente, per la quale forti correnti orientali interessarono la nostra penisola portando freddo e neve, ma questa solo sull'Appennino e sul versante adriatico. Infatti le masse d'aria provenienti da est sono prive di umidità e quella poca che riescono a catturare dal Mar Adriatico è sufficiente solo per qualche nevicata sul versante sopravvento. Affinché la neve possa giungere anche sul versante tirrenico è necessario l'intervento di aria artica, più instabile ed umida di quella continentale o siberiana, ma soprattutto è fondamentale la formazione di un centro di bassa pressione sul Tirreno in modo da «succhiare» l'aria settentrionale e meridionale ed innescare un processo in grado di far scavalcare le Alpi e gli Appennini anche ad aria fredda, altrimenti impossibilitata a passare per la sua elevata densità.</p>
+    <p>L'eccezionale freddo di quei giorni fu dovuto anche ad una caratteristica dell'aria artica: quella di essere più fredda in quota, cosicché, una volta oltrepassate le Alpi ed essersi fermata da noi, si è potuta riversare nei bassi strati congelando tutta l'Italia.</p>
+    <p>In un'intervista di quel periodo il Colonnello Edmondo Bernacca spiegò che:</p>
+    <blockquote class="cron"><p>Tutto è stato provocato da una particolare posizione delle alte e delle basse pressioni. Verso la fine dell'anno avevamo una bassa sull'Europa Centrale ed un'alta sull'Atlantico. In questo corridoio si è infilata l'aria proveniente dalle regioni artiche. Questa corrente fredda aveva una caratteristica: la grande velocità. Se fosse giunta fino a noi lentamente, avrebbe perduto cammin facendo buona parte della sua intensità, si sarebbe mitigata. Invece ci è piombata addosso velocissima, mantenendo quasi le stesse caratteristiche del luogo d'origine.</p><cite>Col. Edmondo Bernacca · 1985</cite></blockquote>
+    <p>Il giorno di Capodanno fu bello con cielo sereno o poco nuvoloso e con temperature non basse. L'ondata di freddo, però, si stava avvicinando. Ecco le osservazioni di quei giorni storici:</p>
+    <div class="tabwrap"><table>
+      <thead><tr><th>Gen 1985</th><th>Osservazioni</th><th class="n">T min</th><th class="n">T max</th></tr></thead>
+      <tbody><tr><td>1</td><td class="wrapc">Sereno o poco nuvoloso con foschia</td><td class="n ">0°C</td><td class="n">8°C</td></tr><tr><td>2</td><td class="wrapc">Nuvoloso</td><td class="n ">−2°C</td><td class="n">6°C</td></tr><tr><td>3</td><td class="wrapc">Sereno o poco nuvoloso con foschia</td><td class="n ">−7°C</td><td class="n">8°C</td></tr><tr><td>4</td><td class="wrapc">Sereno, poi coperto con neve</td><td class="n ">−8°C</td><td class="n">7°C</td></tr><tr><td>5</td><td class="wrapc">Coperto con neve, poi variabile</td><td class="n ">−3°C</td><td class="n">−1°C</td></tr><tr><td>6</td><td class="wrapc">Poco nuvoloso con vento sostenuto</td><td class="n ">−5°C</td><td class="n">−2°C</td></tr><tr><td>7</td><td class="wrapc">Sereno</td><td class="n ">−8°C</td><td class="n">0°C</td></tr><tr><td>8</td><td class="wrapc">Coperto con molta neve e vento sostenuto</td><td class="n ">−10°C</td><td class="n">−2°C</td></tr><tr><td>9</td><td class="wrapc">Coperto con neve, poi variabile</td><td class="n ">−5°C</td><td class="n">−1°C</td></tr><tr><td>10</td><td class="wrapc">Sereno o poco nuvoloso</td><td class="n ">−15°C</td><td class="n">0°C</td></tr><tr><td>11</td><td class="wrapc">Sereno con foschia</td><td class="n ">−22°C</td><td class="n">0°C</td></tr><tr class=hi><td>12</td><td class="wrapc">Sereno con foschia, poi variabile</td><td class="n ">−23°C</td><td class="n">0°C</td></tr><tr><td>13</td><td class="wrapc">Coperto con neve</td><td class="n ">−13°C</td><td class="n">2°C</td></tr><tr><td>14</td><td class="wrapc">Coperto con pioggia intensa, poi miglioramento con nebbia</td><td class="n ">1°C</td><td class="n">4°C</td></tr><tr><td>15</td><td class="wrapc">Coperto con pioggia</td><td class="n ">1°C</td><td class="n">7°C</td></tr></tbody></table></div>
+    <p>Dalle osservazioni si capisce che un fronte freddo passa l'1 ed il 2 gennaio senza effetti di rilievo se non quello di dare inizio alla diminuzione delle temperature minime. La sera del 4 gennaio vede l'arrivo della prima neve che preannuncia l'intensa perturbazione proveniente da nord e che continuerà per tutta la notte ed il giorno seguente con temperature bassissime. Il 9 gennaio la perturbazione fa cadere le ultime abbondanti nevicate in città, poi è la volta del gelo che con una notevole progressione raggiunge valori di temperatura eccezionali: prima −15 °C, poi −22 °C ed infine il mitico <strong>−23 °C a Firenze Peretola</strong>. In città l'Osservatorio Ximeniano registra −11 °C. Il freddo tende ad attenuarsi (−13 °C) il 13 quando arrivano correnti sciroccali richiamate da una nuova depressione al largo della Corsica. Nuova neve torna a cadere, ma la risalita della temperatura non si arresta e la neve diventa pioggia che tristemente mette fine all'ondata di freddo di quell'inverno memorabile.</p>
+    <div class="gal">
+      <figure class="fig"><img src="img/neve-firenze/j.jpg" alt="L'Arno ghiacciato visto dal ponte da Verrazzano" loading="lazy" data-cap="1985: L'Arno ghiacciato visto dal ponte da Verrazzano"><figcaption><b>1985</b>L'Arno ghiacciato visto dal ponte da Verrazzano</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/k.jpg" alt="La statua di Nettuno (il Biancone) ghiacciata" loading="lazy" data-cap="1985: La statua di Nettuno (il Biancone) ghiacciata"><figcaption><b>1985</b>La statua di Nettuno (il Biancone) ghiacciata</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/l.jpg" alt="Neve sui tetti di Viale Europa e Via Erbosa" loading="lazy" data-cap="1985: Neve sui tetti di Viale Europa e Via Erbosa"><figcaption><b>1985</b>Neve sui tetti di Viale Europa e Via Erbosa</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/m.jpg" alt="Panorama dal Piazzale Michelangelo" loading="lazy" data-cap="1985: Panorama dal Piazzale Michelangelo"><figcaption><b>1985</b>Panorama dal Piazzale Michelangelo</figcaption></figure>
+      <figure class="fig"><img src="img/neve-firenze/n.jpg" alt="Neve in Via Beccari" loading="lazy" data-cap="1991: Neve in Via Beccari"><figcaption><b>1991</b>Neve in Via Beccari</figcaption></figure>
+    </div>
+
+    <h2 id="prevedere">Quando nevica a Firenze?</h2>
+    <p>A questo punto, dato che da molti anni a Firenze non si vede una nevicata seria, una domanda è giusto porla: quando si potranno avere condizioni ideali per la neve?</p>
+    <p>Il fattore che dà maggiore sicurezza per una nevicata è il <strong>cuscino di aria fredda</strong> che si forma dopo periodi di tempo (spesso bello) governati da una circolazione più o meno intensa di aria proveniente da Est, Nord-Est o Nord. L'aria fredda tenderà a stagnare nei bassi strati ed, in alcuni casi, a raffreddarsi ulteriormente in modo che, all'arrivo delle perturbazioni, l'aria calda, che di solito le precede, scorra sopra quella fredda e provochi nevicate; nevicate che con il fronte freddo sono ancora più sicure. Ciò avvenne il 29 dicembre 1996, dopo che il Buran, vento gelido siberiano, aveva fatto abbassare notevolmente la temperatura. Nella notte di quel giorno una nevicata fine fine imbiancò, o meglio «spolverò» la città ed il fenomeno si ripresentò il 31 sebbene con neve tonda, pioggia gelata e pioggia mista a neve, prima che i venti di scirocco facessero salire la colonnina di mercurio.</p>
+    <p>Infatti le varianti sono infinite perché spesso dipende dall'intensità delle correnti meridionali che possono far salire la temperatura anche al suolo, come abbiamo visto nell'85 e come è successo ultimamente il 9 febbraio 1999, quando l'aria fredda, arrivata dopo una perturbazione atlantica è bastata a portare la temperatura al suolo intorno allo 0 °C e così il fronte caldo della successiva perturbazione ha dato nevicate piuttosto abbondanti nella provincia di Prato e dintorni, tanto inattese quanto temporanee a causa dell'intensificazione dei venti da Sud che portarono presto la temperatura a 13 °C e i circa 10 cm di neve allo scioglimento rapido per la pioggia ed il «caldo». A Firenze, invece, non era nemmeno nevicato perché l'<strong>isola di calore</strong> della città aveva sciolto la neve già mentre cadeva. Questo è anche un altro punto dolente per Firenze, perché, quand'anche la neve attacchi dappertutto, in città spesso si scioglie inesorabilmente.</p>
+    <p>A volte, però, avviene anche l'inverso: cioè dalla pioggia si passa alla neve. Questo succede quando una intensa perturbazione forma un vortice sul Golfo Ligure o sul Tirreno Settentrionale ed, a seguito del fronte freddo, riversa aria fredda dalle quote superiori a quelle inferiori proprio mediante le abbondanti precipitazioni: situazioni di questo genere si sono avute il 13 gennaio 1999 ed il 21 febbraio 1996, quando sui tetti e sulle auto della città si depositò 1 cm di neve di breve durata.</p>
+    <p>Insomma prevedere la neve a Firenze è una delle cose più difficili per un meteorologo, anche perché le perturbazioni, con le loro nuvole, possono arrivare nel mezzo della giornata quando la temperatura è già salita sopra lo zero (mentre a Firenze comincia quasi sempre a nevicare di notte) o possono provocare venti di tramontana che per «effetto föhn» riscaldano l'aria invece di raffreddarla.</p>
+    <p>Perciò il modo più sicuro (per molti forse anche il più meraviglioso) per sapere quando nevicherà è alzarsi la mattina e, aprendo la finestra, vedere lo spettacolare tappeto bianco che si estende su tutto e che si alza fiocco dopo fiocco.</p>
+  </article>
+
+  <aside class="side">
+    <nav class="toc" aria-label="Indice">
+      <div class="sec-kicker" style="margin:0">Indice</div>
+      <ol>
+        <li><a href="#medioevo">Dal Medioevo all'Ottocento</a></li>
+        <li><a href="#novecento">I primi del Novecento</a></li>
+        <li><a href="#1929">L'inverno del 1929</a></li>
+        <li><a href="#registro">Neve a Firenze, 1960–1993</a></li>
+        <li><a href="#1985">Il gennaio 1985</a></li>
+        <li><a href="#prevedere">Quando nevica a Firenze?</a></li>
+      </ol>
+    </nav>
+  </aside>
+  </div></div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="fnote">
+      <div class="art">
+        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M60 14v92M20 37l80 46M100 37l-80 46"/><path d="M48 22l12 8 12-8M48 98l12-8 12 8"/>
+        </svg>
+      </div>
+      <div>
+        <div class="sec-kicker" style="color:rgba(255,255,255,.7)">Nota</div>
+        <h2>Memoria storica, <em>non previsione.</em></h2>
+        <p>Articolo di David Gervasoni pubblicato su Aeris (aeris.toscana.it) il 10 gennaio 2011, riproposto qui per il suo valore storico e climatico; le fotografie provengono dall'articolo originale. Per la neve di oggi nel Mugello consulta la pagina dedicata.</p>
+        <a class="tlink" href="neve.html">Vai alla pagina Neve
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div></section>
+
+  <footer class="foot"><div class="wrap">
+    <span>Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></span>
+    <span class="src">Fonte: <a href="https://web.archive.org/web/20110722055600/http://www.aeris.toscana.it/articles.asp?id=5" target="_blank" rel="noreferrer">D. Gervasoni, «La neve a Firenze», Aeris 2011</a></span>
+  </div></footer>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true"><img alt=""><p></p></div>
+<script>
+const lb=document.getElementById("lb"),li=lb.querySelector("img"),lp=lb.querySelector("p");
+document.querySelectorAll(".fig img").forEach(i=>i.addEventListener("click",()=>{li.src=i.src;li.alt=i.alt;lp.textContent=i.dataset.cap;lb.classList.add("on");}));
+lb.addEventListener("click",()=>lb.classList.remove("on"));
+addEventListener("keydown",e=>{if(e.key==="Escape")lb.classList.remove("on");});
+if("serviceWorker" in navigator){navigator.serviceWorker.getRegistration&&navigator.serviceWorker.register("sw.js").catch(()=>{});}
+</script>
+</body>
+</html>
