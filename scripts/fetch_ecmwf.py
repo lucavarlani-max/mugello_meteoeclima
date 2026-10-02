@@ -9,8 +9,10 @@ La risposta JSON contiene il link all'immagine PNG in data.link.href (le immagin
 restano su charts.ecmwf.int). Licenza CC-BY-4.0, © ECMWF.
 
 L'API limita molto le richieste (429 già dopo una decina di chiamate ravvicinate),
-quindi ogni esecuzione dell'Action fa al massimo BUDGET chiamate distanziate di
-PAUSA secondi e riprende la volta dopo da dove si era fermata. Si usa l'ultima
+quindi le chiamate sono distanziate di PAUSA secondi (con 4 s nessun 429 su 40 chiamate).
+Gira nel workflow dedicato .github/workflows/ecmwf.yml, due volte al giorno appena
+c'è una corsa nuova, e prova a raccoglierla tutta (ECMWF_BUDGET chiamate, ~12 minuti);
+se qualcosa manca, la volta dopo riprende da dove si era fermato. Si usa l'ultima
 corsa (00 o 12 UTC) vecchia almeno 12 ore, che ECMWF ha già pubblicato per intero.
 Finché la corsa nuova non è completa la pagina continua a mostrare la precedente.
 """
@@ -35,7 +37,7 @@ PRODOTTI = [
 ]
 PASSI = [0, 12, 24, 36, 48, 60, 72, 84, 96, 120, 144, 168, 192, 216, 240]   # ore dalla corsa
 ETA_MIN = datetime.timedelta(hours=12)
-BUDGET = 40          # chiamate per esecuzione
+BUDGET = int(os.environ.get("ECMWF_BUDGET", "40"))   # chiamate per esecuzione
 PAUSA = 4            # secondi tra le chiamate
 ATTESA_429 = 20
 
@@ -85,8 +87,11 @@ def main():
     else:
         if not nuo or nuo.get("base") != iso(base):
             nuo = nuova(base)
-        lavoro = nuo if cor else None
-        if lavoro is None:            # prima esecuzione: si riempie direttamente la corrente
+        # la corsa nuova resta "in preparazione" solo se quella mostrata è completa;
+        # se non c'è o è incompleta (es. raccolta interrotta), la nuova la sostituisce subito
+        if cor and not mancanti(cor):
+            lavoro = nuo
+        else:
             cor = lavoro = nuo
             nuo = None
     titoli = dati.get("titoli", {})
