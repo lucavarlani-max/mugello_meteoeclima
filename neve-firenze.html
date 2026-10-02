@@ -255,6 +255,22 @@
   tr.hi td{background:var(--sky-tint);font-weight:600}
   .neg{color:var(--sky)}
   .tabnote{font-size:12.5px!important;color:var(--ink-faint)!important;margin:-12px 0 22px!important}
+  .chart{margin:8px 0 26px;max-width:680px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 18px 10px;box-shadow:var(--shadow);position:relative}
+  .ch-h b{display:block;font-family:var(--serif);font-size:18px;letter-spacing:-.01em}
+  .ch-h span{font-size:12.5px;color:var(--ink-faint)}
+  .ch-leg{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0 2px;font-size:12.5px;color:var(--ink-soft)}
+  .ch-leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .ch-pl{position:relative}
+  .ch-pl svg{display:block;width:100%;height:auto;overflow:visible}
+  .chart .grid{stroke:var(--line);stroke-width:1}.chart .zero{stroke:var(--ink-faint);stroke-width:1.2}
+  .chart .ax{fill:var(--ink-faint);font:11px var(--mono)}
+  .chart .val,.chart .lab{fill:var(--ink);font:600 11px var(--mono)}
+  .chart .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  .chart .dot{stroke:var(--panel);stroke-width:2}
+  .chart .cross{stroke:var(--ink-faint);stroke-width:1;stroke-dasharray:3 3}
+  .chart .bar:hover{opacity:.8}
+  .ch-tip{display:none;position:absolute;transform:translate(-50%,-110%);background:var(--ink);color:var(--bg);font-size:12px;line-height:1.4;padding:7px 10px;border-radius:8px;pointer-events:none;white-space:nowrap;z-index:5}
+  @media (max-width:560px){.chart .ax{font-size:17px!important}.chart .val,.chart .lab{font-size:17px}.ch-tip{font-size:12px}.chart{padding:14px 12px 6px}}
   .lb{position:fixed;inset:0;background:rgba(8,20,15,.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;flex-direction:column;gap:10px}
   .lb.on{display:flex}
   .lb img{max-width:100%;max-height:82vh;border-radius:10px}
@@ -349,6 +365,7 @@
         <tr><td>Massima</td><td class="n neg">−0,4 °C</td><td class="n">10,8 °C</td></tr>
         <tr class="hi"><td>Media</td><td class="n neg">−3,2 °C</td><td class="n">6,6 °C</td></tr>
       </tbody></table></div>
+    <figure class="chart" id="c29"><figcaption class="ch-h"><b>Febbraio 1929 contro un febbraio normale</b><span>Temperature medie mensili, °C</span></figcaption><div class="ch-leg"></div><div class="ch-pl"></div><div class="ch-tip" role="status"></div></figure>
     <p>Per far capire l'eccezionalità di quell'inverno basterebbe soltanto dire che a Varsavia si raggiunsero i −45 °C, a Vienna −32 °C (misurazioni queste che non tutti i termometri riuscirono a compiere). Il ghiaccio sul Mar Nero si estese a perdita d'occhio. In Italia ci furono paesi appenninici sommersi da circa 8 metri di neve.</p>
     <p>Ancora oggi qualche persona più attempata, vedendo magari il termometro scendere e ricordandosi quell'inverno da lupi (che in molte parti d'Europa scesero affamati nei villaggi), esclama, esagerando un po': «Fa più freddo del '29!».</p>
 
@@ -358,6 +375,7 @@
       <thead><tr><th>Anno</th><th>Giorno</th><th class="n">Neve</th></tr></thead>
       <tbody><tr><td>1960</td><td>12 gennaio</td><td class="n">9,0 cm</td></tr><tr><td>1963</td><td>13 gennaio</td><td class="n">3,5 cm</td></tr><tr><td></td><td>17 gennaio</td><td class="n">1,0 cm</td></tr><tr class=hi><td></td><td>19 gennaio</td><td class="n">15,0 cm</td></tr><tr class=hi><td></td><td>3 febbraio</td><td class="n">18,0 cm</td></tr><tr><td>1966</td><td>9 gennaio</td><td class="n">5,0 cm</td></tr><tr><td></td><td>15 gennaio</td><td class="n">1,0 cm</td></tr><tr><td></td><td>20 gennaio</td><td class="n">1,5 cm</td></tr><tr><td>1967</td><td>10 dicembre</td><td class="n">neve, nevischio</td></tr><tr class=hi><td>1968</td><td>9 gennaio</td><td class="n">19,0 cm</td></tr><tr><td>1973</td><td>29 novembre</td><td class="n">5,0 cm</td></tr><tr class=hi><td></td><td>1 dicembre</td><td class="n">19,0 cm</td></tr><tr><td>1976</td><td>8 marzo</td><td class="n">3,0 cm</td></tr><tr><td>1979</td><td>4 gennaio</td><td class="n">4,0 cm</td></tr><tr><td></td><td>26 febbraio</td><td class="n">fiocchi</td></tr><tr><td></td><td>31 dicembre</td><td class="n">fiocchi</td></tr><tr><td>1980</td><td>3 dicembre</td><td class="n">0,5 cm</td></tr><tr><td>1982</td><td>26 febbraio</td><td class="n">fiocchi</td></tr><tr><td>1983</td><td>8 febbraio</td><td class="n">fiocchi</td></tr><tr><td></td><td>12 febbraio</td><td class="n">fiocchi</td></tr><tr><td>1984</td><td>27 dicembre</td><td class="n">fiocchi</td></tr><tr><td>1985</td><td>5 gennaio</td><td class="n">3,5 cm</td></tr><tr class=hi><td></td><td>8 gennaio</td><td class="n">16,0 cm</td></tr><tr class=hi><td></td><td>9 gennaio</td><td class="n">21,0 cm</td></tr><tr><td></td><td>13 gennaio</td><td class="n">8,0 cm</td></tr><tr><td>1986</td><td>11 febbraio</td><td class="n">2,0 cm</td></tr><tr><td></td><td>17 febbraio</td><td class="n">neve breve</td></tr><tr><td></td><td>25 febbraio</td><td class="n">fiocchi</td></tr><tr><td>1987</td><td>11 gennaio</td><td class="n">neve breve</td></tr><tr><td></td><td>12 gennaio</td><td class="n">neve breve</td></tr><tr><td></td><td>13 gennaio</td><td class="n">neve breve</td></tr><tr><td></td><td>16 marzo</td><td class="n">12,0 cm</td></tr><tr><td>1991</td><td>4 febbraio</td><td class="n">fiocchi</td></tr><tr><td></td><td>6 febbraio</td><td class="n">3,0 cm</td></tr><tr><td></td><td>7 febbraio</td><td class="n">5,0 cm</td></tr><tr><td></td><td>12 febbraio</td><td class="n">fiocchi</td></tr><tr><td>1992</td><td>22 gennaio</td><td class="n">nevischio</td></tr><tr><td>1993</td><td>21 febbraio</td><td class="n">nevischio</td></tr></tbody></table></div>
     <p class="tabnote">In evidenza le nevicate di almeno 15 cm. Altre situazioni nevose non hanno fatto rimanere la neve al suolo.</p>
+    <figure class="chart" id="csnow"><figcaption class="ch-h"><b>Neve al suolo a Firenze, 1960–1993</b><span>Massimo giornaliero registrato in ogni anno, cm · Osservatorio Ximeniano</span></figcaption><div class="ch-leg"></div><div class="ch-pl"></div><div class="ch-tip" role="status"></div></figure>
 
     <h2 id="1985">Il gennaio 1985, −23 °C</h2>
     <p>Come non soffermarci sull'ultimo grande inverno che si ricordi a Firenze? Quel gennaio del 1985 fece registrare temperature record soprattutto per Firenze che arrivò a <strong>−23 °C</strong>.</p>
@@ -369,6 +387,7 @@
     <div class="tabwrap"><table>
       <thead><tr><th>Gen 1985</th><th>Osservazioni</th><th class="n">T min</th><th class="n">T max</th></tr></thead>
       <tbody><tr><td>1</td><td class="wrapc">Sereno o poco nuvoloso con foschia</td><td class="n ">0°C</td><td class="n">8°C</td></tr><tr><td>2</td><td class="wrapc">Nuvoloso</td><td class="n ">−2°C</td><td class="n">6°C</td></tr><tr><td>3</td><td class="wrapc">Sereno o poco nuvoloso con foschia</td><td class="n ">−7°C</td><td class="n">8°C</td></tr><tr><td>4</td><td class="wrapc">Sereno, poi coperto con neve</td><td class="n ">−8°C</td><td class="n">7°C</td></tr><tr><td>5</td><td class="wrapc">Coperto con neve, poi variabile</td><td class="n ">−3°C</td><td class="n">−1°C</td></tr><tr><td>6</td><td class="wrapc">Poco nuvoloso con vento sostenuto</td><td class="n ">−5°C</td><td class="n">−2°C</td></tr><tr><td>7</td><td class="wrapc">Sereno</td><td class="n ">−8°C</td><td class="n">0°C</td></tr><tr><td>8</td><td class="wrapc">Coperto con molta neve e vento sostenuto</td><td class="n ">−10°C</td><td class="n">−2°C</td></tr><tr><td>9</td><td class="wrapc">Coperto con neve, poi variabile</td><td class="n ">−5°C</td><td class="n">−1°C</td></tr><tr><td>10</td><td class="wrapc">Sereno o poco nuvoloso</td><td class="n ">−15°C</td><td class="n">0°C</td></tr><tr><td>11</td><td class="wrapc">Sereno con foschia</td><td class="n ">−22°C</td><td class="n">0°C</td></tr><tr class=hi><td>12</td><td class="wrapc">Sereno con foschia, poi variabile</td><td class="n ">−23°C</td><td class="n">0°C</td></tr><tr><td>13</td><td class="wrapc">Coperto con neve</td><td class="n ">−13°C</td><td class="n">2°C</td></tr><tr><td>14</td><td class="wrapc">Coperto con pioggia intensa, poi miglioramento con nebbia</td><td class="n ">1°C</td><td class="n">4°C</td></tr><tr><td>15</td><td class="wrapc">Coperto con pioggia</td><td class="n ">1°C</td><td class="n">7°C</td></tr></tbody></table></div>
+    <figure class="chart" id="c85"><figcaption class="ch-h"><b>Gennaio 1985: l'ondata di gelo a Firenze</b><span>Temperature minime e massime giornaliere, °C</span></figcaption><div class="ch-leg"></div><div class="ch-pl"></div><div class="ch-tip" role="status"></div></figure>
     <p>Dalle osservazioni si capisce che un fronte freddo passa l'1 ed il 2 gennaio senza effetti di rilievo se non quello di dare inizio alla diminuzione delle temperature minime. La sera del 4 gennaio vede l'arrivo della prima neve che preannuncia l'intensa perturbazione proveniente da nord e che continuerà per tutta la notte ed il giorno seguente con temperature bassissime. Il 9 gennaio la perturbazione fa cadere le ultime abbondanti nevicate in città, poi è la volta del gelo che con una notevole progressione raggiunge valori di temperatura eccezionali: prima −15 °C, poi −22 °C ed infine il mitico <strong>−23 °C a Firenze Peretola</strong>. In città l'Osservatorio Ximeniano registra −11 °C. Il freddo tende ad attenuarsi (−13 °C) il 13 quando arrivano correnti sciroccali richiamate da una nuova depressione al largo della Corsica. Nuova neve torna a cadere, ma la risalita della temperatura non si arresta e la neve diventa pioggia che tristemente mette fine all'ondata di freddo di quell'inverno memorabile.</p>
     <div class="gal">
       <figure class="fig"><img src="img/neve-firenze/j.jpg" alt="L'Arno ghiacciato visto dal ponte da Verrazzano" loading="lazy" data-cap="1985: L'Arno ghiacciato visto dal ponte da Verrazzano"><figcaption><b>1985</b>L'Arno ghiacciato visto dal ponte da Verrazzano</figcaption></figure>
@@ -426,6 +445,73 @@
 
   <div class="lb" id="lb" role="dialog" aria-modal="true"><img alt=""><p></p></div>
 <script>
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const fmt=v=>String(v).replace(".",",").replace("-","−");
+function chart(id,{W=640,H=300,m={l:44,r:14,t:12,b:34}},build){
+  const root=document.getElementById(id),pl=root.querySelector(".ch-pl"),tip=root.querySelector(".ch-tip"),leg=root.querySelector(".ch-leg");
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":root.querySelector("b").textContent});pl.appendChild(svg);
+  const api={svg,W,H,m,tip,pl,leg,show(x,y,html){tip.innerHTML=html;tip.style.display="block";const r=pl.getBoundingClientRect();const px=x/W*r.width;tip.style.left=Math.min(Math.max(px,70),r.width-70)+"px";tip.style.top=(y/H*r.height)+"px";},hide(){tip.style.display="none";}};
+  pl.addEventListener("mouseleave",api.hide);build(api);
+}
+function axes(a,{ymin,ymax,step,n,label,unit=""}){
+  const {svg,W,H,m}=a,iw=W-m.l-m.r,ih=H-m.t-m.b,y=v=>m.t+ih*(1-(v-ymin)/(ymax-ymin));
+  for(let v=ymin;v<=ymax;v+=step){el("line",{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),class:v===0?"zero":"grid"},svg);
+    const t=el("text",{x:m.l-8,y:y(v)+4,class:"ax","text-anchor":"end"},svg);t.textContent=fmt(v);}
+  return {y,iw,ih};
+}
+const legend=(a,items)=>{a.leg.innerHTML=items.map(([c,t])=>`<span><i style="background:var(${c})"></i>${t}</span>`).join("");};
+
+/* 1985: linee minime/massime */
+chart("c85",{},a=>{
+  const mn=[0,-2,-7,-8,-3,-5,-8,-10,-5,-15,-22,-23,-13,1,1],mx=[8,6,8,7,-1,-2,0,-2,-1,0,0,0,2,4,7];
+  const {y,iw}=axes(a,{ymin:-25,ymax:10,step:5});const x=i=>a.m.l+iw*i/14;
+  legend(a,[["--sky","Temperatura minima"],["--amber","Temperatura massima"]]);
+  const line=(d,c)=>{el("path",{d:d.map((v,i)=>(i?"L":"M")+x(i)+" "+y(v)).join(""),class:"ln",style:`stroke:var(${c})`},a.svg);};
+  line(mn,"--sky");line(mx,"--amber");
+  for(let i=0;i<15;i++){const t=el("text",{x:x(i),y:a.H-12,class:"ax","text-anchor":"middle"},a.svg);t.textContent=i+1;}
+  const t=el("text",{x:a.m.l+iw/2,y:a.H-0,class:"ax","text-anchor":"middle"},a.svg);t.textContent="gennaio 1985";
+  const hi=el("g",{},a.svg),dot=(i,v,c)=>el("circle",{cx:x(i),cy:y(v),r:4.5,class:"dot",style:`fill:var(${c})`},hi);
+  /* etichetta del record */
+  const r=el("text",{x:x(11)+8,y:y(-23)+4,class:"lab"},a.svg);r.textContent="−23 °C · 12 gen";
+  r.setAttribute("x",x(11)-8);r.setAttribute("text-anchor","end");
+  const vl=el("line",{y1:a.m.t,y2:a.H-a.m.b,class:"cross",style:"display:none"},a.svg);
+  const hit=el("rect",{x:a.m.l,y:a.m.t,width:iw,height:a.H-a.m.t-a.m.b,fill:"transparent"},a.svg);
+  const mv=e=>{const rc=a.svg.getBoundingClientRect(),px=(e.clientX-rc.left)/rc.width*a.W;const i=Math.max(0,Math.min(14,Math.round((px-a.m.l)/iw*14)));
+    vl.setAttribute("x1",x(i));vl.setAttribute("x2",x(i));vl.style.display="";hi.innerHTML="";dot(i,mn[i],"--sky");dot(i,mx[i],"--amber");
+    a.show(x(i),y(Math.max(mn[i],mx[i])),`<b>${i+1} gennaio 1985</b><br>min ${fmt(mn[i])} °C · max ${fmt(mx[i])} °C`);};
+  hit.addEventListener("pointermove",mv);hit.addEventListener("pointerleave",()=>{vl.style.display="none";hi.innerHTML="";});
+});
+
+/* 1929: barre raggruppate */
+chart("c29",{H:280},a=>{
+  const cats=["Minima","Massima","Media"],s1=[-6.1,-0.4,-3.2],s2=[3.0,10.8,6.6];
+  const {y,iw}=axes(a,{ymin:-8,ymax:12,step:4});const gw=iw/3;
+  legend(a,[["--sky","Febbraio 1929"],["--ink-faint","Febbraio normale"]]);
+  cats.forEach((c,i)=>{const cx=a.m.l+gw*(i+.5),bw=44;
+    [[s1[i],"--sky",-bw-1],[s2[i],"--ink-faint",1]].forEach(([v,col,dx])=>{
+      const y0=y(0),y1=y(v),top=Math.min(y0,y1),h=Math.abs(y1-y0);
+      const r=el("rect",{x:cx+dx,y:top,width:bw,height:h,rx:4,class:"bar",style:`fill:var(${col})`},a.svg);
+      const t=el("text",{x:cx+dx+bw/2,y:v<0?y1+14:y1-5,class:"val","text-anchor":"middle"},a.svg);t.textContent=fmt(v.toFixed(1));
+      r.addEventListener("pointerenter",()=>a.show(cx+dx+bw/2,top,`<b>${c}</b><br>${col==="--sky"?"1929":"normale"}: ${fmt(v)} °C`));});
+    const t=el("text",{x:cx,y:a.H-10,class:"ax","text-anchor":"middle"},a.svg);t.textContent=c;});
+});
+
+/* neve 1960–1993: massimo giornaliero per anno */
+chart("csnow",{H:300,m:{l:44,r:14,t:16,b:34}},a=>{
+  const d=[[1960,9],[1963,18],[1966,5],[1967,0],[1968,19],[1973,19],[1976,3],[1979,4],[1980,.5],[1982,0],[1983,0],[1984,0],[1985,21],[1986,2],[1987,12],[1991,5],[1992,0],[1993,0]];
+  const note={1967:"neve e nevischio",1982:"solo fiocchi",1983:"solo fiocchi",1984:"solo fiocchi",1992:"nevischio",1993:"nevischio"};
+  const {y,iw}=axes(a,{ymin:0,ymax:25,step:5});const gw=iw/d.length,bw=Math.min(22,gw-8);
+  d.forEach(([yr,v],i)=>{const cx=a.m.l+gw*(i+.5),big=v>=15;
+    if(v>0){const r=el("rect",{x:cx-bw/2,y:y(v),width:bw,height:y(0)-y(v),rx:4,class:"bar",style:`fill:var(${big?"--sky":"--ink-faint"})`},a.svg);
+      r.addEventListener("pointerenter",()=>a.show(cx,y(v),`<b>${yr}</b><br>massimo ${fmt(v)} cm`));}
+    else{const c=el("circle",{cx,cy:y(0)-5,r:3.5,class:"dot",style:"fill:var(--ink-faint)"},a.svg);
+      c.addEventListener("pointerenter",()=>a.show(cx,y(0)-5,`<b>${yr}</b><br>${note[yr]||"tracce"}`));}
+    if(big){const t=el("text",{x:cx,y:y(v)-5,class:"val","text-anchor":"middle"},a.svg);t.textContent=fmt(v);}
+    if(i%2===0||true){const t=el("text",{x:cx,y:a.H-10,class:"ax","text-anchor":"middle",style:"font-size:9.5px"},a.svg);t.setAttribute("transform",`rotate(-60 ${cx} ${a.H-14})`);t.setAttribute("text-anchor","end");t.setAttribute("y",a.H-14);t.textContent=yr;}});
+  legend(a,[["--sky","almeno 15 cm"],["--ink-faint","meno di 15 cm (punto = solo fiocchi o nevischio)"]]);
+});
+
 const lb=document.getElementById("lb"),li=lb.querySelector("img"),lp=lb.querySelector("p");
 document.querySelectorAll(".fig img").forEach(i=>i.addEventListener("click",()=>{li.src=i.src;li.alt=i.alt;lp.textContent=i.dataset.cap;lb.classList.add("on");}));
 lb.addEventListener("click",()=>lb.classList.remove("on"));
