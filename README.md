@@ -48,6 +48,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   in home) — i report climatologici mensili di Borgo San Lorenzo (stazione SIR TOS01000999), da leggere online
   (HTML interattivo) o scaricare in PDF. File in `reports/clima/AAAA-MM-<luogo>.html/.pdf`, elenco in
   `data/report-clima.json`: per aggiungere un mese basta copiare i due file e inserire un elemento in cima a `report`.
+- **Mappe** (`mappe.html`) — mappa del Mugello con le previsioni per comune (WeatherNext 3) e, sotto, le
+  **carte del Centro europeo ECMWF** (`ecmwf-carte.js`): 10 carte del modello IFS sull'Europa (pressione e vento,
+  geopotenziale 500 hPa, precipitazioni, temperatura, nuvole, neve, zero termico, raffiche, instabilità) fino a
+  10 giorni, con selettore, cursore e animazione. I link alle immagini (OpenCharts API, © ECMWF, CC BY 4.0) sono in
+  `data/ecmwf.json`, raccolti da `scripts/fetch_ecmwf.py` nell'Action a piccoli blocchi (l'API limita le richieste):
+  una corsa nuova (00 o 12 UTC, vecchia almeno 12 ore) viene mostrata solo quando è completa.
 - **Temperature in Toscana** (`temperature-toscana.html`) — tutte le stazioni della rete
   termometrica del CFR Toscana: temperatura attuale, minime e massime di oggi e di ieri,
   classifiche, anomalie rispetto alla quota, grafico temperatura/quota, andamento giorno
