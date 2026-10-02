@@ -52,7 +52,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **carte del Centro europeo ECMWF** (`ecmwf-carte.js`): 10 carte del modello IFS sull'Europa (pressione e vento,
   geopotenziale 500 hPa, precipitazioni, temperatura, nuvole, neve, zero termico, raffiche, instabilità) fino a
   10 giorni, con selettore, cursore e animazione. I link alle immagini (OpenCharts API, © ECMWF, CC BY 4.0) sono in
-  `data/ecmwf.json`, raccolti da `scripts/fetch_ecmwf.py` nell'Action a piccoli blocchi (l'API limita le richieste):
+  `data/ecmwf.json`, raccolti da `scripts/fetch_ecmwf.py` nel workflow dedicato `.github/workflows/ecmwf.yml`
+  (00:41, 02:41, 12:41 e 14:41 UTC; ~150 richieste distanziate di 4 s, perché l'API limita le richieste):
   una corsa nuova (00 o 12 UTC, vecchia almeno 12 ore) viene mostrata solo quando è completa.
 - **Temperature in Toscana** (`temperature-toscana.html`) — tutte le stazioni della rete
   termometrica del CFR Toscana: temperatura attuale, minime e massime di oggi e di ieri,
