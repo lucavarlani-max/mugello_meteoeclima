@@ -3,7 +3,7 @@
    2) Google Analytics 4 (facoltativo): si attiva scrivendo l'ID di misurazione in GA_ID qui sotto.
       Usa cookie, quindi viene caricato SOLO se il visitatore accetta nel banner; la scelta resta
       salvata nel browser e si cambia con il link "Preferenze cookie" in fondo alla pagina. */
-var GA_ID = "";   // es. "G-AB12CD34EF" (Google Analytics > Amministrazione > Stream di dati)
+var GA_ID = "G-QQFBDGK1X1";   // es. "G-AB12CD34EF" (Google Analytics > Amministrazione > Stream di dati)
 
 /* Contatore visite con GoatCounter (gratuito, senza cookie: non serve il banner del consenso).
    Le statistiche complete si vedono su https://mugellometeoeclima.goatcounter.com
