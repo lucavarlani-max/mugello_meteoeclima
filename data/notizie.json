@@ -1,7 +1,77 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-01",
+ "aggiornato": "2026-10-02",
  "numeri": [
+  {
+   "data": "2026-10-02",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "El Niño verso il record: tre probabilità su quattro per un evento «storico»",
+    "testo": "Secondo il NOAA Climate Prediction Center c'è oltre il 90% di probabilità di un El Niño molto forte nell'autunno-inverno 2026-27 e il 75% che in ottobre-dicembre superi i +2,5 °C, un valore mai raggiunto dal 1950.",
+    "fonte": "NOAA Climate Prediction Center",
+    "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+    "foto": "oceano"
+   },
+   "numero": {
+    "valore": "75%",
+    "testo": "La probabilità che El Niño in ottobre-dicembre 2026 superi i +2,5 °C, più di qualsiasi evento dal 1950."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Etna, torna la calma",
+     "testo": "Il 1° ottobre il tremore vulcanico è su livelli ordinari dopo giorni di allerta; l'aeroporto di Catania è pienamente operativo, senza limitazioni.",
+     "fonte": "Sky TG24 / etnamonitor",
+     "url": "https://tg24.sky.it/cronaca/2026/09/28/etna-chiuso-aeroporto-catania",
+     "foto": "etna"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Due scosse di magnitudo 5,1",
+     "testo": "Il 1° ottobre due terremoti di magnitudo 5,1 sono stati registrati dall'USGS, uno alle Isole Salomone e uno vicino a Miyako, in Giappone.",
+     "fonte": "USGS",
+     "url": "https://earthquake.usgs.gov/earthquakes/map/",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Ottobre comincia senza uragani nell'Atlantico",
+     "testo": "Otto tempeste con nome ma nessun uragano: è la prima volta nell'era dei satelliti, e il National Hurricane Center non prevede formazioni nei prossimi sette giorni.",
+     "fonte": "Tampa Bay Times / NHC",
+     "url": "https://www.tampabay.com/hurricane/2026/10/01/atlantic-gulf-storm-season-tropics-el-nino-weather-forecast/",
+     "foto": "uragano2"
+    },
+    {
+     "cat": "mugello",
+     "titolo": "Mugello, fine settimana di sole",
+     "testo": "Oggi cielo prevalentemente soleggiato tra 15 e 23 °C; sabato e domenica ancora sole, con piovaschi solo sui rilievi e massime nelle zone interne attorno ai 22 °C.",
+     "fonte": "LaMMA Toscana",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-barberinodimugello",
+     "foto": "bilancino"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Mugello (previsioni per Barberino) oggi tra 15 e 23 °C, soleggiato; sabato 3 ottobre minime di 14 °C e massime di 22 °C, con sole e nubi innocue. In Toscana massime tra 26 e 28 °C.",
+     "fonte": "LaMMA Toscana"
+    },
+    {
+     "tipo": "storia",
+     "testo": "2 ottobre 2020: la tempesta «Alex» investe Piemonte, Liguria e Alpi Marittime con 517 mm in 12 ore a Limone Pancani e 596 mm in 24 ore a Mergozzo, una delle alluvioni più intense mai registrate nel Nord-Ovest.",
+     "fonte": "Arpa Piemonte / Nimbus"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "31,2 mm in un solo minuto: è la pioggia più intensa mai misurata in 60 secondi, a Unionville (Maryland, Stati Uniti) il 4 luglio 1956.",
+     "fonte": "WMO"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:16 e tramonta alle 18:50, circa 11 ore e 34 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa calante (62%) e domani, 3 ottobre, sarà all'ultimo quarto."
+    }
+   ]
+  },
   {
    "data": "2026-10-01",
    "apertura": {
