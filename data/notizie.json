@@ -1,7 +1,88 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-01",
+ "aggiornato": "2026-10-02",
  "numeri": [
+  {
+   "data": "2026-10-02",
+   "apertura": {
+    "cat": "vulcani",
+    "titolo": "Il respiro inquieto della Terra: 23 vulcani in eruzione",
+    "testo": "Secondo l'ultimo bollettino settimanale (17–23 settembre) sono 23 i vulcani in eruzione nel mondo: cinque nuove eruzioni, tra cui Ambrym (Vanuatu) e Chikurachki (isole Curili), e diciotto fenomeni già in corso, dal Pacifico al Mediterraneo.",
+    "fonte": "Smithsonian / USGS GVP",
+    "url": "https://volcano.si.edu/reports_weekly.cfm"
+   },
+   "numero": {
+    "valore": "1.213 t/giorno",
+    "testo": "L'anidride solforosa (SO₂) emessa dal vulcano Sangay, in Ecuador, il 21 settembre: il valore più alto registrato nel 2026."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "L'Etna non si ferma",
+     "testo": "Il vulcano siciliano è tra i diciotto con un'eruzione in corso: emissioni di cenere e attività stromboliana ai crateri sommitali, allerta gialla.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "etna"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Scossa di magnitudo 6,6 alle Isole della Lealtà",
+     "testo": "Il 25 settembre, a 10 km di profondità e 81 km a est-nord-est di Tadine, in Nuova Caledonia. Nessuna allerta tsunami.",
+     "fonte": "USGS",
+     "url": "https://earthquake.usgs.gov/earthquakes/eventpage/pt26268000",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Antartide, una tregua temporanea dovuta ai tropici",
+     "testo": "Tra il 2021 e il 2023 il ghiaccio antartico ha guadagnato 695 miliardi di tonnellate, il maggiore aumento su 22 mesi in vent'anni, per le nevicate più abbondanti legate alla piscina calda del Pacifico tropicale. Un effetto ritenuto temporaneo.",
+     "fonte": "Nature",
+     "url": "https://www.nature.com/articles/s41586-026-10912-x",
+     "foto": "ghiaccio1"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Campi Flegrei, sismicità ai minimi da tre anni",
+     "testo": "30 terremoti nella settimana dal 21 al 27 settembre, il valore più basso in tre anni; il suolo continua a sollevarsi di circa 1 cm al mese e la Solfatara è a 173 °C.",
+     "fonte": "INGV – Osservatorio Vesuviano",
+     "url": "https://www.pozzuolinews24.it/bradisismo-campi-flegrei-21-27-settembre-2026/"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico in ottobre senza uragani",
+     "testo": "Per la prima volta dal 1966, nell'era dei satelliti, la stagione atlantica arriva a ottobre senza nessun uragano formato. La stagione resta aperta fino al 30 novembre.",
+     "fonte": "Tampa Bay Times (dati NHC)",
+     "url": "https://www.tampabay.com/hurricane/2026/10/01/atlantic-gulf-storm-season-tropics-el-nino-weather-forecast",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, lava a intermittenza da più bocche",
+     "testo": "Alle Hawaii prosegue l'episodio effusivo con fontane e colate da più bocche; il livello di allerta è «Watch».",
+     "fonte": "Smithsonian GVP / USGS HVO",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea1"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Borgo San Lorenzo oggi tra 15 e 26 °C, cielo velato ma asciutto (pioggia al 5%) e venti deboli da nord-est; domani e sabato sereno, con l'anticiclone stabile.",
+     "fonte": "LaMMA Toscana",
+     "url": "https://www.lamma.toscana.it/meteo/meteo-borgosanlorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1858: l'unico uragano che abbia colpito la California, a San Diego. 1898: un uragano di categoria 4 in Georgia, l'ultimo così forte nello Stato. 1971: tempesta di neve sulle Black Hills, con oltre 30 cm.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Oct_02"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "A Borgo San Lorenzo il Sole sorge alle 7:13 e tramonta alle 18:56: circa 11 ore e 42 minuti di luce. Nel corso di ottobre si perde quasi un'ora e mezza di luce; domenica 25 ottobre torna l'ora solare."
+    }
+   ]
+  },
   {
    "data": "2026-10-01",
    "apertura": {
