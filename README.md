@@ -12,7 +12,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   Aggiornamento ogni 5 minuti; se la stazione è offline ripiega su Open-Meteo.
 - **Previsioni 9 comuni + 7 giorni** — modello AI **WeatherNext 3** di Google
   (DeepMind), tramite la Google Weather API, aggiornate dalla GitHub Action che
-  scrive `data/previsioni.json`. Se la chiave manca o l'API non risponde, ripiega
+  scrive `data/previsioni.json`. Per ogni giorno: icona, massima, minima, probabilità di pioggia (`pp`, %)
+  e pioggia prevista (`mm`, somma di giorno e notte dalla `qpf` di Google, `precipitation_sum` con Open-Meteo). Se la chiave manca o l'API non risponde, ripiega
   automaticamente su **Open-Meteo** (server e, in ultima istanza, lato browser).
   Le pagine (`previsioni-allinea.js`) scartano i giorni già passati in ora italiana: le
   esecuzioni programmate di GitHub possono partire con ore di ritardo e, prima delle 7,

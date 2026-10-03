@@ -168,6 +168,7 @@
   .day .hi{font-family:var(--serif);font-weight:700;font-size:15px}
   .day .lo{font-size:12px;color:var(--ink-faint)}
   .day .pp{font-family:var(--mono);font-size:10px;color:var(--rain);margin-top:3px}
+  .day .mm{font-family:var(--mono);font-size:10px;color:var(--rain);opacity:.85;min-height:13px}
 
   /* ---- section headings ---- */
   .sec{margin-top:34px}
@@ -1089,13 +1090,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <h3>I prossimi 7 giorni <span class="chip ok" id="live-badge" style="display:none;font-size:10px;vertical-align:middle">● live</span></h3>
         <div class="sub">Borgo San Lorenzo · modello AI WeatherNext 3 (Google) · <a href="comune.html?c=6" style="color:var(--pine);font-weight:600;text-decoration:none">dettaglio orario →</a></div>
         <div class="week" id="week">
-          <div class="day on"><div class="dow" id="d0-dow">Dom</div><div class="di" id="d0-di">⛅</div><div class="hi" id="d0-hi">25°</div><div class="lo" id="d0-lo">12°</div><div class="pp" id="d0-pp">20%</div></div>
-          <div class="day"><div class="dow" id="d1-dow">Lun</div><div class="di" id="d1-di">⛈</div><div class="hi" id="d1-hi">23°</div><div class="lo" id="d1-lo">13°</div><div class="pp" id="d1-pp">70%</div></div>
-          <div class="day"><div class="dow" id="d2-dow">Mar</div><div class="di" id="d2-di">🌦</div><div class="hi" id="d2-hi">21°</div><div class="lo" id="d2-lo">11°</div><div class="pp" id="d2-pp">45%</div></div>
-          <div class="day"><div class="dow" id="d3-dow">Mer</div><div class="di" id="d3-di">☀️</div><div class="hi" id="d3-hi">24°</div><div class="lo" id="d3-lo">10°</div><div class="pp" id="d3-pp">5%</div></div>
-          <div class="day"><div class="dow" id="d4-dow">Gio</div><div class="di" id="d4-di">☀️</div><div class="hi" id="d4-hi">26°</div><div class="lo" id="d4-lo">12°</div><div class="pp" id="d4-pp">0%</div></div>
-          <div class="day"><div class="dow" id="d5-dow">Ven</div><div class="di" id="d5-di">⛅</div><div class="hi" id="d5-hi">25°</div><div class="lo" id="d5-lo">13°</div><div class="pp" id="d5-pp">15%</div></div>
-          <div class="day"><div class="dow" id="d6-dow">Sab</div><div class="di" id="d6-di">🌤</div><div class="hi" id="d6-hi">24°</div><div class="lo" id="d6-lo">12°</div><div class="pp" id="d6-pp">10%</div></div>
+          <div class="day on"><div class="dow" id="d0-dow">Dom</div><div class="di" id="d0-di">⛅</div><div class="hi" id="d0-hi">25°</div><div class="lo" id="d0-lo">12°</div><div class="pp" id="d0-pp">20%</div><div class="mm" id="d0-mm"></div></div>
+          <div class="day"><div class="dow" id="d1-dow">Lun</div><div class="di" id="d1-di">⛈</div><div class="hi" id="d1-hi">23°</div><div class="lo" id="d1-lo">13°</div><div class="pp" id="d1-pp">70%</div><div class="mm" id="d1-mm"></div></div>
+          <div class="day"><div class="dow" id="d2-dow">Mar</div><div class="di" id="d2-di">🌦</div><div class="hi" id="d2-hi">21°</div><div class="lo" id="d2-lo">11°</div><div class="pp" id="d2-pp">45%</div><div class="mm" id="d2-mm"></div></div>
+          <div class="day"><div class="dow" id="d3-dow">Mer</div><div class="di" id="d3-di">☀️</div><div class="hi" id="d3-hi">24°</div><div class="lo" id="d3-lo">10°</div><div class="pp" id="d3-pp">5%</div><div class="mm" id="d3-mm"></div></div>
+          <div class="day"><div class="dow" id="d4-dow">Gio</div><div class="di" id="d4-di">☀️</div><div class="hi" id="d4-hi">26°</div><div class="lo" id="d4-lo">12°</div><div class="pp" id="d4-pp">0%</div><div class="mm" id="d4-mm"></div></div>
+          <div class="day"><div class="dow" id="d5-dow">Ven</div><div class="di" id="d5-di">⛅</div><div class="hi" id="d5-hi">25°</div><div class="lo" id="d5-lo">13°</div><div class="pp" id="d5-pp">15%</div><div class="mm" id="d5-mm"></div></div>
+          <div class="day"><div class="dow" id="d6-dow">Sab</div><div class="di" id="d6-di">🌤</div><div class="hi" id="d6-hi">24°</div><div class="lo" id="d6-lo">12°</div><div class="pp" id="d6-pp">10%</div><div class="mm" id="d6-mm"></div></div>
         </div>
       </div>
     </div>
@@ -1344,6 +1345,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const r=n=>Math.round(n);
   const set=(id,t)=>{const e=document.getElementById(id); if(e)e.textContent=t;};
   const dec=v=>v.toFixed(1).replace('.',',');
+  // pioggia prevista in mm: niente sotto 0,1; una cifra decimale sotto i 10 mm
+  const mmTxt=v=>(v==null||v<0.1)?'':(v<10?dec(v):String(Math.round(v)))+' mm';
   const card=d=>CARD[Math.round(((d%360)/22.5))%16];
 
   let omScarp=null; // cache Open-Meteo per Scarperia (per icona/min-max quando arriva la stazione)
@@ -1370,7 +1373,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const d=data[i]; if(!d) return; const cur=d.current, dl=d.daily;
       set('c'+i+'-ico', wmo(cur.weather_code)[0]);
       set('c'+i+'-t', r(dl.temperature_2m_max[0])+'°');
-      set('c'+i+'-sub', 'min '+r(dl.temperature_2m_min[0])+'° · '+(dl.precipitation_probability_max[0]??0)+'%');
+      set('c'+i+'-sub', 'min '+r(dl.temperature_2m_min[0])+'° · '+(dl.precipitation_probability_max[0]??0)+'%'+(mmTxt(dl.precipitation_sum[0])?' · '+mmTxt(dl.precipitation_sum[0]):''));
     });
 
     // confronto tra comuni (oggi)
@@ -1398,6 +1401,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       set('d'+i+'-hi', r(f.temperature_2m_max[i])+'°');
       set('d'+i+'-lo', r(f.temperature_2m_min[i])+'°');
       set('d'+i+'-pp', (f.precipitation_probability_max[i]??0)+'%');
+      set('d'+i+'-mm', mmTxt(f.precipitation_sum?f.precipitation_sum[i]:null));
     });
     const lb=document.getElementById('live-badge'); if(lb) lb.style.display='inline-block';
     set('note','● Stazione ISCARP2 (Weather Underground) + previsioni Open-Meteo · aggiornamento automatico · elaborazioni L. Varlani');
@@ -1418,7 +1422,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const g0=(c.giorni&&c.giorni[0])||{};
       set('c'+i+'-ico', wmo(c.now?c.now.code:g0.code)[0]);
       if(g0.tmax!=null) set('c'+i+'-t', r(g0.tmax)+'°'); else if(c.now&&c.now.t!=null) set('c'+i+'-t', r(c.now.t)+'°');
-      if(g0.tmin!=null) set('c'+i+'-sub', 'min '+r(g0.tmin)+'° · '+(g0.pp??0)+'%');
+      if(g0.tmin!=null) set('c'+i+'-sub', 'min '+r(g0.tmin)+'° · '+(g0.pp??0)+'%'+(mmTxt(g0.mm)?' · '+mmTxt(g0.mm):''));
     });
 
     // pannello "adesso": icona/desc/min-max da Scarperia
@@ -1438,6 +1442,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       set('d'+i+'-hi', r(d.tmax)+'°');
       set('d'+i+'-lo', r(d.tmin)+'°');
       set('d'+i+'-pp', (d.pp??0)+'%');
+      set('d'+i+'-mm', mmTxt(d.mm));
     });
 
     // confronto tra comuni (oggi)
