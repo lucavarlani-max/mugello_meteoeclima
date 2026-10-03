@@ -111,6 +111,7 @@
   .hr .t{font-weight:700;font-size:16px;font-family:var(--serif)}
   .hr .p{font-family:var(--mono);font-size:10.5px;color:var(--rain);margin-top:3px;min-height:14px}
   .hr .w{font-family:var(--mono);font-size:10px;color:var(--ink-faint);margin-top:2px}
+  .hr .w small,.hr .p small{font-size:9px}
   .hr.night{background:var(--panel-2)}
   /* chart */
   .chart-wrap{margin-top:4px}
@@ -122,9 +123,11 @@
   .day .dow{width:64px;font-weight:600;text-transform:capitalize}
   .day .di{font-size:28px;width:40px;text-align:center;flex:none}
   .day .dd{flex:1;color:var(--ink-soft);font-size:13.5px}
-  .day .pp{font-family:var(--mono);font-size:12px;color:var(--rain);width:58px;text-align:right}
+  .day .pp{font-family:var(--mono);font-size:12px;color:var(--rain);width:74px;text-align:right;line-height:1.3;white-space:nowrap;flex:none}
+  .day .pp small{display:block;font-size:11px;opacity:.85;white-space:nowrap}
   .day .tp{width:96px;text-align:right;font-family:var(--serif);font-weight:700}
   .day .tp s{color:var(--ink-faint);text-decoration:none;font-weight:600;margin-left:6px}
+  @media (max-width:520px){ .day{gap:8px} .day .dow{width:auto;min-width:56px} .day .di{width:30px;font-size:24px} .day .tp{width:auto;flex:none} .day .dd{min-width:0} }
   /* sun row */
   .sun{display:flex;gap:26px;flex-wrap:wrap}
   .sun .kv .v{font-size:18px}
@@ -257,6 +260,8 @@
   const CARD=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
   const card=d=>CARD[Math.round(((d%360)/22.5))%16];
   const r=n=>Math.round(n);
+  // pioggia prevista in mm: niente sotto 0,1; una cifra decimale sotto i 10 mm
+  const mmTxt=v=>(v==null||v<0.1)?'':(v<10?v.toFixed(1).replace('.',','):String(Math.round(v)))+' mm';
   const set=(id,t)=>{const e=document.getElementById(id); if(e)e.textContent=t;};
 
   const params=new URLSearchParams(location.search);
@@ -335,7 +340,7 @@
       el.innerHTML='<div class="dow">'+(i===0?'Oggi':DOW[dt.getDay()])+'</div>'+
         '<div class="di">'+w[0]+'</div>'+
         '<div class="dd">'+w[1]+' · '+dt.getDate()+'/'+(dt.getMonth()+1)+'</div>'+
-        '<div class="pp">💧 '+(d.pp??0)+'%</div>'+
+        '<div class="pp">💧 '+(d.pp??0)+'%'+(mmTxt(d.mm)?'<small>'+mmTxt(d.mm)+'</small>':'')+'</div>'+
         '<div class="tp">'+r(d.tmax)+'°<s>'+r(d.tmin)+'°</s></div>';
       box.appendChild(el);
     });
@@ -379,8 +384,8 @@
       el.innerHTML='<div class="h">'+(t.getHours()===0?(t.getDate()+'/'+(t.getMonth()+1)):hh)+'</div>'+
         '<div class="i">'+wmo(H.weather_code[i])[0]+'</div>'+
         '<div class="t">'+r(H.temperature_2m[i])+'°</div>'+
-        '<div class="p">'+(pp!=null&&pp>0?('💧'+pp+'%'):(mm>0?('💧'+mm.toFixed(1)):''))+'</div>'+
-        '<div class="w">'+r(H.wind_speed_10m[i])+'</div>';
+        '<div class="p">'+(pp!=null&&pp>0?('💧'+pp+'%'):'')+(mm>=0.1?((pp>0?'<br>':'💧')+'<small>'+mmTxt(mm)+'</small>'):'')+'</div>'+
+        '<div class="w" title="Vento medio">💨 '+r(H.wind_speed_10m[i])+' <small>km/h</small></div>';
       hs.appendChild(el);
     });
 
