@@ -207,6 +207,7 @@
   .tk-row[data-k="pioggia"] .tk-item b{color:var(--sky-deep)}
   .tk-item .p{color:var(--ink-faint);font-size:12px}
   .tk-item .r{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-right:1px}
+  .tk-item .fl{width:20px;height:15px;object-fit:cover;border-radius:2px;margin-right:6px;vertical-align:-2px;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
   @media (prefers-reduced-motion:reduce){ .tk-track{animation:none;overflow-x:auto;max-width:100%} }
   .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
   .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
@@ -263,7 +264,7 @@
           <div class="tk"><div class="tk-track" id="tk-caldo"><span class="loading">Carico i dati…</span></div></div>
         </div>
         <div class="tk-row" data-k="freddo">
-          <div class="tk-lab">🧊 Le temperature più basse</div>
+          <div class="tk-lab">🧊 Le temperature più basse <span class="n">· una sola stazione in Antartide</span></div>
           <div class="tk"><div class="tk-track" id="tk-freddo"><span class="loading">Carico i dati…</span></div></div>
         </div>
         <div class="tk-row" data-k="pioggia">
@@ -517,14 +518,16 @@
   /* ---------- estremi nel mondo ----------
      legge ./data/estremi.json, scritto da scripts/fetch_estremi.py (OGIMET) nella GitHub Action:
      { "aggiornato": "2026-09-30T12:00:00Z",
-       "caldo":   [{ "staz":"Death Valley", "paese":"Stati Uniti", "v":47.2 }, ...10],
-       "freddo":  [{ "staz":"Vostok",       "paese":"Antartide",  "v":-62.1 }, ...10],
+       "caldo":   [{ "staz":"Death Valley", "paese":"Stati Uniti", "iso":"us", "v":47.2 }, ...10],
+       "freddo":  [{ "staz":"Vostok",       "paese":"Antartide",  "iso":"aq", "v":-62.1 }, ...10],   (una sola stazione antartica)
        "pioggia": [{ "staz":"...",          "paese":"...",        "v":182.4 }, ...10] }
-     v in °C per caldo/freddo, in mm per pioggia (accumulo nelle 24 ore). */
+     v in °C per caldo/freddo, in mm per pioggia (accumulo nelle 24 ore).
+     Bandierine da flagcdn.com (codice ISO del paese); se l'immagine non arriva viene nascosta. */
+  const bandiera=it=>/^[a-z]{2}$/.test(it.iso||"")?`<img class="fl" src="https://flagcdn.com/w20/${it.iso}.png" srcset="https://flagcdn.com/w40/${it.iso}.png 2x" width="20" height="15" alt="" title="${esc(it.paese||"")}" loading="lazy" onerror="this.remove()">`:"";
   function tkTrack(id,items,fmt,emoji){
     const el=$(id);
     if(!items||!items.length){el.innerHTML='<span class="loading">Dati in arrivo.</span>';return;}
-    const riga=(it,i)=>`<span class="tk-item"><span class="r">#${i+1}</span>${emoji} <b>${fmt(it.v)}</b> <span class="p">${esc(it.staz)}${it.paese?", "+esc(it.paese):""}</span></span>`;
+    const riga=(it,i)=>`<span class="tk-item"><span class="r">#${i+1}</span>${emoji} <b>${fmt(it.v)}</b> <span class="p">${bandiera(it)}${esc(it.staz)}${it.paese?", "+esc(it.paese):""}</span></span>`;
     el.innerHTML=items.concat(items).map((it,i)=>riga(it,i%items.length)).join("");
   }
   async function estremi(){
