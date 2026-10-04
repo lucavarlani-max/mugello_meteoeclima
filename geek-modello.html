@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- MODELLO per una nuova sperimentazione MeteoGeek.
+     1. Copia questo file come geek-<nome>.html (es. geek-giorni-di-nebbia.html).
+     2. Cambia titolo, descrizione, canonical e i testi; togli la riga "robots noindex".
+     3. Metti grafico/tabella nella sezione "La sperimentazione" (dati in data/geek/<nome>.json o .csv).
+     4. Aggiungi la scheda in data/meteogeek.json con link "geek-<nome>.html". -->
+<meta name="robots" content="noindex">
+<title>Titolo della sperimentazione · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Una frase che spiega che cosa mostra questa sperimentazione.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-modello.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Titolo della sperimentazione · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Titolo breve</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · grafico</div>
+      <h1>Titolo della sperimentazione</h1>
+      <p class="lead">Che cosa ho voluto vedere, con quali dati e perché è curioso. Due o tre frasi.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>La sperimentazione</h2><span class="src">fonte dei dati · periodo</span></div>
+      <div class="card">
+        <div id="grafico" style="min-height:260px;display:grid;place-items:center;color:var(--ink-faint);font-family:var(--mono);font-size:12px">qui il grafico o la tabella</div>
+        <p class="note">Come si legge il grafico.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Che cosa si vede</h2></div>
+      <div class="card"><p class="note" style="margin:0">Le osservazioni principali, con i numeri.</p></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> …</li>
+          <li><b>Metodo:</b> …</li>
+          <li><b>Limiti:</b> …</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
