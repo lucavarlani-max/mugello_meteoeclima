@@ -46,8 +46,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   dati 1923–2017): i 5 massimi per 10 durate da 5 minuti a 24 ore, grafico durata/pioggia, classifiche, linea del
   tempo, stazioni ed eventi (1996, 2017, 1930). Dati in `data/piogge-estreme.json`, PDF originale in `reports/toscana/`.
 - **Archivio climatico** (`archivio-climatico.html`, link "Archivio climatico" del riquadro "Il mese in cifre"
-  in home) — i report climatologici mensili di Borgo San Lorenzo (stazione SIR TOS01000999), da leggere online
-  (HTML interattivo) o scaricare in PDF. File in `reports/clima/AAAA-MM-<luogo>.html/.pdf`, elenco in
+  in home e sottomenu Toscana) — i report climatologici mensili di Borgo San Lorenzo (stazione SIR TOS01000999)
+  e Firenzuola (stazione Arpae-SIMC, 476 m), da leggere online (HTML interattivo, se c'è) o in PDF. File in `reports/clima/AAAA-MM-<luogo>.html/.pdf`, elenco in
   `data/report-clima.json`: per aggiungere un mese basta copiare i due file e inserire un elemento in cima a `report`.
 - **Mappe** (`mappe.html`) — mappa del Mugello con le previsioni per comune (WeatherNext 3) e, sotto, le
   **carte del Centro europeo ECMWF** (`ecmwf-carte.js`): 10 carte del modello IFS sull'Europa (pressione e vento,

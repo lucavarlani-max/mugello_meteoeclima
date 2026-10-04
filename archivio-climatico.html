@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Archivio climatico · Mugello Meteo & Clima</title>
-<meta name="description" content="I report climatologici mensili del Mugello: temperature, piogge ed estremi di ogni mese a Borgo San Lorenzo, confrontati con la serie storica dal 1951. Da leggere online o scaricare in PDF.">
+<meta name="description" content="I report climatologici mensili del Mugello: temperature, piogge ed estremi di ogni mese a Borgo San Lorenzo e Firenzuola, confrontati con le serie storiche delle stazioni. Da leggere online o scaricare in PDF.">
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/archivio-climatico.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="Archivio climatico · Il mese in cifre">
-<meta property="og:description" content="I report climatologici mensili del Mugello: temperature, piogge ed estremi di ogni mese a Borgo San Lorenzo, confrontati con la serie storica dal 1951. Da leggere online o scaricare in PDF.">
+<meta property="og:description" content="I report climatologici mensili del Mugello: temperature, piogge ed estremi di ogni mese a Borgo San Lorenzo e Firenzuola, confrontati con le serie storiche delle stazioni. Da leggere online o scaricare in PDF.">
 <meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/archivio-climatico.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
@@ -155,14 +155,16 @@
     <header class="head">
       <div class="eyebrow">Il mese in cifre</div>
       <h1>Archivio climatico</h1>
-      <p class="lead">I report climatologici mensili di Borgo San Lorenzo: temperature, piogge, estremi e il confronto con la serie storica della stazione dal 1951. Ogni report si legge online, con i grafici interattivi, o si scarica in PDF.</p>
+      <p class="lead">I report climatologici mensili delle stazioni del Mugello, Borgo San Lorenzo e Firenzuola: temperature, piogge, estremi e il confronto con la serie storica di ogni stazione. Ogni report si legge online o si scarica in PDF.</p>
     </header>
 
     <div id="arch"><p class="empty">Carico l'archivio…</p></div>
 
     <div class="about">
       <h3>Dati e metodo</h3>
-      <p>I report usano i dati della stazione di Borgo San Lorenzo (TOS01000999, 196 m) del Servizio Idrologico Regionale della Toscana: temperature dal 1951, pioggia dal 2004. I valori del mese appena concluso sono pre-validati e possono essere rettificati dal SIR. Metodo, periodi di riferimento e qualità dei dati sono spiegati in fondo a ogni report.</p>
+      <p><b>Borgo San Lorenzo:</b> stazione TOS01000999 (196 m) del Servizio Idrologico Regionale della Toscana, temperature dal 1951 e pioggia dal 2004; i valori del mese appena concluso sono pre-validati e possono essere rettificati dal SIR.</p>
+      <p><b>Firenzuola:</b> stazione di Firenzuola (476 m, bacino del Santerno) dell'archivio Arpae-SIMC dell'Emilia-Romagna, settembri dal 2002; il confronto è con gli ultimi 24 anni, non con un trentennio climatologico standard.</p>
+      <p>Metodo, periodi di riferimento e qualità dei dati sono spiegati in ogni report.</p>
     </div>
   </main>
 
@@ -176,7 +178,7 @@
     if(!R.length){document.getElementById("arch").innerHTML='<p class="empty">Nessun report ancora pubblicato.</p>';return;}
     const anni=[...new Set(R.map(r=>r.mese.slice(0,4)))];
     document.getElementById("arch").innerHTML=anni.map(y=>`<h2 class="yr">${y}</h2><div class="reps">`+R.filter(r=>r.mese.startsWith(y)).map(r=>`
-      <article class="rep" id="m${esc(r.mese)}">
+      <article class="rep" id="m${esc(r.mese)}-${esc((r.luogo||"").toLowerCase().replace(/[^a-z]+/g,"-"))}">
         <div>
           <div class="eyebrow">Report climatologico · ${esc(r.luogo)}</div>
           <h3>${esc(r.titolo)}</h3>
@@ -184,7 +186,7 @@
           <div class="st2">${esc(r.stazione)}</div>
           <p class="sint">${esc(r.sintesi)}</p>
           <div class="acts">
-            <a class="btn" href="${esc(r.html)}" target="_blank" rel="noopener">Apri il report →</a>
+            <a class="btn" href="${esc(r.html||r.pdf)}" target="_blank" rel="noopener">${r.html?"Apri il report →":"Leggi il report (PDF) →"}</a>
             <a class="btn ghost" href="${esc(r.pdf)}" download>⬇ Scarica il PDF${r.pdf_kb?` (${Math.round(r.pdf_kb)} KB)`:""}</a>
           </div>
         </div>
