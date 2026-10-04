@@ -119,6 +119,13 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   (un elemento in cima a `esperimenti`: titolo, tipo grafico/statistica/curiosita/tabella/esperimento, data, testo, link,
   tag, stato e anteprima facoltativi). Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
   dal modello `geek-modello.html` (non indicizzato); nel menu evidenziano MeteoGeek.
+- **Le mie stazioni** (`stazioni.html` + `stazioni.js`, voce Stazioni del menu) — la stazione ISCARP2 di Scarperia
+  (Weather Underground, letta dal browser come in home) e la stazione Netatmo: valori attuali, min/max di oggi,
+  temperature delle ultime 24 ore a confronto e ultimi 7 giorni di ISCARP2. La Netatmo è letta dall'Action con
+  `scripts/fetch_netatmo.py` (API Netatmo con OAuth) che scrive `data/netatmo.json`, solo moduli esterni e senza
+  coordinate. Servono i segreti `NETATMO_CLIENT_ID`, `NETATMO_CLIENT_SECRET`, `NETATMO_REFRESH_TOKEN` (permesso
+  read_station) e `NETATMO_KEY` (frase a piacere): il refresh token che Netatmo rinnova a ogni accesso viene
+  salvato cifrato in `data/netatmo-token.enc`. Senza segreti la scheda Netatmo mostra «in arrivo».
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
   senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
   visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).

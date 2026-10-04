@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le mie stazioni meteo · Mugello Meteo & Clima</title>
+<meta name="description" content="Le stazioni meteo di Mugello Meteo & Clima: la stazione ISCARP2 di Scarperia (Weather Underground) e la stazione Netatmo, con dati in tempo reale, le ultime 24 ore a confronto e gli ultimi 7 giorni.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Le mie stazioni meteo · Mugello Meteo & Clima">
+<meta property="og:description" content="Dati in tempo reale dalle stazioni meteo del Mugello di Mugello Meteo & Clima.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  /* identità delle due stazioni (stessi colori in grafico, schede e tabella) */
+  :root{--s-wu:#2a78d6;--s-na:#eb6834;--red:#c8452b}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-wu:#3987e5;--s-na:#d95926;--red:#e0674c}}
+  :root[data-theme="dark"]{--s-wu:#3987e5;--s-na:#d95926;--red:#e0674c}
+  .sts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+  .st{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px;border-top:4px solid var(--c)}
+  .st .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+  .st .nm{font-family:var(--serif);font-weight:800;font-size:20px;letter-spacing:-.01em}
+  .st .sub{color:var(--ink-faint);font-size:12.5px;font-family:var(--mono)}
+  .st .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .st .live i{width:8px;height:8px;border-radius:50%;background:#2fa05a}
+  .st .live.off i{background:#9aa79f}
+  .st .now{display:flex;align-items:baseline;gap:14px;margin:12px 0 8px;flex-wrap:wrap}
+  .st .t{font-family:var(--serif);font-weight:800;font-size:54px;line-height:1;letter-spacing:-.03em}
+  .st .t s{font-size:24px;text-decoration:none;color:var(--ink-faint)}
+  .st .mm{font-size:13px;color:var(--ink-soft)} .st .mm b{font-family:var(--mono)}
+  .st .kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+  .st .kv div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;padding:8px 10px}
+  .st .kv span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .st .kv b{font-family:var(--serif);font-size:18px;font-weight:700}
+  .st .foot2{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink-faint)}
+  .st .foot2 a{color:var(--ink-faint)}
+  .st .wait{color:var(--ink-soft);font-size:13.5px;margin:12px 0 0}
+  .chart{width:100%;height:320px;position:relative}
+  .chart svg{display:block;width:100%;height:100%;overflow:visible}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .grid{stroke:var(--line);stroke-width:1}
+  svg .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  svg .cross{stroke:var(--ink-faint);stroke-width:1}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:0 0 8px}
+  .legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+    padding:8px 11px;font-size:12.5px;line-height:1.5;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .tip i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  td.r{color:var(--red)} td.c{color:var(--s-wu)}
+  @media (max-width:760px){ .sts{grid-template-columns:1fr} .st .t{font-size:46px} .chart{height:260px} }
+  @media (max-width:520px){ .st .kv{grid-template-columns:repeat(2,minmax(0,1fr))} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Le mie stazioni</div>
+    <header class="head">
+      <div class="eyebrow">Stazioni meteo · dati in tempo reale</div>
+      <h1>Le mie stazioni</h1>
+      <p class="lead">Le stazioni meteo che curo nel Mugello: la stazione amatoriale <b>ISCARP2</b> di Scarperia, collegata alla rete Weather Underground, e la mia stazione <b>Netatmo</b>. Qui trovi i valori di adesso, il confronto delle temperature nelle ultime 24 ore e il riepilogo degli ultimi 7 giorni.</p>
+    </header>
+
+    <div class="sts">
+      <div class="st" id="st-wu" style="--c:var(--s-wu)"><div class="loading">Carico ISCARP2…</div></div>
+      <div class="st" id="st-na" style="--c:var(--s-na)"><div class="loading">Carico la stazione Netatmo…</div></div>
+    </div>
+
+    <section>
+      <div class="sh"><h2>Le ultime 24 ore a confronto</h2><span class="src">temperatura dell'aria</span></div>
+      <div class="card">
+        <div class="legend" id="leg"></div>
+        <div class="chart" id="ch"><div class="tip"></div></div>
+        <p class="note" id="ch-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Gli ultimi 7 giorni a Scarperia</h2><span class="src">stazione ISCARP2 · Weather Underground</span></div>
+      <div class="card"><div class="tbl"><table id="tab"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Le stazioni</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>ISCARP2 · Scarperia</b> — stazione meteo amatoriale collegata alla rete <a href="https://www.wunderground.com/dashboard/pws/ISCARP2" target="_blank" rel="noopener">Weather Underground</a>; è la stazione del riquadro «Adesso» della home. Dati letti direttamente dal sito ogni 5 minuti.</li>
+          <li><b>Netatmo</b> — stazione personale Netatmo con modulo esterno; i dati arrivano dall'API Netatmo a ogni aggiornamento automatico del sito (di solito ogni poche ore). Si pubblicano solo i moduli esterni.</li>
+          <li>Le stazioni amatoriali non hanno la certificazione delle reti ufficiali: posizione, schermatura dal sole e manutenzione possono influire sui valori, soprattutto nelle ore di sole.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · elaborazioni L. Varlani · <a href="index.html">torna alla home</a></div></footer>
+<script src="stazioni.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
