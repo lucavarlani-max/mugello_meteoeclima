@@ -254,3 +254,8 @@ Stazione ISCARP2 (Weather Underground) · WeatherNext 3 / Google Weather API · 
    regola fissa, non va saltata) e il nome OMM della stazione in `links` nelle chiamate a
    `WMOCat.mount` (`serie-storiche.html` e `stazioni-centenarie.html`) per evidenziarla sulla
    mappa, solo se è davvero una delle stazioni centenarie riconosciute (vedi `data/serie/wmo-centenarie.json`).
+5. **Aggiungi la stazione anche al grafico di confronto del riscaldamento** (anche questa è
+   una regola fissa, non va saltata): nell'array `ST` in cima a `serie-confronto.js`
+   (`{id:"<slug>",n:"<nome>",c:"<nome breve per etichette e legenda>"}`) e, se sono finiti
+   i colori già definiti, una nuova coppia `--sN` (chiaro e scuro) nella regola `.rs` in
+   `serie-storiche.html`. Tabella, legenda e testo si aggiornano da soli.
