@@ -82,7 +82,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **Genova 1833–2025** (`genova.html`, Osservatorio Meteorologico Storico dell'Università di Genova, dati aperti HistObs UniGe, temperatura e pioggia),
   **Mont Aigoual 1896–2026** (`mont-aigoual.html`, osservatorio di Météo-France a 1567 m nelle Cevenne, dati NOAA GHCN-Daily: pioggia dal 1896, temperatura dal 1949, media giornaliera completata con TAVG, opzione `--tavg` di `build_serie.py`) e
   **De Bilt 1901–2026** (`de-bilt.html`, stazione di riferimento del KNMI nei Paesi Bassi, stazione centenaria OMM) e
-  **Bangalore 1901–2026** (`bangalore.html`, India Meteorological Department, stazione centenaria OMM come osservatorio pluviometrico dal 1867: pioggia dal 1901, temperatura dal 1973, media giornaliera completata con TAVG e soglia di giorni validi per anno abbassata a 275 con `--min-anno=275` di `build_serie.py`, introdotta per questa serie).
+  **Bangalore 1901–2026** (`bangalore.html`, India Meteorological Department, stazione centenaria OMM come osservatorio pluviometrico dal 1867: pioggia dal 1901, temperatura dal 1973, media giornaliera completata con TAVG e soglia di giorni validi per anno abbassata a 275 con `--min-anno=275` di `build_serie.py`, introdotta per questa serie) e
+  **Firenzuola 1961–2026** (`firenzuola.html`, la prima serie di un comune del Mugello stesso: stazione 01429 di ARPAE Emilia-Romagna, archivio opendata Eraclito, 66 anni praticamente senza lacune).
   Analisi d'insieme **Italia, stazioni NOAA** (`italia-ghcn.html` + `italia-ghcn.js`): 100 stazioni
   italiane del registro GHCN-Daily (mappa, cronologia, tabella) e trent'anni di dati 1996–2025
   su 46 stazioni (temperatura, gelo e caldo, precipitazioni, quota, latitudine); dati in `data/serie/italia-ghcn.json`, file originali (CSV, riepilogo,
