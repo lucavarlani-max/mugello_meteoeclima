@@ -9,14 +9,14 @@
     ["Radar & dati","radar.html",["radar"]],
     ["Mappe","mappe.html",["mappe"]],
     ["Neve",[["❄️ Neve oggi","neve.html"],["📜 La neve a Firenze","neve-firenze.html"]],["neve","neve-firenze"]],
-    ["Clima Firenze","clima-firenze.html",["clima-firenze"]],
     ["Cielo","effemeridi.html",["effemeridi"]],
     ["Webcam",[["📷 Webcam Mugello","index.html#webcam"],["🌍 Webcam Panomax","webcam-panomax.html"]],["webcam-panomax"]],
     ["Proverbi","proverbi.html",["proverbi"]],
-    ["Toscana",[["Temperature"],["🌡️ Oggi e ieri","temperature-toscana.html"],["Borgo S. Lorenzo"],["📊 Oggi nella storia","borgo-storico.html"],["Report mensili"],["📅 Archivio climatico","archivio-climatico.html"],["Record storici"],["🔴 Massime","estremi-massime.html"],["🔵 Minime","estremi-minime.html"],["Piogge"],["🌧️ Piogge estreme","piogge-estreme.html"]],
-      ["temperature-toscana","borgo-storico","archivio-climatico","estremi-massime","estremi-minime","piogge-estreme"]],
+    ["Toscana",[["Temperature"],["🌡️ Oggi e ieri","temperature-toscana.html"],["Firenze"],["🏛️ Clima di Firenze","clima-firenze.html"],["Borgo S. Lorenzo"],["📊 Oggi nella storia","borgo-storico.html"],["Report mensili"],["📅 Archivio climatico","archivio-climatico.html"],["Record storici"],["🔴 Massime","estremi-massime.html"],["🔵 Minime","estremi-minime.html"],["Piogge"],["🌧️ Piogge estreme","piogge-estreme.html"]],
+      ["temperature-toscana","clima-firenze","borgo-storico","archivio-climatico","estremi-massime","estremi-minime","piogge-estreme"]],
     ["Serie storiche","serie-storiche.html",["serie-storiche","stazioni-centenarie","italia-ghcn","milano-brera","new-york-central-park","padova","moncalieri","de-bilt","san-francisco","genova","mont-aigoual"]],
-    ["Notizie","notizie.html",["notizie"]]
+    ["Notizie","notizie.html",["notizie"]],
+    ["🧪 MeteoGeek","meteogeek.html",["meteogeek","geek-*"]]   // geek-*: tutte le pagine delle sperimentazioni
   ];
   const pag=(location.pathname.split("/").pop()||"index.html").replace(/\.html$/,"");
   const esc=s=>s.replace(/&/g,"&amp;");
@@ -33,7 +33,7 @@
   .mm-top *{box-sizing:border-box}
   .mm-nav{display:flex;align-items:center;gap:0;margin-left:auto;position:static;background:none;padding:0;box-shadow:none}
   .mm-nav a,.mm-dd>button{font:inherit;font-size:13px;font-weight:500;color:var(--ink-soft,#48584f);text-decoration:none;
-    padding:7px 8px;border-radius:999px;background:none;border:0;cursor:pointer;white-space:nowrap;line-height:1.3}
+    padding:7px 6px;border-radius:999px;background:none;border:0;cursor:pointer;white-space:nowrap;line-height:1.3}
   .mm-nav a:hover,.mm-dd>button:hover{background:var(--pine-tint,#e3f1eb);color:var(--pine-deep,#0a4f3c)}
   .mm-nav a.on,.mm-dd.on>button{background:var(--pine,#0f6b52);color:#fff}
   .mm-dd{position:relative}
@@ -62,7 +62,7 @@
 
   const link=(t,h,on)=>`<a href="${h}"${on?' class="on" aria-current="page"':""}>${esc(t)}</a>`;
   const nav=VOCI.map(([t,v,pp])=>{
-    const on=pp.includes(pag);
+    const on=pp.some(x=>x.endsWith("*")?pag.startsWith(x.slice(0,-1)):x===pag);
     if(typeof v==="string") return link(t,v,on);
     return `<div class="mm-dd${on?" on":""}"><button type="button" aria-haspopup="true">${esc(t)} ▾</button><div class="mm-menu">`+
       v.map(x=>x.length===1?`<div class="mm-h">${esc(x[0])}</div>`:link(x[0],x[1],x[1].replace(/\.html.*$/,"")===pag)).join("")+`</div></div>`;

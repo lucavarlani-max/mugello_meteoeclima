@@ -114,6 +114,11 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   `fb-post.html`) — la stessa barra di navigazione della home, fissa in alto durante lo scorrimento, con la voce
   della pagina evidenziata e il menu ☰ sotto i 1180 px. Le voci sono nell'elenco `VOCI` del file: se si aggiunge
   una pagina al menu della home, va aggiunta anche lì.
+- **MeteoGeek** (`meteogeek.html`, voce 🧪 MeteoGeek del menu) — il laboratorio: sperimentazioni, grafici insoliti,
+  statistiche, curiosità e tabelle, come schede filtrabili per tipo e con ricerca. Elenco in `data/meteogeek.json`
+  (un elemento in cima a `esperimenti`: titolo, tipo grafico/statistica/curiosita/tabella/esperimento, data, testo, link,
+  tag, stato e anteprima facoltativi). Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
+  dal modello `geek-modello.html` (non indicizzato); nel menu evidenziano MeteoGeek.
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
   senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
   visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).
