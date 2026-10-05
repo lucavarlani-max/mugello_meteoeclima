@@ -1,2 +1,48 @@
 id;nome;comune;lat;lon;quota;termo;pluvio
+TOS10000922;Barberino di Mugello;Barberino di Mugello (FI);44.0;11.241;260.26;1;1
+TOS10000938;Bivigliano;Vaglia (FI);43.895;11.322;570.91;0;1
 TOS01000999;Borgo S. Lorenzo;Borgo San Lorenzo (FI);43.958;11.391;196.00;1;1
+TOS10001000;Borgo S. Lorenzo;Borgo San Lorenzo (FI);43.956;11.371;193.00;0;1
+TOS11000017;Borgo S. Lorenzo 2;Borgo San Lorenzo (FI);43.986;11.39;280.00;1;1
+TOS10001002;Campestri;Vicchio (FI);43.907;11.439;450.46;0;1
+TOS10000912;Casaglia;Barberino di Mugello (FI);44.051;11.198;516.68;0;1
+TOS03001021;Castagneto;San Godenzo (FI);43.939;11.643;918.00;1;1
+TOS10001020;Castagno;San Godenzo (FI);43.899;11.661;725.88;0;1
+TOS01000911;Cavallina;Barberino di Mugello (FI);43.984;11.237;256.00;0;1
+TOS10000910;Cavallina;Barberino di Mugello (FI);43.987;11.232;274.50;0;1
+TOS01001029;Dicomano;Dicomano (FI);43.888;11.52;148.00;0;1
+TOS10001030;Dicomano;Dicomano (FI);43.895;11.544;186.00;1;1
+TOS11000081;Firenzuola Vanella;Firenzuola (FI);44.098;11.372;535.21;1;1
+TOS10001004;Fornello;Vicchio (FI);44.007;11.49;545.42;0;1
+TOS11000108;Giogo;Firenzuola (FI);44.047;11.389;880.00;1;1
+TOS11000514;Lanciafame;Borgo San Lorenzo (FI);43.965;11.405;240.00;1;1
+TOS01000926;Le Croci (Barberino);Barberino di Mugello (FI);44.007;11.271;388.00;1;1
+TOS01000921;Mangona;Barberino di Mugello (FI);44.05;11.196;540.00;1;1
+TOS01000925;Marcoiano;Scarperia e San Piero (FI);44.054;11.305;537.51;1;1
+TOS01000916;Monte di Fò;Barberino di Mugello (FI);44.08;11.281;820.00;1;1
+TOS10000915;Monte di Fo';Barberino di Mugello (FI);44.079;11.282;759.23;0;1
+TOS03001001;Monte Giovi;Vicchio (FI);43.877;11.448;960.00;1;1
+TOS10001172;Montecuccoli;Barberino di Mugello (FI);44.01;11.179;620.78;0;1
+TOS10000973;Montesenario;Vaglia (FI);43.895;11.334;815.00;1;1
+TOS10000920;Passo della Futa;Firenzuola (FI);44.095;11.278;888.01;0;1
+TOS10000934;Pescina;Vaglia (FI);43.873;11.257;503.53;0;1
+TOS01000931;Ponte a Olmo;Scarperia e San Piero (FI);44.049;11.304;459.00;0;1
+TOS10000930;Ponte a Olmo;Scarperia e San Piero (FI);44.05;11.306;448.60;1;1
+TOS10001104;Pratolino;Vaglia (FI);43.859;11.303;405.09;0;1
+TOS01000979;Razzuolo;Borgo San Lorenzo (FI);44.032;11.468;637.00;0;1
+TOS10000980;Razzuolo;Borgo San Lorenzo (FI);44.033;11.469;633.13;0;1
+TOS01000991;Ronta;Borgo San Lorenzo (FI);44.009;11.436;380.00;0;1
+TOS10000990;Ronta;Borgo San Lorenzo (FI);44.006;11.432;372.00;0;1
+TOS01000961;S. Agata di Mugello;Scarperia e San Piero (FI);44.021;11.337;357.00;0;1
+TOS10000960;S. Agata di Mugello;Scarperia e San Piero (FI);44.022;11.335;337.41;0;1
+TOS10000978;S. Ansano;Borgo San Lorenzo (FI);43.903;11.386;278.69;0;1
+TOS10000918;S. Lucia Ostale;Barberino di Mugello (FI);44.067;11.281;515.68;0;1
+TOS10000923;S. Nicolò a Latera;Barberino di Mugello (FI);43.974;11.234;312.67;0;1
+TOS10000950;S. Piero a Sieve;Scarperia e San Piero  (FI);43.97;11.333;210.85;1;1
+TOS01004621;S. Piero a Sieve-Sieve;Scarperia e San Piero (FI);43.965;11.328;222.00;0;1
+TOS01000941;Vaglia;Vaglia (FI);43.908;11.275;340.00;0;1
+TOS10000940;Vaglia;Vaglia (FI);43.911;11.277;313.00;1;1
+TOS10000970;Vetta alle Croci;Vaglia (FI);43.87;11.344;522.47;0;1
+TOS10001006;Vicchio;Vicchio (FI);43.934;11.468;196.70;0;1
+TOS01001011;Villore;Vicchio (FI);43.964;11.541;365.00;1;1
+TOS10001010;Villore;Vicchio (FI);43.967;11.546;382.07;1;1
