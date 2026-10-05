@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Il laboratorio di Mugello Meteo & Clima: sperimentazioni, grafici insoliti, statistiche particolari, curiosità e tabelle sul tempo e sul clima.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/meteogeek.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="MeteoGeek · il laboratorio di Mugello Meteo & Clima">
+<meta property="og:description" content="Sperimentazioni, grafici insoliti, statistiche particolari, curiosità e tabelle sul tempo e sul clima.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/meteogeek.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  /* un tocco "da laboratorio": griglia millimetrata nell'intestazione e etichette in monospazio */
+  .lab-head{position:relative;margin-top:14px;padding:26px 24px 22px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+    background:
+      linear-gradient(var(--panel),var(--panel)) padding-box;
+    box-shadow:var(--shadow)}
+  .lab-head::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+    background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
+    background-size:22px 22px}
+  .lab-head > *{position:relative}
+  .lab-head h1{display:flex;align-items:center;gap:12px}
+  .lab-head h1 .ico{font-size:38px}
+  .lab-head .lead{margin-bottom:0}
+  .lab-head .cmd{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:10px}
+  .lab-head .cmd b{color:var(--pine)}
+  .ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:22px 0 14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:13px;padding:6px 12px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);cursor:pointer}
+  .chip:hover{border-color:var(--pine)}
+  .chip[aria-pressed="true"]{background:var(--pine);border-color:var(--pine);color:#fff}
+  .chip .n{font-family:var(--mono);font-size:11px;opacity:.75;margin-left:4px}
+  input[type=search]{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:8px 14px;min-width:min(100%,240px);margin-left:auto}
+  .exps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .exp{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;
+    text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+  a.exp:hover{transform:translateY(-2px);box-shadow:0 2px 6px rgba(16,38,31,.07),0 20px 44px -20px rgba(16,38,31,.28)}
+  .exp .img{aspect-ratio:16/8;background:var(--line-soft) center/cover no-repeat;border-bottom:1px solid var(--line)}
+  .exp .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .exp .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .exp .tipo{color:var(--c,var(--pine));font-weight:600}
+  .exp .stato{border:1px solid currentColor;border-radius:999px;padding:0 6px;color:var(--amber)}
+  .exp h3{font-family:var(--serif);font-weight:800;font-size:18px;line-height:1.25;margin:2px 0 0;letter-spacing:-.01em}
+  .exp p{margin:0;color:var(--ink-soft);font-size:13.5px}
+  .exp .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+  .exp .tags span{font-size:11.5px;color:var(--ink-faint);background:var(--panel-2);border:1px solid var(--line-soft);border-radius:999px;padding:1px 8px}
+  .exp .go{font-weight:600;color:var(--pine);font-size:13px}
+  .exp.soon{border-style:dashed;box-shadow:none;background:transparent}
+  .vuoto{color:var(--ink-faint);font-family:var(--mono);font-size:12px;padding:20px 0}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / MeteoGeek</div>
+    <header class="lab-head">
+      <div class="eyebrow">Il laboratorio</div>
+      <h1><span class="ico" aria-hidden="true">🧪</span>MeteoGeek</h1>
+      <p class="lead">Qui raccolgo le mie sperimentazioni: grafici nati per curiosità, statistiche particolari, tabelle, confronti insoliti e piccole scoperte nei dati del tempo e del clima. Alcune diventano sezioni del sito, altre restano prove di laboratorio.</p>
+      <div class="cmd" id="cmd">$ ls esperimenti/</div>
+    </header>
+
+    <div class="ctl">
+      <div class="chips" id="filtri" role="group" aria-label="Tipo"></div>
+      <input type="search" id="q" placeholder="Cerca…" aria-label="Cerca tra le sperimentazioni">
+    </div>
+    <div class="exps" id="exps"><div class="vuoto">Carico il laboratorio…</div></div>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · MeteoGeek · elaborazioni L. Varlani · <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const TIPI={grafico:["📈","Grafico","#2a78d6"],statistica:["🧮","Statistica","#7a5bc0"],curiosita:["💡","Curiosità","#c9671f"],
+              tabella:["🗂️","Tabella","#0f6b52"],esperimento:["🧪","Esperimento","#c8452b"]};
+  const MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const dIt=s=>{if(!s)return"";const [y,m,d]=s.split("-").map(Number);return d+" "+MES[m-1]+" "+y;};
+  let E=[], tipo="", q="";
+
+  fetch("./data/meteogeek.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{
+    E=(d.esperimenti||[]).slice().sort((a,b)=>(b.data||"").localeCompare(a.data||""));
+    const t0=new URLSearchParams(location.search).get("tipo"); if(TIPI[t0]) tipo=t0;
+    filtri(); disegna();
+  }).catch(()=>{$("exps").innerHTML='<div class="vuoto">Il laboratorio non è raggiungibile in questo momento.</div>';});
+
+  function filtri(){
+    const n=k=>E.filter(e=>!k||e.tipo===k).length;
+    $("filtri").innerHTML=[["","Tutti"]].concat(Object.entries(TIPI).filter(([k])=>n(k)).map(([k,v])=>[k,v[0]+" "+v[1]]))
+      .map(([k,l])=>`<button class="chip" data-k="${k}" aria-pressed="${k===tipo}">${l}<span class="n">${n(k)}</span></button>`).join("");
+    $("filtri").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{tipo=b.dataset.k;filtri();disegna();}));
+  }
+  function disegna(){
+    const qq=q.trim().toLowerCase();
+    const F=E.filter(e=>(!tipo||e.tipo===tipo)&&(!qq||[e.titolo,e.testo,(e.tag||[]).join(" ")].join(" ").toLowerCase().includes(qq)));
+    $("cmd").innerHTML=`$ ls esperimenti/${tipo?"<b>"+tipo+"</b>/":""} <span style="opacity:.7">→ ${F.length} ${F.length===1?"risultato":"risultati"}</span>`;
+    $("exps").innerHTML=F.map(e=>{const t=TIPI[e.tipo]||TIPI.esperimento;
+      const ext=/^https?:/.test(e.link||""), file=/\.(pdf|csv|xlsx?|zip|json)$/i.test(e.link||"");
+      const tag=e.link?"a":"div", attr=e.link?` href="${esc(e.link)}"${ext||file?' target="_blank" rel="noopener"':""}`:"";
+      return `<${tag} class="exp" style="--c:${t[2]}"${attr}>
+        ${e.anteprima?`<div class="img" style="background-image:url('${esc(e.anteprima)}')"></div>`:""}
+        <div class="bd">
+          <div class="meta"><span class="tipo">${t[0]} ${t[1]}</span>${e.data?`<span>${dIt(e.data)}</span>`:""}${e.stato?`<span class="stato">${e.stato==="in-corso"?"in corso":esc(e.stato)}</span>`:""}</div>
+          <h3>${esc(e.titolo)}</h3>
+          <p>${esc(e.testo)}</p>
+          <div class="tags">${(e.tag||[]).map(x=>`<span>#${esc(x)}</span>`).join("")}</div>
+          ${e.link?`<span class="go">${file?"Apri il file →":"Apri →"}</span>`:""}
+        </div></${tag}>`;}).join("")+
+      (tipo||qq?"":`<div class="exp soon"><div class="bd"><div class="meta"><span>⏳ In arrivo</span></div><h3>Prossimi esperimenti</h3><p>Il laboratorio è sempre aperto: nuove prove, grafici e statistiche si aggiungeranno qui man mano.</p></div></div>`);
+    if(!F.length) $("exps").innerHTML='<div class="vuoto">Nessuna sperimentazione corrisponde alla ricerca.</div>';
+  }
+  $("q").addEventListener("input",e=>{q=e.target.value;disegna();});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

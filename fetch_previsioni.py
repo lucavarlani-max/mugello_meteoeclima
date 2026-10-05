@@ -89,6 +89,14 @@ def getjson(url, timeout=30, retries=3):
     raise last
 
 # -------------------- Google Weather API --------------------
+def qpf(x):
+    """Pioggia prevista (mm) di una metà giornata della Google Weather API, se c'è."""
+    q = ((x.get("precipitation") or {}).get("qpf") or {})
+    v = q.get("quantity")
+    if v is None:
+        return None
+    return v * 25.4 if str(q.get("unit", "")).upper().startswith("INCH") else v
+
 def google_days(c):
     q = urllib.parse.urlencode({
         "key": KEY,
@@ -111,11 +119,13 @@ def google_days(c):
         pp = max([x for x in (pp_d, pp_n) if x is not None], default=0)
         tmax = (d.get("maxTemperature") or {}).get("degrees")
         tmin = (d.get("minTemperature") or {}).get("degrees")
+        mm = [x for x in (qpf(day), qpf(night)) if x is not None]   # giorno (7-19) + notte (19-7)
         days.append({
             "iso": iso, "code": g2wmo(cond),
             "tmax": None if tmax is None else round(tmax),
             "tmin": None if tmin is None else round(tmin),
             "pp": int(round(pp)),
+            "mm": round(sum(mm), 1) if mm else None,
         })
         if iso < oggi():          # giorno già passato in Italia: si scarta
             days.pop()
@@ -149,7 +159,7 @@ def from_openmeteo(c):
     q = urllib.parse.urlencode({
         "latitude": c["lat"], "longitude": c["lon"],
         "current": "temperature_2m,weather_code",
-        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset",
+        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,sunrise,sunset",
         "timezone": "Europe/Rome", "forecast_days": 7,
     })
     j = getjson("https://api.open-meteo.com/v1/forecast?" + q)
@@ -161,6 +171,7 @@ def from_openmeteo(c):
             "tmax": round(dl["temperature_2m_max"][i]),
             "tmin": round(dl["temperature_2m_min"][i]),
             "pp": int(dl["precipitation_probability_max"][i] or 0),
+            "mm": round(dl["precipitation_sum"][i] or 0, 1),
         })
     sole = None
     if dl.get("sunrise") and dl.get("sunset"):
@@ -176,7 +187,7 @@ def from_openmeteo_all():
     q = urllib.parse.urlencode({
         "latitude": lats, "longitude": lons,
         "current": "temperature_2m,weather_code",
-        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset",
+        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,sunrise,sunset",
         "timezone": "Europe/Rome", "forecast_days": 7,
     })
     data = getjson("https://api.open-meteo.com/v1/forecast?" + q)
@@ -193,6 +204,7 @@ def from_openmeteo_all():
                 "tmax": round(dl["temperature_2m_max"][k]),
                 "tmin": round(dl["temperature_2m_min"][k]),
                 "pp": int(dl["precipitation_probability_max"][k] or 0),
+                "mm": round(dl["precipitation_sum"][k] or 0, 1),
             })
         sole = None
         if dl.get("sunrise") and dl.get("sunset"):

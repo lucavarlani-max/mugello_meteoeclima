@@ -1,0 +1,79 @@
+{
+ "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
+ "esperimenti": [
+  {
+   "id": "riscaldamento-stazioni",
+   "titolo": "Il riscaldamento di otto stazioni storiche a confronto",
+   "tipo": "grafico",
+   "data": "2026-09-28",
+   "testo": "Milano, Padova, Genova, New York, San Francisco e le altre sullo stesso grafico: l'anomalia rispetto al 1961–1990 con media mobile su 11 anni, la tendenza dal 1971 e l'anno più caldo di ciascuna.",
+   "link": "serie-storiche.html#riscaldamento",
+   "tag": [
+    "serie storiche",
+    "riscaldamento"
+   ]
+  },
+  {
+   "id": "piogge-estreme",
+   "titolo": "Un secolo di piogge estreme in Toscana",
+   "tipo": "grafico",
+   "data": "2026-10-01",
+   "testo": "Quanta pioggia può cadere in 5 minuti, in un'ora, in un giorno: i record dei pluviografi toscani dal 1923 su un grafico durata–pioggia a scala logaritmica, con il 19 giugno 1996 che li detiene tutti.",
+   "link": "piogge-estreme.html",
+   "tag": [
+    "Toscana",
+    "pioggia",
+    "record"
+   ]
+  },
+  {
+   "id": "carte-sinottiche",
+   "titolo": "Carte sinottiche disegnate dal sito",
+   "tipo": "esperimento",
+   "data": "2026-09-20",
+   "testo": "Geopotenziale a 500 hPa, temperatura a 850 hPa e pressione al suolo sull'Europa, disegnati direttamente nel browser dai dati del modello ECMWF in proiezione conica di Lambert, ogni 12 ore fino a 5 giorni.",
+   "link": "radar.html#carte",
+   "tag": [
+    "modelli",
+    "Europa"
+   ]
+  },
+  {
+   "id": "effemeridi",
+   "titolo": "Il cielo del Mugello calcolato nel browser",
+   "tipo": "esperimento",
+   "data": "2026-09-28",
+   "testo": "Alba, tramonto, crepuscoli, ora d'oro, fasi lunari, pianeti visibili ed equinozi calcolati con gli algoritmi astronomici di Meeus, per qualsiasi giorno dal 1950 al 2050.",
+   "link": "effemeridi.html",
+   "tag": [
+    "astronomia",
+    "Sole",
+    "Luna"
+   ]
+  },
+  {
+   "id": "stazioni-centenarie",
+   "titolo": "Le 474 stazioni centenarie del mondo",
+   "tipo": "tabella",
+   "data": "2026-09-26",
+   "testo": "Il catalogo dell'Organizzazione meteorologica mondiale delle stazioni che misurano da oltre cento anni, con mappa, filtri e scheda di ciascuna: 22 sono in Italia.",
+   "link": "stazioni-centenarie.html",
+   "tag": [
+    "OMM",
+    "serie storiche"
+   ]
+  },
+  {
+   "id": "estremi-mondo",
+   "titolo": "Gli estremi del pianeta nelle ultime 24 ore",
+   "tipo": "curiosita",
+   "data": "2026-10-03",
+   "testo": "Il posto più caldo, il più freddo (con una sola stazione in Antartide) e il più piovoso della Terra, dai bollettini delle stazioni sinottiche di tutto il mondo, aggiornati più volte al giorno.",
+   "link": "radar.html#estremi",
+   "tag": [
+    "mondo",
+    "record"
+   ]
+  }
+ ]
+}

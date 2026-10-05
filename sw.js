@@ -1,9 +1,14 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v52';
+const CACHE = 'mmc-v60';
 const SHELL = [
   './',
   './index.html',
   './menu.js',
+  './stazioni.html',
+  './stazioni.js',
+  './stazioni-mugello.html',
+  './data/sir/mugello.json',
+  './meteogeek.html',
   './ecmwf-carte.js',
   './piogge-estreme.html',
   './piogge-estreme.js',
@@ -26,8 +31,6 @@ const SHELL = [
   './cielo.js',
   './serie-storiche.html',
   './archivio-climatico.html',
-  './stazioni-mugello.html',
-  './data/sir/mugello.json',
   './milano-brera.html',
   './new-york-central-park.html',
   './padova.html',
@@ -37,6 +40,9 @@ const SHELL = [
   './genova.html',
   './mont-aigoual.html',
   './bangalore.html',
+  './firenzuola.html',
+  './oxford.html',
+  './domodossola.html',
   './webcam-panomax.html',
   './webcam-panomax.js',
   './italia-ghcn.html',

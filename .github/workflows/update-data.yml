@@ -27,7 +27,7 @@ jobs:
           python-version: "3.12"
 
       - name: Dipendenze
-        run: pip install pdfplumber
+        run: pip install pdfplumber cryptography
 
       - name: Aggiorna previsioni (WeatherNext / Google Weather API)
         env:
@@ -55,15 +55,21 @@ jobs:
       - name: Aggiorna estremi meteo nel mondo (OGIMET)
         run: python scripts/fetch_estremi.py
 
-      - name: Aggiorna carte ECMWF (link alle immagini, a piccoli blocchi)
+      - name: Aggiorna la stazione Netatmo (se i segreti sono configurati)
         continue-on-error: true
-        run: python scripts/fetch_ecmwf.py
+        env:
+          NETATMO_CLIENT_ID: ${{ secrets.NETATMO_CLIENT_ID }}
+          NETATMO_CLIENT_SECRET: ${{ secrets.NETATMO_CLIENT_SECRET }}
+          NETATMO_REFRESH_TOKEN: ${{ secrets.NETATMO_REFRESH_TOKEN }}
+          NETATMO_KEY: ${{ secrets.NETATMO_KEY }}
+        run: python scripts/fetch_netatmo.py
 
       - name: Commit se cambiato
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/*.json data/bsl/borgo.json
+          if [ -f data/netatmo-token.enc ]; then git add data/netatmo-token.enc; fi
           if ! git diff --cached --quiet; then
             git commit -m "dati: aggiornamento automatico"
             git pull --rebase origin main || true   # se nel frattempo main è cambiato

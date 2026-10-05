@@ -155,11 +155,17 @@
   .now-stats .k{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
   .now-stats .v{font-family:var(--serif);font-weight:700;font-size:19px;margin-top:3px}
 
-  .today{background:color-mix(in srgb,var(--panel) 66%,transparent);border:1px solid color-mix(in srgb,var(--line) 70%,transparent);border-radius:var(--r);padding:20px;box-shadow:var(--shadow-lift);
+  .today{min-width:0;background:color-mix(in srgb,var(--panel) 66%,transparent);border:1px solid color-mix(in srgb,var(--line) 70%,transparent);border-radius:var(--r);padding:20px;box-shadow:var(--shadow-lift);
     -webkit-backdrop-filter:blur(14px) saturate(1.15);backdrop-filter:blur(14px) saturate(1.15)}
   .today h3{font-size:16px}
   .today .sub{color:var(--ink-faint);font-size:12.5px;margin-top:2px}
-  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:16px}
+  .week-carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-top:16px;border-radius:10px}
+  .week-carousel::-webkit-scrollbar{display:none}
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;flex:0 0 100%;scroll-snap-align:start}
+  .week-dots{display:flex;justify-content:center;gap:7px;margin-top:12px}
+  .wdot{width:7px;height:7px;padding:0;border-radius:50%;border:0;background:var(--line);cursor:pointer;transition:background .15s,transform .15s;flex:none}
+  .wdot:hover{background:var(--ink-faint)}
+  .wdot.on{background:var(--pine);transform:scale(1.3)}
   .day{text-align:center;padding:10px 2px;border-radius:10px}
   .day:hover{background:var(--panel-2)}
   .day.on{background:var(--pine-tint)}
@@ -168,6 +174,7 @@
   .day .hi{font-family:var(--serif);font-weight:700;font-size:15px}
   .day .lo{font-size:12px;color:var(--ink-faint)}
   .day .pp{font-family:var(--mono);font-size:10px;color:var(--rain);margin-top:3px}
+  .day .mm{font-family:var(--mono);font-size:10px;color:var(--rain);opacity:.85;min-height:13px}
 
   /* ---- section headings ---- */
   .sec{margin-top:34px}
@@ -301,7 +308,7 @@
   /* voci del menu compatte: il menu completo ci sta fino a 1180 px di finestra (portatili con
      schermo 1280 o 1366, o Full HD con zoom 150%); sotto compare il menu ☰ */
   nav.main{gap:0}
-  nav.main a,nav.main .dd>button{padding:7px 8px;font-size:13px}
+  nav.main a,nav.main .dd>button{padding:7px 6px;font-size:13px}
   header.top .brand{font-size:18px;gap:9px}
   header.top .brand .mark{width:32px;height:32px}
   header.top .brand small{letter-spacing:.1em}
@@ -1013,6 +1020,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <nav class="main">
       <a href="#comuni" class="active">Previsioni</a>
       <a href="./radar.html">Radar &amp; dati</a>
+      <div class="dd">
+        <button type="button" onclick="this.parentNode.classList.toggle('open')">Stazioni ▾</button>
+        <div class="dd-menu">
+          <a href="./stazioni.html">📡 Le mie stazioni</a>
+          <a href="./stazioni-mugello.html">📍 Stazioni del Mugello (SIR)</a>
+        </div>
+      </div>
       <a href="./mappe.html">Mappe</a>
       <div class="dd">
         <button type="button" onclick="this.parentNode.classList.toggle('open')">Neve ▾</button>
@@ -1021,8 +1035,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <a href="./neve-firenze.html">📜 La neve a Firenze</a>
         </div>
       </div>
-      <a href="./clima-firenze.html">Clima Firenze</a>
-      <a href="#cielo">Cielo</a>
+      <a href="./effemeridi.html">Cielo</a>
       <div class="dd">
         <button type="button" onclick="this.parentNode.classList.toggle('open')">Webcam ▾</button>
         <div class="dd-menu">
@@ -1030,16 +1043,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <a href="./webcam-panomax.html">🌍 Webcam Panomax</a>
         </div>
       </div>
-      <a href="./proverbi.html">Proverbi</a>
       <div class="dd">
         <button type="button" onclick="this.parentNode.classList.toggle('open')">Toscana ▾</button>
         <div class="dd-menu">
           <div class="dh">Temperature</div>
           <a href="./temperature-toscana.html">🌡️ Oggi e ieri</a>
+          <div class="dh">Firenze</div>
+          <a href="./clima-firenze.html">🏛️ Clima di Firenze</a>
           <div class="dh">Borgo S. Lorenzo</div>
           <a href="./borgo-storico.html">📊 Oggi nella storia</a>
+          <div class="dh">Report mensili</div>
           <a href="./archivio-climatico.html">📅 Archivio climatico</a>
-          <a href="./stazioni-mugello.html">📍 Stazioni del Mugello</a>
           <div class="dh">Record storici</div>
           <a href="./estremi-massime.html">🔴 Massime</a>
           <a href="./estremi-minime.html">🔵 Minime</a>
@@ -1048,7 +1062,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
         </div>
       </div>
       <a href="./serie-storiche.html">Serie storiche</a>
-      <a href="./notizie.html">Notizie</a>
+      <div class="dd">
+        <button type="button" onclick="this.parentNode.classList.toggle('open')">Notizie ▾</button>
+        <div class="dd-menu">
+          <a href="./notizie.html">📰 Terra &amp; Cielo</a>
+          <a href="./proverbi.html">📜 Proverbi del cielo</a>
+        </div>
+      </div>
+      <a href="./meteogeek.html">🧪 MeteoGeek</a>
     </nav>
     <button class="menu-btn" aria-label="Menu">☰</button>
   </div>
@@ -1072,7 +1093,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
       <div class="hero-grid">
       <div class="now">
-        <div class="place"><span class="live-dot"></span> <span id="now-place">Scarperia · staz. ISCARP2</span> · <span id="now-upd">agg. 09:40</span></div>
+        <div class="place"><span class="live-dot"></span> <span id="now-place">Scarperia · staz. ISCARP2</span> · <span id="now-upd">agg. 09:40</span> · <a href="./stazioni.html" style="color:inherit">le mie stazioni →</a></div>
         <div class="now-main">
           <div class="now-temp"><span id="now-int">18</span><span id="now-dec">,4°</span></div>
           <div class="now-ico" id="now-ico">⛅</div>
@@ -1088,15 +1109,100 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
       <div class="today">
         <h3>I prossimi 7 giorni <span class="chip ok" id="live-badge" style="display:none;font-size:10px;vertical-align:middle">● live</span></h3>
-        <div class="sub">Borgo San Lorenzo · modello AI WeatherNext 3 (Google) · <a href="comune.html?c=6" style="color:var(--pine);font-weight:600;text-decoration:none">dettaglio orario →</a></div>
-        <div class="week" id="week">
-          <div class="day on"><div class="dow" id="d0-dow">Dom</div><div class="di" id="d0-di">⛅</div><div class="hi" id="d0-hi">25°</div><div class="lo" id="d0-lo">12°</div><div class="pp" id="d0-pp">20%</div></div>
-          <div class="day"><div class="dow" id="d1-dow">Lun</div><div class="di" id="d1-di">⛈</div><div class="hi" id="d1-hi">23°</div><div class="lo" id="d1-lo">13°</div><div class="pp" id="d1-pp">70%</div></div>
-          <div class="day"><div class="dow" id="d2-dow">Mar</div><div class="di" id="d2-di">🌦</div><div class="hi" id="d2-hi">21°</div><div class="lo" id="d2-lo">11°</div><div class="pp" id="d2-pp">45%</div></div>
-          <div class="day"><div class="dow" id="d3-dow">Mer</div><div class="di" id="d3-di">☀️</div><div class="hi" id="d3-hi">24°</div><div class="lo" id="d3-lo">10°</div><div class="pp" id="d3-pp">5%</div></div>
-          <div class="day"><div class="dow" id="d4-dow">Gio</div><div class="di" id="d4-di">☀️</div><div class="hi" id="d4-hi">26°</div><div class="lo" id="d4-lo">12°</div><div class="pp" id="d4-pp">0%</div></div>
-          <div class="day"><div class="dow" id="d5-dow">Ven</div><div class="di" id="d5-di">⛅</div><div class="hi" id="d5-hi">25°</div><div class="lo" id="d5-lo">13°</div><div class="pp" id="d5-pp">15%</div></div>
-          <div class="day"><div class="dow" id="d6-dow">Sab</div><div class="di" id="d6-di">🌤</div><div class="hi" id="d6-hi">24°</div><div class="lo" id="d6-lo">12°</div><div class="pp" id="d6-pp">10%</div></div>
+        <div class="sub"><span id="week-place">Borgo San Lorenzo</span> · modello AI WeatherNext 3 (Google) · <a id="week-link" href="comune.html?c=6" style="color:var(--pine);font-weight:600;text-decoration:none">dettaglio orario →</a></div>
+        <div class="week-carousel" id="week-carousel">
+          <div class="week" data-ci="0" role="group" aria-label="Previsioni Firenzuola">
+            <div class="day on"><div class="dow" id="d0-dow-0">Dom</div><div class="di" id="d0-di-0">⛅</div><div class="hi" id="d0-hi-0">25°</div><div class="lo" id="d0-lo-0">12°</div><div class="pp" id="d0-pp-0">20%</div><div class="mm" id="d0-mm-0"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-0">Lun</div><div class="di" id="d1-di-0">⛈</div><div class="hi" id="d1-hi-0">23°</div><div class="lo" id="d1-lo-0">13°</div><div class="pp" id="d1-pp-0">70%</div><div class="mm" id="d1-mm-0"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-0">Mar</div><div class="di" id="d2-di-0">🌦</div><div class="hi" id="d2-hi-0">21°</div><div class="lo" id="d2-lo-0">11°</div><div class="pp" id="d2-pp-0">45%</div><div class="mm" id="d2-mm-0"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-0">Mer</div><div class="di" id="d3-di-0">☀️</div><div class="hi" id="d3-hi-0">24°</div><div class="lo" id="d3-lo-0">10°</div><div class="pp" id="d3-pp-0">5%</div><div class="mm" id="d3-mm-0"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-0">Gio</div><div class="di" id="d4-di-0">☀️</div><div class="hi" id="d4-hi-0">26°</div><div class="lo" id="d4-lo-0">12°</div><div class="pp" id="d4-pp-0">0%</div><div class="mm" id="d4-mm-0"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-0">Ven</div><div class="di" id="d5-di-0">⛅</div><div class="hi" id="d5-hi-0">25°</div><div class="lo" id="d5-lo-0">13°</div><div class="pp" id="d5-pp-0">15%</div><div class="mm" id="d5-mm-0"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-0">Sab</div><div class="di" id="d6-di-0">🌤</div><div class="hi" id="d6-hi-0">24°</div><div class="lo" id="d6-lo-0">12°</div><div class="pp" id="d6-pp-0">10%</div><div class="mm" id="d6-mm-0"></div></div>
+          </div>
+          <div class="week" data-ci="1" role="group" aria-label="Previsioni Palazzuolo sul Senio">
+            <div class="day on"><div class="dow" id="d0-dow-1">Dom</div><div class="di" id="d0-di-1">⛅</div><div class="hi" id="d0-hi-1">25°</div><div class="lo" id="d0-lo-1">12°</div><div class="pp" id="d0-pp-1">20%</div><div class="mm" id="d0-mm-1"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-1">Lun</div><div class="di" id="d1-di-1">⛈</div><div class="hi" id="d1-hi-1">23°</div><div class="lo" id="d1-lo-1">13°</div><div class="pp" id="d1-pp-1">70%</div><div class="mm" id="d1-mm-1"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-1">Mar</div><div class="di" id="d2-di-1">🌦</div><div class="hi" id="d2-hi-1">21°</div><div class="lo" id="d2-lo-1">11°</div><div class="pp" id="d2-pp-1">45%</div><div class="mm" id="d2-mm-1"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-1">Mer</div><div class="di" id="d3-di-1">☀️</div><div class="hi" id="d3-hi-1">24°</div><div class="lo" id="d3-lo-1">10°</div><div class="pp" id="d3-pp-1">5%</div><div class="mm" id="d3-mm-1"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-1">Gio</div><div class="di" id="d4-di-1">☀️</div><div class="hi" id="d4-hi-1">26°</div><div class="lo" id="d4-lo-1">12°</div><div class="pp" id="d4-pp-1">0%</div><div class="mm" id="d4-mm-1"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-1">Ven</div><div class="di" id="d5-di-1">⛅</div><div class="hi" id="d5-hi-1">25°</div><div class="lo" id="d5-lo-1">13°</div><div class="pp" id="d5-pp-1">15%</div><div class="mm" id="d5-mm-1"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-1">Sab</div><div class="di" id="d6-di-1">🌤</div><div class="hi" id="d6-hi-1">24°</div><div class="lo" id="d6-lo-1">12°</div><div class="pp" id="d6-pp-1">10%</div><div class="mm" id="d6-mm-1"></div></div>
+          </div>
+          <div class="week" data-ci="2" role="group" aria-label="Previsioni Marradi">
+            <div class="day on"><div class="dow" id="d0-dow-2">Dom</div><div class="di" id="d0-di-2">⛅</div><div class="hi" id="d0-hi-2">25°</div><div class="lo" id="d0-lo-2">12°</div><div class="pp" id="d0-pp-2">20%</div><div class="mm" id="d0-mm-2"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-2">Lun</div><div class="di" id="d1-di-2">⛈</div><div class="hi" id="d1-hi-2">23°</div><div class="lo" id="d1-lo-2">13°</div><div class="pp" id="d1-pp-2">70%</div><div class="mm" id="d1-mm-2"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-2">Mar</div><div class="di" id="d2-di-2">🌦</div><div class="hi" id="d2-hi-2">21°</div><div class="lo" id="d2-lo-2">11°</div><div class="pp" id="d2-pp-2">45%</div><div class="mm" id="d2-mm-2"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-2">Mer</div><div class="di" id="d3-di-2">☀️</div><div class="hi" id="d3-hi-2">24°</div><div class="lo" id="d3-lo-2">10°</div><div class="pp" id="d3-pp-2">5%</div><div class="mm" id="d3-mm-2"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-2">Gio</div><div class="di" id="d4-di-2">☀️</div><div class="hi" id="d4-hi-2">26°</div><div class="lo" id="d4-lo-2">12°</div><div class="pp" id="d4-pp-2">0%</div><div class="mm" id="d4-mm-2"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-2">Ven</div><div class="di" id="d5-di-2">⛅</div><div class="hi" id="d5-hi-2">25°</div><div class="lo" id="d5-lo-2">13°</div><div class="pp" id="d5-pp-2">15%</div><div class="mm" id="d5-mm-2"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-2">Sab</div><div class="di" id="d6-di-2">🌤</div><div class="hi" id="d6-hi-2">24°</div><div class="lo" id="d6-lo-2">12°</div><div class="pp" id="d6-pp-2">10%</div><div class="mm" id="d6-mm-2"></div></div>
+          </div>
+          <div class="week" data-ci="3" role="group" aria-label="Previsioni Barberino di Mugello">
+            <div class="day on"><div class="dow" id="d0-dow-3">Dom</div><div class="di" id="d0-di-3">⛅</div><div class="hi" id="d0-hi-3">25°</div><div class="lo" id="d0-lo-3">12°</div><div class="pp" id="d0-pp-3">20%</div><div class="mm" id="d0-mm-3"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-3">Lun</div><div class="di" id="d1-di-3">⛈</div><div class="hi" id="d1-hi-3">23°</div><div class="lo" id="d1-lo-3">13°</div><div class="pp" id="d1-pp-3">70%</div><div class="mm" id="d1-mm-3"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-3">Mar</div><div class="di" id="d2-di-3">🌦</div><div class="hi" id="d2-hi-3">21°</div><div class="lo" id="d2-lo-3">11°</div><div class="pp" id="d2-pp-3">45%</div><div class="mm" id="d2-mm-3"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-3">Mer</div><div class="di" id="d3-di-3">☀️</div><div class="hi" id="d3-hi-3">24°</div><div class="lo" id="d3-lo-3">10°</div><div class="pp" id="d3-pp-3">5%</div><div class="mm" id="d3-mm-3"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-3">Gio</div><div class="di" id="d4-di-3">☀️</div><div class="hi" id="d4-hi-3">26°</div><div class="lo" id="d4-lo-3">12°</div><div class="pp" id="d4-pp-3">0%</div><div class="mm" id="d4-mm-3"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-3">Ven</div><div class="di" id="d5-di-3">⛅</div><div class="hi" id="d5-hi-3">25°</div><div class="lo" id="d5-lo-3">13°</div><div class="pp" id="d5-pp-3">15%</div><div class="mm" id="d5-mm-3"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-3">Sab</div><div class="di" id="d6-di-3">🌤</div><div class="hi" id="d6-hi-3">24°</div><div class="lo" id="d6-lo-3">12°</div><div class="pp" id="d6-pp-3">10%</div><div class="mm" id="d6-mm-3"></div></div>
+          </div>
+          <div class="week" data-ci="4" role="group" aria-label="Previsioni Scarperia e San Piero">
+            <div class="day on"><div class="dow" id="d0-dow-4">Dom</div><div class="di" id="d0-di-4">⛅</div><div class="hi" id="d0-hi-4">25°</div><div class="lo" id="d0-lo-4">12°</div><div class="pp" id="d0-pp-4">20%</div><div class="mm" id="d0-mm-4"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-4">Lun</div><div class="di" id="d1-di-4">⛈</div><div class="hi" id="d1-hi-4">23°</div><div class="lo" id="d1-lo-4">13°</div><div class="pp" id="d1-pp-4">70%</div><div class="mm" id="d1-mm-4"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-4">Mar</div><div class="di" id="d2-di-4">🌦</div><div class="hi" id="d2-hi-4">21°</div><div class="lo" id="d2-lo-4">11°</div><div class="pp" id="d2-pp-4">45%</div><div class="mm" id="d2-mm-4"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-4">Mer</div><div class="di" id="d3-di-4">☀️</div><div class="hi" id="d3-hi-4">24°</div><div class="lo" id="d3-lo-4">10°</div><div class="pp" id="d3-pp-4">5%</div><div class="mm" id="d3-mm-4"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-4">Gio</div><div class="di" id="d4-di-4">☀️</div><div class="hi" id="d4-hi-4">26°</div><div class="lo" id="d4-lo-4">12°</div><div class="pp" id="d4-pp-4">0%</div><div class="mm" id="d4-mm-4"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-4">Ven</div><div class="di" id="d5-di-4">⛅</div><div class="hi" id="d5-hi-4">25°</div><div class="lo" id="d5-lo-4">13°</div><div class="pp" id="d5-pp-4">15%</div><div class="mm" id="d5-mm-4"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-4">Sab</div><div class="di" id="d6-di-4">🌤</div><div class="hi" id="d6-hi-4">24°</div><div class="lo" id="d6-lo-4">12°</div><div class="pp" id="d6-pp-4">10%</div><div class="mm" id="d6-mm-4"></div></div>
+          </div>
+          <div class="week" data-ci="5" role="group" aria-label="Previsioni San Piero a Sieve">
+            <div class="day on"><div class="dow" id="d0-dow-5">Dom</div><div class="di" id="d0-di-5">⛅</div><div class="hi" id="d0-hi-5">25°</div><div class="lo" id="d0-lo-5">12°</div><div class="pp" id="d0-pp-5">20%</div><div class="mm" id="d0-mm-5"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-5">Lun</div><div class="di" id="d1-di-5">⛈</div><div class="hi" id="d1-hi-5">23°</div><div class="lo" id="d1-lo-5">13°</div><div class="pp" id="d1-pp-5">70%</div><div class="mm" id="d1-mm-5"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-5">Mar</div><div class="di" id="d2-di-5">🌦</div><div class="hi" id="d2-hi-5">21°</div><div class="lo" id="d2-lo-5">11°</div><div class="pp" id="d2-pp-5">45%</div><div class="mm" id="d2-mm-5"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-5">Mer</div><div class="di" id="d3-di-5">☀️</div><div class="hi" id="d3-hi-5">24°</div><div class="lo" id="d3-lo-5">10°</div><div class="pp" id="d3-pp-5">5%</div><div class="mm" id="d3-mm-5"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-5">Gio</div><div class="di" id="d4-di-5">☀️</div><div class="hi" id="d4-hi-5">26°</div><div class="lo" id="d4-lo-5">12°</div><div class="pp" id="d4-pp-5">0%</div><div class="mm" id="d4-mm-5"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-5">Ven</div><div class="di" id="d5-di-5">⛅</div><div class="hi" id="d5-hi-5">25°</div><div class="lo" id="d5-lo-5">13°</div><div class="pp" id="d5-pp-5">15%</div><div class="mm" id="d5-mm-5"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-5">Sab</div><div class="di" id="d6-di-5">🌤</div><div class="hi" id="d6-hi-5">24°</div><div class="lo" id="d6-lo-5">12°</div><div class="pp" id="d6-pp-5">10%</div><div class="mm" id="d6-mm-5"></div></div>
+          </div>
+          <div class="week" data-ci="6" role="group" aria-label="Previsioni Borgo San Lorenzo">
+            <div class="day on"><div class="dow" id="d0-dow-6">Dom</div><div class="di" id="d0-di-6">⛅</div><div class="hi" id="d0-hi-6">25°</div><div class="lo" id="d0-lo-6">12°</div><div class="pp" id="d0-pp-6">20%</div><div class="mm" id="d0-mm-6"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-6">Lun</div><div class="di" id="d1-di-6">⛈</div><div class="hi" id="d1-hi-6">23°</div><div class="lo" id="d1-lo-6">13°</div><div class="pp" id="d1-pp-6">70%</div><div class="mm" id="d1-mm-6"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-6">Mar</div><div class="di" id="d2-di-6">🌦</div><div class="hi" id="d2-hi-6">21°</div><div class="lo" id="d2-lo-6">11°</div><div class="pp" id="d2-pp-6">45%</div><div class="mm" id="d2-mm-6"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-6">Mer</div><div class="di" id="d3-di-6">☀️</div><div class="hi" id="d3-hi-6">24°</div><div class="lo" id="d3-lo-6">10°</div><div class="pp" id="d3-pp-6">5%</div><div class="mm" id="d3-mm-6"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-6">Gio</div><div class="di" id="d4-di-6">☀️</div><div class="hi" id="d4-hi-6">26°</div><div class="lo" id="d4-lo-6">12°</div><div class="pp" id="d4-pp-6">0%</div><div class="mm" id="d4-mm-6"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-6">Ven</div><div class="di" id="d5-di-6">⛅</div><div class="hi" id="d5-hi-6">25°</div><div class="lo" id="d5-lo-6">13°</div><div class="pp" id="d5-pp-6">15%</div><div class="mm" id="d5-mm-6"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-6">Sab</div><div class="di" id="d6-di-6">🌤</div><div class="hi" id="d6-hi-6">24°</div><div class="lo" id="d6-lo-6">12°</div><div class="pp" id="d6-pp-6">10%</div><div class="mm" id="d6-mm-6"></div></div>
+          </div>
+          <div class="week" data-ci="7" role="group" aria-label="Previsioni Vicchio">
+            <div class="day on"><div class="dow" id="d0-dow-7">Dom</div><div class="di" id="d0-di-7">⛅</div><div class="hi" id="d0-hi-7">25°</div><div class="lo" id="d0-lo-7">12°</div><div class="pp" id="d0-pp-7">20%</div><div class="mm" id="d0-mm-7"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-7">Lun</div><div class="di" id="d1-di-7">⛈</div><div class="hi" id="d1-hi-7">23°</div><div class="lo" id="d1-lo-7">13°</div><div class="pp" id="d1-pp-7">70%</div><div class="mm" id="d1-mm-7"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-7">Mar</div><div class="di" id="d2-di-7">🌦</div><div class="hi" id="d2-hi-7">21°</div><div class="lo" id="d2-lo-7">11°</div><div class="pp" id="d2-pp-7">45%</div><div class="mm" id="d2-mm-7"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-7">Mer</div><div class="di" id="d3-di-7">☀️</div><div class="hi" id="d3-hi-7">24°</div><div class="lo" id="d3-lo-7">10°</div><div class="pp" id="d3-pp-7">5%</div><div class="mm" id="d3-mm-7"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-7">Gio</div><div class="di" id="d4-di-7">☀️</div><div class="hi" id="d4-hi-7">26°</div><div class="lo" id="d4-lo-7">12°</div><div class="pp" id="d4-pp-7">0%</div><div class="mm" id="d4-mm-7"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-7">Ven</div><div class="di" id="d5-di-7">⛅</div><div class="hi" id="d5-hi-7">25°</div><div class="lo" id="d5-lo-7">13°</div><div class="pp" id="d5-pp-7">15%</div><div class="mm" id="d5-mm-7"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-7">Sab</div><div class="di" id="d6-di-7">🌤</div><div class="hi" id="d6-hi-7">24°</div><div class="lo" id="d6-lo-7">12°</div><div class="pp" id="d6-pp-7">10%</div><div class="mm" id="d6-mm-7"></div></div>
+          </div>
+          <div class="week" data-ci="8" role="group" aria-label="Previsioni Dicomano">
+            <div class="day on"><div class="dow" id="d0-dow-8">Dom</div><div class="di" id="d0-di-8">⛅</div><div class="hi" id="d0-hi-8">25°</div><div class="lo" id="d0-lo-8">12°</div><div class="pp" id="d0-pp-8">20%</div><div class="mm" id="d0-mm-8"></div></div>
+            <div class="day"><div class="dow" id="d1-dow-8">Lun</div><div class="di" id="d1-di-8">⛈</div><div class="hi" id="d1-hi-8">23°</div><div class="lo" id="d1-lo-8">13°</div><div class="pp" id="d1-pp-8">70%</div><div class="mm" id="d1-mm-8"></div></div>
+            <div class="day"><div class="dow" id="d2-dow-8">Mar</div><div class="di" id="d2-di-8">🌦</div><div class="hi" id="d2-hi-8">21°</div><div class="lo" id="d2-lo-8">11°</div><div class="pp" id="d2-pp-8">45%</div><div class="mm" id="d2-mm-8"></div></div>
+            <div class="day"><div class="dow" id="d3-dow-8">Mer</div><div class="di" id="d3-di-8">☀️</div><div class="hi" id="d3-hi-8">24°</div><div class="lo" id="d3-lo-8">10°</div><div class="pp" id="d3-pp-8">5%</div><div class="mm" id="d3-mm-8"></div></div>
+            <div class="day"><div class="dow" id="d4-dow-8">Gio</div><div class="di" id="d4-di-8">☀️</div><div class="hi" id="d4-hi-8">26°</div><div class="lo" id="d4-lo-8">12°</div><div class="pp" id="d4-pp-8">0%</div><div class="mm" id="d4-mm-8"></div></div>
+            <div class="day"><div class="dow" id="d5-dow-8">Ven</div><div class="di" id="d5-di-8">⛅</div><div class="hi" id="d5-hi-8">25°</div><div class="lo" id="d5-lo-8">13°</div><div class="pp" id="d5-pp-8">15%</div><div class="mm" id="d5-mm-8"></div></div>
+            <div class="day"><div class="dow" id="d6-dow-8">Sab</div><div class="di" id="d6-di-8">🌤</div><div class="hi" id="d6-hi-8">24°</div><div class="lo" id="d6-lo-8">12°</div><div class="pp" id="d6-pp-8">10%</div><div class="mm" id="d6-mm-8"></div></div>
+          </div>
+        </div>
+        <div class="week-dots" id="week-dots">
+          <button class="wdot" data-i="0" aria-label="Firenzuola" aria-pressed="false"></button>
+          <button class="wdot" data-i="1" aria-label="Palazzuolo sul Senio" aria-pressed="false"></button>
+          <button class="wdot" data-i="2" aria-label="Marradi" aria-pressed="false"></button>
+          <button class="wdot" data-i="3" aria-label="Barberino di Mugello" aria-pressed="false"></button>
+          <button class="wdot" data-i="4" aria-label="Scarperia e San Piero" aria-pressed="false"></button>
+          <button class="wdot" data-i="5" aria-label="San Piero a Sieve" aria-pressed="false"></button>
+          <button class="wdot on" data-i="6" aria-label="Borgo San Lorenzo" aria-pressed="true"></button>
+          <button class="wdot" data-i="7" aria-label="Vicchio" aria-pressed="false"></button>
+          <button class="wdot" data-i="8" aria-label="Dicomano" aria-pressed="false"></button>
         </div>
       </div>
     </div>
@@ -1345,6 +1451,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const r=n=>Math.round(n);
   const set=(id,t)=>{const e=document.getElementById(id); if(e)e.textContent=t;};
   const dec=v=>v.toFixed(1).replace('.',',');
+  // pioggia prevista in mm: niente sotto 0,1; una cifra decimale sotto i 10 mm
+  const mmTxt=v=>(v==null||v<0.1)?'':(v<10?dec(v):String(Math.round(v)))+' mm';
   const card=d=>CARD[Math.round(((d%360)/22.5))%16];
 
   let omScarp=null; // cache Open-Meteo per Scarperia (per icona/min-max quando arriva la stazione)
@@ -1366,12 +1474,21 @@ svg.leaflet-image-layer.leaflet-interactive path {
     let data=await res.json(); if(!Array.isArray(data)) data=[data];
     omScarp=data[STAZ];
 
-    // card comuni
+    // card comuni + previsioni 7 giorni di ciascun comune (carosello)
     COMUNI.forEach((c,i)=>{
       const d=data[i]; if(!d) return; const cur=d.current, dl=d.daily;
       set('c'+i+'-ico', wmo(cur.weather_code)[0]);
       set('c'+i+'-t', r(dl.temperature_2m_max[0])+'°');
-      set('c'+i+'-sub', 'min '+r(dl.temperature_2m_min[0])+'° · '+(dl.precipitation_probability_max[0]??0)+'%');
+      set('c'+i+'-sub', 'min '+r(dl.temperature_2m_min[0])+'° · '+(dl.precipitation_probability_max[0]??0)+'%'+(mmTxt(dl.precipitation_sum[0])?' · '+mmTxt(dl.precipitation_sum[0]):''));
+      dl.time.forEach((iso,k)=>{ if(k>6)return;
+        const dt=new Date(iso+'T12:00');
+        set('d'+k+'-dow-'+i, k===0?'Oggi':DOW[dt.getDay()]);
+        set('d'+k+'-di-'+i, wmo(dl.weather_code[k])[0]);
+        set('d'+k+'-hi-'+i, r(dl.temperature_2m_max[k])+'°');
+        set('d'+k+'-lo-'+i, r(dl.temperature_2m_min[k])+'°');
+        set('d'+k+'-pp-'+i, (dl.precipitation_probability_max[k]??0)+'%');
+        set('d'+k+'-mm-'+i, mmTxt(dl.precipitation_sum?dl.precipitation_sum[k]:null));
+      });
     });
 
     // confronto tra comuni (oggi)
@@ -1390,16 +1507,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
       set('st-rain', dec(dl.precipitation_sum[0]||0)+' mm');
     }
 
-    // 7 giorni (Borgo)
-    const f=data[FCAST].daily;
-    f.time.forEach((iso,i)=>{ if(i>6)return;
-      const dt=new Date(iso+'T12:00');
-      set('d'+i+'-dow', i===0?'Oggi':DOW[dt.getDay()]);
-      set('d'+i+'-di', wmo(f.weather_code[i])[0]);
-      set('d'+i+'-hi', r(f.temperature_2m_max[i])+'°');
-      set('d'+i+'-lo', r(f.temperature_2m_min[i])+'°');
-      set('d'+i+'-pp', (f.precipitation_probability_max[i]??0)+'%');
-    });
     const lb=document.getElementById('live-badge'); if(lb) lb.style.display='inline-block';
     set('note','● Stazione ISCARP2 (Weather Underground) + previsioni Open-Meteo · aggiornamento automatico · elaborazioni L. Varlani');
   }
@@ -1414,12 +1521,21 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const cs=P.comuni||[]; pvComuni=cs;
     if(!cs.length || !(cs[FCAST]&&cs[FCAST].giorni&&cs[FCAST].giorni.length>=3)) throw new Error('previsioni vuote o vecchie');
 
-    // card comuni
+    // card comuni + previsioni 7 giorni di ciascun comune (carosello)
     cs.forEach((c,i)=>{
       const g0=(c.giorni&&c.giorni[0])||{};
       set('c'+i+'-ico', wmo(c.now?c.now.code:g0.code)[0]);
       if(g0.tmax!=null) set('c'+i+'-t', r(g0.tmax)+'°'); else if(c.now&&c.now.t!=null) set('c'+i+'-t', r(c.now.t)+'°');
-      if(g0.tmin!=null) set('c'+i+'-sub', 'min '+r(g0.tmin)+'° · '+(g0.pp??0)+'%');
+      if(g0.tmin!=null) set('c'+i+'-sub', 'min '+r(g0.tmin)+'° · '+(g0.pp??0)+'%'+(mmTxt(g0.mm)?' · '+mmTxt(g0.mm):''));
+      (c.giorni||[]).forEach((d,k)=>{ if(k>6)return;
+        const dt=new Date(d.iso+'T12:00');
+        set('d'+k+'-dow-'+i, k===0?'Oggi':DOW[dt.getDay()]);
+        set('d'+k+'-di-'+i, wmo(d.code)[0]);
+        set('d'+k+'-hi-'+i, r(d.tmax)+'°');
+        set('d'+k+'-lo-'+i, r(d.tmin)+'°');
+        set('d'+k+'-pp-'+i, (d.pp??0)+'%');
+        set('d'+k+'-mm-'+i, mmTxt(d.mm));
+      });
     });
 
     // pannello "adesso": icona/desc/min-max da Scarperia
@@ -1430,16 +1546,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
       set('now-desc', wmo(pvScarp.code)[1]+' · min '+r(pvScarp.tmin)+'° / max '+r(pvScarp.tmax)+'°');
       if(!document.getElementById('now-int').dataset.live && s.now && s.now.t!=null) setNowTemp(s.now.t);
     }
-
-    // 7 giorni (Borgo)
-    (cs[FCAST].giorni||[]).forEach((d,i)=>{ if(i>6)return;
-      const dt=new Date(d.iso+'T12:00');
-      set('d'+i+'-dow', i===0?'Oggi':DOW[dt.getDay()]);
-      set('d'+i+'-di', wmo(d.code)[0]);
-      set('d'+i+'-hi', r(d.tmax)+'°');
-      set('d'+i+'-lo', r(d.tmin)+'°');
-      set('d'+i+'-pp', (d.pp??0)+'%');
-    });
 
     // confronto tra comuni (oggi)
     renderConfronto(cs.map(function(c){var g=(c.giorni&&c.giorni[0])||{}; return {n:c.n,tmax:g.tmax,tmin:g.tmin,pp:g.pp};}));
@@ -1753,6 +1859,29 @@ svg.leaflet-image-layer.leaflet-interactive path {
     catch(e){ initWebcam(WC_SAMPLE); }
   }
 
+  // carosello "I prossimi 7 giorni": scorre tra i 9 comuni, puntini sotto, click/swipe
+  function initWeekCarousel(){
+    const car=document.getElementById('week-carousel'), dots=document.getElementById('week-dots');
+    if(!car||!dots) return;
+    const pages=[...car.children], dotEls=[...dots.children], place=document.getElementById('week-place'), link=document.getElementById('week-link');
+    function setActive(i){
+      dotEls.forEach((d,k)=>{ const on=k===i; d.classList.toggle('on',on); d.setAttribute('aria-pressed',on); });
+      if(place) place.textContent=COMUNI[i].n;
+      if(link) link.href='comune.html?c='+i;
+    }
+    dotEls.forEach((d,i)=>d.addEventListener('click',()=>car.scrollTo({left:pages[i].offsetLeft-pages[0].offsetLeft,behavior:'smooth'})));
+    let cur=FCAST, rt;
+    car.addEventListener('scroll',()=>{
+      clearTimeout(rt);
+      rt=setTimeout(()=>{
+        const i=Math.max(0,Math.min(pages.length-1,Math.round((car.scrollLeft)/(car.clientWidth||1))));
+        if(i!==cur){ cur=i; setActive(i); }
+      },100);
+    },{passive:true});
+    car.scrollLeft=pages[FCAST].offsetLeft-pages[0].offsetLeft; // posizione iniziale: Borgo San Lorenzo, senza animazione
+    setActive(FCAST);
+  }
+
   async function cycle(){
     let pv=false;
     try{ await previsioni(); pv=true; }catch(e){ console.log('previsioni.json n/d:',e); }
@@ -1767,7 +1896,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     try{ await seismic(); }catch(e){ console.log('sismica offline:',e); }
     try{ await fiumi(); }catch(e){ console.log('fiumi n/d:',e); }
   }
-  document.addEventListener('DOMContentLoaded', ()=>{ cycle(); setInterval(cycle, REFRESH); setInterval(rotateNext, 9000); climate().catch(e=>console.log('clima n/d:',e)); invaso().catch(function(){}); allerta().catch(function(){}); webcam().catch(function(){}); });
+  document.addEventListener('DOMContentLoaded', ()=>{ initWeekCarousel(); cycle(); setInterval(cycle, REFRESH); setInterval(rotateNext, 9000); climate().catch(e=>console.log('clima n/d:',e)); invaso().catch(function(){}); allerta().catch(function(){}); webcam().catch(function(){}); });
 })();
 </script>
 <script>

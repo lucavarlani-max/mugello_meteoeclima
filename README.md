@@ -12,7 +12,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   Aggiornamento ogni 5 minuti; se la stazione è offline ripiega su Open-Meteo.
 - **Previsioni 9 comuni + 7 giorni** — modello AI **WeatherNext 3** di Google
   (DeepMind), tramite la Google Weather API, aggiornate dalla GitHub Action che
-  scrive `data/previsioni.json`. Se la chiave manca o l'API non risponde, ripiega
+  scrive `data/previsioni.json`. Per ogni giorno: icona, massima, minima, probabilità di pioggia (`pp`, %)
+  e pioggia prevista (`mm`, somma di giorno e notte dalla `qpf` di Google, `precipitation_sum` con Open-Meteo). Se la chiave manca o l'API non risponde, ripiega
   automaticamente su **Open-Meteo** (server e, in ultima istanza, lato browser).
   Le pagine (`previsioni-allinea.js`) scartano i giorni già passati in ora italiana: le
   esecuzioni programmate di GitHub possono partire con ore di ritardo e, prima delle 7,
@@ -45,14 +46,15 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   dati 1923–2017): i 5 massimi per 10 durate da 5 minuti a 24 ore, grafico durata/pioggia, classifiche, linea del
   tempo, stazioni ed eventi (1996, 2017, 1930). Dati in `data/piogge-estreme.json`, PDF originale in `reports/toscana/`.
 - **Archivio climatico** (`archivio-climatico.html`, link "Archivio climatico" del riquadro "Il mese in cifre"
-  in home) — i report climatologici mensili di Borgo San Lorenzo (stazione SIR TOS01000999), da leggere online
-  (HTML interattivo) o scaricare in PDF. File in `reports/clima/AAAA-MM-<luogo>.html/.pdf`, elenco in
+  in home e sottomenu Toscana) — i report climatologici mensili di Borgo San Lorenzo (stazione SIR TOS01000999)
+  e Firenzuola (stazione Arpae-SIMC, 476 m), da leggere online (HTML interattivo, se c'è) o in PDF. File in `reports/clima/AAAA-MM-<luogo>.html/.pdf`, elenco in
   `data/report-clima.json`: per aggiungere un mese basta copiare i due file e inserire un elemento in cima a `report`.
 - **Mappe** (`mappe.html`) — mappa del Mugello con le previsioni per comune (WeatherNext 3) e, sotto, le
   **carte del Centro europeo ECMWF** (`ecmwf-carte.js`): 10 carte del modello IFS sull'Europa (pressione e vento,
   geopotenziale 500 hPa, precipitazioni, temperatura, nuvole, neve, zero termico, raffiche, instabilità) fino a
   10 giorni, con selettore, cursore e animazione. I link alle immagini (OpenCharts API, © ECMWF, CC BY 4.0) sono in
-  `data/ecmwf.json`, raccolti da `scripts/fetch_ecmwf.py` nell'Action a piccoli blocchi (l'API limita le richieste):
+  `data/ecmwf.json`, raccolti da `scripts/fetch_ecmwf.py` nel workflow dedicato `.github/workflows/ecmwf.yml`
+  (00:41, 02:41, 12:41 e 14:41 UTC; ~150 richieste distanziate di 4 s, perché l'API limita le richieste):
   una corsa nuova (00 o 12 UTC, vecchia almeno 12 ore) viene mostrata solo quando è completa.
 - **Temperature in Toscana** (`temperature-toscana.html`) — tutte le stazioni della rete
   termometrica del CFR Toscana: temperatura attuale, minime e massime di oggi e di ieri,
@@ -80,7 +82,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **Genova 1833–2025** (`genova.html`, Osservatorio Meteorologico Storico dell'Università di Genova, dati aperti HistObs UniGe, temperatura e pioggia),
   **Mont Aigoual 1896–2026** (`mont-aigoual.html`, osservatorio di Météo-France a 1567 m nelle Cevenne, dati NOAA GHCN-Daily: pioggia dal 1896, temperatura dal 1949, media giornaliera completata con TAVG, opzione `--tavg` di `build_serie.py`) e
   **De Bilt 1901–2026** (`de-bilt.html`, stazione di riferimento del KNMI nei Paesi Bassi, stazione centenaria OMM) e
-  **Bangalore 1901–2026** (`bangalore.html`, India Meteorological Department, stazione centenaria OMM come osservatorio pluviometrico dal 1867: pioggia dal 1901, temperatura dal 1973, media giornaliera completata con TAVG e soglia di giorni validi per anno abbassata a 275 con `--min-anno=275` di `build_serie.py`, introdotta per questa serie).
+  **Bangalore 1901–2026** (`bangalore.html`, India Meteorological Department, stazione centenaria OMM come osservatorio pluviometrico dal 1867: pioggia dal 1901, temperatura dal 1973, media giornaliera completata con TAVG e soglia di giorni validi per anno abbassata a 275 con `--min-anno=275` di `build_serie.py`, introdotta per questa serie) e
+  **Firenzuola 1961–2026** (`firenzuola.html`, la prima serie di un comune del Mugello stesso: stazione 01429 di ARPAE Emilia-Romagna, archivio opendata Eraclito, 66 anni praticamente senza lacune) e
+  **Oxford 1815–2025** (`oxford.html`, Radcliffe Meteorological Station dell'Università di Oxford, stazione centenaria OMM: temperatura dal 1815, pioggia dal 1827, 211 anni con appena 5 valori mancanti) e
+  **Domodossola 1872–2013** (`domodossola.html`, Osservatorio del Collegio Rosmini, stazione centenaria OMM: unica serie del sito senza dati giornalieri, costruita a mano dalle tabelle annuali e mensili pubblicate su *Nimbus* 72 della Società Meteorologica Italiana — niente massime/minime separate né "un giorno nella storia"; script di estrazione via `pdftotext -bbox` non versionato, dati finali in `domodossola.js` e `data/serie/domodossola.json`).
   Analisi d'insieme **Italia, stazioni NOAA** (`italia-ghcn.html` + `italia-ghcn.js`): 100 stazioni
   italiane del registro GHCN-Daily (mappa, cronologia, tabella) e trent'anni di dati 1996–2025
   su 46 stazioni (temperatura, gelo e caldo, precipitazioni, quota, latitudine); dati in `data/serie/italia-ghcn.json`, file originali (CSV, riepilogo,
@@ -122,6 +127,18 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   `fb-post.html`) — la stessa barra di navigazione della home, fissa in alto durante lo scorrimento, con la voce
   della pagina evidenziata e il menu ☰ sotto i 1180 px. Le voci sono nell'elenco `VOCI` del file: se si aggiunge
   una pagina al menu della home, va aggiunta anche lì.
+- **MeteoGeek** (`meteogeek.html`, voce 🧪 MeteoGeek del menu) — il laboratorio: sperimentazioni, grafici insoliti,
+  statistiche, curiosità e tabelle, come schede filtrabili per tipo e con ricerca. Elenco in `data/meteogeek.json`
+  (un elemento in cima a `esperimenti`: titolo, tipo grafico/statistica/curiosita/tabella/esperimento, data, testo, link,
+  tag, stato e anteprima facoltativi). Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
+  dal modello `geek-modello.html` (non indicizzato); nel menu evidenziano MeteoGeek.
+- **Le mie stazioni** (`stazioni.html` + `stazioni.js`, voce Stazioni del menu) — la stazione ISCARP2 di Scarperia
+  (Weather Underground, letta dal browser come in home) e la stazione Netatmo: valori attuali, min/max di oggi,
+  temperature delle ultime 24 ore a confronto e ultimi 7 giorni di ISCARP2. La Netatmo è letta dall'Action con
+  `scripts/fetch_netatmo.py` (API Netatmo con OAuth) che scrive `data/netatmo.json`, solo moduli esterni e senza
+  coordinate. Servono i segreti `NETATMO_CLIENT_ID`, `NETATMO_CLIENT_SECRET`, `NETATMO_REFRESH_TOKEN` (permesso
+  read_station) e `NETATMO_KEY` (frase a piacere): il refresh token che Netatmo rinnova a ogni accesso viene
+  salvato cifrato in `data/netatmo-token.enc`. Senza segreti la scheda Netatmo mostra «in arrivo».
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
   senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
   visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).
@@ -249,3 +266,8 @@ Stazione ISCARP2 (Weather Underground) · WeatherNext 3 / Google Weather API · 
    regola fissa, non va saltata) e il nome OMM della stazione in `links` nelle chiamate a
    `WMOCat.mount` (`serie-storiche.html` e `stazioni-centenarie.html`) per evidenziarla sulla
    mappa, solo se è davvero una delle stazioni centenarie riconosciute (vedi `data/serie/wmo-centenarie.json`).
+5. **Aggiungi la stazione anche al grafico di confronto del riscaldamento** (anche questa è
+   una regola fissa, non va saltata): nell'array `ST` in cima a `serie-confronto.js`
+   (`{id:"<slug>",n:"<nome>",c:"<nome breve per etichette e legenda>"}`) e, se sono finiti
+   i colori già definiti, una nuova coppia `--sN` (chiaro e scuro) nella regola `.rs` in
+   `serie-storiche.html`. Tabella, legenda e testo si aggiornano da soli.

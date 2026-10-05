@@ -1,6 +1,42 @@
 {
- "nota": "Archivio dei report climatologici mensili. Per aggiungerne uno: copia HTML e PDF in reports/clima/AAAA-MM-<luogo>.html/.pdf e aggiungi un elemento IN CIMA a \"report\".",
+ "nota": "Archivio dei report climatologici mensili. Per aggiungerne uno: copia il PDF (e l'HTML interattivo, se c'è) in reports/clima/AAAA-MM-<luogo>.pdf/.html e aggiungi un elemento IN CIMA a \"report\" (senza \"html\" se il report è solo in PDF).",
  "report": [
+  {
+   "mese": "2026-09",
+   "titolo": "Settembre 2026",
+   "luogo": "Firenzuola",
+   "sottotitolo": "Più caldo e più asciutto del normale: un inizio ancora estivo e un finale fresco e quasi senza pioggia.",
+   "stazione": "Stazione Arpae di Firenzuola · 476 m · confronto con i settembri 2002–2025",
+   "sintesi": "Il 3° settembre più caldo della serie (19,1 °C, +1,8 °C), con un record: dall'1 all'8 la massima è rimasta sempre sopra i 30 °C, 8 giorni di fila contro i 5 del primato precedente. La pioggia, 68,0 mm, è caduta in tre episodi; dal 20 al 30 settembre solo 0,4 mm. Nessuna notte tropicale.",
+   "kpi": [
+    {
+     "k": "Temp. media",
+     "v": "19,1 °C",
+     "d": "+1,8 °C vs 2002–2025 · 3° su 25",
+     "t": "caldo"
+    },
+    {
+     "k": "Massima assoluta",
+     "v": "33,9 °C",
+     "d": "4 settembre · 2° valore della serie",
+     "t": "caldo"
+    },
+    {
+     "k": "Minima assoluta",
+     "v": "5,0 °C",
+     "d": "26 settembre",
+     "t": "freddo"
+    },
+    {
+     "k": "Pioggia totale",
+     "v": "68,0 mm",
+     "d": "−37% vs media 2002–2025 (107,9 mm)",
+     "t": "pioggia"
+    }
+   ],
+   "pdf": "reports/clima/2026-09-firenzuola.pdf",
+   "pdf_kb": 938
+  },
   {
    "mese": "2026-09",
    "titolo": "Settembre 2026",

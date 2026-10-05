@@ -2,7 +2,9 @@
 """
 Aggiorna data/estremi.json: le 10 temperature più alte, le 10 più basse e le
 10 stazioni con più pioggia nel mondo nelle ultime 24 ore, per il ticker
-della pagina radar.html.
+della pagina radar.html. Per le temperature più basse si tiene una sola stazione
+dell'Antartide (la più fredda): le altre nove sono dal resto del mondo. Ogni
+stazione ha il codice ISO del paese ("iso") per la bandierina.
 
 Fonte: OGIMET (www.ogimet.com), ranking mondiale calcolato dai bollettini
 SYNOP delle stazioni sinottiche di tutto il mondo:
@@ -26,6 +28,8 @@ HEADERS = {
     "Referer": "http://www.ogimet.com/ranking.phtml",
 }
 RANK = 10
+RANK_RICHIESTA = 60          # si chiede una classifica più lunga per poter scartare le stazioni antartiche
+MAX_ANTARTIDE = 1            # temperature più basse: al massimo una stazione dell'Antartide, le altre dal resto del mondo
 MIN_STAZIONI = 500          # sotto questa soglia l'ora è considerata troppo recente/incompleta
 TENTATIVI_ORE = [2, 4, 7, 12, 24]   # ore di margine da provare, in ordine
 
@@ -98,6 +102,53 @@ PAESI_IT = {
     "Afghanistan": "Afghanistan", "Antarctica": "Antartide",
 }
 
+# Paesi OGIMET -> codice ISO 3166-1 alpha-2, per la bandierina nel ticker.
+PAESI_ISO = {
+    "United States": "us", "United States of America": "us", "United Kingdom": "gb",
+    "United Arab Emirates": "ae", "Saudi Arabia": "sa", "Bolivia, Plurinational State of": "bo", "Bolivia": "bo",
+    "Venezuela, Bolivarian Republic of": "ve", "Venezuela": "ve", "Iran, Islamic Republic of": "ir", "Iran": "ir",
+    "Korea, Republic of": "kr", "Korea, Democratic People's Republic of": "kp",
+    "Tanzania, United Republic of": "tz", "Tanzania": "tz", "Moldova, Republic of": "md", "Moldova": "md",
+    "Congo, Democratic Republic of the": "cd", "Congo": "cg", "Lao People's Democratic Republic": "la",
+    "Syrian Arab Republic": "sy", "Syria": "sy", "Russian Federation": "ru", "Russia": "ru", "Viet Nam": "vn", "Vietnam": "vn",
+    "Brunei Darussalam": "bn", "Micronesia, Federated States of": "fm", "Taiwan, Province of China": "tw", "Taiwan": "tw",
+    "Czechia": "cz", "Czech Republic": "cz", "North Macedonia": "mk", "Bosnia and Herzegovina": "ba",
+    "Saint Vincent and the Grenadines": "vc", "Trinidad and Tobago": "tt", "Antigua and Barbuda": "ag",
+    "Papua New Guinea": "pg", "New Zealand": "nz", "South Africa": "za", "South Sudan": "ss", "Sri Lanka": "lk",
+    "Sao Tome and Principe": "st", "Dominican Republic": "do", "Costa Rica": "cr", "Puerto Rico": "pr",
+    "Ivory Coast": "ci", "Cote d'Ivoire": "ci", "Burkina Faso": "bf", "Equatorial Guinea": "gq",
+    "Guinea-Bissau": "gw", "Central African Republic": "cf", "Western Sahara": "eh", "Cabo Verde": "cv",
+    "Cape Verde": "cv", "French Polynesia": "pf", "French Guiana": "gf", "New Caledonia": "nc",
+    "Solomon Islands": "sb", "Marshall Islands": "mh", "Faroe Islands": "fo", "Cayman Islands": "ky",
+    "Turks and Caicos Islands": "tc", "Falkland Islands (Malvinas)": "fk", "Falkland Islands": "fk",
+    "Greenland": "gl", "Iceland": "is", "Ireland": "ie", "Netherlands": "nl", "Germany": "de",
+    "Switzerland": "ch", "Austria": "at", "Belgium": "be", "France": "fr", "Spain": "es", "Portugal": "pt",
+    "Italy": "it", "Greece": "gr", "Poland": "pl", "Sweden": "se", "Norway": "no", "Finland": "fi",
+    "Denmark": "dk", "Estonia": "ee", "Latvia": "lv", "Lithuania": "lt", "Belarus": "by", "Ukraine": "ua",
+    "Romania": "ro", "Bulgaria": "bg", "Hungary": "hu", "Slovakia": "sk", "Slovenia": "si", "Croatia": "hr",
+    "Serbia": "rs", "Montenegro": "me", "Albania": "al", "Turkey": "tr", "Turkiye": "tr", "Cyprus": "cy",
+    "Malta": "mt", "Luxembourg": "lu", "Georgia": "ge", "Armenia": "am", "Azerbaijan": "az",
+    "Kazakhstan": "kz", "Uzbekistan": "uz", "Turkmenistan": "tm", "Kyrgyzstan": "kg", "Tajikistan": "tj",
+    "Mongolia": "mn", "China": "cn", "Hong Kong": "hk", "Macao": "mo", "Japan": "jp", "India": "in",
+    "Pakistan": "pk", "Bangladesh": "bd", "Nepal": "np", "Bhutan": "bt", "Myanmar": "mm", "Thailand": "th",
+    "Cambodia": "kh", "Malaysia": "my", "Singapore": "sg", "Indonesia": "id", "Philippines": "ph",
+    "Fiji": "fj", "Australia": "au", "Canada": "ca", "Mexico": "mx", "Cuba": "cu", "Jamaica": "jm",
+    "Haiti": "ht", "Panama": "pa", "Nicaragua": "ni", "Honduras": "hn", "Guatemala": "gt", "Belize": "bz",
+    "El Salvador": "sv", "Colombia": "co", "Ecuador": "ec", "Peru": "pe", "Chile": "cl", "Argentina": "ar",
+    "Paraguay": "py", "Uruguay": "uy", "Brazil": "br", "Guyana": "gy", "Suriname": "sr", "Egypt": "eg",
+    "Libya": "ly", "Tunisia": "tn", "Algeria": "dz", "Morocco": "ma", "Sudan": "sd", "Ethiopia": "et",
+    "Eritrea": "er", "Djibouti": "dj", "Somalia": "so", "Kenya": "ke", "Uganda": "ug", "Rwanda": "rw",
+    "Burundi": "bi", "Nigeria": "ng", "Niger": "ne", "Chad": "td", "Mali": "ml", "Mauritania": "mr",
+    "Senegal": "sn", "Gambia": "gm", "Guinea": "gn", "Sierra Leone": "sl", "Liberia": "lr", "Ghana": "gh",
+    "Togo": "tg", "Benin": "bj", "Cameroon": "cm", "Gabon": "ga", "Angola": "ao", "Zambia": "zm",
+    "Zimbabwe": "zw", "Botswana": "bw", "Namibia": "na", "Mozambique": "mz", "Malawi": "mw",
+    "Madagascar": "mg", "Mauritius": "mu", "Seychelles": "sc", "Comoros": "km", "Eswatini": "sz",
+    "Swaziland": "sz", "Lesotho": "ls", "Yemen": "ye", "Oman": "om", "Qatar": "qa", "Bahrain": "bh",
+    "Kuwait": "kw", "Jordan": "jo", "Lebanon": "lb", "Israel": "il", "Palestine": "ps", "Iraq": "iq",
+    "Afghanistan": "af", "Antarctica": "aq", "Svalbard and Jan Mayen": "sj", "Reunion": "re",
+    "Martinique": "mq", "Guadeloupe": "gp", "Bermuda": "bm", "Bahamas": "bs", "Barbados": "bb",
+}
+
 
 def _get(url, timeout=40):
     req = urllib.request.Request(url, headers=HEADERS)
@@ -129,25 +180,40 @@ def parse_sezione(pagina, ancora, n=RANK):
         label = html.unescape(rm.group("label")).strip()
         lm = LABEL_RE.match(label)
         if lm:
-            staz, paese = lm.group("staz").strip(), paese_it(lm.group("paese"))
+            en = lm.group("paese").strip()
+            staz, paese, iso = lm.group("staz").strip(), paese_it(en), PAESI_ISO.get(en, "")
         else:
-            staz, paese = label, ""
+            staz, paese, iso = label, "", ""
         try:
             v = float(rm.group("val"))
         except ValueError:
             continue
-        out.append({"staz": staz, "paese": paese, "v": v})
+        out.append({"staz": staz, "paese": paese, "iso": iso, "v": v})
+        if len(out) >= n:
+            break
+    return out
+
+
+def limita_antartide(righe, n=RANK):
+    """Tiene al massimo MAX_ANTARTIDE stazioni antartiche (le più fredde) e completa con il resto del mondo."""
+    out, ant = [], 0
+    for r in righe:
+        if r["iso"] == "aq" or r["paese"] == "Antartide":
+            if ant >= MAX_ANTARTIDE:
+                continue
+            ant += 1
+        out.append(r)
         if len(out) >= n:
             break
     return out
 
 
 def scarica_ranking(ora_utc):
-    url = (f"{URL}?lang=en&state=World&rank={RANK}"
+    url = (f"{URL}?lang=en&state=World&rank={RANK_RICHIESTA}"
            f"&ano={ora_utc.year}&mes={ora_utc.month:02d}&day={ora_utc.day:02d}&hora={ora_utc.hour:02d}")
     pagina = _get(url)
     caldo = parse_sezione(pagina, "tmax")
-    freddo = parse_sezione(pagina, "tmin")
+    freddo = limita_antartide(parse_sezione(pagina, "tmin", RANK_RICHIESTA))
     pioggia = parse_sezione(pagina, "R24")
     return caldo, freddo, pioggia, ora_utc
 
