@@ -2,6 +2,35 @@
  "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
  "esperimenti": [
   {
+   "id": "ghcn-climatologia",
+   "titolo": "Climatologia di 49 stazioni italiane NOAA",
+   "tipo": "grafico",
+   "data": "2026-10-05",
+   "stato": "nuovo",
+   "testo": "Climatologia mensile 1991–2020 e medie annuali (massime, minime e medie) di 49 stazioni italiane del catalogo NOAA GHCN-Daily, con il confronto fra più stazioni sullo stesso grafico: da Monte Cimone a Pisa, da Verona a Palermo.",
+   "link": "geek-ghcn-climatologia.html",
+   "tag": [
+    "NOAA",
+    "GHCN",
+    "climatologia"
+   ]
+  },
+  {
+   "id": "ghcn-stazioni",
+   "titolo": "La mappa delle stazioni NOAA GHCN-Daily",
+   "tipo": "esperimento",
+   "data": "2026-10-05",
+   "stato": "nuovo",
+   "testo": "Tutte le stazioni del catalogo NOAA GHCN-Daily su una mappa interattiva: ricerca per nome o codice, filtro per paese e anni di attività, classifica dei paesi, copertura nel tempo ed esportazione CSV delle stazioni filtrate.",
+   "link": "geek-ghcn-stazioni.html",
+   "tag": [
+    "NOAA",
+    "GHCN",
+    "stazioni",
+    "mappa"
+   ]
+  },
+  {
    "id": "riscaldamento-stazioni",
    "titolo": "Il riscaldamento di otto stazioni storiche a confronto",
    "tipo": "grafico",

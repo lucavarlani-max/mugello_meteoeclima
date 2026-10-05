@@ -1,0 +1,155 @@
+#!/usr/bin/env python3
+"""Genera una pagina HTML interattiva dalle climatologie GHCN-Daily.
+
+Input: i file prodotti da ghcn_climatology.py:
+  climatologia_monthly.csv
+  climatologia_annual.csv
+
+Esempio:
+  python3 ghcn_climatology_chart.py \
+      --monthly climatologia_monthly.csv \
+      --annual climatologia_annual.csv \
+      --output climatologia_interattiva.html
+
+L'HTML prodotto usa SVG e JavaScript nativo: non richiede framework,
+database o backend e può essere incorporato in una pagina con un iframe.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+from pathlib import Path
+
+MONTHS = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"]
+
+
+def read_csv(path: Path) -> list[dict[str, str]]:
+    with path.open("r", encoding="utf-8-sig", newline="") as f:
+        return list(csv.DictReader(f, delimiter=";"))
+
+
+def number(value: str | None) -> float | None:
+    if value is None or not value.strip():
+        return None
+    try:
+        return float(value.replace(",", "."))
+    except ValueError:
+        return None
+
+
+def normalize_monthly(rows: list[dict[str, str]]) -> list[dict[str, object]]:
+    out = []
+    for row in rows:
+        month = int(row["month"])
+        value = number(row.get("mean_value"))
+        if value is None:
+            continue
+        out.append({
+            "station_id": row.get("station_id", ""),
+            "element": row.get("element", ""),
+            "month": month,
+            "month_name": row.get("month_name", MONTHS[month - 1].lower()),
+            "value": value,
+            "unit": row.get("unit", ""),
+            "observations": int(float(row.get("observations", 0) or 0)),
+            "coverage": number(row.get("coverage_percent")) or 0,
+            "minimum": number(row.get("minimum")),
+            "maximum": number(row.get("maximum")),
+        })
+    return out
+
+
+def normalize_annual(rows: list[dict[str, str]]) -> list[dict[str, object]]:
+    out = []
+    for row in rows:
+        value = number(row.get("mean_value"))
+        if value is None:
+            continue
+        out.append({
+            "station_id": row.get("station_id", ""),
+            "element": row.get("element", ""),
+            "year": int(row["year"]),
+            "value": value,
+            "unit": row.get("unit", ""),
+            "observations": int(float(row.get("observations", 0) or 0)),
+            "coverage": number(row.get("coverage_percent")) or 0,
+            "minimum": number(row.get("minimum")),
+            "maximum": number(row.get("maximum")),
+        })
+    return out
+
+
+def html_page(monthly: list[dict[str, object]], annual: list[dict[str, object]], title: str) -> str:
+    payload = json.dumps({"monthly": monthly, "annual": annual}, ensure_ascii=False, separators=(",", ":"))
+    title_json = json.dumps(title, ensure_ascii=False)
+    return f'''<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<style>
+:root{{--bg:#f4f6f2;--panel:#fff;--panel2:#fbfcfa;--ink:#16261f;--soft:#48584f;--faint:#6f7c74;--line:#e3e8e1;--pine:#0f6b52;--pineDeep:#0a4f3c;--sky:#2f7cc4;--amber:#c9671f;--shadow:0 1px 2px rgba(16,38,31,.05),0 8px 24px -12px rgba(16,38,31,.18);--r:16px}}
+*{{box-sizing:border-box}} body{{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:14px;line-height:1.45}} .wrap{{max-width:1180px;margin:auto;padding:18px 20px 28px}}
+h1,h2,h3{{font-family:"Bricolage Grotesque",system-ui,sans-serif}} h1{{color:var(--pineDeep);font-size:clamp(24px,4vw,38px);letter-spacing:-.025em;margin:0 0 3px}} .sub{{color:var(--soft);margin:0 0 16px}}
+.controls,.card{{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}} .controls{{display:flex;gap:10px;align-items:end;flex-wrap:wrap;padding:13px 14px;margin-bottom:14px}} label{{display:flex;flex-direction:column;gap:4px;color:var(--faint);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}} select,button{{font:inherit;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:var(--panel2);color:var(--ink);cursor:pointer}} select[multiple]{{min-width:230px;border-radius:11px;padding:6px;height:76px}} button{{background:var(--pine);border-color:var(--pine);color:#fff;font-weight:600}} button:hover{{background:var(--pineDeep)}} .hint{{margin-left:auto;color:var(--faint);font-size:12px}}
+.grid{{display:grid;grid-template-columns:1fr 1fr;gap:14px}} .card{{padding:15px 16px;min-width:0}} h2{{font-size:20px;color:var(--pineDeep);margin:0 0 2px}} .caption{{font-size:12px;color:var(--faint);margin-bottom:8px}} .chartbox{{height:330px;position:relative}} svg{{display:block;width:100%;height:100%;overflow:visible}} .gridline{{stroke:var(--line);stroke-width:1}} .axis{{fill:var(--faint);font-size:11px;font-family:"IBM Plex Mono",monospace}} .line{{fill:none;stroke:var(--sky);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}} .point{{fill:var(--panel);stroke:var(--sky);stroke-width:2;cursor:pointer}} .bar{{fill:var(--pine);opacity:.88;cursor:pointer}} .bar:hover,.point:hover{{fill:var(--amber);stroke:var(--amber)}}
+.summary{{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}} .metric{{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:9px}} .metric small{{display:block;color:var(--faint);font-size:10px;text-transform:uppercase;letter-spacing:.04em}} .metric strong{{display:block;color:var(--pineDeep);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:19px;margin-top:3px}} .tip{{position:fixed;z-index:5;pointer-events:none;background:var(--ink);color:#fff;border-radius:9px;padding:8px 10px;font-size:12px;line-height:1.45;opacity:0;transition:opacity .12s;box-shadow:var(--shadow)}} footer{{color:var(--faint);font-size:11px;margin-top:13px}}
+@media(max-width:760px){{.grid{{grid-template-columns:1fr}}.summary{{grid-template-columns:repeat(2,1fr)}}.hint{{width:100%;margin-left:0}}.chartbox{{height:280px}}}}
+.legend{{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;color:var(--soft);font-size:12.5px}}.legend span{{display:inline-flex;align-items:center;gap:6px}}.legend i{{display:inline-block;width:12px;height:12px;border-radius:3px;flex:none}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+</head>
+<body><main class="wrap">
+<h1>{title}</h1><p class="sub">Medie climatologiche mensili e serie annuali · dati GHCN-Daily</p>
+<div class="controls"><label>Stazioni (Ctrl/Cmd per più selezioni)<select id="station" multiple size="3"></select></label><label>Elemento<select id="element"></select></label><button id="reset">Azzera selezione</button><span class="hint" id="hint"></span></div>
+<div class="grid"><section class="card"><h2>Climatologia mensile</h2><div class="caption" id="monthlyCaption"></div><div class="chartbox" id="monthlyChart"></div><div class="legend" id="monthlyLegend"></div></section>
+<section class="card"><h2>Media annuale</h2><div class="caption" id="annualCaption"></div><div class="chartbox" id="annualChart"></div><div class="legend" id="annualLegend"></div></section></div>
+<div class="summary"><div class="metric"><small>Media del periodo</small><strong id="mean">—</strong></div><div class="metric"><small>Valore minimo</small><strong id="minimum">—</strong></div><div class="metric"><small>Valore massimo</small><strong id="maximum">—</strong></div><div class="metric"><small>Anno più caldo/alto</small><strong id="maxYear">—</strong></div><div class="metric"><small>Copertura media</small><strong id="coverage">—</strong></div></div>
+<footer>Grafici generati da climatologia GHCN-Daily. Passa il mouse sui punti o sulle barre per i dettagli.</footer>
+</main><div class="tip" id="tip"></div>
+<script>
+const DATA={payload}; const TITLE={title_json}; const MONTHS={json.dumps(MONTHS)};
+const isDef=(id,i)=>(typeof DEFAULTS!=='undefined'&&DEFAULTS.length)?DEFAULTS.includes(id):i<2;
+const nm=id=>(typeof NAMES!=='undefined'&&NAMES[id])||id;
+const stationEl=document.getElementById('station'), elementEl=document.getElementById('element'), tip=document.getElementById('tip');
+const fmt=n=>Number(n).toLocaleString('it-IT',{{maximumFractionDigits:2}});
+const key=(s,e)=>s+'|'+e;
+const stations=[...new Set([...DATA.monthly,...DATA.annual].map(x=>x.station_id))].sort();
+const elements=[...new Set([...DATA.monthly,...DATA.annual].map(x=>x.element))].sort();
+stations.forEach((x,i)=>{{const o=new Option(nm(x),x);if(isDef(x,i))o.selected=true;stationEl.add(o)}}); elements.forEach(x=>elementEl.add(new Option(x,x)));
+function showTip(e,text){{tip.innerHTML=text;tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';tip.style.opacity=1}} function hideTip(){{tip.style.opacity=0}}
+function svgEl(tag,attrs){{const x=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))x.setAttribute(k,v);return x}}
+function chartFrame(w,h,pad,min,max,count){{const svg=svgEl('svg',{{viewBox:`0 0 ${{w}} ${{h}}`,role:'img'}});const y=v=>h-pad.b-(v-min)/(max-min||1)*(h-pad.t-pad.b);[0,.25,.5,.75,1].forEach(t=>{{const val=min+t*(max-min), yy=y(val);svg.appendChild(svgEl('line',{{x1:pad.l,x2:w-pad.r,y1:yy,y2:yy,class:'gridline'}}));const tx=svgEl('text',{{x:pad.l-7,y:yy+4,'text-anchor':'end',class:'axis'}});tx.textContent=fmt(val);svg.appendChild(tx)}});return {{svg,y}}}}
+function palette(i){{return ['#2f7cc4','#0f6b52','#c9671f','#8d5aa8','#b8431f','#2f9b8f','#65738b'][i%7]}}
+function drawLegend(id,series){{const box=document.getElementById(id);box.replaceChildren();series.forEach((x,i)=>{{const s=document.createElement('span');const sw=document.createElement('i');sw.style.background=palette(i);s.append(sw,document.createTextNode(nm(x)));box.append(s)}})}}
+function drawMonthly(rows){{const box=document.getElementById('monthlyChart');box.replaceChildren();if(!rows.length){{box.textContent='Nessun dato mensile';return}}const groups=[...new Set(rows.map(x=>x.station_id))],vals=rows.map(x=>x.value),min=Math.min(...vals),max=Math.max(...vals),w=640,h=330,p={{l:48,r:15,t:15,b:34}},f=chartFrame(w,h,p,min,max,12),svg=f.svg;groups.forEach((station,si)=>{{const data=rows.filter(x=>x.station_id===station).sort((a,b)=>a.month-b.month),points=data.map(x=>[p.l+(x.month-.5)*(w-p.l-p.r)/12,f.y(x.value),x]);const path=svgEl('path',{{d:points.map((q,i)=>(i?'L':'M')+q[0]+','+q[1]).join(' '),class:'line'}});path.style.stroke=palette(si);svg.appendChild(path);points.forEach(([xx,yy,x])=>{{const c=svgEl('circle',{{cx:xx,cy:yy,r:4,class:'point'}});c.style.stroke=palette(si);c.addEventListener('mousemove',e=>showTip(e,`<b>${{nm(x.station_id)}} · ${{x.month_name}}</b><br>${{fmt(x.value)}} ${{x.unit}}<br>Copertura: ${{fmt(x.coverage)}}%`));c.addEventListener('mouseleave',hideTip);svg.appendChild(c)}})}});for(let i=0;i<12;i++){{const tx=svgEl('text',{{x:p.l+(i+.5)*(w-p.l-p.r)/12,y:h-10,'text-anchor':'middle',class:'axis'}});tx.textContent=MONTHS[i];svg.appendChild(tx)}}box.appendChild(svg);drawLegend('monthlyLegend',groups);document.getElementById('monthlyCaption').textContent=`${{groups.length}} stazioni · elemento ${{rows[0].element}}`;return rows[0].unit}}
+function drawAnnual(rows){{const box=document.getElementById('annualChart');box.replaceChildren();if(!rows.length){{box.textContent='Nessun dato annuale';return}}const groups=[...new Set(rows.map(x=>x.station_id))],vals=rows.map(x=>x.value),min=Math.min(...vals),max=Math.max(...vals),w=640,h=330,p={{l:48,r:15,t:15,b:34}},f=chartFrame(w,h,p,min,max,rows.length),svg=f.svg,first=rows.reduce((a,x)=>Math.min(a,x.year),9999),last=rows.reduce((a,x)=>Math.max(a,x.year),0),step=[1,2,5,10,20,25,50].find(k=>(last-first)/k<=8)||50;for(let yr=Math.ceil(first/step)*step;yr<=last;yr+=step){{const tx=svgEl('text',{{x:p.l+(yr-first)*(w-p.l-p.r)/Math.max(1,last-first),y:h-10,'text-anchor':'middle',class:'axis'}});tx.textContent=yr;svg.appendChild(tx)}}groups.forEach((station,si)=>{{const data=rows.filter(x=>x.station_id===station).sort((a,b)=>a.year-b.year),points=data.map(x=>[p.l+(x.year-first)*(w-p.l-p.r)/Math.max(1,last-first),f.y(x.value),x]);const path=svgEl('path',{{d:points.map((q,i)=>(i?'L':'M')+q[0]+','+q[1]).join(' '),class:'line'}});path.style.stroke=palette(si);svg.appendChild(path);points.forEach(([xx,yy,x])=>{{const c=svgEl('circle',{{cx:xx,cy:yy,r:3.5,class:'point'}});c.style.stroke=palette(si);c.addEventListener('mousemove',e=>showTip(e,`<b>${{nm(x.station_id)}} · ${{x.year}}</b><br>${{fmt(x.value)}} ${{x.unit}}<br>Copertura: ${{fmt(x.coverage)}}%`));c.addEventListener('mouseleave',hideTip);svg.appendChild(c)}})}});box.appendChild(svg);drawLegend('annualLegend',groups);document.getElementById('annualCaption').textContent=`${{groups.length}} stazioni · serie annuale · elemento ${{rows[0].element}}`;return rows[0].unit}}
+function render(){{const selected=[...stationEl.selectedOptions].map(o=>o.value),e=elementEl.value,m=DATA.monthly.filter(x=>selected.includes(x.station_id)&&x.element===e),a=DATA.annual.filter(x=>selected.includes(x.station_id)&&x.element===e),unit=drawMonthly(m)||drawAnnual(a)||'';drawAnnual(a),values=a.map(x=>x.value);document.getElementById('mean').textContent=values.length?fmt(values.reduce((u,v)=>u+v,0)/values.length)+' '+unit:'—';document.getElementById('minimum').textContent=values.length?fmt(Math.min(...values))+' '+unit:'—';document.getElementById('maximum').textContent=values.length?fmt(Math.max(...values))+' '+unit:'—';document.getElementById('maxYear').textContent=selected.length===1&&values.length?a[values.indexOf(Math.max(...values))].year:'—';document.getElementById('coverage').textContent=a.length?fmt(a.reduce((u,v)=>u+v.coverage,0)/a.length)+'%':'—';document.getElementById('hint').textContent=`${{selected.length}} stazioni · ${{m.length}} mesi · ${{a.length}} anni`;}}
+stationEl.addEventListener('change',render);elementEl.addEventListener('change',render);document.getElementById('reset').onclick=()=>{{[...stationEl.options].forEach((o,i)=>o.selected=isDef(o.value,i));elementEl.selectedIndex=0;render()}};render();
+</script></body></html>'''
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--monthly", required=True, type=Path, help="CSV climatologia mensile.")
+    p.add_argument("--annual", required=True, type=Path, help="CSV climatologia annuale.")
+    p.add_argument("--output", required=True, type=Path, help="HTML di destinazione.")
+    p.add_argument("--title", default="Climatologia meteorologica", help="Titolo della pagina.")
+    args = p.parse_args()
+    monthly = normalize_monthly(read_csv(args.monthly))
+    annual = normalize_annual(read_csv(args.annual))
+    if not monthly and not annual:
+        raise SystemExit("Errore: i CSV non contengono dati utilizzabili.")
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(html_page(monthly, annual, args.title), encoding="utf-8")
+    print(f"Creato: {args.output}")
+    print(f"Righe mensili: {len(monthly):,}; righe annuali: {len(annual):,}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

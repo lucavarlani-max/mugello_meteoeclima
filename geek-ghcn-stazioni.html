@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mappa delle stazioni NOAA GHCN-Daily · MeteoGeek · Mugello Meteo &amp; Clima</title>
+<meta name="description" content="Tutte le stazioni NOAA GHCN-Daily del mondo su una mappa interattiva: ricerca, filtri per paese e anni di attività, classifica per paese ed esportazione CSV.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ghcn-stazioni.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Mappa delle stazioni NOAA GHCN-Daily · MeteoGeek">
+<meta property="og:description" content="Le stazioni meteo del mondo del catalogo NOAA GHCN-Daily su una mappa interattiva, con filtri ed esportazione CSV.">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root { --blue:#0b4f71; --ink:#18313f; --muted:#617784; --paper:#f7fafb; }
+* { box-sizing:border-box; }
+html,body { height:100%; margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+body { display:flex; flex-direction:column; }
+header { background:linear-gradient(135deg,#073b56,#0b6685); color:white; padding:15px 20px 13px; box-shadow:0 2px 10px #00223533; z-index:1000; }
+h1 { font-size:clamp(18px,2.4vw,27px); margin:0 0 4px; letter-spacing:-.02em; }
+.subtitle { opacity:.86; font-size:13px; }
+.toolbar { display:flex; gap:9px; flex-wrap:wrap; align-items:center; padding:10px 12px; background:white; border-bottom:1px solid #dbe6eb; z-index:900; }
+input,button,select { font:inherit; }
+input[type=search] { min-width:260px; flex:1 1 280px; padding:9px 11px; border:1px solid #bfd0d8; border-radius:8px; color:var(--ink); outline:none; }
+input[type=search]:focus, select:focus, input.year:focus { border-color:#2184a8; box-shadow:0 0 0 3px #2184a822; }
+.filter-label { display:flex; align-items:center; gap:5px; color:var(--muted); font-size:12px; font-weight:650; }
+select, input.year { padding:8px 8px; border:1px solid #bfd0d8; border-radius:8px; color:var(--ink); background:white; }
+.year { width:82px; }
+.dash { color:var(--muted); margin:0 -4px; }
+button { border:1px solid #b8ccd5; background:#f5fafc; color:var(--blue); padding:9px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+button:hover { background:#e7f3f7; }
+.stats { margin-left:auto; color:var(--muted); font-size:13px; white-space:nowrap; }
+#countryChartPanel { background:white; border-bottom:1px solid #dbe6eb; padding:12px 16px 13px; max-height:390px; overflow:auto; }
+.chart-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px; }
+.chart-head h2 { margin:0; font-size:15px; color:var(--blue); }
+.chart-note { color:var(--muted); font-size:11px; }
+.country-row { display:grid; grid-template-columns:minmax(130px,190px) 1fr 72px; gap:8px; align-items:center; min-height:22px; cursor:pointer; border-radius:5px; padding:1px 4px; }
+.country-row:hover { background:#eef7f9; }
+.country-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; color:var(--ink); }
+.country-track { height:14px; background:#edf3f5; border-radius:4px; overflow:hidden; }
+.country-bar { height:100%; background:linear-gradient(90deg,#0b6685,#41a2ae); border-radius:4px; min-width:2px; }
+.country-count { font-size:11px; color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
+#temporalPanel { background:#f7fafb; border-bottom:1px solid #dbe6eb; padding:13px 16px 15px; }
+.stat-cards { display:grid; grid-template-columns:repeat(8,minmax(100px,1fr)); gap:7px; margin:10px 0 14px; }
+.stat-card { background:white; border:1px solid #dbe6eb; border-radius:7px; padding:8px 9px; min-height:58px; }
+.stat-label { display:block; color:var(--muted); font-size:10px; line-height:1.2; }
+.stat-card strong { display:block; color:var(--blue); font-size:18px; margin-top:4px; font-variant-numeric:tabular-nums; }
+.temporal-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.temporal-grid h3 { margin:0 0 7px; font-size:12px; color:var(--ink); }
+.bar-chart { max-height:260px; overflow:auto; padding-right:4px; }
+.temporal-row { display:grid; grid-template-columns:52px 1fr 48px; gap:7px; align-items:center; min-height:19px; }
+.temporal-label, .temporal-value { font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.temporal-value { text-align:right; }
+.temporal-track { height:12px; background:#e5eef1; border-radius:4px; overflow:hidden; }
+.temporal-bar { height:100%; background:#4d93a5; border-radius:4px; min-width:2px; }
+@media (max-width:900px) { .stat-cards { grid-template-columns:repeat(4,1fr); } }
+@media (max-width:600px) { .stat-cards { grid-template-columns:repeat(2,1fr); } .temporal-grid { grid-template-columns:1fr; gap:13px; } }
+#map { flex:1; min-height:430px; }
+.legend { position:absolute; bottom:22px; right:12px; z-index:800; background:white; padding:10px 12px; border-radius:8px; box-shadow:0 1px 7px #15374633; font-size:12px; line-height:1.5; }
+.dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; vertical-align:-1px; }
+.leaflet-popup-content { margin:13px 15px; min-width:235px; }
+.popup-title { font-size:15px; font-weight:750; color:var(--blue); margin-bottom:7px; }
+.popup-grid { display:grid; grid-template-columns:auto 1fr; gap:3px 10px; font-size:12px; }
+.popup-grid b { color:#60737d; font-weight:600; }
+.popup-links { margin-top:9px; padding-top:8px; border-top:1px solid #e1eaee; line-height:1.65; font-size:12px; }
+.popup-links a { color:#0b6685; text-decoration:none; font-weight:650; }
+.popup-links a:hover { text-decoration:underline; }
+footer { background:#f0f5f7; color:#617784; font-size:11px; padding:6px 12px; border-top:1px solid #dbe6eb; }
+@media (max-width:600px) { .stats { margin-left:0; width:100%; } input[type=search] { min-width:0; } }
+
+/* Tema MeteoGeek — coerente con lucavarlani-max.github.io/mugello_meteoeclima */
+:root {
+  --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+  --ink:#16261f; --ink-soft:#48584f; --ink-faint:#6f7c74;
+  --line:#e3e8e1; --line-soft:#eef1ec;
+  --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+  --sky:#2f7cc4; --sky-tint:#e4eff9;
+  --amber:#c9671f; --amber-tint:#fbeadc;
+  --shadow:0 1px 2px rgba(16,38,31,.05),0 8px 24px -12px rgba(16,38,31,.18);
+  --r:16px; --r-sm:11px; --r-pill:999px;
+}
+body { background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans",system-ui,sans-serif; font-size:14px; line-height:1.5; }
+header { background:var(--bg); color:var(--ink); border-bottom:1px solid var(--line); box-shadow:none; padding:20px max(20px,calc((100vw - 1180px)/2 + 20px)) 16px; }
+h1 { font-family:"Bricolage Grotesque",system-ui,sans-serif; color:var(--pine-deep); font-weight:800; letter-spacing:-.02em; }
+.subtitle { color:var(--ink-soft); opacity:1; }
+.toolbar { background:var(--panel); border-bottom:1px solid var(--line); padding:12px max(16px,calc((100vw - 1180px)/2 + 16px)); }
+input[type=search], select, input.year { background:var(--panel-2); color:var(--ink); border:1px solid var(--line); border-radius:var(--r-pill); }
+input[type=search]:focus, select:focus, input.year:focus { border-color:var(--pine); box-shadow:0 0 0 3px var(--pine-tint); }
+button { background:var(--pine); color:#fff; border:0; border-radius:var(--r-pill); }
+button:hover { background:var(--pine-deep); }
+.filter-label, .stats, .chart-note, .country-count, .temporal-label, .temporal-value { color:var(--ink-faint); }
+#countryChartPanel, #temporalPanel { background:var(--panel); border-color:var(--line); }
+.chart-head h2 { font-family:"Bricolage Grotesque",system-ui,sans-serif; color:var(--pine-deep); font-weight:700; }
+.country-row:hover { background:var(--pine-tint); }
+.country-track, .temporal-track { background:var(--line-soft); }
+.country-bar { background:linear-gradient(90deg,var(--pine),var(--sky)); }
+.temporal-bar { background:var(--sky); }
+.stat-card { background:var(--panel); border-color:var(--line); border-radius:var(--r-sm); box-shadow:var(--shadow); }
+.stat-card strong { font-family:"Bricolage Grotesque",system-ui,sans-serif; color:var(--pine-deep); }
+.temporal-grid h3 { font-family:"Bricolage Grotesque",system-ui,sans-serif; color:var(--ink); }
+.legend { background:var(--panel); border:1px solid var(--line); box-shadow:var(--shadow); }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background:var(--panel); }
+.popup-title { color:var(--pine-deep); font-family:"Bricolage Grotesque",system-ui,sans-serif; }
+.popup-links a { color:var(--pine); }
+footer { background:var(--bg); color:var(--ink-faint); border-color:var(--line); }
+/* nel sito la pagina scorre normalmente sotto il menu: i pannelli non si restringono e la mappa ha un'altezza fissa */
+html,body{height:auto;min-height:100%}
+header,.toolbar,#countryChartPanel,#temporalPanel{flex-shrink:0}
+.mapwrap{position:relative;flex:none}
+#map{flex:none;height:72vh;min-height:430px}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+<header><div class="subtitle" style="margin-bottom:6px"><a href="meteogeek.html" style="color:inherit">← MeteoGeek</a></div><h1>Mappa delle stazioni NOAA GHCN-Daily</h1><div class="subtitle">Stazioni meteorologiche geolocalizzate — dataset ufficiale NOAA/NCEI</div></header>
+<div class="toolbar">
+  <input id="search" type="search" placeholder="Cerca nome, codice stazione o WMO…" aria-label="Cerca stazione">
+  <label class="filter-label">Paese <select id="country"><option value="">Tutti i paesi</option></select></label>
+  <label class="filter-label">Attive tra <input id="yearFrom" class="year" type="number" min="1700" max="2100" placeholder="anno"></label>
+  <span class="dash">–</span>
+  <label class="filter-label"><input id="yearTo" class="year" type="number" min="1700" max="2100" placeholder="anno"></label>
+  <button id="reset" type="button">Azzera filtri</button>
+  <button id="exportCsv" type="button">Esporta CSV</button>
+  <button id="locate" type="button">Usa la mia posizione</button>
+  <span class="stats" id="stats">Caricamento…</span>
+</div>
+<section id="countryChartPanel" aria-label="Grafico delle stazioni per paese">
+  <div class="chart-head"><h2>Distribuzione delle stazioni per paese</h2><span class="chart-note" id="chartNote">Calcolo…</span></div>
+  <div id="countryChart"></div>
+</section>
+<section id="temporalPanel" class="analytics-panel" aria-label="Statistiche sulla copertura temporale">
+  <div class="chart-head"><h2>Copertura temporale delle stazioni meteorologiche</h2><span class="chart-note" id="temporalNote">Calcolo…</span></div>
+  <div id="statCards" class="stat-cards">
+    <div class="stat-card"><span class="stat-label">Stazioni filtrate</span><strong id="statTotal">—</strong></div>
+    <div class="stat-card"><span class="stat-label">Con anni disponibili</span><strong id="statKnown">—</strong></div>
+    <div class="stat-card"><span class="stat-label">Attive nel 2026</span><strong id="statCurrent">—</strong></div>
+    <div class="stat-card"><span class="stat-label">Serie concluse</span><strong id="statEnded">—</strong></div>
+    <div class="stat-card"><span class="stat-label">Inizio più antico</span><strong id="statEarliest">—</strong></div>
+    <div class="stat-card"><span class="stat-label">Fine più recente</span><strong id="statLatest">—</strong></div>
+    <div class="stat-card"><span class="stat-label">Durata media</span><strong id="statAverage">—</strong></div>
+    <div class="stat-card"><span class="stat-label">Durata mediana</span><strong id="statMedian">—</strong></div>
+  </div>
+  <div class="temporal-grid">
+    <div><h3>Distribuzione per decennio di inizio</h3><div id="startChart" class="bar-chart"></div></div>
+    <div><h3>Distribuzione per decennio di fine</h3><div id="endChart" class="bar-chart"></div></div>
+  </div>
+</section>
+<div class="mapwrap"><div id="map"></div>
+<div class="legend"><div><span class="dot" style="background:#1d8a68"></span>stazione standard</div><div><span class="dot" style="background:#d9822b"></span>GSN</div><div><span class="dot" style="background:#b23a48"></span>HCN</div></div></div>
+<footer>Fonte: NOAA National Centers for Environmental Information · GHCN-Daily · file ghcnd-stations.txt · generata 2026-09-28 20:42 UTC. Clicca un punto per i dettagli.</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="data/geek/ghcn-stazioni.js"></script>
+<script>
+
+const map = L.map('map', { preferCanvas:true, worldCopyJump:true }).setView([25,10], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'© OpenStreetMap contributors'}).addTo(map);
+const renderer = L.canvas({padding:0.5});
+const layers=[];
+const color=s => s[7] ? '#b23a48' : (s[6] ? '#d9822b' : '#1d8a68');
+function popup(s) {
+  const [id,lat,lon,elev,name,state,gsn,hcn,wmo,cc,country,first,last]=s;
+  return `<div class="popup-title">${name || 'Stazione senza nome'}</div><div class="popup-grid">`+
+    `<b>Codice</b><span>${id}</span><b>Paese</b><span>${country}</span><b>Coordinate</b><span>${lat.toFixed(4)}, ${lon.toFixed(4)}</span>`+
+    `<b>Quota</b><span>${elev.toFixed(1)} m</span>`+
+    (first?`<b>Anni attivi</b><span>${first}–${last}</span>`:'<b>Anni attivi</b><span>non disponibili</span>')+
+    (wmo?`<b>WMO</b><span>${wmo}</span>`:'')+
+    (state?`<b>Stato/area</b><span>${state}</span>`:'')+
+    (gsn?`<b>Rete</b><span>GSN</span>`:'')+(hcn?`<b>Rete</b><span>HCN</span>`:'')+
+    `</div><div class="popup-links">`+
+    `<a href="https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/${encodeURIComponent(id)}.dly" target="_blank" rel="noopener noreferrer">Dati giornalieri NOAA (.dly)</a><br>`+
+    `<a href="https://www.ncei.noaa.gov/access/search/data-search/daily-summaries?stations=${encodeURIComponent(id)}" target="_blank" rel="noopener noreferrer">Apri la scheda NCEI della stazione</a></div>`;
+}
+function makeLayer(s) {
+  const m=L.circleMarker([s[1],s[2]], {renderer, radius:3.5, weight:0.7, color:'#fff', fillColor:color(s), fillOpacity:.78});
+  m.bindPopup(popup(s)); m.station=s; return m;
+}
+let currentFiltered=stations;
+const referenceYear=new Date().getUTCFullYear();
+function render(list) {
+  currentFiltered=list;
+  layers.forEach(m=>m.remove()); layers.length=0;
+  for (const s of list) { const m=makeLayer(s); m.addTo(map); layers.push(m); }
+  document.getElementById('stats').textContent = `${list.length.toLocaleString('it-IT')} di ${stations.length.toLocaleString('it-IT')} stazioni visualizzate`;
+  updateTemporalPanels();
+}
+const search=document.getElementById('search');
+const countrySelect=document.getElementById('country');
+const yearFrom=document.getElementById('yearFrom');
+const yearTo=document.getElementById('yearTo');
+[...new Map(stations.map(s=>[s[9],s[10]])).entries()].sort((a,b)=>a[1].localeCompare(b[1])).forEach(([code,name])=>{ const o=document.createElement('option'); o.value=code; o.textContent=name+' ('+code+')'; countrySelect.appendChild(o); });
+function updateCountryChart() {
+  const counts=new Map();
+  stations.forEach(s=>counts.set(s[9], (counts.get(s[9])||0)+1));
+  const names=new Map(stations.map(s=>[s[9],s[10]]));
+  const top=[...counts.entries()].sort((a,b)=>b[1]-a[1]).slice(0,25);
+  const max=top[0]?.[1]||1;
+  const total=stations.length;
+  const chart=document.getElementById('countryChart'); chart.replaceChildren();
+  document.getElementById('chartNote').textContent=`Top 25 paesi · ${total.toLocaleString('it-IT')} stazioni in ${counts.size} paesi · clicca una barra per filtrare`;
+  top.forEach(([code,count])=>{
+    const row=document.createElement('div'); row.className='country-row'; row.title=`Filtra ${names.get(code)} (${code})`;
+    const name=document.createElement('div'); name.className='country-name'; name.textContent=`${names.get(code)} (${code})`;
+    const track=document.createElement('div'); track.className='country-track';
+    const bar=document.createElement('div'); bar.className='country-bar'; bar.style.width=`${(count/max*100).toFixed(2)}%`; track.appendChild(bar);
+    const value=document.createElement('div'); value.className='country-count'; value.textContent=count.toLocaleString('it-IT');
+    row.append(name,track,value);
+    row.addEventListener('click',()=>{ countrySelect.value=code; applyFilters(); document.getElementById('map').scrollIntoView({behavior:'smooth',block:'start'}); });
+    chart.appendChild(row);
+  });
+}
+function median(values) {
+  if(!values.length) return null;
+  const a=[...values].sort((x,y)=>x-y); const m=Math.floor(a.length/2);
+  return a.length%2 ? a[m] : (a[m-1]+a[m])/2;
+}
+function drawTemporalChart(id, values, color) {
+  const box=document.getElementById(id); box.replaceChildren();
+  if(!values.length) { box.textContent='Nessun dato temporale per i filtri correnti.'; return; }
+  const counts=new Map(); values.forEach(y=>{const decade=Math.floor(y/10)*10; counts.set(decade,(counts.get(decade)||0)+1);});
+  const entries=[...counts.entries()].sort((a,b)=>a[0]-b[0]); const max=Math.max(...entries.map(x=>x[1]));
+  entries.forEach(([decade,count])=>{
+    const row=document.createElement('div'); row.className='temporal-row';
+    const label=document.createElement('span'); label.className='temporal-label'; label.textContent=`${decade}–${decade+9}`;
+    const track=document.createElement('div'); track.className='temporal-track';
+    const bar=document.createElement('div'); bar.className='temporal-bar'; bar.style.width=`${(count/max*100).toFixed(2)}%`; bar.style.background=color; track.appendChild(bar);
+    const value=document.createElement('span'); value.className='temporal-value'; value.textContent=count.toLocaleString('it-IT');
+    row.append(label,track,value); box.appendChild(row);
+  });
+}
+function updateTemporalPanels() {
+  const valid=currentFiltered.filter(s=>Number.isInteger(s[11])&&Number.isInteger(s[12]));
+  const starts=valid.map(s=>s[11]); const ends=valid.map(s=>s[12]);
+  const durations=valid.map(s=>s[12]-s[11]+1);
+  const set=(id,value)=>document.getElementById(id).textContent=value;
+  set('statTotal',currentFiltered.length.toLocaleString('it-IT')); set('statKnown',valid.length.toLocaleString('it-IT'));
+  set('statCurrent',valid.filter(s=>s[12]>=referenceYear).length.toLocaleString('it-IT'));
+  set('statEnded',valid.filter(s=>s[12]<referenceYear).length.toLocaleString('it-IT'));
+  set('statEarliest',starts.length?starts.reduce((a,b)=>b<a?b:a):'—'); set('statLatest',ends.length?ends.reduce((a,b)=>b>a?b:a):'—');
+  set('statAverage',durations.length?(durations.reduce((a,b)=>a+b,0)/durations.length).toFixed(1)+' anni':'—');
+  const med=median(durations); set('statMedian',med===null?'—':(Number.isInteger(med)?med:med.toFixed(1))+' anni');
+  document.getElementById('temporalNote').textContent=`Statistiche calcolate sulle stazioni filtrate · riferimento attività: ${referenceYear}`;
+  drawTemporalChart('startChart',starts,'#287f91'); drawTemporalChart('endChart',ends,'#b97837');
+}
+function exportFilteredCsv() {
+  const header=['station_id','name','country_code','country','latitude','longitude','elevation_m','wmo','network','active_start_year','active_end_year'];
+  const esc=v=>`"${String(v??'').replaceAll('"','""')}"`;
+  const rows=currentFiltered.map(s=>[s[0],s[4],s[9],s[10],s[1],s[2],s[3],s[8],[s[6]?'GSN':'',s[7]?'HCN':''].filter(Boolean).join('+')||'Standard',s[11],s[12]]);
+  const csv='\uFEFF'+[header,...rows].map(r=>r.map(esc).join(';')).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='ghcn-stazioni-filtrate.csv'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function applyFilters() {
+  const q=search.value.trim().toLowerCase(); const cc=countrySelect.value;
+  const from=parseInt(yearFrom.value,10); const to=parseInt(yearTo.value,10);
+  const result=stations.filter(s=>{
+    const textMatch=!q || s[0].toLowerCase().includes(q)||s[4].toLowerCase().includes(q)||s[8].toLowerCase().includes(q)||s[5].toLowerCase()===q||s[10].toLowerCase().includes(q);
+    const countryMatch=!cc || s[9]===cc;
+    const yearMatch=(!Number.isFinite(from)&&!Number.isFinite(to)) || (s[11]!==null && s[12]!==null && (!Number.isFinite(from)||s[12]>=from) && (!Number.isFinite(to)||s[11]<=to));
+    return textMatch && countryMatch && yearMatch;
+  });
+  render(result);
+  if(result.length===1) { map.setView([result[0][1],result[0][2]], Math.max(map.getZoom(),8)); layers[0].openPopup(); }
+}
+search.addEventListener('input',applyFilters); countrySelect.addEventListener('change',applyFilters); yearFrom.addEventListener('change',applyFilters); yearTo.addEventListener('change',applyFilters);
+document.getElementById('exportCsv').addEventListener('click',exportFilteredCsv);
+render(stations);
+updateCountryChart();
+document.getElementById('reset').onclick=()=>{search.value=''; countrySelect.value=''; yearFrom.value=''; yearTo.value=''; render(stations); map.setView([25,10],2);};
+document.getElementById('locate').onclick=()=>map.locate({setView:true,maxZoom:7,enableHighAccuracy:true});
+map.on('locationfound',e=>L.circle(e.latlng,{radius:e.accuracy/2,color:'#1261a0',fillOpacity:.08}).addTo(map).bindPopup('La tua posizione approssimativa').openPopup());
+map.on('locationerror',()=>alert('Impossibile ottenere la posizione. Verifica i permessi del browser.'));
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body></html>
