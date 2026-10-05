@@ -1,0 +1,44 @@
+{
+ "termo": {
+  "2002": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2003": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2004": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2005": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2006": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2007": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2008": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2009": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2010": "Anno PRE-VALIDATO",
+  "2011": "Anno PRE-VALIDATO",
+  "2012": "Anno PRE-VALIDATO",
+  "2013": "Anno PRE-VALIDATO",
+  "2014": "Anno PRE-VALIDATO",
+  "2015": "Anno PRE-VALIDATO",
+  "2016": "Anno PRE-VALIDATO"
+ },
+ "pluvio0_24": {
+  "2002": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2003": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2004": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2005": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2006": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2007": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2008": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2009": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2010": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2011": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2012": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2013": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2014": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2015": "Anno VALIDATO dal Servizio Agrometeorologico",
+  "2016": "Anno PRE-VALIDATO",
+  "2017": "Anno PRE-VALIDATO"
+ },
+ "pluvio": {
+  "2012": "Anno PRE-VALIDATO",
+  "2013": "Anno PRE-VALIDATO",
+  "2014": "Anno PRE-VALIDATO",
+  "2015": "Anno PRE-VALIDATO",
+  "2016": "Anno PRE-VALIDATO"
+ }
+}

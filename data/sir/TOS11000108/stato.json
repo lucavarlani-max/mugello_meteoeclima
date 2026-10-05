@@ -1,10 +1,5 @@
 {
  "termo": {
-  "1993": "Anno VALIDATO dal Servizio Agrometeorologico",
-  "1994": "Anno VALIDATO dal Servizio Agrometeorologico",
-  "1995": "Anno VALIDATO dal Servizio Agrometeorologico",
-  "1996": "Anno VALIDATO dal Servizio Agrometeorologico",
-  "1997": "Anno VALIDATO dal Servizio Agrometeorologico",
   "1998": "Anno PRE-VALIDATO",
   "1999": "Anno VALIDATO dal Servizio Agrometeorologico",
   "2000": "Anno VALIDATO dal Servizio Agrometeorologico",
@@ -24,8 +19,8 @@
   "2014": "Anno PRE-VALIDATO",
   "2015": "Anno PRE-VALIDATO",
   "2016": "Anno PRE-VALIDATO",
-  "2017": "Anno VALIDATO",
-  "2018": "Anno VALIDATO",
+  "2017": "Anno PRE-VALIDATO",
+  "2018": "Anno PRE-VALIDATO",
   "2019": "Anno PRE-VALIDATO",
   "2020": "Anno PRE-VALIDATO",
   "2021": "Anno PRE-VALIDATO",
@@ -36,11 +31,6 @@
   "2026": "Anno PRE-VALIDATO"
  },
  "pluvio0_24": {
-  "1993": "Anno VALIDATO dal Servizio Agrometeorologico",
-  "1994": "Anno VALIDATO dal Servizio Agrometeorologico",
-  "1995": "Anno VALIDATO dal Servizio Agrometeorologico",
-  "1996": "Anno VALIDATO dal Servizio Agrometeorologico",
-  "1997": "Anno VALIDATO dal Servizio Agrometeorologico",
   "1998": "Anno VALIDATO dal Servizio Agrometeorologico",
   "1999": "Anno VALIDATO dal Servizio Agrometeorologico",
   "2000": "Anno VALIDATO dal Servizio Agrometeorologico",
