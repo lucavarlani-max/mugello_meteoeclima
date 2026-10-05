@@ -116,3 +116,10 @@ Caricare sul proprio hosting:
 - La mappa usa Leaflet e OpenStreetMap tramite risorse esterne.
 - I font MeteoGeek sono caricati da Google Fonts; se il sito deve funzionare completamente offline, sostituire i font con file locali o lasciare i fallback di sistema.
 - Il download dell'intero catalogo NOAA può essere molto grande e richiedere molto tempo. È consigliabile iniziare con un paese o una lista mirata di stazioni.
+
+## Modifiche rispetto al pacchetto originale
+
+- `ghcn_climatology.py` scarta di default i valori con flag di qualità NOAA (`qflag`) e quelli fisicamente impossibili (per esempio i 999 °C usati come segnaposto in alcune stazioni); `--keep-flagged` li mantiene.
+- `ghcn_climatology_chart.py`: nel grafico delle medie annuali le stazioni ora condividono lo stesso asse degli anni (prima ogni serie era stirata sul proprio periodo) e l'asse mostra gli anni; la legenda ha i colori; se la pagina trova `NAMES` e `DEFAULTS` mostra i nomi delle stazioni e le selezioni iniziali.
+- `to_site.py` porta nel sito la pagina generata (`data/geek/ghcn-climatologia.js`), con i nomi delle stazioni da `ghcnd-stations.txt`.
+- Pagina del sito: `geek-ghcn-climatologia.html`. Dati attuali: 49 stazioni italiane con temperatura, climatologia mensile 1991–2020 e medie annuali su tutto il periodo.

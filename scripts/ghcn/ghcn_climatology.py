@@ -17,6 +17,10 @@ Esempi:
   python ghcn_climatology.py --input dati.csv --station AO000066160 \
       --element TAVG --mode both --output-dir risultati
 
+Qualità: di default si scartano i valori con flag di qualità NOAA (colonna qflag) e quelli fuori
+da intervalli fisici plausibili (temperature fuori da -90…60 °C, pioggia fuori da 0…2000 mm);
+--keep-flagged mantiene i valori con flag.
+
 Nota: la media mensile è la media dei valori giornalieri disponibili nel mese,
 mentre la media annuale è la media dei valori giornalieri disponibili nell'anno.
 Le colonne di copertura consentono di valutare quanto il risultato sia completo.
@@ -49,6 +53,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--element", action="append", help="Limita a uno o più elementi, es. TAVG; opzione ripetibile.")
     p.add_argument("--start-year", type=int, help="Primo anno incluso.")
     p.add_argument("--end-year", type=int, help="Ultimo anno incluso.")
+    p.add_argument("--keep-flagged", action="store_true",
+                   help="Mantiene anche i valori con flag di qualità NOAA (qflag); di default sono scartati.")
     p.add_argument("--min-observations", type=int, default=1,
                    help="Minimo numero di giorni validi per includere un gruppo (default: 1).")
     p.add_argument("--expected-days", type=int, default=30,
@@ -101,6 +107,13 @@ def read_rows(path: Path, args: argparse.Namespace) -> Iterable[dict[str, object
                 continue
             value = parse_float(str(row.get("value", "")))
             if value is None or not sid or not element or not 1 <= month <= 12:
+                continue
+            # controlli di qualità: flag NOAA e valori impossibili (es. 999 °C usato come segnaposto)
+            if not args.keep_flagged and (row.get("qflag") or "").strip():
+                continue
+            if element in {"TMAX", "TMIN", "TAVG"} and not -90 <= value <= 60:
+                continue
+            if element == "PRCP" and not 0 <= value <= 2000:
                 continue
             yield {
                 "station_id": sid,

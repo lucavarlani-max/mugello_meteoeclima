@@ -3,11 +3,11 @@
  "esperimenti": [
   {
    "id": "ghcn-climatologia",
-   "titolo": "Climatologia NOAA GHCN-Daily, stazione per stazione",
+   "titolo": "Climatologia di 49 stazioni italiane NOAA",
    "tipo": "grafico",
    "data": "2026-10-05",
-   "stato": "in-corso",
-   "testo": "Climatologie mensili e medie annuali calcolate dai dati NOAA GHCN-Daily, con il confronto fra più stazioni sullo stesso grafico. Per ora c'è una stazione di prova (Luanda, in Angola): le stazioni italiane arriveranno appena scaricati i dati.",
+   "stato": "nuovo",
+   "testo": "Climatologia mensile 1991–2020 e medie annuali (massime, minime e medie) di 49 stazioni italiane del catalogo NOAA GHCN-Daily, con il confronto fra più stazioni sullo stesso grafico: da Monte Cimone a Pisa, da Verona a Palermo.",
    "link": "geek-ghcn-climatologia.html",
    "tag": [
     "NOAA",
