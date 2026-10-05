@@ -2,6 +2,20 @@
  "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
  "esperimenti": [
   {
+   "id": "ghcn-climatologia",
+   "titolo": "Climatologia NOAA GHCN-Daily, stazione per stazione",
+   "tipo": "grafico",
+   "data": "2026-10-05",
+   "stato": "in-corso",
+   "testo": "Climatologie mensili e medie annuali calcolate dai dati NOAA GHCN-Daily, con il confronto fra più stazioni sullo stesso grafico. Per ora c'è una stazione di prova (Luanda, in Angola): le stazioni italiane arriveranno appena scaricati i dati.",
+   "link": "geek-ghcn-climatologia.html",
+   "tag": [
+    "NOAA",
+    "GHCN",
+    "climatologia"
+   ]
+  },
+  {
    "id": "ghcn-stazioni",
    "titolo": "La mappa delle stazioni NOAA GHCN-Daily",
    "tipo": "esperimento",
