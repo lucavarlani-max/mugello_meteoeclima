@@ -2,6 +2,21 @@
  "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
  "esperimenti": [
   {
+   "id": "ghcn-stazioni",
+   "titolo": "La mappa delle stazioni NOAA GHCN-Daily",
+   "tipo": "esperimento",
+   "data": "2026-10-05",
+   "stato": "nuovo",
+   "testo": "Tutte le stazioni del catalogo NOAA GHCN-Daily su una mappa interattiva: ricerca per nome o codice, filtro per paese e anni di attività, classifica dei paesi, copertura nel tempo ed esportazione CSV delle stazioni filtrate.",
+   "link": "geek-ghcn-stazioni.html",
+   "tag": [
+    "NOAA",
+    "GHCN",
+    "stazioni",
+    "mappa"
+   ]
+  },
+  {
    "id": "riscaldamento-stazioni",
    "titolo": "Il riscaldamento di otto stazioni storiche a confronto",
    "tipo": "grafico",
