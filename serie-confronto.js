@@ -12,7 +12,8 @@
     {id:"mont-aigoual",n:"Mont Aigoual",c:"Mont Aigoual"},
     {id:"bangalore",n:"Bangalore",c:"Bangalore"},
     {id:"firenzuola",n:"Firenzuola",c:"Firenzuola"},
-    {id:"oxford",n:"Oxford",c:"Oxford"}
+    {id:"oxford",n:"Oxford",c:"Oxford"},
+    {id:"domodossola",n:"Domodossola",c:"Domodossola"}
   ];
   ST.forEach((s,i)=>s.col="var(--s"+(i+1)+")");
   const B0=1961,B1=1990,WIN=5,MINW=6;

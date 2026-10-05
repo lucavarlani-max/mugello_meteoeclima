@@ -84,7 +84,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **De Bilt 1901–2026** (`de-bilt.html`, stazione di riferimento del KNMI nei Paesi Bassi, stazione centenaria OMM) e
   **Bangalore 1901–2026** (`bangalore.html`, India Meteorological Department, stazione centenaria OMM come osservatorio pluviometrico dal 1867: pioggia dal 1901, temperatura dal 1973, media giornaliera completata con TAVG e soglia di giorni validi per anno abbassata a 275 con `--min-anno=275` di `build_serie.py`, introdotta per questa serie) e
   **Firenzuola 1961–2026** (`firenzuola.html`, la prima serie di un comune del Mugello stesso: stazione 01429 di ARPAE Emilia-Romagna, archivio opendata Eraclito, 66 anni praticamente senza lacune) e
-  **Oxford 1815–2025** (`oxford.html`, Radcliffe Meteorological Station dell'Università di Oxford, stazione centenaria OMM: temperatura dal 1815, pioggia dal 1827, 211 anni con appena 5 valori mancanti).
+  **Oxford 1815–2025** (`oxford.html`, Radcliffe Meteorological Station dell'Università di Oxford, stazione centenaria OMM: temperatura dal 1815, pioggia dal 1827, 211 anni con appena 5 valori mancanti) e
+  **Domodossola 1872–2013** (`domodossola.html`, Osservatorio del Collegio Rosmini, stazione centenaria OMM: unica serie del sito senza dati giornalieri, costruita a mano dalle tabelle annuali e mensili pubblicate su *Nimbus* 72 della Società Meteorologica Italiana — niente massime/minime separate né "un giorno nella storia"; script di estrazione via `pdftotext -bbox` non versionato, dati finali in `domodossola.js` e `data/serie/domodossola.json`).
   Analisi d'insieme **Italia, stazioni NOAA** (`italia-ghcn.html` + `italia-ghcn.js`): 100 stazioni
   italiane del registro GHCN-Daily (mappa, cronologia, tabella) e trent'anni di dati 1996–2025
   su 46 stazioni (temperatura, gelo e caldo, precipitazioni, quota, latitudine); dati in `data/serie/italia-ghcn.json`, file originali (CSV, riepilogo,

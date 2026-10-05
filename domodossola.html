@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Domodossola 1872–2013 · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="La serie ultracentenaria dell'Osservatorio di Domodossola - Collegio Rosmini (1871-2013), stazione centenaria OMM: 142 anni di temperatura e pioggia digitalizzati da Nimbus 72 (Società Meteorologica Italiana). Riscaldamento, neve, record mensili e il clima mese per mese.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/domodossola.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Domodossola, 142 anni di clima all'ombra delle Alpi (1872–2013)">
+<meta property="og:description" content="La serie ultracentenaria dell'Osservatorio di Domodossola - Collegio Rosmini: riscaldamento, pioggia, neve e record, digitalizzati da Nimbus 72 (Società Meteorologica Italiana).">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/domodossola.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="serie-storiche.html">← Serie storiche</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Domodossola</div>
+    <header class="head">
+      <div class="eyebrow">Stazione centenaria · dal 1872 · 280 m</div>
+      <h1>Domodossola, 1872–2013</h1>
+      <p class="lead">L'Osservatorio del Collegio Rosmini di Domodossola, nell'alto Piemonte, misura il tempo dal dicembre 1871: 142 anni quasi senza interruzioni, tra i più lunghi d'Italia. Questa pagina usa le tabelle annuali e mensili pubblicate su <b>Nimbus 72</b> (Bertolotto, Mercalli, Cat Berro - Società Meteorologica Italiana; Mosello, Rogora - CNR-ISE Pallanza), che hanno digitalizzato 277.000 valori dai registri originali 1871-2013. <span id="lead-n"></span> A differenza delle altre serie di questo sito non si tratta di dati giornalieri: niente massime e minime separate, né "un giorno nella storia".</p>
+      <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Dal 1872 in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
+      <p class="sub">Ogni riga verticale è un anno: blu più freddo, rosso più caldo della media 1961–1990. Passa sopra per leggere il valore.</p>
+      <div class="card">
+        <div class="stripes" id="stripes"></div>
+        <div class="axis-y" id="stripes-ax"></div>
+        <div class="scale"><span>−2 °C</span><i></i><span>+2 °C</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura anno per anno</h2><span class="src">media mobile su 21 anni</span></div>
+      <div class="card">
+        <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+        <div class="chart" id="ch-year"></div>
+        <p class="note" id="trend-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Mese per mese, stagione per stagione</h2><span class="src">scegli il periodo</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="ctrl">
+            <select id="sel-per" aria-label="Periodo"></select>
+          </div>
+          <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+          <div class="chart" id="ch-month"></div>
+        </div>
+        <div class="card">
+          <h3 id="ep-title">Per epoca</h3>
+          <div class="tbl"><table id="ep"></table></div>
+          <h3 style="margin-top:16px">I più caldi e i più freddi</h3>
+          <div class="tbl"><table id="rk"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Precipitazioni</h2><span class="src">dal 1872 · totale annuo e media mobile 11 anni</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Totale dell'anno</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 anni</span></div>
+          <div class="chart" id="ch-prec"></div>
+        </div>
+        <div class="card">
+          <h3>Il clima mese per mese</h3>
+          <div class="tbl"><table id="norm"></table></div>
+          <p class="note">Normali e medie pubblicate su Nimbus 72 (tabb. 22 e 23): la temperatura 1905-2013 è la media dell'intero periodo con misure in capannina; la pioggia 1961-90 è il trentennio di riferimento OMM.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Neve</h2><span class="src">quantità annua di neve fresca, 1872–2010</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Totale dell'anno</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 anni</span></div>
+          <div class="chart" id="ch-neve"></div>
+          <p class="note" id="neve-note"></p>
+        </div>
+        <div class="card">
+          <h3>Gli anni più nevosi</h3>
+          <div class="tbl"><table id="r-stag"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>I record mensili</h2><span class="src">intero periodo 1871–2013</span></div>
+      <div class="two">
+        <div class="card"><h3>🧊 Le minime per mese</h3><div class="tbl"><table id="r-tn"></table></div></div>
+        <div class="card"><h3>🔥 Le massime per mese</h3><div class="tbl"><table id="r-tx"></table></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Inverni più freddi, estati più calde</h2><span class="src">media stagionale, due periodi a confronto</span></div>
+      <div class="two">
+        <div class="card"><h3>❄️ Gli inverni più freddi</h3><div class="tbl"><table id="t-inverni"></table></div></div>
+        <div class="card"><h3>☀️ Le estati più calde</h3><div class="tbl"><table id="t-estati"></table></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il clima di Domodossola in cifre</h2><span class="src">dal riepilogo di Nimbus 72</span></div>
+      <div class="card">
+        <div class="facts" id="cifre" style="grid-template-columns:repeat(4,minmax(0,1fr))"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> BERTOLOTTO P.L., MERCALLI L., CAT BERRO D. (Società Meteorologica Italiana), MOSELLO R., ROGORA M. (CNR-ISE, Pallanza), «La serie climatica ultracentenaria di Domodossola - Collegio Rosmini, 1871-2013», <i>Nimbus</i> 72, 2014. Osservatorio fondato nel dicembre 1871 (46,19° N, 8,29° E, circa 280 m), misure in torretta fino al 1904 e in capannina al suolo dal 1905. Stazione centenaria riconosciuta dall'Organizzazione Meteorologica Mondiale (osservazioni a Domodossola fin dal 1772).</li>
+          <li><b>A differenza delle altre serie di questo sito, qui non ci sono dati giornalieri.</b> I 277.000 valori giornalieri digitalizzati dagli autori non sono pubblicati nell'articolo: restano le tabelle con le medie e i totali mensili e annuali (temperatura media, pioggia, neve fresca) per ogni anno dal 1872 al 2013, più gli estremi mensili con data. Per questo qui non ci sono grafici di massime/minime separate, conteggi di giorni estremi per anno, una classifica dei 15 giorni record, né "un giorno nella storia".</li>
+          <li><b>Discontinuità del 1905:</b> fino al 1904 i termometri erano in una torretta sopraelevata, dal 1905 in una capannina a livello del prato; le minime notturne in torretta risultavano sistematicamente più alte. Per la tendenza climatica secolare gli autori hanno quindi usato una serie omogeneizzata a cura di CNR-ISAC (Michele Brunetti): +1,3 °C/secolo nel periodo 1872-2013. La tendenza calcolata in questa pagina usa invece la serie originale non omogeneizzata pubblicata nelle tabelle, come tutte le altre elaborazioni dell'articolo (valori medi, mesi e stagioni più calde/fredde, record): per questo il valore mostrato nel grafico differisce da quello, più corretto, degli autori.</li>
+          <li>Le lacune della serie originale (parte del 1943, il biennio 1944-45, il periodo 1946-1955 e gli anni 1961, 1962, 1998-2000 per la temperatura; alcuni anni tra il 1944 e il 2000 per pioggia e neve) sono state colmate dagli autori con le serie omogenee di Locarno-Monti e Lugano, o con le stazioni vicine di Calice, Crevola e Pallanzeno.</li>
+          <li>Anomalie calcolate rispetto al trentennio 1961-1990 (qui usato anche in luogo del 1991-2020, non disponibile: la serie pubblicata si ferma al 2013).</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="data/serie/domodossola.csv" download>⬇ Dati annuali e mensili (CSV)</a>
+          <a class="btn ghost" href="data/serie/domodossola.json" download>⬇ Dati strutturati (JSON)</a>
+        </p>
+        <p class="note">Dati Nimbus 72, Società Meteorologica Italiana e CNR-ISE Pallanza · trascrizione ed elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="serie-storiche.html">serie storiche</a> · <a href="index.html">torna alla home</a></div></footer>
+
+<script src="domodossola.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
