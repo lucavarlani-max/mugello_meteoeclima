@@ -1020,7 +1020,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <nav class="main">
       <a href="#comuni" class="active">Previsioni</a>
       <a href="./radar.html">Radar &amp; dati</a>
-      <a href="./stazioni.html">Stazioni</a>
+      <div class="dd">
+        <button type="button" onclick="this.parentNode.classList.toggle('open')">Stazioni ▾</button>
+        <div class="dd-menu">
+          <a href="./stazioni.html">📡 Le mie stazioni</a>
+          <a href="./stazioni-mugello.html">📍 Stazioni del Mugello (SIR)</a>
+        </div>
+      </div>
       <a href="./mappe.html">Mappe</a>
       <div class="dd">
         <button type="button" onclick="this.parentNode.classList.toggle('open')">Neve ▾</button>

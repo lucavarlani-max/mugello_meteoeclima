@@ -7,7 +7,7 @@
   const VOCI=[
     ["Previsioni","index.html#comuni",["comune"]],
     ["Radar & dati","radar.html",["radar"]],
-    ["Stazioni","stazioni.html",["stazioni"]],
+    ["Stazioni",[["📡 Le mie stazioni","stazioni.html"],["📍 Stazioni del Mugello (SIR)","stazioni-mugello.html"]],["stazioni","stazioni-mugello"]],
     ["Mappe","mappe.html",["mappe"]],
     ["Neve",[["❄️ Neve oggi","neve.html"],["📜 La neve a Firenze","neve-firenze.html"]],["neve","neve-firenze"]],
     ["Cielo","effemeridi.html",["effemeridi"]],
