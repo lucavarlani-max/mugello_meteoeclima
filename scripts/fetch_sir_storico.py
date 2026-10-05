@@ -23,6 +23,7 @@ Pausa tra le richieste (--pausa, default 0.4 s) per non appesantire il server.
 Esempi:
   python3 scripts/fetch_sir_storico.py --id TOS01000999
   python3 scripts/fetch_sir_storico.py --bbox 11.1,43.8,11.7,44.2          # il Mugello
+  python3 scripts/fetch_sir_storico.py --mugello                           # i comuni del Mugello
   python3 scripts/fetch_sir_storico.py --tutte
 
 I dati del SIR sono distribuiti con licenza CC BY-SA 4.0 (https://www.sir.toscana.it/licenze):
@@ -79,6 +80,11 @@ def stazioni(bbox="7,40,15,46"):
                     "lat": f["lat"], "lon": f["lon"], "quota": q.group(1) if q else "",
                     "termo": int("termometro" in desc), "pluvio": int("pluviometro" in desc)})
     return out
+
+
+MUGELLO = ["Barberino di Mugello", "Borgo San Lorenzo", "Dicomano", "Firenzuola", "Marradi",
+           "Palazzuolo sul Senio", "San Godenzo", "Scarperia e San Piero", "Vaglia", "Vicchio"]
+BBOX_MUGELLO = "11.10,43.80,11.85,44.25"
 
 
 def anni_disponibili(ids, prodotto):
@@ -186,6 +192,7 @@ def main():
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--id", action="append", help="codice stazione (ripetibile), es. TOS01000999")
     g.add_argument("--bbox", help="lon_min,lat_min,lon_max,lat_max")
+    g.add_argument("--mugello", action="store_true", help="le stazioni dei comuni del Mugello")
     g.add_argument("--tutte", action="store_true", help="tutte le stazioni del SIR con archivio")
     ap.add_argument("--pausa", type=float, default=0.4, help="secondi fra una richiesta e l'altra")
     ap.add_argument("--pluvio9", action="store_true", help="scarica anche la pioggia 9->9")
@@ -193,7 +200,9 @@ def main():
     ap.add_argument("--max", type=int, default=0, help="si ferma dopo N stazioni (prove)")
     a = ap.parse_args()
     PAUSA[0] = a.pausa
-    elenco = stazioni(a.bbox or "7,40,15,46")
+    elenco = stazioni(BBOX_MUGELLO if a.mugello else a.bbox or "7,40,15,46")
+    if a.mugello:
+        elenco = [s for s in elenco if re.sub(r"\s+", " ", s["comune"]).rsplit(" (", 1)[0].strip() in MUGELLO]
     if a.id:
         elenco = [s for s in elenco if s["id"] in a.id]
     if a.max:
@@ -201,7 +210,7 @@ def main():
     print(f"{len(elenco)} stazioni", flush=True)
     scrivi_csv(os.path.join(OUT, "stazioni.csv"), ["id", "nome", "comune", "lat", "lon", "quota", "termo", "pluvio"],
                [[s[k] for k in ("id", "nome", "comune", "lat", "lon", "quota", "termo", "pluvio")] for s in elenco]) \
-        if not os.path.exists(os.path.join(OUT, "stazioni.csv")) or a.tutte or a.bbox else None
+        if not os.path.exists(os.path.join(OUT, "stazioni.csv")) or a.tutte or a.bbox or a.mugello else None
     for i, s in enumerate(elenco, 1):
         r = []
         try:
