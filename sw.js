@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v51';
+const CACHE = 'mmc-v52';
 const SHELL = [
   './',
   './index.html',
@@ -26,6 +26,8 @@ const SHELL = [
   './cielo.js',
   './serie-storiche.html',
   './archivio-climatico.html',
+  './stazioni-mugello.html',
+  './data/sir/mugello.json',
   './milano-brera.html',
   './new-york-central-park.html',
   './padova.html',

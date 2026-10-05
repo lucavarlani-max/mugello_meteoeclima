@@ -109,6 +109,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   0→24, dal 2004) e `prec99.csv` (pioggia 9→9, dal 1916), più `stato.json` (stato di validazione di ogni
   anno) e `stazioni.csv`. Si aggiorna con `python3 scripts/fetch_sir_storico.py --mugello --pluvio9`
   (riprende da dove si era fermato). Dati Regione Toscana - SIR, licenza CC BY-SA 4.0.
+- **Stazioni del Mugello** (`stazioni-mugello.html`) — confronto fra le stazioni SIR dei comuni del
+  Mugello: classifica e andamento della pioggia annua con la quota, temperature massime e minime,
+  confronto interattivo fino a quattro stazioni (clima mensile e pioggia anno per anno) ed elenco ordinabile.
+  Dati sintetizzati in `data/sir/mugello.json` da `scripts/build_sir_mugello.py`.
 - **Webcam** — nel menu un sottomenu con *Webcam Mugello* (mappa delle webcam della vallata in
   home, `data/webcam.json`) e *Webcam Panomax* (`webcam-panomax.html` + `webcam-panomax.js`):
   le 668 webcam panoramiche pubbliche Panomax su mappa Leaflet con ricerca, filtri per paese e
