@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MOCKUP · Web cam meteo Mugello + widget Mugello Meteo &amp; Clima</title>
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --bg:#f2f2f0; --panel:#fff; --ink:#1b1b1b; --ink-soft:#555; --line:#e1e1dc;
+    --brand:#b3201f;            /* rosso testata (approssimato) */
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --amber:#c9671f; --rain:#3566b0;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+  a{color:inherit;text-decoration:none}
+  .sans{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+
+  .mock-flag{background:#222;color:#ffd54a;font:600 12px/1 system-ui,sans-serif;text-align:center;padding:8px 12px;letter-spacing:.02em}
+  .topbar{background:#222;color:#bbb;font:12px/1 system-ui,sans-serif}
+  .topbar .wrap{display:flex;justify-content:space-between;gap:12px;padding-top:9px;padding-bottom:9px}
+  header.masthead{background:#fff;border-bottom:3px solid var(--brand)}
+  .masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:18px;padding-bottom:18px}
+  .logo{font:800 34px/1 Georgia,serif;letter-spacing:-.02em;color:var(--brand)}
+  .logo small{display:block;font:600 11px/1.2 system-ui,sans-serif;color:var(--ink-soft);letter-spacing:.18em;text-transform:uppercase;margin-top:5px}
+  .ad-leader{width:min(468px,100%);height:60px;border:1px dashed #bbb;color:#999;display:grid;place-items:center;font:12px system-ui,sans-serif;background:repeating-linear-gradient(45deg,#fafafa,#fafafa 8px,#f0f0f0 8px,#f0f0f0 16px)}
+  nav.main{background:var(--brand);font:600 14px/1 system-ui,sans-serif}
+  nav.main .wrap{display:flex;gap:0;overflow-x:auto;white-space:nowrap}
+  nav.main a{color:#fff;padding:14px 14px;text-transform:uppercase;letter-spacing:.04em;font-size:13px}
+  nav.main a.on,nav.main a:hover{background:rgba(0,0,0,.22)}
+
+  .crumbs{font:13px system-ui,sans-serif;color:var(--ink-soft);padding:16px 0 4px}
+  h1.page{font:800 36px/1.1 Georgia,serif;margin:6px 0 8px;letter-spacing:-.01em}
+  .lead{font-size:18px;color:var(--ink-soft);margin:0 0 22px;max-width:62ch}
+
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;padding-bottom:40px}
+  @media(max-width:980px){.layout{grid-template-columns:1fr}}
+
+  /* webcam grid */
+  .cams{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .cam{background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .cam .ph{aspect-ratio:4/3;position:relative;display:grid;place-items:center;color:#fff;font:700 13px system-ui,sans-serif;
+    background:linear-gradient(180deg,#8fb6d9 0%,#cfe0ec 45%,#6f8f5b 46%,#4f6b40 100%)}
+  .cam .ph:after{content:"";position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(120deg,transparent 40%,rgba(0,0,0,.18) 41%,transparent 60%)}
+  .cam .ph span{position:relative;z-index:1;background:rgba(0,0,0,.45);padding:4px 8px;border-radius:3px}
+  .cam .live{position:absolute;top:8px;left:8px;z-index:2;background:var(--brand);color:#fff;font:700 10px/1 system-ui,sans-serif;padding:4px 6px;border-radius:2px;letter-spacing:.08em}
+  .cam .b{padding:10px 12px 12px}
+  .cam h3{margin:0 0 2px;font:700 15px/1.25 Georgia,serif}
+  .cam p{margin:0;font:12px/1.3 system-ui,sans-serif;color:var(--ink-soft)}
+  .sec-title{font:700 13px/1 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.1em;border-left:4px solid var(--brand);padding-left:10px;margin:0 0 14px}
+
+  aside .box{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:14px;margin-bottom:20px}
+  .ad-mpu{height:250px;border:1px dashed #bbb;color:#999;display:grid;place-items:center;font:12px system-ui,sans-serif;background:repeating-linear-gradient(45deg,#fafafa,#fafafa 8px,#f0f0f0 8px,#f0f0f0 16px)}
+
+  /* ========= WIDGET Mugello Meteo & Clima ========= */
+  .mmc{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;border:1px solid #cfe3d9;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 8px 24px -14px rgba(10,79,60,.45);margin-bottom:20px}
+  .mmc-h{background:linear-gradient(135deg,var(--pine) 0%,var(--pine-deep) 100%);color:#fff;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .mmc-h b{font-size:14px;letter-spacing:.01em}
+  .mmc-h small{display:block;font-size:11px;opacity:.8;margin-top:2px}
+  .mmc-pill{font-size:10px;font-weight:700;letter-spacing:.08em;background:rgba(255,255,255,.18);padding:4px 8px;border-radius:99px;white-space:nowrap}
+  .mmc-sel{padding:10px 14px 0}
+  .mmc-sel select{width:100%;padding:8px 10px;border:1px solid #cfe3d9;border-radius:9px;font:600 14px system-ui,sans-serif;color:var(--pine-deep);background:var(--pine-tint)}
+  .mmc-now{display:flex;align-items:center;gap:12px;padding:12px 14px 6px}
+  .mmc-now .ico{font-size:46px;line-height:1}
+  .mmc-now .t{font-size:40px;font-weight:700;line-height:1;color:#16261f}
+  .mmc-now .t sup{font-size:18px;font-weight:600;color:var(--ink-soft)}
+  .mmc-now .d{font-size:13px;color:var(--ink-soft);line-height:1.35}
+  .mmc-days{padding:4px 8px 6px}
+  .mmc-d{display:grid;grid-template-columns:62px 30px 1fr auto;align-items:center;gap:8px;padding:7px 6px;border-top:1px solid #eef1ec;font-size:13px}
+  .mmc-d:first-child{border-top:0}
+  .mmc-d .g{font-weight:700;color:#16261f}
+  .mmc-d .g small{display:block;font-weight:500;color:var(--ink-soft);font-size:11px}
+  .mmc-d .i{font-size:22px;text-align:center}
+  .mmc-d .pp{color:var(--rain);font-size:12px;font-weight:600}
+  .mmc-d .tt{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .mmc-d .tt b{color:var(--amber)} .mmc-d .tt span{color:var(--sky)}
+  .mmc-bar{height:5px;border-radius:99px;background:linear-gradient(90deg,var(--sky),#e8c04a,var(--amber));opacity:.85}
+  .mmc-f{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;background:#f6faf8;border-top:1px solid #e3f1eb;font-size:11px;color:var(--ink-soft)}
+  .mmc-f a{color:var(--pine);font-weight:700}
+  .mmc-f a:hover{text-decoration:underline}
+
+  footer{background:#222;color:#aaa;font:13px/1.6 system-ui,sans-serif;padding:26px 0;margin-top:10px}
+  footer b{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="mock-flag">MOCKUP / PROTOTIPO · layout ispirato a ilfilo.net, ricostruito a mano · non è il sito reale</div>
+
+<div class="topbar"><div class="wrap"><span>Mercoledì 6 ottobre 2026</span><span>Redazione · Pubblicità · Contatti</span></div></div>
+
+<header class="masthead"><div class="wrap">
+  <a class="logo" href="#">Il Filo<small>Notizie dal Mugello</small></a>
+  <div class="ad-leader">Banner 468×60</div>
+</div></header>
+
+<nav class="main"><div class="wrap">
+  <a href="#">Home</a><a href="#">Cronaca</a><a href="#">Politica</a><a href="#">Economia</a>
+  <a href="#">Sport</a><a href="#">Cultura</a><a href="#">Eventi</a><a href="#" class="on">Meteo &amp; Webcam</a><a href="#">Contatti</a>
+</div></nav>
+
+<main class="wrap">
+  <div class="crumbs">Home › Meteo &amp; Webcam › <b>Web cam meteo Mugello</b></div>
+  <h1 class="page">Web cam meteo Mugello</h1>
+  <p class="lead">Le immagini in diretta dai passi appenninici, dai laghi e dai paesi del Mugello: guarda com'è il tempo adesso.</p>
+
+  <div class="layout">
+    <section>
+      <h2 class="sec-title">Le webcam</h2>
+      <div class="cams" id="cams"></div>
+    </section>
+
+    <aside>
+      <!-- ============ WIDGET PREVISIONI ============ -->
+      <div class="mmc" id="mmc">
+        <div class="mmc-h">
+          <div><b>Previsioni Mugello</b><small id="mmc-up">Mugello Meteo &amp; Clima</small></div>
+          <span class="mmc-pill">7 GIORNI</span>
+        </div>
+        <div class="mmc-sel"><select id="mmc-sel" aria-label="Scegli il comune"></select></div>
+        <div class="mmc-now" id="mmc-now"></div>
+        <div class="mmc-days" id="mmc-days"></div>
+        <div class="mmc-f"><span>Dati: Open-Meteo</span><a href="https://lucavarlani-max.github.io/mugello_meteoeclima/" target="_blank" rel="noopener">Tutte le previsioni →</a></div>
+      </div>
+
+      <div class="box"><div class="ad-mpu">Banner 300×250</div></div>
+      <div class="box">
+        <h2 class="sec-title">Ultime notizie</h2>
+        <p class="sans" style="font-size:14px;margin:0 0 10px"><b>Titolo di esempio dalla cronaca del Mugello</b><br><span style="color:#777;font-size:12px">2 ore fa</span></p>
+        <p class="sans" style="font-size:14px;margin:0"><b>Un altro titolo segnaposto per la colonna laterale</b><br><span style="color:#777;font-size:12px">5 ore fa</span></p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer><div class="wrap"><b>Il Filo</b> · Mockup a scopo dimostrativo · Widget previsioni a cura di <b>Mugello Meteo &amp; Clima</b></div></footer>
+
+<script src="previsioni-allinea.js"></script>
+<script>
+/* ---- Webcam (segnaposto: nel sito reale useranno le immagini vere) ---- */
+var CAMS=[
+ ["Passo della Futa","983 m · Firenzuola",1],["Passo della Colla","913 m · Borgo San Lorenzo",1],
+ ["Passo del Muraglione","907 m · San Godenzo",1],["Lago di Bilancino","252 m · Barberino di Mugello",0],
+ ["Palazzuolo sul Senio","437 m",0],["Passo della Raticosa","968 m · Firenzuola",0],
+ ["Monte Giovi","722 m · Vicchio",0],["Valle del Diaterna","770 m",0],["Passo della Consuma","1050 m",0]
+];
+document.getElementById('cams').innerHTML=CAMS.map(function(c){
+  return '<a class="cam" href="#"><div class="ph">'+(c[2]?'<i class="live">● LIVE</i>':'')+'<span>Immagine webcam</span></div>'+
+         '<div class="b"><h3>'+c[0]+'</h3><p>'+c[1]+'</p></div></a>';
+}).join('');
+
+/* ---- Widget previsioni ---- */
+var ICO=function(c){
+  if(c===0)return'☀️'; if(c===1)return'🌤️'; if(c===2)return'⛅'; if(c===3)return'☁️';
+  if(c===45||c===48)return'🌫️'; if(c>=51&&c<=57)return'🌦️'; if(c>=61&&c<=67)return'🌧️';
+  if(c>=71&&c<=77)return'🌨️'; if(c>=80&&c<=82)return'🌦️'; if(c>=95)return'⛈️'; return'☁️';
+};
+var DESC=function(c){
+  if(c===0)return'Sereno'; if(c<=2)return'Poco nuvoloso'; if(c===3)return'Coperto';
+  if(c===45||c===48)return'Nebbia'; if(c>=51&&c<=57)return'Pioviggine'; if(c>=61&&c<=67)return'Pioggia';
+  if(c>=71&&c<=77)return'Neve'; if(c>=80&&c<=82)return'Rovesci'; if(c>=95)return'Temporale'; return'Nuvoloso';
+};
+var GG=['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+var P=null;
+
+function render(i){
+  var c=P.comuni[i], g=c.giorni||[];
+  var now=document.getElementById('mmc-now');
+  var d0=g[0];
+  now.innerHTML = c.now
+    ? '<div class="ico">'+ICO(c.now.code)+'</div><div><div class="t">'+Math.round(c.now.t)+'<sup>°C</sup></div></div><div class="d"><b>'+c.n+'</b><br>'+DESC(c.now.code)+'</div>'
+    : (d0 ? '<div class="ico">'+ICO(d0.code)+'</div><div><div class="t">'+d0.tmax+'<sup>°C</sup></div></div><div class="d"><b>'+c.n+'</b><br>'+DESC(d0.code)+' · max di oggi</div>' : '');
+  var min=Math.min.apply(null,g.map(function(x){return x.tmin})), max=Math.max.apply(null,g.map(function(x){return x.tmax}));
+  document.getElementById('mmc-days').innerHTML=g.slice(0,7).map(function(x,k){
+    var dt=new Date(x.iso+'T12:00:00');
+    var l=(100*(x.tmin-min)/Math.max(1,max-min)), w=Math.max(8,100*(x.tmax-x.tmin)/Math.max(1,max-min));
+    return '<div class="mmc-d"><div class="g">'+(k===0?'Oggi':GG[dt.getDay()])+'<small>'+dt.getDate()+'/'+(dt.getMonth()+1)+'</small></div>'+
+      '<div class="i" title="'+DESC(x.code)+'">'+ICO(x.code)+'</div>'+
+      '<div><div class="pp">💧 '+x.pp+'%</div><div style="position:relative;height:5px;background:#eef1ec;border-radius:99px;margin-top:4px"><div class="mmc-bar" style="position:absolute;left:'+l+'%;width:'+w+'%"></div></div></div>'+
+      '<div class="tt"><span>'+x.tmin+'°</span> / <b>'+x.tmax+'°</b></div></div>';
+  }).join('');
+}
+function init(data){
+  P=data;
+  var s=document.getElementById('mmc-sel');
+  s.innerHTML=P.comuni.map(function(c,i){return'<option value="'+i+'">'+c.n+'</option>'}).join('');
+  var def=P.comuni.findIndex(function(c){return c.n==='Borgo San Lorenzo'}); if(def<0)def=0; s.value=def;
+  s.onchange=function(){render(+s.value)};
+  var a=(P.aggiornato||'').replace('T',' ');
+  if(a)document.getElementById('mmc-up').textContent='Agg. '+a.slice(8,10)+'/'+a.slice(5,7)+' ore '+a.slice(11,16);
+  render(def);
+}
+
+/* Dati: previsioni.json del progetto; se non raggiungibile (es. file aperto da disco) → esempio incorporato */
+var FALLBACK={aggiornato:"2026-10-06T08:00",comuni:[
+ {n:"Borgo San Lorenzo",now:{t:14.2,code:2},giorni:[
+  {iso:"2026-10-06",code:2,tmax:21,tmin:10,pp:10},{iso:"2026-10-07",code:3,tmax:19,tmin:11,pp:35},
+  {iso:"2026-10-08",code:61,tmax:17,tmin:11,pp:80},{iso:"2026-10-09",code:80,tmax:16,tmin:10,pp:60},
+  {iso:"2026-10-10",code:1,tmax:19,tmin:8,pp:5},{iso:"2026-10-11",code:0,tmax:21,tmin:7,pp:0},{iso:"2026-10-12",code:0,tmax:22,tmin:8,pp:0}]},
+ {n:"Barberino di Mugello",now:{t:13.1,code:3},giorni:[
+  {iso:"2026-10-06",code:3,tmax:20,tmin:10,pp:15},{iso:"2026-10-07",code:3,tmax:18,tmin:10,pp:40},
+  {iso:"2026-10-08",code:63,tmax:16,tmin:11,pp:85},{iso:"2026-10-09",code:80,tmax:16,tmin:9,pp:55},
+  {iso:"2026-10-10",code:2,tmax:18,tmin:7,pp:10},{iso:"2026-10-11",code:0,tmax:20,tmin:6,pp:0},{iso:"2026-10-12",code:1,tmax:21,tmin:7,pp:0}]}
+]};
+fetch('previsioni.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()})
+  .then(function(d){ if(window.allineaPrevisioni)d=window.allineaPrevisioni(d); if(!d.comuni[0].giorni.length)throw 0; init(d)})
+  .catch(function(){init(FALLBACK)});
+</script>
+</body>
+</html>
