@@ -34,6 +34,27 @@
   .leg i{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:4px;vertical-align:-2px;border:1px solid var(--line)}
   .tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
   .tile .big{font-size:26px}
+  .ctl2{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13px;color:var(--ink-soft)}
+  .ctl2 select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:6px 11px}
+  .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+  .bars{display:grid;grid-template-columns:36px 1fr 118px;gap:6px 10px;align-items:center;font-size:12.5px}
+  .bars .l{font-family:var(--mono);color:var(--ink-soft)}
+  .bars .t{position:relative;height:16px;background:var(--line-soft);border-radius:4px}
+  .bars .t b{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--sky)}
+  .bars .t b.mx{background:var(--pine)}.bars .t b.mn{background:var(--ctx)}
+  .bars .t u{position:absolute;top:-3px;bottom:-3px;width:0;border-left:2px dashed var(--amber);text-decoration:none}
+  .bars .v{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);text-align:right}
+  .verd{margin:12px 0 0;padding:10px 12px;border-radius:var(--r-sm);background:var(--panel-2);border:1px solid var(--line-soft);font-size:13px;color:var(--ink-soft)}
+  .verd b{color:var(--ink)}
+  .chips2{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 0}
+  .chips2 span{font-family:var(--mono);font-size:11.5px;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:999px;padding:1px 8px;color:var(--ink-soft)}
+  .rk{width:100%;border-collapse:collapse;font-size:12.5px}
+  .rk td{padding:4px 6px;border-bottom:1px solid var(--line-soft)}
+  .rk td:last-child{text-align:right;font-family:var(--mono);color:var(--ink-soft)}
+  .yrs{display:flex;flex-wrap:wrap;gap:2px;margin:10px 0 0}
+  .yrs i{display:inline-block;width:11px;height:18px;border-radius:2px;cursor:help;border:1px solid var(--line-soft)}
+  h3.sm{font-family:var(--serif);font-size:15px;margin:0 0 8px;font-weight:700}
+  @media(max-width:760px){.g2{grid-template-columns:minmax(0,1fr)}}
   @media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 <body>
@@ -71,11 +92,47 @@
     </section>
 
     <section>
+      <div class="sh"><h2>Statistiche: quando piove di più</h2><span class="src" id="src3"></span></div>
+      <div class="card">
+        <div class="ctl2">Conta come "giorno di pioggia" quando cadono almeno
+          <select id="soglia" aria-label="Soglia di pioggia"><option value="1">1 mm (pioggia)</option><option value="10">10 mm (pioggia forte)</option><option value="30">30 mm (piogge intense)</option><option value="50">50 mm (eventi estremi)</option></select>
+          <span id="nser"></span></div>
+        <div class="tiles" id="tiles3"></div>
+      </div>
+      <div class="g2" style="margin-top:14px">
+        <div class="card"><h3 class="sm">Quale giorno della settimana piove di più?</h3><div class="bars" id="wd"></div><div class="verd" id="wdv"></div></div>
+        <div class="card"><h3 class="sm">Quali mesi sono più piovosi?</h3><div class="bars" id="mo"></div><div class="verd" id="mov">La linea tratteggiata è la media di tutta la serie.</div></div>
+      </div>
+      <div class="card" style="margin-top:14px"><h3 class="sm">La probabilità di pioggia nel corso dell'anno</h3>
+        <canvas class="cv" id="prob" role="img" aria-label="Probabilità di pioggia per giorno dell'anno"></canvas>
+        <div id="tip3">Passa sul grafico per leggere la probabilità di un giorno.</div>
+        <p class="note">Per ogni giorno del calendario: in quanti anni della serie ha piovuto quel giorno. La linea è mediata su 15 giorni (7 prima e 7 dopo) per togliere il rumore; i puntini sono i valori giorno per giorno. Linea tratteggiata: media annua.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il tuo giorno nella storia</h2><span class="src">quante volte ha piovuto in quella data</span></div>
+      <div class="card">
+        <div class="ctl2">Scegli una data:
+          <select id="gm" aria-label="Mese"></select><select id="gg" aria-label="Giorno"></select></div>
+        <div id="giorno"></div>
+        <div class="yrs" id="yrs"></div>
+        <p class="note">Un rettangolo per anno (colore = pioggia di quel giorno, con la stessa scala del calendario). Passa sopra per leggere anno e millimetri.</p>
+      </div>
+      <div class="g2" style="margin-top:14px">
+        <div class="card"><h3 class="sm">Giorni del calendario in cui non è mai piovuto</h3><div id="mai"></div></div>
+        <div class="card"><h3 class="sm">Giorni del calendario in cui ha piovuto sempre</h3><div id="sempre"></div></div>
+        <div class="card"><h3 class="sm">Le 10 date più asciutte</h3><table class="rk" id="rkd"></table></div>
+        <div class="card"><h3 class="sm">Le 10 date più piovose</h3><table class="rk" id="rkp"></table></div>
+      </div>
+    </section>
+
+    <section>
       <div class="sh"><h2>Dati e metodo</h2></div>
       <div class="card">
         <ul class="note">
           <li><b>Fonte:</b> Borgo San Lorenzo (<code>data/bsl/borgo.json</code>) e pluviometri SIR Toscana (<code>data/sir/</code>, pioggia giornaliera 0–24), Regione Toscana, CC BY-SA 4.0; Firenzuola (<code>data/serie/firenzuola.csv</code>). Si aggiornano con le Action del sito.</li>
-          <li><b>Metodo:</b> un giorno è "piovoso" se cade almeno 1 mm. Le serie asciutte e piovose contano giorni consecutivi; un giorno senza dato interrompe la serie. Il confronto con la media usa solo gli anni con almeno 330 giorni di dati.</li>
+          <li><b>Metodo:</b> un giorno è "piovoso" se cade almeno 1 mm. Le serie asciutte e piovose contano giorni consecutivi; un giorno senza dato interrompe la serie. Il confronto con la media usa solo gli anni con almeno 330 giorni di dati. Le statistiche usano tutti i giorni con dato dell'intera serie della stazione, anche degli anni incompleti. Il test sui giorni della settimana è un χ² (6 gradi di libertà) sui giorni di pioggia contro quelli asciutti: i giorni di pioggia non sono indipendenti tra loro (le perturbazioni durano più giorni), quindi il p-value è un po' ottimistico.</li>
           <li><b>Limiti:</b> sono pluviometri puntuali: due stazioni a pochi chilometri possono avere giorni diversi. I dati più recenti non sono ancora validati dall'ente. Gli anni con buchi sono segnalati sopra il grafico.</li>
         </ul>
       </div>
@@ -176,13 +233,89 @@
     $("tip2").textContent=dIt(q.y,mo,d)+" · "+(k>oggi?"—":v==null?"dato mancante":f1(v)+" mm")}
 
   function leg(){var P=pal();$("leg").innerHTML=LAB.map(function(l,i){return '<span><i style="background:'+P[i]+'"></i>'+l+'</span>'}).join("")+'<span><i style="background:'+(dark()?"#3a4741":"#c9cfca")+'"></i>senza dato</span>'}
-  function disegna(){if(!DATA)return;cal();all();leg()}
+  /* ---------------- statistiche ---------------- */
+  var ST=null, thr=1;
+  var NOMI_G=["Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato","Domenica"];
+  var pct=function(v){return (v*100).toFixed(v<.1?1:0).replace(".",",")+"%"};
+  function calcola(){var wd=[0,1,2,3,4,5,6].map(function(){return{n:0,r:0,mm:0}}),mo=[],doy={},ny={},tot={n:0,r:0,mm:0},cd=0,cw=0,dry={n:0,a:"",b:""},wet={n:0,a:"",b:""},rec={v:-1,k:""},prevK=null,sd="",sw="";
+    for(var i=0;i<12;i++)mo.push({n:0,r:0,mm:0});
+    var keys=Object.keys(DATA).sort();
+    keys.forEach(function(k){var v=DATA[k],y=+k.slice(0,4),m=+k.slice(5,7)-1,d=+k.slice(8,10),dow=(new Date(Date.UTC(y,m,d)).getUTCDay()+6)%7,r=v>=thr?1:0,md=k.slice(5);
+      ny[y]=1;tot.n++;tot.r+=r;tot.mm+=v;wd[dow].n++;wd[dow].r+=r;wd[dow].mm+=v;mo[m].n++;mo[m].r+=r;mo[m].mm+=v;
+      var o=doy[md]||(doy[md]={n:0,r:0,mm:0,max:-1,my:0,ys:[]});o.n++;o.r+=r;o.mm+=v;o.ys.push([y,v]);if(v>o.max){o.max=v;o.my=y}
+      if(v>rec.v){rec.v=v;rec.k=k}
+      var cons=prevK&&(new Date(k+"T00:00:00Z")-new Date(prevK+"T00:00:00Z"))===864e5;
+      if(!cons){cd=0;cw=0}
+      if(r){if(cw===0)sw=k;cw++;cd=0;if(cw>wet.n){wet={n:cw,a:sw,b:k}}}else{if(cd===0)sd=k;cd++;cw=0;if(cd>dry.n){dry={n:cd,a:sd,b:k}}}
+      prevK=k});
+    var yrs=Object.keys(ny).length;
+    ST={wd:wd,mo:mo,doy:doy,tot:tot,dry:dry,wet:wet,rec:rec,yrs:yrs,p:tot.r/tot.n}}
+  var nomeData=function(md){var a=md.split("-");return +a[1]+" "+MESI[+a[0]-1]};
+  var dIt2=function(k){return +k.slice(8)+" "+MESI[+k.slice(5,7)-1]+" "+k.slice(0,4)};
+  function barre(el,rows,avg){var mx=Math.max.apply(null,rows.map(function(r){return r.p}))*1.08||1,mn=Math.min.apply(null,rows.map(function(r){return r.p})),top=rows.reduce(function(a,r){return r.p>a.p?r:a},rows[0]);
+    $(el).innerHTML=rows.map(function(r){return '<span class="l">'+r.l+'</span><span class="t"><b class="'+(r===top?"mx":"")+'" style="width:'+(r.p/mx*100)+'%"></b><u style="left:'+(avg/mx*100)+'%"></u></span><span class="v">'+pct(r.p)+" · "+r.x+"</span>"}).join("")}
+  function chi6(x){var h=x/2;return Math.exp(-h)*(1+h+h*h/2)}
+  function statistiche(){if(!DATA)return;thr=+$("soglia").value;calcola();var T=ST,uni=thr===1?"giorno di pioggia":"giorno con ≥ "+thr+" mm";
+    $("src3").textContent=cur.nome+" · "+T.tot.n.toLocaleString("it-IT")+" giorni, "+T.yrs+" anni";
+    $("nser").textContent="";
+    var ann=T.tot.mm/T.tot.n*365.25,gi=T.p*365.25;
+    var tl=[["Giorni di pioggia",pct(T.p),"in media "+Math.round(gi)+" giorni all'anno"+(thr>1?" ≥ "+thr+" mm":"")],
+      ["Pioggia media annua",f0(ann)+"<s>mm</s>","dai giorni con dato"],
+      ["Record giornaliero",f1(T.rec.v)+"<s>mm</s>",dIt2(T.rec.k)],
+      ["Serie asciutta record",T.dry.n+"<s>gg</s>",dIt2(T.dry.a).replace(/ \d{4}$/,function(m){return m})+" →"],
+      ["Serie piovosa record",T.wet.n+"<s>gg</s>",dIt2(T.wet.a)+" →"]];
+    $("tiles3").innerHTML=tl.map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
+    /* giorni della settimana */
+    var rows=T.wd.map(function(w,i){return{l:NOMI_G[i].slice(0,3),p:w.r/w.n,x:f1(w.mm/w.n)+" mm"}});barre("wd",rows,T.p);
+    var chi=0;T.wd.forEach(function(w){var e=w.n*T.p,f=w.n-e;if(e>0)chi+=Math.pow(w.r-e,2)/e;if(f>0)chi+=Math.pow((w.n-w.r)-f,2)/f});var pv=chi6(chi);
+    var best=T.wd.reduce(function(a,w,i){return w.r/w.n>a.p?{p:w.r/w.n,i:i}:a},{p:-1,i:0}),worst=T.wd.reduce(function(a,w,i){return w.r/w.n<a.p?{p:w.r/w.n,i:i}:a},{p:2,i:0});
+    $("wdv").innerHTML="Il giorno più bagnato è il <b>"+NOMI_G[best.i].toLowerCase()+"</b> ("+pct(best.p)+"), il più asciutto il <b>"+NOMI_G[worst.i].toLowerCase()+"</b> ("+pct(worst.p)+"). "+
+      (pv<.05?"La differenza è <b>statisticamente significativa</b> (χ²="+f1(chi)+", p="+(pv<.001?"&lt;0,001":pv.toFixed(3).replace(".",","))+"): attenzione, può comunque dipendere da come sono distribuite le perturbazioni."
+       :"Ma la differenza <b>non è distinguibile dal caso</b> (χ²="+f1(chi)+", p="+pv.toFixed(2).replace(".",",")+"): la pioggia non ha preferenze per un giorno della settimana.")+(T.tot.r<300?" Con così pochi giorni (<b>"+T.tot.r+"</b>) il test è poco affidabile.":"");
+    /* mesi */
+    barre("mo",T.mo.map(function(m,i){return{l:MES[i],p:m.r/m.n,x:f0(m.mm/m.n*(nd(2001,i)))+" mm"}}),T.p);
+    $("mov").innerHTML="La linea tratteggiata è la media dell'intera serie ("+pct(T.p)+"). A destra la pioggia media del mese."+(thr>1?" Le percentuali sono i giorni con almeno "+thr+" mm.":"");
+    /* mai / sempre / classifiche */
+    var minN=Math.max(10,Math.round(0.6*Math.max.apply(null,Object.keys(T.doy).map(function(k){return T.doy[k].n})))),
+      L=Object.keys(T.doy).filter(function(k){return T.doy[k].n>=minN}).sort(),
+      mai=L.filter(function(k){return T.doy[k].r===0}),sempre=L.filter(function(k){return T.doy[k].r===T.doy[k].n});
+    var chips=function(a,tot){return '<div class="chips2">'+a.slice(0,40).map(function(k){return "<span>"+nomeData(k)+"</span>"}).join("")+(a.length>40?"<span>… e altri "+(a.length-40)+"</span>":"")+"</div>"};
+    $("mai").innerHTML=mai.length?"<p class=\"note\" style=\"margin:0\"><b>"+mai.length+"</b> date su "+L.length+" non hanno mai visto "+(thr===1?"pioggia":"almeno "+thr+" mm")+" in tutta la serie ("+T.yrs+" anni).</p>"+chips(mai):"<p class=\"note\" style=\"margin:0\">Nessuna: ogni data del calendario ha visto "+(thr===1?"pioggia":"almeno "+thr+" mm")+" almeno una volta nella serie.</p>";
+    $("sempre").innerHTML=sempre.length?"<p class=\"note\" style=\"margin:0\"><b>"+sempre.length+"</b> date su "+L.length+" hanno sempre avuto "+(thr===1?"pioggia":"almeno "+thr+" mm")+" tutte le volte.</p>"+chips(sempre):"<p class=\"note\" style=\"margin:0\">Nessuna: non c'è una data in cui abbia sempre piovuto"+(thr===1?"":" "+thr+" mm")+".</p>";
+    var rk=function(a){return a.slice(0,10).map(function(k){var o=T.doy[k];return "<tr><td>"+nomeData(k)+"</td><td>"+o.r+" su "+o.n+" anni ("+pct(o.r/o.n)+")</td></tr>"}).join("")};
+    var asc=L.slice().sort(function(a,b){return T.doy[a].r/T.doy[a].n-T.doy[b].r/T.doy[b].n||T.doy[b].n-T.doy[a].n}),pio=L.slice().sort(function(a,b){return T.doy[b].r/T.doy[b].n-T.doy[a].r/T.doy[a].n||T.doy[b].n-T.doy[a].n});
+    $("rkd").innerHTML=rk(asc);$("rkp").innerHTML=rk(pio);
+    var note="Si considerano le date con dati in almeno "+minN+" anni.",d0=asc[0],p0=pio[0];
+    $("mai").insertAdjacentHTML("beforeend",'<p class="note" style="margin:8px 0 0">'+(mai.length?"":"La più vicina è il "+nomeData(d0)+": "+T.doy[d0].r+" su "+T.doy[d0].n+" anni. ")+note+"</p>");$("sempre").insertAdjacentHTML("beforeend",'<p class="note" style="margin:8px 0 0">'+(sempre.length?"":"La più vicina è il "+nomeData(p0)+": "+T.doy[p0].r+" su "+T.doy[p0].n+" anni. ")+note+"</p>");
+    giorno();prob()}
+  function giorno(){if(!ST)return;var m=+$("gm").value,d=+$("gg").value,md=("0"+(m+1)).slice(-2)+"-"+("0"+d).slice(-2),o=ST.doy[md],P=pal();
+    if(!o){$("giorno").innerHTML="<p class=\"note\">Nessun dato per questa data.</p>";$("yrs").innerHTML="";return}
+    var rn=o.ys.filter(function(a){return a[1]>=thr}).length,sec=o.n-rn,mx=o.ys.reduce(function(a,b){return b[1]>a[1]?b:a});
+    $("giorno").innerHTML="<p style=\"margin:0;font-size:15px\">Il <b>"+d+" "+MESI[m]+"</b> è "+(thr===1?"piovuto":"stato con almeno "+thr+" mm")+" in <b>"+rn+" anni su "+o.n+"</b> ("+pct(rn/o.n)+")"+
+      (rn===0?" — <b>mai</b> in tutta la serie.":rn===o.n?" — <b>sempre</b>.":".")+" Pioggia media di quel giorno: "+f1(o.mm/o.n)+" mm; il massimo è stato "+f1(mx[1])+" mm nel "+mx[0]+".</p>";
+    $("yrs").innerHTML=o.ys.map(function(a){return '<i title="'+a[0]+": "+f1(a[1])+' mm" style="background:'+P[bin(a[1])]+'"></i>'}).join("")}
+  function prob(){if(!ST)return;var cv=$("prob"),W=cv.parentNode.clientWidth-36,H=190,L=34,Tm=10,B=22,c=setup(cv,W,H),md=[];
+    for(var m=0;m<12;m++)for(var d=1;d<=nd(2000,m);d++)md.push(("0"+(m+1)).slice(-2)+"-"+("0"+d).slice(-2));
+    var raw=md.map(function(k){var o=ST.doy[k];return o&&o.n>=3?o.r/o.n:null});
+    var sm=raw.map(function(v,i){var s=0,n=0;for(var j=-7;j<=7;j++){var u=raw[(i+j+366)%366];if(u!=null){s+=u;n++}}return n?s/n:null});
+    var mxv=Math.max(.1,Math.ceil(Math.max.apply(null,raw.filter(function(v){return v!=null}))*10)/10),w=(W-L-6)/366,X=function(i){return L+(i+.5)*w},Y=function(v){return Tm+(1-v/mxv)*(H-Tm-B)};
+    c.font="10px "+css("--mono");c.textBaseline="middle";c.strokeStyle=css("--line");c.fillStyle=css("--ink-faint");
+    for(var g=0;g<=4;g++){var v=mxv*g/4;c.beginPath();c.moveTo(L,Y(v));c.lineTo(W-6,Y(v));c.stroke();c.fillText(Math.round(v*100)+"%",0,Y(v))}
+    var a=0;c.textBaseline="alphabetic";for(var m2=0;m2<12;m2++){c.fillText(MES[m2],L+a*w+2,H-6);a+=nd(2000,m2)}
+    c.fillStyle=css("--sky");c.globalAlpha=.35;raw.forEach(function(v,i){if(v!=null){c.beginPath();c.arc(X(i),Y(v),1.6,0,6.3);c.fill()}});c.globalAlpha=1;
+    c.setLineDash([5,4]);c.strokeStyle=css("--amber");c.beginPath();c.moveTo(L,Y(ST.p));c.lineTo(W-6,Y(ST.p));c.stroke();c.setLineDash([]);
+    c.strokeStyle=css("--pine");c.lineWidth=2.2;c.beginPath();var st=false;sm.forEach(function(v,i){if(v==null){st=false;return}if(!st){c.moveTo(X(i),Y(v));st=true}else c.lineTo(X(i),Y(v))});c.stroke();
+    PR={L:L,w:w,md:md,sm:sm,raw:raw}}
+  var PR=null;
+  function tipProb(ev){if(!PR)return;var p=hit(ev,$("prob")),i=Math.floor((p.x-PR.L)/PR.w);if(i<0||i>365)return;var k=PR.md[i],o=ST.doy[k];
+    $("tip3").textContent=nomeData(k)+" · ha piovuto "+(o?o.r+" anni su "+o.n+" ("+pct(o.r/o.n)+")":"—")+" · media mobile 15 giorni: "+(PR.sm[i]!=null?pct(PR.sm[i]):"—")}
+  function disegna(){if(!DATA)return;cal();all();leg();prob()}
 
   function scegliStazione(){cur=S[+$("sta").value];$("src").textContent="caricamento…";
     carica(cur).then(function(m){DATA=m;var cy=anni(m),ys=Object.keys(cy).map(Number).sort(function(a,b){return b-a});
       $("anno").innerHTML=ys.map(function(y){return '<option value="'+y+'">'+y+(y===+oggi.slice(0,4)?" (in corso)":cy[y]<330?" (parziale)":"")+'</option>'}).join("");
       yr=ys[0];if(cy[yr]<60&&ys.length>1&&ys[0]===+oggi.slice(0,4))yr=ys[0];$("anno").value=yr;
-      $("src").textContent=cur.nome+" · dal "+ys[ys.length-1]+(cur.q?" · "+cur.q+" m":"");vai()}).catch(function(){$("src").textContent="Dati non disponibili al momento."})}
+      $("src").textContent=cur.nome+" · dal "+ys[ys.length-1]+(cur.q?" · "+cur.q+" m":"");vai();statistiche()}).catch(function(){$("src").textContent="Dati non disponibili al momento."})}
   function vai(){var o=$("anno").options;$("prev").disabled=$("anno").selectedIndex>=o.length-1;$("next").disabled=$("anno").selectedIndex<=0;disegna()}
 
   fetch("./data/sir/mugello.json").then(function(r){return r.json()}).then(function(m){
@@ -202,6 +335,13 @@
     ca.addEventListener("click",function(ev){var q=posAll(ev);if(!q)return;yr=q.y;$("anno").value=yr;vai();$("cal").scrollIntoView({behavior:"smooth",block:"center"})});
     var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(disegna,150)});
     matchMedia("(prefers-color-scheme:dark)").addEventListener&&matchMedia("(prefers-color-scheme:dark)").addEventListener("change",disegna);
+    $("gm").innerHTML=MESI.map(function(n,i){return '<option value="'+i+'">'+n+'</option>'}).join("");
+    var td=new Date(oggi+"T00:00:00Z");$("gm").value=td.getUTCMonth();
+    var fillG=function(keep){var n=nd(2000,+$("gm").value);$("gg").innerHTML=Array.from({length:n},function(_,i){return '<option value="'+(i+1)+'">'+(i+1)+'</option>'}).join("");$("gg").value=Math.min(keep,n)};
+    fillG(td.getUTCDate());
+    $("gm").addEventListener("change",function(){fillG(+$("gg").value);giorno()});$("gg").addEventListener("change",giorno);
+    $("soglia").addEventListener("change",statistiche);
+    var cp=$("prob");cp.addEventListener("mousemove",tipProb);cp.addEventListener("touchstart",tipProb,{passive:true});cp.addEventListener("touchmove",tipProb,{passive:true});
     scegliStazione();
   }).catch(function(){$("src").textContent="Dati non disponibili al momento."});
 })();

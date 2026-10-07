@@ -7,14 +7,16 @@
       "tipo": "grafico",
       "data": "2026-10-07",
       "stato": "nuovo",
-      "testo": "Un quadratino per ogni giorno, più scuro quanto più piove: Borgo San Lorenzo dal 1991, Firenzuola dal 1961 e i pluviometri della Regione Toscana. Giorni piovosi, serie asciutte e piovose, e tutti gli anni a confronto.",
+      "testo": "Un quadratino per ogni giorno, più scuro quanto più piove, e le statistiche della serie: piove di più di lunedì o di sabato? Quali date non hanno mai visto pioggia? Quanto è probabile che piova nel tuo compleanno? Borgo San Lorenzo, Firenzuola e i pluviometri della Regione Toscana.",
       "link": "geek-pioggia-calendario.html",
       "tag": [
         "pioggia",
         "calendario",
         "heatmap",
         "SIR",
-        "Mugello"
+        "Mugello",
+        "statistica",
+        "probabilità"
       ]
     },
     {
