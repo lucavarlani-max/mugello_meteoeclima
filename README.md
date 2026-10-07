@@ -146,6 +146,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   per Borgo San Lorenzo e Firenzuola, fino a 15 giorni, in `data/ensemble.json` scritto da `scripts/fetch_ensemble.py` nel giro
   dell'Action (scarica al massimo ogni 6 ore). La pagina disegna i membri, la media e la fascia 10°–90°, e calcola
   probabilità di pioggia e incertezza per giorno.
+  **Microclima** (`geek-microclima.html`): profilo verticale della temperatura con le otto stazioni attive della rete regionale tra
+  196 e 960 m (`data/termo.json`), ISCARP2 (Weather Underground, dal browser) e Netatmo, confronto ISCARP2/Netatmo sulle ultime 24 ore e
+  statistiche storiche sulle notti d'inversione termica da `data/sir/<id>/temp.csv` (minima in basso < minima in alto).
+  **Skew-T** (`geek-skewt.html`): `scripts/fetch_skewt.py` scarica da Open-Meteo (ECMWF IFS, riserva GFS) i profili su livelli di
+  pressione da 1000 a 200 hPa per Borgo San Lorenzo e Firenzuola, ogni 3 ore fino a 5 giorni, in `data/skewt.json` (al massimo ogni 6 ore).
+  La pagina ricalcola punto di rugiada, LCL, particella, CAPE/CIN, zero termico, indice K e acqua precipitabile e disegna il diagramma.
 - **Le mie stazioni** (`stazioni.html` + `stazioni.js`, voce Stazioni del menu) — la stazione ISCARP2 di Scarperia
   (Weather Underground, letta dal browser come in home) e la stazione Netatmo: valori attuali, min/max di oggi,
   temperature delle ultime 24 ore a confronto e ultimi 7 giorni di ISCARP2. La Netatmo è letta dall'Action con

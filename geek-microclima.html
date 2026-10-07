@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Microclima del Mugello · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Quanto cambia la temperatura salendo dal fondovalle all'Appennino? Il profilo verticale del Mugello in tempo reale, ISCARP2 contro Netatmo e la storia delle inversioni termiche dal 1992.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-microclima.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Microclima del Mugello · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13px;color:var(--ink-soft)}
+  .sel select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;max-width:100%}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:13px;padding:6px 12px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);cursor:pointer}
+  .chip:hover{border-color:var(--pine)}
+  .chip[aria-pressed="true"]{background:var(--pine);border-color:var(--pine);color:#fff}
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tile .big{font-size:26px}
+  @media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  canvas.cv{display:block;width:100%;cursor:crosshair}
+  .tip{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:18px;margin:8px 0 0}
+  .leg{display:flex;flex-wrap:wrap;gap:4px 16px;margin:8px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);align-items:center}
+  .leg i{display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px}
+  .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+  @media(max-width:860px){.g2{grid-template-columns:minmax(0,1fr)}}
+  h3.sm{font-family:var(--serif);font-size:15px;margin:0 0 8px;font-weight:700}
+  .verd{margin:12px 0 0;padding:10px 12px;border-radius:var(--r-sm);background:var(--panel-2);border:1px solid var(--line-soft);font-size:13.5px;color:var(--ink-soft)}
+  .verd b{color:var(--ink)}
+  .vuoto{display:grid;place-items:center;min-height:120px;color:var(--ink-faint);font-family:var(--mono);font-size:12.5px;text-align:center;padding:10px}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Microclima</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · statistica</div>
+      <h1>Il microclima del Mugello</h1>
+      <p class="lead">Salendo di quota l'aria si raffredda, di solito. Ma le notti serene e senza vento l'aria fredda scivola a fondovalle e <i>in alto fa più caldo che in basso</i>: è l'<b>inversione termica</b>. Con otto stazioni della Regione tra 196 e 960 metri, più le mie due stazioni (ISCARP2 e Netatmo), si vede in diretta com'è fatta oggi la temperatura sul Mugello, e nelle serie dal 1992 quanto spesso succede.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Adesso, a tutte le quote</h2><span class="src" id="src1">caricamento…</span></div>
+      <div class="card">
+        <div class="sel"><div class="chips" id="modo" role="group" aria-label="Quale temperatura"></div></div>
+        <canvas class="cv" id="cp" role="img" aria-label="Temperatura in funzione della quota"></canvas>
+        <div class="tip" id="tip1">Passa su un punto (o toccalo) per leggerne i dati.</div>
+        <div class="leg"><span><i style="background:var(--sky);border-radius:50%"></i>stazioni Regione Toscana</span><span><i style="background:var(--amber);transform:rotate(45deg)"></i>ISCARP2 (Scarperia)</span><span><i style="background:var(--pine);clip-path:polygon(50% 0,100% 100%,0 100%)"></i>Netatmo</span><span>— retta di regressione (solo stazioni della Regione)</span></div>
+        <div class="tiles" id="tiles1" style="margin-top:14px"></div>
+        <div class="verd" id="verd1"></div>
+        <p class="note">L'ora delle misure della Regione è ora solare. Il gradiente standard dell'atmosfera libera è −0,65 °C ogni 100 m: sul terreno reale dipende molto da ora, vento e nuvole. Valori positivi = <b>inversione</b> (più caldo in quota).</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Due sensori, stesso paese</h2><span class="src" id="src2"></span></div>
+      <div class="card">
+        <canvas class="cv" id="c24" role="img" aria-label="Temperatura nelle ultime 24 ore di ISCARP2 e Netatmo"></canvas>
+        <div class="leg" id="leg24"></div>
+        <div class="tip" id="tip2">Passa sul grafico per leggere un istante.</div>
+        <div class="verd" id="verd2"></div>
+        <p class="note">ISCARP2 e Netatmo sono entrambe a Scarperia, a pochi metri di quota di distanza: le differenze che vedi sono schermatura dal sole, esposizione e tipo di sensore, non clima. È il limite di ogni stazione amatoriale: conviene sempre confrontarla con quella ufficiale.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Quante notti d'inversione?</h2><span class="src" id="src3"></span></div>
+      <div class="card">
+        <div class="sel">Confronta
+          <select id="basso" aria-label="Stazione in basso"></select> con
+          <select id="alto" aria-label="Stazione in alto"></select>
+        </div>
+        <div class="tiles" id="tiles3"></div>
+        <div class="g2" style="margin-top:14px">
+          <div><h3 class="sm">Per mese: notti con inversione</h3><canvas class="cv" id="cm" role="img" aria-label="Percentuale di notti con inversione per mese"></canvas><div class="tip" id="tip3"></div></div>
+          <div><h3 class="sm">Per anno: notti con inversione</h3><canvas class="cv" id="cy" role="img" aria-label="Percentuale di notti con inversione per anno"></canvas><div class="tip" id="tip4"></div></div>
+        </div>
+        <p class="note">Una notte conta come <b>inversione</b> quando la <b>minima</b> della stazione in basso è <i>più bassa</i> di quella in alto. Il gradiente è la differenza tra la temperatura in alto e in basso, divisa per il dislivello, in °C ogni 100 m: negativo è normale, positivo è inversione. Le percentuali per mese sono su tutti i giorni con dato in entrambe le stazioni.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> stazioni della rete regionale (Centro Funzionale Regione Toscana, <code>data/termo.json</code>) e serie giornaliere di massima e minima del Servizio Idrologico Regionale (<code>data/sir/&lt;id&gt;/temp.csv</code>, dal 1992 per quasi tutte); ISCARP2 da Weather Underground (letta dal browser); Netatmo da <code>data/netatmo.json</code> (aggiornato dall'Action).</li>
+          <li><b>Metodo:</b> il profilo verticale usa le otto stazioni attive tra 196 e 960 m (Borgo S. Lorenzo, Borgo S. Lorenzo 2, Villore, Le Croci, Mangona, Monte di Fò, Giogo, Monte Giovi); la retta è una regressione lineare della temperatura sulla quota. Le statistiche storiche usano i giorni con minima valida in entrambe le stazioni scelte.</li>
+          <li><b>Limiti:</b> le stazioni non sono sulla stessa verticale (stanno su versanti diversi e a esposizioni diverse), quindi il "gradiente" misura anche differenze di versante. I dati degli ultimi mesi non sono ancora validati dall'ente.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var f1=function(v){return v==null||isNaN(v)?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−")};
+  var sg=function(v){if(v==null||isNaN(v))return "—";v=Math.round(v*10)/10;return v===0?"0,0":(v>0?"+":"−")+Math.abs(v).toFixed(1).replace(".",",")};
+  var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()};
+  var MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  var WU="https://api.weather.com/v2/pws/",WU_ID="ISCARP2",WU_KEY="06ae21018c5f4306ae21018c5f430678";
+  var IDS=["TOS01000999","TOS11000017","TOS01001011","TOS01000926","TOS01000921","TOS01000916","TOS11000108","TOS03001001"];
+  var ST=[],AM=[],MODI=[["t","Adesso"],["min","Minima di oggi"],["max","Massima di oggi"],["ieri_min","Minima di ieri"],["ieri_max","Massima di ieri"]],modo="t",TERMO=null,ISC=null,NET=null,PLOT=null;
+  var HIST={},oggi=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome"}).format(new Date());
+  function setup(cv,H){var W=cv.parentNode.clientWidth-(cv.parentNode.classList.contains("card")?36:0),dpr=window.devicePixelRatio||1;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+"px";var c=cv.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);return {c:c,W:W,H:H}}
+  function reg(P){var n=P.length;if(n<3)return null;var sx=0,sy=0,sxy=0,sxx=0,syy=0;P.forEach(function(p){sx+=p.x;sy+=p.y;sxy+=p.x*p.y;sxx+=p.x*p.x;syy+=p.y*p.y});var d=n*sxx-sx*sx;if(!d)return null;var b=(n*sxy-sx*sy)/d,a=(sy-b*sx)/n,sst=syy-sy*sy/n,ssr=0;P.forEach(function(p){ssr+=Math.pow(p.y-(a+b*p.x),2)});return {a:a,b:b,r2:sst?1-ssr/sst:null}}
+  function parseCsv(t){var o={};t.split("\n").forEach(function(l,i){if(!i)return;var a=l.split(";");if(a[0].length!==10)return;var mx=a[1]===""?null:+a[1],mn=a[2]===""?null:+a[2];o[a[0]]=[isNaN(mx)?null:mx,isNaN(mn)?null:mn]});return o}
+
+  /* ================= 1. profilo verticale ================= */
+  function punti(){var out=[];ST.forEach(function(s){var r=TERMO[s.id];if(r&&r.attiva&&r[modo]!=null)out.push({x:r[modo],q:s.quota,nome:s.nome,kind:"cfr",ora:modo==="t"?r.ora:""})});
+    if(ISC&&ISC.elev!=null){var v=modo==="t"?ISC.t:modo==="min"?ISC.min:modo==="max"?ISC.max:null;if(v!=null)out.push({x:v,q:ISC.elev,nome:"ISCARP2 · Scarperia",kind:"isc"})}
+    if(NET&&NET.quota!=null){var e=NET.e||{},vn=modo==="t"?e.t:modo==="min"?e.tmin:modo==="max"?e.tmax:null;if(vn!=null)out.push({x:vn,q:NET.quota,nome:"Netatmo · "+(NET.luogo||"Scarperia"),kind:"net"})}
+    return out}
+  function profilo(){var P=punti(),cv=$("cp");$("tiles1").innerHTML="";
+    if(P.length<3){setup(cv,60);$("verd1").textContent="Dati della Regione non disponibili in questo momento.";PLOT=null;return}
+    var A=setup(cv,Math.min(480,Math.max(320,cv.parentNode.clientWidth*.55))),c=A.c,L=52,Rr=16,T=12,B=34,
+        xs=P.map(function(p){return p.x}),x0=Math.floor(Math.min.apply(null,xs)-1),x1=Math.ceil(Math.max.apply(null,xs)+1),q0=100,q1=1050,
+        X=function(v){return L+(v-x0)/(x1-x0)*(A.W-L-Rr)},Y=function(q){return T+(1-(q-q0)/(q1-q0))*(A.H-T-B)};
+    c.font="10.5px "+css("--mono");c.strokeStyle=css("--line");c.fillStyle=css("--ink-faint");c.textBaseline="middle";
+    for(var q=200;q<=1000;q+=200){c.beginPath();c.moveTo(L,Y(q));c.lineTo(A.W-Rr,Y(q));c.stroke();c.fillText(q+" m",0,Y(q))}
+    c.textBaseline="alphabetic";var st=Math.max(1,Math.round((x1-x0)/8));for(var v=Math.ceil(x0/st)*st;v<=x1;v+=st){c.beginPath();c.moveTo(X(v),T);c.lineTo(X(v),A.H-B);c.stroke();c.fillText(v+"°",X(v)-8,A.H-16)}
+    c.fillText("temperatura",L,A.H-2);
+    var C=P.filter(function(p){return p.kind==="cfr"}),R=reg(C.map(function(p){return {x:p.q,y:p.x}}));
+    if(R){c.strokeStyle=css("--ink");c.lineWidth=1.4;c.setLineDash([6,4]);c.beginPath();c.moveTo(X(R.a+R.b*q0),Y(q0));c.lineTo(X(R.a+R.b*q1),Y(q1));c.stroke();c.setLineDash([])}
+    c.lineWidth=1;PLOT={P:P,X:X,Y:Y,L:L,A:A};
+    P.forEach(function(p){var x=X(p.x),y=Y(p.q);p.px=x;p.py=y;
+      if(p.kind==="cfr"){c.fillStyle=css("--sky");c.beginPath();c.arc(x,y,5.5,0,6.3);c.fill();c.fillStyle=css("--ink-soft");c.textBaseline="middle";c.fillText(p.nome,x+9,y)}
+      else if(p.kind==="isc"){c.fillStyle=css("--amber");c.save();c.translate(x,y);c.rotate(Math.PI/4);c.fillRect(-5,-5,10,10);c.restore();c.fillStyle=css("--ink-soft");c.textAlign="right";c.textBaseline="middle";c.fillText("ISCARP2",x-10,y);c.textAlign="left"}
+      else{c.fillStyle=css("--pine");c.beginPath();c.moveTo(x,y-6);c.lineTo(x+6,y+5);c.lineTo(x-6,y+5);c.closePath();c.fill();c.fillStyle=css("--ink-soft");c.textAlign="right";c.textBaseline="middle";c.fillText("Netatmo",x-10,y+11);c.textAlign="left"}});
+    /* riquadri */
+    var g=R?R.b*100:null,Cs=C.slice().sort(function(a,b){return a.q-b.q}),bas=Cs[0],alt=Cs[Cs.length-1];
+    var tl=[["Gradiente",g==null?"—":sg(g)+"<s>°C/100 m</s>",R?"standard −0,65 · R² "+f1(R.r2):""],
+      ["Fondovalle contro cima",bas&&alt?sg(alt.x-bas.x)+"<s>°C</s>":"—",bas&&alt?alt.nome+" ("+Math.round(alt.q)+" m) meno "+bas.nome+" ("+Math.round(bas.q)+" m)":""]];
+    if(ISC&&ISC.t!=null){var bo=C.filter(function(p){return /Borgo S\. Lorenzo$/.test(p.nome)})[0],isv=P.filter(function(p){return p.kind==="isc"})[0];if(bo&&isv)tl.push(["ISCARP2 − Borgo (Regione)",sg(isv.x-bo.x)+"<s>°C</s>","stessa valle, sensori diversi"])}
+    var ne=P.filter(function(p){return p.kind==="net"})[0],is=P.filter(function(p){return p.kind==="isc"})[0];
+    if(ne&&is)tl.push(["Netatmo − ISCARP2",sg(ne.x-is.x)+"<s>°C</s>","stesso paese, sensori diversi"]);
+    $("tiles1").innerHTML=tl.slice(0,4).map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
+    var lab=modo==="min"||modo==="ieri_min"?"notturno":"";
+    $("verd1").innerHTML=g==null?"":(g>0.1?"<b>Inversione termica</b>: in quota fa più caldo che a fondovalle (+"+f1(g)+" °C ogni 100 m). Succede con cielo sereno, aria ferma e freddo ristagnante nella valle.":g>-0.35?"Gradiente <b>molto debole</b> ("+sg(g)+" °C/100 m): l'aria è stabile, la temperatura cambia poco con la quota.":g>-0.8?"Gradiente <b>vicino allo standard</b> ("+sg(g)+" °C/100 m): il profilo è quello &laquo;normale&raquo; dell'atmosfera.":"Gradiente <b>ripido</b> ("+sg(g)+" °C/100 m): l'aria è instabile, in quota è molto più fresco che in basso.")
+    $("src1").textContent=(TERMO&&TERMO._agg?"Regione: "+TERMO._agg.slice(11,16)+" ora solare":"")+(ISC&&ISC.t!=null?" · ISCARP2 in linea":"")+(NET?" · Netatmo "+(NET.agg||"").slice(11,16)+" UTC":"")}
+  function tip1(ev){if(!PLOT)return;var cv=$("cp"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,x=t.clientX-r.left,y=t.clientY-r.top,best=null,bd=1e9;PLOT.P.forEach(function(p){var d=Math.hypot(p.px-x,p.py-y);if(d<bd){bd=d;best=p}});
+    if(best&&bd<40)$("tip1").textContent=best.nome+" · "+Math.round(best.q)+" m · "+f1(best.x)+" °C"+(best.ora?" (ore "+best.ora+")":"")}
+
+  /* ================= 2. ultime 24 ore ================= */
+  var S24=null;
+  function serie24(){var cv=$("c24"),W=[];
+    var A=(ISC&&ISC.serie)||[],B=(NET&&NET.serie)||[];
+    if(A.length<2&&B.length<2){setup(cv,60);$("leg24").innerHTML="";$("verd2").textContent="Le serie delle ultime 24 ore non sono disponibili in questo momento (servono Weather Underground e Netatmo).";S24=null;return}
+    var Z=setup(cv,Math.min(340,Math.max(240,cv.parentNode.clientWidth*.38))),c=Z.c,L=40,Rr=10,T=10,B2=24,all=A.concat(B),t0=Math.min.apply(null,all.map(function(p){return p[0]})),t1=Math.max.apply(null,all.map(function(p){return p[0]})),
+        v=all.map(function(p){return p[1]}),lo=Math.floor(Math.min.apply(null,v)-1),hi=Math.ceil(Math.max.apply(null,v)+1),X=function(t){return L+(t-t0)/(t1-t0)*(Z.W-L-Rr)},Y=function(x){return T+(1-(x-lo)/(hi-lo))*(Z.H-T-B2)};
+    c.font="10.5px "+css("--mono");c.strokeStyle=css("--line");c.fillStyle=css("--ink-faint");c.textBaseline="middle";var st=Math.max(1,Math.round((hi-lo)/6));for(var g=Math.ceil(lo/st)*st;g<=hi;g+=st){c.beginPath();c.moveTo(L,Y(g));c.lineTo(Z.W-Rr,Y(g));c.stroke();c.fillText(g+"°",0,Y(g))}
+    c.textBaseline="alphabetic";for(var h=Math.ceil(t0/36e5/3)*3*36e5;h<=t1;h+=3*36e5){var hh=new Date(h).toLocaleTimeString("it-IT",{timeZone:"Europe/Rome",hour:"2-digit",minute:"2-digit"});c.beginPath();c.strokeStyle=css("--line-soft");c.moveTo(X(h),T);c.lineTo(X(h),Z.H-B2);c.stroke();c.fillText(hh,X(h)-12,Z.H-6)}
+    var line=function(a,col){if(a.length<2)return;c.strokeStyle=col;c.lineWidth=2;c.beginPath();a.forEach(function(p,i){if(!i)c.moveTo(X(p[0]),Y(p[1]));else c.lineTo(X(p[0]),Y(p[1]))});c.stroke()};
+    line(A,css("--amber"));line(B,css("--pine"));S24={A:A,B:B,X:X,L:L,Rr:Rr,W:Z.W,t0:t0,t1:t1};
+    $("leg24").innerHTML='<span><i style="background:var(--amber);height:3px;vertical-align:middle"></i>ISCARP2 (orari)</span><span><i style="background:var(--pine);height:3px;vertical-align:middle"></i>Netatmo ('+(NET&&NET.nome?NET.nome:"")+')</span>';
+    /* differenza: per ogni punto Netatmo, ISCARP2 interpolata */
+    var itp=function(t){for(var i=1;i<A.length;i++)if(A[i][0]>=t&&A[i-1][0]<=t){var u=(t-A[i-1][0])/(A[i][0]-A[i-1][0]);return A[i-1][1]+(A[i][1]-A[i-1][1])*u}return null};
+    var D=[];B.forEach(function(p){var a=itp(p[0]);if(a!=null)D.push({h:+new Date(p[0]).toLocaleTimeString("it-IT",{timeZone:"Europe/Rome",hour:"2-digit"}),d:p[1]-a})});
+    if(D.length>=6){var m=function(a){return a.length?a.reduce(function(x,y){return x+y.d},0)/a.length:null},notte=D.filter(function(x){return x.h<7||x.h>=20}),gg=D.filter(function(x){return x.h>=10&&x.h<17});
+      $("verd2").innerHTML="Netatmo meno ISCARP2: in media <b>"+sg(m(D))+" °C</b> nelle 24 ore, <b>"+sg(m(notte))+" °C</b> di notte e <b>"+sg(m(gg))+" °C</b> nelle ore centrali. "+(Math.abs(m(gg)-m(notte))>1?"La differenza cambia molto tra giorno e notte: è tipica di una diversa schermatura dal sole.":"La differenza è abbastanza costante: probabile scarto di taratura tra i sensori.")}
+    else $("verd2").textContent=A.length<2?"ISCARP2 (Weather Underground) non è raggiungibile in questo momento: vedi solo la Netatmo.":B.length<2?"La Netatmo non ha dati recenti: vedi solo ISCARP2.":"Troppo pochi punti sovrapposti per confrontare i due sensori."}
+  function tip2(ev){if(!S24)return;var cv=$("c24"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,tt=S24.t0+(t.clientX-r.left-S24.L)/(r.width-S24.L-S24.Rr)*(S24.t1-S24.t0);
+    var near=function(a){var b=null;a.forEach(function(p){if(!b||Math.abs(p[0]-tt)<Math.abs(b[0]-tt))b=p});return b},a=near(S24.A),b=near(S24.B);
+    $("tip2").textContent=new Date(tt).toLocaleString("it-IT",{timeZone:"Europe/Rome",weekday:"short",hour:"2-digit",minute:"2-digit"})+" · ISCARP2 "+(a?f1(a[1]):"—")+" °C · Netatmo "+(b?f1(b[1]):"—")+" °C"}
+
+  /* ================= 3. storia ================= */
+  function carica(id){if(HIST[id])return Promise.resolve(HIST[id]);return fetch("./data/sir/"+id+"/temp.csv").then(function(r){return r.text()}).then(function(t){HIST[id]=parseCsv(t);return HIST[id]})}
+  function storia(){var lo=ST.filter(function(s){return s.id===$("basso").value})[0],hi=ST.filter(function(s){return s.id===$("alto").value})[0];
+    if(!lo||!hi||lo.id===hi.id||hi.quota<=lo.quota+50){$("tiles3").innerHTML="";$("src3").textContent="";$("verd3")&&0;setup($("cm"),40);setup($("cy"),40);$("tip3").textContent=$("tip4").textContent="";$("tiles3").innerHTML='<div class="vuoto" style="grid-column:1/-1">Scegli una stazione in basso e una più in alto (almeno 50 m di dislivello).</div>';return}
+    Promise.all([carica(lo.id),carica(hi.id)]).then(function(a){var A=a[0],B=a[1],dh=hi.quota-lo.quota,days=Object.keys(A).filter(function(k){return B[k]&&A[k][1]!=null&&B[k][1]!=null}).sort();
+      if(days.length<100){$("tiles3").innerHTML='<div class="vuoto" style="grid-column:1/-1">Queste due stazioni hanno meno di 100 giorni in comune.</div>';return}
+      var M=[],Y={};for(var i=0;i<12;i++)M.push({n:0,inv:0,gn:0,gx:0,nx:0});
+      var best={d:0,k:""};
+      days.forEach(function(k){var m=+k.slice(5,7)-1,y=+k.slice(0,4),gn=(B[k][1]-A[k][1])/dh*100,inv=A[k][1]<B[k][1]?1:0;M[m].n++;M[m].inv+=inv;M[m].gn+=gn;
+        if(A[k][0]!=null&&B[k][0]!=null){M[m].gx+=(B[k][0]-A[k][0])/dh*100;M[m].nx++}
+        var o=Y[y]||(Y[y]={n:0,inv:0});o.n++;o.inv+=inv;var dd=B[k][1]-A[k][1];if(dd>best.d){best={d:dd,k:k}}});
+      var tot=days.length,ninv=M.reduce(function(s,m){return s+m.inv},0),gn=M.reduce(function(s,m){return s+m.gn},0)/tot,nx=M.reduce(function(s,m){return s+m.nx},0),gx=nx?M.reduce(function(s,m){return s+m.gx},0)/nx:null,
+          win=[11,0,1].reduce(function(s,i){return {n:s.n+M[i].n,inv:s.inv+M[i].inv}},{n:0,inv:0}),est=[5,6,7].reduce(function(s,i){return {n:s.n+M[i].n,inv:s.inv+M[i].inv}},{n:0,inv:0});
+      $("src3").textContent=lo.nome+" ("+Math.round(lo.quota)+" m) e "+hi.nome+" ("+Math.round(hi.quota)+" m) · "+tot.toLocaleString("it-IT")+" giorni, "+days[0].slice(0,4)+"–"+days[tot-1].slice(0,4);
+      var tl=[["Notti con inversione",Math.round(ninv/tot*100)+"<s>%</s>","minima in basso < minima in alto"],["In inverno (dic–feb)",win.n?Math.round(win.inv/win.n*100)+"<s>%</s>":"—","in estate (giu–ago): "+(est.n?Math.round(est.inv/est.n*100)+"%":"—")],
+        ["Gradiente medio",sg(gn)+"<s>°C/100 m</s>","minime · massime "+(gx==null?"—":sg(gx))],["Inversione più forte",sg(best.d)+"<s>°C</s>",best.k?best.k.slice(8)+" "+MES[+best.k.slice(5,7)-1]+" "+best.k.slice(0,4):"—"]];
+      $("tiles3").innerHTML=tl.map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
+      var barre=function(cv,vals,labs,tipId,fmt){var Z=setup(cv,230),c=Z.c,L=34,T=8,Bm=24,n=vals.length,w=(Z.W-L-4)/n;c.font="10.5px "+css("--mono");c.textBaseline="middle";c.strokeStyle=css("--line");c.fillStyle=css("--ink-faint");
+        [0,25,50,75,100].forEach(function(g){var y=T+(1-g/100)*(Z.H-T-Bm);c.beginPath();c.moveTo(L,y);c.lineTo(Z.W,y);c.stroke();c.fillText(g+"%",0,y)});
+        c.textBaseline="alphabetic";vals.forEach(function(v,i){if(v==null)return;var h=v/100*(Z.H-T-Bm);c.fillStyle=css("--sky");c.fillRect(L+i*w+1,Z.H-Bm-h,Math.max(1,w-2),h);
+          if(labs[i]!=null&&(n<=12||i%Math.ceil(n/8)===0)){c.fillStyle=css("--ink-faint");c.fillText(labs[i],L+i*w,Z.H-8)}});
+        cv._d={L:L,w:w,vals:vals,fmt:fmt,tip:tipId}};
+      barre($("cm"),M.map(function(m){return m.n?m.inv/m.n*100:null}),MES,"tip3",function(i){return MES[i]+": "+Math.round(M[i].inv/M[i].n*100)+"% delle notti ("+M[i].inv+" su "+M[i].n+")"});
+      var ys=Object.keys(Y).map(Number).sort(function(a,b){return a-b}).filter(function(y){return Y[y].n>=200});
+      barre($("cy"),ys.map(function(y){return Y[y].inv/Y[y].n*100}),ys.map(function(y){return String(y).slice(2)}),"tip4",function(i){var y=ys[i];return y+": "+Math.round(Y[y].inv/Y[y].n*100)+"% delle notti ("+Y[y].inv+" su "+Y[y].n+")"})})}
+  function tipBar(ev){var cv=ev.currentTarget,d=cv._d;if(!d)return;var r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,i=Math.floor((t.clientX-r.left-d.L)/d.w);if(i<0||i>=d.vals.length||d.vals[i]==null)return;$(d.tip).textContent=d.fmt(i)}
+
+  /* ================= avvio ================= */
+  function modi(){$("modo").innerHTML=MODI.map(function(m){return '<button class="chip" data-k="'+m[0]+'" aria-pressed="'+(m[0]===modo)+'">'+m[1]+'</button>'}).join("");
+    $("modo").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){modo=b.dataset.k;modi();profilo()})})}
+  function wuIsc(){var g=function(u){return fetch(WU+u+"?stationId="+WU_ID+"&format=json&units=m&apiKey="+WU_KEY).then(function(r){if(!r.ok)throw 0;return r.json()})},I={};
+    return g("observations/current").then(function(j){var o=j.observations[0],m=o.metric;I.t=m.temp;I.elev=m.elev;return g("observations/all/1day").then(function(d){var v=(d.observations||[]).map(function(x){return x.metric||{}}),lo=v.map(function(x){return x.tempLow}).filter(function(x){return x!=null}),hi=v.map(function(x){return x.tempHigh}).filter(function(x){return x!=null});
+        if(lo.length)I.min=Math.min.apply(null,lo);if(hi.length)I.max=Math.max.apply(null,hi)}).catch(function(){})})
+      .then(function(){return g("observations/hourly/7day").then(function(h){var lim=Date.now()-24*36e5;I.serie=(h.observations||[]).map(function(x){return [x.epoch*1000,(x.metric||{}).tempAvg]}).filter(function(p){return p[0]>=lim&&p[1]!=null})}).catch(function(){})})
+      .then(function(){return I.t!=null?I:null}).catch(function(){return null})}
+  function init(){
+    var pTermo=fetch("./data/termo.json",{cache:"no-store"}).then(function(r){return r.json()}),pSt=fetch("./data/sir/stazioni.csv").then(function(r){return r.text()}),
+        pNet=fetch("./data/netatmo.json",{cache:"no-store"}).then(function(r){return r.json()}).catch(function(){return null});
+    Promise.all([pTermo,pSt,pNet,wuIsc()]).then(function(a){var t=a[0],csv=a[1].split("\n"),net=a[2];ISC=a[3];
+      TERMO={};(t.stazioni||[]).forEach(function(r){TERMO[r.id]=r});TERMO._agg=t.aggiornato||"";
+      csv.slice(1).forEach(function(l){var c=l.split(";");if(IDS.indexOf(c[0])>=0)ST.push({id:c[0],nome:c[1],quota:+c[5]})});
+      ST.sort(function(x,y){return x.quota-y.quota});
+      var s0=net&&(net.stazioni||[])[0];if(s0){var e=(s0.moduli||{}).esterno||{};NET={quota:s0.quota,luogo:s0.luogo,nome:s0.nome,e:e,agg:e.agg,serie:((s0.storia||{}).dati||[]).map(function(x){return [x[0]*1000,x[1]]}).filter(function(p){return p[1]!=null&&p[0]>=Date.now()-24*36e5})}}
+      modi();profilo();serie24();
+      var opt=ST.map(function(s){return '<option value="'+s.id+'">'+s.nome+' ('+Math.round(s.quota)+' m)</option>'}).join("");$("basso").innerHTML=opt;$("alto").innerHTML=opt;$("basso").value="TOS01000999";$("alto").value="TOS01000916";
+      $("basso").addEventListener("change",storia);$("alto").addEventListener("change",storia);storia();
+      var cp=$("cp");cp.addEventListener("mousemove",tip1);cp.addEventListener("touchstart",tip1,{passive:true});
+      var c2=$("c24");c2.addEventListener("mousemove",tip2);c2.addEventListener("touchstart",tip2,{passive:true});c2.addEventListener("touchmove",tip2,{passive:true});
+      ["cm","cy"].forEach(function(id){var c=$(id);c.addEventListener("mousemove",tipBar);c.addEventListener("touchstart",tipBar,{passive:true})});
+      var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(function(){profilo();serie24();storia()},150)})
+    }).catch(function(){$("src1").textContent="Dati non disponibili al momento."})}
+  init();
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
