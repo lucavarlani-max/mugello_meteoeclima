@@ -1,7 +1,91 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-02",
+ "aggiornato": "2026-10-07",
  "numeri": [
+  {
+   "data": "2026-10-07",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Isaias verso il primo uragano del 2026, il più tardivo da oltre un secolo",
+    "testo": "La depressione tropicale Nove si è formata nel Golfo del Messico e dovrebbe diventare la tempesta Isaias e poi un uragano di categoria 2, con venti fino a 160 km/h, diretto fra la Louisiana e la Florida: sarebbe il primo uragano della stagione atlantica, a ottobre inoltrato.",
+    "fonte": "AccuWeather",
+    "url": "https://www.accuweather.com/en/hurricane/tropical-depression-9-forms-in-gulf-to-become-atlantics-first-hurricane-before-striking-us/1942566",
+    "foto": "uragano3"
+   },
+   "numero": {
+    "valore": "9",
+    "testo": "La nona tempesta con nome della stagione atlantica 2026, se la depressione verrà battezzata Isaias: le prime otto non sono diventate uragani."
+   },
+   "storie": [
+    {
+     "cat": "uragani",
+     "titolo": "Rachel, uragano nel Pacifico orientale",
+     "testo": "Ha venti di circa 135 km/h, a qualche centinaio di miglia a sud-ovest della punta della Baja California; per i prossimi sette giorni non sono attese nuove formazioni nella zona.",
+     "fonte": "NOAA National Hurricane Center",
+     "url": "https://www.nhc.noaa.gov/gtwo.php?basin=epac&fdays=7",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "ozono",
+     "titolo": "Buco dell'ozono fra i più grandi degli ultimi anni",
+     "testo": "Sull'Antartide ha raggiunto circa 25 milioni di km² il 12 settembre, 5 sopra la media, e un picco di 27,4 milioni il 20 settembre, vicino al massimo del 2015 (27,9 milioni); ora si sta richiudendo.",
+     "fonte": "Copernicus CAMS",
+     "url": "https://atmosphere.copernicus.eu/copernicus-ozone-hole-reaches-notable-threshold-early-again-area-increases-above-average-2026",
+     "foto": "ozono"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, un'intrusione sotto la caldera",
+     "testo": "Fra il 30 settembre e l'1 ottobre il magma si è spostato sotto la caldera sommitale senza arrivare in superficie; l'USGS mantiene il livello WATCH e non esclude il 55° episodio di fontane di lava.",
+     "fonte": "USGS HVO / Hawaii Tribune-Herald",
+     "url": "https://hawaiitribune-herald.com/2026/10/04/features/volcano-watch-an-intrusion-during-an-eruption-at-the-summit-of-kilauea",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Campi Flegrei, sciame con boati",
+     "testo": "Alle 2:16 del 6 ottobre una scossa di magnitudo 1,9, a 2,8 km di profondità vicino alla Solfatara, la più forte di uno sciame di eventi lievi, forse accompagnata da un boato avvertito dai residenti.",
+     "fonte": "Osservatorio Vesuviano / AlaNews",
+     "url": "https://www.alanews.it/2026/10/06/cronaca/sciame-sismico-campi-flegrei-scossa-magnitudo-1-9-pozzuoli"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Magnitudo 6,0 nel mare di Sumba",
+     "testo": "Il 4 ottobre alle 00:55 (ora italiana) l'INGV ha localizzato un terremoto Mwp 6,0 a 9 km di profondità, in mare davanti all'isola di Sumba, in Indonesia, senza danni significativi.",
+     "fonte": "INGV",
+     "url": "http://terremoti.ingv.it/event/46762051",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "temporali",
+     "titolo": "Toscana, torna il maltempo",
+     "testo": "Mercoledì 7 ottobre, dopo le schiarite del mattino, rovesci e temporali dal pomeriggio alla sera sui settori occidentali e settentrionali della regione, con allerta gialla su una parte della Toscana.",
+     "fonte": "Protezione Civile / MeteoWeb",
+     "url": "https://www.meteoweb.eu/2026/10/allerta-meteo-protezione-civile-7-ottobre-forti-temporali-sulle-regioni-tirreniche-allarme-giallo-in-6-regioni/1001988060/"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Mercoledì 7 ottobre: nubi sparse e schiarite al mattino, poi piogge e rovesci dal pomeriggio-sera, più probabili sui settori occidentali e settentrionali della Toscana; temperature pressoché stazionarie, venti deboli da sud-sud-est. Allerta gialla per temporali su parte della regione: controlla gli avvisi del Centro Funzionale.",
+     "fonte": "LaMMA Toscana / Protezione Civile"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1737: il ciclone di Calcutta (le fonti divergono sulla data, alcune indicano l'11 ottobre), con una grande onda di tempesta e forse oltre 300.000 vittime, stima storica incerta. 2016: l'uragano Matthew, appena sceso a categoria 3, costeggia la Florida orientale.",
+     "fonte": "NHC / Wikipedia"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Un fulmine riscalda l'aria intorno a sé fino a circa 30.000 °C, circa cinque volte la temperatura della superficie del Sole; è il caldo improvviso che genera il tuono.",
+     "fonte": "NOAA National Weather Service"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:22 e tramonta alle 18:41, circa 11 ore e 19 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata all'11%; la Luna nuova è sabato 10 ottobre alle 17:50."
+    }
+   ]
+  },
   {
    "data": "2026-10-02",
    "apertura": {
