@@ -39,6 +39,22 @@
   ],
   "esperimenti": [
     {
+      "id": "spaghetti-ensemble",
+      "titolo": "51 futuri possibili: lo spaghetti plot ECMWF",
+      "tipo": "grafico",
+      "tema": "previsioni",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "I 51 membri dell'ensemble ECMWF per Borgo San Lorenzo e Firenzuola, fino a 15 giorni: temperatura, pioggia cumulata e pressione. Quando la previsione è affidabile e quando si apre a ventaglio, con probabilità di pioggia e incertezza giorno per giorno.",
+      "link": "geek-ensemble.html",
+      "tag": [
+        "ECMWF",
+        "ensemble",
+        "incertezza",
+        "previsioni"
+      ]
+    },
+    {
       "id": "compleanno-clima",
       "titolo": "Il tuo compleanno nel clima",
       "tipo": "statistica",

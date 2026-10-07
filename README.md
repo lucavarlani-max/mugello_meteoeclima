@@ -142,6 +142,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   ISCARP2 (Weather Underground, chiave pubblica di `stazioni.js`) in `data/verifica/iscarp2.json`. La pagina li confronta con le misure
   (ISCARP2 per Scarperia e San Piero, SIR per Borgo San Lorenzo) e con persistenza e climatologia. Una tantum,
   `python scripts/fetch_verifica.py --da-git` recupera dalla storia git le previsioni WeatherNext passate.
+  **Spaghetti plot** (`geek-ensemble.html`): i 51 membri dell'ensemble ECMWF IFS (Open-Meteo Ensemble API; riserva NOAA GFS)
+  per Borgo San Lorenzo e Firenzuola, fino a 15 giorni, in `data/ensemble.json` scritto da `scripts/fetch_ensemble.py` nel giro
+  dell'Action (scarica al massimo ogni 6 ore). La pagina disegna i membri, la media e la fascia 10°–90°, e calcola
+  probabilità di pioggia e incertezza per giorno.
 - **Le mie stazioni** (`stazioni.html` + `stazioni.js`, voce Stazioni del menu) — la stazione ISCARP2 di Scarperia
   (Weather Underground, letta dal browser come in home) e la stazione Netatmo: valori attuali, min/max di oggi,
   temperature delle ultime 24 ore a confronto e ultimi 7 giorni di ISCARP2. La Netatmo è letta dall'Action con
