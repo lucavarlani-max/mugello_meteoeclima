@@ -1,0 +1,177 @@
+name: Aggiorna climatologie NOAA GHCN-Daily
+
+on:
+  schedule:
+    # Ogni giorno alle 05:17 UTC (06:17 in inverno, 07:17 in estate in Italia)
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+    inputs:
+      start_year:
+        description: "Primo anno della climatologia mensile"
+        required: false
+        default: "1991"
+      end_year:
+        description: "Ultimo anno della climatologia mensile"
+        required: false
+        default: "2020"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aggiorna-ghcn-climatologie
+  cancel-in-progress: false
+
+env:
+  STATIONS_URL: https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt
+  GHCN_BASE_URL: https://www.ncei.noaa.gov/pub/data/ghcn/daily/all
+  MONTHLY_START: ${{ inputs.start_year || '1991' }}
+  MONTHLY_END: ${{ inputs.end_year || '2020' }}
+
+jobs:
+  update-ghcn:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Scarica elenco stazioni NOAA
+        run: |
+          curl --fail --retry 4 --retry-delay 5 -L "$STATIONS_URL" \
+            -o ghcnd-stations.txt
+          test -s ghcnd-stations.txt
+
+      - name: Individua le stazioni presenti nella climatologia del sito
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          js = Path("data/geek/ghcn-climatologia.js").read_text(encoding="utf-8")
+          ids = sorted(set(re.findall(r'"station_id":"([A-Z0-9]{11})"', js)))
+          if not ids:
+              raise SystemExit("Nessuna stazione trovata in data/geek/ghcn-climatologia.js")
+          Path("ghcn_station_ids.txt").write_text("\n".join(ids) + "\n", encoding="ascii")
+          print(f"Stazioni da aggiornare: {len(ids)}")
+          print("\n".join(ids))
+          PY
+          test -s ghcn_station_ids.txt
+
+      - name: Scarica i dati giornalieri GHCN
+        run: |
+          args=()
+          while IFS= read -r station; do
+            args+=(--station "$station")
+          done < ghcn_station_ids.txt
+
+          python3 scripts/ghcn/ghcn_dly_to_csv.py \
+            "${args[@]}" \
+            --element TAVG \
+            --element TMAX \
+            --element TMIN \
+            --base-url "$GHCN_BASE_URL" \
+            --pause 0.15 \
+            --timeout 90 \
+            --output ghcn_daily.csv
+
+          test -s ghcn_daily.csv
+          echo "Righe scaricate: $(wc -l < ghcn_daily.csv)"
+
+      - name: Calcola climatologia mensile 1991-2020
+        run: |
+          rm -rf build/climatologie
+          mkdir -p build/climatologie
+          python3 scripts/ghcn/ghcn_climatology.py \
+            --input ghcn_daily.csv \
+            --mode monthly \
+            --element TAVG \
+            --element TMAX \
+            --element TMIN \
+            --start-year "$MONTHLY_START" \
+            --end-year "$MONTHLY_END" \
+            --output build/climatologie/climatologia_monthly.csv
+          test -s build/climatologie/climatologia_monthly.csv
+
+      - name: Calcola medie annuali su tutto il periodo disponibile
+        run: |
+          python3 scripts/ghcn/ghcn_climatology.py \
+            --input ghcn_daily.csv \
+            --mode annual \
+            --element TAVG \
+            --element TMAX \
+            --element TMIN \
+            --output build/climatologie/climatologia_annual.csv
+          test -s build/climatologie/climatologia_annual.csv
+
+      - name: Calcola statistiche degli eventi estremi
+        run: |
+          python3 scripts/ghcn/ghcn_extremes.py \
+            --input ghcn_daily.csv \
+            --output data/geek/ghcn-estremi.js
+          test -s data/geek/ghcn-estremi.js
+
+      - name: Genera i dati JavaScript per la pagina climatologica
+        run: |
+          python3 scripts/ghcn/ghcn_climatology_chart.py \
+            --monthly build/climatologie/climatologia_monthly.csv \
+            --annual build/climatologie/climatologia_annual.csv \
+            --output build/climatologia_confronto.html \
+            --title "Climatologia GHCN-Daily"
+
+          # Aggiorna il file caricato da geek-ghcn-climatologia.html.
+          # I due default sono mostrati all'apertura della pagina.
+          python3 scripts/ghcn/to_site.py \
+            build/climatologia_confronto.html \
+            --stations ghcnd-stations.txt \
+            --default IT000016090 \
+            --default IT000016134
+
+      - name: Verifica output
+        run: |
+          test -s data/geek/ghcn-climatologia.js
+          grep -q 'const DATA=' data/geek/ghcn-climatologia.js
+          grep -q 'const NAMES=' data/geek/ghcn-climatologia.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s = Path("data/geek/ghcn-climatologia.js").read_text(encoding="utf-8")
+          monthly = len(re.findall(r'"month":', s))
+          annual = len(re.findall(r'"year":', s))
+          if monthly == 0 or annual == 0:
+              raise SystemExit("Output climatologico vuoto o incompleto")
+          print(f"Record mensili: {monthly}; record annuali: {annual}")
+          PY
+
+      - name: Commit e push se ci sono modifiche
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/geek/ghcn-climatologia.js data/geek/ghcn-estremi.js
+          if git diff --cached --quiet; then
+            echo "Nessuna variazione nella climatologia GHCN"
+            exit 0
+          fi
+          git commit -m "dati: aggiorna climatologie NOAA GHCN-Daily"
+          git push origin HEAD:main
+
+      - name: Salva log e file di controllo
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ghcn-log-${{ github.run_number }}
+          path: |
+            ghcnd-stations.txt
+            ghcn_station_ids.txt
+            ghcn_daily.csv
+            build/climatologie/*.csv
+          if-no-files-found: ignore
+          retention-days: 7
