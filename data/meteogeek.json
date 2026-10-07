@@ -39,6 +39,23 @@
   ],
   "esperimenti": [
     {
+      "id": "compleanno-clima",
+      "titolo": "Il tuo compleanno nel clima",
+      "tipo": "statistica",
+      "tema": "clima",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Scegli una data e una stazione: com'era il tempo quel giorno in tutti gli anni di misure? Record di caldo e freddo, tendenza, confronto tra primi e ultimi 30 anni, e se scrivi l'anno in cui sei nato, come era il tuo giorno.",
+      "link": "geek-compleanno-clima.html",
+      "tag": [
+        "compleanno",
+        "temperatura",
+        "record",
+        "tendenza",
+        "serie storiche"
+      ]
+    },
+    {
       "id": "verifica-modello",
       "titolo": "Chi ci azzecca di più? Il modello contro le misure",
       "tipo": "statistica",
