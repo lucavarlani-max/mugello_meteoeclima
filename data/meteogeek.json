@@ -2,6 +2,21 @@
   "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
   "esperimenti": [
     {
+      "id": "warming-stripes",
+      "titolo": "Warming stripes del Mugello",
+      "tipo": "grafico",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Un colore per ogni anno, dal blu al rosso: la storia del clima di Borgo San Lorenzo, Firenzuola e altre 11 serie lunghe, italiane e mondiali, sulla stessa scala e con download in PNG.",
+      "link": "geek-stripes.html",
+      "tag": [
+        "warming stripes",
+        "temperatura",
+        "Mugello",
+        "clima"
+      ]
+    },
+    {
       "id": "ghcn-stazione",
       "titolo": "Scheda completa di ogni stazione NOAA",
       "tipo": "tabella",
