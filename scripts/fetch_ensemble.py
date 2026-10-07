@@ -9,7 +9,8 @@ vicini la previsione è affidabile, se si aprono a ventaglio è incerta.
 
 Fonte: Open-Meteo Ensemble API (gratuita, senza chiave), modello ecmwf_ifs025; se non disponibile ripiega su
 NOAA GFS 0,25° (31 membri). Per due punti: Borgo San Lorenzo (fondovalle) e Firenzuola (Appennino).
-Variabili: temperatura a 2 m, pioggia (cumulata dall'inizio, mm) e pressione al livello del mare (hPa).
+Variabili: temperatura a 2 m, pioggia (cumulata dall'inizio, mm), pressione al livello del mare (hPa) e temperatura a
+850 e 500 hPa (circa 1,5 e 5,5 km di quota).
 
 Uscita: data/ensemble.json
   {"aggiornato":.., "modello":.., "membri":N, "t":[ora locale ISO ogni 3 ore],
@@ -31,8 +32,8 @@ import urllib.request
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(HERE, "data", "ensemble.json")
 PUNTI = [("borgo", "Borgo San Lorenzo", 43.9547, 11.3861), ("firenzuola", "Firenzuola", 44.1206, 11.3789)]
-VARS = ["temperature_2m", "precipitation", "pressure_msl"]
-SCALA = {"temperature_2m": 10, "precipitation": 10, "pressure_msl": 10}
+VARS = ["temperature_2m", "precipitation", "pressure_msl", "temperature_850hPa", "temperature_500hPa"]
+SCALA = {v: 10 for v in VARS}
 MODELLI = [("ecmwf_ifs025", "ECMWF IFS 0,25° ensemble"), ("gfs025", "NOAA GFS 0,25° ensemble")]
 GIORNI = [15, 10, 7]            # si prova dal più lungo: se l'API rifiuta (400) si accorcia
 MIN_MEMBRI = 10
@@ -47,7 +48,8 @@ def recente():
     try:
         d = json.load(open(OUT, encoding="utf-8"))
         t = datetime.datetime.fromisoformat(d["aggiornato"].replace("Z", "+00:00"))
-        return adesso() - t < ETA_MAX
+        completo = all(v in d["punti"][0]["dati"] for v in VARS)      # un file senza le variabili nuove va rifatto subito
+        return completo and adesso() - t < ETA_MAX
     except Exception:  # noqa: BLE001
         return False
 

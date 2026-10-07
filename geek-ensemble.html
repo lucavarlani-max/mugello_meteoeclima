@@ -70,6 +70,7 @@
           <div id="tip">Passa sul grafico (o tocca) per leggere i valori in un istante.</div>
         </div>
         <div class="tiles" id="tiles" style="margin-top:14px"></div>
+        <p class="note" id="notaq" hidden></p>
         <p class="note">Ogni linea sottile è uno dei membri; la linea scura è il <b>controllo</b> (la previsione "principale" non perturbata), quella verde tratteggiata è la <b>media</b> dell'ensemble, la fascia gialla contiene l'80% centrale dei membri (dal 10° al 90° percentile). La pioggia è <b>cumulata</b> dall'inizio della previsione: ogni linea è una possibile storia di quanta acqua sarà caduta.</p>
       </div>
     </section>
@@ -102,7 +103,7 @@
   var f1=function(v){return v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−")};
   var f0=function(v){return v==null?"—":String(Math.round(v)).replace("-","−")};
   var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()};
-  var VAR=[{k:"temperature_2m",nome:"Temperatura a 2 m",u:"°C",d:1},{k:"precipitation",nome:"Pioggia cumulata",u:"mm",d:1},{k:"pressure_msl",nome:"Pressione al livello del mare",u:"hPa",d:1}];
+  var VAR=[{k:"temperature_2m",nome:"Temperatura a 2 m",u:"°C",d:1},{k:"precipitation",nome:"Pioggia cumulata",u:"mm",d:1},{k:"pressure_msl",nome:"Pressione al livello del mare",u:"hPa",d:1},{k:"temperature_850hPa",nome:"Temperatura a 850 hPa",u:"°C",d:1,q:"circa 1,5 km"},{k:"temperature_500hPa",nome:"Temperatura a 500 hPa",u:"°C",d:1,q:"circa 5,5 km"}];
   var E=null,pi=0,vi=0,ST=null,GR=null,oggi=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome"}).format(new Date());
   var dow=function(d){return GS[new Date(d+"T00:00:00Z").getUTCDay()]};
   var lab=function(d){return dow(d)+" "+(+d.slice(8))+" "+MES[+d.slice(5,7)-1]};
@@ -133,6 +134,16 @@
       ["Acqua nelle prossime 72 h",t3&&t3.length?f1(pct(t3,.5))+"<s>mm</s>":"—",t3&&t3.length?"mediana · da "+f1(pct(t3,.1))+" a "+f1(pct(t3,.9))+" mm (10°–90°)":""],
       ["Il ventaglio si apre",fan?lab(fan.d):"oltre l'orizzonte",fan?"fascia della massima ≥ 5 °C":"fascia della massima sempre < 5 °C"]];
     $("tiles").innerHTML=T.map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("")}
+  var NOTAQ={temperature_850hPa:"<b>850 hPa</b> è a circa 1,5 km di quota, sopra lo strato più influenzato dal suolo: è la temperatura con cui i meteorologi seguono le masse d'aria. Con T850 intorno a 0 °C la neve scende verso i 600–800 m (se precipita); con −5 °C o meno può imbiancare anche il fondovalle; d'estate, oltre 20–22 °C, è ondata di caldo.",
+    temperature_500hPa:"<b>500 hPa</b> è a circa 5,5 km. Aria molto fredda in quota (−20 °C o meno) sopra aria più mite al suolo rende l'atmosfera instabile: temporali, grandine, neve a bassa quota in inverno. Valori sopra −8 °C d'estate segnalano un anticiclone caldo."};
+  var SOGLIA={temperature_850hPa:[0,"≤ 0 °C","T850"],temperature_500hPa:[-20,"≤ −20 °C","T500"]};
+  function tilesQuota(v,S){var now=new Intl.DateTimeFormat("sv-SE",{timeZone:"Europe/Rome",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}).format(new Date()).replace(" ","T"),i0=Math.max(0,E.t.findIndex(function(t){return t>=now})),T=[];
+    [1,3,5,7].forEach(function(n){var i=i0+8*n;if(i>=E.t.length)return;var c=S.map(function(s){return s[i]}),m=pct(c,.5),lo=pct(c,.1),hi=pct(c,.9);
+      T.push(["Tra "+n+(n===1?" giorno":" giorni")+" · "+lab(E.t[i].slice(0,10)).split(" ").slice(0,3).join(" "),f0(m)+"<s>°C</s>","10°–90°: "+f0(lo)+" … "+f0(hi)+" °C · ventaglio "+f1(hi-lo)+" °C"])});
+    var sg=SOGLIA[v.k],fin=Math.min(E.t.length,i0+57),n7=S.length,hit=S.filter(function(s){var mn=Infinity;for(var j=i0;j<fin;j++)if(s[j]!=null&&s[j]<mn)mn=s[j];return mn<=sg[0]}).length;
+    T=T.slice(0,3);T.push([sg[2]+" "+sg[1]+" entro 7 giorni",Math.round(hit/n7*100)+"<s>%</s>","dei "+n7+" membri scende a questo valore in almeno un momento"]);
+    $("tiles").innerHTML=T.map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
+    $("notaq").hidden=false;$("notaq").innerHTML=NOTAQ[v.k]}
   function tabella(G){var h="<tr><th>Giorno</th><th>Massima °C</th><th>Minima °C</th><th>Fascia Tmax</th><th>Pioggia ≥ 1 mm</th><th>Pioggia ≥ 10 mm</th><th>Pioggia mm (mediana · max)</th></tr>";
     G.forEach(function(r){var amp=pct(r.tx,.9)-pct(r.tx,.1),c=amp<2.5?"var(--pine)":amp<5?"var(--amber)":"var(--warm)",p1=share(r.rn,1),p10=share(r.rn,10);
       h+="<tr><td>"+lab(r.d)+"</td><td>"+f0(pct(r.tx,.5))+" <small style='color:var(--ink-faint)'>("+f0(pct(r.tx,.1))+"…"+f0(pct(r.tx,.9))+")</small></td><td>"+f0(pct(r.tn,.5))+" <small style='color:var(--ink-faint)'>("+f0(pct(r.tn,.1))+"…"+f0(pct(r.tn,.9))+")</small></td>"+
@@ -161,11 +172,11 @@
   function tip(ev){if(!GR||!ST)return;var cv=$("cv"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,i=Math.round((t.clientX-r.left-GR.L)/(r.width-GR.L-GR.Rr)*(GR.n-1));if(i<0||i>=GR.n)return;var o=ST.o,v=VAR[vi],d=E.t[i];
     $("tip").textContent=lab(d.slice(0,10))+" ore "+d.slice(11,16)+" · media "+f1(o.mean[i])+" "+v.u+" · 10°–90°: "+f1(o.p10[i])+" … "+f1(o.p90[i])+" · min–max: "+f1(o.min[i])+" … "+f1(o.max[i])+" · controllo "+f1(o.ctl[i]);draw(i)}
 
-  function render(){var pt=E.punti[pi],v=VAR[vi],S=ser(pt,v.k);ST={S:S,o:stats(S)};legenda();draw();var G=giorni(pt);tiles(G,pt);tabella(G);
+  function render(){var pt=E.punti[pi],v=VAR[vi],S=ser(pt,v.k);ST={S:S,o:stats(S)};legenda();draw();var G=giorni(pt);if(SOGLIA[v.k]){tilesQuota(v,S);}else{$("notaq").hidden=true;tiles(G,pt);}tabella(G);
     $("src").textContent=pt.nome+" · "+E.modello+" · "+E.membri+" membri";$("src2").textContent="aggiornato "+E.aggiornato.slice(0,10)+" ore "+E.aggiornato.slice(11,16)+" UTC"}
   function vars(){$("vars").innerHTML=VAR.map(function(v,i){return '<button class="chip" data-i="'+i+'" aria-pressed="'+(i===vi)+'">'+v.nome+'</button>'}).join("");
     $("vars").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){vi=+b.dataset.i;vars();render()})})}
-  fetch("./data/ensemble.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){E=d;
+  fetch("./data/ensemble.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){E=d;VAR=VAR.filter(function(v){return E.punti[0].dati[v.k]});
     $("pt").innerHTML=E.punti.map(function(p,i){return '<option value="'+i+'">'+p.nome+'</option>'}).join("");$("pt").addEventListener("change",function(){pi=+$("pt").value;render()});
     var eta=(Date.now()-Date.parse(E.aggiornato))/36e5;if(eta>30){$("banner").hidden=false;$("banner").textContent="Attenzione: i dati hanno più di "+Math.round(eta)+" ore, l'aggiornamento automatico potrebbe essere fermo."}
     vars();render();var cv=$("cv");cv.addEventListener("mousemove",tip);cv.addEventListener("touchstart",tip,{passive:true});cv.addEventListener("touchmove",tip,{passive:true});cv.addEventListener("mouseleave",function(){draw()});
