@@ -177,6 +177,7 @@ function popup(s) {
     (state?`<b>Stato/area</b><span>${state}</span>`:'')+
     (gsn?`<b>Rete</b><span>GSN</span>`:'')+(hcn?`<b>Rete</b><span>HCN</span>`:'')+
     `</div><div class="popup-links">`+
+    `<a href="geek-ghcn-stazione.html?id=${encodeURIComponent(id)}" target="_blank" rel="noopener noreferrer">Scheda completa MeteoGeek</a><br>`+
     `<a href="https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/${encodeURIComponent(id)}.dly" target="_blank" rel="noopener noreferrer">Dati giornalieri NOAA (.dly)</a><br>`+
     `<a href="https://www.ncei.noaa.gov/access/search/data-search/daily-summaries?stations=${encodeURIComponent(id)}" target="_blank" rel="noopener noreferrer">Apri la scheda NCEI della stazione</a></div>`;
 }
