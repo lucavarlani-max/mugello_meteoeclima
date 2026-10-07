@@ -56,6 +56,10 @@ jobs:
         continue-on-error: true
         run: python scripts/fetch_ensemble.py
 
+      - name: Aggiorna profili verticali per lo skew-T (ogni 6 ore)
+        continue-on-error: true
+        run: python scripts/fetch_skewt.py
+
       - name: Aggiorna estremi meteo nel mondo (OGIMET)
         run: python scripts/fetch_estremi.py
 

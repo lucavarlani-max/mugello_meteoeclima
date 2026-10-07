@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skew-T del Mugello · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Il diagramma skew-T-log-p dell'atmosfera sopra il Mugello: temperatura e punto di rugiada a tutte le quote, parcella d'aria, CAPE, CIN, zero termico, vento. Lo stesso strumento dei meteorologi, spiegato.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-skewt.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Skew-T del Mugello · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px;font-size:13px;color:var(--ink-soft)}
+  .sel select,.sel button{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;max-width:100%}
+  .sel button{cursor:pointer;color:var(--ink-soft)}.sel button:hover{border-color:var(--pine)}
+  .sel input[type=range]{flex:1;min-width:160px;accent-color:var(--pine)}
+  .sel .when{font-family:var(--mono);font-size:12.5px;color:var(--ink);min-width:200px}
+  .lay{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start}
+  @media(max-width:900px){.lay{grid-template-columns:minmax(0,1fr)}}
+  canvas.cv{display:block;width:100%;cursor:crosshair}
+  .tip{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:18px;margin:8px 0 0}
+  .tl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .tl .tile .big{font-size:24px}
+  .tl .tile{padding:12px 13px}
+  .verd{margin:12px 0 0;padding:11px 13px;border-radius:var(--r-sm);background:var(--panel-2);border:1px solid var(--line-soft);font-size:13.5px;color:var(--ink-soft);line-height:1.55}
+  .verd b{color:var(--ink)}
+  .leg{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);align-items:center}
+  .leg i{display:inline-block;width:20px;height:0;vertical-align:middle;margin-right:6px;border-top:3px solid}
+  .leg b{display:inline-block;width:18px;height:10px;vertical-align:middle;margin-right:6px;border-radius:2px;opacity:.55}
+  .vuoto{display:grid;place-items:center;min-height:200px;color:var(--ink-faint);font-family:var(--mono);font-size:12.5px;text-align:center;padding:10px}
+  details.how{margin:10px 0 0;font-size:13.5px;color:var(--ink-soft)} details.how summary{cursor:pointer;font-weight:600;color:var(--ink)}
+  details.how ul{margin:8px 0 0;padding-left:18px} details.how li{margin:4px 0}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Skew-T</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento</div>
+      <h1>Lo skew-T del Mugello</h1>
+      <p class="lead">È il diagramma con cui i meteorologi "radiografano" l'atmosfera: una riga rossa per la temperatura a ogni quota, una azzurra per l'umidità (punto di rugiada), e una particella d'aria che sale per vedere se diventerà un temporale. Qui lo calcolo e lo disegno dal profilo previsto dal modello sopra Borgo San Lorenzo e Firenzuola, ogni 3 ore per 5 giorni, con la spiegazione in italiano.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Il sondaggio</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div class="sel">Punto <select id="pt" aria-label="Punto"></select>
+          Particella <select id="parc" aria-label="Particella"><option value="sb">dalla superficie</option><option value="ml">mescolata (primi 100 hPa)</option><option value="mu">la più instabile</option></select></div>
+        <div class="sel"><button id="prev" type="button" aria-label="Scadenza precedente">◀</button><button id="play" type="button" aria-label="Avvia animazione">▶ anima</button><button id="next" type="button" aria-label="Scadenza successiva">▶</button>
+          <input id="sl" type="range" min="0" max="0" step="1" value="0" aria-label="Scadenza"><span class="when" id="when"></span></div>
+        <div class="lay">
+          <div><canvas class="cv" id="sk" role="img" aria-label="Diagramma skew-T log-p"></canvas>
+            <div class="leg" id="leg"></div><div class="tip" id="tip">Passa sul diagramma per leggere pressione, quota e temperatura.</div></div>
+          <div><div class="tl" id="tiles"></div><div class="verd" id="verd"></div></div>
+        </div>
+        <details class="how"><summary>Come si legge uno skew-T</summary><ul>
+          <li><b>Asse verticale:</b> la pressione (in scala logaritmica), che sale con la quota: 1000 hPa è circa il livello del mare, 500 hPa circa 5,5 km, 200 hPa circa 12 km.</li>
+          <li><b>Linee oblique "skew":</b> sono le isoterme (temperatura costante), inclinate a 45°. La riga rossa è la temperatura reale dell'aria, quella azzurra il punto di rugiada: <b>quando si toccano l'aria è satura</b> e c'è nuvola o nebbia.</li>
+          <li><b>Linee arancio sottili</b> (curve): adiabatiche secche, come si raffredda l'aria che sale senza condensare. <b>Linee verdi</b>: adiabatiche sature, come si raffredda quando condensa. <b>Tratteggi azzurri</b>: rapporto di mescolanza.</li>
+          <li><b>La particella (tratteggio nero):</b> un pacchetto d'aria preso dal basso e fatto salire. Sale secco fino al <b>LCL</b> (base delle nubi), poi segue l'adiabatica satura. Dove diventa più caldo dell'ambiente (<b>LFC</b>) sale da solo, fino al <b>EL</b> (cima del temporale). L'area compresa è il <b>CAPE</b> (energia per i temporali, in J/kg), quella sotto il LFC è il <b>CIN</b> (il "tappo" da superare).</li>
+          <li><b>Barbe del vento</b> a destra: l'asta punta da dove soffia; ogni barbetta lunga vale 10 nodi, la corta 5, il triangolo 50.</li></ul></details>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Quando c'è energia per i temporali</h2><span class="src" id="src2"></span></div>
+      <div class="card">
+        <canvas class="cv" id="ca" role="img" aria-label="CAPE nel tempo"></canvas>
+        <div class="leg"><span><i style="border-color:var(--warm)"></i>CAPE calcolato dal profilo</span><span><i style="border-color:var(--ink-faint);border-top-style:dashed"></i>CAPE del modello</span><span><i style="border-color:var(--pine);border-top-width:1px"></i>scadenza mostrata</span></div>
+        <div class="tip" id="tip2">Clicca sul grafico per mostrare quel momento nello skew-T.</div>
+        <p class="note">Il CAPE calcolato qui usa la particella scelta sopra, con temperatura virtuale; quello del modello usa un altro metodo (di norma una particella della parte più umida dello strato basso), quindi i due possono differire anche del 30–50%. Valori di riferimento: sotto 300 J/kg poca convezione, 300–1000 moderata, oltre 1000 temporali organizzati possibili, oltre 2500 eventi violenti. Un CAPE alto con CIN forte significa energia "ingabbiata": i temporali partono solo se qualcosa fa salire l'aria (fronte, rilievo).</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> profilo verticale del modello ECMWF IFS 0,25° (riserva NOAA GFS) tramite Open-Meteo: temperatura, umidità e quota geopotenziale sui livelli da 1000 a 200 hPa, più temperatura e punto di rugiada a 2 m, pressione al suolo e vento. <code>scripts/fetch_skewt.py</code> scarica i dati nel giro automatico del sito (al massimo ogni 6 ore) in <code>data/skewt.json</code>. Orari in UTC, mostrati anche in ora italiana.</li>
+          <li><b>Metodo:</b> punto di rugiada dall'umidità relativa (formula di Magnus); LCL con la formula di Bolton; salita secca fino al LCL e poi adiabatica satura (integrazione a passi di 2 hPa); CAPE e CIN con la temperatura virtuale. K-index = (T850−T500)+Td850−(T700−Td700). Acqua precipitabile: integrale del rapporto di mescolanza dal suolo a 300 hPa. Il livello dello zero termico è interpolato sul profilo.</li>
+          <li><b>Limiti:</b> è un profilo di <b>modello</b>, non un radiosondaggio: la cella da circa 25 km smussa rilievi e valli (soprattutto a Firenzuola) e lo strato più basso è poco risolto. Con 14 livelli la risoluzione verticale è grossolana: CAPE e CIN sono stime, non misure. Per le allerte vale la Protezione Civile della Toscana.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()};
+  var f0=function(v){return v==null||isNaN(v)?"—":String(Math.round(v)).replace("-","−")};
+  var f1=function(v){return v==null||isNaN(v)?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−")};
+  var GS=["dom","lun","mar","mer","gio","ven","sab"],MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  var Rd=287.04,Cp=1005,EPS=0.622,Lv=2.5e6,G=9.81,K=Rd/Cp;
+  /* ---------------- termodinamica ---------------- */
+  var es=function(T){return 6.112*Math.exp(17.67*T/(T+243.5))};                       /* hPa, T in °C */
+  var mix=function(T,p){var e=es(T);return EPS*e/(p-e)};                                /* kg/kg di aria secca */
+  function dewp(T,rh){rh=Math.max(1,Math.min(100,rh));var g=Math.log(rh/100)+17.67*T/(T+243.5);return 243.5*g/(17.67-g)}
+  function tdFromW(w,p){var e=w*p/(EPS+w),l=Math.log(e/6.112);return 243.5*l/(17.67-l)}
+  var tv=function(T,w){return (T+273.15)*(1+0.61*w)};
+  function dTdp(T,p){var Tk=T+273.15,rs=mix(T,p);return (Rd*Tk+Lv*rs)/(p*(Cp+Lv*Lv*rs*EPS/(Rd*Tk*Tk)))}       /* K/hPa, adiabatica satura */
+  function moistUp(T,p,pTop,dp){var out=[{p:p,T:T}];while(p>pTop){var h=Math.min(dp,p-pTop),k1=dTdp(T,p),k2=dTdp(T-k1*h/2,p-h/2);T-=k2*h;p-=h;out.push({p:p,T:T})}return out}
+  function lcl(T,Td,p){var Tk=T+273.15,Tdk=Td+273.15;if(Td>=T-0.01)return {p:p,T:T};var Tl=1/(1/(Tdk-56)+Math.log(Tk/Tdk)/800)+56;return {p:p*Math.pow(Tl/Tk,1/K),T:Tl-273.15}}
+  /* profilo ambiente: [{p,T,Td,z,rh,v,d}] dal suolo in su, interpolazione lineare in ln p */
+  function interp(P,p,key){for(var i=1;i<P.length;i++){if(P[i].p<=p&&p<=P[i-1].p){var a=P[i-1][key],b=P[i][key];if(a==null||b==null)return null;var u=(Math.log(p)-Math.log(P[i-1].p))/(Math.log(P[i].p)-Math.log(P[i-1].p));return a+(b-a)*u}}return null}
+  function parcel(P,p0,T0,Td0){var L=lcl(T0,Td0,p0),w0=mix(Td0,p0),path=[],pTop=P[P.length-1].p;
+    for(var p=p0;p>L.p;p-=2){path.push({p:p,T:(T0+273.15)*Math.pow(p/p0,K)-273.15,w:w0})}
+    moistUp(L.T,L.p,pTop,2).forEach(function(x){path.push({p:x.p,T:x.T,w:mix(x.T,x.p)})});
+    /* differenza di temperatura virtuale (particella - ambiente) a ogni passo */
+    var dv=function(x){var Te=interp(P,x.p,"T"),Td=interp(P,x.p,"Td");return Te==null||Td==null?null:tv(x.T,x.w)-tv(Te,mix(Math.min(Td,Te),x.p))};
+    var d=path.map(dv),n=path.length,li=-1,i;
+    for(i=0;i<n-1;i++){if(d[i+1]==null)break;if(path[i].p<=L.p+1e-6&&d[i+1]>0){li=i;break}}
+    var seg=function(a,b){return (d[a]+d[b])/2*Rd*Math.log(path[a].p/path[b].p)};
+    if(li<0)return {L:L,path:path,cape:0,cin:null,lfc:null,el:null};
+    var cin=0;for(i=0;i<li;i++){var q=seg(i,i+1);if(q<0)cin-=q}
+    var lfc,cape=0,el=null;
+    if(d[li]>0)lfc={p:path[li].p,T:path[li].T};
+    else{var u=-d[li]/(d[li+1]-d[li]);lfc={p:path[li].p+(path[li+1].p-path[li].p)*u,T:path[li].T+(path[li+1].T-path[li].T)*u};cape+=0.5*d[li+1]*(1-u)*Rd*Math.log(path[li].p/path[li+1].p)}
+    for(i=Math.max(li,d[li]>0?li:li+1);i<n-1;i++){if(d[i+1]==null){break}
+      if(d[i]>0&&d[i+1]>0)cape+=seg(i,i+1);
+      else if(d[i]>0&&d[i+1]<=0){var u2=d[i]/(d[i]-d[i+1]);cape+=0.5*d[i]*u2*Rd*Math.log(path[i].p/path[i+1].p);el={p:path[i].p+(path[i+1].p-path[i].p)*u2,T:path[i].T+(path[i+1].T-path[i].T)*u2};break}}
+    if(!el)el={p:path[n-1].p,T:path[n-1].T,top:true};
+    return {L:L,path:path,cape:cape,cin:cin,lfc:lfc,el:el}}
+  function altezza(P,p){return interp(P,p,"z")}
+  /* ---------------- dati ---------------- */
+  var D=null,pi=0,ti=0,PR=null,GR=null,SKcache={};
+  function profilo(pt,i){var s=pt.sup,ps=s.ps[i],t2=s.t[i],td2=s.td[i];if(ps==null||t2==null||td2==null)return null;
+    var P=[{p:ps,T:t2,Td:Math.min(td2,t2),z:pt.quota,rh:null,v:s.v?s.v[i]:null,d:s.d?s.d[i]:null,sup:true}];
+    D.livelli.slice().sort(function(a,b){return b-a}).forEach(function(L){var o=pt.liv[String(L)];if(!o||L>=ps-3)return;var T=o.t[i],rh=o.rh[i];if(T==null||rh==null)return;
+      P.push({p:L,T:T,Td:Math.min(dewp(T,rh),T),z:o.z?o.z[i]:null,rh:rh,v:o.v?o.v[i]:null,d:o.d?o.d[i]:null})});
+    return P.length>=5?P:null}
+  function start(P,tipo){var s=P[0];if(tipo==="sb")return {p:s.p,T:s.T,Td:s.Td};
+    if(tipo==="ml"){var th=0,w=0,n=0;P.forEach(function(x){if(x.p>=s.p-100){th+=(x.T+273.15)*Math.pow(1000/x.p,K);w+=mix(x.Td,x.p);n++}});th/=n;w/=n;var T=th*Math.pow(s.p/1000,K)-273.15;return {p:s.p,T:T,Td:Math.min(tdFromW(w,s.p),T)}}
+    return null}
+  function analisi(pt,i,tipo){var key=pt.id+"|"+i+"|"+tipo;if(SKcache[key])return SKcache[key];var P=profilo(pt,i);if(!P)return (SKcache[key]={P:null});
+    var best=null;
+    if(tipo==="mu"){P.forEach(function(x){if(x.p<P[0].p-300||x.p<650)return;var r=parcel(P,x.p,x.T,x.Td);if(!best||r.cape>best.r.cape||(best.r.cape===0&&r.cape===0&&x===P[0]))best={r:r,s:{p:x.p,T:x.T,Td:x.Td}}})}
+    else{var s0=start(P,tipo);best={r:parcel(P,s0.p,s0.T,s0.Td),s:s0}}
+    var r=best.r,zs=P[0].z||0,ix=indici(P,r);return (SKcache[key]={P:P,r:r,s:best.s,ix:ix,zs:zs})}
+  function indici(P,r){var T=function(p){return interp(P,p,"T")},Td=function(p){return interp(P,p,"Td")},o={};
+    var t850=T(850),td850=Td(850),t500=T(500),t700=T(700),td700=Td(700);
+    o.K=(t850!=null&&t500!=null&&td850!=null&&t700!=null&&td700!=null)?(t850-t500)+td850-(t700-td700):null;
+    o.TT=(t850!=null&&td850!=null&&t500!=null)?t850+td850-2*t500:null;
+    var pp=null;for(var i=0;i<r.path.length;i++)if(r.path[i].p<=500){pp=r.path[i];break}o.LI=pp&&t500!=null?t500-pp.T:null;
+    var pw=0;for(var j=1;j<P.length;j++){if(P[j].p<300)break;var w1=mix(P[j-1].Td,P[j-1].p),w2=mix(P[j].Td,P[j].p);pw+=(w1+w2)/2*(P[j-1].p-P[j].p)*100/G}o.PW=pw;
+    var z0=null;for(var k=1;k<P.length;k++){if(P[k-1].T>0&&P[k].T<=0&&P[k].z!=null&&P[k-1].z!=null){var u=P[k-1].T/(P[k-1].T-P[k].T);z0=P[k-1].z+(P[k].z-P[k-1].z)*u;break}}
+    if(z0==null&&P[0].T<=0)z0=P[0].z;o.Z0=z0;
+    var v5=P.filter(function(x){return x.p===500})[0],s=P[0];if(v5&&v5.v!=null&&s.v!=null&&v5.d!=null&&s.d!=null){var u1=s.v/3.6*Math.sin(s.d*Math.PI/180),v1=s.v/3.6*Math.cos(s.d*Math.PI/180),u2=v5.v/3.6*Math.sin(v5.d*Math.PI/180),v2=v5.v/3.6*Math.cos(v5.d*Math.PI/180);o.SH=Math.hypot(u2-u1,v2-v1)}else o.SH=null;
+    return o}
+  /* ---------------- disegno ---------------- */
+  var PB=1050,PT=200;
+  function layout(W,H){var L=44,R=64,T=10,B=26,h=H-T-B,k=0.85,sx=(W-L-R)/62,Tmin=-30;
+    var Y=function(p){return T+Math.log(p/PT)/Math.log(PB/PT)*h};
+    var X=function(Tc,p){return L+(Tc-Tmin)*sx+(T+h-Y(p))*k};
+    return {L:L,R:R,T:T,B:B,h:h,W:W,H:H,X:X,Y:Y,Tmin:Tmin,sx:sx,k:k}}
+  function clip(c,g){c.beginPath();c.rect(g.L,g.T,g.W-g.L-g.R,g.h);c.clip()}
+  function poly(c,g,pts,col,w,dash,al){c.strokeStyle=col;c.lineWidth=w;c.globalAlpha=al==null?1:al;c.setLineDash(dash||[]);c.beginPath();pts.forEach(function(q,i){var x=g.X(q.T,q.p),y=g.Y(q.p);if(!i)c.moveTo(x,y);else c.lineTo(x,y)});c.stroke();c.setLineDash([]);c.globalAlpha=1}
+  function sfondo(c,g){c.save();clip(c,g);
+    var ink=css("--ink-faint"),ps=[];for(var p=PB;p>=PT;p-=10)ps.push(p);
+    for(var T=-120;T<=50;T+=10)poly(c,g,[{T:T,p:PB},{T:T,p:PT}],T===0?css("--sky"):css("--line"),T===0?1.6:1);
+    for(var th=250;th<=480;th+=10)poly(c,g,ps.map(function(p){return {T:th*Math.pow(p/1000,K)-273.15,p:p}}),css("--amber"),.8,null,.45);
+    for(var t0=-20;t0<=44;t0+=4)poly(c,g,moistUp(t0,1000,PT,10).concat([]),css("--pine"),.8,[2,3],.5);
+    [0.4,1,2,4,7,10,16,24].forEach(function(w){var pts=[];for(var p=PB;p>=600;p-=25)pts.push({T:tdFromW(w/1000,p),p:p});poly(c,g,pts,css("--sky"),.9,[4,4],.5)});
+    c.restore();
+    c.font="10.5px "+css("--mono");c.textBaseline="middle";c.fillStyle=ink;
+    for(var q=1000;q>=200;q-=100){var y=g.Y(q);c.strokeStyle=css("--line");c.lineWidth=1;c.beginPath();c.moveTo(g.L-4,y);c.lineTo(g.L,y);c.stroke();c.fillText(q,4,y)}
+    c.textBaseline="alphabetic";for(var T2=-30;T2<=40;T2+=10){var x=g.X(T2,PB);if(x>g.L&&x<g.W-g.R)c.fillText(T2+"°",x-8,g.H-8)}
+    c.strokeStyle=css("--line");c.strokeRect(g.L+.5,g.T+.5,g.W-g.L-g.R,g.h)}
+  function barba(c,x,y,v,d,col){/* v in nodi; d direzione da cui soffia */
+    var kt=Math.round(v/5)*5;c.strokeStyle=col;c.fillStyle=col;c.lineWidth=1.3;if(kt<5){c.beginPath();c.arc(x,y,2,0,6.3);c.stroke();return}
+    var a=d*Math.PI/180,ux=Math.sin(a),uy=-Math.cos(a),L=26,px=-uy,py=ux;c.beginPath();c.moveTo(x,y);c.lineTo(x+ux*L,y+uy*L);c.stroke();var pos=L;
+    while(kt>=50){c.beginPath();c.moveTo(x+ux*pos,y+uy*pos);c.lineTo(x+ux*(pos-5)+px*9,y+uy*(pos-5)+py*9);c.lineTo(x+ux*(pos-5),y+uy*(pos-5));c.closePath();c.fill();kt-=50;pos-=7}
+    while(kt>=10){c.beginPath();c.moveTo(x+ux*pos,y+uy*pos);c.lineTo(x+ux*pos+px*9-ux*2,y+uy*pos+py*9-uy*2);c.stroke();kt-=10;pos-=4}
+    if(kt>=5){c.beginPath();c.moveTo(x+ux*pos,y+uy*pos);c.lineTo(x+ux*pos+px*5-ux*1,y+uy*pos+py*5-uy*1);c.stroke()}}
+  function draw(){var cv=$("sk"),W=cv.parentNode.clientWidth,H=Math.min(640,Math.max(420,W*.98)),dpr=window.devicePixelRatio||1;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+"px";
+    var c=cv.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);var g=layout(W,H);GR=g;var A=PR;sfondo(c,g);
+    if(!A||!A.P){c.font="13px "+css("--mono");c.fillStyle=css("--ink-faint");c.fillText("Profilo non disponibile per questa scadenza.",g.L+14,g.T+30);return}
+    c.save();clip(c,g);
+    /* aree CAPE / CIN (tra ambiente e particella) */
+    var r=A.r,P=A.P,env=function(p){return interp(P,p,"T")};
+    {var shade=function(p1,p2,col){var pts=[],q;for(q=0;q<r.path.length;q++){var x=r.path[q];if(x.p<=p1&&x.p>=p2)pts.push({T:x.T,p:x.p})}if(pts.length<2)return;
+        c.fillStyle=col;c.beginPath();pts.forEach(function(x,i){var px=g.X(x.T,x.p),py=g.Y(x.p);if(!i)c.moveTo(px,py);else c.lineTo(px,py)});for(q=pts.length-1;q>=0;q--){var e=env(pts[q].p);if(e!=null)c.lineTo(g.X(e,pts[q].p),g.Y(pts[q].p))}c.closePath();c.fill()};
+      if(r.lfc&&r.el){c.globalAlpha=.30;shade(r.lfc.p,r.el.p,css("--amber"));c.globalAlpha=1}
+      c.globalAlpha=.25;shade(A.s.p,r.lfc?r.lfc.p:Math.max(r.L.p-250,PT),css("--sky"));c.globalAlpha=1}
+    /* particella e profili */
+    poly(c,g,r.path.filter(function(x){return x.p<=A.s.p}).map(function(x){return {T:x.T,p:x.p}}),css("--ink"),1.6,[6,4]);
+    poly(c,g,P.map(function(x){return {T:x.Td,p:x.p}}),css("--sky"),2.6);
+    poly(c,g,P.map(function(x){return {T:x.T,p:x.p}}),css("--warm"),2.8);
+    c.restore();
+    /* livelli caratteristici */
+    c.font="11px "+css("--mono");c.textBaseline="middle";var marks=[["EL",r.el],["LFC",r.lfc],["LCL",r.L]];
+    marks.forEach(function(m){if(!m[1])return;var y=g.Y(m[1].p);if(y<g.T||y>g.T+g.h)return;c.strokeStyle=css("--ink");c.lineWidth=1.2;c.beginPath();c.moveTo(g.W-g.R-26,y);c.lineTo(g.W-g.R,y);c.stroke();c.fillStyle=css("--ink");c.textAlign="right";c.fillText(m[0],g.W-g.R-30,y);c.textAlign="left"});
+    /* barbe */
+    P.forEach(function(x){if(x.v==null||x.d==null)return;var y=g.Y(x.p);if(y<g.T+4||y>g.T+g.h-4)return;barba(c,g.W-g.R/2,y,x.v/1.852,x.d,css("--ink-soft"))});
+    c.textAlign="left"}
+  function hit(ev){var cv=$("sk"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev;return {x:t.clientX-r.left,y:t.clientY-r.top}}
+  function tip(ev){if(!GR||!PR||!PR.P)return;var q=hit(ev),g=GR;if(q.y<g.T||q.y>g.T+g.h)return;var p=PT*Math.exp((q.y-g.T)/g.h*Math.log(PB/PT)),z=interp(PR.P,p,"z"),T=interp(PR.P,p,"T"),Td=interp(PR.P,p,"Td"),Tx=(q.x-g.L-(g.T+g.h-q.y)*g.k)/g.sx+g.Tmin;
+    $("tip").textContent=f0(p)+" hPa"+(z!=null?" · "+f0(z)+" m":"")+(T!=null?" · T "+f1(T)+" °C, Td "+f1(Td)+" °C":"")+" · cursore "+f1(Tx)+" °C"}
+  /* ---------------- pannello ---------------- */
+  function when(i){var d=new Date(D.t[i]+"Z"),rom=d.toLocaleString("it-IT",{timeZone:"Europe/Rome",weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});return rom+" (ora italiana) · "+D.t[i].slice(11,16)+" UTC"}
+  var CL=function(c){return c<50?"praticamente assente":c<300?"debole":c<1000?"moderato":c<2500?"forte":"molto forte"};
+  function pannello(){var A=PR;$("when").textContent=when(ti);
+    if(!A||!A.P){$("tiles").innerHTML="";$("verd").textContent="Profilo non disponibile per questa scadenza.";return}
+    var r=A.r,ix=A.ix,z=function(p){var h=altezza(A.P,p);return h==null?null:h},agl=function(p){var h=z(p);return h==null?null:h-A.zs};
+    var pt=D.punti[pi],mc=pt.sup.cape?pt.sup.cape[ti]:null;
+    var T=[["CAPE",f0(r.cape)+"<s>J/kg</s>",CL(r.cape)+(mc!=null?" · modello "+f0(mc):"")],["CIN",r.cin==null?"—":f0(r.cin)+"<s>J/kg</s>",r.cin==null?"nessun LFC: la particella resta più fredda":r.cin<25?"tappo debole":r.cin<100?"tappo moderato":"tappo forte"],
+      ["Base delle nubi (LCL)",agl(r.L.p)==null?"—":f0(agl(r.L.p))+"<s>m</s>","sul suolo · "+f0(r.L.p)+" hPa"],["Zero termico",ix.Z0==null?"—":f0(ix.Z0)+"<s>m</s>","quota in cui si gela"],
+      ["Acqua precipitabile",f0(ix.PW)+"<s>mm</s>","nell'intera colonna fino a 300 hPa"],["Indice K / Lifted",f0(ix.K)+" / "+(ix.LI==null?"—":f1(ix.LI)),"K>30 temporali probabili · LI<0 instabile"]];
+    $("tiles").innerHTML=T.map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
+    var s=A.P[0],hum=A.P.filter(function(x){return x.rh!=null&&x.rh>=90}),L=[];
+    L.push("In superficie "+f1(s.T)+" °C con punto di rugiada "+f1(s.Td)+" °C ("+(s.T-s.Td<2?"aria quasi satura: nebbia o nubi basse possibili":s.T-s.Td<6?"aria umida":"aria asciutta")+").");
+    if(r.cape<50)L.push("<b>Energia per i temporali praticamente assente</b>"+(r.lfc==null?": la particella non riesce a diventare più calda dell'ambiente.":"."));
+    else L.push("<b>CAPE "+CL(r.cape)+"</b> ("+f0(r.cape)+" J/kg)"+(r.cin>=100?", ma con un <b>tappo forte</b> (CIN "+f0(r.cin)+"): i temporali partono solo con un forzante (fronte, rilievo, convergenza).":r.cin>=25?" e un tappo moderato (CIN "+f0(r.cin)+").":" e quasi nessun tappo: la convezione può partire facilmente."));
+    if(r.lfc&&r.el){var hl=z(r.lfc.p),he=z(r.el.p);L.push("La particella diventa più calda dell'ambiente a circa "+(hl==null?f0(r.lfc.p)+" hPa":f0(hl)+" m")+" e le nubi potrebbero salire fino a circa "+(he==null?f0(r.el.p)+" hPa":f0(he)+" m")+(r.el.top?" (oltre il bordo dei dati)":"")+".")}
+    if(ix.Z0!=null)L.push("Zero termico a "+f0(ix.Z0)+" m: "+(ix.Z0-A.zs<1200&&s.T<6?"la neve può scendere fin verso "+f0(Math.max(A.zs,ix.Z0-300))+" m.":"la pioggia cade da quote più alte di questa."));
+    if(hum.length>=2)L.push("Strati molto umidi (UR≥90%) tra circa "+f0(hum[hum.length-1].p)+" e "+f0(hum[0].p)+" hPa: nubi probabili.");
+    if(ix.SH!=null)L.push("Vento tra suolo e 5,5 km: differenza di "+f0(ix.SH)+" m/s ("+(ix.SH>=20?"forte, i temporali possono organizzarsi":ix.SH>=12?"moderata":"debole")+").");
+    $("verd").innerHTML=L.join(" ")}
+  function legenda(){$("leg").innerHTML='<span><i style="border-color:var(--warm)"></i>temperatura</span><span><i style="border-color:var(--sky)"></i>punto di rugiada</span><span><i style="border-color:var(--ink);border-top-style:dashed"></i>particella</span><span><b style="background:var(--amber)"></b>CAPE</span><span><b style="background:var(--sky)"></b>CIN</span>'}
+  /* ---------------- serie CAPE ---------------- */
+  var CA=null;
+  function serieCape(){var cv=$("ca"),W=cv.parentNode.clientWidth-36,H=210,dpr=window.devicePixelRatio||1;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+"px";var c=cv.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);
+    var pt=D.punti[pi],tipo=$("parc").value,vals=D.t.map(function(_,i){var a=analisi(pt,i,tipo);return a.P?a.r.cape:null}),mod=pt.sup.cape||[],mx=Math.max(100,Math.max.apply(null,vals.filter(function(v){return v!=null}).concat(mod.filter(function(v){return v!=null}))))*1.1,
+        L=44,R=10,T=10,B=26,n=D.t.length,X=function(i){return L+i/(n-1)*(W-L-R)},Y=function(v){return T+(1-v/mx)*(H-T-B)};
+    c.font="10.5px "+css("--mono");c.textBaseline="middle";c.strokeStyle=css("--line");c.fillStyle=css("--ink-faint");var st=mx>1500?500:mx>600?200:100;for(var g=0;g<=mx;g+=st){c.beginPath();c.moveTo(L,Y(g));c.lineTo(W-R,Y(g));c.stroke();c.fillText(g,0,Y(g))}
+    c.textBaseline="alphabetic";D.t.forEach(function(t,i){var d=new Date(t+"Z"),h=+d.toLocaleString("it-IT",{timeZone:"Europe/Rome",hour:"2-digit",hour12:false});if(h===0||h===24){c.strokeStyle=css("--line-soft");c.beginPath();c.moveTo(X(i),T);c.lineTo(X(i),H-B);c.stroke();c.fillStyle=css("--ink-faint");c.fillText(GS[d.getDay()]+" "+d.getDate(),X(i)+3,H-8)}});
+    var line=function(a,col,w,dash){c.strokeStyle=col;c.lineWidth=w;c.setLineDash(dash||[]);c.beginPath();var s=false;a.forEach(function(v,i){if(v==null){s=false;return}if(!s){c.moveTo(X(i),Y(v));s=true}else c.lineTo(X(i),Y(v))});c.stroke();c.setLineDash([])};
+    if(mod.length)line(mod,css("--ink-faint"),1.4,[5,4]);line(vals,css("--warm"),2.4);
+    c.strokeStyle=css("--pine");c.lineWidth=1.5;c.beginPath();c.moveTo(X(ti),T);c.lineTo(X(ti),H-B);c.stroke();CA={L:L,R:R,n:n,vals:vals}
+    var pk=vals.reduce(function(a,v,i){return v!=null&&v>a.v?{v:v,i:i}:a},{v:-1,i:0});$("src2").textContent=pk.v>=50?"picco di CAPE: "+f0(pk.v)+" J/kg · "+when(pk.i).split(" (")[0]:"CAPE sempre basso nei 5 giorni"}
+  function clickCa(ev){if(!CA)return;var cv=$("ca"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,i=Math.round((t.clientX-r.left-CA.L)/(r.width-CA.L-CA.R)*(CA.n-1));if(i>=0&&i<CA.n){ti=i;$("sl").value=i;aggiorna()}}
+  function tipCa(ev){if(!CA)return;var cv=$("ca"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,i=Math.round((t.clientX-r.left-CA.L)/(r.width-CA.L-CA.R)*(CA.n-1));if(i>=0&&i<CA.n){var m=D.punti[pi].sup.cape;$("tip2").textContent=when(i).split(" (")[0]+" · CAPE calcolato "+f0(CA.vals[i])+" J/kg"+(m&&m[i]!=null?" · modello "+f0(m[i]):"")}}
+  /* ---------------- controllo ---------------- */
+  function aggiorna(){PR=analisi(D.punti[pi],ti,$("parc").value);draw();pannello();serieCape()}
+  var timer=null;function play(){if(timer){clearInterval(timer);timer=null;$("play").textContent="▶ anima";return}$("play").textContent="❚❚ ferma";timer=setInterval(function(){ti=(ti+1)%D.t.length;$("sl").value=ti;aggiorna()},700)}
+  fetch("./data/skewt.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){D=d;
+    $("pt").innerHTML=D.punti.map(function(p,i){return '<option value="'+i+'">'+p.nome+(p.quota!=null?" ("+Math.round(p.quota)+" m)":"")+'</option>'}).join("");
+    var now=Date.now();ti=Math.max(0,D.t.findIndex(function(t){return Date.parse(t+"Z")>=now-1.5*36e5}));if(ti<0)ti=0;
+    $("sl").max=D.t.length-1;$("sl").value=ti;legenda();$("src").textContent=D.modello+" · aggiornato "+D.aggiornato.slice(0,10)+" ore "+D.aggiornato.slice(11,16)+" UTC";
+    $("pt").addEventListener("change",function(){pi=+$("pt").value;aggiorna()});$("parc").addEventListener("change",aggiorna);
+    $("sl").addEventListener("input",function(){ti=+$("sl").value;aggiorna()});$("prev").addEventListener("click",function(){ti=(ti+D.t.length-1)%D.t.length;$("sl").value=ti;aggiorna()});$("next").addEventListener("click",function(){ti=(ti+1)%D.t.length;$("sl").value=ti;aggiorna()});$("play").addEventListener("click",play);
+    var sk=$("sk");sk.addEventListener("mousemove",tip);sk.addEventListener("touchstart",tip,{passive:true});sk.addEventListener("touchmove",tip,{passive:true});
+    var ca=$("ca");ca.addEventListener("click",clickCa);ca.addEventListener("mousemove",tipCa);ca.addEventListener("touchstart",function(e){tipCa(e);clickCa(e)},{passive:true});
+    var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(function(){draw();serieCape()},150)});
+    window.__skewt={parcel:parcel,mix:mix,es:es,lcl:lcl,dewp:dewp};aggiorna()
+  }).catch(function(){$("src").textContent="in arrivo";$("sk").parentNode.innerHTML='<div class="vuoto">I profili verticali arrivano dal giro automatico del sito (ogni 6 ore circa):<br>compariranno dopo il prossimo aggiornamento.</div>';$("tiles").innerHTML="";$("ca").parentNode.innerHTML='<div class="vuoto">In attesa dei dati.</div>'});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

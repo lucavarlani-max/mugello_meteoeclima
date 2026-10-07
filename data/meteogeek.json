@@ -39,6 +39,40 @@
   ],
   "esperimenti": [
     {
+      "id": "microclima",
+      "titolo": "Il microclima del Mugello: l'inversione termica",
+      "tipo": "statistica",
+      "tema": "stazioni",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Il profilo della temperatura da 196 a 960 metri in tempo reale con otto stazioni della Regione, ISCARP2 e Netatmo a confronto nelle ultime 24 ore, e quante notti d'inversione termica ci sono state dal 1992: a Borgo la minima è più bassa di quella a 820 m in oltre metà delle notti.",
+      "link": "geek-microclima.html",
+      "tag": [
+        "microclima",
+        "inversione termica",
+        "quota",
+        "ISCARP2",
+        "Netatmo"
+      ]
+    },
+    {
+      "id": "skewt",
+      "titolo": "Lo skew-T del Mugello",
+      "tipo": "esperimento",
+      "tema": "previsioni",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Il diagramma dei meteorologi calcolato dal profilo previsto sopra Borgo San Lorenzo e Firenzuola: temperatura e punto di rugiada a tutte le quote, particella d'aria, CAPE, CIN, base delle nubi, zero termico, vento. Ogni 3 ore per 5 giorni, con la spiegazione in italiano.",
+      "link": "geek-skewt.html",
+      "tag": [
+        "skew-T",
+        "CAPE",
+        "temporali",
+        "sondaggio",
+        "ECMWF"
+      ]
+    },
+    {
       "id": "spaghetti-ensemble",
       "titolo": "51 futuri possibili: lo spaghetti plot ECMWF",
       "tipo": "grafico",
