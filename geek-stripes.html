@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Warming stripes del Mugello · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Le strisce del clima: un colore per ogni anno, dal blu al rosso, per Borgo San Lorenzo, Firenzuola e altre 11 serie storiche italiane e mondiali.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-stripes.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Warming stripes del Mugello · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  #stripes{display:block;width:100%;height:auto;border-radius:var(--r-sm);cursor:crosshair}
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+  .sel select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px}
+  .sel button{font:inherit;font-size:13px;padding:7px 12px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);cursor:pointer}
+  .sel button:hover{border-color:var(--pine)}
+  #tip{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:18px;margin:8px 0 0}
+  .bar{height:12px;border-radius:6px;margin:12px 0 2px;max-width:420px}
+  .barl{display:flex;justify-content:space-between;max-width:420px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .row{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;margin:5px 0}
+  .row canvas{width:100%;height:26px;border-radius:4px;display:block}
+  .row a{font-size:12.5px;color:var(--ink);text-decoration:none;font-weight:600}
+  .row a:hover{color:var(--pine)}.row .tr{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);text-align:right}
+  @media(max-width:640px){.row{grid-template-columns:96px 1fr 56px}}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Warming stripes</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · grafico</div>
+      <h1>Warming stripes del Mugello</h1>
+      <p class="lead">Un colore per ogni anno: blu se è stato più freddo del periodo 1961–1990, rosso se più caldo. Niente assi e niente numeri, solo la storia del clima di una stazione. Scegli Borgo San Lorenzo, Firenzuola o una delle altre serie lunghe e confrontale.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Le strisce</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div class="sel">
+          <select id="sta" aria-label="Stazione"></select>
+          <button id="png" type="button">Scarica PNG</button>
+        </div>
+        <canvas id="stripes" role="img" aria-label="Warming stripes della stazione scelta"></canvas>
+        <div id="tip">Passa il mouse (o tocca) su una striscia per leggere anno e anomalia.</div>
+        <div class="bar" id="bar"></div>
+        <div class="barl"><span>−2,5 °C</span><span>0</span><span>+2,5 °C</span></div>
+        <p class="note">Ogni striscia è la temperatura media di un anno (media di massima e minima) meno la media della stessa stazione nel periodo di riferimento. La scala dei colori è uguale per tutte le stazioni, così sono confrontabili. Le strisce grigie sono anni senza dati sufficienti.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Che cosa si vede</h2></div>
+      <div class="card"><div id="oss" class="note" style="margin:0"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Tutte le stazioni a confronto</h2><span class="src">stessa scala, stesso periodo di riferimento</span></div>
+      <div class="card"><div id="tutte"></div>
+        <p class="note">L'ultima colonna è la tendenza lineare dal 1951 (o dall'inizio della serie, se più recente), in °C per decennio. Clicca il nome per aprire la stazione.</p></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> Borgo San Lorenzo: Servizio Idrologico Regionale e Centro Funzionale Toscana (dal 1951). Firenzuola e le altre serie: serie giornaliere già usate nelle pagine delle stazioni storiche (<code>data/serie/</code>). Elaborazione: <code>scripts/build_stripes.py</code>.</li>
+          <li><b>Metodo:</b> temperatura media annua, anomalia rispetto alla media 1961–1990 della stessa stazione (per Bangalore, che non copre bene quel periodo, rispetto all'intera serie). Un anno conta se ha almeno 330 giorni validi. Tendenza: regressione lineare sugli anni disponibili.</li>
+          <li><b>Limiti:</b> i dati sono quelli di una singola stazione, non del territorio; spostamenti, cambi di strumento e urbanizzazione non sono corretti. Borgo San Lorenzo ha un buco 1989–2000.</li>
+          <li><b>Idea originale:</b> le warming stripes di Ed Hawkins (Università di Reading, 2018), qui applicate ai dati del Mugello.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var f1=function(v){return (v<0?"−":v>0?"+":"")+Math.abs(v).toFixed(1).replace(".",",")};
+  var RANGE=2.5, D=null, cur=null, bandw=1;
+  /* blu → bianco → rosso (palette tipo RdBu) */
+  var STOPS=[[-1,[8,48,107]],[-.66,[49,130,189]],[-.33,[158,202,225]],[0,[247,247,247]],[.33,[252,174,145]],[.66,[222,45,38]],[1,[103,0,13]]];
+  function col(a){if(a==null)return "#8d96907a";var t=Math.max(-1,Math.min(1,a/RANGE));
+    for(var i=1;i<STOPS.length;i++){if(t<=STOPS[i][0]){var p=STOPS[i-1],q=STOPS[i],u=(t-p[0])/(q[0]-p[0]);
+      return "rgb("+[0,1,2].map(function(k){return Math.round(p[1][k]+(q[1][k]-p[1][k])*u)}).join(",")+")";}}return "rgb(103,0,13)";}
+  function anom(s){var m={};s.anni.forEach(function(r){m[r[0]]=r[1]-s.rif.tm});return m}
+  function trend(s,from){var p=s.anni.filter(function(r){return r[0]>=from});if(p.length<10)return null;
+    var n=p.length,sx=0,sy=0,sxy=0,sxx=0;p.forEach(function(r){sx+=r[0];sy+=r[1];sxy+=r[0]*r[1];sxx+=r[0]*r[0]});
+    return (n*sxy-sx*sy)/(n*sxx-sx*sx)*10;}
+  function draw(cv,s,h){var A=anom(s),W=cv.clientWidth||600,dpr=window.devicePixelRatio||1,n=s.al-s.dal+1;
+    cv.width=Math.round(W*dpr);cv.height=Math.round(h*dpr);cv.style.height=h+"px";
+    var c=cv.getContext("2d");c.scale(dpr,dpr);var w=W/n;
+    for(var y=s.dal;y<=s.al;y++){c.fillStyle=col(A[y]==null?null:A[y]);
+      if(A[y]==null){c.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--line").trim()||"#ccc";}
+      c.fillRect((y-s.dal)*w,0,w+.6,h);}
+    return w;}
+  function show(){var s=cur,cv=$("stripes");bandw=draw(cv,s,Math.min(380,Math.max(180,cv.clientWidth*.42)));
+    $("src").textContent=s.nome+" · "+s.dal+"–"+s.al+" · "+s.n+" anni · riferimento "+s.rif.periodo+" ("+s.rif.tm.toFixed(1).replace(".",",")+" °C)";
+    var A=s.anni.map(function(r){return{y:r[0],a:r[1]-s.rif.tm,t:r[1]}}),top=A.slice().sort(function(x,y){return y.a-x.a}).slice(0,5),
+        cold=A.slice().sort(function(x,y){return x.a-y.a})[0],last10=A.slice(-10),first10=A.slice(0,10),
+        avg=function(a){return a.reduce(function(x,y){return x+y.a},0)/a.length},tr=trend(s,Math.max(1951,s.dal));
+    var li=[];
+    li.push("<b>Gli anni più caldi:</b> "+top.map(function(x){return x.y+" ("+f1(x.a)+" °C)"}).join(", ")+".");
+    li.push("<b>L'anno più freddo:</b> "+cold.y+" ("+f1(cold.a)+" °C).");
+    if(A.length>=30)li.push("<b>Gli ultimi dieci anni disponibili</b> ("+last10[0].y+"–"+last10[9].y+") sono in media "+f1(avg(last10))+" °C rispetto al riferimento; i primi dieci della serie ("+first10[0].y+"–"+first10[9].y+") "+f1(avg(first10))+" °C.");
+    if(tr!=null)li.push("<b>Tendenza:</b> "+f1(tr)+" °C per decennio dal "+Math.max(1951,s.dal)+".");
+    if(s.nota)li.push("<b>Nota:</b> "+s.nota+".");
+    $("oss").innerHTML="<ul style='margin:0;padding-left:18px'><li>"+li.join("</li><li>")+"</li></ul>";}
+  function tutte(){var h="";D.stazioni.forEach(function(s,i){var t=trend(s,Math.max(1951,s.dal));
+      h+='<div class="row"><a href="#" data-i="'+i+'">'+s.nome+'</a><canvas data-i="'+i+'"></canvas><span class="tr">'+(t==null?"—":f1(t))+'</span></div>';});
+    $("tutte").innerHTML=h;
+    $("tutte").querySelectorAll("canvas").forEach(function(cv){draw(cv,D.stazioni[cv.dataset.i],26)});
+    $("tutte").querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();$("sta").value=a.dataset.i;pick();scrollTo({top:0,behavior:"smooth"});});});}
+  function pick(){cur=D.stazioni[+$("sta").value];show();}
+  function tip(ev){var cv=$("stripes"),r=cv.getBoundingClientRect(),x=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left,
+      y=cur.dal+Math.floor(x/(r.width/(cur.al-cur.dal+1))),row=cur.anni.filter(function(q){return q[0]===y})[0];
+    $("tip").textContent=row?y+" · media "+row[1].toFixed(1).replace(".",",")+" °C · anomalia "+f1(row[1]-cur.rif.tm)+" °C":y+" · dati insufficienti";}
+  fetch("./data/geek/stripes.json").then(function(r){return r.json()}).then(function(d){D=d;
+    $("sta").innerHTML=["Mugello","Italia","Mondo"].map(function(g){return '<optgroup label="'+g+'">'+d.stazioni.map(function(s,i){return s.area===g?'<option value="'+i+'">'+s.nome+'</option>':""}).join("")+'</optgroup>'}).join("");
+    var bar=[];for(var i=-10;i<=10;i++)bar.push(col(i/10*RANGE)+" "+((i+10)/20*100)+"%");$("bar").style.background="linear-gradient(90deg,"+bar.join(",")+")";
+    pick();tutte();
+    $("sta").addEventListener("change",pick);
+    $("stripes").addEventListener("mousemove",tip);$("stripes").addEventListener("touchstart",tip,{passive:true});$("stripes").addEventListener("touchmove",tip,{passive:true});
+    $("png").addEventListener("click",function(){var c=document.createElement("canvas");c.width=1600;c.height=800;
+      var s=cur,A=anom(s),n=s.al-s.dal+1,x=c.getContext("2d");
+      for(var y=s.dal;y<=s.al;y++){x.fillStyle=A[y]==null?"#bbb":col(A[y]);x.fillRect((y-s.dal)*1600/n,0,1600/n+1,800);}
+      var a=document.createElement("a");a.download="warming-stripes-"+s.id+".png";a.href=c.toDataURL("image/png");a.click();});
+    var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(function(){show();tutte();},150)});
+  }).catch(function(){$("src").textContent="Dati non disponibili al momento."});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
