@@ -50,10 +50,10 @@
     },
     {
      "cat": "terremoti",
-     "titolo": "Magnitudo 6,0 nel mare di Sumba",
-     "testo": "Il 4 ottobre alle 00:55 (ora italiana) l'INGV ha localizzato un terremoto Mwp 6,0 a 9 km di profondità, in mare davanti all'isola di Sumba, in Indonesia, senza danni significativi.",
-     "fonte": "INGV",
-     "url": "http://terremoti.ingv.it/event/46762051",
+     "titolo": "Scosse di magnitudo 5,5 e 5,9 nel Pacifico settentrionale",
+     "testo": "Il 6 ottobre un terremoto di magnitudo 5,5 in Alaska, a circa 87 km di profondità, avvertito in diversi centri, e uno di magnitudo 5,9 nelle isole Curili, in Russia, a 264 km da Severo-Kurilsk.",
+     "fonte": "USGS / Fox Weather",
+     "url": "https://www.foxweather.com/weather-news/magnitude-5-5-earthquake-rattles-alaska-triggering-noticeable-shaking-across-region",
      "foto": "sismo1"
     },
     {
@@ -83,6 +83,149 @@
     {
      "tipo": "almanacco",
      "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:22 e tramonta alle 18:41, circa 11 ore e 19 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata all'11%; la Luna nuova è sabato 10 ottobre alle 17:50."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-06",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Tre tifoni insieme nel Pacifico occidentale, caso raro a ottobre",
+    "testo": "Choi-wan, Nolo e Koguma sono attivi nello stesso momento: non accadeva in ottobre da cinque anni, secondo la Japan Weather Association. Le tempeste sollevano onde alte lungo le coste del Giappone; Choi-wan dovrebbe piegare verso nord-est senza toccare terra.",
+    "fonte": "The Japan Times",
+    "url": "https://www.japantimes.co.jp/news/2026/10/06/japan/western-pacific-typhoons/",
+    "foto": "uragano1"
+   },
+   "numero": {
+    "valore": "3",
+    "testo": "I sistemi tropicali attivi contemporaneamente nel Pacifico occidentale il 6 ottobre: in ottobre non succedeva da cinque anni."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Stromboli, nuova colata sulla Sciara del Fuoco",
+     "testo": "Dalle 15:05 del 5 ottobre l'INGV segnala un nuovo flusso di lava sulla parte alta della Sciara del Fuoco; nella settimana precedente l'attività era stata stromboliana ordinaria, con un trabocco di lava dal cratere Nord il 1° ottobre.",
+     "fonte": "INGV Osservatorio Etneo",
+     "url": "https://www.ct.ingv.it/index.php/monitoraggio-e-sorveglianza/prodotti-del-monitoraggio/bollettini-settimanali-multidisciplinari/1173-bollettino-Settimanale-sul-monitoraggio-vulcanico-geochimico-e-sismico-del-vulcano-Stromboli-del-2026-10-06/file"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Sheveluch, cenere a 6,7 km di quota",
+     "testo": "Il 5 ottobre il centro di Tokyo per le ceneri vulcaniche ha segnalato in Kamchatka una nube di cenere alta circa 6.700 m (livello di volo 220), spinta verso nord-est a 25 nodi.",
+     "fonte": "VAAC Tokyo",
+     "url": "https://volcanodiscovery.com/sheveluch/news/371581/vaac-advisory-2026-352.html"
+    },
+    {
+     "cat": "temporali",
+     "titolo": "Allerta gialla sulla Toscana meridionale",
+     "testo": "Martedì 6 ottobre allerta gialla per temporali e rischio idrogeologico su Etruria-Costa Sud, Ombrone-Costa, Fiora e Albegna e Isole, con piogge diffuse fin dalle prime ore sulla Toscana meridionale e sul Lazio settentrionale.",
+     "fonte": "Protezione Civile / MeteoWeb",
+     "url": "https://www.meteoweb.eu/2026/10/allerta-meteo-protezione-civile-6-ottobre-due-regioni-in-giallo-per-temporali-e-rischio-idrogeologico/1001987719/",
+     "foto": "tornado"
+    },
+    {
+     "cat": "clima",
+     "titolo": "A metà settimana il fronte atlantico",
+     "testo": "Fra mercoledì e giovedì un fronte atlantico porta piogge al Centro-Nord e aria più fresca, dopo giorni di temperature sopra la media.",
+     "fonte": "Sbircia la Notizia",
+     "url": "https://www.sbircialanotizia.it/articoli/2026/10/06/allerta-gialla-fronte-3oqdg/"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "L'allerta gialla di martedì 6 ottobre riguarda la Toscana meridionale e costiera; per il Mugello l'attenzione è al fronte atlantico di mercoledì e giovedì, con piogge e temperature in calo: controlla gli avvisi del Centro Funzionale.",
+     "fonte": "Protezione Civile / LaMMA Toscana"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1967: il 6 ottobre cadono 490 mm di pioggia in un solo giorno a Ucluelet, nella Columbia Britannica, il record canadese. 1985: fra il 6 e il 7 ottobre la tempesta tropicale Isabel scarica fino a 600 mm in 24 ore su Porto Rico, con alluvioni e frane che fanno circa 180 vittime.",
+     "fonte": "NWS"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Uragani, tifoni e cicloni tropicali sono lo stesso fenomeno: cambia solo il nome a seconda dell'oceano. «Uragano» nell'Atlantico e nel Pacifico nord-orientale, «tifone» nel Pacifico nord-occidentale, «ciclone» nell'Oceano Indiano e nel Pacifico meridionale.",
+     "fonte": "NOAA"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:21 e tramonta alle 18:43, circa 11 ore e 22 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata al 19%; la Luna nuova è sabato 10 ottobre alle 17:50."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-05",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "El Niño 2026 è già il più intenso mai registrato e non ha finito di crescere",
+    "testo": "Le temperature dell'Oceano Pacifico tropicale indicano che è già l'El Niño più forte mai osservato; il NOAA stima oltre il 90% di probabilità che diventi molto forte nell'autunno-inverno 2026-27.",
+    "fonte": "Science News Explores / NOAA CPC",
+    "url": "https://snexplores.org/article/record-breaking-2026-el-nino",
+    "foto": "oceano"
+   },
+   "numero": {
+    "valore": "90%",
+    "testo": "La probabilità, stimata dal NOAA, che l'El Niño in corso diventi molto forte nell'autunno-inverno 2026-27."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Magnitudo 6,0 nel mare di Sumba",
+     "testo": "Il 4 ottobre alle 00:55 (ora italiana) l'INGV ha localizzato un terremoto Mwp 6,0 a 9 km di profondità, in mare davanti all'isola di Sumba, in Indonesia, senza danni significativi.",
+     "fonte": "INGV",
+     "url": "http://terremoti.ingv.it/event/46762051",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Si forma la depressione tropicale Nove nel Golfo",
+     "testo": "Si è formata nel Golfo del Messico e dovrebbe rafforzarsi fino a diventare il primo uragano di una stagione atlantica che ha già avuto otto tempeste con nome, nessuna arrivata a uragano.",
+     "fonte": "CNN",
+     "url": "https://www.cnn.com/2026/10/05/weather/storm-isaias-hurricane-path-gulf-climate",
+     "foto": "uragano2"
+    },
+    {
+     "cat": "clima",
+     "titolo": "La Corte Suprema Usa e la scienza del clima",
+     "testo": "Il 5 ottobre i giudici hanno ascoltato il caso Suncor contro Boulder, che decide se le città possono chiedere i danni climatici alle compagnie petrolifere: al centro c'è la scienza dell'attribuzione. La sentenza è attesa nel 2027.",
+     "fonte": "Colorado Public Radio",
+     "url": "https://www.cpr.org/2026/10/05/scotust-hears-boulder-suncor-climate-case/"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Appennino centrale, scosse lievi a Norcia",
+     "testo": "Il 5 ottobre l'INGV ha registrato due scosse a Norcia, di magnitudo 2,6 e 2,4, con altri eventi minori fra Umbria e Marche: sismicità ordinaria, senza danni.",
+     "fonte": "INGV",
+     "url": "https://ultimiterremoti.it/2026/10/05/terremoto-053630-m2-6-epicentro-2-km-ne-norcia-pg/"
+    },
+    {
+     "cat": "temporali",
+     "titolo": "Toscana, in arrivo i temporali",
+     "testo": "Lunedì 5 ottobre cielo con nubi in aumento dal pomeriggio e piogge sulla costa centro-meridionale; fra la sera e il mattino dopo possibili temporali intensi sulle coste del sud e sulle isole della regione.",
+     "fonte": "Maremma News / Protezione Civile",
+     "url": "https://maremmanews.it/il-meteo-in-maremma-e-in-toscana/2026-10-04/meteo-come-sara-il-tempo-lunedi-5-ottobre-in-toscana-e-provincia-di-grosseto",
+     "foto": "fulmine"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Lunedì 5 ottobre in Toscana minime fra 6 e 12 °C e massime fino a 13–25 °C, nubi in aumento dal pomeriggio-sera, venti deboli o moderati e mare poco mosso; piogge sulla costa centro-meridionale.",
+     "fonte": "LaMMA Toscana / Maremma News"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1864: il 5 ottobre un ciclone tropicale con una grande onda di tempesta sommerge Calcutta: oltre 60.000 vittime, in gran parte per annegamento. Dopo la catastrofe nacque in India un sistema di allerta per i cicloni.",
+     "fonte": "Wikipedia / The Tribune"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "La parola «uragano» viene da hurakán, un nome di origine taína legato al dio delle tempeste: gli spagnoli lo adottarono nei Caraibi e da lì è arrivato in tutte le lingue europee.",
+     "fonte": "NOAA"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:19 e tramonta alle 18:45, circa 11 ore e 25 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata al 29%; la Luna nuova è sabato 10 ottobre alle 17:50."
     }
    ]
   },
