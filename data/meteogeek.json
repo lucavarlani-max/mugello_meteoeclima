@@ -1,6 +1,77 @@
 {
-  "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
+  "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una (scegli anche il suo \"tema\" tra quelli di \"temi\" qui sotto; senza tema finisce in \"Altre prove\"): un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
+  "temi": [
+    {
+      "id": "clima",
+      "icona": "🌡️",
+      "nome": "Clima e temperature",
+      "testo": "Come cambia il caldo: strisce del clima, climatologie, riscaldamento delle stazioni.",
+      "colore": "#c8452b"
+    },
+    {
+      "id": "pioggia",
+      "icona": "🌧️",
+      "nome": "Pioggia e acqua",
+      "testo": "Calendari, probabilità e record di pioggia nel Mugello e in Toscana.",
+      "colore": "#2a78d6"
+    },
+    {
+      "id": "previsioni",
+      "icona": "🔮",
+      "nome": "Previsioni e modelli",
+      "testo": "Quanto ci azzeccano i modelli e come si leggono le carte sinottiche.",
+      "colore": "#7a5bc0"
+    },
+    {
+      "id": "stazioni",
+      "icona": "📡",
+      "nome": "Stazioni e serie storiche",
+      "testo": "Schede, mappe e confronti tra le stazioni meteo più antiche e lunghe.",
+      "colore": "#0f6b52"
+    },
+    {
+      "id": "mondo",
+      "icona": "🌍",
+      "nome": "Mondo e curiosità",
+      "testo": "Record planetari, astronomia e piccole scoperte fuori dal Mugello.",
+      "colore": "#c9671f"
+    }
+  ],
   "esperimenti": [
+    {
+      "id": "compleanno-clima",
+      "titolo": "Il tuo compleanno nel clima",
+      "tipo": "statistica",
+      "tema": "clima",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Scegli una data e una stazione: com'era il tempo quel giorno in tutti gli anni di misure? Record di caldo e freddo, tendenza, confronto tra primi e ultimi 30 anni, e se scrivi l'anno in cui sei nato, come era il tuo giorno.",
+      "link": "geek-compleanno-clima.html",
+      "tag": [
+        "compleanno",
+        "temperatura",
+        "record",
+        "tendenza",
+        "serie storiche"
+      ]
+    },
+    {
+      "id": "verifica-modello",
+      "titolo": "Chi ci azzecca di più? Il modello contro le misure",
+      "tipo": "statistica",
+      "data": "2026-10-07",
+      "stato": "in-corso",
+      "testo": "WeatherNext 3 e Open-Meteo messi ogni giorno alla prova contro ISCARP2 e il pluviometro SIR di Borgo, con due avversari senza intelligenza: la persistenza e la media del periodo. Errori su massima e minima, probabilità di pioggia e Brier score. L'archivio è appena partito e si arricchisce da solo.",
+      "link": "geek-verifica-modello.html",
+      "tag": [
+        "previsioni",
+        "WeatherNext",
+        "ISCARP2",
+        "verifica",
+        "Brier"
+      ],
+      "tema": "previsioni"
+    },
     {
       "id": "pioggia-calendario",
       "titolo": "Il calendario della pioggia",
@@ -17,7 +88,8 @@
         "Mugello",
         "statistica",
         "probabilità"
-      ]
+      ],
+      "tema": "pioggia"
     },
     {
       "id": "warming-stripes",
@@ -32,7 +104,8 @@
         "temperatura",
         "Mugello",
         "clima"
-      ]
+      ],
+      "tema": "clima"
     },
     {
       "id": "ghcn-stazione",
@@ -47,7 +120,8 @@
         "GHCN",
         "stazioni",
         "clima"
-      ]
+      ],
+      "tema": "stazioni"
     },
     {
       "id": "ghcn-climatologia",
@@ -61,7 +135,8 @@
         "NOAA",
         "GHCN",
         "climatologia"
-      ]
+      ],
+      "tema": "clima"
     },
     {
       "id": "ghcn-stazioni",
@@ -76,7 +151,8 @@
         "GHCN",
         "stazioni",
         "mappa"
-      ]
+      ],
+      "tema": "stazioni"
     },
     {
       "id": "riscaldamento-stazioni",
@@ -88,7 +164,8 @@
       "tag": [
         "serie storiche",
         "riscaldamento"
-      ]
+      ],
+      "tema": "clima"
     },
     {
       "id": "piogge-estreme",
@@ -101,7 +178,8 @@
         "Toscana",
         "pioggia",
         "record"
-      ]
+      ],
+      "tema": "pioggia"
     },
     {
       "id": "carte-sinottiche",
@@ -113,7 +191,8 @@
       "tag": [
         "modelli",
         "Europa"
-      ]
+      ],
+      "tema": "previsioni"
     },
     {
       "id": "effemeridi",
@@ -126,7 +205,8 @@
         "astronomia",
         "Sole",
         "Luna"
-      ]
+      ],
+      "tema": "mondo"
     },
     {
       "id": "stazioni-centenarie",
@@ -138,7 +218,8 @@
       "tag": [
         "OMM",
         "serie storiche"
-      ]
+      ],
+      "tema": "stazioni"
     },
     {
       "id": "estremi-mondo",
@@ -150,7 +231,8 @@
       "tag": [
         "mondo",
         "record"
-      ]
+      ],
+      "tema": "mondo"
     }
   ]
 }

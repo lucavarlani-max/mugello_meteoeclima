@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verifica delle previsioni · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Quanto ci azzecca la previsione? Il modello WeatherNext 3 e Open-Meteo confrontati ogni giorno con quello che misurano davvero la stazione ISCARP2 di Scarperia e il pluviometro SIR di Borgo San Lorenzo.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-verifica-modello.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Verifica delle previsioni · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13px;color:var(--ink-soft)}
+  .sel select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;max-width:100%}
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tile .big{font-size:26px}
+  @media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .banner{margin:0 0 14px;padding:11px 14px;border-radius:var(--r-sm);background:var(--amber-tint);border:1px solid var(--line);color:var(--ink);font-size:13.5px}
+  .tw{overflow-x:auto}
+  table.m{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+  table.m th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;text-align:right;padding:6px 8px;border-bottom:1px solid var(--line)}
+  table.m th:first-child,table.m td:first-child{text-align:left}
+  table.m td{padding:7px 8px;border-bottom:1px solid var(--line-soft);text-align:right;font-family:var(--mono);font-size:12.5px}
+  table.m td:first-child{font-family:var(--sans);font-size:13.5px;font-weight:600}
+  table.m td.best{color:var(--pine);font-weight:700}
+  table.m tr.base td:first-child{color:var(--ink-soft);font-weight:500}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+  .verd{margin:12px 0 0;padding:10px 12px;border-radius:var(--r-sm);background:var(--panel-2);border:1px solid var(--line-soft);font-size:13.5px;color:var(--ink-soft)}
+  .verd b{color:var(--ink)}
+  canvas.cv{display:block;width:100%;cursor:crosshair}
+  #tip{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:18px;margin:8px 0 0}
+  .leg{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
+  .vuoto{display:grid;place-items:center;min-height:120px;color:var(--ink-faint);font-family:var(--mono);font-size:12.5px;text-align:center;padding:10px}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Verifica delle previsioni</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · statistica</div>
+      <h1>Chi ci azzecca di più?</h1>
+      <p class="lead">Ogni giorno il sito archivia la previsione del modello <b>WeatherNext 3</b> (Google) e quella di <b>Open-Meteo</b>, e il giorno dopo le confronta con quello che hanno misurato davvero la stazione personale <b>ISCARP2</b> di Scarperia e il pluviometro del Servizio Idrologico a Borgo San Lorenzo. Come "avversari" ci sono due metodi senza intelligenza: <b>dire che domani sarà come oggi</b> (persistenza) e <b>dire la media del periodo</b> (climatologia). Se un modello non li batte, non serve a niente.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>La classifica</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div class="sel">Misure di riferimento:
+          <select id="ver" aria-label="Stazione di riferimento"></select>
+          Previsione fatta
+          <select id="lead" aria-label="Anticipo"><option value="1">1 giorno prima (domani)</option><option value="2">2 giorni prima</option><option value="3">3 giorni prima</option><option value="4">4 giorni prima</option></select>
+        </div>
+        <div class="banner" id="banner" hidden></div>
+        <div class="tiles" id="tiles"></div>
+        <div class="tw" style="margin-top:14px"><table class="m" id="tab"></table></div>
+        <div class="verd" id="verd"></div>
+        <p class="note">In <b style="color:var(--pine)">verde</b> il migliore di ogni colonna. <b>Err. medio</b> è la differenza media in valore assoluto tra previsto e misurato (più basso è meglio). <b>Bias</b> è la differenza con segno: positivo = il modello sovrastima. <b>Pioggia ok</b> è la quota di giorni in cui il modello ha detto bene "piove/non piove" (si considera "piove" se la probabilità prevista è almeno 50% e il misurato è almeno 1 mm). <b>Brier</b> misura quanto è buona la probabilità di pioggia: 0 è perfetto, 0,25 è quello che si ottiene dicendo sempre "50%".</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Previsto e misurato, giorno per giorno</h2><span class="src">ultimi 30 giorni verificati</span></div>
+      <div class="card">
+        <h3 style="font-family:var(--serif);font-size:15px;margin:0 0 6px">Temperatura massima</h3>
+        <canvas class="cv" id="gt" role="img" aria-label="Temperatura massima prevista e misurata"></canvas>
+        <h3 style="font-family:var(--serif);font-size:15px;margin:14px 0 6px">Pioggia del giorno (mm)</h3>
+        <canvas class="cv" id="gp" role="img" aria-label="Pioggia prevista e misurata"></canvas>
+        <div class="leg" id="leg"></div>
+        <div id="tip">Passa sul grafico (o tocca) per leggere i numeri di un giorno.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>La tabella dei giorni</h2></div>
+      <div class="card"><div class="tw"><table class="m" id="gg"></table></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Previsioni:</b> <code>scripts/fetch_verifica.py</code>, nel giro automatico del sito, salva a ogni esecuzione le previsioni a 7 giorni dei nove comuni (<code>data/verifica/log.json</code>). Per ogni giorno e anticipo si tiene la previsione emessa <b>entro le 12</b> del giorno di emissione, così "1 giorno prima" è davvero la previsione della mattina precedente. WeatherNext 3 è archiviato solo quando tutti i comuni arrivano da Google (altrimenti i dati sono misti e non si attribuiscono al modello). Open-Meteo è il modello "best match" gratuito.</li>
+          <li><b>Misure:</b> ISCARP2 da Weather Underground (riepilogo giornaliero, <code>data/verifica/iscarp2.json</code>, giorni conclusi); Borgo San Lorenzo dalla stazione SIR TOS01000999 (<code>data/bsl/borgo.json</code>: massima, minima e pioggia 0–24). Le previsioni di Scarperia e San Piero si confrontano con ISCARP2, quelle di Borgo San Lorenzo con il SIR.</li>
+          <li><b>Baselines:</b> la persistenza usa le misure di <i>anticipo</i> giorni prima; la climatologia è la media 1991–2020 della stazione SIR di Borgo (temperature ±3 giorni, probabilità di pioggia ±7 giorni), anche quando si verifica ISCARP2.</li>
+          <li><b>Limiti:</b> poche settimane di dati non bastano per dire chi è il migliore: sotto i 30 giorni la classifica può cambiare spesso. Il modello prevede il comune, la stazione misura un punto (e ISCARP2 è un sensore amatoriale, non tarato come quelli ufficiali). WeatherNext arrotonda le temperature all'intero.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var f1=function(v){return v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−")};
+  var f2=function(v){return v==null?"—":v.toFixed(2).replace(".",",")};
+  var sg=function(v){return v==null?"—":(v>0?"+":"")+f1(v)};
+  var pc=function(v){return v==null?"—":Math.round(v*100)+"%"};
+  var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()};
+  var MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  var LOG=null,ISC=null,B=null,CL=null,TR=[],tr=null,LD=1,oggi=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome"}).format(new Date());
+  var MOD=[{id:"wn",nome:"WeatherNext 3",col:"--pine"},{id:"om",nome:"Open-Meteo",col:"--amber"}];
+  var addD=function(iso,n){var d=new Date(iso+"T00:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+  var dm=function(iso){return +iso.slice(8)+" "+MES[+iso.slice(5,7)-1]};
+
+  /* ---------- misure ---------- */
+  function sirGet(d){var t0=Date.parse(B.t.dal+"T00:00:00Z"),i=Math.round((Date.parse(d+"T00:00:00Z")-t0)/864e5),p0=Date.parse(B.p.dal+"T00:00:00Z"),j=Math.round((Date.parse(d+"T00:00:00Z")-p0)/864e5);
+    if(i<0||i>=B.t.tx.length||j<0||j>=B.p.mm.length)return null;var x=B.t.tx[i],n=B.t.tn[i],m=B.p.mm[j];return x==null||n==null||m==null?null:{tx:x,tn:n,mm:m}}
+  function iscGet(d){var v=ISC&&ISC.giorni&&ISC.giorni[d];return v?{tx:v[0],tn:v[1],mm:v[2]}:null}
+  /* ---------- climatologia (Borgo SIR, 1991-2020) ---------- */
+  function clima(){var tx=[],tn=[],ra=[],i;for(i=0;i<366;i++){tx.push([0,0]);tn.push([0,0]);ra.push([0,0])}
+    var idx=function(d){return Math.round((Date.UTC(2000,+d.slice(5,7)-1,+d.slice(8,10))-Date.UTC(2000,0,1))/864e5)},t0=Date.parse(B.t.dal+"T00:00:00Z"),p0=Date.parse(B.p.dal+"T00:00:00Z");
+    B.t.tx.forEach(function(x,k){var d=new Date(t0+k*864e5).toISOString().slice(0,10),y=+d.slice(0,4);if(y<1991||y>2020)return;var a=idx(d);if(x!=null){tx[a][0]+=x;tx[a][1]++}if(B.t.tn[k]!=null){tn[a][0]+=B.t.tn[k];tn[a][1]++}});
+    B.p.mm.forEach(function(m,k){var d=new Date(p0+k*864e5).toISOString().slice(0,10),y=+d.slice(0,4);if(y<1991||y>2020||m==null)return;var a=idx(d);ra[a][0]+=m>=1?1:0;ra[a][1]++});
+    var sm=function(A,w){return A.map(function(_,i){var s=0,n=0;for(var j=-w;j<=w;j++){var u=A[(i+j+366)%366];s+=u[0];n+=u[1]}return n?s/n:null})};
+    return {tx:sm(tx,3),tn:sm(tn,3),ra:sm(ra,7),idx:idx}}
+  /* ---------- valutazione ---------- */
+  function entry(mod,com,d,L){var m=LOG.mod[mod]&&LOG.mod[mod][com];return m&&m[d]&&m[d][L]||null}
+  function giorniModello(L){var out={};MOD.forEach(function(m){var c=LOG.mod[m.id]&&LOG.mod[m.id][tr.comune];if(!c)return;Object.keys(c).forEach(function(d){if(c[d][L]&&tr.get(d))out[d]=1})});return Object.keys(out).sort()}
+  function recs(id,L,days){var r=[];days.forEach(function(d){var o=tr.get(d);if(!o)return;
+      if(id==="wn"||id==="om"){var e=entry(id,tr.comune,d,L);if(!e)return;r.push({d:d,ftx:e[0],ftn:e[1],p:e[2]/100,fmm:e[3],o:o})}
+      else if(id==="per"){var q=tr.get(addD(d,-L));if(!q)return;r.push({d:d,ftx:q.tx,ftn:q.tn,p:q.mm>=1?1:0,fmm:q.mm,o:o})}
+      else{var a=CL.idx(d);r.push({d:d,ftx:CL.tx[a],ftn:CL.tn[a],p:CL.ra[a],fmm:null,o:o})}});return r}
+  function met(R){var n=R.length;if(!n)return {n:0};var s=function(f){return R.reduce(function(a,r){return a+f(r)},0)/n};
+    var mm=R.filter(function(r){return r.fmm!=null});
+    return {n:n,mx:s(function(r){return Math.abs(r.ftx-r.o.tx)}),mn:s(function(r){return Math.abs(r.ftn-r.o.tn)}),bx:s(function(r){return r.ftx-r.o.tx}),
+      w2:s(function(r){return Math.abs(r.ftx-r.o.tx)<=2?1:0}),ok:s(function(r){return (r.p>=.5)===(r.o.mm>=1)?1:0}),br:s(function(r){return Math.pow(r.p-(r.o.mm>=1?1:0),2)}),
+      mmae:mm.length?mm.reduce(function(a,r){return a+Math.abs(r.fmm-r.o.mm)},0)/mm.length:null}}
+  var ROWS=[{id:"wn",nome:"WeatherNext 3",col:"--pine"},{id:"om",nome:"Open-Meteo",col:"--amber"},{id:"per",nome:"Persistenza (come oggi)",base:1,col:"--ink-faint"},{id:"cli",nome:"Climatologia (media 1991–2020)",base:1,col:"--ctx"}];
+  var COLS=[["n","Giorni",0,0],["mx","Err. Tmax °C",1,1],["mn","Err. Tmin °C",1,1],["bx","Bias Tmax °C",1,2],["w2","Tmax ±2 °",0,3],["ok","Pioggia ok",0,3],["br","Brier",1,4],["mmae","Err. mm",1,1]];
+  function tab(M){var h="<tr><th>Modello</th>"+COLS.map(function(c){return "<th>"+c[1]+"</th>"}).join("")+"</tr>";
+    var best={};COLS.forEach(function(c){var k=c[0];if(k==="n")return;var v=ROWS.filter(function(r){return M[r.id].n>=1&&M[r.id][k]!=null}).map(function(r){return {id:r.id,v:k==="bx"?Math.abs(M[r.id][k]):M[r.id][k]}});
+      if(v.length<2)return;var up=k==="w2"||k==="ok",b=v.reduce(function(a,x){return (up?x.v>a.v:x.v<a.v)?x:a});best[k]=b.id});
+    ROWS.forEach(function(r){var m=M[r.id];h+="<tr"+(r.base?' class="base"':"")+"><td><span class=\"dot\" style=\"background:var("+r.col+")\"></span>"+r.nome+"</td>"+COLS.map(function(c){var k=c[0],v=m[k],t;
+        if(k==="n")t=m.n;else if(m.n===0||v==null)t="—";else if(k==="bx")t=sg(v);else if(k==="w2"||k==="ok")t=pc(v);else if(k==="br")t=f2(v);else t=f1(v);
+        return "<td"+(best[k]===r.id?' class="best"':"")+">"+t+"</td>"}).join("")+"</tr>"});
+    $("tab").innerHTML=h;return best}
+  function verdetto(M,best){var wn=M.wn,om=M.om,nm=function(id){return (ROWS.filter(function(r){return r.id===id})[0]||{}).nome},p=[];
+    if(!(wn.n||om.n)){$("verd").innerHTML="Nessun giorno verificabile con questa combinazione: la previsione era archiviata ma la misura non c'è ancora, oppure si sta ancora raccogliendo.";return}
+    if(best.mx)p.push("per la <b>temperatura massima</b> il più preciso è <b>"+nm(best.mx)+"</b> ("+f1(M[best.mx].mx)+" °C di errore medio)");
+    if(best.mn)p.push("per la <b>minima</b> <b>"+nm(best.mn)+"</b> ("+f1(M[best.mn].mn)+" °C)");
+    if(best.br)p.push("per la <b>probabilità di pioggia</b> <b>"+nm(best.br)+"</b> (Brier "+f2(M[best.br].br)+")");
+    var bat=[];["wn","om"].forEach(function(id){var m=M[id];if(!m.n||!M.cli.n)return;if(m.mx<M.cli.mx&&m.mx<(M.per.n?M.per.mx:9e9))bat.push(nm(id))});
+    var nn=Math.max(wn.n,om.n);
+    $("verd").innerHTML=(nn<10?"Per ora, su soli <b>"+nn+" "+(nn===1?"giorno":"giorni")+"</b> (troppo pochi per fidarsi): ":"Su <b>"+nn+" giorni</b>: ")+(p.length?p.join("; ")+".":"confronto non ancora possibile tra più modelli.")+(nn<10?"":bat.length?" "+bat.join(" e ")+" batte"+(bat.length>1?"no":"")+" la climatologia e la persistenza sulla massima.":" Nessun modello batte ancora nettamente i due metodi semplici sulla massima.")}
+  function render(){LD=+$("lead").value;var days=giorniModello(LD),M={};
+    ROWS.forEach(function(r){M[r.id]=met(recs(r.id,LD,r.base?days:days))});
+    var nn=Math.max(M.wn.n,M.om.n),first=days[0];
+    $("tiles").innerHTML=[["Giorni verificati",nn,nn<30?"servono ~30 per cifre solide":"campione solido"],["Primo giorno",first?dm(first)+" "+first.slice(0,4):"—","da quando c'è l'archivio"],["Errore Tmax · WeatherNext",M.wn.n?f1(M.wn.mx)+"<s>°C</s>":"—","differenza media in valore assoluto"],["Errore Tmax · Open-Meteo",M.om.n?f1(M.om.mx)+"<s>°C</s>":"—",M.om.n?"differenza media in valore assoluto":"archivio iniziato oggi"]]
+      .map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
+    var b=$("banner");if(nn<30){b.hidden=false;b.innerHTML="<b>Sperimentazione appena partita:</b> finora ci sono "+nn+" giorni verificabili con questi parametri"+(nn<10?", troppo pochi per trarre conclusioni":"")+". L'archivio si arricchisce da solo ogni giorno: tra un mese i numeri saranno molto più solidi."}else b.hidden=true;
+    var best=tab(M);verdetto(M,best);grafici(days);giornoGiorno(days)}
+  /* ---------- grafici ---------- */
+  var GR=null;
+  function setup(cv,H){var W=cv.parentNode.clientWidth-36,dpr=window.devicePixelRatio||1;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+"px";var c=cv.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);return {c:c,W:W,H:H}}
+  function grafici(days){var D=days.slice(-30),L=36,R=10,T=10,Bt=24;GR={D:D};
+    var vuoto=D.length<2;
+    ["gt","gp"].forEach(function(id){$(id).style.display=vuoto?"none":"block"});
+    if(vuoto){$("leg").innerHTML='<div class="vuoto" style="width:100%">Servono almeno 2 giorni verificati per disegnare i grafici.</div>';return}
+    $("leg").innerHTML='<span><span class="dot" style="background:var(--ink)"></span>misurato</span>'+MOD.map(function(m){return '<span><span class="dot" style="background:var('+m.col+')"></span>'+m.nome+'</span>'}).join("");
+    var val=function(id,d,k){var e=entry(id,tr.comune,d,LD);return e?e[k]:null};
+    /* temperatura */
+    var a=setup($("gt"),210),c=a.c,vals=[];D.forEach(function(d){vals.push(tr.get(d).tx);MOD.forEach(function(m){var v=val(m.id,d,0);if(v!=null)vals.push(v)})});
+    var lo=Math.floor(Math.min.apply(null,vals)-1),hi=Math.ceil(Math.max.apply(null,vals)+1),X=function(i){return L+(i+.5)*(a.W-L-R)/D.length},Y=function(v){return T+(1-(v-lo)/(hi-lo))*(a.H-T-Bt)};
+    c.font="10.5px "+css("--mono");c.fillStyle=css("--ink-faint");c.strokeStyle=css("--line");c.textBaseline="middle";
+    for(var g=lo;g<=hi;g+=Math.max(1,Math.round((hi-lo)/5))){c.beginPath();c.moveTo(L,Y(g));c.lineTo(a.W-R,Y(g));c.stroke();c.fillText(g+"°",0,Y(g))}
+    c.textBaseline="alphabetic";D.forEach(function(d,i){if(D.length<=16||i%Math.ceil(D.length/12)===0)c.fillText(dm(d),X(i)-12,a.H-6)});
+    var serie=function(fn,col,w,pts){c.strokeStyle=col;c.fillStyle=col;c.lineWidth=w;c.beginPath();var st=false;D.forEach(function(d,i){var v=fn(d);if(v==null){st=false;return}if(!st){c.moveTo(X(i),Y(v));st=true}else c.lineTo(X(i),Y(v))});c.stroke();
+      if(pts)D.forEach(function(d,i){var v=fn(d);if(v!=null){c.beginPath();c.arc(X(i),Y(v),3,0,6.3);c.fill()}})};
+    MOD.forEach(function(m){serie(function(d){return val(m.id,d,0)},css(m.col),1.6,true)});
+    serie(function(d){return tr.get(d).tx},css("--ink"),2.4,true);
+    /* pioggia */
+    var b=setup($("gp"),150),c2=b.c,mx=1;D.forEach(function(d){mx=Math.max(mx,tr.get(d).mm);MOD.forEach(function(m){var v=val(m.id,d,3);if(v!=null)mx=Math.max(mx,v)})});mx=Math.ceil(mx*1.1);
+    var X2=function(i){return L+(i+.5)*(b.W-L-R)/D.length},Y2=function(v){return T+(1-v/mx)*(b.H-T-Bt)},bw=Math.max(4,(b.W-L-R)/D.length*.5);
+    c2.font="10.5px "+css("--mono");c2.fillStyle=css("--ink-faint");c2.strokeStyle=css("--line");c2.textBaseline="middle";
+    [0,.5,1].forEach(function(f){var v=mx*f;c2.beginPath();c2.moveTo(L,Y2(v));c2.lineTo(b.W-R,Y2(v));c2.stroke();c2.fillText(Math.round(v),0,Y2(v))});
+    c2.textBaseline="alphabetic";D.forEach(function(d,i){if(D.length<=16||i%Math.ceil(D.length/12)===0)c2.fillText(dm(d),X2(i)-12,b.H-6)});
+    c2.fillStyle=css("--sky");c2.globalAlpha=.55;D.forEach(function(d,i){var v=tr.get(d).mm;c2.fillRect(X2(i)-bw/2,Y2(v),bw,Y2(0)-Y2(v))});c2.globalAlpha=1;
+    MOD.forEach(function(m,k){c2.fillStyle=css(m.col);D.forEach(function(d,i){var v=val(m.id,d,3);if(v==null)return;c2.beginPath();c2.arc(X2(i)+(k?5:-5),Y2(v),3.2,0,6.3);c2.fill()})});
+    GR.L=L;GR.R=R}
+  function tip(ev){if(!GR||!GR.D||GR.D.length<2)return;var cv=ev.currentTarget,r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,i=Math.floor((t.clientX-r.left-GR.L)/((r.width-GR.L-GR.R)/GR.D.length));if(i<0||i>=GR.D.length)return;
+    var d=GR.D[i],o=tr.get(d),s=dm(d)+" · misurato "+f1(o.tx)+"/"+f1(o.tn)+" °C, "+f1(o.mm)+" mm";
+    MOD.forEach(function(m){var e=entry(m.id,tr.comune,d,LD);if(e)s+=" · "+m.nome+" "+f1(e[0])+"/"+f1(e[1])+" °C, "+e[2]+"%, "+f1(e[3])+" mm"});$("tip").textContent=s}
+  function giornoGiorno(days){var D=days.slice(-14).reverse();
+    if(!D.length){$("gg").innerHTML='<tr><td><div class="vuoto">Ancora nessun giorno da mostrare.</div></td></tr>';return}
+    var h="<tr><th>Giorno</th><th>Misurato Tmax/Tmin</th><th>Pioggia mm</th>"+MOD.map(function(m){return "<th>"+m.nome+" Tmax/Tmin</th><th>"+m.nome+" pioggia (prob., mm)</th>"}).join("")+"</tr>";
+    D.forEach(function(d){var o=tr.get(d);h+="<tr><td>"+dm(d)+"</td><td>"+f1(o.tx)+" / "+f1(o.tn)+"</td><td>"+f1(o.mm)+"</td>"+MOD.map(function(m){var e=entry(m.id,tr.comune,d,LD);
+      return e?"<td>"+f1(e[0])+" / "+f1(e[1])+" <small style=\"color:var(--ink-faint)\">("+sg(e[0]-o.tx)+")</small></td><td>"+e[2]+"% · "+f1(e[3])+"</td>":"<td>—</td><td>—</td>"}).join("")+"</tr>"});
+    $("gg").innerHTML=h}
+
+  function sceltaVer(){tr=TR[+$("ver").value];$("src").textContent=tr.nome+(LOG.agg?" · archivio aggiornato "+LOG.agg.slice(0,10)+" ore "+LOG.agg.slice(11,16):"");render()}
+  Promise.all([fetch("./data/verifica/log.json").then(function(r){return r.ok?r.json():{mod:{}}}).catch(function(){return {mod:{}}}),
+               fetch("./data/verifica/iscarp2.json").then(function(r){return r.ok?r.json():null}).catch(function(){return null}),
+               fetch("./data/bsl/borgo.json").then(function(r){return r.json()})]).then(function(a){LOG=a[0];if(!LOG.mod)LOG.mod={};ISC=a[1];B=a[2];CL=clima();
+    TR=[{id:"isc",nome:"ISCARP2 · Scarperia e San Piero (stazione personale)",comune:"Scarperia e San Piero",get:iscGet},{id:"sir",nome:"SIR · Borgo San Lorenzo (stazione ufficiale)",comune:"Borgo San Lorenzo",get:sirGet}];
+    $("ver").innerHTML=TR.map(function(t,i){return '<option value="'+i+'">'+t.nome+'</option>'}).join("");
+    var nIsc=ISC&&ISC.giorni?Object.keys(ISC.giorni).length:0;$("ver").value=nIsc>=3?0:1;
+    $("ver").addEventListener("change",sceltaVer);$("lead").addEventListener("change",render);
+    ["gt","gp"].forEach(function(id){var c=$(id);c.addEventListener("mousemove",tip);c.addEventListener("touchstart",tip,{passive:true});c.addEventListener("touchmove",tip,{passive:true})});
+    var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(render,150)});
+    sceltaVer()}).catch(function(){$("src").textContent="Dati non disponibili al momento."});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

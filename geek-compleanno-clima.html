@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Il tuo compleanno nel clima · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Scegli una data, magari il tuo compleanno: com'era il tempo quel giorno nel corso degli anni a Borgo San Lorenzo, Firenzuola, Genova, Milano, Padova e altre stazioni storiche? Record, tendenza e confronto con l'anno in cui sei nato.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-compleanno-clima.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Il tuo compleanno nel clima · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13px;color:var(--ink-soft)}
+  .sel select,.sel input{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;max-width:100%}
+  .sel input{width:130px}
+  .tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tile .big{font-size:26px}
+  @media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  canvas.cv{display:block;width:100%;cursor:crosshair}
+  #tip{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:18px;margin:8px 0 0}
+  .leg{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+  .g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+  @media(max-width:860px){.g3{grid-template-columns:minmax(0,1fr)}}
+  h3.sm{font-family:var(--serif);font-size:15px;margin:0 0 8px;font-weight:700}
+  .rk{width:100%;border-collapse:collapse;font-size:13px}
+  .rk td{padding:5px 6px;border-bottom:1px solid var(--line-soft)}
+  .rk td:first-child{font-family:var(--mono);color:var(--ink-faint);width:28px}
+  .rk td:last-child{text-align:right;font-family:var(--mono);color:var(--ink-soft)}
+  .me{margin:0 0 14px;padding:14px 16px;border-radius:var(--r);background:var(--pine-tint);border:1px solid var(--line);font-size:15px;line-height:1.55}
+  .me b{color:var(--pine-deep)}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Il tuo compleanno nel clima</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · statistica</div>
+      <h1>Il tuo compleanno nel clima</h1>
+      <p class="lead">Scegli una data, magari il tuo compleanno, e una stazione: com'era il tempo <i>quel giorno</i> in tutti gli anni di cui abbiamo le misure? Quanto faceva caldo al record, quanto freddo, quando è piovuto di più. E se scrivi l'anno in cui sei nato, vedi come era il tuo giorno e quanto è cambiato da allora.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>La tua data</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div class="sel">Stazione
+          <select id="sta" aria-label="Stazione"></select>
+          Data
+          <select id="gg" aria-label="Giorno"></select><select id="gm" aria-label="Mese"></select>
+          Anno di nascita <input id="nasc" type="number" inputmode="numeric" min="1700" max="2026" placeholder="es. 1985" aria-label="Anno di nascita (facoltativo)">
+          Finestra
+          <select id="fin" aria-label="Finestra di giorni"><option value="0">solo quel giorno</option><option value="3" selected>± 3 giorni</option><option value="7">± 7 giorni</option></select>
+        </div>
+        <div class="me" id="me" hidden></div>
+        <div class="tiles" id="tiles"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Quel giorno, anno per anno</h2><span class="src" id="src2"></span></div>
+      <div class="card">
+        <canvas class="cv" id="cv" role="img" aria-label="Temperatura massima e minima di quella data in ogni anno"></canvas>
+        <div id="tip">Passa sul grafico (o tocca) per leggere un anno.</div>
+        <div class="leg"><span><span class="dot" style="background:var(--warm)"></span>massima</span><span><span class="dot" style="background:var(--cold)"></span>minima</span><span>— media mobile di 11 anni</span><span>- - tendenza della massima</span><span id="legb"></span></div>
+        <p class="note">I puntini sono i valori del giorno esatto, le linee sono la media nella finestra scelta (che toglie il rumore: un singolo giorno può essere bollente o gelido per caso). La media mobile scorre su 11 anni; la tendenza è una retta sulla media della massima.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>I record di quella data</h2><span class="src">solo il giorno esatto</span></div>
+      <div class="g3">
+        <div class="card"><h3 class="sm">Le 5 massime più alte</h3><table class="rk" id="rk1"></table></div>
+        <div class="card"><h3 class="sm">Le 5 minime più basse</h3><table class="rk" id="rk2"></table></div>
+        <div class="card"><h3 class="sm">Le 5 piogge più forti</h3><table class="rk" id="rk3"></table></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> Borgo San Lorenzo: SIR Toscana (<code>data/bsl/borgo.json</code>, temperature dal 1951, pioggia dal 1991). Le altre stazioni: serie giornaliere di <code>data/serie/</code> (le stesse delle pagine delle serie storiche). Il 29 febbraio esiste solo negli anni bisestili.</li>
+          <li><b>Metodo:</b> per ogni anno si prende la data scelta (e, con la finestra, i giorni vicini). "Media" è la media su tutti gli anni con dato; "ultimi 30 anni" e "primi 30 anni" sono gli ultimi e i primi 30 anni con dato per quella data. Pioggia: un giorno è piovoso se cade almeno 1 mm.</li>
+          <li><b>Limiti:</b> una data sola, in una stazione sola: il caso pesa molto, per questo conviene guardare la finestra e la media mobile. Spostamenti dei termometri e urbanizzazione non sono corretti. Le serie più antiche hanno molti buchi (specie la pioggia).</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  var f1=function(v){return v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−")};
+  var sg=function(v){if(v==null)return "—";v=Math.round(v*10)/10;return v===0?"0,0":(v>0?"+":"−")+f1(Math.abs(v)).replace("−","")};
+  var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()};
+  var ST=[{id:"borgo",nome:"Borgo San Lorenzo",sub:"SIR, dal 1951",kind:"bsl"},{id:"firenzuola",nome:"Firenzuola",sub:"dal 1961",f:"firenzuola"},{id:"genova",nome:"Genova",sub:"dal 1833",f:"genova"},
+    {id:"milano",nome:"Milano Brera",sub:"dal 1763",f:"milano-brera"},{id:"padova",nome:"Padova",sub:"dal 1725",f:"padova"},{id:"moncalieri",nome:"Moncalieri",sub:"dal 1865",f:"moncalieri"},
+    {id:"oxford",nome:"Oxford",sub:"dal 1815",f:"oxford"},{id:"debilt",nome:"De Bilt",sub:"dal 1901",f:"de-bilt"},{id:"ny",nome:"New York Central Park",sub:"dal 1869",f:"new-york-central-park"},{id:"sf",nome:"San Francisco",sub:"dal 1921",f:"san-francisco"}];
+  var CACHE={},cur=null,D=null,R=null,GR=null,oggi=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome"}).format(new Date());
+  var key=function(y,m,d){var t=new Date(Date.UTC(y,m,d));return t.toISOString().slice(0,10)};
+  function parseCsv(t){var L=t.split("\n"),h=L[0].trim().split(","),it=h.indexOf("tmax"),in_=h.indexOf("tmin"),ip=h.indexOf("prec"),m={};
+    for(var i=1;i<L.length;i++){var a=L[i].split(",");if(a[0].length!==10)continue;var tx=a[it]===""||a[it]==null?null:+a[it],tn=a[in_]===""||a[in_]==null?null:+a[in_],pr=a[ip]===""||a[ip]==null?null:+a[ip];
+      if(tx==null&&tn==null&&pr==null)continue;m[a[0]]=[isNaN(tx)?null:tx,isNaN(tn)?null:tn,isNaN(pr)?null:pr]}return m}
+  function carica(s){if(CACHE[s.id])return Promise.resolve(CACHE[s.id]);var p;
+    if(s.kind==="bsl")p=fetch("./data/bsl/borgo.json").then(function(r){return r.json()}).then(function(b){var m={},t0=Date.parse(b.t.dal+"T00:00:00Z"),p0=Date.parse(b.p.dal+"T00:00:00Z");
+      b.t.tx.forEach(function(x,i){var tn=b.t.tn[i];if(x==null&&tn==null)return;m[new Date(t0+i*864e5).toISOString().slice(0,10)]=[x,tn,null]});
+      b.p.mm.forEach(function(v,i){if(v==null)return;var k=new Date(p0+i*864e5).toISOString().slice(0,10);(m[k]||(m[k]=[null,null,null]))[2]=v});return m});
+    else p=fetch("./data/serie/"+s.f+".csv").then(function(r){return r.text()}).then(parseCsv);
+    return p.then(function(m){CACHE[s.id]=m;return m})}
+  var mean=function(a){a=a.filter(function(v){return v!=null});return a.length?a.reduce(function(x,y){return x+y},0)/a.length:null};
+
+  /* per ogni anno: valori del giorno esatto e media nella finestra */
+  function calcola(){var m=+$("gm").value,d=+$("gg").value,w=+$("fin").value,y0=+Object.keys(D).reduce(function(a,k){return k<a?k:a},"9999-12-31").slice(0,4),y1=+oggi.slice(0,4),Y=[];
+    for(var y=y0;y<=y1;y++){var t=new Date(Date.UTC(y,m,d));if(t.getUTCMonth()!==m)continue;      /* 29 febbraio */
+      var e=D[key(y,m,d)]||[null,null,null],a=[],b=[],c=[];
+      for(var o=-w;o<=w;o++){var v=D[key(y,m,d+o)];if(v){a.push(v[0]);b.push(v[1])}}
+      Y.push({y:y,tx:e[0],tn:e[1],pr:e[2],mx:mean(a),mn:mean(b)})}
+    return Y.filter(function(r){return r.tx!=null||r.tn!=null||r.pr!=null||r.mx!=null||r.mn!=null})}
+  function lin(P){var p=P.filter(function(r){return r.mx!=null});if(p.length<15)return null;var n=p.length,sx=0,sy=0,sxy=0,sxx=0;p.forEach(function(r){sx+=r.y;sy+=r.mx;sxy+=r.y*r.mx;sxx+=r.y*r.y});var b=(n*sxy-sx*sy)/(n*sxx-sx*sx);return {b:b,a:(sy-b*sx)/n}}
+  function top(P,k,asc,n){return P.filter(function(r){return r[k]!=null}).sort(function(a,b){return asc?a[k]-b[k]:b[k]-a[k]}).slice(0,n)}
+  function render(){if(!D)return;var m=+$("gm").value,d=+$("gg").value;R=calcola();var nome=d+" "+MESI[m],ys=R.filter(function(r){return r.mx!=null}).map(function(r){return r.y});
+    $("src").textContent=cur.nome+" · "+cur.sub;
+    if(!R.length){$("tiles").innerHTML="";$("me").hidden=true;$("src2").textContent="";draw();return}
+    var hot=top(R,"tx",false,1)[0],cold=top(R,"tn",true,1)[0],wet=top(R,"pr",false,1)[0],rn=R.filter(function(r){return r.pr!=null}),pr=rn.length?rn.filter(function(r){return r.pr>=1}).length/rn.length:null;
+    var last=R.filter(function(r){return r.mx!=null}).slice(-30),first=R.filter(function(r){return r.mx!=null}).slice(0,30),mL=mean(last.map(function(r){return r.mx})),mF=mean(first.map(function(r){return r.mx})),tr=lin(R);
+    var w=+$("fin").value,ww=w?" (media dei giorni ±"+w+")":"";
+    $("src2").textContent=R.length+" anni con dati, "+R[0].y+"–"+R[R.length-1].y;
+    $("tiles").innerHTML=[["Massima record",hot?f1(hot.tx)+"<s>°C</s>":"—",hot?"nel "+hot.y:""],["Minima più bassa",cold?f1(cold.tn)+"<s>°C</s>":"—",cold?"nel "+cold.y:""],
+      ["Massima media",f1(mean(R.map(function(r){return r.mx})))+"<s>°C</s>","tutti gli anni"+ww],
+      ["Ultimi 30 anni vs primi 30",first.length>=10&&last.length>=10?sg(mL-mF)+"<s>°C</s>":"—",first.length>=10?f1(mF)+" → "+f1(mL)+" °C":"serie corta"],
+      ["Giorni di pioggia",pr==null?"—":Math.round(pr*100)+"<s>%</s>",wet?"max "+f1(wet.pr)+" mm nel "+wet.y:"nessun dato di pioggia"]]
+      .map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
+    var rk=function(el,L,k,u){$(el).innerHTML=L.length?L.map(function(r,i){return "<tr><td>"+(i+1)+"</td><td>"+r.y+"</td><td>"+f1(r[k])+" "+u+"</td></tr>"}).join(""):"<tr><td>nessun dato</td></tr>"};
+    rk("rk1",top(R,"tx",false,5),"tx","°C");rk("rk2",top(R,"tn",true,5),"tn","°C");rk("rk3",top(R,"pr",false,5).filter(function(r){return r.pr>0}),"pr","mm");
+    /* compleanno */
+    var by=+$("nasc").value,me=$("me");me.hidden=true;
+    if(by){var r0=R.filter(function(r){return r.y===by})[0];
+      if(!r0||(r0.tx==null&&r0.tn==null&&r0.pr==null)){me.hidden=false;me.innerHTML="Per il <b>"+nome+" "+by+"</b> questa stazione non ha misure"+(R.length?": la serie parte dal <b>"+R[0].y+"</b>. Prova un'altra stazione.":".")}
+      else{var q=R.filter(function(r){return r.tx!=null}),rank=r0.tx!=null?q.filter(function(r){return r.tx>r0.tx}).length+1:null,rec=R.slice(-10).filter(function(r){return r.mx!=null}),mr=mean(rec.map(function(r){return r.mx})),mn0=r0.mx,
+          pcs=[];
+        if(r0.tx!=null||r0.tn!=null)pcs.push("il <b>"+nome+" "+by+"</b> a "+cur.nome+" la massima fu <b>"+f1(r0.tx)+" °C</b> e la minima <b>"+f1(r0.tn)+" °C</b>"+(r0.pr!=null?(r0.pr>=1?", con <b>"+f1(r0.pr)+" mm</b> di pioggia":", senza pioggia"):""));
+        else pcs.push("il <b>"+nome+" "+by+"</b> a "+cur.nome+(r0.pr!=null?" caddero <b>"+f1(r0.pr)+" mm</b> di pioggia":" ci sono dati solo nei giorni vicini"));
+        var s1=pcs[0].charAt(0).toUpperCase()+pcs[0].slice(1);
+        if(rank!=null)s1+=": è stata la <b>"+rank+"ª massima più alta</b> su "+q.length+" anni con dato";
+        s1+=".";
+        if(mn0!=null&&mr!=null)var dd=Math.round((mr-mn0)*10)/10;s1+=dd===0?" Oggi, in quella data, la massima media degli ultimi 10 anni è uguale a quella del tuo anno.":" Oggi, in quella data, la massima media degli ultimi 10 anni è di <b>"+f1(Math.abs(dd))+" °C</b> "+(dd>0?"più alta":"più bassa")+" di quella del tuo anno"+(w?" (medie dei giorni ±"+w+")":"")+".";
+        me.hidden=false;me.innerHTML=s1}}
+    draw()}
+  /* ---------- grafico ---------- */
+  function draw(){var cv=$("cv"),W=cv.parentNode.clientWidth-36,H=330,dpr=window.devicePixelRatio||1;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+"px";var c=cv.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);
+    if(!R||R.length<2){c.font="13px "+css("--mono");c.fillStyle=css("--ink-faint");c.fillText("Nessun dato per questa data.",10,30);GR=null;return}
+    var L=38,Rr=10,T=10,B=24,vals=[];R.forEach(function(r){[r.tx,r.tn,r.mx,r.mn].forEach(function(v){if(v!=null)vals.push(v)})});
+    var lo=Math.floor(Math.min.apply(null,vals)-1),hi=Math.ceil(Math.max.apply(null,vals)+1),y0=R[0].y,y1=R[R.length-1].y,
+        X=function(y){return L+(y-y0)/(Math.max(1,y1-y0))*(W-L-Rr)},Y=function(v){return T+(1-(v-lo)/(hi-lo))*(H-T-B)};
+    c.font="10.5px "+css("--mono");c.strokeStyle=css("--line");c.fillStyle=css("--ink-faint");c.textBaseline="middle";var step=Math.max(2,Math.round((hi-lo)/6/2)*2);
+    for(var g=Math.ceil(lo/step)*step;g<=hi;g+=step){c.beginPath();c.moveTo(L,Y(g));c.lineTo(W-Rr,Y(g));c.stroke();c.fillText(g+"°",0,Y(g))}
+    c.textBaseline="alphabetic";var ys=Math.max(10,Math.ceil((y1-y0)/8/10)*10);for(var y=Math.ceil(y0/ys)*ys;y<=y1;y+=ys)c.fillText(y,X(y)-12,H-6);
+    var warm=css("--warm"),cold=css("--cold");
+    c.globalAlpha=.35;R.forEach(function(r){if(r.tx!=null){c.fillStyle=warm;c.beginPath();c.arc(X(r.y),Y(r.tx),2.4,0,6.3);c.fill()}if(r.tn!=null){c.fillStyle=cold;c.beginPath();c.arc(X(r.y),Y(r.tn),2.4,0,6.3);c.fill()}});c.globalAlpha=1;
+    var ma=function(k){return R.map(function(r,i){var s=0,n=0;for(var j=i-5;j<=i+5;j++){var q=R[j];if(q&&q[k]!=null){s+=q[k];n++}}return n>=4?{y:r.y,v:s/n}:null})};
+    var line=function(A,col,w,dash){c.strokeStyle=col;c.lineWidth=w;c.setLineDash(dash||[]);c.beginPath();var st=false;A.forEach(function(p){if(!p){st=false;return}if(!st){c.moveTo(X(p.y),Y(p.v));st=true}else c.lineTo(X(p.y),Y(p.v))});c.stroke();c.setLineDash([])};
+    line(R.filter(function(r){return r.mn!=null}).map(function(r){return {y:r.y,v:r.mn}}),cold,.8);line(R.filter(function(r){return r.mx!=null}).map(function(r){return {y:r.y,v:r.mx}}),warm,.8);
+    line(ma("mn"),cold,2.6);line(ma("mx"),warm,2.6);
+    var tr=lin(R);if(tr)line([{y:y0,v:tr.a+tr.b*y0},{y:y1,v:tr.a+tr.b*y1}],css("--ink"),1.4,[6,4]);
+    var by=+$("nasc").value;$("legb").textContent="";
+    if(by&&by>=y0&&by<=y1){c.strokeStyle=css("--pine");c.lineWidth=1.6;c.beginPath();c.moveTo(X(by),T);c.lineTo(X(by),H-B);c.stroke();c.fillStyle=css("--pine");c.fillText("tu",X(by)+4,T+10);$("legb").textContent="| il tuo anno"}
+    GR={L:L,Rr:Rr,y0:y0,y1:y1,W:W,tr:tr};
+    if(tr)$("src2").textContent+=" · tendenza della massima "+sg(tr.b*10)+" °C per decennio"}
+  function tip(ev){if(!GR||!R)return;var cv=$("cv"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,x=t.clientX-r.left,y=Math.round(GR.y0+(x-GR.L)/(GR.W-GR.L-GR.Rr)*Math.max(1,GR.y1-GR.y0)),p=R.reduce(function(a,q){return !a||Math.abs(q.y-y)<Math.abs(a.y-y)?q:a},null);if(!p)return;
+    $("tip").textContent=p.y+" · giorno: "+f1(p.tx)+" / "+f1(p.tn)+" °C"+(p.pr!=null?", "+f1(p.pr)+" mm":"")+" · finestra: "+f1(p.mx)+" / "+f1(p.mn)+" °C"}
+
+  function scegli(){cur=ST[+$("sta").value];$("src").textContent="caricamento…";carica(cur).then(function(m){D=m;render()}).catch(function(){$("src").textContent="Dati non disponibili al momento."})}
+  $("sta").innerHTML=ST.map(function(s,i){return '<option value="'+i+'">'+s.nome+' ('+s.sub+')</option>'}).join("");
+  $("gm").innerHTML=MESI.map(function(n,i){return '<option value="'+i+'">'+n+'</option>'}).join("");
+  var td=new Date(oggi+"T00:00:00Z");$("gm").value=td.getUTCMonth();
+  function giorni(keep){var n=new Date(Date.UTC(2000,+$("gm").value+1,0)).getUTCDate();$("gg").innerHTML=Array.from({length:n},function(_,i){return '<option value="'+(i+1)+'">'+(i+1)+'</option>'}).join("");$("gg").value=Math.min(keep,n)}
+  giorni(td.getUTCDate());
+  $("sta").addEventListener("change",scegli);$("gm").addEventListener("change",function(){giorni(+$("gg").value);render()});$("gg").addEventListener("change",render);$("fin").addEventListener("change",render);$("nasc").addEventListener("input",render);
+  var cv=$("cv");cv.addEventListener("mousemove",tip);cv.addEventListener("touchstart",tip,{passive:true});cv.addEventListener("touchmove",tip,{passive:true});
+  var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(draw,150)});
+  scegli();
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
