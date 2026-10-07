@@ -63,7 +63,7 @@
         <div class="lay">
           <div><canvas class="cv" id="sk" role="img" aria-label="Diagramma skew-T log-p"></canvas>
             <div class="leg" id="leg"></div><div class="tip" id="tip">Passa sul diagramma per leggere pressione, quota e temperatura.</div></div>
-          <div><div class="tl" id="tiles"></div><div class="verd" id="verd"></div></div>
+          <div><div class="tl" id="tiles"></div><div class="verd" id="verd"></div><p class="note" id="notapt" hidden></p></div>
         </div>
         <details class="how"><summary>Come si legge uno skew-T</summary><ul>
           <li><b>Asse verticale:</b> la pressione (in scala logaritmica), che sale con la quota: 1000 hPa è circa il livello del mare, 500 hPa circa 5,5 km, 200 hPa circa 12 km.</li>
@@ -90,7 +90,7 @@
         <ul class="note">
           <li><b>Fonte:</b> profilo verticale del modello ECMWF IFS 0,25° (riserva NOAA GFS) tramite Open-Meteo: temperatura, umidità e quota geopotenziale sui livelli da 1000 a 200 hPa, più temperatura e punto di rugiada a 2 m, pressione al suolo e vento. <code>scripts/fetch_skewt.py</code> scarica i dati nel giro automatico del sito (al massimo ogni 6 ore) in <code>data/skewt.json</code>. Orari in UTC, mostrati anche in ora italiana.</li>
           <li><b>Metodo:</b> punto di rugiada dall'umidità relativa (formula di Magnus); LCL con la formula di Bolton; salita secca fino al LCL e poi adiabatica satura (integrazione a passi di 2 hPa); CAPE e CIN con la temperatura virtuale. K-index = (T850−T500)+Td850−(T700−Td700). Acqua precipitabile: integrale del rapporto di mescolanza dal suolo a 300 hPa. Il livello dello zero termico è interpolato sul profilo.</li>
-          <li><b>Limiti:</b> è un profilo di <b>modello</b>, non un radiosondaggio: la cella da circa 25 km smussa rilievi e valli (soprattutto a Firenzuola) e lo strato più basso è poco risolto. Con 14 livelli la risoluzione verticale è grossolana: CAPE e CIN sono stime, non misure. Per le allerte vale la Protezione Civile della Toscana.</li>
+          <li><b>Limiti:</b> è un profilo di <b>modello</b>, non un radiosondaggio: la cella da circa 25 km smussa rilievi e valli e lo strato più basso è poco risolto. Borgo San Lorenzo e Firenzuola cadono nella <b>stessa cella</b>: sopra il suolo i due profili sono identici, cambiano solo temperatura, punto di rugiada e pressione al suolo, corrette per la quota del punto. Con 14 livelli la risoluzione verticale è grossolana: CAPE e CIN sono stime, non misure. Per le allerte vale la Protezione Civile della Toscana.</li>
         </ul>
       </div>
     </section>
@@ -212,7 +212,10 @@
   /* ---------------- pannello ---------------- */
   function when(i){var d=new Date(D.t[i]+"Z"),rom=d.toLocaleString("it-IT",{timeZone:"Europe/Rome",weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});return rom+" (ora italiana) · "+D.t[i].slice(11,16)+" UTC"}
   var CL=function(c){return c<50?"praticamente assente":c<300?"debole":c<1000?"moderato":c<2500?"forte":"molto forte"};
-  function pannello(){var A=PR;$("when").textContent=when(ti);
+  function notaPunti(){var n=$("notapt");if(D.punti.length<2){n.hidden=true;return}var a=D.punti[0],b=D.punti[1],same=true,cnt=0;
+    D.livelli.forEach(function(L){var x=a.liv[String(L)],y=b.liv[String(L)];if(!x||!y)return;cnt++;if(x.t[ti]!==y.t[ti]||x.rh[ti]!==y.rh[ti])same=false});
+    if(cnt&&same){n.hidden=false;n.innerHTML="<b>Nota:</b> "+a.nome+" e "+b.nome+" cadono nella stessa cella del modello: ai livelli di pressione i due profili sono <b>identici</b>. Cambiano solo temperatura, punto di rugiada e pressione al suolo (corrette per la quota del punto), quindi la differenza tra i due diagrammi è tutta nello strato più basso."}else n.hidden=true}
+  function pannello(){var A=PR;$("when").textContent=when(ti);notaPunti();
     if(!A||!A.P){$("tiles").innerHTML="";$("verd").textContent="Profilo non disponibile per questa scadenza.";return}
     var r=A.r,ix=A.ix,z=function(p){var h=altezza(A.P,p);return h==null?null:h},agl=function(p){var h=z(p);return h==null?null:h-A.zs};
     var pt=D.punti[pi],mc=pt.sup.cape?pt.sup.cape[ti]:null;

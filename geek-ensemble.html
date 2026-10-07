@@ -71,6 +71,7 @@
         </div>
         <div class="tiles" id="tiles" style="margin-top:14px"></div>
         <p class="note" id="notaq" hidden></p>
+        <p class="note" id="notapt" hidden></p>
         <p class="note">Ogni linea sottile è uno dei membri; la linea scura è il <b>controllo</b> (la previsione "principale" non perturbata), quella verde tratteggiata è la <b>media</b> dell'ensemble, la fascia gialla contiene l'80% centrale dei membri (dal 10° al 90° percentile). La pioggia è <b>cumulata</b> dall'inizio della previsione: ogni linea è una possibile storia di quanta acqua sarà caduta.</p>
       </div>
     </section>
@@ -89,7 +90,7 @@
         <ul class="note">
           <li><b>Fonte:</b> ECMWF IFS ensemble (51 membri, 0,25°) tramite l'API Ensemble di Open-Meteo; se non disponibile, NOAA GFS (31 membri). <code>scripts/fetch_ensemble.py</code> scarica i dati nel giro automatico del sito (al massimo ogni 6 ore) e scrive <code>data/ensemble.json</code>.</li>
           <li><b>Metodo:</b> serie ogni 3 ore in ora italiana. Percentili e media calcolati nel browser su tutti i membri a ogni istante. Probabilità di pioggia = quota di membri sopra soglia in quel giorno (con 51 membri ogni membro vale circa 2 punti percentuali).</li>
-          <li><b>Limiti:</b> le probabilità dell'ensemble non sono tarate sulla stazione: un ensemble troppo "sicuro di sé" (poco ventaglio) può sbagliare lo stesso. I punti sono celle da 0,25° (~25 km), che a Firenzuola smussano l'Appennino. Non è un'allerta ufficiale: per quelle vale la Protezione Civile della Toscana.</li>
+          <li><b>Limiti:</b> le probabilità dell'ensemble non sono tarate sulla stazione: un ensemble troppo "sicuro di sé" (poco ventaglio) può sbagliare lo stesso. Borgo San Lorenzo e Firenzuola cadono nella <b>stessa cella</b> del modello (0,25°, circa 25 km): per pioggia, pressione e temperature in quota i valori dei due punti sono identici, e per la temperatura a 2 m cambia solo la correzione per la quota. A questa risoluzione il modello non distingue il fondovalle dall'Appennino. Non è un'allerta ufficiale: per quelle vale la Protezione Civile della Toscana.</li>
         </ul>
       </div>
     </section>
@@ -144,6 +145,15 @@
     T=T.slice(0,3);T.push([sg[2]+" "+sg[1]+" entro 7 giorni",Math.round(hit/n7*100)+"<s>%</s>","dei "+n7+" membri scende a questo valore in almeno un momento"]);
     $("tiles").innerHTML=T.map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
     $("notaq").hidden=false;$("notaq").innerHTML=NOTAQ[v.k]}
+  /* i due punti cadono nella stessa cella del modello: lo si dice, dati alla mano */
+  function notaPunti(v,pt){var n=$("notapt");if(E.punti.length<2){n.hidden=true;return}
+    var A=E.punti[0].dati[v.k],B=E.punti[1].dati[v.k];if(!A||!B){n.hidden=true;return}
+    var same=true,mn=Infinity,mx=-Infinity,f=E.scala[v.k]||10;
+    for(var m=0;m<A.length&&m<B.length;m++)for(var i=0;i<A[m].length;i++){var a=A[m][i],b=B[m][i];if(a==null||b==null)continue;var d=a-b;if(d!==0)same=false;if(d<mn)mn=d;if(d>mx)mx=d}
+    var p0=E.punti[0].nome,p1=E.punti[1].nome;
+    if(same){n.hidden=false;n.innerHTML="<b>Nota:</b> "+p0+" e "+p1+" cadono nella stessa cella da 0,25° del modello (circa 25 km): per questa variabile i "+E.membri+" membri sono <b>identici</b> nei due punti, quindi scegliere l'altro punto non cambia nulla."}
+    else if(isFinite(mn)&&(mx-mn)/f<=0.3){n.hidden=false;n.innerHTML="<b>Nota:</b> i due punti cadono nella stessa cella del modello. I valori di "+p0+" e "+p1+" differiscono solo di <b>"+f1(Math.abs(mn+mx)/2/f)+" °C</b>, sempre uguali in ogni istante: è la correzione per la differenza di quota applicata ai dati, non una differenza di previsione."}
+    else n.hidden=true}
   function tabella(G){var h="<tr><th>Giorno</th><th>Massima °C</th><th>Minima °C</th><th>Fascia Tmax</th><th>Pioggia ≥ 1 mm</th><th>Pioggia ≥ 10 mm</th><th>Pioggia mm (mediana · max)</th></tr>";
     G.forEach(function(r){var amp=pct(r.tx,.9)-pct(r.tx,.1),c=amp<2.5?"var(--pine)":amp<5?"var(--amber)":"var(--warm)",p1=share(r.rn,1),p10=share(r.rn,10);
       h+="<tr><td>"+lab(r.d)+"</td><td>"+f0(pct(r.tx,.5))+" <small style='color:var(--ink-faint)'>("+f0(pct(r.tx,.1))+"…"+f0(pct(r.tx,.9))+")</small></td><td>"+f0(pct(r.tn,.5))+" <small style='color:var(--ink-faint)'>("+f0(pct(r.tn,.1))+"…"+f0(pct(r.tn,.9))+")</small></td>"+
@@ -172,7 +182,7 @@
   function tip(ev){if(!GR||!ST)return;var cv=$("cv"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,i=Math.round((t.clientX-r.left-GR.L)/(r.width-GR.L-GR.Rr)*(GR.n-1));if(i<0||i>=GR.n)return;var o=ST.o,v=VAR[vi],d=E.t[i];
     $("tip").textContent=lab(d.slice(0,10))+" ore "+d.slice(11,16)+" · media "+f1(o.mean[i])+" "+v.u+" · 10°–90°: "+f1(o.p10[i])+" … "+f1(o.p90[i])+" · min–max: "+f1(o.min[i])+" … "+f1(o.max[i])+" · controllo "+f1(o.ctl[i]);draw(i)}
 
-  function render(){var pt=E.punti[pi],v=VAR[vi],S=ser(pt,v.k);ST={S:S,o:stats(S)};legenda();draw();var G=giorni(pt);if(SOGLIA[v.k]){tilesQuota(v,S);}else{$("notaq").hidden=true;tiles(G,pt);}tabella(G);
+  function render(){var pt=E.punti[pi],v=VAR[vi],S=ser(pt,v.k);ST={S:S,o:stats(S)};legenda();draw();var G=giorni(pt);if(SOGLIA[v.k]){tilesQuota(v,S);}else{$("notaq").hidden=true;tiles(G,pt);}tabella(G);notaPunti(v,pt);
     $("src").textContent=pt.nome+" · "+E.modello+" · "+E.membri+" membri";$("src2").textContent="aggiornato "+E.aggiornato.slice(0,10)+" ore "+E.aggiornato.slice(11,16)+" UTC"}
   function vars(){$("vars").innerHTML=VAR.map(function(v,i){return '<button class="chip" data-i="'+i+'" aria-pressed="'+(i===vi)+'">'+v.nome+'</button>'}).join("");
     $("vars").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){vi=+b.dataset.i;vars();render()})})}
