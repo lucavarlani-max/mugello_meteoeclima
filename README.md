@@ -129,8 +129,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   una pagina al menu della home, va aggiunta anche lì.
 - **MeteoGeek** (`meteogeek.html`, voce 🧪 MeteoGeek del menu) — il laboratorio: sperimentazioni, grafici insoliti,
   statistiche, curiosità e tabelle, come schede filtrabili per tipo e con ricerca. Elenco in `data/meteogeek.json`
-  (un elemento in cima a `esperimenti`: titolo, tipo grafico/statistica/curiosita/tabella/esperimento, data, testo, link,
-  tag, stato e anteprima facoltativi). Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
+  (un elemento in cima a `esperimenti`: titolo, tipo grafico/statistica/curiosita/tabella/esperimento, **tema**, data, testo,
+  link, tag, stato e anteprima facoltativi). I **temi** (le sottosezioni della home: clima, pioggia, previsioni, stazioni,
+  mondo) sono definiti nel blocco `temi` dello stesso file (id, icona, nome, testo, colore): per aggiungerne uno basta
+  una voce lì. La home mostra i temi come riquadri e, senza filtri, le ultime 3 prove di ciascuno con "Tutte le N prove →";
+  i filtri tema, tipo e ricerca si combinano e il tema è nell'indirizzo (`meteogeek.html?tema=pioggia`). Una scheda senza
+  tema (o con un tema sconosciuto) finisce in "Altre prove". Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
   dal modello `geek-modello.html` (non indicizzato); nel menu evidenziano MeteoGeek.
   **Verifica delle previsioni** (`geek-verifica-modello.html`): `scripts/fetch_verifica.py` (nel giro dell'Action `update-data`)
   archivia le previsioni a 7 giorni dei nove comuni di WeatherNext 3 (solo se tutti da Google) e di Open-Meteo in
