@@ -126,30 +126,62 @@ def registra_om(log, ora_it):
         registra(log, "om", nome, ora_it.strftime("%Y-%m-%d"), ora_it.hour, giorni)
 
 
+def _num(v):
+    """Numero da un campo di Weather Underground (può arrivare nullo, come stringa o con virgola)."""
+    try:
+        return None if v is None or v == "" else float(str(v).replace(",", "."))
+    except ValueError:
+        return None
+
+
+def _data_locale(s):
+    """Data (ora italiana) di un riepilogo: da obsTimeLocal, altrimenti da obsTimeUtc."""
+    loc = str(s.get("obsTimeLocal") or "")[:10]
+    if len(loc) == 10:
+        return loc
+    try:
+        return datetime.fromisoformat(str(s.get("obsTimeUtc")).replace("Z", "+00:00")).astimezone(ROMA).strftime("%Y-%m-%d")
+    except ValueError:
+        return ""
+
+
 def leggi_wu(riassunti, oggi):
     """riassunti: lista `summaries` di Weather Underground (dailysummary/7day). Restituisce {data:[tmax,tmin,mm]}
-    solo per i giorni conclusi (prima di `oggi`) e con valori validi."""
+    solo per i giorni conclusi (prima di `oggi`) e con tutti e tre i valori numerici."""
     out = {}
     for s in riassunti or []:
         m = s.get("metric") or {}
-        data = str(s.get("obsTimeLocal", ""))[:10]
+        data = _data_locale(s)
         if not data or data >= oggi:
             continue
-        tx, tn, mm = m.get("tempHigh"), m.get("tempLow"), m.get("precipTotal")
+        tx, tn, mm = _num(m.get("tempHigh")), _num(m.get("tempLow")), _num(m.get("precipTotal"))
         if tx is None or tn is None or mm is None:
             continue
         out[data] = [round(tx, 1), round(tn, 1), round(mm, 1)]
     return out
 
 
+def diagnostica_wu(risposta):
+    """Righe di log che spiegano perché un giro è andato a buon fine ma senza giorni validi."""
+    rs = risposta.get("summaries")
+    righe = ["ISCARP2: nessun giorno valido. Chiavi della risposta: %s; riepiloghi: %s" % (
+        sorted(risposta)[:8], len(rs) if isinstance(rs, list) else rs)]
+    if isinstance(rs, list) and rs:
+        righe.append("  chiavi del primo riepilogo: %s" % sorted(rs[0])[:30])
+        righe.append("  chiavi di metric: %s" % sorted((rs[0].get("metric") or {}))[:40])
+        for s in rs:
+            m = s.get("metric") or {}
+            righe.append("  %s (letta come %s): tempHigh=%r tempLow=%r precipTotal=%r" % (
+                s.get("obsTimeLocal"), _data_locale(s), m.get("tempHigh"), m.get("tempLow"), m.get("precipTotal")))
+    return "\n".join(righe)
+
+
 def aggiorna_iscarp2(oggi):
     url = ("https://api.weather.com/v2/pws/dailysummary/7day?stationId=%s&format=json&units=m&apiKey=%s" % (WU_ID, WU_KEY))
     risposta = getjson(url)
     nuovi = leggi_wu(risposta.get("summaries"), oggi)
-    if not nuovi:      # diagnostica: il giro è andato a buon fine ma non c'è nessun giorno valido
-        rs = risposta.get("summaries")
-        print("ISCARP2: nessun giorno valido. Chiavi risposta: %s; riepiloghi: %s; primo: %s" % (
-            sorted(risposta)[:8], len(rs) if isinstance(rs, list) else rs, json.dumps(rs[0])[:300] if rs else None), file=sys.stderr)
+    if not nuovi:
+        print(diagnostica_wu(risposta), file=sys.stderr)
     obs = carica(OBS, {"nome": "ISCARP2 · Scarperia (stazione personale, Weather Underground)", "giorni": {}})
     obs["giorni"].update(nuovi)
     taglio = (datetime.now(ROMA) - timedelta(days=CONSERVA_GIORNI)).strftime("%Y-%m-%d")
