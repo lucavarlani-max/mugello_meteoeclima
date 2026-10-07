@@ -143,7 +143,7 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   (ISCARP2 per Scarperia e San Piero, SIR per Borgo San Lorenzo) e con persistenza e climatologia. Una tantum,
   `python scripts/fetch_verifica.py --da-git` recupera dalla storia git le previsioni WeatherNext passate.
   **Spaghetti plot** (`geek-ensemble.html`): i 51 membri dell'ensemble ECMWF IFS (Open-Meteo Ensemble API; riserva NOAA GFS)
-  per Borgo San Lorenzo e Firenzuola, fino a 15 giorni, in `data/ensemble.json` scritto da `scripts/fetch_ensemble.py` nel giro
+  per Borgo San Lorenzo e Firenzuola, fino a 15 giorni (temperatura a 2 m, pioggia cumulata, pressione, temperatura a 850 e 500 hPa), in `data/ensemble.json` scritto da `scripts/fetch_ensemble.py` nel giro
   dell'Action (scarica al massimo ogni 6 ore). La pagina disegna i membri, la media e la fascia 10°–90°, e calcola
   probabilità di pioggia e incertezza per giorno.
   **Microclima** (`geek-microclima.html`): profilo verticale della temperatura con le otto stazioni attive della rete regionale tra

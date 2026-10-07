@@ -144,7 +144,12 @@ def leggi_wu(riassunti, oggi):
 
 def aggiorna_iscarp2(oggi):
     url = ("https://api.weather.com/v2/pws/dailysummary/7day?stationId=%s&format=json&units=m&apiKey=%s" % (WU_ID, WU_KEY))
-    nuovi = leggi_wu(getjson(url).get("summaries"), oggi)
+    risposta = getjson(url)
+    nuovi = leggi_wu(risposta.get("summaries"), oggi)
+    if not nuovi:      # diagnostica: il giro è andato a buon fine ma non c'è nessun giorno valido
+        rs = risposta.get("summaries")
+        print("ISCARP2: nessun giorno valido. Chiavi risposta: %s; riepiloghi: %s; primo: %s" % (
+            sorted(risposta)[:8], len(rs) if isinstance(rs, list) else rs, json.dumps(rs[0])[:300] if rs else None), file=sys.stderr)
     obs = carica(OBS, {"nome": "ISCARP2 · Scarperia (stazione personale, Weather Underground)", "giorni": {}})
     obs["giorni"].update(nuovi)
     taglio = (datetime.now(ROMA) - timedelta(days=CONSERVA_GIORNI)).strftime("%Y-%m-%d")
