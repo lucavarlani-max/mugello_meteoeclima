@@ -2,6 +2,22 @@
   "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
   "esperimenti": [
     {
+      "id": "verifica-modello",
+      "titolo": "Chi ci azzecca di più? Il modello contro le misure",
+      "tipo": "statistica",
+      "data": "2026-10-07",
+      "stato": "in-corso",
+      "testo": "WeatherNext 3 e Open-Meteo messi ogni giorno alla prova contro ISCARP2 e il pluviometro SIR di Borgo, con due avversari senza intelligenza: la persistenza e la media del periodo. Errori su massima e minima, probabilità di pioggia e Brier score. L'archivio è appena partito e si arricchisce da solo.",
+      "link": "geek-verifica-modello.html",
+      "tag": [
+        "previsioni",
+        "WeatherNext",
+        "ISCARP2",
+        "verifica",
+        "Brier"
+      ]
+    },
+    {
       "id": "pioggia-calendario",
       "titolo": "Il calendario della pioggia",
       "tipo": "grafico",

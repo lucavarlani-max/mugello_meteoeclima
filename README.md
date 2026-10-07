@@ -132,6 +132,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   (un elemento in cima a `esperimenti`: titolo, tipo grafico/statistica/curiosita/tabella/esperimento, data, testo, link,
   tag, stato e anteprima facoltativi). Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
   dal modello `geek-modello.html` (non indicizzato); nel menu evidenziano MeteoGeek.
+  **Verifica delle previsioni** (`geek-verifica-modello.html`): `scripts/fetch_verifica.py` (nel giro dell'Action `update-data`)
+  archivia le previsioni a 7 giorni dei nove comuni di WeatherNext 3 (solo se tutti da Google) e di Open-Meteo in
+  `data/verifica/log.json` (per ogni giorno e anticipo, la previsione emessa entro le 12) e il riepilogo giornaliero di
+  ISCARP2 (Weather Underground, chiave pubblica di `stazioni.js`) in `data/verifica/iscarp2.json`. La pagina li confronta con le misure
+  (ISCARP2 per Scarperia e San Piero, SIR per Borgo San Lorenzo) e con persistenza e climatologia. Una tantum,
+  `python scripts/fetch_verifica.py --da-git` recupera dalla storia git le previsioni WeatherNext passate.
 - **Le mie stazioni** (`stazioni.html` + `stazioni.js`, voce Stazioni del menu) — la stazione ISCARP2 di Scarperia
   (Weather Underground, letta dal browser come in home) e la stazione Netatmo: valori attuali, min/max di oggi,
   temperature delle ultime 24 ore a confronto e ultimi 7 giorni di ISCARP2. La Netatmo è letta dall'Action con
