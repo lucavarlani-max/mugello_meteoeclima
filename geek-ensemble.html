@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lo spaghetti plot · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="51 futuri possibili: i membri dell'ensemble ECMWF per il Mugello, temperatura, pioggia e pressione fino a 15 giorni. Quando la previsione è affidabile e quando si apre a ventaglio.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ensemble.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Lo spaghetti plot · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13px;color:var(--ink-soft)}
+  .sel select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:13px;padding:6px 12px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);cursor:pointer}
+  .chip:hover{border-color:var(--pine)}
+  .chip[aria-pressed="true"]{background:var(--pine);border-color:var(--pine);color:#fff}
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tile .big{font-size:26px}
+  @media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  canvas.cv{display:block;width:100%;cursor:crosshair}
+  #tip{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:34px;margin:8px 0 0}
+  .leg{display:flex;flex-wrap:wrap;gap:4px 16px;margin:8px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);align-items:center}
+  .leg i{display:inline-block;width:20px;height:0;vertical-align:middle;margin-right:6px;border-top:2px solid}
+  .leg b{display:inline-block;width:20px;height:9px;vertical-align:middle;margin-right:6px;border-radius:2px}
+  .tw{overflow-x:auto}
+  table.m{width:100%;border-collapse:collapse;font-size:13px;min-width:620px}
+  table.m th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;text-align:right;padding:6px 8px;border-bottom:1px solid var(--line)}
+  table.m th:first-child,table.m td:first-child{text-align:left}
+  table.m td{padding:6px 8px;border-bottom:1px solid var(--line-soft);text-align:right;font-family:var(--mono);font-size:12.5px}
+  table.m td:first-child{font-family:var(--sans);font-size:13.5px;font-weight:600}
+  td.pp{color:var(--ink);font-weight:600}
+  .banner{margin:0 0 14px;padding:11px 14px;border-radius:var(--r-sm);background:var(--amber-tint);border:1px solid var(--line);color:var(--ink);font-size:13.5px}
+  .vuoto{display:grid;place-items:center;min-height:160px;color:var(--ink-faint);font-family:var(--mono);font-size:12.5px;text-align:center;padding:10px}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Spaghetti plot</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · grafico</div>
+      <h1>51 futuri possibili</h1>
+      <p class="lead">Un modello meteorologico non fa <i>una</i> previsione: ne fa 51, partendo da condizioni iniziali appena diverse. Disegnate tutte insieme sembrano spaghetti. Se restano unite, il tempo è prevedibile; se si aprono a ventaglio, nessuno sa davvero cosa succederà. Qui vedi i 51 membri dell'ensemble <b>ECMWF</b> per Borgo San Lorenzo e per Firenzuola, fino a 15 giorni.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Gli spaghetti</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div class="sel">Punto
+          <select id="pt" aria-label="Punto"></select>
+          <div class="chips" id="vars" role="group" aria-label="Variabile"></div>
+        </div>
+        <div class="banner" id="banner" hidden></div>
+        <div id="area">
+          <canvas class="cv" id="cv" role="img" aria-label="Membri dell'ensemble ECMWF"></canvas>
+          <div class="leg" id="leg"></div>
+          <div id="tip">Passa sul grafico (o tocca) per leggere i valori in un istante.</div>
+        </div>
+        <div class="tiles" id="tiles" style="margin-top:14px"></div>
+        <p class="note">Ogni linea sottile è uno dei membri; la linea scura è il <b>controllo</b> (la previsione "principale" non perturbata), quella verde tratteggiata è la <b>media</b> dell'ensemble, la fascia gialla contiene l'80% centrale dei membri (dal 10° al 90° percentile). La pioggia è <b>cumulata</b> dall'inizio della previsione: ogni linea è una possibile storia di quanta acqua sarà caduta.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Giorno per giorno</h2><span class="src" id="src2"></span></div>
+      <div class="card">
+        <div class="tw"><table class="m" id="tab"></table></div>
+        <p class="note">Per ogni giorno si guardano i 51 membri: la <b>massima</b> e la <b>minima</b> sono la mediana con tra parentesi la fascia 10°–90° percentile; le <b>probabilità di pioggia</b> sono la quota di membri che prevedono almeno 1 mm (o 10 mm) in quel giorno. La <b>fascia</b> (p90−p10 della massima) è la misura dell'incertezza: più è larga, meno ci si può fidare della singola previsione. I dati sono ogni 3 ore, quindi le massime e le minime reali possono essere 1–2 °C più estreme di quelle calcolate.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> ECMWF IFS ensemble (51 membri, 0,25°) tramite l'API Ensemble di Open-Meteo; se non disponibile, NOAA GFS (31 membri). <code>scripts/fetch_ensemble.py</code> scarica i dati nel giro automatico del sito (al massimo ogni 6 ore) e scrive <code>data/ensemble.json</code>.</li>
+          <li><b>Metodo:</b> serie ogni 3 ore in ora italiana. Percentili e media calcolati nel browser su tutti i membri a ogni istante. Probabilità di pioggia = quota di membri sopra soglia in quel giorno (con 51 membri ogni membro vale circa 2 punti percentuali).</li>
+          <li><b>Limiti:</b> le probabilità dell'ensemble non sono tarate sulla stazione: un ensemble troppo "sicuro di sé" (poco ventaglio) può sbagliare lo stesso. I punti sono celle da 0,25° (~25 km), che a Firenzuola smussano l'Appennino. Non è un'allerta ufficiale: per quelle vale la Protezione Civile della Toscana.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var GS=["dom","lun","mar","mer","gio","ven","sab"],MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  var f1=function(v){return v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−")};
+  var f0=function(v){return v==null?"—":String(Math.round(v)).replace("-","−")};
+  var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()};
+  var VAR=[{k:"temperature_2m",nome:"Temperatura a 2 m",u:"°C",d:1},{k:"precipitation",nome:"Pioggia cumulata",u:"mm",d:1},{k:"pressure_msl",nome:"Pressione al livello del mare",u:"hPa",d:1}];
+  var E=null,pi=0,vi=0,ST=null,GR=null,oggi=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome"}).format(new Date());
+  var dow=function(d){return GS[new Date(d+"T00:00:00Z").getUTCDay()]};
+  var lab=function(d){return dow(d)+" "+(+d.slice(8))+" "+MES[+d.slice(5,7)-1]};
+  function pct(a,p){var s=a.filter(function(v){return v!=null}).sort(function(x,y){return x-y});if(!s.length)return null;var i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo)}
+  var mean=function(a){a=a.filter(function(v){return v!=null});return a.length?a.reduce(function(x,y){return x+y},0)/a.length:null};
+  function ser(pt,k){var f=E.scala[k];return pt.dati[k].map(function(s){return s.map(function(v){return v==null?null:v/f})})}
+  /* statistiche per istante */
+  function stats(S){var n=E.t.length,o={min:[],max:[],mean:[],p10:[],p90:[],ctl:S[0]};for(var i=0;i<n;i++){var c=S.map(function(s){return s[i]}).filter(function(v){return v!=null});
+      o.min.push(c.length?Math.min.apply(null,c):null);o.max.push(c.length?Math.max.apply(null,c):null);o.mean.push(mean(c));o.p10.push(pct(c,.1));o.p90.push(pct(c,.9))}return o}
+  /* statistiche giornaliere dal punto scelto */
+  function giorni(pt){var T=ser(pt,"temperature_2m"),P=ser(pt,"precipitation"),days=[],idx={};
+    E.t.forEach(function(t,i){var d=t.slice(0,10);if(!(d in idx)){idx[d]=[];days.push(d)}idx[d].push(i)});
+    var res=[];
+    days.forEach(function(d,k){var ii=idx[d],nxt=days[k+1],i0=ii[0],i1=nxt?idx[nxt][0]:null,full=ii.length>=6;
+      var tx=[],tn=[],rn=[];
+      T.forEach(function(s,m){var v=ii.map(function(i){return s[i]}).filter(function(x){return x!=null});if(v.length>=6&&full){tx.push(Math.max.apply(null,v));tn.push(Math.min.apply(null,v))}
+        var a=P[m][i0],b=i1!=null?P[m][i1]:null;if(a!=null&&b!=null&&E.t[i0].slice(11,13)==="00")rn.push(b-a)});
+      res.push({d:d,tx:tx,tn:tn,rn:rn})});
+    return res.filter(function(r){return r.tx.length>=10})}
+  var share=function(a,th){return a.length?a.filter(function(v){return v>=th}).length/a.length:null};
+
+  function tiles(G,pt){var dom=G.filter(function(r){return r.d>oggi})[0]||G[0];if(!dom){$("tiles").innerHTML="";return}
+    var ppi=share(dom.rn,1),t3=null,P=ser(pt,"precipitation"),i0=E.t.findIndex(function(t){return t.slice(0,10)>=oggi}),i3=i0>=0?i0+24:-1;
+    if(i0>=0&&i3<E.t.length&&E.t[i0].slice(11,13)==="00")t3=P.map(function(s){return s[i3]!=null&&s[i0]!=null?s[i3]-s[i0]:null}).filter(function(v){return v!=null});
+    var amp=G.map(function(r){return pct(r.tx,.9)-pct(r.tx,.1)}),fan=null;for(var k=0;k<G.length;k++)if(amp[k]>=5){fan=G[k];break}
+    var T=[["Massima "+lab(dom.d),f0(pct(dom.tx,.5))+"<s>°C</s>","10°–90°: "+f0(pct(dom.tx,.1))+" … "+f0(pct(dom.tx,.9))+" °C"],
+      ["Pioggia "+lab(dom.d),ppi==null?"—":Math.round(ppi*100)+"<s>%</s>","dei membri prevede ≥ 1 mm"],
+      ["Acqua nelle prossime 72 h",t3&&t3.length?f1(pct(t3,.5))+"<s>mm</s>":"—",t3&&t3.length?"mediana · da "+f1(pct(t3,.1))+" a "+f1(pct(t3,.9))+" mm (10°–90°)":""],
+      ["Il ventaglio si apre",fan?lab(fan.d):"oltre l'orizzonte",fan?"fascia della massima ≥ 5 °C":"fascia della massima sempre < 5 °C"]];
+    $("tiles").innerHTML=T.map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("")}
+  function tabella(G){var h="<tr><th>Giorno</th><th>Massima °C</th><th>Minima °C</th><th>Fascia Tmax</th><th>Pioggia ≥ 1 mm</th><th>Pioggia ≥ 10 mm</th><th>Pioggia mm (mediana · max)</th></tr>";
+    G.forEach(function(r){var amp=pct(r.tx,.9)-pct(r.tx,.1),c=amp<2.5?"var(--pine)":amp<5?"var(--amber)":"var(--warm)",p1=share(r.rn,1),p10=share(r.rn,10);
+      h+="<tr><td>"+lab(r.d)+"</td><td>"+f0(pct(r.tx,.5))+" <small style='color:var(--ink-faint)'>("+f0(pct(r.tx,.1))+"…"+f0(pct(r.tx,.9))+")</small></td><td>"+f0(pct(r.tn,.5))+" <small style='color:var(--ink-faint)'>("+f0(pct(r.tn,.1))+"…"+f0(pct(r.tn,.9))+")</small></td>"+
+        "<td style='color:"+c+";font-weight:700'>"+f1(amp)+"</td><td class='pp'>"+(p1==null?"—":Math.round(p1*100)+"%")+"</td><td class='pp'>"+(p10==null?"—":Math.round(p10*100)+"%")+"</td><td>"+(r.rn.length?f1(pct(r.rn,.5))+" · "+f1(Math.max.apply(null,r.rn)):"—")+"</td></tr>"});
+    $("tab").innerHTML=h}
+  /* ---------- grafico ---------- */
+  function draw(hov){var cv=$("cv"),W=cv.parentNode.clientWidth,H=Math.min(440,Math.max(280,W*.48)),dpr=window.devicePixelRatio||1;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+"px";
+    var c=cv.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);var v=VAR[vi],S=ST.S,o=ST.o,L=44,Rr=10,T=10,B=26,n=E.t.length,lo=Infinity,hi=-Infinity;
+    o.min.forEach(function(x,i){if(x!=null&&x<lo)lo=x;if(o.max[i]!=null&&o.max[i]>hi)hi=o.max[i]});if(v.k==="precipitation")lo=0;
+    var pad=(hi-lo)*.06||1;lo=v.k==="precipitation"?0:Math.floor(lo-pad);hi=Math.ceil(hi+pad);
+    var X=function(i){return L+i/(n-1)*(W-L-Rr)},Y=function(x){return T+(1-(x-lo)/(hi-lo))*(H-T-B)};
+    c.font="10.5px "+css("--mono");c.textBaseline="middle";c.strokeStyle=css("--line");c.fillStyle=css("--ink-faint");
+    var step=(hi-lo)/5,mag=Math.pow(10,Math.floor(Math.log10(step))),st=[1,2,5,10].map(function(m){return m*mag}).filter(function(m){return m>=step})[0]||step;
+    for(var g=Math.ceil(lo/st)*st;g<=hi+1e-9;g+=st){c.beginPath();c.moveTo(L,Y(g));c.lineTo(W-Rr,Y(g));c.stroke();c.fillText(f0(g),0,Y(g))}
+    c.textBaseline="alphabetic";var every=W<520?2:1,k=0;E.t.forEach(function(t,i){if(t.slice(11,13)==="00"){c.strokeStyle=css("--line-soft");c.beginPath();c.moveTo(X(i),T);c.lineTo(X(i),H-B);c.stroke();
+        if(k%every===0){c.fillStyle=css("--ink-faint");c.fillText(dow(t.slice(0,10))+" "+(+t.slice(8,10)),X(i)+3,H-8)}k++}});
+    /* fascia 10-90 */
+    c.fillStyle=css("--amber");c.globalAlpha=.2;c.beginPath();var first=true,i;for(i=0;i<n;i++){if(o.p90[i]==null)continue;if(first){c.moveTo(X(i),Y(o.p90[i]));first=false}else c.lineTo(X(i),Y(o.p90[i]))}
+    for(i=n-1;i>=0;i--){if(o.p10[i]!=null)c.lineTo(X(i),Y(o.p10[i]))}c.closePath();c.fill();c.globalAlpha=1;
+    var line=function(a,col,w,al,dash){c.strokeStyle=col;c.lineWidth=w;c.globalAlpha=al;c.setLineDash(dash||[]);c.beginPath();var s=false;a.forEach(function(x,j){if(x==null){return}if(!s){c.moveTo(X(j),Y(x));s=true}else c.lineTo(X(j),Y(x))});c.stroke();c.setLineDash([]);c.globalAlpha=1};
+    S.slice(1).forEach(function(s){line(s,css("--sky"),1,.2)});
+    line(o.mean,css("--pine"),2.4,1,[7,4]);line(o.ctl,css("--ink"),1.8,1);
+    if(hov!=null){c.strokeStyle=css("--ink-soft");c.lineWidth=1;c.beginPath();c.moveTo(X(hov),T);c.lineTo(X(hov),H-B);c.stroke()}
+    GR={L:L,Rr:Rr,n:n,W:W}}
+  function legenda(){$("leg").innerHTML='<span><i style="border-color:var(--sky);opacity:.6"></i>'+(E.membri-1)+' membri perturbati</span><span><i style="border-color:var(--ink)"></i>controllo</span><span><i style="border-color:var(--pine);border-top-style:dashed"></i>media</span><span><b style="background:var(--amber);opacity:.3"></b>10°–90° percentile</span>'}
+  function tip(ev){if(!GR||!ST)return;var cv=$("cv"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,i=Math.round((t.clientX-r.left-GR.L)/(r.width-GR.L-GR.Rr)*(GR.n-1));if(i<0||i>=GR.n)return;var o=ST.o,v=VAR[vi],d=E.t[i];
+    $("tip").textContent=lab(d.slice(0,10))+" ore "+d.slice(11,16)+" · media "+f1(o.mean[i])+" "+v.u+" · 10°–90°: "+f1(o.p10[i])+" … "+f1(o.p90[i])+" · min–max: "+f1(o.min[i])+" … "+f1(o.max[i])+" · controllo "+f1(o.ctl[i]);draw(i)}
+
+  function render(){var pt=E.punti[pi],v=VAR[vi],S=ser(pt,v.k);ST={S:S,o:stats(S)};legenda();draw();var G=giorni(pt);tiles(G,pt);tabella(G);
+    $("src").textContent=pt.nome+" · "+E.modello+" · "+E.membri+" membri";$("src2").textContent="aggiornato "+E.aggiornato.slice(0,10)+" ore "+E.aggiornato.slice(11,16)+" UTC"}
+  function vars(){$("vars").innerHTML=VAR.map(function(v,i){return '<button class="chip" data-i="'+i+'" aria-pressed="'+(i===vi)+'">'+v.nome+'</button>'}).join("");
+    $("vars").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){vi=+b.dataset.i;vars();render()})})}
+  fetch("./data/ensemble.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){E=d;
+    $("pt").innerHTML=E.punti.map(function(p,i){return '<option value="'+i+'">'+p.nome+'</option>'}).join("");$("pt").addEventListener("change",function(){pi=+$("pt").value;render()});
+    var eta=(Date.now()-Date.parse(E.aggiornato))/36e5;if(eta>30){$("banner").hidden=false;$("banner").textContent="Attenzione: i dati hanno più di "+Math.round(eta)+" ore, l'aggiornamento automatico potrebbe essere fermo."}
+    vars();render();var cv=$("cv");cv.addEventListener("mousemove",tip);cv.addEventListener("touchstart",tip,{passive:true});cv.addEventListener("touchmove",tip,{passive:true});cv.addEventListener("mouseleave",function(){draw()});
+    var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(function(){draw()},150)})
+  }).catch(function(){$("src").textContent="in arrivo";$("area").innerHTML='<div class="vuoto">I dati dell\'ensemble arrivano dal giro automatico del sito (ogni 6 ore circa):<br>compariranno dopo il prossimo aggiornamento.</div>';$("vars").innerHTML="";$("tiles").innerHTML="";$("tab").innerHTML=""});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
