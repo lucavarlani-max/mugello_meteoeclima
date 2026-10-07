@@ -2,6 +2,22 @@
   "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
   "esperimenti": [
     {
+      "id": "pioggia-calendario",
+      "titolo": "Il calendario della pioggia",
+      "tipo": "grafico",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Un quadratino per ogni giorno, più scuro quanto più piove: Borgo San Lorenzo dal 1991, Firenzuola dal 1961 e i pluviometri della Regione Toscana. Giorni piovosi, serie asciutte e piovose, e tutti gli anni a confronto.",
+      "link": "geek-pioggia-calendario.html",
+      "tag": [
+        "pioggia",
+        "calendario",
+        "heatmap",
+        "SIR",
+        "Mugello"
+      ]
+    },
+    {
       "id": "warming-stripes",
       "titolo": "Warming stripes del Mugello",
       "tipo": "grafico",

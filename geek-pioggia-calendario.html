@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendario della pioggia · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Un quadratino per ogni giorno: il calendario della pioggia del Mugello, anno per anno, per Borgo San Lorenzo, Firenzuola e i pluviometri della Regione Toscana.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-pioggia-calendario.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Calendario della pioggia · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+  .sel select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;max-width:100%}
+  .sel button{font:inherit;font-size:13px;padding:7px 12px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);cursor:pointer}
+  .sel button:hover:not(:disabled){border-color:var(--pine)}.sel button:disabled{opacity:.4;cursor:default}
+  canvas.cv{display:block;width:100%;cursor:crosshair}
+  .scr{overflow-x:auto}
+  #tip,#tip2{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:18px;margin:8px 0 0}
+  .leg{display:flex;flex-wrap:wrap;gap:4px 12px;margin:10px 0 0;font-family:var(--mono);font-size:11px;color:var(--ink-faint);align-items:center}
+  .leg i{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:4px;vertical-align:-2px;border:1px solid var(--line)}
+  .tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tile .big{font-size:26px}
+  @media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Calendario della pioggia</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · grafico</div>
+      <h1>Il calendario della pioggia</h1>
+      <p class="lead">Un quadratino per ogni giorno, più è scuro più ha piovuto. A colpo d'occhio si vedono le settimane di maltempo, le estati secche, i giorni "da record". Scegli la stazione e l'anno: Borgo San Lorenzo dal 1991, Firenzuola dal 1961, più i pluviometri della Regione Toscana sparsi nel Mugello.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Un anno, giorno per giorno</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div class="sel">
+          <select id="sta" aria-label="Stazione"></select>
+          <button id="prev" type="button" aria-label="Anno precedente">←</button>
+          <select id="anno" aria-label="Anno"></select>
+          <button id="next" type="button" aria-label="Anno successivo">→</button>
+        </div>
+        <div class="scr" id="scr"><canvas class="cv" id="cal" role="img" aria-label="Calendario della pioggia giorno per giorno"></canvas></div>
+        <div id="tip">Passa il mouse (o tocca) su un quadratino per leggere data e pioggia.</div>
+        <div class="leg" id="leg"></div>
+        <div class="tiles" id="tiles"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Tutti gli anni insieme</h2><span class="src">una riga per anno, da gennaio a dicembre</span></div>
+      <div class="card">
+        <canvas class="cv" id="all" role="img" aria-label="Tutti gli anni della stazione, una riga per anno"></canvas>
+        <div id="tip2">Clicca una riga per aprire quell'anno nel calendario sopra.</div>
+        <p class="note">Ogni riga è un anno, ogni colonna è un giorno dell'anno (29 febbraio incluso). Le righe con tante macchie scure sono gli anni più piovosi; le fasce chiare a luglio-agosto sono le estati asciutte. I quadratini grigi sono giorni senza dato.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> Borgo San Lorenzo (<code>data/bsl/borgo.json</code>) e pluviometri SIR Toscana (<code>data/sir/</code>, pioggia giornaliera 0–24), Regione Toscana, CC BY-SA 4.0; Firenzuola (<code>data/serie/firenzuola.csv</code>). Si aggiornano con le Action del sito.</li>
+          <li><b>Metodo:</b> un giorno è "piovoso" se cade almeno 1 mm. Le serie asciutte e piovose contano giorni consecutivi; un giorno senza dato interrompe la serie. Il confronto con la media usa solo gli anni con almeno 330 giorni di dati.</li>
+          <li><b>Limiti:</b> sono pluviometri puntuali: due stazioni a pochi chilometri possono avere giorni diversi. I dati più recenti non sono ancora validati dall'ente. Gli anni con buchi sono segnalati sopra il grafico.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  var MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  var GIO=["Lun","","Mer","","Ven","","Dom"];
+  var f1=function(v){return v.toFixed(1).replace(".",",")};
+  var f0=function(v){return String(Math.round(v))};
+  var BINS=[0,1,5,10,20,40,80]; /* soglie inferiori in mm: <1 asciutto */
+  var LAB=["< 1 mm","1–5","5–10","10–20","20–40","40–80","≥ 80 mm"];
+  var LIGHT=["#eef1ec","#cfe3f4","#9ec9ea","#63a6dc","#2f7cc4","#1c4f93","#0d2a5c"],
+      DARK=["#1e2a24","#1d3a55","#25587f","#2f7cc4","#4f93d6","#8ab9ea","#c6defa"];
+  var dark=function(){var t=document.documentElement.getAttribute("data-theme");return t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme:dark)").matches)};
+  var pal=function(){return dark()?DARK:LIGHT};
+  var bin=function(v){var b=0;for(var i=0;i<BINS.length;i++)if(v>=BINS[i])b=i;return b};
+  var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()};
+  var D=null, S=[], cur=null, DATA=null, yr=null, layout=null, layAll=null;
+  var oggi=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome"}).format(new Date());
+  var isoD=function(y,m,d){return y+"-"+("0"+(m+1)).slice(-2)+"-"+("0"+d).slice(-2)};
+  var nd=function(y,m){return new Date(Date.UTC(y,m+1,0)).getUTCDate()};
+  var dIt=function(y,m,d){return d+" "+MESI[m]+" "+y};
+
+  function parseCsv(t,col){var m={};t.split("\n").forEach(function(l){var a=l.split(/[;,]/);if(!/^\d{4}-\d\d-\d\d$/.test(a[0]))return;var v=parseFloat(a[col]);if(!isNaN(v))m[a[0]]=v});return m}
+  var CACHE={};
+  function carica(s){if(CACHE[s.id])return Promise.resolve(CACHE[s.id]);
+    var p;
+    if(s.kind==="bsl")p=fetch("./data/bsl/borgo.json").then(function(r){return r.json()}).then(function(b){var m={},t=new Date(b.p.dal+"T00:00:00Z").getTime();
+        b.p.mm.forEach(function(v,i){if(v!=null)m[new Date(t+i*864e5).toISOString().slice(0,10)]=v});return m});
+    else if(s.kind==="fir")p=fetch("./data/serie/firenzuola.csv").then(function(r){return r.text()}).then(function(t){return parseCsv(t,1)});
+    else p=fetch("./data/sir/"+s.id+"/prec024.csv").then(function(r){return r.text()}).then(function(t){return parseCsv(t,1)});
+    return p.then(function(m){CACHE[s.id]=m;return m});}
+
+  function anni(m){var c={};Object.keys(m).forEach(function(k){var y=+k.slice(0,4);c[y]=(c[y]||0)+1});return c}
+  function stats(y){var m=DATA,n=0,tot=0,pi=0,mx=-1,dmx="",dry=0,dryD="",wet=0,wetD="",cd=0,cw=0,sd="",sw="";
+    for(var mo=0;mo<12;mo++)for(var d=1;d<=nd(y,mo);d++){var k=isoD(y,mo,d),v=m[k];
+      if(v==null||k>oggi){cd=0;cw=0;continue}
+      n++;tot+=v;if(v>mx){mx=v;dmx=k}
+      if(v>=1){pi++;if(cw===0)sw=k;cw++;cd=0;if(cw>wet){wet=cw;wetD=sw}}
+      else{if(cd===0)sd=k;cd++;cw=0;if(cd>dry){dry=cd;dryD=sd}}}
+    return {n:n,tot:tot,pi:pi,mx:mx,dmx:dmx,dry:dry,dryD:dryD,wet:wet,wetD:wetD}}
+  var short=function(k){var a=k.split("-");return +a[2]+" "+MES[+a[1]-1]+(a[0]?" "+a[0]:"")};
+  var shortNoY=function(k){var a=k.split("-");return +a[2]+" "+MES[+a[1]-1]};
+
+  function tiles(y){var s=stats(y),cy=anni(DATA),comp=Object.keys(cy).filter(function(k){return cy[k]>=330&&+k!==y}),
+      media=null,mediaPi=null;
+    if(comp.length>=5&&s.n>=330){media=comp.reduce(function(a,k){return a+stats(+k).tot},0)/comp.length;mediaPi=comp.reduce(function(a,k){return a+stats(+k).pi},0)/comp.length}
+    var T=[["Pioggia caduta",f0(s.tot)+"<s>mm</s>",y===+oggi.slice(0,4)?"dal 1° gennaio, "+s.n+" giorni":s.n<330?"su "+s.n+" giorni di dati":(media!=null?(s.tot>=media?"+":"−")+Math.abs(Math.round((s.tot/media-1)*100))+"% sulla media ("+f0(media)+" mm)":"")],
+      ["Giorni piovosi",s.pi+"<s>gg</s>",(mediaPi!=null?"media "+f0(mediaPi)+" giorni":"almeno 1 mm")],
+      ["Giorno più piovoso",s.mx>=0?f1(s.mx)+"<s>mm</s>":"—",s.mx>=0?short(s.dmx):""],
+      ["Serie asciutta più lunga",s.dry+"<s>gg</s>",s.dry?shortNoY(s.dryD)+" →":""],
+      ["Serie piovosa più lunga",s.wet+"<s>gg</s>",s.wet?shortNoY(s.wetD)+" →":""]];
+    $("tiles").innerHTML=T.map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("")}
+
+  function setup(cv,W,H){var dpr=window.devicePixelRatio||1;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+"px";var c=cv.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);return c}
+  function cellCol(v,fut){var P=pal();if(v==null)return fut?"transparent":(dark()?"#3a4741":"#c9cfca");return P[bin(v)]}
+
+  function cal(){var cv=$("cal"),W0=$("scr").clientWidth,L=30,T=18,cell=Math.max(9,Math.min(22,Math.floor((W0-L)/54))),W=Math.max(W0,L+54*cell),gap=Math.max(1,Math.round(cell*.15)),
+      H=T+7*cell+4;cv.style.width=W+"px";var c=setup(cv,W,H),jan1=new Date(Date.UTC(yr,0,1)).getUTCDay(),off=(jan1+6)%7,P=pal();
+    c.font="10px "+css("--mono");c.fillStyle=css("--ink-faint");c.textBaseline="middle";
+    GIO.forEach(function(g,i){if(g)c.fillText(g,0,T+i*cell+cell/2)});
+    layout={L:L,T:T,cell:cell,off:off,gap:gap};
+    var doy=0;
+    for(var mo=0;mo<12;mo++){var first=true;
+      for(var d=1;d<=nd(yr,mo);d++,doy++){var k=isoD(yr,mo,d),col=Math.floor((doy+off)/7),row=(doy+off)%7,fut=k>oggi,v=DATA[k];
+        c.fillStyle=cellCol(v,fut);
+        if(!(fut&&v==null)){c.beginPath();c.roundRect?c.roundRect(L+col*cell,T+row*cell,cell-gap,cell-gap,2):c.rect(L+col*cell,T+row*cell,cell-gap,cell-gap);c.fill()}
+        else{c.strokeStyle=css("--line-soft");c.strokeRect(L+col*cell+.5,T+row*cell+.5,cell-gap-1,cell-gap-1)}
+        if(d===1){c.fillStyle=css("--ink-faint");c.textBaseline="alphabetic";c.fillText(MES[mo],L+col*cell,11);c.textBaseline="middle"}}}
+    var n=Math.ceil((doy+off)/7);layout.cols=n;layout.y=yr;tiles(yr)}
+
+  function all(){var cv=$("all"),W=cv.parentNode.clientWidth-36,L=40,ys=Object.keys(anni(DATA)).map(Number).sort(function(a,b){return a-b}),
+      rh=Math.max(5,Math.min(11,Math.floor(560/ys.length))),T=14,H=T+ys.length*rh+2,c=setup(cv,W,H),cw=(W-L)/366;
+    c.font="10px "+css("--mono");c.textBaseline="middle";layAll={L:L,T:T,rh:rh,cw:cw,ys:ys};
+    var acc=0;for(var mo=0;mo<12;mo++){c.fillStyle=css("--ink-faint");c.textBaseline="alphabetic";c.fillText(MES[mo],L+acc*cw,10);c.textBaseline="middle";acc+=nd(2000,mo)}
+    ys.forEach(function(y,i){var yy=T+i*rh;c.fillStyle=y===yr?css("--pine"):css("--ink-faint");
+      if(rh>=9||y%5===0)c.fillText(String(y),0,yy+rh/2);
+      var a=0;for(var mo=0;mo<12;mo++){var dim=nd(2000,mo),dm=nd(y,mo);
+        for(var d=1;d<=dim;d++){var k=d<=dm?isoD(y,mo,d):null,v=k?DATA[k]:null,fut=k&&k>oggi;
+          if(d>dm){continue}if(fut&&v==null)continue;
+          c.fillStyle=cellCol(v,false);c.fillRect(L+(a+d-1)*cw,yy,Math.ceil(cw),rh-1)}
+        a+=dim}})}
+
+  function hit(ev,cv){var r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev;return {x:t.clientX-r.left,y:t.clientY-r.top}}
+  function tipCal(ev){if(!layout)return;var p=hit(ev,$("cal")),col=Math.floor((p.x-layout.L)/layout.cell),row=Math.floor((p.y-layout.T)/layout.cell);
+    if(col<0||row<0||row>6)return;var doy=col*7+row-layout.off;if(doy<0)return;var dt=new Date(Date.UTC(layout.y,0,1+doy));if(dt.getUTCFullYear()!==layout.y)return;
+    var k=dt.toISOString().slice(0,10),v=DATA[k];$("tip").textContent=dIt(layout.y,dt.getUTCMonth(),dt.getUTCDate())+" · "+(k>oggi?"giorno non ancora arrivato":v==null?"dato mancante":v<1?"asciutto ("+f1(v)+" mm)":f1(v)+" mm")}
+  function posAll(ev){if(!layAll)return null;var p=hit(ev,$("all")),i=Math.floor((p.y-layAll.T)/layAll.rh),x=Math.floor((p.x-layAll.L)/layAll.cw);
+    if(i<0||i>=layAll.ys.length||x<0||x>365)return null;return {y:layAll.ys[i],x:x}}
+  function tipAll(ev){var q=posAll(ev);if(!q)return;var a=0,mo=0,d;for(mo=0;mo<12;mo++){var dim=nd(2000,mo);if(q.x<a+dim)break;a+=dim}d=q.x-a+1;
+    if(mo>11||d>nd(q.y,mo)){$("tip2").textContent=q.y;return}var k=isoD(q.y,mo,d),v=DATA[k];
+    $("tip2").textContent=dIt(q.y,mo,d)+" · "+(k>oggi?"—":v==null?"dato mancante":f1(v)+" mm")}
+
+  function leg(){var P=pal();$("leg").innerHTML=LAB.map(function(l,i){return '<span><i style="background:'+P[i]+'"></i>'+l+'</span>'}).join("")+'<span><i style="background:'+(dark()?"#3a4741":"#c9cfca")+'"></i>senza dato</span>'}
+  function disegna(){if(!DATA)return;cal();all();leg()}
+
+  function scegliStazione(){cur=S[+$("sta").value];$("src").textContent="caricamento…";
+    carica(cur).then(function(m){DATA=m;var cy=anni(m),ys=Object.keys(cy).map(Number).sort(function(a,b){return b-a});
+      $("anno").innerHTML=ys.map(function(y){return '<option value="'+y+'">'+y+(y===+oggi.slice(0,4)?" (in corso)":cy[y]<330?" (parziale)":"")+'</option>'}).join("");
+      yr=ys[0];if(cy[yr]<60&&ys.length>1&&ys[0]===+oggi.slice(0,4))yr=ys[0];$("anno").value=yr;
+      $("src").textContent=cur.nome+" · dal "+ys[ys.length-1]+(cur.q?" · "+cur.q+" m":"");vai()}).catch(function(){$("src").textContent="Dati non disponibili al momento."})}
+  function vai(){var o=$("anno").options;$("prev").disabled=$("anno").selectedIndex>=o.length-1;$("next").disabled=$("anno").selectedIndex<=0;disegna()}
+
+  fetch("./data/sir/mugello.json").then(function(r){return r.json()}).then(function(m){
+    var cy=+oggi.slice(0,4);
+    S=[{id:"borgo",kind:"bsl",nome:"Borgo San Lorenzo",q:196,grp:"Serie lunghe"},
+       {id:"firenzuola",kind:"fir",nome:"Firenzuola",q:null,grp:"Serie lunghe"}];
+    m.stazioni.filter(function(s){return s.pioggia&&+s.pioggia.al>=cy-1&&s.id!=="TOS01000999"}).sort(function(a,b){return a.quota-b.quota}).forEach(function(s){
+      S.push({id:s.id,kind:"sir",nome:s.nome+" ("+s.comune+")",q:Math.round(s.quota),grp:"Pluviometri SIR (per quota)"})});
+    var g={};S.forEach(function(s,i){(g[s.grp]=g[s.grp]||[]).push('<option value="'+i+'">'+s.nome+'</option>')});
+    $("sta").innerHTML=Object.keys(g).map(function(k){return '<optgroup label="'+k+'">'+g[k].join("")+'</optgroup>'}).join("");
+    $("sta").addEventListener("change",scegliStazione);
+    $("anno").addEventListener("change",function(){yr=+$("anno").value;vai()});
+    $("prev").addEventListener("click",function(){var a=$("anno");if(a.selectedIndex<a.options.length-1){a.selectedIndex++;yr=+a.value;vai()}});
+    $("next").addEventListener("click",function(){var a=$("anno");if(a.selectedIndex>0){a.selectedIndex--;yr=+a.value;vai()}});
+    var cv=$("cal");cv.addEventListener("mousemove",tipCal);cv.addEventListener("touchstart",tipCal,{passive:true});cv.addEventListener("touchmove",tipCal,{passive:true});
+    var ca=$("all");ca.addEventListener("mousemove",tipAll);ca.addEventListener("touchstart",tipAll,{passive:true});
+    ca.addEventListener("click",function(ev){var q=posAll(ev);if(!q)return;yr=q.y;$("anno").value=yr;vai();$("cal").scrollIntoView({behavior:"smooth",block:"center"})});
+    var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(disegna,150)});
+    matchMedia("(prefers-color-scheme:dark)").addEventListener&&matchMedia("(prefers-color-scheme:dark)").addEventListener("change",disegna);
+    scegliStazione();
+  }).catch(function(){$("src").textContent="Dati non disponibili al momento."});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
