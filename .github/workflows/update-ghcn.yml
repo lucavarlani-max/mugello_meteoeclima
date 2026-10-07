@@ -14,6 +14,22 @@ on:
         description: "Ultimo anno della climatologia mensile"
         required: false
         default: "2020"
+      hot_threshold:
+        description: "Soglia giornata calda TMAX (°C)"
+        required: false
+        default: "30"
+      very_hot_threshold:
+        description: "Soglia giornata molto calda TMAX (°C)"
+        required: false
+        default: "35"
+      cold_threshold:
+        description: "Soglia giornata fredda TMIN (°C)"
+        required: false
+        default: "0"
+      very_cold_threshold:
+        description: "Soglia giornata molto fredda TMIN (°C)"
+        required: false
+        default: "-5"
 
 permissions:
   contents: write
@@ -27,6 +43,10 @@ env:
   GHCN_BASE_URL: https://www.ncei.noaa.gov/pub/data/ghcn/daily/all
   MONTHLY_START: ${{ inputs.start_year || '1991' }}
   MONTHLY_END: ${{ inputs.end_year || '2020' }}
+  HOT_THRESHOLD: ${{ inputs.hot_threshold || '30' }}
+  VERY_HOT_THRESHOLD: ${{ inputs.very_hot_threshold || '35' }}
+  COLD_THRESHOLD: ${{ inputs.cold_threshold || '0' }}
+  VERY_COLD_THRESHOLD: ${{ inputs.very_cold_threshold || '-5' }}
 
 jobs:
   update-ghcn:
@@ -78,6 +98,7 @@ jobs:
             --element TAVG \
             --element TMAX \
             --element TMIN \
+            --element PRCP \
             --base-url "$GHCN_BASE_URL" \
             --pause 0.15 \
             --timeout 90 \
@@ -116,6 +137,10 @@ jobs:
         run: |
           python3 scripts/ghcn/ghcn_extremes.py \
             --input ghcn_daily.csv \
+            --hot-threshold "$HOT_THRESHOLD" \
+            --very-hot-threshold "$VERY_HOT_THRESHOLD" \
+            --cold-threshold "$COLD_THRESHOLD" \
+            --very-cold-threshold "$VERY_COLD_THRESHOLD" \
             --output data/geek/ghcn-estremi.js
           test -s data/geek/ghcn-estremi.js
 
