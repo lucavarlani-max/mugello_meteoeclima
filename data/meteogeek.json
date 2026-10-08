@@ -40,19 +40,20 @@
   "esperimenti": [
     {
       "id": "weathergami",
-      "titolo": "Weathergami di Borgo San Lorenzo",
+      "titolo": "Weathergami: il clima di una stazione in un colpo d'occhio",
       "tipo": "grafico",
       "tema": "clima",
       "data": "2026-10-08",
       "stato": "nuovo",
-      "testo": "Ogni giorno dal 1951 ha una massima e una minima: il Weathergami le raggruppa in esagoni colorati per frequenza e mostra il clima del fondovalle in un solo sguardo. Si può filtrare per stagione, mese e periodo (fino al 1979 o dal 2000) e confrontare le forme.",
+      "testo": "Ogni giorno ha una massima e una minima: il Weathergami le raggruppa in esagoni colorati per frequenza. Si sceglie la stazione (Borgo San Lorenzo, le stazioni del Mugello e della Toscana, Firenzuola, Genova, Milano, New York e altre) e si filtra per stagione, mese e periodo per confrontare le forme.",
       "link": "geek-weathergami.html",
       "tag": [
         "weathergami",
         "temperature",
         "massima e minima",
         "esagoni",
-        "serie storiche"
+        "serie storiche",
+        "stazioni"
       ]
     },
     {
