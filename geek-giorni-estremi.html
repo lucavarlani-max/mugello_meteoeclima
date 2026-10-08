@@ -76,6 +76,7 @@
         <canvas class="cv" id="cv" role="img" aria-label="Numero di giorni all'anno del tipo scelto"></canvas>
         <div id="tip">Passa sul grafico (o tocca) per leggere un anno.</div>
         <div class="leg"><span><span class="dot" id="dotc"></span><span id="legn">giorni all'anno</span></span><span>— media del decennio</span><span>- - tendenza</span></div>
+        <p class="note" id="lac" hidden></p>
         <p class="note">Ogni barra è il numero di giorni dell'anno che rispettano la soglia. Le linee orizzontali sono la media di ciascun decennio: servono a togliere il rumore, perché un'estate o un inverno possono essere eccezionali per caso. Un anno entra nel conto solo se la stazione ha misurato almeno l'85% dei suoi giorni.</p>
       </div>
     </section>
@@ -92,6 +93,7 @@
           <li><b>Fonte:</b> Borgo San Lorenzo: SIR Toscana (<code>data/bsl/borgo.json</code>, temperature dal 1951). Le altre stazioni: serie giornaliere di <code>data/serie/</code> (le stesse delle pagine delle serie storiche).</li>
           <li><b>Definizioni:</b> notte tropicale = minima ≥ 20 °C; giorno tropicale = massima ≥ 30 °C; giornata molto calda = massima ≥ 35 °C; giorno estivo = massima ≥ 25 °C; giorno di gelo = minima &lt; 0 °C; giorno di ghiaccio = massima &lt; 0 °C (non scende mai sopra lo zero).</li>
           <li><b>Metodo:</b> si conta, per ogni anno solare, quante volte la soglia è rispettata, solo per gli anni con almeno l'85% dei giorni misurati. L'anno in corso è escluso dai grafici e confrontato a parte con la media degli ultimi 30 anni completi nello stesso periodo (dal 1° gennaio a oggi).</li>
+          <li><b>Borgo San Lorenzo:</b> la serie ha un buco dal 1989 al 1999 e cambia strumento nel tempo: fino agli anni '80 le minime sono lette su un termometro (valori per lo più interi o a mezzo grado), dal 2000 sono registrate da una stazione automatica. Un confronto tra i due periodi va letto con cautela, e il fondovalle di notte si raffredda molto, per questo le notti davvero tropicali sono poche.</li>
           <li><b>Limiti:</b> il conto cambia se cambia il termometro o il suo riparo, o se la stazione si ritrova circondata da case e asfalto: non sono corretti. Una soglia netta amplifica le differenze (un giorno a 34,9 °C non conta, uno a 35,0 sì). Nei decenni con pochi anni validi la media è meno solida.</li>
         </ul>
       </div>
@@ -148,6 +150,9 @@
     /* anno in corso, stesso periodo */
     var cy=Y[ANNO],base=Object.keys(Y).map(Number).filter(function(y){return y<ANNO&&Y[y].n[I.k]>=.85*(bis(y)?366:365)}).sort().slice(-30),
         mb=mean(base.map(function(y){return Y[y].ytd[I.id]||0})),yc=cy&&cy.ytd[I.id]!=null?cy.ytd[I.id]:null;
+    var lac=$("lac"),have={};P.forEach(function(r){have[r.y]=1});var mis=[],rg=null;
+    for(var yy=P[0].y;yy<=P[P.length-1].y;yy++){if(have[yy]){rg=null;continue}if(rg&&rg[1]===yy-1)rg[1]=yy;else{rg=[yy,yy];mis.push(rg)}}
+    lac.hidden=!mis.length;if(mis.length)lac.innerHTML="<b>Anni mancanti</b> (la stazione non ha misurato abbastanza giorni): "+mis.map(function(r){return r[0]===r[1]?r[0]:r[0]+"–"+r[1]}).join(", ")+". Le medie dei «primi» e degli «ultimi» 30 anni contano solo gli anni presenti, quindi possono coprire periodi non contigui.";
     $("src2").textContent=P.length+" anni validi, "+P[0].y+"–"+P[P.length-1].y+(tr?" · tendenza "+sg(tr.b*10)+" giorni per decennio":"");
     $("tiles").innerHTML=[["Primi "+first.length+" anni",f1(mF)+"<s>gg/anno</s>",first[0].y+"–"+first[first.length-1].y],
       ["Ultimi "+last.length+" anni",f1(mL)+"<s>gg/anno</s>",last[0].y+"–"+last[last.length-1].y+" · "+sg(mL-mF)+" gg"],
