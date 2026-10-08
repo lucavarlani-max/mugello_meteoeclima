@@ -39,6 +39,23 @@
   ],
   "esperimenti": [
     {
+      "id": "weathergami",
+      "titolo": "Weathergami di Borgo San Lorenzo",
+      "tipo": "grafico",
+      "tema": "clima",
+      "data": "2026-10-08",
+      "stato": "nuovo",
+      "testo": "Ogni giorno dal 1951 ha una massima e una minima: il Weathergami le raggruppa in esagoni colorati per frequenza e mostra il clima del fondovalle in un solo sguardo. Si può filtrare per stagione, mese e periodo (fino al 1979 o dal 2000) e confrontare le forme.",
+      "link": "geek-weathergami.html",
+      "tag": [
+        "weathergami",
+        "temperature",
+        "massima e minima",
+        "esagoni",
+        "serie storiche"
+      ]
+    },
+    {
       "id": "giorni-estremi",
       "titolo": "Giorni che non esistevano",
       "tipo": "statistica",
