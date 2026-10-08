@@ -92,7 +92,7 @@
       <div class="card">
         <ul class="note">
           <li><b>Previsioni:</b> <code>scripts/fetch_verifica.py</code>, nel giro automatico del sito, salva a ogni esecuzione le previsioni a 7 giorni dei nove comuni (<code>data/verifica/log.json</code>). Per ogni giorno e anticipo si tiene la previsione emessa <b>entro le 12</b> del giorno di emissione, così "1 giorno prima" è davvero la previsione della mattina precedente. WeatherNext 3 è archiviato solo quando tutti i comuni arrivano da Google (altrimenti i dati sono misti e non si attribuiscono al modello). Open-Meteo è il modello "best match" gratuito.</li>
-          <li><b>Misure:</b> ISCARP2 da Weather Underground (riepilogo giornaliero, <code>data/verifica/iscarp2.json</code>, giorni conclusi); Borgo San Lorenzo dalla stazione SIR TOS01000999 (<code>data/bsl/borgo.json</code>: massima, minima e pioggia 0–24). Le previsioni di Scarperia e San Piero si confrontano con ISCARP2, quelle di Borgo San Lorenzo con il SIR.</li>
+          <li><b>Misure:</b> ISCARP2 da Weather Underground (riepilogo giornaliero, <code>data/verifica/iscarp2.json</code>, giorni conclusi); Borgo San Lorenzo dalla stazione SIR TOS01000999 (<code>data/bsl/borgo.json</code>: massima, minima e pioggia 0–24). ISCARP2 misura temperature ma non comunica la pioggia a Weather Underground: per quella stazione le metriche di pioggia restano vuote (— ) e si valutano solo con il SIR. Le previsioni di Scarperia e San Piero si confrontano con ISCARP2, quelle di Borgo San Lorenzo con il SIR.</li>
           <li><b>Baselines:</b> la persistenza usa le misure di <i>anticipo</i> giorni prima; la climatologia è la media 1991–2020 della stazione SIR di Borgo (temperature ±3 giorni, probabilità di pioggia ±7 giorni), anche quando si verifica ISCARP2.</li>
           <li><b>Limiti:</b> poche settimane di dati non bastano per dire chi è il migliore: sotto i 30 giorni la classifica può cambiare spesso. Il modello prevede il comune, la stazione misura un punto (e ISCARP2 è un sensore amatoriale, non tarato come quelli ufficiali). WeatherNext arrotonda le temperature all'intero.</li>
         </ul>
@@ -131,12 +131,12 @@
   function giorniModello(L){var out={};MOD.forEach(function(m){var c=LOG.mod[m.id]&&LOG.mod[m.id][tr.comune];if(!c)return;Object.keys(c).forEach(function(d){if(c[d][L]&&tr.get(d))out[d]=1})});return Object.keys(out).sort()}
   function recs(id,L,days){var r=[];days.forEach(function(d){var o=tr.get(d);if(!o)return;
       if(id==="wn"||id==="om"){var e=entry(id,tr.comune,d,L);if(!e)return;r.push({d:d,ftx:e[0],ftn:e[1],p:e[2]/100,fmm:e[3],o:o})}
-      else if(id==="per"){var q=tr.get(addD(d,-L));if(!q)return;r.push({d:d,ftx:q.tx,ftn:q.tn,p:q.mm>=1?1:0,fmm:q.mm,o:o})}
+      else if(id==="per"){var q=tr.get(addD(d,-L));if(!q)return;r.push({d:d,ftx:q.tx,ftn:q.tn,p:q.mm==null?null:(q.mm>=1?1:0),fmm:q.mm,o:o})}
       else{var a=CL.idx(d);r.push({d:d,ftx:CL.tx[a],ftn:CL.tn[a],p:CL.ra[a],fmm:null,o:o})}});return r}
   function met(R){var n=R.length;if(!n)return {n:0};var s=function(f){return R.reduce(function(a,r){return a+f(r)},0)/n};
-    var mm=R.filter(function(r){return r.fmm!=null});
+    var mm=R.filter(function(r){return r.fmm!=null&&r.o.mm!=null}),rr=R.filter(function(r){return r.o.mm!=null&&r.p!=null}),sr=function(f){return rr.length?rr.reduce(function(a,r){return a+f(r)},0)/rr.length:null};
     return {n:n,mx:s(function(r){return Math.abs(r.ftx-r.o.tx)}),mn:s(function(r){return Math.abs(r.ftn-r.o.tn)}),bx:s(function(r){return r.ftx-r.o.tx}),
-      w2:s(function(r){return Math.abs(r.ftx-r.o.tx)<=2?1:0}),ok:s(function(r){return (r.p>=.5)===(r.o.mm>=1)?1:0}),br:s(function(r){return Math.pow(r.p-(r.o.mm>=1?1:0),2)}),
+      w2:s(function(r){return Math.abs(r.ftx-r.o.tx)<=2?1:0}),ok:sr(function(r){return (r.p>=.5)===(r.o.mm>=1)?1:0}),br:sr(function(r){return Math.pow(r.p-(r.o.mm>=1?1:0),2)}),
       mmae:mm.length?mm.reduce(function(a,r){return a+Math.abs(r.fmm-r.o.mm)},0)/mm.length:null}}
   var ROWS=[{id:"wn",nome:"WeatherNext 3",col:"--pine"},{id:"om",nome:"Open-Meteo",col:"--amber"},{id:"per",nome:"Persistenza (come oggi)",base:1,col:"--ink-faint"},{id:"cli",nome:"Climatologia (media 1991–2020)",base:1,col:"--ctx"}];
   var COLS=[["n","Giorni",0,0],["mx","Err. Tmax °C",1,1],["mn","Err. Tmin °C",1,1],["bx","Bias Tmax °C",1,2],["w2","Tmax ±2 °",0,3],["ok","Pioggia ok",0,3],["br","Brier",1,4],["mmae","Err. mm",1,1]];
@@ -182,12 +182,12 @@
     MOD.forEach(function(m){serie(function(d){return val(m.id,d,0)},css(m.col),1.6,true)});
     serie(function(d){return tr.get(d).tx},css("--ink"),2.4,true);
     /* pioggia */
-    var b=setup($("gp"),150),c2=b.c,mx=1;D.forEach(function(d){mx=Math.max(mx,tr.get(d).mm);MOD.forEach(function(m){var v=val(m.id,d,3);if(v!=null)mx=Math.max(mx,v)})});mx=Math.ceil(mx*1.1);
+    var b=setup($("gp"),150),c2=b.c,mx=1;D.forEach(function(d){var m0=tr.get(d).mm;if(m0!=null)mx=Math.max(mx,m0);MOD.forEach(function(m){var v=val(m.id,d,3);if(v!=null)mx=Math.max(mx,v)})});mx=Math.ceil(mx*1.1);
     var X2=function(i){return L+(i+.5)*(b.W-L-R)/D.length},Y2=function(v){return T+(1-v/mx)*(b.H-T-Bt)},bw=Math.max(4,(b.W-L-R)/D.length*.5);
     c2.font="10.5px "+css("--mono");c2.fillStyle=css("--ink-faint");c2.strokeStyle=css("--line");c2.textBaseline="middle";
     [0,.5,1].forEach(function(f){var v=mx*f;c2.beginPath();c2.moveTo(L,Y2(v));c2.lineTo(b.W-R,Y2(v));c2.stroke();c2.fillText(Math.round(v),0,Y2(v))});
     c2.textBaseline="alphabetic";D.forEach(function(d,i){if(D.length<=16||i%Math.ceil(D.length/12)===0)c2.fillText(dm(d),X2(i)-12,b.H-6)});
-    c2.fillStyle=css("--sky");c2.globalAlpha=.55;D.forEach(function(d,i){var v=tr.get(d).mm;c2.fillRect(X2(i)-bw/2,Y2(v),bw,Y2(0)-Y2(v))});c2.globalAlpha=1;
+    c2.fillStyle=css("--sky");c2.globalAlpha=.55;D.forEach(function(d,i){var v=tr.get(d).mm;if(v==null)return;c2.fillRect(X2(i)-bw/2,Y2(v),bw,Y2(0)-Y2(v))});c2.globalAlpha=1;
     MOD.forEach(function(m,k){c2.fillStyle=css(m.col);D.forEach(function(d,i){var v=val(m.id,d,3);if(v==null)return;c2.beginPath();c2.arc(X2(i)+(k?5:-5),Y2(v),3.2,0,6.3);c2.fill()})});
     GR.L=L;GR.R=R}
   function tip(ev){if(!GR||!GR.D||GR.D.length<2)return;var cv=ev.currentTarget,r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,i=Math.floor((t.clientX-r.left-GR.L)/((r.width-GR.L-GR.R)/GR.D.length));if(i<0||i>=GR.D.length)return;

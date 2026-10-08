@@ -12,7 +12,7 @@ Ogni esecuzione dell'Action:
 
 Uscite:
   data/verifica/log.json      {"v":1,"agg":..,"mod":{"wn"|"om":{comune:{giorno_bersaglio:{anticipo:[tmax,tmin,pp,mm,ora]}}}}}
-  data/verifica/iscarp2.json  {"nome":..,"giorni":{data:[tmax,tmin,mm]}}
+  data/verifica/iscarp2.json  {"nome":..,"giorni":{data:[tmax,tmin,mm|null]}}
 
 «anticipo» = giorni tra l'emissione e il giorno previsto (0 = oggi, 1 = domani...). Per ogni coppia (giorno, anticipo)
 si tiene la previsione emessa entro le 12 (ora italiana) del giorno di emissione, cioè l'ultima della mattina: così
@@ -147,7 +147,8 @@ def _data_locale(s):
 
 def leggi_wu(riassunti, oggi):
     """riassunti: lista `summaries` di Weather Underground (dailysummary/7day). Restituisce {data:[tmax,tmin,mm]}
-    solo per i giorni conclusi (prima di `oggi`) e con tutti e tre i valori numerici."""
+    solo per i giorni conclusi (prima di `oggi`) e con massima e minima numeriche. La pioggia è facoltativa: ISCARP2
+    non la comunica nel riepilogo di Weather Underground (precipTotal sempre nullo), e allora vale None."""
     out = {}
     for s in riassunti or []:
         m = s.get("metric") or {}
@@ -155,9 +156,9 @@ def leggi_wu(riassunti, oggi):
         if not data or data >= oggi:
             continue
         tx, tn, mm = _num(m.get("tempHigh")), _num(m.get("tempLow")), _num(m.get("precipTotal"))
-        if tx is None or tn is None or mm is None:
+        if tx is None or tn is None:
             continue
-        out[data] = [round(tx, 1), round(tn, 1), round(mm, 1)]
+        out[data] = [round(tx, 1), round(tn, 1), None if mm is None else round(mm, 1)]
     return out
 
 

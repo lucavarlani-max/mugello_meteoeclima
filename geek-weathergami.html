@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weathergami di Borgo San Lorenzo · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Il Weathergami di Borgo San Lorenzo: ogni esagono raggruppa i giorni con la stessa combinazione di temperatura minima e massima dal 1951. Si legge il clima del fondovalle in un solo sguardo, per stagione, mese e periodo.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-weathergami.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Weathergami di Borgo San Lorenzo · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13px;color:var(--ink-soft)}
+  .sel select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;max-width:100%}
+  .tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tile .big{font-size:26px}
+  @media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .cw{position:relative;margin-top:14px}
+  #chart{width:100%;background:#0b1320;border-radius:8px}
+  #chart svg{display:block;width:100%;height:auto;touch-action:manipulation}
+  #tooltip{position:absolute;pointer-events:none;background:#161b22;border:1px solid #58a6ff;border-radius:8px;padding:.6rem .8rem;font-size:12.5px;color:#e6edf3;box-shadow:0 8px 24px rgba(0,0,0,.5);opacity:0;transition:opacity .12s;z-index:30;min-width:155px}
+  #tooltip.visible{opacity:1}
+  #tooltip .t-title{font-weight:600;margin-bottom:.3rem;color:#58a6ff}
+  #tooltip .t-row{display:flex;justify-content:space-between;gap:1rem;color:#c9d1d9}
+  #tooltip .t-row span:last-child{font-variant-numeric:tabular-nums;color:#ffd166;font-weight:600}
+  .lg{display:flex;flex-wrap:wrap;gap:6px 18px;margin:12px 0 0;font-size:13px;color:var(--ink-soft)}
+  .sw{display:inline-block;width:13px;height:13px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1px solid var(--line)}
+  .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+  @media(max-width:860px){.g2{grid-template-columns:minmax(0,1fr)}}
+  h3.sm{font-family:var(--serif);font-size:15px;margin:0 0 8px;font-weight:700}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Weathergami di Borgo San Lorenzo</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · grafico</div>
+      <h1>Weathergami di Borgo San Lorenzo</h1>
+      <p class="lead">Ogni giorno ha una massima e una minima. Se si mette ogni giorno dal 1951 in un grafico, con la minima in orizzontale e la massima in verticale, i punti si accavallano: il Weathergami li raggruppa in esagoni e li colora in base a quanti giorni contengono. Il risultato è una fotografia del clima del fondovalle: dove il colore è caldo, il tempo "si ripete" più spesso.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Il grafico</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div class="sel">Periodo dell'anno
+          <select id="stag" aria-label="Periodo dell'anno">
+            <option value="all">Tutto l'anno</option><option value="inv">Inverno (dic–feb)</option><option value="est">Estate (giu–ago)</option>
+            <optgroup label="Un mese solo" id="mesi"></optgroup>
+          </select>
+          Anni
+          <select id="per" aria-label="Periodo di anni">
+            <option value="all">Tutta la serie</option><option value="old">Fino al 1979</option><option value="new">Dal 2000</option>
+          </select>
+        </div>
+        <div class="tiles" id="tiles"></div>
+        <div class="cw"><div id="chart"><div id="status" style="padding:3rem 1rem;text-align:center;color:#8b949e;font-size:14px">Caricamento serie storica…</div></div><div id="tooltip"></div></div>
+        <div class="lg"><span><span class="sw" style="background:#0d1b2a"></span>molto rara</span><span><span class="sw" style="background:#778da9"></span>abbastanza comune</span><span><span class="sw" style="background:#ffd166"></span>molto frequente</span><span><span class="sw" style="background:#e76f51"></span>tra le più tipiche</span></div>
+        <p class="note" id="lac" hidden></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Come si legge</h2></div>
+      <div class="g2">
+        <div class="card">
+          <h3 class="sm">Esagoni e colori</h3>
+          <p class="note">Ogni <b>esagono</b> raccoglie i giorni con una combinazione simile di <i>minima</i> (asse orizzontale) e <i>massima</i> (asse verticale). Più il colore è caldo, più giorni ci sono. Passa il mouse, o tocca, un esagono per leggere quanti giorni contiene e le temperature medie. I colori si adattano alla selezione: confronta le forme, non i singoli colori, quando cambi periodo.</p>
+        </div>
+        <div class="card">
+          <h3 class="sm">Le zone del grafico</h3>
+          <ul class="note">
+            <li><b>Inverno (gelate)</b>: in basso a sinistra.</li>
+            <li><b>Estate tipica</b>: in alto a destra, dove si accumulano più giorni.</li>
+            <li><b>Ondate di caldo</b>: gli estremi in alto a destra.</li>
+            <li><b>La linea tratteggiata</b> è massima = minima: sotto non può esserci nessun giorno. Più un esagono è lontano dalla linea, più è ampia l'escursione termica di quel giorno.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> Servizio Idrologico Regionale (SIR) e Centro Funzionale Regione Toscana, stazione di Borgo S. Lorenzo (TOS01000999, 196 m), file <code>data/bsl/borgo.json</code>. Il Weathergami mostra la frequenza di ogni combinazione di massima e minima giornaliere; il nome deriva da «scorigami», le statistiche sportive.</li>
+          <li><b>Riferimento:</b> Kahl, J. D. W., 2023: <i>The Weathergami chart: Displaying easily digestible weather and climate data</i>. <i>Bulletin of the American Meteorological Society</i>, 104(10), <a href="https://doi.org/10.1175/BAMS-D-23-0035.1" rel="noopener">doi:10.1175/BAMS-D-23-0035.1</a>. Questa pagina è una versione ispirata a quel lavoro: esagoni al posto della griglia originale, con le minime in orizzontale e le massime in verticale.</li>
+          <li><b>Metodo:</b> si usano i giorni con massima e minima entrambe misurate; le temperature sono arrotondate a 0,5 °C. Inverno = dicembre, gennaio, febbraio; estate = giugno, luglio, agosto. «Fino al 1979» e «Dal 2000» lasciano fuori di proposito il buco 1989–1999.</li>
+          <li><b>Limiti:</b> fino agli anni '80 le minime sono lette a mano su un termometro (valori interi o a mezzo grado), poi registrate da una stazione automatica: il confronto tra i due periodi va letto con cautela. L'anno in corso è parziale. Il fondovalle raffredda molto di notte, e un'altra stazione darebbe un grafico diverso.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  var f1=function(v){return v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−")};
+  var NS="http://www.w3.org/2000/svg",PAIRS=[],META=null;
+  $("mesi").innerHTML=MESI.map(function(n,i){return '<option value="m'+i+'">'+n+'</option>'}).join("");
+
+  /* ---------- scala di colore: stessa interpolazione B-spline in RGB usata dal grafico originale ---------- */
+  var PAL=["#0d1b2a","#1b3a4b","#415a77","#778da9","#e0e1dd","#ffd166","#f4a261","#e76f51","#d62828"].map(function(h){return [1,3,5].map(function(i){return parseInt(h.substr(i,2),16)})});
+  function basis(t,v0,v1,v2,v3){var t2=t*t,t3=t2*t;return((1-3*t+3*t2-t3)*v0+(4-6*t2+3*t3)*v1+(1+3*t+3*t2-3*t3)*v2+t3*v3)/6}
+  function pal(t){t=Math.max(0,Math.min(1,t));var n=PAL.length-1,i=t>=1?n-1:Math.floor(t*n),u=t>=1?1:(t-i/n)*n,o=[0,1,2].map(function(c){var v1=PAL[i][c],v2=PAL[i+1][c],v0=i>0?PAL[i-1][c]:2*v1-v2,v3=i<n-1?PAL[i+2][c]:2*v2-v1;return Math.max(0,Math.min(255,Math.round(basis(u,v0,v1,v2,v3))))});return "rgb("+o.join(",")+")"}
+  /* ---------- tick "belli" (1, 2, 5 × 10^k) ---------- */
+  function ticks(lo,hi,n){var raw=(hi-lo)/n,p=Math.pow(10,Math.floor(Math.log10(raw))),e=raw/p,st=(e>=7.07?10:e>=3.16?5:e>=1.41?2:1)*p,o=[];for(var v=Math.ceil(lo/st)*st;v<=hi+1e-9;v+=st)o.push(Math.round(v/st)*st);return o}
+  function el(p,n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;p.appendChild(e);return e}
+
+  /* ---------- dati ---------- */
+  function parse(raw){var tx=raw.t.tx,tn=raw.t.tn,t0=Date.parse(raw.t.dal+"T00:00:00Z"),P=[];
+    for(var i=0;i<tx.length;i++){var a=tx[i],b=tn[i];if(a==null||b==null||a<b-.1)continue;var d=new Date(t0+i*864e5);
+      P.push({tmax:Math.round(a*2)/2,tmin:Math.round(b*2)/2,year:d.getUTCFullYear(),month:d.getUTCMonth()})}
+    return P}
+  function filtra(){var s=$("stag").value,p=$("per").value;
+    return PAIRS.filter(function(d){
+      if(s==="inv"&&!(d.month===11||d.month<=1))return false;if(s==="est"&&!(d.month>=5&&d.month<=7))return false;if(s[0]==="m"&&d.month!==+s.slice(1))return false;
+      if(p==="old"&&d.year>1979)return false;if(p==="new"&&d.year<2000)return false;return true})}
+
+  /* ---------- grafico (stessa grafica dell'originale) ---------- */
+  var G=null,W=760,H=580,M={top:44,right:24,bottom:52,left:58},IW=W-M.left-M.right,IH=H-M.top-M.bottom,R=8,DX=R*2*Math.sin(Math.PI/3),DY=R*1.5;
+  function costruisci(){var ext=function(k){var lo=1e9,hi=-1e9;PAIRS.forEach(function(d){if(d[k]<lo)lo=d[k];if(d[k]>hi)hi=d[k]});return [lo,hi]},
+      te=ext("tmin"),tx=ext("tmax"),xd=[Math.floor(te[0])-2,Math.ceil(te[1])+2],yd=[Math.floor(tx[0])-2,Math.ceil(tx[1])+2],
+      X=function(v){return (v-xd[0])/(xd[1]-xd[0])*IW},Y=function(v){return IH-(v-yd[0])/(yd[1]-yd[0])*IH};
+    var c=$("chart");c.innerHTML="";var svg=el(c,"svg",{viewBox:"0 0 "+W+" "+H,width:"100%",role:"img","aria-label":"Weathergami: frequenza delle combinazioni di temperatura massima e minima giornaliere a Borgo San Lorenzo"});
+    var defs=el(svg,"defs",{}),cp=el(defs,"clipPath",{id:"clip"});el(cp,"rect",{width:IW,height:IH});
+    var g=el(svg,"g",{transform:"translate("+M.left+","+M.top+")"}),plot=el(g,"g",{"clip-path":"url(#clip)"});
+    /* assi */
+    var gx=el(g,"g",{transform:"translate(0,"+IH+")"});el(gx,"path",{d:"M0,6V0H"+IW+"V6",stroke:"#30363d",fill:"none"});
+    ticks(xd[0],xd[1],8).forEach(function(v){var a=el(gx,"g",{transform:"translate("+X(v)+",0)"});el(a,"line",{stroke:"#30363d",y2:6});el(a,"text",{y:9,dy:"0.71em","text-anchor":"middle",fill:"#c9d1d9","font-size":10},String(v).replace("-","−"))});
+    var gy=el(g,"g",{});el(gy,"path",{d:"M-6,0H0V"+IH+"H-6",stroke:"#30363d",fill:"none"});
+    ticks(yd[0],yd[1],9).forEach(function(v){var a=el(gy,"g",{transform:"translate(0,"+Y(v)+")"});el(a,"line",{stroke:"#30363d",x2:-6});el(a,"text",{x:-9,dy:"0.32em","text-anchor":"end",fill:"#c9d1d9","font-size":10},String(v).replace("-","−"))});
+    el(g,"text",{x:IW/2,y:IH+40,"text-anchor":"middle",fill:"#c9d1d9","font-size":12},"Temperatura minima giornaliera (°C)");
+    el(g,"text",{transform:"rotate(-90)",x:-IH/2,y:-44,"text-anchor":"middle",fill:"#c9d1d9","font-size":12},"Temperatura massima giornaliera (°C)");
+    el(svg,"text",{x:W/2,y:20,"text-anchor":"middle",fill:"#e6edf3","font-size":14,"font-weight":600},"Weathergami · Borgo San Lorenzo (dati reali)");
+    /* diagonali: max = min e due parallele */
+    var x0=xd[0],x1=xd[1],y0=yd[0],y1=yd[1];
+    el(plot,"line",{x1:X(Math.max(x0,y0)),y1:Y(Math.max(x0,y0)),x2:X(Math.min(x1,y1)),y2:Y(Math.min(x1,y1)),stroke:"#fff","stroke-opacity":.28,"stroke-dasharray":"6,4","stroke-width":1.2});
+    [5,15].forEach(function(d,i){el(plot,"line",{x1:X(Math.max(x0,y0-d)),y1:Y(Math.max(x0,y0-d)+d),x2:X(Math.min(x1,y1-d)),y2:Y(Math.min(x1,y1-d)+d),stroke:"#fff","stroke-opacity":.12+i*.04,"stroke-dasharray":"3,5","stroke-width":.9})});
+    var hexG=el(plot,"g",{});
+    /* annotazioni */
+    var an=el(plot,"g",{"pointer-events":"none"});
+    [{tx:-5,ty:2,t:"Inverno\n(gelate)",c:"#a8dadc"},{tx:16,ty:31,t:"Estate\ntipica",c:"#ffd166"},{tx:22,ty:39,t:"Ondate\ndi caldo",c:"#e76f51"}].forEach(function(a){
+      if(a.tx<xd[0]||a.tx>xd[1]||a.ty<yd[0]||a.ty>yd[1])return;var t=el(an,"text",{x:X(a.tx),y:Y(a.ty),"text-anchor":"middle",fill:a.c,"font-size":11,"font-style":"italic",opacity:.9});
+      a.t.split("\n").forEach(function(l,i){el(t,"tspan",{x:X(a.tx),dy:i?13:0},l)})});
+    /* legenda a gradiente */
+    var lg=el(defs,"linearGradient",{id:"legGrad"});for(var i=0;i<=10;i++)el(lg,"stop",{offset:(i*10)+"%","stop-color":pal(i/10)});
+    var lgg=el(svg,"g",{transform:"translate("+(W-150-28)+","+(H-32)+")"});el(lgg,"rect",{width:150,height:10,fill:"url(#legGrad)",rx:2});
+    el(lgg,"text",{y:21,fill:"#8b949e","font-size":9},"rara");el(lgg,"text",{x:150,y:21,"text-anchor":"end",fill:"#8b949e","font-size":9},"frequente");
+    G={X:X,Y:Y,hexG:hexG,bins:[],n:0}}
+  function hexbin(data){var bins=new Map();
+    data.forEach(function(p){var px=G.X(p.tmin),py=G.Y(p.tmax);if(px<0||px>IW||py<0||py>IH)return;var j=Math.round(py/DY),i=Math.round((px-(j&1)*DX/2)/DX),k=i+","+j,b=bins.get(k);
+      if(!b){b=[];b.x=i*DX+(j&1)*DX/2;b.y=j*DY;bins.set(k,b)}b.push(p)});return Array.from(bins.values())}
+  var HEX=(function(){var o=[];for(var a=0;a<360;a+=60){var r=a*Math.PI/180;o.push((R*Math.sin(r)).toFixed(3)+","+(-R*Math.cos(r)).toFixed(3))}return "M"+o.join("L")+"Z"})();
+  function disegna(data){var bins=hexbin(data),mx=bins.reduce(function(a,b){return Math.max(a,b.length)},1);G.bins=bins;G.n=data.length;G.hexG.innerHTML="";
+    bins.forEach(function(b,i){var p=el(G.hexG,"path",{d:HEX,transform:"translate("+b.x+","+b.y+")",fill:pal(mx>1?(b.length-1)/(mx-1):0),stroke:"#0d1117","stroke-width":.5,opacity:.95,"data-i":i})})}
+
+  /* ---------- riquadri e testo ---------- */
+  function riquadri(data){var n=data.length,uni={},mxd=null,mnd=null,sx=0,sn=0;
+    data.forEach(function(d){uni[d.tmax+"|"+d.tmin]=1;sx+=d.tmax;sn+=d.tmin;if(!mxd||d.tmax>mxd.tmax)mxd=d;if(!mnd||d.tmin<mnd.tmin)mnd=d});
+    if(!n){$("tiles").innerHTML='<div class="vuoto" style="grid-column:1/-1">Nessun giorno con questi filtri.</div>';return}
+    $("tiles").innerHTML=[["Giorni validi",n.toLocaleString("it-IT"),Object.keys(uni).length.toLocaleString("it-IT")+" combinazioni uniche"],["Massima media",f1(sx/n)+"<s>°C</s>","dei giorni scelti"],["Minima media",f1(sn/n)+"<s>°C</s>","dei giorni scelti"],
+      ["Massima assoluta",f1(mxd.tmax)+"<s>°C</s>","nel "+mxd.year],["Minima assoluta",f1(mnd.tmin)+"<s>°C</s>","nel "+mnd.year]]
+      .map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("")}
+  function render(){if(!G)return;var d=filtra();riquadri(d);disegna(d);hide();
+    var ys=d.map(function(x){return x.year});$("src").textContent=d.length?"Borgo San Lorenzo · "+Math.min.apply(null,ys)+"–"+Math.max.apply(null,ys):"nessun dato"}
+
+  /* ---------- tooltip (mouse e tocco) ---------- */
+  var tt=$("tooltip");function hide(){tt.classList.remove("visible")}
+  function mostra(ev){var t=ev.target;if(!t||t.getAttribute==null||t.getAttribute("data-i")==null){hide();return}var b=G.bins[+t.getAttribute("data-i")],n=b.length,
+      mn=b.reduce(function(a,p){return a+p.tmin},0)/n,mx=b.reduce(function(a,p){return a+p.tmax},0)/n;
+    tt.innerHTML='<div class="t-title">Combinazione</div><div class="t-row"><span>Min media</span><span>'+f1(mn)+' °C</span></div><div class="t-row"><span>Max media</span><span>'+f1(mx)+' °C</span></div><div class="t-row" style="margin-top:4px"><span>Giorni</span><span>'+n+'</span></div><div class="t-row"><span>% sul totale</span><span>'+(100*n/G.n).toFixed(2).replace(".",",")+'%</span></div>';
+    var r=$("chart").getBoundingClientRect(),l=ev.clientX-r.left+14,tp=ev.clientY-r.top+14;if(l+180>r.width)l=ev.clientX-r.left-190;if(tp+130>r.height)tp=ev.clientY-r.top-130;tt.style.left=Math.max(0,l)+"px";tt.style.top=Math.max(0,tp)+"px";tt.classList.add("visible")}
+  $("chart").addEventListener("pointermove",mostra);$("chart").addEventListener("pointerdown",mostra);$("chart").addEventListener("pointerleave",hide);
+
+  $("stag").addEventListener("change",render);$("per").addEventListener("change",render);
+  fetch("./data/bsl/borgo.json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(raw){META=raw;PAIRS=parse(raw);if(!PAIRS.length)throw 0;
+    var have={};PAIRS.forEach(function(d){have[d.year]=(have[d.year]||0)+1});var y0=PAIRS[0].year,y1=PAIRS[PAIRS.length-1].year,mis=[],rg=null;
+    for(var y=y0;y<=y1;y++){if(have[y]>=250){rg=null;continue}if(rg&&rg[1]===y-1)rg[1]=y;else{rg=[y,y];mis.push(rg)}}
+    if(mis.length){$("lac").hidden=false;$("lac").innerHTML="<b>Anni mancanti o incompleti</b> (meno di 250 giorni con massima e minima): "+mis.map(function(r){return r[0]===r[1]?r[0]:r[0]+"–"+r[1]}).join(", ")+". SIR aggiornato al "+raw.sir_al+"."}
+    costruisci();render()}).catch(function(){$("chart").innerHTML='<div style="padding:3rem 1rem;text-align:center;color:#f85149;font-size:14px">Dati non disponibili al momento.</div>';$("src").textContent=""});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
