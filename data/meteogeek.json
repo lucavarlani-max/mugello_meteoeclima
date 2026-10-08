@@ -39,6 +39,23 @@
   ],
   "esperimenti": [
     {
+      "id": "giorni-estremi",
+      "titolo": "Giorni che non esistevano",
+      "tipo": "statistica",
+      "tema": "clima",
+      "data": "2026-10-08",
+      "stato": "nuovo",
+      "testo": "Notti tropicali, giornate sopra i 35 °C, giorni di gelo e di ghiaccio: quanti ce n'erano ogni anno e quanti ce ne sono oggi? Il conteggio per anno e per decennio a Borgo San Lorenzo, Firenzuola e altre stazioni storiche, con il confronto dell'anno in corso.",
+      "link": "geek-giorni-estremi.html",
+      "tag": [
+        "notti tropicali",
+        "gelo",
+        "ondate di calore",
+        "soglie",
+        "serie storiche"
+      ]
+    },
+    {
       "id": "microclima",
       "titolo": "Il microclima del Mugello: l'inversione termica",
       "tipo": "statistica",

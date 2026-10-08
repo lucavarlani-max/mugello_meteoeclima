@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giorni che non esistevano · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Notti tropicali, giornate sopra i 35 °C, giorni di gelo: quanti ce n'erano ogni anno a Borgo San Lorenzo, Firenzuola, Genova, Milano e altre stazioni storiche, e come sono cambiati decennio dopo decennio.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-giorni-estremi.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Giorni che non esistevano · MeteoGeek">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<style>
+  .sel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13px;color:var(--ink-soft)}
+  .sel select,.sel input{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;max-width:100%}
+  .sel input{width:130px}
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tile .big{font-size:26px}
+  @media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  canvas.cv{display:block;width:100%;cursor:crosshair}
+  #tip{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:18px;margin:8px 0 0}
+  .leg{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+  .g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+  @media(max-width:860px){.g3{grid-template-columns:minmax(0,1fr)}}
+  h3.sm{font-family:var(--serif);font-size:15px;margin:0 0 8px;font-weight:700}
+  .rk{width:100%;border-collapse:collapse;font-size:13px}
+  .rk td{padding:5px 6px;border-bottom:1px solid var(--line-soft)}
+  .rk td:first-child{font-family:var(--mono);color:var(--ink-faint);width:28px}
+  .rk td:last-child{text-align:right;font-family:var(--mono);color:var(--ink-soft)}
+  .dec{width:100%;border-collapse:collapse;font-size:13px;font-family:var(--mono)}
+  .dec th,.dec td{padding:6px 8px;border-bottom:1px solid var(--line-soft);text-align:right}
+  .dec th:first-child,.dec td:first-child{text-align:left}
+  .dec th{color:var(--ink-faint);font-weight:500;font-size:11.5px}
+  .dec-w{overflow-x:auto}
+  .me{margin:0 0 14px;padding:14px 16px;border-radius:var(--r);background:var(--pine-tint);border:1px solid var(--line);font-size:15px;line-height:1.55}
+  .me b{color:var(--pine-deep)}
+</style>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Giorni che non esistevano</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · statistica</div>
+      <h1>Giorni che non esistevano</h1>
+      <p class="lead">Notti tropicali (la minima non scende sotto i 20 °C), giornate sopra i 35 °C, giorni di gelo: sono soglie che si sentono sulla pelle. Qui le contiamo anno per anno e decennio per decennio, a Borgo San Lorenzo, Firenzuola e in altre stazioni storiche: quali giorni stanno diventando più frequenti, e quali si stanno rarefacendo? Dipende molto dalla stazione, e a volte il risultato sorprende.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Il contatore</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div class="sel">Stazione
+          <select id="sta" aria-label="Stazione"></select>
+          Tipo di giorno
+          <select id="ind" aria-label="Tipo di giorno"></select>
+        </div>
+        <div class="me" id="me" hidden></div>
+        <div class="tiles" id="tiles"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Anno per anno</h2><span class="src" id="src2"></span></div>
+      <div class="card">
+        <canvas class="cv" id="cv" role="img" aria-label="Numero di giorni all'anno del tipo scelto"></canvas>
+        <div id="tip">Passa sul grafico (o tocca) per leggere un anno.</div>
+        <div class="leg"><span><span class="dot" id="dotc"></span><span id="legn">giorni all'anno</span></span><span>— media del decennio</span><span>- - tendenza</span></div>
+        <p class="note" id="lac" hidden></p>
+        <p class="note">Ogni barra è il numero di giorni dell'anno che rispettano la soglia. Le linee orizzontali sono la media di ciascun decennio: servono a togliere il rumore, perché un'estate o un inverno possono essere eccezionali per caso. Un anno entra nel conto solo se la stazione ha misurato almeno l'85% dei suoi giorni.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Decennio per decennio</h2><span class="src">giorni all'anno, media del decennio</span></div>
+      <div class="card dec-w"><table class="dec" id="dec"></table></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> Borgo San Lorenzo: SIR Toscana (<code>data/bsl/borgo.json</code>, temperature dal 1951). Le altre stazioni: serie giornaliere di <code>data/serie/</code> (le stesse delle pagine delle serie storiche).</li>
+          <li><b>Definizioni:</b> notte tropicale = minima ≥ 20 °C; giorno tropicale = massima ≥ 30 °C; giornata molto calda = massima ≥ 35 °C; giorno estivo = massima ≥ 25 °C; giorno di gelo = minima &lt; 0 °C; giorno di ghiaccio = massima &lt; 0 °C (non scende mai sopra lo zero).</li>
+          <li><b>Metodo:</b> si conta, per ogni anno solare, quante volte la soglia è rispettata, solo per gli anni con almeno l'85% dei giorni misurati. L'anno in corso è escluso dai grafici e confrontato a parte con la media degli ultimi 30 anni completi nello stesso periodo (dal 1° gennaio a oggi).</li>
+          <li><b>Borgo San Lorenzo:</b> la serie ha un buco dal 1989 al 1999 e cambia strumento nel tempo: fino agli anni '80 le minime sono lette su un termometro (valori per lo più interi o a mezzo grado), dal 2000 sono registrate da una stazione automatica. Un confronto tra i due periodi va letto con cautela, e il fondovalle di notte si raffredda molto, per questo le notti davvero tropicali sono poche.</li>
+          <li><b>Limiti:</b> il conto cambia se cambia il termometro o il suo riparo, o se la stazione si ritrova circondata da case e asfalto: non sono corretti. Una soglia netta amplifica le differenze (un giorno a 34,9 °C non conta, uno a 35,0 sì). Nei decenni con pochi anni validi la media è meno solida.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var f1=function(v){return v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−")};
+  var sg=function(v){if(v==null)return "—";v=Math.round(v*10)/10;return v===0?"0,0":(v>0?"+":"−")+f1(Math.abs(v)).replace("−","")};
+  var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()};
+  var ST=[{id:"borgo",nome:"Borgo San Lorenzo",sub:"SIR, dal 1951",kind:"bsl"},{id:"firenzuola",nome:"Firenzuola",sub:"dal 1961",f:"firenzuola"},{id:"genova",nome:"Genova",sub:"dal 1833",f:"genova"},
+    {id:"milano",nome:"Milano Brera",sub:"dal 1763",f:"milano-brera"},{id:"padova",nome:"Padova",sub:"dal 1725",f:"padova"},{id:"moncalieri",nome:"Moncalieri",sub:"dal 1865",f:"moncalieri"},
+    {id:"oxford",nome:"Oxford",sub:"dal 1815",f:"oxford"},{id:"debilt",nome:"De Bilt",sub:"dal 1901",f:"de-bilt"},{id:"ny",nome:"New York Central Park",sub:"dal 1869",f:"new-york-central-park"},{id:"sf",nome:"San Francisco",sub:"dal 1921",f:"san-francisco"}];
+  /* k = campo (0 = massima, 1 = minima), ok = condizione, w = tono */
+  var IND=[{id:"nt",nome:"Notti tropicali",def:"minima ≥ 20 °C",k:1,ok:function(v){return v>=20},w:"warm"},
+    {id:"gt",nome:"Giorni tropicali",def:"massima ≥ 30 °C",k:0,ok:function(v){return v>=30},w:"warm"},
+    {id:"g35",nome:"Giornate molto calde",def:"massima ≥ 35 °C",k:0,ok:function(v){return v>=35},w:"warm"},
+    {id:"ge",nome:"Giorni estivi",def:"massima ≥ 25 °C",k:0,ok:function(v){return v>=25},w:"warm"},
+    {id:"gg",nome:"Giorni di gelo",def:"minima < 0 °C",k:1,ok:function(v){return v<0},w:"cold"},
+    {id:"gi",nome:"Giorni di ghiaccio",def:"massima < 0 °C",k:0,ok:function(v){return v<0},w:"cold"}];
+  var CACHE={},cur=null,D=null,R=null,GR=null,oggi=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome"}).format(new Date()),ANNO=+oggi.slice(0,4);
+  function parseCsv(t){var L=t.split("\n"),h=L[0].trim().split(","),it=h.indexOf("tmax"),in_=h.indexOf("tmin"),m={};
+    for(var i=1;i<L.length;i++){var a=L[i].split(",");if(a[0].length!==10)continue;var tx=a[it]===""||a[it]==null?null:+a[it],tn=a[in_]===""||a[in_]==null?null:+a[in_];
+      if(isNaN(tx))tx=null;if(isNaN(tn))tn=null;if(tx==null&&tn==null)continue;m[a[0]]=[tx,tn]}return m}
+  function carica(s){if(CACHE[s.id])return Promise.resolve(CACHE[s.id]);var p;
+    if(s.kind==="bsl")p=fetch("./data/bsl/borgo.json").then(function(r){return r.json()}).then(function(b){var m={},t0=Date.parse(b.t.dal+"T00:00:00Z");
+      b.t.tx.forEach(function(x,i){var tn=b.t.tn[i];if(x==null&&tn==null)return;m[new Date(t0+i*864e5).toISOString().slice(0,10)]=[x,tn]});return m});
+    else p=fetch("./data/serie/"+s.f+".csv").then(function(r){return r.text()}).then(parseCsv);
+    return p.then(function(m){CACHE[s.id]=m;return m})}
+  var mean=function(a){a=a.filter(function(v){return v!=null});return a.length?a.reduce(function(x,y){return x+y},0)/a.length:null};
+  var bis=function(y){return (y%4===0&&y%100!==0)||y%400===0};
+
+  /* per ogni anno: giorni con dato e giorni che rispettano la soglia, per tutti gli indici (fino a `fino` = MM-GG per l'anno in corso) */
+  function conta(){var Y={};
+    Object.keys(D).forEach(function(d){var y=+d.slice(0,4),v=D[d],r=Y[y]||(Y[y]={y:y,n:[0,0],c:{},ytd:{}});
+      var ytd=d.slice(5)<=oggi.slice(5);
+      IND.forEach(function(I){var x=v[I.k];if(x==null)return;r.c[I.id]=(r.c[I.id]||0)+(I.ok(x)?1:0);if(ytd)r.ytd[I.id]=(r.ytd[I.id]||0)+(I.ok(x)?1:0)});
+      if(v[0]!=null)r.n[0]++;if(v[1]!=null)r.n[1]++});
+    return Y}
+  function validi(Y,I){return Object.keys(Y).map(Number).sort(function(a,b){return a-b}).filter(function(y){return y<ANNO&&Y[y].n[I.k]>=.85*(bis(y)?366:365)}).map(function(y){return {y:y,c:Y[y].c[I.id]||0}})}
+  function lin(P){if(P.length<15)return null;var n=P.length,sx=0,sy=0,sxy=0,sxx=0;P.forEach(function(r){sx+=r.y;sy+=r.c;sxy+=r.y*r.c;sxx+=r.y*r.y});var b=(n*sxy-sx*sy)/(n*sxx-sx*sx);return {b:b,a:(sy-b*sx)/n}}
+  var dec=function(y){return Math.floor(y/10)*10};
+  function decadi(P){var o={};P.forEach(function(r){(o[dec(r.y)]||(o[dec(r.y)]=[])).push(r.c)});return o}
+
+  function render(){if(!D)return;var I=IND[+$("ind").value],Y=conta(),P=validi(Y,I);R=P;$("src").textContent=cur.nome+" · "+cur.sub;
+    $("dotc").style.background=css(I.w==="warm"?"--warm":"--cold");$("legn").textContent=I.nome.toLowerCase()+" all'anno ("+I.def+")";
+    var me=$("me");me.hidden=true;
+    if(P.length<2){$("tiles").innerHTML="";$("src2").textContent="";$("dec").innerHTML="";GR=null;draw();return}
+    var first=P.slice(0,30),last=P.slice(-30),mF=mean(first.map(function(r){return r.c})),mL=mean(last.map(function(r){return r.c})),rec=P.reduce(function(a,r){return !a||r.c>a.c?r:a},null),
+        zero=P.filter(function(r){return r.c===0}).length,tr=lin(P);
+    /* anno in corso, stesso periodo */
+    var cy=Y[ANNO],base=Object.keys(Y).map(Number).filter(function(y){return y<ANNO&&Y[y].n[I.k]>=.85*(bis(y)?366:365)}).sort().slice(-30),
+        mb=mean(base.map(function(y){return Y[y].ytd[I.id]||0})),yc=cy&&cy.ytd[I.id]!=null?cy.ytd[I.id]:null;
+    var lac=$("lac"),have={};P.forEach(function(r){have[r.y]=1});var mis=[],rg=null;
+    for(var yy=P[0].y;yy<=P[P.length-1].y;yy++){if(have[yy]){rg=null;continue}if(rg&&rg[1]===yy-1)rg[1]=yy;else{rg=[yy,yy];mis.push(rg)}}
+    lac.hidden=!mis.length;if(mis.length)lac.innerHTML="<b>Anni mancanti</b> (la stazione non ha misurato abbastanza giorni): "+mis.map(function(r){return r[0]===r[1]?r[0]:r[0]+"–"+r[1]}).join(", ")+". Le medie dei «primi» e degli «ultimi» 30 anni contano solo gli anni presenti, quindi possono coprire periodi non contigui.";
+    $("src2").textContent=P.length+" anni validi, "+P[0].y+"–"+P[P.length-1].y+(tr?" · tendenza "+sg(tr.b*10)+" giorni per decennio":"");
+    $("tiles").innerHTML=[["Primi "+first.length+" anni",f1(mF)+"<s>gg/anno</s>",first[0].y+"–"+first[first.length-1].y],
+      ["Ultimi "+last.length+" anni",f1(mL)+"<s>gg/anno</s>",last[0].y+"–"+last[last.length-1].y+" · "+sg(mL-mF)+" gg"],
+      ["Anno record",String(rec.c)+"<s>gg</s>","nel "+rec.y+(zero?" · "+zero+" anni senza nessuno":"")],
+      [ANNO+" finora",yc==null?"—":yc+"<s>gg</s>",mb==null?"":"media "+f1(mb)+" nello stesso periodo"]]
+      .map(function(t){return '<div class="tile"><div class="lab">'+t[0]+'</div><div class="big">'+t[1]+'</div><div class="who">'+t[2]+'</div></div>'}).join("");
+    if(mF<.5&&mL>=1.5&&I.w==="warm"){me.hidden=false;me.innerHTML="Nei primi "+first.length+" anni di misure a <b>"+cur.nome+"</b> i <b>"+I.nome.toLowerCase()+"</b> erano in media <b>"+f1(mF)+"</b> all'anno. Negli ultimi "+last.length+" sono <b>"+f1(mL)+"</b>: un giorno che quasi non esisteva è diventato normale."}
+    else if(mF>=1.5&&mL<mF*.6&&I.w==="cold"){me.hidden=false;me.innerHTML="A <b>"+cur.nome+"</b> i <b>"+I.nome.toLowerCase()+"</b> erano in media <b>"+f1(mF)+"</b> all'anno nei primi "+first.length+" anni di misure; negli ultimi "+last.length+" sono <b>"+f1(mL)+"</b>: è un tipo di giorno che si sta rarefacendo."}
+    /* tabella dei decenni, tutti gli indici */
+    var ds={},anni={};IND.forEach(function(J){var p=validi(Y,J),d=decadi(p);ds[J.id]=d;Object.keys(d).forEach(function(k){anni[k]=1})});
+    var K=Object.keys(anni).map(Number).sort(function(a,b){return a-b});
+    $("dec").innerHTML="<tr><th>Decennio</th>"+IND.map(function(J){return "<th>"+J.nome+"<br>"+J.def+"</th>"}).join("")+"</tr>"+
+      K.map(function(k){return "<tr><td>"+k+"–"+(k+9)+"</td>"+IND.map(function(J){var a=ds[J.id][k];return "<td>"+(a?f1(mean(a))+(a.length<8?'<sup title="'+a.length+' anni validi"> *</sup>':""):"—")+"</td>"}).join("")+"</tr>"}).join("")+
+      '<tr><td colspan="'+(IND.length+1)+'" style="text-align:left;color:var(--ink-faint);font-size:11.5px;border:0">* meno di 8 anni validi nel decennio. Valori in giorni all\'anno.</td></tr>';
+    draw()}
+
+  function draw(){var cv=$("cv"),W=cv.parentNode.clientWidth-36,H=320,dpr=window.devicePixelRatio||1;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+"px";var c=cv.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);
+    if(!R||R.length<2){c.font="13px "+css("--mono");c.fillStyle=css("--ink-faint");c.fillText("Dati insufficienti per questa stazione.",10,30);GR=null;return}
+    var I=IND[+$("ind").value],L=34,Rr=10,T=10,B=24,mx=Math.max.apply(null,R.map(function(r){return r.c})),hi=Math.max(4,Math.ceil(mx*1.1/ (mx>40?10:mx>15?5:2))*(mx>40?10:mx>15?5:2)),y0=R[0].y,y1=R[R.length-1].y,
+        X=function(y){return L+(y-y0+.5)/(y1-y0+1)*(W-L-Rr)},Y=function(v){return T+(1-v/hi)*(H-T-B)},bw=Math.max(1,(W-L-Rr)/(y1-y0+1)*.78);
+    c.font="10.5px "+css("--mono");c.strokeStyle=css("--line");c.fillStyle=css("--ink-faint");c.textBaseline="middle";var st=hi/4;
+    for(var g=0;g<=hi+.01;g+=st){c.beginPath();c.moveTo(L,Y(g));c.lineTo(W-Rr,Y(g));c.stroke();c.fillText(String(Math.round(g)),0,Y(g))}
+    c.textBaseline="alphabetic";var ys=Math.max(10,Math.ceil((y1-y0)/8/10)*10);for(var y=Math.ceil(y0/ys)*ys;y<=y1;y+=ys)c.fillText(y,X(y)-12,H-6);
+    var col=css(I.w==="warm"?"--warm":"--cold");c.fillStyle=col;c.globalAlpha=.55;R.forEach(function(r){if(r.c>0)c.fillRect(X(r.y)-bw/2,Y(r.c),bw,Y(0)-Y(r.c))});c.globalAlpha=1;
+    c.strokeStyle=css("--ink");c.lineWidth=2.4;var D2=decadi(R);Object.keys(D2).forEach(function(k){var a=D2[k],m=mean(a),ya=Math.max(+k,y0),yb=Math.min(+k+9,y1);c.beginPath();c.moveTo(X(ya)-bw/2,Y(m));c.lineTo(X(yb)+bw/2,Y(m));c.stroke()});
+    var tr=lin(R);if(tr){c.lineWidth=1.4;c.setLineDash([6,4]);c.beginPath();c.moveTo(X(y0),Y(Math.max(0,tr.a+tr.b*y0)));c.lineTo(X(y1),Y(Math.max(0,tr.a+tr.b*y1)));c.stroke();c.setLineDash([])}
+    GR={L:L,Rr:Rr,y0:y0,y1:y1,W:W}}
+  function tip(ev){if(!GR||!R)return;var cv=$("cv"),r=cv.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev,x=t.clientX-r.left,y=Math.round(GR.y0+(x-GR.L)/(GR.W-GR.L-GR.Rr)*(GR.y1-GR.y0+1)-.5),p=R.reduce(function(a,q){return !a||Math.abs(q.y-y)<Math.abs(a.y-y)?q:a},null);if(!p)return;
+    var d=mean(decadi(R)[dec(p.y)]);$("tip").textContent=p.y+" · "+p.c+" "+(p.c===1?"giorno":"giorni")+" · media del decennio "+f1(d)}
+
+  function scegli(){cur=ST[+$("sta").value];$("src").textContent="caricamento…";carica(cur).then(function(m){D=m;render()}).catch(function(){$("src").textContent="Dati non disponibili al momento."})}
+  $("sta").innerHTML=ST.map(function(s,i){return '<option value="'+i+'">'+s.nome+' ('+s.sub+')</option>'}).join("");
+  $("ind").innerHTML=IND.map(function(s,i){return '<option value="'+i+'">'+s.nome+' ('+s.def+')</option>'}).join("");
+  $("sta").addEventListener("change",scegli);$("ind").addEventListener("change",render);
+  var cv=$("cv");cv.addEventListener("mousemove",tip);cv.addEventListener("touchstart",tip,{passive:true});cv.addEventListener("touchmove",tip,{passive:true});
+  var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(draw,150)});
+  scegli();
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
