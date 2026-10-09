@@ -56,6 +56,13 @@
   .heat i{width:11px;height:11px;border-radius:2px;display:block}
   .scale{display:flex;align-items:center;gap:4px;font-size:11.5px;color:var(--ink-faint);margin-top:8px;flex-wrap:wrap}
   .scale i{flex:none;width:14px;height:11px;border-radius:2px;display:inline-block;margin-left:6px}
+  .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-top:14px}
+  .gal figure{margin:0;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;overflow:hidden}
+  .gal img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--line-soft)}
+  .gal figcaption{padding:6px 8px;font-size:11.5px;line-height:1.45;color:var(--ink-soft)}
+  .gal .et{font-family:var(--mono);font-size:10px;letter-spacing:.05em;border-radius:999px;padding:1px 7px;border:1px solid var(--line);display:inline-block;margin-bottom:4px}
+  .gal .et.si{background:var(--inv);border-color:var(--inv);color:#fff} .gal .et.no{border-color:var(--pine);color:var(--pine)}
+  .bar{height:8px;border-radius:999px;background:var(--line-soft);overflow:hidden;margin-top:6px} .bar i{display:block;height:100%;background:var(--pine);border-radius:999px}
   @media (max-width:860px){ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))} .two,.phys{grid-template-columns:1fr} }
 </style>
 <script src="analytics.js" defer></script>
@@ -98,7 +105,17 @@
       <div class="sh"><h2>Le prossime notti a Borgo San Lorenzo</h2><span class="src">previsione oraria Open-Meteo · dalle 20 alle 8</span></div>
       <div class="card">
         <div class="tbl"><table id="fc"><tbody><tr><td class="loading">Carico la previsione…</td></tr></tbody></table></div>
-        <p class="note">Per ogni notte: lo scarto più piccolo fra temperatura e punto di rugiada (0 = aria satura), il vento medio a 10 m e la copertura nuvolosa media. I pallini dicono se la notte rientra nelle soglie pratiche usate dai previsori per la nebbia da irraggiamento: scarto fino a 1 °C, vento fino a 2 m/s, nuvole fino al 30%. Le soglie non sono calibrate sul Mugello e non danno una probabilità: dicono solo se gli ingredienti ci sono. L'ultima colonna è la visibilità minima calcolata dal modello, che sulla nebbia di valle è poco affidabile.</p>
+        <p class="note">Per ogni notte: lo scarto più piccolo fra temperatura e punto di rugiada (0 = aria satura), il vento medio a 10 m e la copertura nuvolosa media. I pallini dicono se la notte rientra nelle soglie pratiche usate dai previsori per la nebbia da irraggiamento: scarto fino a 1 °C, vento fino a 2 m/s, nuvole fino al 30%. Le soglie non sono calibrate sul Mugello e non danno una probabilità: dicono solo se gli ingredienti ci sono. La colonna della visibilità minima è calcolata dal modello e sulla nebbia di valle è poco affidabile. La colonna «Probabilità di nebbia» compare solo quando il diario della nebbia (qui sotto) ha abbastanza mattine classificate e il modello calibrato si dimostra migliore della semplice frequenza.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il diario della nebbia</h2><span class="src" id="dia-src">webcam del lago di Bilancino · ogni mattina</span></div>
+      <div class="card">
+        <p class="note" style="margin-top:0">Per dare una probabilità di nebbia calibrata sul Mugello servono mattine in cui sappiamo se la nebbia c'era. Nessuno lo registra, quindi il sito ha iniziato a farlo. Ogni mattina fra le 7 e le 10 salva una foto della webcam sul lago di Bilancino, in fondovalle, insieme alle misure della notte e alla previsione che il modello aveva fatto il giorno prima. Ogni foto viene poi classificata a vista: nebbia sì o no.</p>
+        <div class="tiles" id="dia-tiles"></div>
+        <div class="gal" id="dia-gal"></div>
+        <p class="note" id="dia-note"></p>
       </div>
     </section>
 
@@ -192,9 +209,67 @@
     box.insertBefore(svg,tip);
   }
 
-  // ---------- le prossime notti (Open-Meteo)
+  // ---------- diario della nebbia e calibrazione
+  // Una probabilità si mostra solo con abbastanza mattine classificate, e solo se batte la frequenza climatologica.
+  const MIN_N=60, MIN_CLASSE=15;
+  const FEAT=r=>[r.scarto_min, r.vento_medio, r.nuvole_medie/100];
+  function logistica(X,y,lambda=0.1,iter=400){
+    const m=X[0].length, mu=[], sd=[];
+    for(let k=0;k<m;k++){const c=X.map(r=>r[k]); mu[k]=c.reduce((a,b)=>a+b,0)/c.length; sd[k]=Math.sqrt(c.reduce((a,b)=>a+(b-mu[k])**2,0)/c.length)||1;}
+    const Z=X.map(r=>r.map((v,k)=>(v-mu[k])/sd[k]));
+    let w=new Array(m+1).fill(0);
+    for(let it=0;it<iter;it++){ // Newton-Raphson con piccola regolarizzazione
+      const g=new Array(m+1).fill(0), H=Array.from({length:m+1},()=>new Array(m+1).fill(0));
+      Z.forEach((z,i)=>{const x=[1,...z], p=1/(1+Math.exp(-x.reduce((a,v,k)=>a+v*w[k],0))), q=p*(1-p);
+        for(let a=0;a<=m;a++){g[a]+=(p-y[i])*x[a]; for(let b=0;b<=m;b++) H[a][b]+=q*x[a]*x[b];}});
+      for(let a=1;a<=m;a++){g[a]+=lambda*w[a]; H[a][a]+=lambda;}
+      const d=risolvi(H,g); let mx=0; w=w.map((v,k)=>{mx=Math.max(mx,Math.abs(d[k]));return v-d[k];}); if(mx<1e-6) break;}
+    return x=>1/(1+Math.exp(-( w[0]+x.reduce((a,v,k)=>a+w[k+1]*(v-mu[k])/sd[k],0) )));
+  }
+  function risolvi(A,b){const n=b.length, M=A.map((r,i)=>[...r,b[i]]);
+    for(let c=0;c<n;c++){let p=c; for(let r=c+1;r<n;r++) if(Math.abs(M[r][c])>Math.abs(M[p][c])) p=r; [M[c],M[p]]=[M[p],M[c]];
+      for(let r=0;r<n;r++){ if(r===c) continue; const f=M[r][c]/M[c][c]; for(let k=c;k<=n;k++) M[r][k]-=f*M[c][k]; }}
+    return M.map((r,i)=>r[n]/r[i]);}
+  function calibra(diario){
+    const g=Object.entries(diario&&diario.giorni||{}).map(([d,r])=>Object.assign({d},r));
+    const ok=g.filter(r=>(r.nebbia===true||r.nebbia===false)&&r.previsione&&FEAT(r.previsione).every(v=>v!=null));
+    const X=ok.map(r=>FEAT(r.previsione)), y=ok.map(r=>r.nebbia?1:0);
+    const pos=y.filter(v=>v).length, neg=y.length-pos;
+    const st={g,ok,n:ok.length,pos,neg,pronto:false};
+    if(ok.length<MIN_N||pos<MIN_CLASSE||neg<MIN_CLASSE) return st;
+    // verifica onesta: ogni mattina prevista da un modello che non l'ha vista (leave-one-out)
+    const clim=pos/y.length; let bs=0, bc=0;
+    X.forEach((x,i)=>{const f=logistica(X.filter((_,k)=>k!==i),y.filter((_,k)=>k!==i)); bs+=(f(x)-y[i])**2; bc+=(clim-y[i])**2;});
+    st.brier=bs/X.length; st.skill=1-bs/bc; st.clim=clim; st.f=logistica(X,y); st.pronto=st.skill>0;
+    return st;
+  }
+
+  function diario(c,d){
+    const g=c.g.slice().sort((a,b)=>a.d<b.d?1:-1);
+    const foto=g.filter(r=>r.foto).length, dacl=g.filter(r=>r.foto&&r.nebbia==null).length;
+    const pctN=Math.min(100,c.n/MIN_N*100), pctP=Math.min(100,c.pos/MIN_CLASSE*100);
+    $("dia-tiles").innerHTML=
+      `<div class="tile"><span>Mattine archiviate</span><b>${foto}</b><small>${g.length?"dal "+dl(g[g.length-1].d)+" "+g[g.length-1].d.slice(0,4):"si comincia domattina"}</small></div>`+
+      `<div class="tile"><span>Classificate</span><b>${c.n}</b><small>${dacl} da classificare</small></div>`+
+      `<div class="tile"><span>Con nebbia / senza</span><b>${c.pos} / ${c.neg}</b><small>servono almeno ${MIN_CLASSE} e ${MIN_CLASSE}</small></div>`+
+      `<div class="tile"><span>Calibrazione</span><b>${c.pronto?"attiva":c.skill!=null?"non utile":fmt(Math.min(pctN,pctP),0)+"%"}</b>`+
+        `<small>${c.pronto?`Brier ${fmt(c.brier,3)}, ${fmt(c.skill*100,0)}% meglio della frequenza di nebbia (${fmt(c.clim*100,0)}%)`
+          : c.skill!=null?`il modello non batte la frequenza climatologica (${fmt(c.clim*100,0)}%): la probabilità resta nascosta`
+          : "mancano "+[c.n<MIN_N?`${MIN_N-c.n} mattine classificate`:"",c.pos<MIN_CLASSE?`${MIN_CLASSE-c.pos} mattine di nebbia`:"",c.neg<MIN_CLASSE?`${MIN_CLASSE-c.neg} mattine limpide`:""].filter(Boolean).join(", ")}</small><div class="bar"><i style="width:${Math.min(pctN,pctP)}%"></i></div></div>`;
+    $("dia-gal").innerHTML=g.filter(r=>r.foto).slice(0,12).map(r=>{const t=new Date(r.d+"T12:00:00");
+      const et=r.nebbia===true?'<span class="et si">NEBBIA</span>':r.nebbia===false?'<span class="et no">LIMPIDO</span>':r.nebbia==="incerto"?'<span class="et">INCERTO</span>':'<span class="et">DA CLASSIFICARE</span>';
+      const ur=r.umidita_max&&r.umidita_max.TOS11000017, inv=r.inversione;
+      return `<figure><img loading="lazy" src="${r.foto}" alt="Lago di Bilancino, ${dl(r.d)} ore ${r.ora}"><figcaption>${et}<br><b>${GG[t.getDay()]} ${dl(r.d)}</b> · ${r.ora}${r.ferma?" · <i>webcam ferma</i>":""}<br>`+
+        `inversione ${inv==null?"–":sg(inv)+" °C"} · umidità max ${ur==null?"–":fmt(ur,0)+"%"}`+
+        (r.previsione?`<br>previsto: scarto ${fmt(r.previsione.scarto_min,1)} °C, vento ${fmt(r.previsione.vento_medio,1)} m/s, nuvole ${fmt(r.previsione.nuvole_medie,0)}%`:"")+`</figcaption></figure>`;}).join("");
+    $("dia-src").textContent=d&&d.webcam?`webcam ${d.webcam.nome} (${d.webcam.fonte}) · ogni mattina`:"webcam del lago di Bilancino · ogni mattina";
+    $("dia-note").innerHTML=`La probabilità comparirà nella tabella delle prossime notti quando ci saranno almeno ${MIN_N} mattine classificate, con almeno ${MIN_CLASSE} di nebbia e ${MIN_CLASSE} senza. Il modello è una regressione logistica sulle tre grandezze previste il giorno prima (scarto temperatura–rugiada, vento, nuvole). Sarà mostrato solo se, verificato mattina per mattina su giorni che non ha usato per imparare, prevede meglio della semplice frequenza della nebbia. «Inversione» è la minima di Monte Giovi meno quella di Borgo; «umidità max» è il valore massimo dalla mezzanotte a Borgo S. Lorenzo 2.`;
+  }
+
+  // ---------- le prossime notti (Open-Meteo) + diario
   const q="latitude=43.958&longitude=11.391&hourly=temperature_2m,dew_point_2m,wind_speed_10m,cloud_cover,visibility&wind_speed_unit=ms&timezone=Europe%2FRome&forecast_days=4";
-  get("https://api.open-meteo.com/v1/forecast?"+q).then(o=>{
+  const diarioP=get("./data/nebbia-diario.json?t="+Date.now()).catch(()=>null).then(d=>{const c=calibra(d); diario(c,d); return c;});
+  Promise.all([get("https://api.open-meteo.com/v1/forecast?"+q),diarioP]).then(([o,cal])=>{
     const h=o.hourly, t=h.time, notti=[];
     for(let i=0;i<t.length;i++){ if(!t[i].endsWith("T20:00")) continue;
       const k=[]; for(let j=i;j<Math.min(t.length,i+13);j++) k.push(j); if(k.length<13) continue;
@@ -204,11 +279,12 @@
       const ok=k.filter(j=>h.temperature_2m[j]-h.dew_point_2m[j]<=1 && h.wind_speed_10m[j]<=2 && h.cloud_cover[j]<=30).length;
       notti.push({d:t[i].slice(0,10),sp:Math.min(...sp),v:media(k.map(j=>h.wind_speed_10m[j])),c:media(k.map(j=>h.cloud_cover[j])),vis:vis.length?Math.min(...vis):null,ok});}
     const pal=(c)=>`<b class="${c?"si":""}">${c?"sì":"no"}</b>`;
-    $("fc").innerHTML="<thead><tr><th>Notte</th><th>Scarto T − rugiada</th><th>Vento medio</th><th>Nuvole medie</th><th>Ore con tutti e tre</th><th>Visibilità minima (modello)</th></tr></thead><tbody>"+
+    $("fc").innerHTML=`<thead><tr><th>Notte</th><th>Scarto T − rugiada</th><th>Vento medio</th><th>Nuvole medie</th><th>Ore con tutti e tre</th><th>Visibilità minima (modello)</th>${cal.pronto?"<th>Probabilità di nebbia</th>":""}</tr></thead><tbody>`+
       notti.map(n=>{const d=new Date(n.d+"T12:00:00"), d2=new Date(d.getTime()+864e5);
         return `<tr><td>${GG[d.getDay()]} ${d.getDate()} → ${GG[d2.getDay()]} ${d2.getDate()}</td>`+
         `<td><span class="cond">${fmt(n.sp,1)} °C ${pal(n.sp<=1)}</span></td><td><span class="cond">${fmt(n.v,1)} m/s ${pal(n.v<=2)}</span></td>`+
-        `<td><span class="cond">${fmt(n.c,0)}% ${pal(n.c<=30)}</span></td><td>${n.ok} su 13</td><td>${n.vis==null?"–":n.vis>=10000?"oltre 10 km":fmt(n.vis/1000,1)+" km"}</td></tr>`;}).join("")+"</tbody>";
+        `<td><span class="cond">${fmt(n.c,0)}% ${pal(n.c<=30)}</span></td><td>${n.ok} su 13</td><td>${n.vis==null?"–":n.vis>=10000?"oltre 10 km":fmt(n.vis/1000,1)+" km"}</td>`+
+        (cal.pronto?`<td><b>${(p=>p>0.95?"oltre 95%":p<0.05?"sotto 5%":fmt(p*100,0)+"%")(cal.f([n.sp,n.v,n.c/100]))}</b></td>`:"")+"</tr>";}).join("")+"</tbody>";
   }).catch(e=>{$("fc").innerHTML=`<tbody><tr><td>Previsione non raggiungibile in questo momento (${e.message}).</td></tr></tbody>`;});
 
   // ---------- statistica dalle minime SIR
