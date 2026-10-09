@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /index_1.html
+Disallow: /fb-post.html
+Disallow: /geek-modello.html
+
+Sitemap: https://lucavarlani-max.github.io/mugello_meteoeclima/sitemap.xml
