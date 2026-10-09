@@ -1680,6 +1680,277 @@
      "testo": "Nel Mugello il giorno dura 12 ore e 45 minuti (alba alle 06:48, tramonto alle 19:33). L'equinozio d'autunno è il 23 settembre."
     }
    ]
+  },
+  {
+   "data": "2026-10-05",
+   "apertura": {
+    "cat": "terremoti",
+    "titolo": "Campi Flegrei, svelato il «motore» della crisi: fluidi magmatici a 3-4 km di profondità",
+    "testo": "Un nuovo studio dell'INGV, pubblicato su Science Advances, individua nei fluidi magmatici in risalita a 3-4 km di profondità la causa del bradisismo in corso: l'emissione di anidride carbonica dal suolo della Solfatara è cresciuta in modo quasi esponenziale dal 2005.",
+    "fonte": "INGV / AgenSIR",
+    "url": "https://www.agensir.it/quotidiano/2026/10/8/campi-flegrei-ingv-un-nuovo-studio-indaga-il-motore-della-crisi-in-atto/"
+   },
+   "numero": {
+    "valore": "+31 cm",
+    "testo": "Il sollevamento del suolo ai Campi Flegrei misurato alla stazione GNSS di RITE dall'inizio del 2025. Nell'ultima settimana rilevata (28 settembre-4 ottobre) sono stati 23 i terremoti localizzati, magnitudo massima 1,7."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Stromboli, la colata si divide in due bracci",
+     "testo": "Dal cratere Nord prosegue la tracimazione lavica iniziata il 1° ottobre, divisa in due bracci nella parte alta della Sciara del Fuoco; il tremore vulcanico resta stabile.",
+     "fonte": "INGV / BeSicilyMag",
+     "url": "https://www.besicilymag.it/2026/10/lifestyle/stromboli-nuova-colata-dalla-nord-due-bracci-sulla-sciara-del-fuoco/"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Krakatau, pennacchi bianchi sul cratere",
+     "testo": "L'agenzia vulcanologica indonesiana segnala attività eruttiva in corso: pennacchi bianchi osservati tra l'1 e il 4 ottobre, alti fino a 50 metri sopra l'orlo craterico.",
+     "fonte": "Smithsonian GVP / PVMBG",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Artico, il minimo 2026 tra i più bassi di sempre",
+     "testo": "Il ghiaccio marino artico ha toccato il minimo annuale il 12 settembre, a 4,6 milioni di km²: decimo valore più basso nei 48 anni di satelliti, a pari merito con 2008, 2010 e 2025.",
+     "fonte": "NASA / NSIDC",
+     "url": "https://science.nasa.gov/earth/earth-observatory/arctic-sea-ice-shrinks-to-its-2026-minimum/",
+     "foto": "ghiaccio1"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Agosto 2026, il più caldo di sempre anche per NOAA",
+     "testo": "Il 48° agosto consecutivo sopra la media del Novecento: +1,32 °C, il record precedente (2023 e 2024) superato di quasi un decimo di grado. Anche gli oceani al massimo storico.",
+     "fonte": "NOAA NCEI",
+     "url": "https://www.ncei.noaa.gov/news/global-climate-202608",
+     "foto": "terra"
+    },
+    {
+     "cat": "ozono",
+     "titolo": "Il buco dell'ozono tra i più estesi degli ultimi anni",
+     "testo": "Il 20 settembre il buco nell'ozono antartico ha raggiunto 27,4 milioni di km², secondo valore più alto mai registrato per quella data dopo l'ottobre 2015: la causa è un vortice polare insolitamente forte.",
+     "fonte": "Copernicus CAMS",
+     "url": "https://atmosphere.copernicus.eu/copernicus-ozone-hole-reaches-notable-threshold-early-again-area-increases-above-average-2026",
+     "foto": "ozono"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "storia",
+     "testo": "1982: temporali con fulmini frequenti in South Dakota appiccano incendi a diversi edifici. 2013: una bufera di neve da record colpisce il South Dakota occidentale, quasi 48 ore di neve e vento forte.",
+     "fonte": "NWS Aberdeen",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Oct_05"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "A Borgo San Lorenzo il Sole sorge alle 7:16 e tramonta alle 18:48: circa 11 ore e 31 minuti di luce. Nel corso di ottobre si perde quasi un'ora e mezza di luce; domenica 25 ottobre torna l'ora solare."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-06",
+   "apertura": {
+    "cat": "vulcani",
+    "titolo": "Gareloi, in Alaska: l'allerta torna alla normalità dopo l'esplosione",
+    "testo": "Una breve esplosione dal cratere sud del vulcano aleutino, l'1 ottobre, aveva fatto alzare il livello di allerta ad Advisory; con l'attività tornata su livelli di fondo, l'Alaska Volcano Observatory l'ha riportato a Normal il 6 ottobre alle 10:37.",
+    "fonte": "Alaska Volcano Observatory",
+    "url": "https://avo.alaska.edu/volcano/gareloi"
+   },
+   "numero": {
+    "valore": "M 5,9",
+    "testo": "La scossa più forte della giornata: 264 km a sud-sud-ovest di Severo-Kuril'sk, in Russia. Poche ore dopo un'altra di magnitudo 5,5 si è verificata 92 km a nord-nord-ovest di Aleneva, in Alaska.",
+    "fonte": "USGS"
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Manam, cenere fino a 2 km di quota",
+     "testo": "Nei giorni 5-7 ottobre i pennacchi di cenere del vulcano di Papua Nuova Guinea sono saliti tra 1,8 e 2,1 km sul livello del mare, derivando verso nord-ovest, nord e nord-est.",
+     "fonte": "Darwin VAAC / Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Anche in Antartide il ghiaccio marino ai minimi storici",
+     "testo": "Il massimo invernale antartico di fine inverno 2026 è sostanzialmente appaiato a quello del 2025 per il valore più basso mai misurato: gli ultimi vent'anni restano i venti più bassi in 47 anni di serie satellitare.",
+     "fonte": "Met Office",
+     "url": "https://www.metoffice.gov.uk/research/approach/monitoring/sea-ice/2026/briefing-on-arctic-sea-ice-minimum-and-antarctic-sea-ice-maximum-report---september-2026"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Campi Flegrei, la CO2 di Pisciarelli quasi raddoppiata",
+     "testo": "Nella stessa settimana (28 settembre-4 ottobre) l'anidride carbonica misurata alla fumarola di Pisciarelli è quasi raddoppiata rispetto alla settimana precedente, mentre il sollevamento del suolo prosegue.",
+     "fonte": "Pozzuolinews24 (dati INGV)",
+     "url": "https://www.pozzuolinews24.it/campi-flegrei-bollettino-28-settembre-4-ottobre-2026/"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "storia",
+     "testo": "1967: record canadese di pioggia in un giorno, 490 mm a Brynnor Mines (Ucluelet). 1994: un tornado tocca terra a est di Wilmot, South Dakota. 1952: prima precipitazione invernale mai documentata in Arkansas, con pioggia gelata.",
+     "fonte": "NWS Aberdeen",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_oct_06"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "A Borgo San Lorenzo il Sole sorge alle 7:18 e tramonta alle 18:46: circa 11 ore e 28 minuti di luce. Nel corso di ottobre si perde quasi un'ora e mezza di luce; domenica 25 ottobre torna l'ora solare."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-07",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Isaias nasce nel Golfo del Messico, rompe il digiuno record dell'Atlantico",
+    "testo": "Mercoledì mattina si è formata la tempesta tropicale Isaias nel Golfo del Messico sud-occidentale, nona tempesta della stagione atlantica 2026: la più lunga attesa di sempre, nell'era dei satelliti, per il primo uragano della stagione sta per finire.",
+    "fonte": "EarthSky / CBS News",
+    "url": "https://earthsky.org/earth/tropical-storm-hurricane-isaias-oct-2026/",
+    "foto": "uragano1"
+   },
+   "numero": {
+    "valore": "9ª",
+    "testo": "Isaias è la nona tempesta con nome della stagione atlantica 2026, ma la prima ad avvicinarsi allo status di uragano: colpa dell'El Niño, il cui vento in quota ha finora smorzato sul nascere i sistemi tropicali."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, mappata una nuova fessura eruttiva",
+     "testo": "L'Osservatorio vulcanologico delle Hawaii ha rilevato uno sciame sismico superficiale a nord della caldera sommitale del Kīlauea e mappato un dicco poco profondo; entrambe le bocche sommitali hanno prodotto spruzzi minori nella notte, allerta WATCH e codice colore ARANCIONE.",
+     "fonte": "USGS HVO",
+     "url": "https://volcanoes.usgs.gov/hans-public/notice/DOI-USGS-HVO-2026-10-07T23:17:50+00:00",
+     "foto": "kilauea1"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Luglio 2026, l'oceano più caldo di sempre per quel mese",
+     "testo": "La temperatura superficiale degli oceani a luglio ha segnato un'anomalia di +1,02 °C, terzo valore mensile più alto mai registrato a livello globale, dietro soltanto ad agosto e settembre 2023.",
+     "fonte": "NOAA NCEI",
+     "url": "https://www.ncei.noaa.gov/news/global-climate-202607",
+     "foto": "oceano"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna, degassamento variabile e cenere dal Cratere di Nord-Est",
+     "testo": "Il bollettino settimanale INGV segnala emissioni di cenere blande e discontinue, nessun terremoto da frattura sopra magnitudo 2 e tremore vulcanico su livello basso; non si esclude però un'evoluzione rapida e senza preavviso.",
+     "fonte": "INGV Catania",
+     "url": "https://www.ct.ingv.it/index.php/monitoraggio-e-sorveglianza/prodotti-del-monitoraggio/bollettini-settimanali-multidisciplinari/1171-bollettino-Settimanale-sul-monitoraggio-vulcanico-geochimico-e-sismico-del-vulcano-Etna-del-2026-10-06/file",
+     "foto": "etna"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "storia",
+     "testo": "1959: la sonda sovietica Luna 3 scatta le prime immagini della faccia nascosta della Luna. 1970: una nevicata precoce da record investe il South Dakota meridionale fino al 10 ottobre.",
+     "fonte": "NWS Aberdeen",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Oct_07"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "A Borgo San Lorenzo il Sole sorge alle 7:19 e tramonta alle 18:44: circa 11 ore e 25 minuti di luce. Nel corso di ottobre si perde quasi un'ora e mezza di luce; domenica 25 ottobre torna l'ora solare."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-08",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Isaias diventa il primo uragano della stagione atlantica, punta al Golfo",
+    "testo": "Nella notte Isaias è passato da tempesta tropicale a uragano, con venti fino a 130 km/h: il Centro Uragani statunitense lo attende sulla costa del Golfo tra venerdì e sabato, con rischio di piogge alluvionali.",
+    "fonte": "EarthSky / CBS News",
+    "url": "https://earthsky.org/earth/tropical-storm-hurricane-isaias-oct-2026/",
+    "foto": "uragano2"
+   },
+   "numero": {
+    "valore": "130 km/h",
+    "testo": "I venti massimi sostenuti di Isaias alle 4 del mattino (ora centrale USA) dell'8 ottobre, in rinforzo rispetto ai 120 km/h della sera precedente."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Scossa di magnitudo 6,3 a Vanuatu",
+     "testo": "Il terremoto, poco profondo (10 km), si è verificato 102 km a nord-est di Norsup l'8 ottobre: secondo le stime USGS circa 8.000 persone hanno avvertito una scossa fortissima, ma non risultano danni né allerta tsunami.",
+     "fonte": "USGS / The Watchers",
+     "url": "https://watchers.news/2026/10/08/strong-and-shallow-m6-3-earthquake-hits-vanuatu-3/",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Magnitudo 5,5 nelle Filippine",
+     "testo": "Scossa localizzata 17 km a sud-ovest di Burias lo stesso giorno della scossa di Vanuatu, in una settimana densa di sismicità nel Pacifico occidentale.",
+     "fonte": "USGS"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna, anomalia termica all'area sommitale",
+     "testo": "Il sito INGV-OE segnala un'anomalia di 1,81 MW rilevata l'8 ottobre (dato satellitare VIIRS); nell'ultima settimana il maltempo ha spesso ostacolato l'analisi delle immagini.",
+     "fonte": "INGV-OE",
+     "url": "https://www.ct.ingv.it/technolab/SezioniEsterne/pippo.php",
+     "foto": "etna"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Stromboli, attività termica moderata",
+     "testo": "Il monitoraggio satellitare ha rilevato un picco di 31,36 MW il 6 ottobre: l'attività stromboliana ordinaria prosegue a entrambe le aree crateriche, con spattering all'area Nord.",
+     "fonte": "INGV Catania",
+     "url": "https://www.ct.ingv.it/index.php/monitoraggio-e-sorveglianza/prodotti-del-monitoraggio/bollettini-settimanali-multidisciplinari/1173-bollettino-Settimanale-sul-monitoraggio-vulcanico-geochimico-e-sismico-del-vulcano-Stromboli-del-2026-10-06/file"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "storia",
+     "testo": "1871: il Grande Incendio di Chicago, spinto da forti venti da sud-ovest, distrugge gran parte della città; la stessa notte le fiamme devastano anche Peshtigo, nel Wisconsin. 1982: una nevicata record per la stagione paralizza le Black Hills, con 104 cm a Galena.",
+     "fonte": "NWS Aberdeen",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Oct_08"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "A Borgo San Lorenzo il Sole sorge alle 7:20 e tramonta alle 18:42: circa 11 ore e 22 minuti di luce. Nel corso di ottobre si perde quasi un'ora e mezza di luce; domenica 25 ottobre torna l'ora solare."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-09",
+   "apertura": {
+    "cat": "cielo",
+    "titolo": "Tempesta geomagnetica in corso: aurora possibile fino a New York",
+    "testo": "Una espulsione di massa coronale, legata a un brillamento solare di classe M1,4 dalla regione AR4549, sta raggiungendo la Terra: NOAA prevede una tempesta geomagnetica G2 (moderata) con picco tra le 18 e le 21 UTC di oggi, indice Kp fino a 6.",
+    "fonte": "NOAA SWPC / Space.com",
+    "url": "https://www.space.com/stargazing/auroras/powerful-solar-eruption-could-supercharge-the-northern-lights-this-week",
+    "foto": "tramonto2"
+   },
+   "numero": {
+    "valore": "Kp 6",
+    "testo": "L'indice planetario massimo previsto da NOAA per la tempesta geomagnetica di oggi, soglia della classe G2: possibili aurore fin verso New York e l'Idaho, con cielo scuro favorito dalla luna quasi nuova."
+   },
+   "storie": [
+    {
+     "cat": "uragani",
+     "titolo": "Isaias atteso oggi sulla costa del Golfo",
+     "testo": "Dopo essere diventato il primo uragano della stagione atlantica, Isaias dovrebbe avvicinarsi alla costa del Golfo degli Stati Uniti nelle prossime ore, con rischio di piogge intense e vento forte su Louisiana e Mississippi.",
+     "fonte": "CBS News / NHC",
+     "url": "https://www.cbsnews.com/news/hurricane-season-tropical-threat-gulf-us/",
+     "foto": "uragano3"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Stromboli, nuova anomalia termica rilevata oggi",
+     "testo": "L'ultimo dato satellitare (VIIRS) segnala un'anomalia di 7,46 MW nell'area sommitale: l'attività stromboliana ordinaria prosegue senza variazioni di rilievo.",
+     "fonte": "INGV Catania"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "storia",
+     "testo": "1804: lo «Snow Hurricane» tocca terra vicino Atlantic City, con forti nevicate fin nel sud del Canada. 2001: un'insolita ondata autunnale di tornado genera almeno 23 trombe d'aria tra Nebraska e Oklahoma.",
+     "fonte": "NWS Aberdeen",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Oct_09"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "A Borgo San Lorenzo il Sole sorge alle 7:21 e tramonta alle 18:41: circa 11 ore e 19 minuti di luce. Nel corso di ottobre si perde quasi un'ora e mezza di luce; domenica 25 ottobre torna l'ora solare."
+    }
+   ]
   }
  ]
 }
