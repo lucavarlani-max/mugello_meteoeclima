@@ -39,6 +39,41 @@
   ],
   "esperimenti": [
     {
+      "id": "modelli",
+      "titolo": "Sei modelli a confronto",
+      "tipo": "esperimento",
+      "tema": "previsioni",
+      "data": "2026-10-09",
+      "stato": "nuovo",
+      "testo": "ECMWF, GFS, ICON, UKMO, Météo-France e GEM ora per ora su Borgo San Lorenzo, più WeatherNext di Google: quanto vanno d'accordo nei prossimi 7 giorni e chi ha previsto meglio la massima e la minima di ieri, verificate con la stazione del Centro Funzionale.",
+      "link": "geek-modelli.html",
+      "tag": [
+        "modelli",
+        "ECMWF",
+        "GFS",
+        "ICON",
+        "WeatherNext",
+        "verifica"
+      ]
+    },
+    {
+      "id": "bilancino",
+      "titolo": "Quanta pioggia serve a Bilancino?",
+      "tipo": "esperimento",
+      "tema": "pioggia",
+      "data": "2026-10-09",
+      "stato": "nuovo",
+      "testo": "La pioggia sul bacino e la quota del lago giorno per giorno: quanti millimetri servono per far salire Bilancino di 10 cm, dopo quanto arriva l'acqua e perché d'estate la pioggia non basta.",
+      "link": "geek-bilancino.html",
+      "tag": [
+        "Bilancino",
+        "lago",
+        "pioggia",
+        "bilancio idrico",
+        "Sieve"
+      ]
+    },
+    {
       "id": "weathergami",
       "titolo": "Weathergami: il clima di una stazione in un colpo d'occhio",
       "tipo": "grafico",

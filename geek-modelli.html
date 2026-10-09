@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sei modelli a confronto · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="ECMWF, GFS, ICON, UKMO, Météo-France e GEM a confronto su Borgo San Lorenzo, più WeatherNext di Google: dove i modelli vanno d'accordo, dove si separano e chi ha previsto meglio la temperatura di ieri.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-modelli.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Sei modelli a confronto · MeteoGeek">
+<meta property="og:description" content="Le previsioni dei principali modelli meteorologici su Borgo San Lorenzo, una accanto all'altra, e la verifica con la stazione del Centro Funzionale.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-modelli.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  /* un colore per modello, sempre lo stesso in grafico, legenda e tabelle */
+  :root{--m1:#2a78d6;--m2:#eb6834;--m3:#1baf7a;--m4:#eda100;--m5:#e87ba4;--m6:#008300;--m7:#4a3aa7}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--m1:#3987e5;--m2:#d95926;--m3:#199e70;--m4:#c98500;--m5:#d55181;--m6:#008300;--m7:#9085e9}}
+  :root[data-theme="dark"]{--m1:#3987e5;--m2:#d95926;--m3:#199e70;--m4:#c98500;--m5:#d55181;--m6:#008300;--m7:#9085e9}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel);gap:2px}
+  .seg button{font:inherit;font-size:13px;border:0;background:none;color:var(--ink-soft);padding:6px 14px;border-radius:999px;cursor:pointer}
+  .seg button.on{background:var(--pine);color:#fff}
+  .ctl{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .legend{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft)}
+  .legend button{font:inherit;font-size:12.5px;color:var(--ink-soft);background:none;border:0;padding:2px 0;cursor:pointer}
+  .legend button.off{opacity:.4;text-decoration:line-through}
+  .legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  .chart{width:100%;height:auto;position:relative}
+  .chart svg{display:block;width:100%;height:auto;overflow:visible}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .grid{stroke:var(--line);stroke-width:1}
+  svg .night{fill:var(--panel-2)}
+  svg .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  svg .cross{stroke:var(--ink-faint);stroke-width:1}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+    padding:8px 11px;font-size:12.5px;line-height:1.55;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .tip i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .tile{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px}
+  .tile span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .tile b{display:block;font-family:var(--serif);font-size:26px;font-weight:800;margin:4px 0 2px}
+  .tile small{font-size:12.5px;color:var(--ink-soft)}
+  td i.sw{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:8px;vertical-align:3px}
+  td.best{font-weight:700} .badge{font-family:var(--mono);font-size:10px;letter-spacing:.06em;border:1px solid var(--pine);color:var(--pine);border-radius:999px;padding:1px 7px;margin-left:6px}
+  @media (max-width:760px){ .tiles{grid-template-columns:1fr} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Sei modelli a confronto</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · previsioni e modelli</div>
+      <h1>Sei modelli a confronto</h1>
+      <p class="lead">Stesso punto, stesse ore, sei modelli meteorologici diversi: l'europeo ECMWF, l'americano GFS, il tedesco ICON, l'inglese UKMO, il francese Météo-France e il canadese GEM, più WeatherNext, il modello di intelligenza artificiale di Google che usa la pagina delle previsioni. Dove vanno d'accordo la previsione è solida; dove si separano, conviene andarci piano.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>I prossimi 7 giorni a Borgo San Lorenzo</h2><span class="src" id="run">Open-Meteo</span></div>
+      <div class="card">
+        <div class="ctl">
+          <div class="seg" role="tablist"><button type="button" class="on" data-v="t">Temperatura</button><button type="button" data-v="p">Pioggia cumulata</button></div>
+          <div class="legend" id="leg"></div>
+        </div>
+        <div class="chart" id="ch"><div class="tip"></div><div class="loading">Carico le previsioni dei modelli…</div></div>
+        <p class="note" id="ch-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Quanto vanno d'accordo</h2><span class="src">differenza fra il modello più alto e il più basso</span></div>
+      <div class="card"><div class="tiles" id="spread"></div><p class="note" style="margin-top:12px">Lo scarto è calcolato sulla temperatura alla stessa ora fra i sei modelli numerici. Sotto 2 °C i modelli raccontano la stessa storia; sopra 4 °C vedono situazioni diverse.</p></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Giorno per giorno</h2><span class="src">massima / minima · pioggia del giorno</span></div>
+      <div class="card"><div class="tbl"><table id="tab"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Chi ha vinto ieri?</h2><span class="src" id="ieri-src">previsione del giorno prima · stazione CFR Borgo S. Lorenzo</span></div>
+      <div class="card">
+        <div class="tbl"><table id="ieri"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div>
+        <p class="note" id="ieri-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Modelli numerici:</b> previsioni orarie da <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> per Borgo San Lorenzo (43,958 N · 11,391 E): ECMWF IFS 0,25°, GFS, ICON, UKMO, Météo-France e GEM, ognuno nella sua combinazione «seamless» (il modello locale ad alta risoluzione nei primi giorni, poi quello globale). Si aggiornano ogni volta che apri la pagina.</li>
+          <li><b>WeatherNext:</b> le previsioni giornaliere di Google WeatherNext usate nella pagina delle previsioni del sito (<code>data/previsioni.json</code>); quelle del giorno prima vengono dall'archivio della <a href="geek-verifica-modello.html">verifica del modello</a>.</li>
+          <li><b>Verifica:</b> la previsione emessa il giorno prima (Open-Meteo «Previous Runs») confrontata con la massima e la minima di ieri della stazione del Centro Funzionale di Borgo San Lorenzo (<code>data/termo.json</code>). La pioggia non si verifica qui: un solo pluviometro non basta a giudicare un modello.</li>
+          <li><b>Limiti:</b> un giorno solo non dice chi è il modello migliore: per farsi un'idea servono settimane di confronti. Le celle dei modelli sono grandi (da 2 a 25 km) e la stazione è in fondovalle, dove di notte l'aria fredda ristagna.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · previsioni Open-Meteo e Google WeatherNext · osservazioni CFR Toscana</div></footer>
+<script>
+(function(){
+  "use strict";
+  const LAT=43.958, LON=11.391, COMUNE="Borgo San Lorenzo", STAZ="TOS01000999";
+  const MOD=[["ecmwf_ifs025","ECMWF","--m1"],["gfs_seamless","GFS","--m2"],["icon_seamless","ICON","--m3"],
+             ["ukmo_seamless","UKMO","--m4"],["meteofrance_seamless","Météo-France","--m5"],["gem_seamless","GEM","--m6"]];
+  const WN=["wn","WeatherNext (Google)","--m7"];
+  const $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
+  const fmt=(v,d=1)=>v==null||isNaN(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const GG=["dom","lun","mar","mer","gio","ven","sab"];
+  const glab=iso=>{const t=new Date(iso.slice(0,10)+"T12:00:00");return GG[t.getDay()]+" "+t.getDate();};
+  const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
+  const get=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+  const qs=o=>Object.entries(o).map(([k,v])=>k+"="+encodeURIComponent(v)).join("&");
+  const ids=MOD.map(m=>m[0]).join(",");
+  const nasc=new Set(); let vista="t", D=null;
+
+  // ---------- previsioni dei prossimi 7 giorni
+  Promise.all([
+    get("https://api.open-meteo.com/v1/forecast?"+qs({latitude:LAT,longitude:LON,hourly:"temperature_2m,precipitation",models:ids,timezone:"Europe/Rome",forecast_days:7})),
+    get("./data/previsioni.json?t="+Date.now()).catch(()=>null)
+  ]).then(([om,pv])=>{
+    const h=om.hourly, t=h.time;
+    const serie=MOD.map(([id])=>({t:h["temperature_2m_"+id]||[],p:h["precipitation_"+id]||[]}));
+    const attivi=MOD.map((m,i)=>serie[i].t.some(v=>v!=null));
+    // pioggia cumulata dall'inizio
+    serie.forEach(s=>{let c=0; s.pc=s.p.map(v=>v==null?null:(c+=v));});
+    const wn=pv&&pv.comuni? (pv.comuni.find(c=>c.n===COMUNE)||{}).giorni||[] : [];
+    D={t,serie,attivi,wn};
+    $("run").textContent="Open-Meteo · aggiornato ora";
+    legenda(); disegna(); spread(); tabella();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(disegna,150);});
+  }).catch(e=>{$("ch").querySelector(".loading").textContent="Le previsioni di Open-Meteo non sono raggiungibili in questo momento ("+e.message+"). Riprova più tardi.";
+    $("tab").innerHTML="<tbody><tr><td>Non disponibile.</td></tr></tbody>"; $("spread").innerHTML='<div class="tile"><small>Non disponibile.</small></div>';});
+
+  document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll(".seg button").forEach(x=>x.classList.toggle("on",x===b)); vista=b.dataset.v; if(D) disegna();}));
+
+  function legenda(){
+    $("leg").innerHTML=MOD.map((m,i)=>D.attivi[i]?`<button type="button" data-i="${i}" aria-pressed="true"><i style="background:var(${m[2]})"></i>${m[1]}</button>`:"").join("");
+    $("leg").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const i=+b.dataset.i; nasc.has(i)?nasc.delete(i):nasc.add(i);
+      b.classList.toggle("off",nasc.has(i)); b.setAttribute("aria-pressed",!nasc.has(i)); disegna();}));
+  }
+
+  function disegna(){
+    const box=$("ch"), tip=box.querySelector(".tip"); box.querySelectorAll("svg,.loading").forEach(x=>x.remove());
+    const W=Math.max(300,box.clientWidth), sm=W<600, H=sm?260:340, ml=40, mr=10, top=10, bot=28, hp=H-top-bot;
+    const t=D.t, n=t.length, X=i=>ml+i/(n-1)*(W-ml-mr);
+    const key=vista==="t"?"t":"pc";
+    const vis=MOD.map((m,i)=>i).filter(i=>D.attivi[i]&&!nasc.has(i));
+    let lo=Infinity, hi=-Infinity; vis.forEach(i=>D.serie[i][key].forEach(v=>{if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v);}}));
+    if(!isFinite(lo)){lo=0;hi=1;}
+    if(vista==="p"){lo=0; hi=Math.max(5,hi);}
+    const passo=vista==="t"?(hi-lo>16?5:2):(hi>40?10:hi>15?5:hi>6?2:1);
+    lo=Math.floor(lo/passo)*passo; hi=Math.ceil(hi/passo)*passo;
+    const Y=v=>top+hp-(v-lo)/(hi-lo)*hp;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":vista==="t"?"Temperatura prevista dai sei modelli per i prossimi 7 giorni":"Pioggia cumulata prevista dai sei modelli per i prossimi 7 giorni"});
+    // notti (20-6) in grigio chiaro
+    for(let i=0;i<n;i++){const hh=+t[i].slice(11,13); if(hh===20){const j=Math.min(n-1,i+10); svg.appendChild(el("rect",{x:X(i),y:top,width:X(j)-X(i),height:hp,class:"night"}));}}
+    for(let v=lo;v<=hi+1e-9;v+=passo){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));
+      svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},fmt(v,0)+(vista==="t"?"°":"")));}
+    for(let i=0;i<n;i++) if(t[i].endsWith("T12:00")) svg.appendChild(el("text",{x:X(i),y:H-8,"text-anchor":"middle",class:"axl"},sm?String(+t[i].slice(8,10)):glab(t[i])));
+    vis.forEach(i=>{let d="",pen=false; D.serie[i][key].forEach((v,k)=>{if(v==null){pen=false;return;} d+=(pen?"L":"M")+X(k).toFixed(1)+" "+Y(v).toFixed(1); pen=true;});
+      svg.appendChild(el("path",{d,class:"ln",stroke:`var(${MOD[i][2]})`}));});
+    const cr=el("line",{y1:top,y2:top+hp,class:"cross",opacity:0}); svg.appendChild(cr);
+    const hit=el("rect",{x:ml,y:top,width:W-ml-mr,height:hp,fill:"transparent"}); svg.appendChild(hit);
+    hit.addEventListener("pointermove",ev=>{const r=svg.getBoundingClientRect(); const k=Math.max(0,Math.min(n-1,Math.round(((ev.clientX-r.left)/r.width*W-ml)/(W-ml-mr)*(n-1))));
+      cr.setAttribute("x1",X(k));cr.setAttribute("x2",X(k));cr.setAttribute("opacity",1);
+      const righe=vis.map(i=>[i,D.serie[i][key][k]]).filter(x=>x[1]!=null).sort((a,b)=>b[1]-a[1]);
+      tip.innerHTML=`<b>${glab(t[k])} · ore ${t[k].slice(11,16)}</b><br>`+righe.map(([i,v])=>`<i style="background:var(${MOD[i][2]})"></i>${MOD[i][1]}: <b>${fmt(v,1)}${vista==="t"?" °C":" mm"}</b>`).join("<br>");
+      const px=X(k)/W*r.width; tip.style.left=(px>r.width/2? px-tip.offsetWidth-12 : px+12)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
+    hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;cr.setAttribute("opacity",0);});
+    box.insertBefore(svg,tip);
+    $("ch-note").textContent=vista==="t"
+      ? "Temperatura a 2 metri, ora per ora; le fasce grigie sono le notti. Tocca una voce della legenda per nascondere o mostrare un modello."
+      : "Pioggia sommata dall'inizio della previsione: a fine periodo ogni linea dice quanta pioggia prevede quel modello in tutta la settimana.";
+  }
+
+  function spread(){
+    const t=D.t, now=Date.now();
+    const i0=Math.max(0,t.findIndex(x=>new Date(x).getTime()>=now));
+    const blocchi=[["fra 24 ore",24],["fra 3 giorni",72],["a fine periodo",t.length-1-i0]];
+    $("spread").innerHTML=blocchi.map(([lab,h])=>{const k=Math.min(t.length-1,i0+h);
+      const v=MOD.map((m,i)=>D.attivi[i]?D.serie[i].t[k]:null).filter(x=>x!=null);
+      if(v.length<2) return `<div class="tile"><span>${lab}</span><b>–</b></div>`;
+      const s=Math.max(...v)-Math.min(...v); const giud=s<2?"vanno d'accordo":s<4?"qualche differenza":"vedono cose diverse";
+      return `<div class="tile"><span>${lab} · ${glab(t[k])} ore ${t[k].slice(11,16)}</span><b>${fmt(s,1)} °C</b><small>${giud} · da ${fmt(Math.min(...v),1)} a ${fmt(Math.max(...v),1)} °C</small></div>`;}).join("");
+  }
+
+  function tabella(){
+    const giorni=[...new Set(D.t.map(x=>x.slice(0,10)))];
+    const righe=MOD.map((m,i)=>{if(!D.attivi[i])return "";
+      return `<tr><td><i class="sw" style="background:var(${m[2]})"></i>${m[1]}</td>`+giorni.map(g=>{
+        const k=D.t.map((x,j)=>x.startsWith(g)?j:-1).filter(j=>j>=0);
+        const tt=k.map(j=>D.serie[i].t[j]).filter(v=>v!=null), pp=k.map(j=>D.serie[i].p[j]).filter(v=>v!=null);
+        if(!tt.length) return "<td>–</td>";
+        const mm=pp.reduce((a,b)=>a+b,0);
+        return `<td>${fmt(Math.max(...tt),0)}° / ${fmt(Math.min(...tt),0)}°<br><small>${mm>=0.1?fmt(mm,1)+" mm":"—"}</small></td>`;}).join("")+"</tr>";}).join("");
+    const wnRiga=D.wn.length?`<tr><td><i class="sw" style="background:var(${WN[2]})"></i>${WN[1]}</td>`+giorni.map(g=>{const x=D.wn.find(w=>w.iso===g);
+        return x?`<td>${fmt(x.tmax,0)}° / ${fmt(x.tmin,0)}°<br><small>${x.mm!=null&&x.mm>=0.1?fmt(x.mm,1)+" mm":"—"}</small></td>`:"<td>–</td>";}).join("")+"</tr>":"";
+    $("tab").innerHTML="<thead><tr><th>Modello</th>"+giorni.map(g=>`<th>${glab(g)}</th>`).join("")+"</tr></thead><tbody>"+righe+wnRiga+"</tbody>";
+  }
+
+  // ---------- chi ha vinto ieri
+  Promise.all([
+    get("./data/termo.json?t="+Date.now()),
+    get("https://previous-runs-api.open-meteo.com/v1/forecast?"+qs({latitude:LAT,longitude:LON,hourly:"temperature_2m_previous_day1",models:ids,timezone:"Europe/Rome",past_days:2,forecast_days:1})).catch(()=>null),
+    get("./data/verifica/log.json").catch(()=>null)
+  ]).then(([termo,prev,log])=>{
+    const s=(termo.stazioni||[]).find(x=>x.id===STAZ);
+    if(!s||s.ieri_max==null){$("ieri").innerHTML="<tbody><tr><td>Osservazioni di ieri non disponibili.</td></tr></tbody>";return;}
+    const oggi=termo.aggiornato.slice(0,10), d=new Date(oggi+"T12:00:00Z"); d.setUTCDate(d.getUTCDate()-1); const ieri=d.toISOString().slice(0,10);
+    const righe=[];
+    if(prev&&prev.hourly){const h=prev.hourly, k=h.time.map((x,j)=>x.startsWith(ieri)?j:-1).filter(j=>j>=0);
+      MOD.forEach(([id,nome,c])=>{const v=k.map(j=>(h["temperature_2m_previous_day1_"+id]||[])[j]).filter(x=>x!=null);
+        if(v.length>=20) righe.push({nome,c,tx:Math.max(...v),tn:Math.min(...v)});});}
+    const wn=log&&log.mod&&log.mod.wn&&log.mod.wn[COMUNE]&&log.mod.wn[COMUNE][ieri]&&log.mod.wn[COMUNE][ieri]["1"];
+    if(wn) righe.push({nome:WN[1],c:WN[2],tx:wn[0],tn:wn[1]});
+    if(!righe.length){$("ieri").innerHTML="<tbody><tr><td>Le previsioni del giorno prima non sono raggiungibili in questo momento.</td></tr></tbody>";return;}
+    righe.forEach(r=>{r.ex=r.tx-s.ieri_max; r.en=r.tn-s.ieri_min; r.err=(Math.abs(r.ex)+Math.abs(r.en))/2;});
+    righe.sort((a,b)=>a.err-b.err);
+    const sg=v=>(v>0?"+":"")+fmt(v,1)+" °C";
+    $("ieri").innerHTML="<thead><tr><th>Modello</th><th>Massima prevista</th><th>Errore</th><th>Minima prevista</th><th>Errore</th><th>Errore medio</th></tr></thead><tbody>"+
+      righe.map((r,i)=>{const top=i===0&&righe.length>1; return `<tr><td${top?' class="best"':""}><i class="sw" style="background:var(${r.c})"></i>${r.nome}${top?'<span class="badge">MIGLIORE</span>':""}</td>`+
+        `<td>${fmt(r.tx,1)} °C</td><td>${sg(r.ex)}</td><td>${fmt(r.tn,1)} °C</td><td>${sg(r.en)}</td><td>${fmt(r.err,1)} °C</td></tr>`;}).join("")+"</tbody>";
+    $("ieri-src").textContent=`${glab(ieri)} · osservato a Borgo S. Lorenzo (CFR): massima ${fmt(s.ieri_max,1)} °C, minima ${fmt(s.ieri_min,1)} °C`;
+    $("ieri-note").textContent="Previsioni emesse il giorno prima. «Errore» è previsto meno osservato: positivo se il modello ha previsto troppo caldo. WeatherNext dà valori interi."+
+      (wn?"":" WeatherNext non compare perché per ieri manca la sua previsione nell'archivio.")+
+      (prev&&prev.hourly?"":" I modelli numerici non compaiono perché Open-Meteo non è raggiungibile in questo momento.");
+  }).catch(()=>{$("ieri").innerHTML="<tbody><tr><td>Verifica non disponibile in questo momento.</td></tr></tbody>";});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
