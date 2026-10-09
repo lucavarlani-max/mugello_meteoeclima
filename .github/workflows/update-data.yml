@@ -49,6 +49,10 @@ jobs:
       - name: Aggiorna idrometri Mugello (CFR)
         run: python scripts/fetch_idro.py
 
+      - name: Aggiorna pluviometri Mugello per la verifica dei modelli (CFR, ogni 3 ore)
+        continue-on-error: true
+        run: python scripts/fetch_pluvio_mugello.py
+
       - name: Aggiorna carte sinottiche (ogni 6 ore)
         run: python scripts/fetch_sinottica.py
 

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quanta pioggia serve a Bilancino? · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Pioggia sul bacino e livello del lago di Bilancino giorno per giorno: quanti millimetri servono per far salire il lago di 10 cm, con quale ritardo, e perché d'estate la pioggia non basta.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-bilancino.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Quanta pioggia serve a Bilancino? · MeteoGeek">
+<meta property="og:description" content="Il bilancio idrico del lago di Bilancino con i dati veri: pioggia sul bacino, quota e volume dell'invaso.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-bilancino.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  :root{--rain:#2a78d6;--lake:#0f6b52;--hi:#eb6834}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--rain:#3987e5;--lake:#2fa07c;--hi:#d95926}}
+  :root[data-theme="dark"]{--rain:#3987e5;--lake:#2fa07c;--hi:#d95926}
+  .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px}
+  .tile span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .tile b{display:block;font-family:var(--serif);font-weight:800;font-size:30px;letter-spacing:-.02em;margin:4px 0 2px}
+  .tile small{font-size:12.5px;color:var(--ink-soft)}
+  .chart{width:100%;height:auto;position:relative}
+  .chart svg{display:block;width:100%;height:auto;overflow:visible}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .ttl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-soft);letter-spacing:.04em}
+  svg .grid{stroke:var(--line);stroke-width:1}
+  svg .cross{stroke:var(--ink-faint);stroke-width:1}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+    padding:8px 11px;font-size:12.5px;line-height:1.5;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .tip i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:0 0 8px}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+  .calc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .calc div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px}
+  .calc span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .calc b{display:block;font-family:var(--serif);font-size:24px;font-weight:800;margin:4px 0}
+  .calc p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .calc code{font-family:var(--mono);font-size:11.5px}
+  td.up{color:var(--lake);font-weight:600} td.dn{color:var(--ink-faint)}
+  @media (max-width:860px){ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))} .calc{grid-template-columns:1fr} }
+  @media (max-width:520px){ .tile b{font-size:22px} .tile{padding:12px} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Bilancio idrico di Bilancino</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · pioggia e acqua</div>
+      <h1>Quanta pioggia serve a Bilancino?</h1>
+      <p class="lead">Ogni giorno del 2026, la pioggia caduta sul bacino del lago di Bilancino e la quota dell'invaso. Ho cercato di capire tre cose: quanta acqua serve per far salire il lago di 10 cm, dopo quanto tempo la pioggia arriva al lago, e perché d'estate anche un temporale forte non lo smuove.</p>
+    </header>
+
+    <div class="tiles" id="tiles"><div class="tile"><div class="loading">Carico i dati…</div></div></div>
+
+    <section>
+      <div class="sh"><h2>Pioggia sul bacino e quota del lago</h2><span class="src">dati giornalieri · 2026</span></div>
+      <div class="card">
+        <div class="legend"><span><i style="background:var(--rain)"></i>pioggia media sul bacino (mm al giorno)</span><span><i style="background:var(--lake)"></i>quota del lago (m s.l.m.)</span></div>
+        <div class="chart" id="ch"><div class="tip"></div></div>
+        <p class="note">Passa sopra il grafico per leggere il giorno. In alto la pioggia, in basso la quota: stessa scala dei tempi, così si vede quando a una pioggia segue (o non segue) la salita del lago.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dopo quanto arriva la pioggia al lago?</h2><span class="src">correlazione pioggia → variazione di volume</span></div>
+      <div class="card">
+        <div class="chart" id="lag"><div class="tip"></div></div>
+        <p class="note" id="lag-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il conto del laboratorio</h2></div>
+      <div class="card"><div class="calc" id="calc"></div><p class="note" id="calc-note" style="margin-top:12px"></p></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Gli episodi di pioggia del 2026</h2><span class="src">almeno 25 mm in 3 giorni</span></div>
+      <div class="card">
+        <div class="tbl"><table id="tab"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div>
+        <p class="note">«Salita» è la differenza fra la quota più alta raggiunta nei 7 giorni dopo l'inizio della pioggia e la quota del giorno prima. I mm per +10 cm si calcolano solo quando il lago è salito.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Che cosa si vede</h2></div>
+      <div class="card"><ul class="note" id="insight" style="margin:0"></ul></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Lago:</b> quota e volume giornalieri dell'invaso di Bilancino pubblicati da Publiacqua (<code>data/bilancino.json</code>, lo stesso del riquadro della home).</li>
+          <li><b>Pioggia:</b> media giornaliera (0–24) dei pluviometri del Servizio Idrologico Regionale nel bacino a monte della diga: Cavallina, Le Croci, Mangona e Monte di Fò, tutti nel comune di Barberino di Mugello (<code>data/sir/</code>). Dati SIR Toscana, licenza CC BY-SA 4.0; quelli dell'anno in corso sono ancora pre-validati.</li>
+          <li><b>Metodo:</b> il volume per 10 cm è la mediana di Δvolume/Δquota fra giorni consecutivi; il ritardo è la correlazione fra la pioggia di un giorno e la variazione di volume dei giorni successivi.</li>
+          <li><b>Limiti:</b> il lago non dipende solo dalla pioggia. Publiacqua rilascia acqua verso l'Arno e per l'acquedotto di Firenze, d'estate evapora e il terreno secco assorbe quasi tutto. Quattro pluviometri non raccontano tutta la pioggia del bacino, e la superficie del bacino (circa 150 km²) è una stima.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati Publiacqua e SIR Toscana</div></footer>
+<script>
+(function(){
+  "use strict";
+  const PLUVIO=[["TOS01000911","Cavallina"],["TOS01000926","Le Croci"],["TOS01000921","Mangona"],["TOS01000916","Monte di Fò"]];
+  const BACINO_KM2=150;
+  const $=id=>document.getElementById(id);
+  const NS="http://www.w3.org/2000/svg";
+  const fmt=(v,d=1)=>v==null||isNaN(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const dlab=iso=>{const [y,m,d]=iso.split("-");return (+d)+" "+MESI[+m-1];};
+  const addD=(iso,n)=>{const t=new Date(iso+"T12:00:00Z");t.setUTCDate(t.getUTCDate()+n);return t.toISOString().slice(0,10);};
+  const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+  const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
+
+  Promise.all([
+    fetch("./data/bilancino.json",{cache:"no-cache"}).then(r=>r.json()),
+    ...PLUVIO.map(([id])=>fetch("./data/sir/"+id+"/prec024.csv",{cache:"no-cache"}).then(r=>r.ok?r.text():"").catch(()=>""))
+  ]).then(([b,...csv])=>{
+    const anno=b.anno;
+    // lago: giorno -> [quota, volume]
+    const L={}; b.serie.forEach(x=>{L[anno+"-"+x.d.slice(3,5)+"-"+x.d.slice(0,2)]=[x.q,x.v];});
+    const giorni=Object.keys(L).sort();
+    // pioggia media del bacino
+    const somma={}, n={};
+    csv.forEach(t=>t.split("\n").slice(1).forEach(r=>{const [d,v]=r.split(";"); if(!d||!d.startsWith(anno)||v===undefined||v.trim()==="")return;
+      somma[d]=(somma[d]||0)+parseFloat(v); n[d]=(n[d]||0)+1;}));
+    const P={}; Object.keys(somma).forEach(d=>P[d]=somma[d]/n[d]);
+    const ultimoP=Object.keys(P).sort().pop();
+    const fine=[giorni[giorni.length-1],ultimoP].sort()[1];
+    const asse=[]; for(let d=giorni[0]; d<=fine; d=addD(d,1)) asse.push(d);
+
+    // volume per metro: mediana di dV/dq
+    const sl=[]; for(let i=1;i<giorni.length;i++){const a=L[giorni[i-1]],c=L[giorni[i]],dq=c[0]-a[0]; if(Math.abs(dq)>=0.03) sl.push((c[1]-a[1])/dq);}
+    sl.sort((x,y)=>x-y); const mmcM=sl[Math.floor(sl.length/2)];
+    const vol10=mmcM*0.1;                       // Mmc per 10 cm
+    const area=mmcM;                            // 1 Mmc per metro = 1 km² di superficie
+    const mmTeorici=vol10*1e6/(BACINO_KM2*1e6)*1000;  // se tutta la pioggia del bacino finisse nel lago
+
+    // episodi: almeno 25 mm in 3 giorni, non sovrapposti
+    const ep=[]; for(let i=0;i<asse.length;i++){const d=asse[i];
+      const r3=[0,1,2].reduce((s,k)=>s+(P[addD(d,k)]||0),0);
+      if(r3>=25 && (P[d]||0)>=1){
+        // estendi finché piove (≥1 mm)
+        // l'episodio finisce dopo due giorni di fila con meno di 1 mm
+        let f=d, tot=0, ult=d; while(P[f]!=null && ((P[f]>=1) || (P[addD(f,1)]||0)>=1)){tot+=P[f]; if(P[f]>=1) ult=f; f=addD(f,1);}
+        f=addD(ult,1); if(tot<25){ i=Math.max(i,asse.indexOf(f)-1); continue; }
+        const prima=addD(d,-1); let qmax=null, gmax=null;
+        for(let k=0;k<=7;k++){const g=addD(d,k); if(L[g]&&(qmax==null||L[g][0]>qmax)){qmax=L[g][0];gmax=g;}}
+        if(L[prima] && qmax!=null){ep.push({d,f:addD(f,-1),mm:tot,q0:L[prima][0],sal:qmax-L[prima][0],gmax,mese:+d.slice(5,7)});}
+        const j=asse.indexOf(f); if(j<0) break; i=Math.max(i,j-1);
+      }}
+    ep.forEach(e=>{e.per10=e.sal>=0.05? e.mm/(e.sal*10):null;});
+
+    // correlazione pioggia(t-lag) / dV(t)
+    const dV={}; for(let i=1;i<giorni.length;i++){ if(addD(giorni[i-1],1)===giorni[i]) dV[giorni[i]]=L[giorni[i]][1]-L[giorni[i-1]][1]; }
+    const corr=(x,y)=>{const mx=x.reduce((a,b)=>a+b,0)/x.length,my=y.reduce((a,b)=>a+b,0)/y.length;let sxy=0,sx=0,sy=0;
+      x.forEach((v,i)=>{sxy+=(v-mx)*(y[i]-my);sx+=(v-mx)**2;sy+=(y[i]-my)**2;});return sxy/Math.sqrt(sx*sy);};
+    const lag=[]; for(let k=0;k<=6;k++){const xs=[],ys=[]; Object.keys(dV).forEach(d=>{const p=P[addD(d,-k)]; if(p!=null){xs.push(p);ys.push(dV[d]);}}); lag.push(xs.length>20?corr(xs,ys):null);}
+    const best=lag.reduce((bi,v,i)=>v!=null&&(bi<0||v>lag[bi])?i:bi,-1);
+
+    // ---- riquadri
+    const ul=giorni[giorni.length-1], q=L[ul][0], v=L[ul][1], vmax=Math.max(...giorni.map(g=>L[g][1]));
+    const qa=L[addD(ul,-30)];
+    const p30=[...Array(30)].reduce((s,_,k)=>s+(P[addD(ultimoP,-k)]||0),0);
+    const totAnno=Object.values(P).reduce((a,b)=>a+b,0);
+    $("tiles").innerHTML=
+      `<div class="tile"><span>Quota del lago</span><b>${fmt(q,2)} m</b><small>al ${dlab(ul)}${qa?` · ${q-qa[0]>=0?"+":""}${fmt(q-qa[0],2)} m in 30 giorni`:""}</small></div>`+
+      `<div class="tile"><span>Volume</span><b>${fmt(v,1)} Mmc</b><small>${fmt(v/vmax*100,0)}% del massimo 2026 (${fmt(vmax,1)} Mmc)</small></div>`+
+      `<div class="tile"><span>Pioggia ultimi 30 giorni</span><b>${fmt(p30,0)} mm</b><small>media del bacino, al ${dlab(ultimoP)}</small></div>`+
+      `<div class="tile"><span>Pioggia ${anno}</span><b>${fmt(totAnno,0)} mm</b><small>dal 1° gennaio al ${dlab(ultimoP)}</small></div>`;
+
+    // ---- conto del laboratorio
+    const vinc=ep.filter(e=>e.per10!=null && (e.mese<=4||e.mese>=11)), vest=ep.filter(e=>e.mese>=6&&e.mese<=9);
+    const med=a=>{if(!a.length)return null;const s=[...a].sort((x,y)=>x-y);return s[Math.floor(s.length/2)];};
+    const mInv=med(vinc.map(e=>e.per10));
+    $("calc").innerHTML=
+      `<div><span>Volume per +10 cm</span><b>${fmt(vol10,2)} Mmc</b><p>${fmt(vol10*1e6/1000,0)} mila m³. Dai dati: in media ${fmt(mmcM,1)} milioni di m³ per ogni metro di quota, cioè un lago di circa ${fmt(area,1)} km².</p></div>`+
+      `<div><span>Pioggia teorica</span><b>${fmt(mmTeorici,1)} mm</b><p>Se tutta la pioggia caduta sui ~${BACINO_KM2} km² del bacino finisse nel lago: <code>${fmt(vol10*1e6,0)} m³ ÷ ${BACINO_KM2} km²</code>.</p></div>`+
+      `<div><span>Pioggia reale (stagione fredda)</span><b>${mInv!=null?"~"+fmt(mInv,0)+" mm":"–"}</b><p>${mInv!=null?`Mediana degli episodi fra novembre e aprile in cui il lago è salito (${vinc.length}). Vuol dire che arriva al lago circa ${fmt(mmTeorici/mInv*100,0)}% della pioggia.`:"Nessun episodio invernale utile."}</p></div>`;
+    $("calc-note").textContent=`In estate (giugno–settembre) ${vest.filter(e=>e.sal>=0.05).length} episodi su ${vest.length} hanno fatto salire il lago di almeno 5 cm: il terreno asciutto e la vegetazione trattengono l'acqua, e i rilasci continuano.`;
+
+    // ---- tabella episodi
+    $("tab").innerHTML="<thead><tr><th>Inizio</th><th>Fine</th><th>Pioggia</th><th>Quota prima</th><th>Salita in 7 gg</th><th>mm per +10 cm</th></tr></thead><tbody>"+
+      ep.slice().reverse().map(e=>`<tr><td>${dlab(e.d)}</td><td>${dlab(e.f)}</td><td>${fmt(e.mm,0)} mm</td><td>${fmt(e.q0,2)} m</td>`+
+        `<td class="${e.sal>=0.05?"up":"dn"}">${e.sal>=0?"+":""}${fmt(e.sal*100,0)} cm</td><td>${e.per10!=null?fmt(e.per10,0)+" mm":"–"}</td></tr>`).join("")+"</tbody>";
+
+    // ---- osservazioni
+    const top=ep.slice().sort((a,b)=>b.sal-a.sal)[0];
+    const items=[];
+    if(best>=0) items.push(`<b>Il lago risponde in fretta:</b> la variazione di volume è più legata alla pioggia di ${best===0?"stesso giorno":best===1?"un giorno prima":best+" giorni prima"} (correlazione ${fmt(lag[best],2)}); dopo 3 giorni l'effetto della pioggia non si vede più.`);
+    if(top) items.push(`<b>L'episodio più efficace:</b> dal ${dlab(top.d)} al ${dlab(top.f)}, ${fmt(top.mm,0)} mm sul bacino, e il lago è salito di ${fmt(top.sal*100,0)} cm.`);
+    if(mInv!=null) items.push(`<b>Nella stagione fredda</b> servono circa ${fmt(mInv,0)} mm per 10 cm in più: molto più dei ${fmt(mmTeorici,1)} mm teorici, perché solo una parte della pioggia scorre fino al lago.`);
+    const estMax=vest.slice().sort((a,b)=>b.mm-a.mm)[0];
+    if(estMax) items.push(estMax.sal<0.05
+      ? `<b>D'estate la pioggia non basta:</b> l'episodio estivo più piovoso (${fmt(estMax.mm,0)} mm dal ${dlab(estMax.d)}) non ha fatto salire il lago (${estMax.sal>=0?"+":""}${fmt(estMax.sal*100,0)} cm in 7 giorni): terreno secco, evaporazione e rilasci si mangiano tutto.`
+      : `<b>D'estate:</b> l'episodio più piovoso (${fmt(estMax.mm,0)} mm dal ${dlab(estMax.d)}) ha portato il lago a +${fmt(estMax.sal*100,0)} cm.`);
+    $("insight").innerHTML=items.map(t=>"<li>"+t+"</li>").join("");
+
+    const disegna=()=>{disegnaSerie(asse,P,L); disegnaLag(lag,best);};
+    disegna(); let rt; addEventListener("resize",()=>{clearTimeout(rt); rt=setTimeout(disegna,150);});
+    $("lag-note").textContent="Ogni barra dice quanto la pioggia caduta N giorni prima spiega la variazione di volume del lago in un giorno (1 = legame perfetto, 0 = nessun legame).";
+  }).catch(e=>{$("tiles").innerHTML='<div class="tile"><small>Dati non disponibili ('+esc(e.message||e)+').</small></div>';});
+
+  function disegnaSerie(asse,P,L){
+    const box=$("ch"), tip=box.querySelector(".tip");
+    box.querySelectorAll('svg').forEach(x=>x.remove());
+    const W=Math.max(300,box.clientWidth), sm=W<600, ml=40, mr=8, H1=sm?110:150, H2=sm?150:210, gap=28, top=18, H=top+H1+gap+H2+26;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Pioggia giornaliera sul bacino e quota del lago di Bilancino"});
+    const n=asse.length, bw=(W-ml-mr)/n, X=i=>ml+i*bw+bw/2;
+    const pmax=Math.max(10,...asse.map(d=>P[d]||0)), pTop=Math.ceil(pmax/20)*20;
+    const qs=asse.map(d=>L[d]?L[d][0]:null).filter(v=>v!=null), qmin=Math.floor(Math.min(...qs)), qmax=Math.ceil(Math.max(...qs));
+    const yP=v=>top+H1-v/pTop*H1, y0=top+H1+gap, yQ=v=>y0+H2-(v-qmin)/(qmax-qmin)*H2;
+    svg.appendChild(el("text",{x:ml,y:top-6,class:"ttl"},"PIOGGIA · mm/giorno"));
+    svg.appendChild(el("text",{x:ml,y:y0-6,class:"ttl"},"QUOTA DEL LAGO · m s.l.m."));
+    for(let v=0;v<=pTop;v+=pTop/2){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:yP(v),y2:yP(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:yP(v)+3.5,"text-anchor":"end",class:"axl"},fmt(v,0)));}
+    for(let v=qmin;v<=qmax;v++){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:yQ(v),y2:yQ(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:yQ(v)+3.5,"text-anchor":"end",class:"axl"},v));}
+    asse.forEach((d,i)=>{const v=P[d]; if(v>0.2){const h=Math.max(1,v/pTop*H1); svg.appendChild(el("rect",{x:X(i)-Math.max(1,bw*.8)/2,y:yP(v),width:Math.max(1,bw*.8),height:h,rx:Math.min(2,bw/3),fill:"var(--rain)"}));}
+      if(d.endsWith("-01") && (!sm || +d.slice(5,7)%2===1)){svg.appendChild(el("line",{x1:X(i),x2:X(i),y1:H-22,y2:H-18,class:"grid"}));svg.appendChild(el("text",{x:X(i)+3,y:H-6,class:"axl"},MESI[+d.slice(5,7)-1]));}});
+    let path="",pen=false; asse.forEach((d,i)=>{if(L[d]){path+=(pen?"L":"M")+X(i).toFixed(1)+" "+yQ(L[d][0]).toFixed(1);pen=true;}else pen=false;});
+    svg.appendChild(el("path",{d:path,fill:"none",stroke:"var(--lake)","stroke-width":2,"stroke-linejoin":"round"}));
+    const cr=el("line",{y1:top,y2:y0+H2,class:"cross",opacity:0}), dot=el("circle",{r:4,fill:"var(--lake)",stroke:"var(--panel)","stroke-width":2,opacity:0});
+    svg.appendChild(cr); svg.appendChild(dot);
+    const hit=el("rect",{x:ml,y:top,width:W-ml-mr,height:y0+H2-top,fill:"transparent"}); svg.appendChild(hit);
+    const muovi=ev=>{const r=svg.getBoundingClientRect(), sx=(ev.clientX-r.left)/r.width*W; const i=Math.max(0,Math.min(n-1,Math.floor((sx-ml)/bw))); const d=asse[i];
+      cr.setAttribute("x1",X(i));cr.setAttribute("x2",X(i));cr.setAttribute("opacity",1);
+      if(L[d]){dot.setAttribute("cx",X(i));dot.setAttribute("cy",yQ(L[d][0]));dot.setAttribute("opacity",1);}else dot.setAttribute("opacity",0);
+      tip.innerHTML=`<b>${dlab(d)} ${d.slice(0,4)}</b><br><i style="background:var(--rain)"></i>pioggia ${P[d]!=null?fmt(P[d],1)+" mm":"n.d."}<br><i style="background:var(--lake)"></i>quota ${L[d]?fmt(L[d][0],2)+" m · "+fmt(L[d][1],1)+" Mmc":"n.d."}`;
+      const px=X(i)/W*r.width; tip.style.left=Math.min(r.width-tip.offsetWidth-4,Math.max(0,px+12))+"px"; tip.style.top="10px"; tip.style.opacity=1;};
+    hit.addEventListener("pointermove",muovi); hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;cr.setAttribute("opacity",0);dot.setAttribute("opacity",0);});
+    box.insertBefore(svg,tip);
+  }
+
+  function disegnaLag(lag,best){
+    const box=$("lag"), tip=box.querySelector(".tip");
+    box.querySelectorAll('svg').forEach(x=>x.remove());
+    const W=Math.max(300,box.clientWidth),H=200,ml=40,mr=8,top=14,bot=34, hp=H-top-bot, n=lag.length, bw=(W-ml-mr)/n;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Correlazione fra pioggia e variazione del volume del lago, per ritardo in giorni"});
+    const Y=v=>top+hp-(Math.max(0,v))/1*hp;
+    [0,.25,.5,.75,1].forEach(v=>{svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},fmt(v,2)));});
+    lag.forEach((v,i)=>{const x=ml+i*bw+bw*.2, w=bw*.6;
+      if(v!=null){const vv=Math.max(0,v); const r=el("rect",{x,y:Y(vv),width:w,height:Math.max(1,top+hp-Y(vv)),rx:4,fill:i===best?"var(--hi)":"var(--rain)"});
+        r.addEventListener("pointermove",()=>{tip.innerHTML=`<b>pioggia di ${i===0?"stesso giorno":i===1?"1 giorno prima":i+" giorni prima"}</b><br>correlazione ${fmt(v,2)}`;
+          const bb=box.getBoundingClientRect(); tip.style.left=Math.min(bb.width-tip.offsetWidth-4,(x+w)/W*bb.width+6)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
+        r.addEventListener("pointerleave",()=>tip.style.opacity=0); svg.appendChild(r);
+        svg.appendChild(el("text",{x:x+w/2,y:Y(vv)-6,"text-anchor":"middle",class:"axl"},fmt(v,2)));}
+      svg.appendChild(el("text",{x:x+w/2,y:H-12,"text-anchor":"middle",class:"axl"},i===0?(W<600?"0":"stesso giorno"):"+"+i+" g"));});
+    box.insertBefore(svg,tip);
+  }
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
