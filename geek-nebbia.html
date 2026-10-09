@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nebbia in valle: la trappola fredda del Mugello · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Perché le nebbie del Mugello nascono in fondovalle: l'inversione termica notturna misurata dalle stazioni del Centro Funzionale, quante notti Borgo San Lorenzo è più freddo di Monte Giovi, e le condizioni previste per le prossime notti.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-nebbia.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Nebbia in valle: la trappola fredda del Mugello · MeteoGeek">
+<meta property="og:description" content="L'inversione termica notturna del Mugello misurata dalle stazioni: il fondovalle più freddo della montagna, notte dopo notte.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-nebbia.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  /* freddo = fondovalle più freddo della montagna (inversione), caldo = normale calo con la quota */
+  :root{--inv:#2a78d6;--inv-s:#184f95;--nor:#eb6834;--ora:#2a78d6;--min:#4a3aa7;--ref:#9aa3a0;
+    --d1:#1c5cab;--d2:#6da7ec;--d3:#cde2fb;--d4:#fbd9c9;--d5:#f19a72;--d6:#c4501f}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--inv:#3987e5;--inv-s:#86b6ef;--nor:#d95926;--ora:#3987e5;--min:#9085e9;--ref:#6f7a76;
+    --d1:#86b6ef;--d2:#3987e5;--d3:#1c3a5e;--d4:#5a2c18;--d5:#b5481f;--d6:#f19a72}}
+  :root[data-theme="dark"]{--inv:#3987e5;--inv-s:#86b6ef;--nor:#d95926;--ora:#3987e5;--min:#9085e9;--ref:#6f7a76;
+    --d1:#86b6ef;--d2:#3987e5;--d3:#1c3a5e;--d4:#5a2c18;--d5:#b5481f;--d6:#f19a72}
+  .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .tile{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px}
+  .tile span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .tile b{display:block;font-family:var(--serif);font-size:26px;font-weight:800;margin:4px 0 2px}
+  .tile small{font-size:12.5px;color:var(--ink-soft)}
+  .two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;align-items:start}
+  .chart{width:100%;height:auto;position:relative}
+  .chart svg{display:block;width:100%;height:auto;overflow:visible}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .lab{font-size:11.5px;fill:var(--ink-soft)}
+  svg .grid{stroke:var(--line);stroke-width:1}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+    padding:8px 11px;font-size:12.5px;line-height:1.55;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .legend{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:0 0 8px}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+  .legend i.dot{border-radius:50%} .legend i.dash{height:0;border-top:2px dashed var(--ref);border-radius:0;width:16px;vertical-align:3px}
+  .cond{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;white-space:nowrap}
+  .cond b{font-family:var(--mono);font-size:11px;border-radius:999px;padding:1px 7px;border:1px solid var(--line)}
+  .cond b.si{background:var(--pine);border-color:var(--pine);color:#fff}
+  .phys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .phys div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px}
+  .phys h3{font-family:var(--serif);font-size:16px;margin:0 0 6px}
+  .phys p{margin:0;font-size:13px;color:var(--ink-soft);line-height:1.55}
+  .heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:2px;overflow-x:auto;padding-bottom:4px}
+  .heat i{width:11px;height:11px;border-radius:2px;display:block}
+  .scale{display:flex;align-items:center;gap:4px;font-size:11.5px;color:var(--ink-faint);margin-top:8px;flex-wrap:wrap}
+  .scale i{flex:none;width:14px;height:11px;border-radius:2px;display:inline-block;margin-left:6px}
+  @media (max-width:860px){ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))} .two,.phys{grid-template-columns:1fr} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Nebbia in valle</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · nebbia e inversione termica</div>
+      <h1>Nebbia in valle: la trappola fredda del Mugello</h1>
+      <p class="lead">Le mattine di nebbia del Mugello nascono di notte, in fondovalle. Con il cielo sereno e poco vento il terreno perde calore, l'aria fredda e pesante scivola dai versanti e si raccoglie lungo la Sieve: se è abbastanza umida, si satura e diventa nebbia. Qui misuro la prima parte di questa storia, l'aria fredda intrappolata, con i termometri del Centro Funzionale a quote diverse.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Come nasce la nebbia da irraggiamento</h2></div>
+      <div class="phys">
+        <div><h3>1 · Cielo sereno</h3><p>Di notte il suolo emette radiazione infrarossa verso lo spazio. Le nuvole la rimandano indietro; senza nuvole il suolo e l'aria a contatto si raffreddano molto più in fretta.</p></div>
+        <div><h3>2 · Poco vento</h3><p>Con vento debole lo strato d'aria raffreddato resta al suolo e non si mescola con l'aria più tiepida sopra. In una valle l'aria fredda, più densa, scende dai versanti e ristagna sul fondo: è l'inversione termica.</p></div>
+        <div><h3>3 · Aria umida</h3><p>Se la temperatura scende fino al punto di rugiada, il vapore condensa in goccioline. Se l'aria è secca, la stessa notte fredda produce solo rugiada o brina. Per questo l'inversione è necessaria ma non basta.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Adesso nel Mugello</h2><span class="src" id="now-src">stazioni CFR · zona Mugello–Val di Sieve</span></div>
+      <div class="card">
+        <div class="tiles" id="now-tiles"><div class="tile"><div class="loading">Carico le misure…</div></div></div>
+        <div class="two" style="margin-top:16px">
+          <div>
+            <div class="legend"><span><i class="dot" style="background:var(--ora)"></i>temperatura adesso</span><span><i class="dot" style="background:var(--min)"></i>minima di stanotte</span><span><i class="dash"></i>minima «attesa» con il calo normale dalla quota di Monte Giovi (6,5 °C ogni 1000 m)</span></div>
+            <div class="chart" id="prof"><div class="tip"></div></div>
+          </div>
+          <div class="tbl"><table id="now-tab"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div>
+        </div>
+        <p class="note" id="prof-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Le prossime notti a Borgo San Lorenzo</h2><span class="src">previsione oraria Open-Meteo · dalle 20 alle 8</span></div>
+      <div class="card">
+        <div class="tbl"><table id="fc"><tbody><tr><td class="loading">Carico la previsione…</td></tr></tbody></table></div>
+        <p class="note">Per ogni notte: lo scarto più piccolo fra temperatura e punto di rugiada (0 = aria satura), il vento medio a 10 m e la copertura nuvolosa media. I pallini dicono se la notte rientra nelle soglie pratiche usate dai previsori per la nebbia da irraggiamento: scarto fino a 1 °C, vento fino a 2 m/s, nuvole fino al 30%. Le soglie non sono calibrate sul Mugello e non danno una probabilità: dicono solo se gli ingredienti ci sono. L'ultima colonna è la visibilità minima calcolata dal modello, che sulla nebbia di valle è poco affidabile.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Quante notti il fondovalle è più freddo della montagna</h2><span class="src" id="cl-src">Borgo S. Lorenzo 196 m e Monte Giovi 960 m · SIR Toscana</span></div>
+      <div class="card">
+        <div class="tiles" id="cl-tiles"></div>
+        <div class="legend" style="margin-top:16px"><span><i style="background:var(--inv)"></i>notti con Borgo più freddo di Monte Giovi</span><span><i style="background:var(--inv-s)"></i>di cui con almeno 3 °C di differenza</span></div>
+        <div class="chart" id="mesi"><div class="tip"></div></div>
+        <p class="note" id="mesi-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Notte per notte, gli ultimi 12 mesi</h2><span class="src">minima di Monte Giovi meno minima di Borgo S. Lorenzo</span></div>
+      <div class="card">
+        <div class="heat" id="heat"></div>
+        <div class="scale" id="scale"></div>
+        <p class="note" id="heat-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Adesso:</b> temperature delle stazioni del Centro Funzionale Regione Toscana nella zona di allerta Mugello–Val di Sieve (<code>data/termo.json</code>), umidità relativa e vento delle stesse stazioni (<code>data/nebbia.json</code>), aggiornati dall'Action del sito. Dati in tempo reale, provvisori.</li>
+          <li><b>Statistica:</b> minime giornaliere dell'archivio del Servizio Idrologico Regionale (<code>data/sir/</code>, licenza CC BY-SA 4.0) per Borgo San Lorenzo (196 m, fondovalle della Sieve) e Monte Giovi (960 m, 7 km a sud). Si usano solo i giorni in cui ci sono entrambe le stazioni.</li>
+          <li><b>Perché la differenza delle minime:</b> nell'atmosfera media la temperatura cala di circa 6,5 °C ogni 1000 m, quindi Monte Giovi «dovrebbe» essere circa 5 °C più freddo di Borgo. Quando la sua minima è più alta di quella di Borgo, nella notte l'aria più fredda era in fondovalle: un'inversione termica.</li>
+          <li><b>Previsione:</b> modello «best match» di Open-Meteo per Borgo San Lorenzo, ora per ora: temperatura, punto di rugiada, vento a 10 m, nuvolosità, visibilità.</li>
+          <li><b>Limiti:</b> nel Mugello nessuna stazione pubblica misura la visibilità, quindi qui la nebbia non è osservata: si misurano le condizioni in cui si forma. La minima di una stazione può cadere a un'ora diversa da quella dell'altra; Monte Giovi è un rilievo isolato e non rappresenta tutta la montagna mugellana. L'archivio dell'umidità notturna è iniziato a ottobre 2026 e crescerà con il tempo.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati CFR e SIR Toscana, previsioni Open-Meteo</div></footer>
+<script>
+(function(){
+  "use strict";
+  const VALLE="TOS01000999", MONTE="TOS03001001", LAPSE=6.5;
+  const $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
+  const fmt=(v,d=1)=>v==null||isNaN(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const sg=v=>(v>0?"+":"")+fmt(v,1);
+  const MESI_L=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  const MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const GG=["dom","lun","mar","mer","gio","ven","sab"];
+  const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
+  const get=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+  const txt=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.text();});
+  const dl=iso=>{const t=new Date(iso+"T12:00:00");return t.getDate()+" "+MESI[t.getMonth()];};
+  const resize=fn=>{let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(fn,150);});};
+  const CARD=["N","NE","E","SE","S","SO","O","NO"];
+
+  // ---------- adesso: profilo verticale
+  Promise.all([get("./data/termo.json?t="+Date.now()), get("./data/nebbia.json?t="+Date.now()).catch(()=>null)]).then(([T,N])=>{
+    const st=(T.stazioni||[]).filter(s=>s.zona==="M"&&s.attiva&&s.t!=null&&s.quota!=null).sort((a,b)=>a.quota-b.quota);
+    const v=st.find(s=>s.id===VALLE), m=st.find(s=>s.id===MONTE);
+    const ns=N&&N.stazioni||{};
+    const dT=v&&m?m.t-v.t:null, dMin=v&&m&&v.min!=null&&m.min!=null?m.min-v.min:null;
+    const urV=ns["TOS11000017"]&&ns["TOS11000017"].ur, vtV=ns["TOS11000017"]&&ns["TOS11000017"].vento;
+    $("now-tiles").innerHTML=
+      `<div class="tile"><span>Monte Giovi − Borgo, adesso</span><b>${sg(dT)} °C</b><small>${dT==null?"":dT>0?"inversione: il fondovalle è più freddo":"normale: la montagna è più fredda"}</small></div>`+
+      `<div class="tile"><span>Monte Giovi − Borgo, minime di stanotte</span><b>${sg(dMin)} °C</b><small>${dMin==null?"":dMin>0?"stanotte l'aria fredda era in fondovalle":"stanotte niente inversione fra le due stazioni"}</small></div>`+
+      `<div class="tile"><span>Umidità a Borgo S. Lorenzo 2</span><b>${urV?fmt(urV.v,0)+"%":"–"}</b><small>${urV?`massima di oggi ${fmt(urV.oggi_max,0)}% · 280 m`:"dato non disponibile"}</small></div>`+
+      `<div class="tile"><span>Vento a Borgo S. Lorenzo 2</span><b>${vtV?fmt(vtV.v,1)+" m/s":"–"}</b><small>${vtV?`raffica ${fmt(vtV.raffica,1)} m/s · ${CARD[Math.round((vtV.dir||0)/45)%8]}`:"dato non disponibile"}</small></div>`;
+    $("now-src").textContent=`stazioni CFR · zona Mugello–Val di Sieve · ore ${(T.aggiornato||"").slice(11,16)}`;
+    $("now-tab").innerHTML="<thead><tr><th>Stazione</th><th>Quota</th><th>Adesso</th><th>Minima</th><th>Umidità</th></tr></thead><tbody>"+
+      st.slice().reverse().map(s=>{const u=ns[s.id]&&ns[s.id].ur; return `<tr><td>${s.nome}</td><td>${fmt(s.quota,0)} m</td><td>${fmt(s.t,1)}°</td><td>${fmt(s.min,1)}°</td><td>${u?fmt(u.v,0)+"%":"–"}</td></tr>`;}).join("")+"</tbody>";
+    const disegna=()=>profilo(st,m);
+    disegna(); resize(disegna);
+    $("prof-note").textContent="Ogni pallino è una stazione, alla sua quota. La linea tratteggiata parte dalla minima di Monte Giovi e scende verso valle con il calo normale della temperatura: le minime a sinistra della linea sono più fredde di quanto «dovrebbero», segno che stanotte l'aria fredda è scesa e ha ristagnato in basso.";
+  }).catch(e=>{$("now-tiles").innerHTML=`<div class="tile"><small>Misure non disponibili (${e.message}).</small></div>`;});
+
+  function profilo(st,m){
+    const box=$("prof"), tip=box.querySelector(".tip"); box.querySelectorAll("svg").forEach(x=>x.remove());
+    const W=Math.max(280,box.clientWidth), H=300, ml=48, mr=14, top=12, bot=30, hp=H-top-bot, wp=W-ml-mr;
+    const vals=st.flatMap(s=>[s.t,s.min]).filter(v=>v!=null);
+    let lo=Math.floor(Math.min(...vals)-1), hi=Math.ceil(Math.max(...vals)+1);
+    const z0=0, z1=1100, X=v=>ml+(v-lo)/(hi-lo)*wp, Y=z=>top+hp-(z-z0)/(z1-z0)*hp;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Temperatura delle stazioni del Mugello in funzione della quota"});
+    for(let z=0;z<=1000;z+=200){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(z),y2:Y(z),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:Y(z)+3.5,"text-anchor":"end",class:"axl"},z+" m"));}
+    const passo=hi-lo>12?4:2; for(let t=Math.ceil(lo/passo)*passo;t<=hi;t+=passo) svg.appendChild(el("text",{x:X(t),y:H-10,"text-anchor":"middle",class:"axl"},t+"°"));
+    if(m){[["min","--min"]].forEach(([k])=>{if(m[k]==null)return; const a=m[k]+LAPSE*(m.quota-150)/1000, b=m[k]-LAPSE*(1050-m.quota)/1000;
+      svg.appendChild(el("line",{x1:X(a),y1:Y(150),x2:X(b),y2:Y(1050),stroke:"var(--ref)","stroke-width":1.5,"stroke-dasharray":"5 4"}));});}
+    st.forEach(s=>{[["min","--min"],["t","--ora"]].forEach(([k,c])=>{if(s[k]==null)return;
+      const d=el("circle",{cx:X(s[k]),cy:Y(s.quota),r:5.5,fill:`var(${c})`,stroke:"var(--panel)","stroke-width":2});
+      d.addEventListener("pointermove",()=>{tip.innerHTML=`<b>${s.nome}</b> · ${fmt(s.quota,0)} m<br>adesso ${fmt(s.t,1)} °C · minima ${fmt(s.min,1)} °C`;
+        const r=box.getBoundingClientRect(); tip.style.left=Math.min(r.width-tip.offsetWidth-4,X(s[k])/W*r.width+10)+"px"; tip.style.top=Math.max(0,Y(s.quota)/H*r.height-40)+"px"; tip.style.opacity=1;});
+      d.addEventListener("pointerleave",()=>tip.style.opacity=0); svg.appendChild(d);});});
+    box.insertBefore(svg,tip);
+  }
+
+  // ---------- le prossime notti (Open-Meteo)
+  const q="latitude=43.958&longitude=11.391&hourly=temperature_2m,dew_point_2m,wind_speed_10m,cloud_cover,visibility&wind_speed_unit=ms&timezone=Europe%2FRome&forecast_days=4";
+  get("https://api.open-meteo.com/v1/forecast?"+q).then(o=>{
+    const h=o.hourly, t=h.time, notti=[];
+    for(let i=0;i<t.length;i++){ if(!t[i].endsWith("T20:00")) continue;
+      const k=[]; for(let j=i;j<Math.min(t.length,i+13);j++) k.push(j); if(k.length<13) continue;
+      const sp=k.map(j=>Math.max(0,h.temperature_2m[j]-h.dew_point_2m[j])).filter(v=>!isNaN(v));
+      const media=a=>{const z=a.filter(v=>v!=null);return z.length?z.reduce((x,y)=>x+y,0)/z.length:null;};
+      const vis=k.map(j=>h.visibility&&h.visibility[j]).filter(v=>v!=null);
+      const ok=k.filter(j=>h.temperature_2m[j]-h.dew_point_2m[j]<=1 && h.wind_speed_10m[j]<=2 && h.cloud_cover[j]<=30).length;
+      notti.push({d:t[i].slice(0,10),sp:Math.min(...sp),v:media(k.map(j=>h.wind_speed_10m[j])),c:media(k.map(j=>h.cloud_cover[j])),vis:vis.length?Math.min(...vis):null,ok});}
+    const pal=(c)=>`<b class="${c?"si":""}">${c?"sì":"no"}</b>`;
+    $("fc").innerHTML="<thead><tr><th>Notte</th><th>Scarto T − rugiada</th><th>Vento medio</th><th>Nuvole medie</th><th>Ore con tutti e tre</th><th>Visibilità minima (modello)</th></tr></thead><tbody>"+
+      notti.map(n=>{const d=new Date(n.d+"T12:00:00"), d2=new Date(d.getTime()+864e5);
+        return `<tr><td>${GG[d.getDay()]} ${d.getDate()} → ${GG[d2.getDay()]} ${d2.getDate()}</td>`+
+        `<td><span class="cond">${fmt(n.sp,1)} °C ${pal(n.sp<=1)}</span></td><td><span class="cond">${fmt(n.v,1)} m/s ${pal(n.v<=2)}</span></td>`+
+        `<td><span class="cond">${fmt(n.c,0)}% ${pal(n.c<=30)}</span></td><td>${n.ok} su 13</td><td>${n.vis==null?"–":n.vis>=10000?"oltre 10 km":fmt(n.vis/1000,1)+" km"}</td></tr>`;}).join("")+"</tbody>";
+  }).catch(e=>{$("fc").innerHTML=`<tbody><tr><td>Previsione non raggiungibile in questo momento (${e.message}).</td></tr></tbody>`;});
+
+  // ---------- statistica dalle minime SIR
+  const leggi=s=>{const o={}; s.split("\n").slice(1).forEach(r=>{const c=r.split(";"); if(c.length>=3&&c[2]!==""&&c[2]!==undefined) o[c[0]]=parseFloat(c[2]);}); return o;};
+  Promise.all([txt("./data/sir/"+VALLE+"/temp.csv"),txt("./data/sir/"+MONTE+"/temp.csv")]).then(([a,b])=>{
+    const V=leggi(a), M=leggi(b), giorni=Object.keys(M).filter(d=>V[d]!=null).sort();
+    const D={}; giorni.forEach(g=>D[g]=M[g]-V[g]);
+    const per=Array.from({length:12},()=>({n:0,inv:0,forte:0}));
+    giorni.forEach(g=>{const p=per[+g.slice(5,7)-1]; p.n++; if(D[g]>0)p.inv++; if(D[g]>=3)p.forte++;});
+    const tot=giorni.length, inv=giorni.filter(g=>D[g]>0).length, forte=giorni.filter(g=>D[g]>=3).length;
+    const rec=giorni.reduce((b,g)=>D[g]>D[b]?g:b,giorni[0]);
+    const med=a=>{const z=[...a].sort((x,y)=>x-y);return z[Math.floor(z.length/2)];};
+    $("cl-src").textContent=`Borgo S. Lorenzo 196 m e Monte Giovi 960 m · SIR Toscana · ${dl(giorni[0])} ${giorni[0].slice(0,4)} – ${dl(giorni[giorni.length-1])} ${giorni[giorni.length-1].slice(0,4)}`;
+    $("cl-tiles").innerHTML=
+      `<div class="tile"><span>Notti confrontate</span><b>${tot.toLocaleString("it-IT")}</b><small>dal ${giorni[0].slice(0,4)} a oggi</small></div>`+
+      `<div class="tile"><span>Fondovalle più freddo</span><b>${fmt(inv/tot*100,0)}%</b><small>${inv.toLocaleString("it-IT")} notti con la minima di Borgo sotto quella di Monte Giovi</small></div>`+
+      `<div class="tile"><span>Inversione forte (≥ 3 °C)</span><b>${fmt(forte/tot*100,0)}%</b><small>${forte.toLocaleString("it-IT")} notti</small></div>`+
+      `<div class="tile"><span>La notte record</span><b>${sg(D[rec])} °C</b><small>${dl(rec)} ${rec.slice(0,4)}: Borgo ${fmt(V[rec],1)}°, Monte Giovi ${fmt(M[rec],1)}°</small></div>`;
+    const disegna=()=>mesi(per); disegna(); resize(disegna);
+    const best=per.map((p,i)=>[i,p.inv/p.n]).sort((x,y)=>y[1]-x[1]);
+    $("mesi-note").textContent=`Mediana della differenza fra le minime: ${sg(med(giorni.map(g=>D[g])))} °C, contro i circa −5 °C che darebbe il calo normale con la quota. Il mese con più notti di fondovalle freddo è ${MESI_L[best[0][0]]} (${fmt(best[0][1]*100,0)}%), quello con meno ${MESI_L[best[11][0]]} (${fmt(best[11][1]*100,0)}%). D'estate le inversioni sono frequenti ma l'aria è secca: per la nebbia serve anche l'umidità.`;
+    heat(giorni,D);
+  }).catch(e=>{$("cl-tiles").innerHTML=`<div class="tile"><small>Archivio non disponibile (${e.message}).</small></div>`;});
+
+  function mesi(per){
+    const box=$("mesi"), tip=box.querySelector(".tip"); box.querySelectorAll("svg").forEach(x=>x.remove());
+    const W=Math.max(300,box.clientWidth), sm=W<600, H=sm?220:260, ml=40, mr=8, top=10, bot=28, hp=H-top-bot, bw=(W-ml-mr)/12;
+    const Y=v=>top+hp-v/100*hp;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Percentuale di notti con inversione termica per mese"});
+    [0,25,50,75,100].forEach(v=>{svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},v+"%"));});
+    per.forEach((p,i)=>{const x=ml+i*bw+bw*.18, w=bw*.64, a=p.inv/p.n*100, b=p.forte/p.n*100;
+      const g=el("g",{});
+      g.appendChild(el("rect",{x,y:Y(a),width:w,height:top+hp-Y(a),rx:4,fill:"var(--inv)"}));
+      g.appendChild(el("rect",{x,y:Y(b),width:w,height:Math.max(0,top+hp-Y(b)-0),fill:"var(--inv-s)"}));
+      g.appendChild(el("rect",{x,y:Y(a),width:w,height:2,fill:"var(--panel)",opacity:0}));
+      svg.appendChild(el("text",{x:x+w/2,y:Y(a)-5,"text-anchor":"middle",class:"axl"},fmt(a,0)));
+      svg.appendChild(el("text",{x:x+w/2,y:H-10,"text-anchor":"middle",class:"axl"},sm?MESI[i][0].toUpperCase():MESI[i]));
+      const hit=el("rect",{x:ml+i*bw,y:top,width:bw,height:hp,fill:"transparent"});
+      hit.addEventListener("pointermove",()=>{tip.innerHTML=`<b>${MESI[i]}</b> · ${p.n} notti<br>fondovalle più freddo: ${fmt(a,0)}%<br>di almeno 3 °C: ${fmt(b,0)}%`;
+        const r=box.getBoundingClientRect(); tip.style.left=Math.min(r.width-tip.offsetWidth-4,(x+w)/W*r.width+6)+"px"; tip.style.top="6px"; tip.style.opacity=1;});
+      hit.addEventListener("pointerleave",()=>tip.style.opacity=0);
+      g.appendChild(hit); svg.appendChild(g);});
+    box.insertBefore(svg,tip);
+  }
+
+  function heat(giorni,D){
+    const fine=giorni[giorni.length-1], inizio=new Date(fine+"T12:00:00"); inizio.setDate(inizio.getDate()-364);
+    while(inizio.getDay()!==1) inizio.setDate(inizio.getDate()-1);   // le colonne partono di lunedì
+    const CL=[[-99,-4,"--d6","sotto −4"],[-4,-2,"--d5","da −4 a −2"],[-2,0,"--d4","da −2 a 0"],[0,2,"--d3","da 0 a +2"],[2,4,"--d2","da +2 a +4"],[4,99,"--d1","oltre +4"]];
+    const col=v=>CL.find(c=>v>c[0]&&v<=c[1])||CL[5];
+    let html="", n=0, inv=0;
+    for(const d=new Date(inizio); d<=new Date(fine+"T12:00:00"); d.setDate(d.getDate()+1)){
+      const g=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"), v=D[g];
+      if(v==null){html+=`<i style="background:var(--line-soft)" title="${dl(g)}: dato mancante"></i>`;continue;}
+      n++; if(v>0)inv++;
+      html+=`<i style="background:var(${col(v)[2]})" title="${GG[d.getDay()]} ${dl(g)} ${g.slice(0,4)}: ${sg(v)} °C"></i>`;}
+    $("heat").innerHTML=html;
+    $("scale").innerHTML="Monte Giovi − Borgo: "+CL.map(c=>`<i style="background:var(${c[2]})"></i>${c[3]}`).join(" ")+" °C · in blu le notti con il fondovalle più freddo";
+    $("heat-note").textContent=`Ogni quadratino è una notte, ogni colonna una settimana (dal lunedì alla domenica). Negli ultimi 12 mesi il fondovalle è stato più freddo della montagna in ${inv} notti su ${n}. Passa sopra un quadratino per leggere la data e il valore.`;
+  }
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

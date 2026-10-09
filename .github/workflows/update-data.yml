@@ -53,6 +53,10 @@ jobs:
         continue-on-error: true
         run: python scripts/fetch_pluvio_mugello.py
 
+      - name: Aggiorna umidità e vento del Mugello per la pagina della nebbia (CFR)
+        continue-on-error: true
+        run: python scripts/fetch_nebbia.py
+
       - name: Aggiorna carte sinottiche (ogni 6 ore)
         run: python scripts/fetch_sinottica.py
 
