@@ -39,6 +39,24 @@
   ],
   "esperimenti": [
     {
+      "id": "nebbia",
+      "titolo": "Nebbia in valle: la trappola fredda del Mugello",
+      "tipo": "esperimento",
+      "tema": "clima",
+      "data": "2026-10-09",
+      "stato": "nuovo",
+      "testo": "Perché le nebbie nascono in fondovalle: l'inversione termica notturna misurata dalle stazioni del Centro Funzionale. In quasi metà delle notti Borgo San Lorenzo è più freddo di Monte Giovi, 760 m più in alto; il profilo delle temperature di adesso, il calendario notte per notte e le condizioni previste per le prossime notti.",
+      "link": "geek-nebbia.html",
+      "tag": [
+        "nebbia",
+        "inversione termica",
+        "fondovalle",
+        "Sieve",
+        "Monte Giovi",
+        "umidità"
+      ]
+    },
+    {
       "id": "modelli",
       "titolo": "Sei modelli a confronto",
       "tipo": "esperimento",
