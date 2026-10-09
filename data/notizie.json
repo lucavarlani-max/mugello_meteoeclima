@@ -1,7 +1,166 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-07",
+ "aggiornato": "2026-10-09",
  "numeri": [
+  {
+   "data": "2026-10-09",
+   "apertura": {
+    "cat": "temporali",
+    "titolo": "L'autunno entra in scena: calo termico e piogge sull'Italia",
+    "testo": "Fra l'8 e il 9 ottobre due perturbazioni hanno portato piogge e temporali al Centro-Nord e in Sardegna, con venti forti e aria più fresca da oggi.",
+    "fonte": "Meteo.it",
+    "url": "https://www.meteo.it/notizie/meteo-maltempo-in-italia-weekend-con-piogge-758bd0e7",
+    "foto": "tornado"
+   },
+   "numero": {
+    "valore": "80 mm",
+    "testo": "La pioggia caduta in una sola notte in Friuli Venezia Giulia al passaggio del fronte."
+   },
+   "storie": [
+    {
+     "cat": "uragani",
+     "titolo": "Isaias rompe il silenzio atlantico",
+     "testo": "Nel Golfo del Messico si è formata la tempesta tropicale Isaias, dopo settimane di calma in una stagione atlantica fra le più tranquille mai registrate.",
+     "fonte": "NOAA National Hurricane Center",
+     "url": "https://www.nhc.noaa.gov/text/refresh/MIATWOAT+shtml/020546_MIATWOAT.shtml",
+     "foto": "uragano2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Šiveluč, cenere a 10 km sulla Kamchatka",
+     "testo": "Il vulcano ha lanciato cenere fino a circa 10 km di quota; per gli aerei il codice di allerta è arancione.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, 85 tracimazioni di lava in una settimana",
+     "testo": "Nel cratere sommitale delle Hawaii la lava è traboccata 85 volte nel giro di una settimana.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Il bilancio sismico del 2026",
+     "testo": "I due terremoti più forti dell'anno finora: magnitudo 7,8 nelle Filippine il 7 giugno e 7,5 in Venezuela il 24 giugno, il più grave con 1.943 vittime.",
+     "fonte": "USGS / Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/List_of_earthquakes_in_2026",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Agosto 2026, il mese più caldo mai registrato",
+     "testo": "Secondo Copernicus agosto 2026 eguaglia luglio 2023 come mese più caldo della serie e riporta la temperatura globale sopra +1,5 °C rispetto al periodo preindustriale.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above",
+     "foto": "terra"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Venerdì 9 ottobre a Borgo San Lorenzo: nubi sparse di passaggio, minima 13 °C e massima 21 °C, probabilità di pioggia bassa (25%); weekend senza grandi cambiamenti.",
+     "fonte": "previsioni del sito"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1804: la «Great Snow Hurricane» porta neve abbondante nel New England. 2001: una serie di 23 tornado negli Stati Uniti centrali. 2013: trombe d'aria in Puglia.",
+     "fonte": "NWS"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Fino a inizio ottobre la stagione atlantica 2026 non aveva prodotto nessun uragano: un primato di inattività.",
+     "fonte": "The Boston Globe"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:22 e tramonta alle 18:43, circa 11 ore e 21 minuti di luce, 3 minuti meno di ieri. La Luna è quasi invisibile, vicinissima al Sole; la Luna nuova è domani, sabato 10 ottobre, alle 17:50. Il 25 ottobre torna l'ora solare."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-08",
+   "apertura": {
+    "cat": "cielo",
+    "titolo": "Stanotte le Draconidi, le stelle cadenti del Dragone",
+    "testo": "Il picco dello sciame è atteso attorno all'1 UTC del 9 ottobre (le 3 in Italia). Con la Luna ridotta a una falce sottilissima, vicina alla fase di Luna nuova, il cielo è buio: il momento migliore è la prima parte della notte, quando il Dragone è più alto a nord-ovest.",
+    "fonte": "EarthSky",
+    "url": "https://earthsky.org/astronomy-essentials/everything-you-need-to-know-draconid-meteor-shower/",
+    "foto": "tramonto"
+   },
+   "numero": {
+    "valore": "~10",
+    "testo": "Le meteore all'ora attese al picco delle Draconidi: uno sciame di solito modesto, che in alcuni anni ha dato vere tempeste di stelle cadenti."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Etna e Stromboli fra i vulcani attivi della settimana",
+     "testo": "Il bollettino settimanale del Global Volcanism Program elenca 24 vulcani in attività: fra questi anche l'Etna e lo Stromboli.",
+     "fonte": "Smithsonian / USGS",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "etna"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Magnitudo 5,2 nell'Oceano Indiano",
+     "testo": "Il 7 ottobre una scossa di magnitudo 5,2 ha colpito la regione dell'arcipelago delle Chagos, a circa 10 km di profondità, in mare aperto.",
+     "fonte": "Earthquake Tracker",
+     "url": "https://www.earthquaketracker.org/earthquakes/today"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Golfo del Messico, sistema verso la tempesta tropicale",
+     "testo": "Il National Hurricane Center dà una probabilità vicina al 100% che il disturbo AL92 diventi un ciclone tropicale nelle prossime ore.",
+     "fonte": "NOAA National Hurricane Center",
+     "url": "https://www.nhc.noaa.gov/text/refresh/MIATWOAT+shtml/index.shtml"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Estate 2026: fino a 75 giorni di stress da caldo",
+     "testo": "Secondo il bilancio di Copernicus sull'estate europea, alcune zone del continente hanno avuto fino a 75 giorni di stress termico, fra record ed eventi estremi.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/european-summer-2026-records-extremes-and-context"
+    },
+    {
+     "cat": "temporali",
+     "titolo": "Prima irruzione autunnale sul Centro-Nord",
+     "testo": "Piogge e temporali al Centro-Nord con l'arrivo di aria più fresca: anche sul Mugello una giornata di maltempo autunnale e temperature in calo.",
+     "fonte": "Meteo.it",
+     "url": "https://www.meteo.it/meteo/borgo-san-lorenzo-oggi-48004",
+     "foto": "fulmine"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Settembre 2026: +0,61 °C nella bassa troposfera",
+     "testo": "L'anomalia globale della bassa troposfera misurata dai satelliti (serie UAH v6.1) a settembre è stata di +0,61 °C rispetto alla media 1991-2020.",
+     "fonte": "UAH via Watts Up With That",
+     "url": "https://wattsupwiththat.com/2026/10/03/uah-v6-1-global-temperature-update-for-september-2026-0-61-deg-c/"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Giovedì 8 ottobre: maltempo autunnale con piogge e temporali, temperature in calo con massime fra 13 e 19 °C.",
+     "fonte": "Meteo.it"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1871: nella stessa notte il grande incendio di Chicago e quello di Peshtigo, nel Wisconsin, il più mortale della storia degli Stati Uniti, alimentati da vento forte dopo un'estate di siccità.",
+     "fonte": "NWS"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Il vulcano Reventador, in Ecuador, nelle ultime settimane ha prodotto fra 74 e 97 esplosioni al giorno.",
+     "fonte": "Smithsonian GVP"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:21 e tramonta alle 18:45, circa 11 ore e 24 minuti di luce, 3 minuti meno di ieri. La Luna è una falce sottilissima, illuminata a meno del 5%; la Luna nuova è sabato 10 ottobre alle 17:50. L'ora legale resta fino al 25 ottobre."
+    }
+   ]
+  },
   {
    "data": "2026-10-07",
    "apertura": {
@@ -82,7 +241,7 @@
     },
     {
      "tipo": "almanacco",
-     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:22 e tramonta alle 18:41, circa 11 ore e 19 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata all'11%; la Luna nuova è sabato 10 ottobre alle 17:50."
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:19 e tramonta alle 18:47, circa 11 ore e 27 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata all'11%; la Luna nuova è sabato 10 ottobre alle 17:50."
     }
    ]
   },
@@ -149,7 +308,7 @@
     },
     {
      "tipo": "almanacco",
-     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:21 e tramonta alle 18:43, circa 11 ore e 22 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata al 19%; la Luna nuova è sabato 10 ottobre alle 17:50."
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:18 e tramonta alle 18:48, circa 11 ore e 30 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata al 19%; la Luna nuova è sabato 10 ottobre alle 17:50."
     }
    ]
   },
@@ -225,7 +384,7 @@
     },
     {
      "tipo": "almanacco",
-     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:19 e tramonta alle 18:45, circa 11 ore e 25 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata al 29%; la Luna nuova è sabato 10 ottobre alle 17:50."
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:17 e tramonta alle 18:50, circa 11 ore e 33 minuti di luce, 3 minuti meno di ieri. La Luna è una falce calante illuminata al 29%; la Luna nuova è sabato 10 ottobre alle 17:50."
     }
    ]
   },
