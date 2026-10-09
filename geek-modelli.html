@@ -88,10 +88,21 @@
     </section>
 
     <section>
-      <div class="sh"><h2>Chi ha vinto ieri?</h2><span class="src" id="ieri-src">previsione del giorno prima · stazione CFR Borgo S. Lorenzo</span></div>
+      <div class="sh"><h2>Chi ha vinto ieri? La temperatura</h2><span class="src" id="ieri-src">previsione del giorno prima · stazione CFR Borgo S. Lorenzo</span></div>
       <div class="card">
         <div class="tbl"><table id="ieri"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div>
         <p class="note" id="ieri-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>La pioggia degli ultimi 30 giorni</h2><span class="src" id="pv-src">previsioni del giorno prima · pluviometri CFR del Mugello</span></div>
+      <div class="card">
+        <div class="legend" id="pv-leg"></div>
+        <div class="chart" id="pv-ch"><div class="tip"></div><div class="loading">Carico le misure dei pluviometri e le previsioni…</div></div>
+        <p class="note" id="pv-ch-note"></p>
+        <div class="tbl" style="margin-top:14px"><table id="pv-tab"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div>
+        <p class="note" id="pv-note"></p>
       </div>
     </section>
 
@@ -101,8 +112,9 @@
         <ul class="note">
           <li><b>Modelli numerici:</b> previsioni orarie da <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> per Borgo San Lorenzo (43,958 N · 11,391 E): ECMWF IFS 0,25°, GFS, ICON, UKMO, Météo-France e GEM, ognuno nella sua combinazione «seamless» (il modello locale ad alta risoluzione nei primi giorni, poi quello globale). Si aggiornano ogni volta che apri la pagina.</li>
           <li><b>WeatherNext:</b> le previsioni giornaliere di Google WeatherNext usate nella pagina delle previsioni del sito (<code>data/previsioni.json</code>); quelle del giorno prima vengono dall'archivio della <a href="geek-verifica-modello.html">verifica del modello</a>.</li>
-          <li><b>Verifica:</b> la previsione emessa il giorno prima (Open-Meteo «Previous Runs») confrontata con la massima e la minima di ieri della stazione del Centro Funzionale di Borgo San Lorenzo (<code>data/termo.json</code>). La pioggia non si verifica qui: un solo pluviometro non basta a giudicare un modello.</li>
-          <li><b>Limiti:</b> un giorno solo non dice chi è il modello migliore: per farsi un'idea servono settimane di confronti. Le celle dei modelli sono grandi (da 2 a 25 km) e la stazione è in fondovalle, dove di notte l'aria fredda ristagna.</li>
+          <li><b>Verifica:</b> la previsione emessa il giorno prima (Open-Meteo «Previous Runs») confrontata con la massima e la minima di ieri della stazione del Centro Funzionale di Borgo San Lorenzo (<code>data/termo.json</code>).</li>
+          <li><b>Pioggia:</b> per ogni pluviometro del Centro Funzionale nel Mugello (<code>data/verifica/pluvio-mugello.json</code>, aggiornato dall'Action) la pioggia di ogni giorno è confrontata con quella prevista il giorno prima da ciascun modello nello stesso punto. Un giorno è «piovoso» da 1 mm in su. Sono escluse le stazioni che nel periodo hanno misurato meno del 40% della mediana delle altre (pluviometro probabilmente bloccato). I dati del CFR sono provvisori.</li>
+          <li><b>Limiti:</b> un giorno solo non dice chi è il modello migliore: per farsi un'idea servono settimane di confronti. Le celle dei modelli sono grandi (da 2 a 25 km) e la stazione è in fondovalle, dove di notte l'aria fredda ristagna. Un temporale può scaricare 30 mm su un pluviometro e niente su quello accanto: un modello che lo prevede spostato di pochi chilometri risulta sbagliato due volte.</li>
         </ul>
       </div>
     </section>
@@ -239,6 +251,91 @@
       (wn?"":" WeatherNext non compare perché per ieri manca la sua previsione nell'archivio.")+
       (prev&&prev.hourly?"":" I modelli numerici non compaiono perché Open-Meteo non è raggiungibile in questo momento.");
   }).catch(()=>{$("ieri").innerHTML="<tbody><tr><td>Verifica non disponibile in questo momento.</td></tr></tbody>";});
+
+  // ---------- la pioggia degli ultimi 30 giorni
+  const WN_STAZ={"Borgo San Lorenzo":"TOS01000999","Dicomano":"TOS01001029","San Piero a Sieve":"TOS01004621","Vicchio":"TOS01001011","Barberino di Mugello":"TOS01000926"};
+  get("./data/verifica/pluvio-mugello.json?t="+Date.now()).then(pl=>{
+    let st=pl.stazioni.filter(x=>Object.keys(x.giorni).length>=5);
+    const tot=x=>Object.values(x.giorni).reduce((a,b)=>a+b,0);
+    const mediana=a=>{const z=[...a].sort((p,q)=>p-q);return z.length?z[Math.floor(z.length/2)]:0;};
+    const medTot=mediana(st.map(tot)), esclusi=st.filter(x=>tot(x)<0.4*medTot);
+    st=st.filter(x=>tot(x)>=0.4*medTot);
+    const q=qs({latitude:st.map(x=>x.lat).join(","),longitude:st.map(x=>x.lon).join(","),hourly:"precipitation_previous_day1",models:ids,timezone:"Europe/Rome",past_days:31,forecast_days:1});
+    return Promise.all([get("https://previous-runs-api.open-meteo.com/v1/forecast?"+q).catch(()=>null),get("./data/verifica/log.json").catch(()=>null)])
+      .then(([om,log])=>verificaPioggia(pl,st,esclusi,om,log));
+  }).catch(e=>{$("pv-ch").querySelector(".loading").textContent="Misure dei pluviometri non disponibili ("+e.message+").";$("pv-tab").innerHTML="";});
+
+  function verificaPioggia(pl,st,esclusi,om,log){
+    const giorni=[...new Set(st.flatMap(x=>Object.keys(x.giorni)))].sort();
+    // previsto[modello][stazione][giorno] = mm
+    const P=MOD.map(()=>st.map(()=>({})));
+    if(om){const arr=Array.isArray(om)?om:[om];
+      arr.forEach((o,si)=>{const h=o.hourly; if(!h) return;
+        MOD.forEach(([id],mi)=>{const v=h["precipitation_previous_day1_"+id]; if(!v) return; const acc={},n={};
+          h.time.forEach((t,j)=>{if(v[j]==null)return; const g=t.slice(0,10); acc[g]=(acc[g]||0)+v[j]; n[g]=(n[g]||0)+1;});
+          Object.keys(acc).forEach(g=>{if(n[g]>=20) P[mi][si][g]=acc[g];});});});}
+    const righe=[];
+    MOD.forEach(([id,nome,c],mi)=>{const cp=[];
+      st.forEach((x,si)=>giorni.forEach(g=>{const o=x.giorni[g],f=P[mi][si][g]; if(o!=null&&f!=null) cp.push([f,o,g]);}));
+      if(cp.length>=st.length*3) righe.push(punteggi(nome,c,cp));});
+    // WeatherNext: solo i comuni che hanno un pluviometro, dall'archivio della verifica
+    const wn=log&&log.mod&&log.mod.wn; if(wn){const cp=[];
+      Object.entries(WN_STAZ).forEach(([com,sid])=>{const x=st.find(y=>y.id===sid), arc=wn[com]; if(!x||!arc) return;
+        giorni.forEach(g=>{const r=arc[g]&&arc[g]["1"], o=x.giorni[g]; if(r&&r[3]!=null&&o!=null) cp.push([r[3],o,g]);});});
+      if(cp.length>=5) righe.push(punteggi(WN[1],WN[2],cp));}
+    // grafico: mediana osservata del Mugello e media prevista da ogni modello
+    const oss=giorni.map(g=>{const v=st.map(x=>x.giorni[g]).filter(v=>v!=null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;});
+    const prev=MOD.map((m,mi)=>giorni.map(g=>{const v=st.map((x,si)=>P[mi][si][g]).filter(v=>v!=null);return v.length>=st.length/2?v.reduce((a,b)=>a+b,0)/v.length:null;}));
+    graficoPioggia(giorni,oss,prev);
+    const dm=g=>{const t=new Date(g+"T12:00:00");return t.getDate()+" "+["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"][t.getMonth()];};
+    $("pv-src").textContent=`${st.length} pluviometri CFR · ${dm(giorni[0])} – ${dm(giorni[giorni.length-1])}`;
+    if(!righe.length){$("pv-tab").innerHTML="<tbody><tr><td>Le previsioni del giorno prima non sono raggiungibili in questo momento.</td></tr></tbody>";return;}
+    // il «migliore» si sceglie solo fra chi ha almeno metà dei confronti del più verificato
+    const nMax=Math.max(...righe.map(r=>r.n)); righe.forEach(r=>r.pieno=r.n>=nMax/2);
+    righe.sort((a,b)=>(b.pieno-a.pieno)||(a.mae-b.mae));
+    $("pv-tab").innerHTML="<thead><tr><th>Modello</th><th>Errore medio al giorno</th><th>Pioggia totale prevista</th><th>Giorni azzeccati</th><th>Giorni da 10 mm presi</th><th>Confronti</th></tr></thead><tbody>"+
+      righe.map((r,i)=>{const top=i===0&&r.pieno&&righe.filter(x=>x.pieno).length>1;
+        return `<tr><td${top?' class="best"':""}><i class="sw" style="background:var(${r.c})"></i>${r.nome}${top?'<span class="badge">MIGLIORE</span>':""}</td>`+
+        `<td>${fmt(r.mae,1)} mm</td><td>${fmt(r.bias,0)}% del misurato</td><td>${fmt(r.acc,0)}%</td><td>${r.nf?r.hit+" su "+r.nf:"–"}</td><td>${r.n}</td></tr>`;}).join("")+"</tbody>";
+    $("pv-note").innerHTML="«Errore medio»: di quanti mm sbaglia in media la pioggia di un giorno su un pluviometro. «Pioggia totale prevista»: sotto 100% il modello è stato troppo asciutto, sopra troppo piovoso. «Giorni azzeccati»: quante volte ha detto giusto fra giorno piovoso (≥1 mm) e asciutto. «Giorni da 10 mm presi»: dei giorni in cui un pluviometro ha misurato almeno 10 mm, quanti il modello li aveva previsti sopra i 5 mm."+
+      (righe.some(r=>r.nome===WN[1])?" WeatherNext è verificato solo sui comuni con un pluviometro e dai giorni in cui c'è il suo archivio, quindi su meno confronti e non entra nella scelta del migliore finché l'archivio non cresce.":"")+
+      (esclusi.length?` Esclusi perché hanno misurato molto meno degli altri: ${esclusi.map(x=>x.nome).join(", ")}.`:"");
+  }
+
+  function punteggi(nome,c,cp){
+    let ae=0,sf=0,so=0,ok=0,nf=0,hit=0;
+    cp.forEach(([f,o])=>{ae+=Math.abs(f-o); sf+=f; so+=o; if((f>=1)===(o>=1)) ok++; if(o>=10){nf++; if(f>=5) hit++;}});
+    return {nome,c,n:cp.length,mae:ae/cp.length,bias:so>0?sf/so*100:null,acc:ok/cp.length*100,nf,hit};
+  }
+
+  function graficoPioggia(giorni,oss,prev){
+    const box=$("pv-ch"), tip=box.querySelector(".tip");
+    const ridisegna=()=>{
+      box.querySelectorAll("svg,.loading").forEach(x=>x.remove());
+      const W=Math.max(300,box.clientWidth), sm=W<600, H=sm?220:260, ml=40, mr=10, top=10, bot=28, hp=H-top-bot, n=giorni.length, bw=(W-ml-mr)/n, X=i=>ml+i*bw+bw/2;
+      const att=MOD.map((m,i)=>i).filter(i=>prev[i].some(v=>v!=null));
+      let hi=Math.max(5,...oss.filter(v=>v!=null),...att.flatMap(i=>prev[i].filter(v=>v!=null)));
+      const passo=hi>40?10:hi>15?5:2; hi=Math.ceil(hi/passo)*passo; const Y=v=>top+hp-v/hi*hp;
+      const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Pioggia media misurata dai pluviometri del Mugello e prevista il giorno prima dai modelli"});
+      for(let v=0;v<=hi;v+=passo){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},v+" mm"));}
+      oss.forEach((v,i)=>{if(v!=null&&v>0.05){const w=Math.max(2,bw*.7); svg.appendChild(el("rect",{x:X(i)-w/2,y:Y(v),width:w,height:Math.max(1,top+hp-Y(v)),rx:Math.min(3,w/3),fill:"var(--ink-faint)",opacity:.35}));}});
+      giorni.forEach((g,i)=>{const d=+g.slice(8,10); if((sm?d%7:d%4)===1||i===0) svg.appendChild(el("text",{x:X(i),y:H-8,"text-anchor":"middle",class:"axl"},sm?String(d):glab(g)));});
+      att.forEach(i=>{let d="",pen=false; prev[i].forEach((v,k)=>{if(v==null){pen=false;return;} d+=(pen?"L":"M")+X(k).toFixed(1)+" "+Y(v).toFixed(1); pen=true;});
+        svg.appendChild(el("path",{d,class:"ln",stroke:`var(${MOD[i][2]})`,"stroke-width":1.6}));});
+      const cr=el("line",{y1:top,y2:top+hp,class:"cross",opacity:0}); svg.appendChild(cr);
+      const hit=el("rect",{x:ml,y:top,width:W-ml-mr,height:hp,fill:"transparent"}); svg.appendChild(hit);
+      hit.addEventListener("pointermove",ev=>{const r=svg.getBoundingClientRect(); const k=Math.max(0,Math.min(n-1,Math.floor(((ev.clientX-r.left)/r.width*W-ml)/bw)));
+        cr.setAttribute("x1",X(k));cr.setAttribute("x2",X(k));cr.setAttribute("opacity",1);
+        tip.innerHTML=`<b>${glab(giorni[k])}</b><br><i style="background:var(--ink-faint)"></i>misurata: <b>${fmt(oss[k],1)} mm</b><br>`+
+          att.map(i=>[i,prev[i][k]]).filter(x=>x[1]!=null).sort((a,b)=>b[1]-a[1]).map(([i,v])=>`<i style="background:var(${MOD[i][2]})"></i>${MOD[i][1]}: ${fmt(v,1)} mm`).join("<br>");
+        const px=X(k)/W*r.width; tip.style.left=(px>r.width/2? px-tip.offsetWidth-12 : px+12)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
+      hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;cr.setAttribute("opacity",0);});
+      box.insertBefore(svg,tip);
+      $("pv-leg").innerHTML=`<span><i style="background:var(--ink-faint);opacity:.5;height:10px;vertical-align:-1px"></i>pioggia misurata (media dei pluviometri)</span>`+att.map(i=>`<span><i style="background:var(${MOD[i][2]})"></i>${MOD[i][1]}</span>`).join("");
+      $("pv-ch-note").textContent="Le barre sono la pioggia media misurata ogni giorno dai pluviometri del Mugello; le linee la media di quella prevista il giorno prima dai modelli negli stessi punti.";
+    };
+    ridisegna(); let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(ridisegna,150);});
+  }
 })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
