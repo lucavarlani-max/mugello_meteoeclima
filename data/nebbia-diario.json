@@ -1,0 +1,50 @@
+{
+ "nota": "Diario della nebbia del Mugello (scripts/fetch_nebbia_alba.py). \"nebbia\": true = nebbia o banchi in valle nella foto, false = visibilità buona, \"incerto\" = foto non giudicabile, null = da classificare.",
+ "webcam": {
+  "nome": "Lago di Bilancino (252 m)",
+  "fonte": "Meteo-Project",
+  "url": "https://stazioni.meteoproject.it/webcam/lagobilancino/lagobilancino.jpg"
+ },
+ "giorni": {
+  "2026-10-10": {
+   "ora": "10:35",
+   "nebbia": null,
+   "termo_ora": "2026-10-10T09:25",
+   "tmin_borgo": 12.6,
+   "tmin_giovi": 9.0,
+   "inversione": -3.6,
+   "umidita_max": {
+    "TOS11000017": 86.0,
+    "TOS01000926": 100.0,
+    "TOS11000089": 98.0,
+    "TOS01000921": 85.0,
+    "TOS03001001": 95.0
+   },
+   "umidita_ora": {
+    "TOS11000017": 86.0,
+    "TOS01000926": 100.0,
+    "TOS11000089": 89.0,
+    "TOS01000921": 77.0,
+    "TOS03001001": 82.0
+   },
+   "vento_max": {
+    "TOS11000017": 1.7,
+    "TOS01000926": 1.5,
+    "TOS03001001": 3.9
+   },
+   "cfr_ora": "2026-10-10T09:15",
+   "previsione": {
+    "scarto_min": 0.0,
+    "vento_medio": 0.5,
+    "nuvole_medie": 55,
+    "ore_soglie": 2,
+    "ore": 13
+   },
+   "hash": "f3929bfc3bb14653",
+   "ferma": false,
+   "luce": 148.8,
+   "contrasto": 0.318,
+   "foto": "reports/nebbia/2026-10-10.jpg"
+  }
+ }
+}
