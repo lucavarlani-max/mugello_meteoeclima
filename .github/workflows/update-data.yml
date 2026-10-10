@@ -27,7 +27,7 @@ jobs:
           python-version: "3.12"
 
       - name: Dipendenze
-        run: pip install pdfplumber cryptography
+        run: pip install pdfplumber cryptography pillow
 
       - name: Aggiorna previsioni (WeatherNext / Google Weather API)
         env:
@@ -56,6 +56,10 @@ jobs:
       - name: Aggiorna umidità e vento del Mugello per la pagina della nebbia (CFR)
         continue-on-error: true
         run: python scripts/fetch_nebbia.py
+
+      - name: Diario della nebbia (foto all'alba di Bilancino, una volta al giorno fra le 7 e le 10:30)
+        continue-on-error: true
+        run: python scripts/fetch_nebbia_alba.py
 
       - name: Aggiorna carte sinottiche (ogni 6 ore)
         run: python scripts/fetch_sinottica.py
@@ -90,6 +94,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/*.json data/bsl/borgo.json data/verifica/*.json
           if [ -f data/netatmo-token.enc ]; then git add data/netatmo-token.enc; fi
+          if [ -d reports/nebbia ]; then git add reports/nebbia; fi
           if ! git diff --cached --quiet; then
             git commit -m "dati: aggiornamento automatico"
             git pull --rebase origin main || true   # se nel frattempo main è cambiato

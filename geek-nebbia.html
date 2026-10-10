@@ -259,7 +259,7 @@
     $("dia-gal").innerHTML=g.filter(r=>r.foto).slice(0,12).map(r=>{const t=new Date(r.d+"T12:00:00");
       const et=r.nebbia===true?'<span class="et si">NEBBIA</span>':r.nebbia===false?'<span class="et no">LIMPIDO</span>':r.nebbia==="incerto"?'<span class="et">INCERTO</span>':'<span class="et">DA CLASSIFICARE</span>';
       const ur=r.umidita_max&&r.umidita_max.TOS11000017, inv=r.inversione;
-      return `<figure><img loading="lazy" src="${r.foto}" alt="Lago di Bilancino, ${dl(r.d)} ore ${r.ora}"><figcaption>${et}<br><b>${GG[t.getDay()]} ${dl(r.d)}</b> · ${r.ora}${r.ferma?" · <i>webcam ferma</i>":""}<br>`+
+      return `<figure><a href="${r.foto}" target="_blank" rel="noopener"><img loading="lazy" src="${r.foto}" alt="Lago di Bilancino, ${dl(r.d)} ore ${r.ora}"></a><figcaption>${et}<br><b>${GG[t.getDay()]} ${dl(r.d)}</b> · ${r.ora}${r.ferma?" · <i>webcam ferma</i>":""}<br>`+
         `inversione ${inv==null?"–":sg(inv)+" °C"} · umidità max ${ur==null?"–":fmt(ur,0)+"%"}`+
         (r.previsione?`<br>previsto: scarto ${fmt(r.previsione.scarto_min,1)} °C, vento ${fmt(r.previsione.vento_medio,1)} m/s, nuvole ${fmt(r.previsione.nuvole_medie,0)}%`:"")+`</figcaption></figure>`;}).join("");
     $("dia-src").textContent=d&&d.webcam?`webcam ${d.webcam.nome} (${d.webcam.fonte}) · ogni mattina`:"webcam del lago di Bilancino · ogni mattina";
