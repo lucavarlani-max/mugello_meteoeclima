@@ -5,7 +5,7 @@ e le condizioni misurate nella notte dalle stazioni del Centro Funzionale. Serve
 inverno, l'archivio di «nebbia sì / nebbia no» con cui calibrare una probabilità di nebbia per il Mugello
 (pagina MeteoGeek geek-nebbia.html).
 
-Ogni giorno, alla prima esecuzione fra le 7 e le 10:30 (ora italiana):
+Ogni giorno, alla prima esecuzione fra l'alba (non prima delle 7) e le 10:30 (ora italiana):
   - scarica la foto della webcam, la rimpicciolisce (640 px) e la salva in reports/nebbia/AAAA-MM-GG.jpg;
     se è identica a quella del giorno prima la segna come «ferma» (webcam bloccata);
   - calcola due misure grezze dell'immagine, luminosità media e contrasto (deviazione standard / media della
@@ -15,7 +15,9 @@ Ogni giorno, alla prima esecuzione fra le 7 e le 10:30 (ora italiana):
     di fondovalle e di collina;
   - registra la previsione che Open-Meteo aveva emesso il giorno prima per la notte appena finita (dalle 20 alle 8,
     «Previous Runs», modello best match): scarto minimo fra temperatura e punto di rugiada, vento medio a 10 m,
-    nuvolosità media, ore con tutte e tre le soglie pratiche. Sono le grandezze che la pagina userà per la probabilità;
+    nuvolosità media, ore con tutte e tre le soglie pratiche; e, nelle ore dell'alba (da 3 ore prima a 1 dopo il
+    sorgere del sole, quando la nebbia è più probabile), scarto minimo e vento medio, più le nuvole medie e alte della
+    notte e le nubi basse del modello all'alba. Sono le grandezze che la pagina userà per la probabilità;
   - aggiunge il giorno a data/nebbia-diario.json con "nebbia": null.
 Il campo "nebbia" si compila guardando la foto: true (nebbia o banchi in valle), false (visibilità buona),
 "incerto" (foto buia, controluce, gocce sull'obiettivo...). Solo i giorni con true/false entrano nella calibrazione.
@@ -33,6 +35,7 @@ NEBBIA = os.path.join(HERE, "data", "nebbia.json")
 ROMA = ZoneInfo("Europe/Rome")
 WEBCAM = {"nome": "Lago di Bilancino (252 m)", "fonte": "Meteo-Project",
           "url": "https://stazioni.meteoproject.it/webcam/lagobilancino/lagobilancino.jpg"}
+LAT, LON = 43.958, 11.391           # Borgo S. Lorenzo, fondovalle
 VALLE, MONTE = "TOS01000999", "TOS03001001"
 UMIDITA = ["TOS11000017", "TOS01000926", "TOS11000089", "TOS01000921", "TOS03001001"]   # dal fondovalle alla collina
 VENTO = ["TOS11000017", "TOS01000926", "TOS03001001"]
@@ -76,26 +79,92 @@ def condizioni():
     return out
 
 
+def alba(giorno):
+    """Ora del sorgere del sole a Borgo S. Lorenzo (ora di Roma), algoritmo NOAA semplificato (errore di 1-2 minuti)."""
+    import math
+    d = dt.date.fromisoformat(giorno) if isinstance(giorno, str) else giorno
+    g = 2 * math.pi / 365 * (d.timetuple().tm_yday - 1)
+    eqt = 229.18 * (0.000075 + 0.001868 * math.cos(g) - 0.032077 * math.sin(g)
+                    - 0.014615 * math.cos(2 * g) - 0.040849 * math.sin(2 * g))
+    dec = (0.006918 - 0.399912 * math.cos(g) + 0.070257 * math.sin(g) - 0.006758 * math.cos(2 * g)
+           + 0.000907 * math.sin(2 * g) - 0.002697 * math.cos(3 * g) + 0.00148 * math.sin(3 * g))
+    lat = math.radians(LAT)
+    ha = math.degrees(math.acos(math.cos(math.radians(90.833)) / (math.cos(lat) * math.cos(dec)) - math.tan(lat) * math.tan(dec)))
+    utc = dt.datetime(d.year, d.month, d.day, tzinfo=dt.timezone.utc) + dt.timedelta(minutes=720 - 4 * (LON + ha) - eqt)
+    return utc.astimezone(ROMA)
+
+
+def ore_alba(sorge):
+    """Le ore attorno all'alba, quando la nebbia da irraggiamento è più probabile: da 3 ore prima a 1 ora dopo."""
+    h = sorge.hour
+    return [f"{h + k:02d}" for k in range(-3, 2)]
+
+
 def previsione_notte(oggi):
-    """Previsione emessa il giorno prima per la notte da ieri alle 20 a oggi alle 8 (Open-Meteo Previous Runs)."""
+    """Previsione emessa il giorno prima per la notte da ieri alle 20 a oggi alle 8 (Open-Meteo Previous Runs).
+    Oltre alle grandezze sull'intera notte registra quelle delle ore dell'alba e separa le nuvole per strato:
+    le nuvole medie e alte frenano il raffreddamento notturno, mentre le «nubi basse» del modello al mattino sono
+    spesso la nebbia stessa (o lo strato basso) che il modello vede."""
     v = ["temperature_2m", "dew_point_2m", "wind_speed_10m", "cloud_cover"]
-    q = ("latitude=43.958&longitude=11.391&timezone=Europe%2FRome&past_days=1&forecast_days=1&wind_speed_unit=ms"
-         "&hourly=" + ",".join(x + "_previous_day1" for x in v))
-    h = json.loads(scarica("https://previous-runs-api.open-meteo.com/v1/forecast?" + q))["hourly"]
+    extra = ["cloud_cover_low", "cloud_cover_mid", "cloud_cover_high"]
+    giorni_fa = (dt.datetime.now(ROMA).date() - dt.date.fromisoformat(oggi)).days
+    q = (f"latitude={LAT}&longitude={LON}&timezone=Europe%2FRome&past_days={giorni_fa + 1}&forecast_days=1"
+         "&wind_speed_unit=ms&hourly=")
+    url = "https://previous-runs-api.open-meteo.com/v1/forecast?" + q
+    h = json.loads(scarica(url + ",".join(x + "_previous_day1" for x in v)))["hourly"]
+    try:
+        h.update(json.loads(scarica(url + ",".join(x + "_previous_day1" for x in extra)))["hourly"])
+    except Exception as e:
+        print("nebbia-alba: nuvole per strato non lette", e, file=sys.stderr)
     ieri = (dt.date.fromisoformat(oggi) - dt.timedelta(days=1)).isoformat()
-    ore = [i for i, t in enumerate(h["time"]) if (t[:10] == ieri and t[11:13] >= "20") or (t[:10] == oggi and t[11:13] <= "08")]
-    righe = []
-    for i in ore:
-        t, td, w, c = (h[x + "_previous_day1"][i] for x in v)
-        if None not in (t, td, w, c):
-            righe.append((max(0.0, t - td), w, c))
-    if len(righe) < 10:
-        raise ValueError(f"solo {len(righe)} ore disponibili")
-    return {"scarto_min": round(min(r[0] for r in righe), 1),
-            "vento_medio": round(sum(r[1] for r in righe) / len(righe), 1),
-            "nuvole_medie": round(sum(r[2] for r in righe) / len(righe)),
-            "ore_soglie": sum(1 for r in righe if r[0] <= 1 and r[1] <= 2 and r[2] <= 30),
-            "ore": len(righe)}
+    sorge = alba(oggi)
+    alb = ore_alba(sorge)
+    val = lambda x, i: (h.get(x + "_previous_day1") or [None] * len(h["time"]))[i]
+    notte, mattina = [], []
+    for i, t in enumerate(h["time"]):
+        if not ((t[:10] == ieri and t[11:13] >= "20") or (t[:10] == oggi and t[11:13] <= "08")):
+            continue
+        T, td, w, c = (val(x, i) for x in v)
+        if None in (T, td, w, c):
+            continue
+        lo, mi, hi = (val(x, i) for x in extra)
+        r = {"s": max(0.0, T - td), "w": w, "c": c, "lo": lo,
+             "mh": None if mi is None or hi is None else max(mi, hi), "alba": t[:10] == oggi and t[11:13] in alb,
+             "prima": t[:10] == ieri or t[11:13] <= alb[-2]}
+        notte.append(r)
+        if r["alba"]:
+            mattina.append(r)
+    if len(notte) < 10:
+        raise ValueError(f"solo {len(notte)} ore disponibili")
+    media = lambda a: round(sum(a) / len(a), 1) if a else None
+    out = {"scarto_min": round(min(r["s"] for r in notte), 1),
+           "vento_medio": media([r["w"] for r in notte]),
+           "nuvole_medie": round(sum(r["c"] for r in notte) / len(notte)),
+           "ore_soglie": sum(1 for r in notte if r["s"] <= 1 and r["w"] <= 2 and r["c"] <= 30),
+           "ore": len(notte), "alba": sorge.strftime("%H:%M")}
+    if mattina:
+        out["scarto_alba"] = round(min(r["s"] for r in mattina), 1)
+        out["vento_alba"] = media([r["w"] for r in mattina])
+    mh = [r["mh"] for r in notte if r["prima"] and r["mh"] is not None]
+    if mh:
+        out["nuvole_alte"] = round(sum(mh) / len(mh))           # medie e alte, dalle 20 all'alba
+    lo = [r["lo"] for r in mattina if r["lo"] is not None]
+    if lo:
+        out["nubi_basse_alba"] = round(max(lo))                 # massimo nelle ore dell'alba
+    return out
+
+
+def completa(giorni, oggi):
+    """Rifà la previsione dei giorni già archiviati che non hanno ancora le grandezze dell'alba (fino a 60 giorni fa)."""
+    limite = (dt.date.fromisoformat(oggi) - dt.timedelta(days=60)).isoformat()
+    for d, r in giorni.items():
+        p = r.get("previsione") or {}
+        if d < oggi and d >= limite and "scarto_alba" not in p:
+            try:
+                r["previsione"] = previsione_notte(d)
+                print(f"nebbia-alba: previsione del {d} completata")
+            except Exception as e:
+                print(f"nebbia-alba: previsione del {d} non completata", e, file=sys.stderr)
 
 
 def main():
@@ -108,11 +177,19 @@ def main():
                  "\"incerto\" = foto non giudicabile, null = da classificare.")
     D.setdefault("webcam", WEBCAM)
     giorni = D.setdefault("giorni", {})
-    finestra = dt.time(7, 0) <= ora.time() <= dt.time(10, 30)
+    completa(giorni, oggi)
+    # i veli di nebbia sottili si dissolvono poco dopo l'alba: la foto si scatta il prima possibile con la luce,
+    # da 10 minuti dopo il sorgere del sole (e non prima delle 7) fino alle 10:30
+    sorge = alba(oggi)
+    inizio = max(dt.time(7, 0), (sorge + dt.timedelta(minutes=10)).time())
+    finestra = inizio <= ora.time() <= dt.time(10, 30)
     if not forza and (not finestra or (oggi in giorni and giorni[oggi].get("foto"))):
         print(f"nebbia-alba: niente da fare ({'fuori finestra' if not finestra else 'giorno già archiviato'})")
+        with open(DIARIO, "w", encoding="utf-8") as f:
+            json.dump(D, f, ensure_ascii=False, indent=1)
         return
-    rec = {"ora": ora.strftime("%H:%M"), "nebbia": giorni.get(oggi, {}).get("nebbia")}
+    rec = {"ora": ora.strftime("%H:%M"), "dopo_alba": round((ora - sorge).total_seconds() / 60),
+           "nebbia": giorni.get(oggi, {}).get("nebbia")}
     rec.update(condizioni())
     try:
         rec["previsione"] = previsione_notte(oggi)
