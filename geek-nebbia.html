@@ -48,6 +48,7 @@
   .cond{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;white-space:nowrap}
   .cond b{font-family:var(--mono);font-size:11px;border-radius:999px;padding:1px 7px;border:1px solid var(--line)}
   .cond b.si{background:var(--pine);border-color:var(--pine);color:#fff}
+  h3.sub{margin:22px 0 8px;font-size:15px}
   .phys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
   @media (max-width:1100px){ .phys{grid-template-columns:repeat(2,minmax(0,1fr))} }
   .phys div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px}
@@ -108,15 +109,19 @@
       <div class="card">
         <div class="tbl"><table id="fc"><tbody><tr><td class="loading">Carico la previsione…</td></tr></tbody></table></div>
         <p class="note">La nebbia da irraggiamento è più probabile all'alba, il momento più freddo della notte, e i veli sottili si dissolvono poco dopo. Per questo scarto e vento sono valutati nelle «ore dell'alba», da 3 ore prima a 1 ora dopo il sorgere del sole: lo scarto più piccolo fra temperatura e punto di rugiada (0 = aria satura) e il vento medio a 10 m. Le nuvole sono separate per strato. Quelle medie e alte, mediate dalle 20 all'alba, sono quelle che frenano il raffreddamento. Le nubi basse del modello all'alba non frenano la nebbia: spesso <em>sono</em> la nebbia o lo strato basso che il modello vede, per questo non hanno un pallino. Contarle insieme alle altre, come nella copertura totale, farebbe sembrare «nuvolosa» proprio una notte di nebbia. I pallini dicono se la notte rientra nelle soglie pratiche usate dai previsori per la nebbia da irraggiamento: scarto fino a 1 °C, vento fino a 2 m/s, nuvole medie e alte fino al 30%. Le soglie non sono calibrate sul Mugello e non danno una probabilità: dicono solo se gli ingredienti ci sono. Nubi basse e visibilità minima sono calcolate dal modello e sulla nebbia di valle sono poco affidabili. Se la nebbia si forma sotto zero, le goccioline gelano su alberi ed erba: dopo diverse ore nella nebbia gelata si deposita la galaverna. Le notti si fermano a 72 ore: per un fenomeno così locale, oltre questo limite la previsione non è affidabile. Finestra dell'alba, nubi basse come segnale di nebbia del modello, limite delle 72 ore e galaverna seguono anche la <a href="https://viewfindr.net/it/nebbia/" target="_blank" rel="noopener">guida alla nebbia di VIEWFINDR</a>. La colonna «Probabilità di nebbia» compare solo quando il diario della nebbia (qui sotto) ha abbastanza mattine classificate e il modello calibrato si dimostra migliore della semplice frequenza.</p>
+        <h3 class="sub">Altri parametri utili</h3>
+        <div class="tbl"><table id="fc2"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div>
+        <p class="note"><b>Punto di rugiada</b>: la temperatura a cui l'aria si satura. Più è basso, più l'aria è secca e più il suolo deve raffreddarsi per formare la nebbia. <b>Crossover</b>: la minima della notte meno il punto di rugiada delle 15 del giorno prima (metodo di Craddock e Pritchard, usato dai previsori aeronautici). Se è zero o negativo, nella notte l'aria vicino al suolo arriva a saturazione. <b>Pioggia</b> e <b>umidità del suolo</b>: un terreno bagnato evapora durante la notte e aggiunge umidità proprio nello strato più basso. <b>Pressione</b> alta: tempo anticiclonico, aria ferma. <b>Inversione a 850 hPa</b>: temperatura a circa 1500 m meno quella al suolo; se è positiva c'è un coperchio d'aria calda sopra la valle. <b>Strato limite</b>: lo spessore dell'aria che si rimescola; poche decine di metri all'alba vuol dire aria ferma. Sono tutti valori del modello per il punto di Borgo S. Lorenzo, e solo il crossover ha una soglia riconosciuta. Gli altri entrano nella calibrazione solo se migliorano davvero la previsione.</p>
       </div>
     </section>
 
     <section>
-      <div class="sh"><h2>Il diario della nebbia</h2><span class="src" id="dia-src">webcam del lago di Bilancino · ogni mattina</span></div>
+      <div class="sh"><h2>Il diario della nebbia</h2><span class="src" id="dia-src">fonte: <a href="https://www.ilfilo.net/stazione-meteo-del-lago-di-bilancino/" target="_blank" rel="noopener">webcam di Bilancino del Filo</a> · ogni mattina</span></div>
       <div class="card">
         <p class="note" style="margin-top:0">Per dare una probabilità di nebbia calibrata sul Mugello servono mattine in cui sappiamo se la nebbia c'era. Nessuno lo registra, quindi il sito ha iniziato a farlo. Ogni mattina, appena c'è luce dopo l'alba, salva una foto della webcam sul lago di Bilancino, in fondovalle, insieme alle misure della notte e alla previsione che il modello aveva fatto il giorno prima. Ogni foto viene poi classificata a vista: nebbia sì o no.</p>
         <div class="tiles" id="dia-tiles"></div>
         <div class="gal" id="dia-gal"></div>
+        <p class="note">Foto: <a href="https://www.ilfilo.net/stazione-meteo-del-lago-di-bilancino/" target="_blank" rel="noopener">webcam di Bilancino del Filo</a>, lago di Bilancino (252 m).</p>
         <p class="note" id="dia-note"></p>
       </div>
     </section>
@@ -179,10 +184,12 @@
     const ns=N&&N.stazioni||{};
     const dT=v&&m?m.t-v.t:null, dMin=v&&m&&v.min!=null&&m.min!=null?m.min-v.min:null;
     const urV=ns["TOS11000017"]&&ns["TOS11000017"].ur, vtV=ns["TOS11000017"]&&ns["TOS11000017"].vento;
+    // punto di rugiada misurato (formula di Magnus) da temperatura e umidità della stessa stazione
+    const b2=(T.stazioni||[]).find(s=>s.id==="TOS11000017"), dpV=b2&&b2.t!=null&&urV&&urV.v>0?(g=>243.12*g/(17.62-g))(Math.log(urV.v/100)+17.62*b2.t/(243.12+b2.t)):null;
     $("now-tiles").innerHTML=
       `<div class="tile"><span>Adesso · Monte Giovi 960 m / Borgo 196 m</span><b>${fmt(m&&m.t,1)}° / ${fmt(v&&v.t,1)}°</b><small>${dT==null?"":dT>0?`inversione: la montagna è ${fmt(dT,1)} °C più calda del fondovalle`:`normale: la montagna è ${fmt(-dT,1)} °C più fredda del fondovalle`}</small></div>`+
       `<div class="tile"><span>Minime di stanotte · Monte Giovi / Borgo</span><b>${fmt(m&&m.min,1)}° / ${fmt(v&&v.min,1)}°</b><small>${dMin==null?"":dMin>0?`inversione: in fondovalle ${fmt(dMin,1)} °C più freddo che in montagna`:`nessuna inversione: in montagna ${fmt(-dMin,1)} °C più freddo che in fondovalle`}</small></div>`+
-      `<div class="tile"><span>Umidità a Borgo S. Lorenzo 2</span><b>${urV?fmt(urV.v,0)+"%":"–"}</b><small>${urV?`massima di oggi ${fmt(urV.oggi_max,0)}% · 280 m`:"dato non disponibile"}</small></div>`+
+      `<div class="tile"><span>Umidità e rugiada · Borgo S. Lorenzo 2</span><b>${urV?fmt(urV.v,0)+"%":"–"}${dpV!=null?` · ${fmt(dpV,1)}°`:""}</b><small>${urV?(dpV!=null?`punto di rugiada ${fmt(dpV,1)} °C, scarto dalla temperatura ${fmt(b2.t-dpV,1)} °C · `:"")+`massima di oggi ${fmt(urV.oggi_max,0)}% · 280 m`:"dato non disponibile"}</small></div>`+
       `<div class="tile"><span>Vento a Borgo S. Lorenzo 2</span><b>${vtV?fmt(vtV.v,1)+" m/s":"–"}</b><small>${vtV?`raffica ${fmt(vtV.raffica,1)} m/s · ${CARD[Math.round((vtV.dir||0)/45)%8]}`:"dato non disponibile"}</small></div>`;
     $("now-src").textContent=`stazioni CFR · zona Mugello–Val di Sieve · ore ${(T.aggiornato||"").slice(11,16)}`;
     $("now-tab").innerHTML="<thead><tr><th>Stazione</th><th>Quota</th><th>Adesso</th><th>Minima</th><th>Umidità</th></tr></thead><tbody>"+
@@ -214,12 +221,20 @@
   // ---------- diario della nebbia e calibrazione
   // Una probabilità si mostra solo con abbastanza mattine classificate, e solo se batte la frequenza climatologica.
   const MIN_N=60, MIN_CLASSE=15;
-  // Grandezze previste il giorno prima. Due modelli candidati: il primo con gli ingredienti fisici (scarto e vento
-  // nelle ore dell'alba, nuvole medie e alte della notte), il secondo aggiunge le nubi basse che il modello vede all'alba.
-  // Vince quello con l'errore più basso nella verifica su giorni non usati per imparare.
+  // Grandezze previste il giorno prima. Il modello di base usa gli ingredienti fisici (scarto e vento nelle ore
+  // dell'alba, nuvole medie e alte della notte); ogni altro candidato aggiunge un solo parametro. Si tiene il candidato
+  // con l'errore più basso nella verifica su giorni non usati per imparare: pochi candidati e una variabile in più alla
+  // volta, perché con poche decine di mattine un modello con tutto insieme imparerebbe il rumore.
+  const BASE=r=>[r.scarto_alba, r.vento_alba, r.nuvole_alte==null?null:r.nuvole_alte/100];
+  const piu=(nome,g)=>({nome:"base + "+nome, f:r=>{const x=g(r); return BASE(r).concat([x==null?null:x]);}});
   const MODELLI=[
-    {nome:"scarto, vento, nuvole medie e alte", f:r=>[r.scarto_alba, r.vento_alba, r.nuvole_alte==null?null:r.nuvole_alte/100]},
-    {nome:"scarto, vento, nuvole medie e alte, nubi basse", f:r=>[r.scarto_alba, r.vento_alba, r.nuvole_alte==null?null:r.nuvole_alte/100, r.nubi_basse_alba==null?null:r.nubi_basse_alba/100]}];
+    {nome:"base (scarto, vento, nuvole medie e alte)", f:BASE},
+    piu("nubi basse", r=>r.nubi_basse_alba==null?null:r.nubi_basse_alba/100),
+    piu("punto di rugiada", r=>r.dp_alba),
+    piu("crossover", r=>r.crossover),
+    piu("pioggia delle 24 ore prima", r=>r.pioggia_24h==null?null:Math.log1p(r.pioggia_24h)),
+    piu("umidità del suolo", r=>r.suolo_alba),
+    piu("inversione a 850 hPa", r=>r.inv850_alba)];
   function logistica(X,y,lambda=0.1,iter=400){
     const m=X[0].length, mu=[], sd=[];
     for(let k=0;k<m;k++){const c=X.map(r=>r[k]); mu[k]=c.reduce((a,b)=>a+b,0)/c.length; sd[k]=Math.sqrt(c.reduce((a,b)=>a+(b-mu[k])**2,0)/c.length)||1;}
@@ -274,17 +289,20 @@
       const et=r.nebbia===true?'<span class="et si">NEBBIA</span>':r.nebbia===false?'<span class="et no">LIMPIDO</span>':r.nebbia==="incerto"?'<span class="et">INCERTO</span>':'<span class="et">DA CLASSIFICARE</span>';
       const ur=r.umidita_max&&r.umidita_max.TOS11000017, inv=r.inversione;
       return `<figure><a href="${r.foto}" target="_blank" rel="noopener"><img loading="lazy" src="${r.foto}" alt="Lago di Bilancino, ${dl(r.d)} ore ${r.ora}"></a><figcaption>${et}<br><b>${GG[t.getDay()]} ${dl(r.d)}</b> · ${r.ora}${r.dopo_alba!=null?` (${r.dopo_alba} min dopo l'alba)`:""}${r.ferma?" · <i>webcam ferma</i>":""}<br>`+
-        `inversione ${inv==null?"–":sg(inv)+" °C"} · umidità max ${ur==null?"–":fmt(ur,0)+"%"}`+
+        `inversione ${inv==null?"–":sg(inv)+" °C"} · umidità max ${ur==null?"–":fmt(ur,0)+"%"}${r.rugiada_ora!=null?` · rugiada ${fmt(r.rugiada_ora,1)} °C`:""}`+
         (r.previsione?(p=>p.scarto_alba!=null?`<br>previsto all'alba: scarto ${fmt(p.scarto_alba,1)} °C, vento ${fmt(p.vento_alba,1)} m/s`+(p.nuvole_alte!=null?`<br>nuvole medie e alte ${fmt(p.nuvole_alte,0)}% · nubi basse ${fmt(p.nubi_basse_alba,0)}%`:""):`<br>previsto: scarto ${fmt(p.scarto_min,1)} °C, vento ${fmt(p.vento_medio,1)} m/s, nuvole ${fmt(p.nuvole_medie,0)}%`)(r.previsione):"")+`</figcaption></figure>`;}).join("");
-    $("dia-src").textContent=d&&d.webcam?`webcam ${d.webcam.nome} (${d.webcam.fonte}) · ogni mattina`:"webcam del lago di Bilancino · ogni mattina";
-    $("dia-note").innerHTML=`La probabilità comparirà nella tabella delle prossime notti quando ci saranno almeno ${MIN_N} mattine classificate, con almeno ${MIN_CLASSE} di nebbia e ${MIN_CLASSE} senza. Il modello è una regressione logistica sulle grandezze previste il giorno prima: scarto temperatura–rugiada e vento nelle ore dell'alba, nuvole medie e alte della notte; una seconda versione aggiunge le nubi basse che il modello vede all'alba, e si tiene quella che sbaglia meno. Sarà mostrato solo se, verificato mattina per mattina su giorni che non ha usato per imparare, prevede meglio della semplice frequenza della nebbia. «Inversione» è la minima di Monte Giovi meno quella di Borgo; «umidità max» è il valore massimo dalla mezzanotte a Borgo S. Lorenzo 2.`;
+    $("dia-note").innerHTML=`La probabilità comparirà nella tabella delle prossime notti quando ci saranno almeno ${MIN_N} mattine classificate, con almeno ${MIN_CLASSE} di nebbia e ${MIN_CLASSE} senza. Il modello è una regressione logistica sulle grandezze previste il giorno prima. La base usa scarto temperatura–rugiada e vento nelle ore dell'alba e le nuvole medie e alte della notte. Altri sei candidati aggiungono, uno alla volta, nubi basse, punto di rugiada, crossover, pioggia del giorno prima, umidità del suolo o inversione a 850 hPa. Si tiene il candidato che sbaglia meno. Sarà mostrato solo se, verificato mattina per mattina su giorni che non ha usato per imparare, prevede meglio della semplice frequenza della nebbia. «Inversione» è la minima di Monte Giovi meno quella di Borgo; «umidità max» è il valore massimo dalla mezzanotte a Borgo S. Lorenzo 2.`;
   }
 
   // ---------- le prossime notti (Open-Meteo) + diario
   const q="latitude=43.958&longitude=11.391&hourly=temperature_2m,dew_point_2m,wind_speed_10m,cloud_cover_low,cloud_cover_mid,cloud_cover_high,visibility&daily=sunrise&wind_speed_unit=ms&timezone=Europe%2FRome&forecast_days=5";
   const diarioP=get("./data/nebbia-diario.json?t="+Date.now()).catch(()=>null).then(d=>{const c=calibra(d); diario(c,d); return c;});
-  Promise.all([get("https://api.open-meteo.com/v1/forecast?"+q),diarioP]).then(([o,cal])=>{
+  // parametri facoltativi in richieste separate: se il servizio non ne fornisce uno, la tabella principale resta
+  const qx=v=>get("https://api.open-meteo.com/v1/forecast?latitude=43.958&longitude=11.391&timezone=Europe%2FRome&forecast_days=5&hourly="+v).then(o=>o.hourly).catch(()=>({}));
+  Promise.all([get("https://api.open-meteo.com/v1/forecast?"+q),diarioP,qx("relative_humidity_2m,precipitation,soil_moisture_0_to_1cm,pressure_msl,temperature_850hPa"),qx("boundary_layer_height")]).then(([o,cal,x1,x2])=>{
     const h=o.hourly, t=h.time, notti=[], alba={};
+    [x1,x2].forEach(x=>{if(x.time&&x.time.length===t.length&&x.time[0]===t[0]) Object.keys(x).forEach(k=>{if(k!=="time") h[k]=x[k];});});
+    const hv=(k,j)=>h[k]&&h[k][j]!=null?h[k][j]:null;
     (o.daily&&o.daily.time||[]).forEach((d,i)=>alba[d]=o.daily.sunrise[i]);
     const media=a=>{const z=a.filter(v=>v!=null);return z.length?z.reduce((x,y)=>x+y,0)/z.length:null;};
     const sp=j=>h.temperature_2m[j]==null||h.dew_point_2m[j]==null?null:Math.max(0,h.temperature_2m[j]-h.dew_point_2m[j]);
@@ -301,7 +319,16 @@
       const ok=mat.filter(j=>sp(j)!=null&&sp(j)<=1&&h.wind_speed_10m[j]<=2&&mh(j)!=null&&mh(j)<=30).length;
       // nebbia sotto zero: le goccioline sopraffuse gelano su rami ed erba (galaverna)
       const gelo=notte.concat(mat.slice(-1)).filter(j=>h.temperature_2m[j]!=null&&h.temperature_2m[j]<=0&&sp(j)!=null&&sp(j)<=1).length;
-      notti.push({d,gelo,alba:alba[d2].slice(11,16),scarto_alba:sa.length?Math.min(...sa):null,vento_alba:media(mat.map(j=>h.wind_speed_10m[j])),
+      const vals=(k,jj)=>jj.map(j=>hv(k,j)).filter(v=>v!=null);
+      const i15=t.indexOf(`${d}T15:00`), tmin=Math.min(...notte.map(j=>h.temperature_2m[j]).filter(v=>v!=null));
+      const pp=[]; for(let j=iA-24;j<iA;j++) if(j>=0) pp.push(hv("precipitation",j));
+      const ex={dp_alba:media(mat.map(j=>h.dew_point_2m[j])), ur_alba:vals("relative_humidity_2m",mat).length?Math.max(...vals("relative_humidity_2m",mat)):null,
+        crossover:i15>=0&&h.dew_point_2m[i15]!=null?tmin-h.dew_point_2m[i15]:null,
+        pioggia_24h:pp.length===24&&!pp.includes(null)?pp.reduce((a,b)=>a+b,0):null,
+        suolo_alba:media(vals("soil_moisture_0_to_1cm",mat)), pressione:media(vals("pressure_msl",notte)),
+        inv850_alba:(a=>a.length?Math.max(...a):null)(mat.filter(j=>hv("temperature_850hPa",j)!=null&&h.temperature_2m[j]!=null).map(j=>h.temperature_850hPa[j]-h.temperature_2m[j])),
+        blh_alba:vals("boundary_layer_height",mat).length?Math.min(...vals("boundary_layer_height",mat)):null};
+      notti.push({d,gelo,...ex,alba:alba[d2].slice(11,16),scarto_alba:sa.length?Math.min(...sa):null,vento_alba:media(mat.map(j=>h.wind_speed_10m[j])),
         nuvole_alte:media(notte.map(mh)),nubi_basse_alba:lo.length?Math.max(...lo):null,vis:vis.length?Math.min(...vis):null,ok});}
     const pal=(c)=>`<b class="${c?"si":""}">${c?"sì":"no"}</b>`;
     $("fc").innerHTML=`<thead><tr><th>Notte</th><th>Scarto T − rugiada all'alba</th><th>Vento all'alba</th><th>Nuvole medie e alte</th><th>Ore dell'alba con tutti e tre</th><th>Nubi basse all'alba</th><th>Visibilità all'alba</th>${cal.pronto?"<th>Probabilità di nebbia</th>":""}</tr></thead><tbody>`+
@@ -310,7 +337,14 @@
         `<td><span class="cond">${fmt(n.scarto_alba,1)} °C ${pal(n.scarto_alba<=1)}</span>${n.gelo?`<br><small>${n.gelo} ${n.gelo>1?"ore":"ora"} sotto zero con aria quasi satura: se c'è nebbia, galaverna</small>`:""}</td><td><span class="cond">${fmt(n.vento_alba,1)} m/s ${pal(n.vento_alba<=2)}</span></td>`+
         `<td><span class="cond">${fmt(n.nuvole_alte,0)}% ${pal(n.nuvole_alte<=30)}</span></td><td>${n.ok} su 5</td><td>${fmt(n.nubi_basse_alba,0)}%</td><td>${n.vis==null?"–":n.vis>=10000?"oltre 10 km":fmt(n.vis/1000,1)+" km"}</td>`+
         (cal.pronto?`<td><b>${(f=>f.some(v=>v==null)?"–":(p=>p>0.95?"oltre 95%":p<0.05?"sotto 5%":fmt(p*100,0)+"%")(cal.f(f)))(cal.M.f(n))}</b></td>`:"")+"</tr>";}).join("")+"</tbody>";
-  }).catch(e=>{$("fc").innerHTML=`<tbody><tr><td>Previsione non raggiungibile in questo momento (${e.message}).</td></tr></tbody>`;});
+    const nt=n=>{const d=new Date(n.d+"T12:00:00"), d2=new Date(d.getTime()+864e5); return `${GG[d.getDay()]} ${d.getDate()} → ${GG[d2.getDay()]} ${d2.getDate()}`;};
+    const un=(v,dec,u)=>v==null?"–":fmt(v,dec)+u;
+    $("fc2").innerHTML=`<thead><tr><th>Notte</th><th>Rugiada all'alba</th><th>Umidità all'alba</th><th>Crossover</th><th>Pioggia 24 h prima</th><th>Umidità del suolo</th><th>Pressione</th><th>Inversione 850 hPa</th><th>Strato limite</th></tr></thead><tbody>`+
+      notti.map(n=>`<tr><td>${nt(n)}</td><td>${un(n.dp_alba,1," °C")}</td><td>${un(n.ur_alba,0,"%")}</td>`+
+        `<td>${n.crossover==null?"–":`<span class="cond">${(n.crossover>0?"+":"")+fmt(n.crossover,1)} °C ${pal(n.crossover<=0)}</span>`}</td>`+
+        `<td>${un(n.pioggia_24h,1," mm")}</td><td>${n.suolo_alba==null?"–":fmt(n.suolo_alba*100,0)+"%"}</td><td>${un(n.pressione,0," hPa")}</td>`+
+        `<td>${n.inv850_alba==null?"–":(n.inv850_alba>0?"+":"")+fmt(n.inv850_alba,1)+" °C"}</td><td>${un(n.blh_alba,0," m")}</td></tr>`).join("")+"</tbody>";
+  }).catch(e=>{$("fc").innerHTML=`<tbody><tr><td>Previsione non raggiungibile in questo momento (${e.message}).</td></tr></tbody>`; $("fc2").innerHTML="";});
 
   // ---------- statistica dalle minime SIR
   const leggi=s=>{const o={}; s.split("\n").slice(1).forEach(r=>{const c=r.split(";"); if(c.length>=3&&c[2]!==""&&c[2]!==undefined) o[c[0]]=parseFloat(c[2]);}); return o;};

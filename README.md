@@ -168,8 +168,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   guardando la foto. Con almeno 60 mattine classificate (15 con nebbia e 15 senza) la pagina calibra da sola una
   regressione logistica e mostra la probabilità di nebbia delle prossime notti, solo se batte la frequenza climatologica.
   Le grandezze sono quelle delle ore dell'alba (da 3 ore prima a 1 dopo il sorgere del sole: scarto temperatura–rugiada,
-  vento) più le nuvole medie e alte della notte e, in un secondo modello candidato, le nubi basse del modello all'alba;
-  si tiene il candidato con il Brier score più basso in leave-one-out.
+  vento) più le nuvole medie e alte della notte; sei candidati aggiungono uno alla volta nubi basse, punto di rugiada,
+  crossover (minima meno rugiada delle 15 del giorno prima), pioggia delle 24 ore prima, umidità del suolo o inversione
+  a 850 hPa; si tiene il candidato con il Brier score più basso in leave-one-out. Il diario registra anche umidità
+  all'alba, pressione, strato limite e il punto di rugiada misurato a Borgo S. Lorenzo 2.
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
   senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
   visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).

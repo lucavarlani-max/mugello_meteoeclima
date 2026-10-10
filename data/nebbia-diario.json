@@ -2,7 +2,8 @@
  "nota": "Diario della nebbia del Mugello (scripts/fetch_nebbia_alba.py). \"nebbia\": true = nebbia o banchi in valle nella foto, false = visibilità buona, \"incerto\" = foto non giudicabile, null = da classificare.",
  "webcam": {
   "nome": "Lago di Bilancino (252 m)",
-  "fonte": "Meteo-Project",
+  "fonte": "webcam di Bilancino del Filo",
+  "link": "https://www.ilfilo.net/stazione-meteo-del-lago-di-bilancino/",
   "url": "https://stazioni.meteoproject.it/webcam/lagobilancino/lagobilancino.jpg"
  },
  "giorni": {
