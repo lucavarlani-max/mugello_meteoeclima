@@ -161,12 +161,15 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   salvato cifrato in `data/netatmo-token.enc`. Senza segreti la scheda Netatmo mostra «in arrivo».
 - **Nebbia in valle** (`geek-nebbia.html`, MeteoGeek) — inversione termica notturna misurata (termometri CFR,
   minime SIR di Borgo S. Lorenzo e Monte Giovi), umidità e vento CFR (`scripts/fetch_nebbia.py` → `data/nebbia.json`)
-  e **diario della nebbia**: l'Action `nebbia-alba.yml` ogni mattina (7–10:30) salva la foto della webcam del lago di
+  e **diario della nebbia**: l'Action `nebbia-alba.yml` ogni mattina (appena dopo l'alba, entro le 10:30) salva la foto della webcam del lago di
   Bilancino in `reports/nebbia/AAAA-MM-GG.jpg` e le condizioni della notte, più la previsione emessa il giorno prima,
   in `data/nebbia-diario.json` (`scripts/fetch_nebbia_alba.py`). **Classificare le mattine**: in
   `data/nebbia-diario.json` mettere `"nebbia": true` (nebbia o banchi in valle), `false` (limpido) o `"incerto"`
   guardando la foto. Con almeno 60 mattine classificate (15 con nebbia e 15 senza) la pagina calibra da sola una
   regressione logistica e mostra la probabilità di nebbia delle prossime notti, solo se batte la frequenza climatologica.
+  Le grandezze sono quelle delle ore dell'alba (da 3 ore prima a 1 dopo il sorgere del sole: scarto temperatura–rugiada,
+  vento) più le nuvole medie e alte della notte e, in un secondo modello candidato, le nubi basse del modello all'alba;
+  si tiene il candidato con il Brier score più basso in leave-one-out.
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
   senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
   visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).
