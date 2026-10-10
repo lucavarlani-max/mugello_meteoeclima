@@ -34,6 +34,7 @@ TERMO = os.path.join(HERE, "data", "termo.json")
 NEBBIA = os.path.join(HERE, "data", "nebbia.json")
 ROMA = ZoneInfo("Europe/Rome")
 WEBCAM = {"nome": "Lago di Bilancino (252 m)", "fonte": "webcam di Bilancino del Filo",
+          "link": "https://www.ilfilo.net/stazione-meteo-del-lago-di-bilancino/",
           "url": "https://stazioni.meteoproject.it/webcam/lagobilancino/lagobilancino.jpg"}
 LAT, LON = 43.958, 11.391           # Borgo S. Lorenzo, fondovalle
 VALLE, MONTE = "TOS01000999", "TOS03001001"

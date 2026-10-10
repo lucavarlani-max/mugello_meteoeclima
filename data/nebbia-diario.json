@@ -3,6 +3,7 @@
  "webcam": {
   "nome": "Lago di Bilancino (252 m)",
   "fonte": "webcam di Bilancino del Filo",
+  "link": "https://www.ilfilo.net/stazione-meteo-del-lago-di-bilancino/",
   "url": "https://stazioni.meteoproject.it/webcam/lagobilancino/lagobilancino.jpg"
  },
  "giorni": {
