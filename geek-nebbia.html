@@ -178,8 +178,8 @@
     const dT=v&&m?m.t-v.t:null, dMin=v&&m&&v.min!=null&&m.min!=null?m.min-v.min:null;
     const urV=ns["TOS11000017"]&&ns["TOS11000017"].ur, vtV=ns["TOS11000017"]&&ns["TOS11000017"].vento;
     $("now-tiles").innerHTML=
-      `<div class="tile"><span>Monte Giovi − Borgo, adesso</span><b>${sg(dT)} °C</b><small>${dT==null?"":dT>0?"inversione: il fondovalle è più freddo":"normale: la montagna è più fredda"}</small></div>`+
-      `<div class="tile"><span>Monte Giovi − Borgo, minime di stanotte</span><b>${sg(dMin)} °C</b><small>${dMin==null?"":dMin>0?"stanotte l'aria fredda era in fondovalle":"stanotte niente inversione fra le due stazioni"}</small></div>`+
+      `<div class="tile"><span>Adesso · Monte Giovi 960 m / Borgo 196 m</span><b>${fmt(m&&m.t,1)}° / ${fmt(v&&v.t,1)}°</b><small>${dT==null?"":dT>0?`inversione: la montagna è ${fmt(dT,1)} °C più calda del fondovalle`:`normale: la montagna è ${fmt(-dT,1)} °C più fredda del fondovalle`}</small></div>`+
+      `<div class="tile"><span>Minime di stanotte · Monte Giovi / Borgo</span><b>${fmt(m&&m.min,1)}° / ${fmt(v&&v.min,1)}°</b><small>${dMin==null?"":dMin>0?`inversione: in fondovalle ${fmt(dMin,1)} °C più freddo che in montagna`:`nessuna inversione: in montagna ${fmt(-dMin,1)} °C più freddo che in fondovalle`}</small></div>`+
       `<div class="tile"><span>Umidità a Borgo S. Lorenzo 2</span><b>${urV?fmt(urV.v,0)+"%":"–"}</b><small>${urV?`massima di oggi ${fmt(urV.oggi_max,0)}% · 280 m`:"dato non disponibile"}</small></div>`+
       `<div class="tile"><span>Vento a Borgo S. Lorenzo 2</span><b>${vtV?fmt(vtV.v,1)+" m/s":"–"}</b><small>${vtV?`raffica ${fmt(vtV.raffica,1)} m/s · ${CARD[Math.round((vtV.dir||0)/45)%8]}`:"dato non disponibile"}</small></div>`;
     $("now-src").textContent=`stazioni CFR · zona Mugello–Val di Sieve · ore ${(T.aggiornato||"").slice(11,16)}`;
@@ -302,7 +302,7 @@
       `<div class="tile"><span>Notti confrontate</span><b>${tot.toLocaleString("it-IT")}</b><small>dal ${giorni[0].slice(0,4)} a oggi</small></div>`+
       `<div class="tile"><span>Fondovalle più freddo</span><b>${fmt(inv/tot*100,0)}%</b><small>${inv.toLocaleString("it-IT")} notti con la minima di Borgo sotto quella di Monte Giovi</small></div>`+
       `<div class="tile"><span>Inversione forte (≥ 3 °C)</span><b>${fmt(forte/tot*100,0)}%</b><small>${forte.toLocaleString("it-IT")} notti</small></div>`+
-      `<div class="tile"><span>La notte record</span><b>${sg(D[rec])} °C</b><small>${dl(rec)} ${rec.slice(0,4)}: Borgo ${fmt(V[rec],1)}°, Monte Giovi ${fmt(M[rec],1)}°</small></div>`;
+      `<div class="tile"><span>La notte record · ${dl(rec)} ${rec.slice(0,4)}</span><b>${fmt(M[rec],1)}° / ${fmt(V[rec],1)}°</b><small>minima di Monte Giovi / di Borgo: in fondovalle ${fmt(D[rec],1)} °C più freddo che in vetta</small></div>`;
     const disegna=()=>mesi(per); disegna(); resize(disegna);
     const best=per.map((p,i)=>[i,p.inv/p.n]).sort((x,y)=>y[1]-x[1]);
     $("mesi-note").textContent=`Mediana della differenza fra le minime: ${sg(med(giorni.map(g=>D[g])))} °C, contro i circa −5 °C che darebbe il calo normale con la quota. Il mese con più notti di fondovalle freddo è ${MESI_L[best[0][0]]} (${fmt(best[0][1]*100,0)}%), quello con meno ${MESI_L[best[11][0]]} (${fmt(best[11][1]*100,0)}%). D'estate le inversioni sono frequenti ma l'aria è secca: per la nebbia serve anche l'umidità.`;
