@@ -116,11 +116,12 @@
     </section>
 
     <section>
-      <div class="sh"><h2>Il diario della nebbia</h2><span class="src" id="dia-src">webcam del lago di Bilancino · ogni mattina</span></div>
+      <div class="sh"><h2>Il diario della nebbia</h2><span class="src" id="dia-src">fonte: webcam di Bilancino del Filo · ogni mattina</span></div>
       <div class="card">
         <p class="note" style="margin-top:0">Per dare una probabilità di nebbia calibrata sul Mugello servono mattine in cui sappiamo se la nebbia c'era. Nessuno lo registra, quindi il sito ha iniziato a farlo. Ogni mattina, appena c'è luce dopo l'alba, salva una foto della webcam sul lago di Bilancino, in fondovalle, insieme alle misure della notte e alla previsione che il modello aveva fatto il giorno prima. Ogni foto viene poi classificata a vista: nebbia sì o no.</p>
         <div class="tiles" id="dia-tiles"></div>
         <div class="gal" id="dia-gal"></div>
+        <p class="note">Foto: webcam di Bilancino del Filo, lago di Bilancino (252 m).</p>
         <p class="note" id="dia-note"></p>
       </div>
     </section>
@@ -290,7 +291,7 @@
       return `<figure><a href="${r.foto}" target="_blank" rel="noopener"><img loading="lazy" src="${r.foto}" alt="Lago di Bilancino, ${dl(r.d)} ore ${r.ora}"></a><figcaption>${et}<br><b>${GG[t.getDay()]} ${dl(r.d)}</b> · ${r.ora}${r.dopo_alba!=null?` (${r.dopo_alba} min dopo l'alba)`:""}${r.ferma?" · <i>webcam ferma</i>":""}<br>`+
         `inversione ${inv==null?"–":sg(inv)+" °C"} · umidità max ${ur==null?"–":fmt(ur,0)+"%"}${r.rugiada_ora!=null?` · rugiada ${fmt(r.rugiada_ora,1)} °C`:""}`+
         (r.previsione?(p=>p.scarto_alba!=null?`<br>previsto all'alba: scarto ${fmt(p.scarto_alba,1)} °C, vento ${fmt(p.vento_alba,1)} m/s`+(p.nuvole_alte!=null?`<br>nuvole medie e alte ${fmt(p.nuvole_alte,0)}% · nubi basse ${fmt(p.nubi_basse_alba,0)}%`:""):`<br>previsto: scarto ${fmt(p.scarto_min,1)} °C, vento ${fmt(p.vento_medio,1)} m/s, nuvole ${fmt(p.nuvole_medie,0)}%`)(r.previsione):"")+`</figcaption></figure>`;}).join("");
-    $("dia-src").textContent=d&&d.webcam?`webcam ${d.webcam.nome} (${d.webcam.fonte}) · ogni mattina`:"webcam del lago di Bilancino · ogni mattina";
+    $("dia-src").textContent=`fonte: ${d&&d.webcam&&d.webcam.fonte||"webcam di Bilancino del Filo"} · ogni mattina`;
     $("dia-note").innerHTML=`La probabilità comparirà nella tabella delle prossime notti quando ci saranno almeno ${MIN_N} mattine classificate, con almeno ${MIN_CLASSE} di nebbia e ${MIN_CLASSE} senza. Il modello è una regressione logistica sulle grandezze previste il giorno prima. La base usa scarto temperatura–rugiada e vento nelle ore dell'alba e le nuvole medie e alte della notte. Altri sei candidati aggiungono, uno alla volta, nubi basse, punto di rugiada, crossover, pioggia del giorno prima, umidità del suolo o inversione a 850 hPa. Si tiene il candidato che sbaglia meno. Sarà mostrato solo se, verificato mattina per mattina su giorni che non ha usato per imparare, prevede meglio della semplice frequenza della nebbia. «Inversione» è la minima di Monte Giovi meno quella di Borgo; «umidità max» è il valore massimo dalla mezzanotte a Borgo S. Lorenzo 2.`;
   }
 

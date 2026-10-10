@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Diario della nebbia del Mugello: ogni mattina una foto della webcam del lago di Bilancino (fondovalle, 252 m)
+Diario della nebbia del Mugello: ogni mattina una foto della webcam di Bilancino del Filo (lago di Bilancino, 252 m)
 e le condizioni misurate nella notte dalle stazioni del Centro Funzionale. Serve a costruire, inverno dopo
 inverno, l'archivio di «nebbia sì / nebbia no» con cui calibrare una probabilità di nebbia per il Mugello
 (pagina MeteoGeek geek-nebbia.html).
@@ -33,7 +33,7 @@ FOTO = os.path.join(HERE, "reports", "nebbia")
 TERMO = os.path.join(HERE, "data", "termo.json")
 NEBBIA = os.path.join(HERE, "data", "nebbia.json")
 ROMA = ZoneInfo("Europe/Rome")
-WEBCAM = {"nome": "Lago di Bilancino (252 m)", "fonte": "Meteo-Project",
+WEBCAM = {"nome": "Lago di Bilancino (252 m)", "fonte": "webcam di Bilancino del Filo",
           "url": "https://stazioni.meteoproject.it/webcam/lagobilancino/lagobilancino.jpg"}
 LAT, LON = 43.958, 11.391           # Borgo S. Lorenzo, fondovalle
 VALLE, MONTE = "TOS01000999", "TOS03001001"
@@ -223,7 +223,7 @@ def main():
     D.setdefault("nota", "Diario della nebbia del Mugello (scripts/fetch_nebbia_alba.py). "
                  "\"nebbia\": true = nebbia o banchi in valle nella foto, false = visibilità buona, "
                  "\"incerto\" = foto non giudicabile, null = da classificare.")
-    D.setdefault("webcam", WEBCAM)
+    D["webcam"] = WEBCAM
     giorni = D.setdefault("giorni", {})
     completa(giorni, oggi)
     # i veli di nebbia sottili si dissolvono poco dopo l'alba: la foto si scatta il prima possibile con la luce,
