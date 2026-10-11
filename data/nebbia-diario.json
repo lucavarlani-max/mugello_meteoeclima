@@ -35,11 +35,20 @@
    },
    "cfr_ora": "2026-10-10T09:15",
    "previsione": {
+    "v": 3,
     "scarto_min": 0.0,
     "vento_medio": 0.5,
     "nuvole_medie": 55,
     "ore_soglie": 2,
-    "ore": 13
+    "ore": 13,
+    "alba": "07:21",
+    "scarto_alba": 0.0,
+    "vento_alba": 0.3,
+    "dp_alba": 12.9,
+    "ur_alba": 100,
+    "pressione": 1016,
+    "crossover": -1.3,
+    "pioggia_24h": 0.0
    },
    "hash": "f3929bfc3bb14653",
    "ferma": false,
