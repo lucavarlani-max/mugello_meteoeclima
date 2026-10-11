@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v67';
+const CACHE = 'mmc-v68';
 const SHELL = [
   './',
   './index.html',
@@ -43,6 +43,7 @@ const SHELL = [
   './firenzuola.html',
   './oxford.html',
   './domodossola.html',
+  './webcam.html',
   './webcam-panomax.html',
   './webcam-panomax.js',
   './italia-ghcn.html',

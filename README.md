@@ -159,6 +159,13 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   coordinate. Servono i segreti `NETATMO_CLIENT_ID`, `NETATMO_CLIENT_SECRET`, `NETATMO_REFRESH_TOKEN` (permesso
   read_station) e `NETATMO_KEY` (frase a piacere): il refresh token che Netatmo rinnova a ogni accesso viene
   salvato cifrato in `data/netatmo-token.enc`. Senza segreti la scheda Netatmo mostra «in arrivo».
+- **Webcam del Mugello** (`webcam.html`) — mappa grande in stile scuro (OpenStreetMap / CARTO) con l'anteprima di ogni
+  webcam di `data/webcam.json` (aggiornata ogni 5 minuti) e **galleria** delle foto migliori (`data/galleria.json`,
+  foto in `reports/webcam/galleria/`). L'Action `webcam-scatti.yml` all'alba e al tramonto salva una foto da ogni webcam
+  nel ramo `webcam-candidati` (un solo commit, riscritto ogni volta) e apre una segnalazione «Galleria AAAA-MM-GG …»:
+  si risponde con i numeri e la categoria (`2 tramonto, 5 arcobaleno`) o `no`, e `webcam-galleria.yml` aggiunge le
+  foto scelte. Per temporali e arcobaleni: tab Actions → «Galleria webcam» → Run workflow (scatta subito). Una webcam
+  si esclude dalla galleria con `"galleria": false` in `data/webcam.json`.
 - **Nebbia in valle** (`geek-nebbia.html`, MeteoGeek) — inversione termica notturna misurata (termometri CFR,
   minime SIR di Borgo S. Lorenzo e Monte Giovi), umidità e vento CFR (`scripts/fetch_nebbia.py` → `data/nebbia.json`)
   e **diario della nebbia**: l'Action `nebbia-alba.yml` ogni mattina (appena dopo l'alba, entro le 10:30) salva la foto della webcam del lago di
