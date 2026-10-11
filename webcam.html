@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Webcam del Mugello · Mugello Meteo & Clima</title>
+<meta name="description" content="Le webcam del Mugello e dell'Appennino su una mappa, con l'anteprima in tempo reale, e la galleria delle foto più belle: albe, tramonti, temporali e arcobaleni.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/webcam.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Webcam del Mugello: mappa e galleria">
+<meta property="og:description" content="Le webcam del Mugello su una mappa con l'anteprima in tempo reale, e la galleria di albe, tramonti, temporali e arcobaleni.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/webcam.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+<style>
+  section{margin-top:30px}
+  /* mappa scura: sempre, anche con il tema chiaro del sito */
+  #map{height:min(72vh,720px);min-height:440px;width:100%;border-radius:var(--r);overflow:hidden;border:1px solid #263039;background:#0e1114;box-shadow:var(--shadow)}
+  .leaflet-container{font-family:var(--sans);background:#0e1114}
+  .leaflet-control-attribution{background:rgba(14,17,20,.75)!important;color:#9aa5ad!important}
+  .leaflet-control-attribution a{color:#c6d0d6!important}
+  .leaflet-bar a{background:#1a2026;color:#e6edf1;border-bottom-color:#2b343c}
+  .leaflet-bar a:hover{background:#242c33}
+  /* segnaposto: anteprima della webcam */
+  .cam{position:relative;width:118px;transform:translate(-50%,-100%);cursor:pointer}
+  .cam .ph{width:118px;height:66px;border-radius:9px;overflow:hidden;border:2px solid #e9eef1;background:#1c242b center/cover no-repeat;box-shadow:0 6px 18px rgba(0,0,0,.55);display:grid;place-items:center;color:#9aa5ad;font-size:20px}
+  .cam .ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .cam .nm{margin-top:4px;font:600 11px/1.2 var(--sans);color:#f1f5f7;text-align:center;text-shadow:0 1px 3px #000,0 0 6px #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cam::after{content:"";position:absolute;left:50%;top:66px;margin-left:-6px;border:6px solid transparent;border-top-color:#e9eef1}
+  .cam .live{position:absolute;top:5px;left:5px;font:600 9px/1 var(--mono);letter-spacing:.06em;background:#d93a2b;color:#fff;border-radius:4px;padding:3px 5px}
+  .cam:hover .ph{border-color:#5fd0a6}
+  .grp{width:126px;transform:translate(-50%,-100%)}
+  .grp .ph{position:relative}
+  .grp b{position:absolute;top:-8px;right:-8px;min-width:24px;height:24px;border-radius:12px;background:#3ba883;color:#fff;font:700 12px/24px var(--sans);text-align:center;border:2px solid #0e1114}
+  .me{width:14px;height:14px;border-radius:50%;background:#c97a36;border:2px solid #fff;box-shadow:0 0 0 2px #c97a36}
+  /* elenco delle webcam */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:18px}
+  .wc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit;display:flex;flex-direction:column}
+  .wc:hover{border-color:var(--pine)}
+  .wc .im{aspect-ratio:16/9;background:var(--line-soft);display:grid;place-items:center;color:var(--ink-faint);font-size:12px;position:relative}
+  .wc .im img{width:100%;height:100%;object-fit:cover;display:block}
+  .wc .tx{padding:9px 12px 11px}
+  .wc b{display:block;font-size:14px;line-height:1.25}
+  .wc small{color:var(--ink-faint);font-size:12px}
+  /* galleria */
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+  .chips button{font:inherit;font-size:13px;font-weight:600;color:var(--ink-soft);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 13px;cursor:pointer}
+  .chips button[aria-pressed="true"]{background:var(--pine);border-color:var(--pine);color:#fff}
+  .chips button span{font-family:var(--mono);font-size:11px;opacity:.75;margin-left:4px}
+  .gal{columns:3 260px;column-gap:14px}
+  .gal figure{break-inside:avoid;margin:0 0 14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;box-shadow:var(--shadow);cursor:zoom-in}
+  .gal img{display:block;width:100%;height:auto}
+  .gal figcaption{padding:8px 11px 10px;font-size:12px;color:var(--ink-soft);line-height:1.4}
+  .gal figcaption b{color:var(--ink);font-size:13px}
+  .cat{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:2px 8px;margin-right:6px;color:#fff;background:var(--ink-faint)}
+  .cat.alba{background:#d98a2b}.cat.tramonto{background:#c4532a}.cat.temporale{background:#4a3aa7}.cat.arcobaleno{background:#1baf7a}.cat.nebbia{background:#7b8a92}.cat.neve{background:#2a78d6}
+  .vuoto{border:1px dashed var(--line);border-radius:var(--r);padding:28px;text-align:center;color:var(--ink-soft);background:var(--panel-2)}
+  /* finestra a schermo intero */
+  dialog{border:0;padding:0;background:transparent;max-width:min(1200px,96vw);width:100%}
+  dialog::backdrop{background:rgba(6,9,11,.88)}
+  .dlg{background:#11171b;color:#e9eef1;border-radius:14px;overflow:hidden}
+  .dlg img{display:block;width:100%;max-height:78vh;object-fit:contain;background:#000}
+  .dlg .bar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 14px;flex-wrap:wrap;font-size:13px}
+  .dlg .bar b{font-size:15px}
+  .dlg .bar a{color:#5fd0a6;font-weight:600}
+  .dlg button.x{font:inherit;font-weight:700;background:#263039;color:#fff;border:0;border-radius:999px;padding:7px 13px;cursor:pointer}
+  @media (max-width:600px){ h1{font-size:32px} #map{height:62vh;min-height:380px} .cam{width:96px} .cam .ph{width:96px;height:54px} .cam::after{top:54px} .gal{columns:1} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Webcam del Mugello</div>
+    <header class="head">
+      <div class="eyebrow">Webcam · in tempo reale</div>
+      <h1>Webcam del Mugello</h1>
+      <p class="lead">Le webcam pubbliche del Mugello, della Val di Sieve e dei passi dell'Appennino, con l'ultima immagine di ognuna direttamente sulla mappa. Tocca un'anteprima per vederla grande. Sotto, la galleria delle foto più belle scattate da queste webcam: albe, tramonti, temporali e arcobaleni.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>La mappa</h2><span class="src" id="agg">anteprime aggiornate ogni 5 minuti</span></div>
+      <div id="map" role="region" aria-label="Mappa delle webcam del Mugello"></div>
+      <div class="grid" id="list"></div>
+      <p class="note">Le immagini restano di chi gestisce ogni webcam (la fonte è indicata sotto ogni anteprima): il sito le mostra così come sono pubblicate e rimanda alla pagina originale per la diretta. Alcune webcam pubblicano solo un video o un link e non hanno un'anteprima. Mappa: © OpenStreetMap, stile scuro © CARTO.</p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>La galleria</h2><span class="src" id="g-src">foto scelte dalle webcam del Mugello</span></div>
+      <div class="chips" id="chips" role="group" aria-label="Categoria"></div>
+      <div class="gal" id="gal"></div>
+      <p class="note">Ogni giorno, all'alba e al tramonto, il sito salva una foto da ogni webcam. Le più belle vengono scelte a mano ed entrano qui; le altre si cancellano dopo pochi giorni. Temporali e arcobaleni si catturano su richiesta, quando succedono. Ogni foto riporta la webcam e chi la gestisce.</p>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="webcam-panomax.html">webcam Panomax a 360°</a> · <a href="index.html">torna alla home</a></div></footer>
+
+  <dialog id="dlg" aria-label="Immagine della webcam">
+    <div class="dlg">
+      <img id="dlg-img" alt="">
+      <div class="bar"><div><b id="dlg-t"></b><br><span id="dlg-s"></span></div><div style="display:flex;gap:12px;align-items:center"><a id="dlg-a" target="_blank" rel="noopener">apri la diretta →</a><button class="x" id="dlg-x" type="button">Chiudi</button></div></div>
+    </div>
+  </dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  const data=iso=>{const t=new Date(iso+"T12:00:00");return t.getDate()+" "+MESI[t.getMonth()]+" "+t.getFullYear();};
+  const fresca=(u,t)=>u?u+(u.includes("?")?"&":"?")+"_t="+t:"";       // evita la copia in cache del browser
+  const nome=w=>w.nome.replace(/\s*·\s*LIVE\s*$/i,"");
+  const live=w=>/·\s*LIVE/i.test(w.nome);
+
+  // ---------- finestra a schermo intero
+  const dlg=$("dlg");
+  function mostra(src,titolo,sotto,link){
+    $("dlg-img").src=src; $("dlg-img").alt=titolo; $("dlg-t").textContent=titolo; $("dlg-s").textContent=sotto||"";
+    const a=$("dlg-a"); if(link){a.href=link;a.style.display="";}else a.style.display="none";
+    if(dlg.showModal) dlg.showModal(); else window.open(src,"_blank");
+  }
+  $("dlg-x").onclick=()=>dlg.close();
+  dlg.addEventListener("click",e=>{if(e.target===dlg) dlg.close();});
+
+  // ---------- mappa
+  const map=L.map("map",{scrollWheelZoom:false,zoomControl:true}).setView([44.0,11.42],10);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{maxZoom:19,subdomains:"abcd",
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
+  map.on("focus",()=>map.scrollWheelZoom.enable());
+  L.marker([43.958,11.391],{icon:L.divIcon({className:"",html:'<div class="me" title="Borgo San Lorenzo"></div>',iconSize:[14,14]}),interactive:false}).addTo(map);
+  const gruppo=L.markerClusterGroup({maxClusterRadius:90,showCoverageOnHover:false,spiderfyDistanceMultiplier:2.6,
+    iconCreateFunction:c=>{const m=c.getAllChildMarkers(), w=(m.find(x=>x.options.wc.img)||m[0]).options.wc;
+      return L.divIcon({className:"",iconSize:[0,0],html:`<div class="cam grp"><div class="ph">${w.img?`<img src="${esc(fresca(w.img,T))}" alt="">`:"📷"}<b>${m.length}</b></div><div class="nm">${m.length} webcam</div></div>`});}});
+  let T=Math.floor(Date.now()/3e5), cams=[];
+
+  function segnaposto(w){
+    return L.divIcon({className:"",iconSize:[0,0],html:`<div class="cam" title="${esc(nome(w))}"><div class="ph">${w.img?`<img src="${esc(fresca(w.img,T))}" alt="" loading="lazy" onerror="this.remove()">`:"📷"}</div>${live(w)?'<span class="live">LIVE</span>':""}<div class="nm">${esc(nome(w))}</div></div>`});
+  }
+  function apri(w){
+    if(w.img) mostra(fresca(w.img,T),nome(w),[w.luogo,"fonte: "+(w.fonte||"–")].filter(Boolean).join(" · "),w.link);
+    else if(w.link) window.open(w.link,"_blank","noopener");
+  }
+  function elenco(){
+    $("list").innerHTML=cams.map((w,i)=>`<button class="wc" type="button" data-i="${i}"><div class="im">${w.img?`<img src="${esc(fresca(w.img,T))}" alt="${esc(nome(w))}" loading="lazy" onerror="this.replaceWith(document.createTextNode('anteprima non disponibile'))">`:"solo diretta sul sito della fonte →"}</div><div class="tx"><b>${esc(nome(w))}${live(w)?' <span class="cat temporale" style="background:#d93a2b">live</span>':""}</b><small>${esc(w.luogo||"")} · fonte: ${esc(w.fonte||"–")}</small></div></button>`).join("");
+    $("list").querySelectorAll(".wc").forEach(b=>b.onclick=()=>apri(cams[+b.dataset.i]));
+  }
+  function disegna(){
+    gruppo.clearLayers();
+    cams.forEach(w=>{const m=L.marker([w.lat,w.lon],{icon:segnaposto(w),wc:w}); m.on("click",()=>apri(w)); gruppo.addLayer(m);});
+    elenco();
+  }
+  fetch("./data/webcam.json",{cache:"no-cache"}).then(r=>r.json()).then(d=>{
+    cams=(d.webcam||[]).slice().sort((a,b)=>(b.img?1:0)-(a.img?1:0)||a.nome.localeCompare(b.nome,"it"));
+    map.addLayer(gruppo); disegna();
+    map.fitBounds(L.latLngBounds(cams.filter(w=>Math.abs(w.lat-44)<0.25).map(w=>[w.lat,w.lon])).pad(0.15));
+    setInterval(()=>{T=Math.floor(Date.now()/3e5); disegna(); $("agg").textContent="anteprime aggiornate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"});},3e5);
+  }).catch(()=>{$("list").innerHTML='<div class="vuoto">Elenco delle webcam non disponibile in questo momento.</div>';});
+
+  // ---------- galleria
+  const CAT=[["tutte","Tutte"],["alba","Albe"],["tramonto","Tramonti"],["temporale","Temporali"],["arcobaleno","Arcobaleni"],["nebbia","Nebbia"],["neve","Neve"],["nuvole","Nuvole"],["altro","Altro"]];
+  const FISSE=["tutte","alba","tramonto","temporale","arcobaleno"];
+  let foto=[], scelta="tutte";
+  function galleria(){
+    const n=k=>k==="tutte"?foto.length:foto.filter(f=>f.categoria===k).length;
+    $("chips").innerHTML=CAT.filter(([k])=>FISSE.includes(k)||n(k)).map(([k,l])=>`<button type="button" data-k="${k}" aria-pressed="${k===scelta}">${l}<span>${n(k)}</span></button>`).join("");
+    $("chips").querySelectorAll("button").forEach(b=>b.onclick=()=>{scelta=b.dataset.k; galleria();});
+    const sel=foto.filter(f=>scelta==="tutte"||f.categoria===scelta);
+    if(!sel.length){$("gal").style.columns="auto"; $("gal").innerHTML=`<div class="vuoto">${foto.length?"Ancora nessuna foto in questa categoria.":"La galleria è appena nata: le prime foto arriveranno dalle prossime albe e dai prossimi tramonti."}</div>`; return;}
+    $("gal").style.columns="";
+    $("gal").innerHTML=sel.map((f,i)=>`<figure data-i="${foto.indexOf(f)}"><img src="${esc(f.file)}" alt="${esc((CAT.find(c=>c[0]===f.categoria)||[,""])[1])} da ${esc(f.webcam)}, ${esc(data(f.data))}"${i>5?' loading="lazy"':""}><figcaption><span class="cat ${esc(f.categoria)}">${esc(f.categoria)}</span><b>${esc(f.webcam.replace(/\s*·\s*LIVE\s*$/i,""))}</b><br>${esc(data(f.data))}${f.momento&&!/^(alba|tramonto)$/.test(f.momento)?" · ore "+esc(f.momento):""} · fonte: ${f.link?`<a href="${esc(f.link)}" target="_blank" rel="noopener">${esc(f.fonte||"–")}</a>`:esc(f.fonte||"–")}${f.nota?"<br>"+esc(f.nota):""}</figcaption></figure>`).join("");
+    $("gal").querySelectorAll("figure").forEach(el=>el.onclick=e=>{if(e.target.closest("a")) return; const f=foto[+el.dataset.i]; mostra(f.file,f.webcam.replace(/\s*·\s*LIVE\s*$/i,""),data(f.data)+" · "+f.categoria+" · fonte: "+(f.fonte||"–"),f.link);});
+  }
+  fetch("./data/galleria.json?t="+Date.now(),{cache:"no-cache"}).then(r=>r.json()).then(d=>{foto=d.foto||[]; galleria();}).catch(()=>galleria());
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

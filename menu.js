@@ -11,7 +11,7 @@
     ["Mappe","mappe.html",["mappe"]],
     ["Neve",[["❄️ Neve oggi","neve.html"],["📜 La neve a Firenze","neve-firenze.html"]],["neve","neve-firenze"]],
     ["Cielo","effemeridi.html",["effemeridi"]],
-    ["Webcam",[["📷 Webcam Mugello","index.html#webcam"],["🌍 Webcam Panomax","webcam-panomax.html"]],["webcam-panomax"]],
+    ["Webcam",[["📷 Webcam Mugello","webcam.html"],["🌍 Webcam Panomax","webcam-panomax.html"]],["webcam","webcam-panomax"]],
     ["Toscana",[["Temperature"],["🌡️ Oggi e ieri","temperature-toscana.html"],["Firenze"],["🏛️ Clima di Firenze","clima-firenze.html"],["Borgo S. Lorenzo"],["📊 Oggi nella storia","borgo-storico.html"],["Report mensili"],["📅 Archivio climatico","archivio-climatico.html"],["Record storici"],["🔴 Massime","estremi-massime.html"],["🔵 Minime","estremi-minime.html"],["Piogge"],["🌧️ Piogge estreme","piogge-estreme.html"]],
       ["temperature-toscana","clima-firenze","borgo-storico","archivio-climatico","estremi-massime","estremi-minime","piogge-estreme"]],
     ["Serie storiche","serie-storiche.html",["serie-storiche","stazioni-centenarie","italia-ghcn","milano-brera","new-york-central-park","padova","moncalieri","de-bilt","san-francisco","genova","mont-aigoual","bangalore","firenzuola","oxford","domodossola"]],

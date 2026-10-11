@@ -1,0 +1,79 @@
+name: Galleria webcam (scatti all'alba e al tramonto)
+
+# Ogni 20 minuti nelle fasce dell'alba e del tramonto (ora UTC, tutto l'anno); lo script scatta solo da 10 minuti
+# prima a 40 dopo il sorgere del sole e da 40 prima a 10 dopo il tramonto, una volta per momento.
+# Gli scatti vanno nel ramo «webcam-candidati» (un solo commit, riscritto ogni volta): su main entrano solo le foto
+# scelte dalla segnalazione «Galleria …» (Action webcam-galleria.yml).
+on:
+  schedule:
+    - cron: "4,24,44 3,4,5,6,7 * * *"
+    - cron: "4,24,44 15,16,17,18,19 * * *"
+  workflow_dispatch:
+    inputs:
+      ora:
+        description: "Scatta subito da tutte le webcam (temporali, arcobaleni…)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: webcam-scatti
+  cancel-in-progress: false
+
+jobs:
+  scatta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installa Pillow
+        run: pip install pillow
+
+      - name: Scatti candidati
+        id: s
+        env:
+          WEBCAM_CANDIDATI: ${{ runner.temp }}/candidati
+        run: |
+          mkdir -p "$WEBCAM_CANDIDATI"
+          if git ls-remote --exit-code --heads origin webcam-candidati >/dev/null; then
+            git fetch -q --depth=1 origin webcam-candidati
+            git --work-tree="$WEBCAM_CANDIDATI" checkout FETCH_HEAD -- .
+            git reset -q
+          fi
+          before=$(find "$WEBCAM_CANDIDATI" -name '*.jpg' | sort | md5sum)
+          python scripts/webcam_scatti.py scatta ${{ inputs.ora && '--ora' || '' }}
+          after=$(find "$WEBCAM_CANDIDATI" -name '*.jpg' | sort | md5sum)
+          if [ "$before" != "$after" ]; then echo "nuovi=1" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Pubblica gli scatti nel ramo webcam-candidati
+        if: steps.s.outputs.nuovi == '1'
+        env:
+          WEBCAM_CANDIDATI: ${{ runner.temp }}/candidati
+        run: |
+          cd "$WEBCAM_CANDIDATI"
+          rm -rf .git
+          git init -q -b webcam-candidati
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          printf 'Scatti candidati delle webcam (scripts/webcam_scatti.py). Ramo riscritto a ogni scatto.\n' > README.md
+          git add -A
+          git commit -q -m "scatti candidati della galleria webcam"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" webcam-candidati
+
+      - name: Segnalazione per scegliere le foto
+        if: steps.s.outputs.nuovi == '1'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WEBCAM_CANDIDATI: ${{ runner.temp }}/candidati
+        run: python scripts/webcam_scatti.py apri
