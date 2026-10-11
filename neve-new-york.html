@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La neve a New York · Mugello Meteo &amp; Clima</title>
+<meta name="description" content="Centocinquant'anni di nevicate a Central Park, New York: totali per stagione, distribuzione mensile, le nevicate record e come è cambiata la neve dal 1870 a oggi.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/neve-new-york.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="La neve a New York · 1870–2026">
+<meta property="og:description" content="Centocinquant'anni di nevicate a Central Park, New York: totali per stagione, distribuzione mensile, le nevicate record e come è cambiata la neve dal 1870 a oggi.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/neve-new-york.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lo skyline di Manhattan sotto la neve">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#7d8a82;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --snow:#5b8fc9; --snow-tint:#e8f0f9;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+      --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+      --line:#26332c; --line-soft:#1e2a24;
+      --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+      --sky:#67aef0; --sky-tint:#152634;
+      --amber:#e0975a; --amber-tint:#2e2115;
+      --snow:#7fb0e6; --snow-tint:#16273a;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#67aef0; --sky-tint:#152634;
+    --amber:#e0975a; --amber-tint:#2e2115;
+    --snow:#7fb0e6; --snow-tint:#16273a;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light dark;scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;
+    background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;
+    color:var(--ink-soft);font-size:13px;padding:7px 12px;border:1px solid var(--line);
+    border-radius:var(--r-pill);background:var(--panel)}
+  .back:hover{box-shadow:var(--shadow)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px;letter-spacing:-.01em}
+  .brand b{color:var(--pine)}
+
+  /* hero con foto */
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+    margin-bottom:4px;background:#0c1512}
+  .hero-img{position:absolute;inset:0;background-image:url('img/neve-new-york/hero.jpg');
+    background-size:cover;background-position:center 62%;filter:brightness(.6) saturate(.85)}
+  .hero-veil{position:absolute;inset:0;
+    background:linear-gradient(to bottom,rgba(10,18,16,.3) 0%,rgba(10,18,16,.55) 55%,rgba(10,18,16,.9) 100%)}
+  .hero-in{position:relative;padding:62px 0 34px}
+  .hero .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:#9ccbf0;font-weight:600;text-shadow:0 1px 10px rgba(0,0,0,.9)}
+  .hero h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:46px;
+    margin:.12em 0 .1em;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.7);line-height:1.04}
+  .hero h1 em{font-style:italic;color:#8fd9c1}
+  .hero .lead{color:#d6e5dd;font-size:15px;max-width:60ch;text-shadow:0 1px 12px rgba(0,0,0,.85)}
+  .credit{position:absolute;right:14px;bottom:8px;font-family:var(--mono);font-size:10px;
+    color:rgba(255,255,255,.42)}
+  .credit a{color:rgba(255,255,255,.42)}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:20px 0 6px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);padding:15px 17px}
+  .stat strong{display:block;font-family:var(--serif);font-weight:800;font-size:30px;
+    letter-spacing:-.02em;line-height:1.05;color:var(--snow)}
+  .stat.a strong{color:var(--amber)}
+  .stat span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-faint);margin-top:5px;line-height:1.45}
+
+  section{margin:30px 0}
+  .sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .sh h2{font-family:var(--serif);font-weight:700;font-size:21px;margin:0;letter-spacing:-.01em}
+  .sh .src{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-align:right}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);padding:16px 18px}
+  .sub{color:var(--ink-soft);font-size:13.5px;margin:0 0 12px;max-width:78ch}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.two{grid-template-columns:1fr}}
+
+  svg .ax{font-family:var(--mono);font-size:10px;fill:var(--ink-faint)}
+  svg .val{font-family:var(--mono);font-size:9.5px;fill:var(--ink-soft)}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:11px;
+    color:var(--ink-faint);margin-bottom:8px}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;
+    vertical-align:-1px}
+  .legend i.ln{height:3px;border-radius:2px;width:16px;vertical-align:3px}
+
+  /* range */
+  .ctrl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;
+    font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
+  .ctrl input[type=range]{-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;
+    background:var(--line);outline:none;width:140px;cursor:pointer}
+  .ctrl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;
+    border-radius:50%;background:var(--snow);cursor:pointer;border:0}
+  .ctrl input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;
+    background:var(--snow);cursor:pointer;border:0}
+  .ctrl b{color:var(--snow);font-weight:600;min-width:62px;display:inline-block}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-faint);font-weight:600;
+    padding:7px 8px;border-bottom:1px solid var(--line)}
+  td{padding:7px 8px;border-bottom:1px solid var(--line-soft)}
+  tr:last-child td{border-bottom:0}
+  td.n{font-family:var(--mono);text-align:right;white-space:nowrap}
+  .rank{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;
+    border-radius:50%;font-family:var(--mono);font-size:10.5px;font-weight:600;
+    background:var(--line-soft);color:var(--ink-faint);margin-right:8px}
+  .rank.p1{background:var(--amber-tint);color:var(--amber)}
+  .rank.p2,.rank.p3{background:var(--snow-tint);color:var(--snow)}
+  h3{font-family:var(--serif);font-weight:700;font-size:16px;margin:0 0 8px;letter-spacing:-.01em}
+
+  .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);line-height:1.75}
+  .note li{margin-bottom:7px}
+  .btn{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;
+    text-decoration:none;color:var(--ink-soft);padding:8px 13px;border:1px solid var(--line);
+    border-radius:var(--r-pill);background:var(--panel)}
+  .btn:hover{box-shadow:var(--shadow)}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px;margin-top:34px}
+  @media (max-width:640px){
+    .hero h1{font-size:32px} .hero-in{padding:44px 0 26px}
+    .stat strong{font-size:25px}
+  }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="neve.html">&larr; Torna a Neve</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <section class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-veil"></div>
+    <div class="wrap hero-in">
+      <div class="eyebrow">Storia del clima &middot; New York</div>
+      <h1>La neve<br><em>a New York.</em></h1>
+      <p class="lead">Centocinquantasette inverni misurati a Central Park, dal 1870 a oggi: quanta neve cade davvero sulla citt&agrave;, quando arriva, e come sono andati gli inverni record.</p>
+    </div>
+    <div class="credit">Foto: Lower Manhattan innevata &middot; <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">CC0</a></div>
+  </section>
+
+  <main class="wrap">
+    <div class="stats">
+      <div class="stat"><strong>67,9 cm</strong><span>neve media per stagione</span></div>
+      <div class="stat"><strong>13,6</strong><span>giorni con neve all'anno</span></div>
+      <div class="stat a"><strong>192,1 cm</strong><span>inverno record &middot; 1995/96</span></div>
+      <div class="stat a"><strong>69,3 cm</strong><span>in un giorno &middot; 23 gen 2016</span></div>
+      <div class="stat"><strong>5,9 cm</strong><span>inverno pi&ugrave; scarso &middot; 2022/23</span></div>
+    </div>
+
+    <section>
+      <div class="sh"><h2>Quanta neve, stagione per stagione</h2>
+        <span class="src">stagione invernale luglio&ndash;giugno<br>media mobile 11 stagioni</span></div>
+      <p class="sub">Ogni barra &egrave; un inverno, etichettato con l'anno in cui finisce: l'inverno 1995/96 &mdash; il pi&ugrave; nevoso della serie con 192 cm &mdash; compare come <b>1996</b>. Trascina i cursori per restringere il periodo.</p>
+      <div class="card">
+        <div class="ctrl">
+          <label>dal</label><input type="range" id="rF" min="0" value="0"><b id="lF"></b>
+          <label>al</label><input type="range" id="rT" min="0"><b id="lT"></b>
+        </div>
+        <div class="legend">
+          <span><i style="background:color-mix(in srgb,var(--snow) 45%,var(--panel))"></i>neve della stagione</span>
+          <span><i class="ln" style="background:var(--snow)"></i>media mobile 11 stagioni</span>
+          <span><i class="ln" style="background:var(--amber)"></i>media 1961&ndash;1990 (60,7 cm)</span>
+        </div>
+        <div id="ch-stag"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="two">
+        <div>
+          <div class="sh"><h2>Quando nevica</h2><span class="src">cm medi per mese</span></div>
+          <div class="card">
+            <p class="sub">Febbraio &egrave; il mese pi&ugrave; nevoso, ma la stagione pu&ograve; aprirsi gi&agrave; in ottobre e chiudersi ad aprile.</p>
+            <div id="ch-mesi"></div>
+          </div>
+        </div>
+        <div>
+          <div class="sh"><h2>Come cambia nel tempo</h2><span class="src">media per decennio</span></div>
+          <div class="card">
+            <p class="sub">Gli anni Dieci del Duemila sono stati il decennio pi&ugrave; nevoso di tutta la serie; gli anni Venti, finora, il meno nevoso.</p>
+            <div id="ch-dec"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="two">
+        <div>
+          <div class="sh"><h2>Le nevicate pi&ugrave; grandi</h2><span class="src">neve caduta in un solo giorno</span></div>
+          <div class="card"><table id="t-ev"></table></div>
+        </div>
+        <div>
+          <div class="sh"><h2>Gli inverni pi&ugrave; nevosi</h2><span class="src">totale della stagione</span></div>
+          <div class="card"><table id="t-st"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Prima e ultima neve</h2></div>
+      <div class="card">
+        <p class="sub" style="margin:0">La nevicata pi&ugrave; precoce mai registrata a Central Park &egrave; quella del <b>15 ottobre 1876</b>; la pi&ugrave; tardiva &egrave; del <b>25 aprile 1875</b>. In un inverno medio la prima neve arriva a dicembre e l'ultima se ne va a marzo.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> NOAA, National Centers for Environmental Information, archivio GHCN-Daily, stazione <b>USW00094728</b> &ldquo;NY City Central Park&rdquo; (40,78&deg; N, 73,97&deg; O, 43 m), serie giornaliera dal 1&deg; gennaio 1869 al 23 maggio 2026.</li>
+          <li>Il campo <i>neve caduta</i> dell'archivio GHCN-Daily &egrave; espresso in millimetri: qui &egrave; convertito in centimetri dividendo per dieci. Il valore misura la neve fresca caduta, non lo spessore del manto al suolo.</li>
+          <li>La neve &egrave; sommata per stagione invernale, da luglio a giugno, ed etichettata con l'anno finale (l'inverno 1995/96 &rarr; 1996). I conteggi dei giorni con neve comprendono tutti i giorni con almeno una traccia misurata.</li>
+          <li>In oltre 150 anni sono cambiati strumenti, criteri di misura e ambiente urbano intorno al parco: i confronti fra epoche lontane vanno letti come indicativi.</li>
+          <li>La stessa serie, con temperature, precipitazioni e record, &egrave; nella scheda <a href="new-york-central-park.html">New York Central Park</a>.</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="new-york-central-park.html">La serie storica completa</a>
+          <a class="btn" href="data/serie/new-york-central-park.csv" download>&darr; Serie giornaliera (CSV)</a>
+        </p>
+        <p class="note" style="margin-top:10px">Dati NOAA NCEI &middot; elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima &middot; <a href="neve.html">neve</a> &middot; <a href="index.html">torna alla home</a></div></footer>
+
+<script>
+(function(){
+const SEAS=[[1870,70.7,11,20.3],[1871,76.6,10,22.9],[1872,36.8,15,7.6],[1873,153.0,20,45.7],[1874,94.6,13,19.1],[1875,143.4,18,25.4],[1876,47.7,10,27.9],[1877,93.6,18,20.8],[1878,20.6,4,12.7],[1879,90.9,18,33.0],[1880,58.0,12,10.2],[1881,90.7,21,16.5],[1882,79.9,15,20.3],[1883,89.4,18,17.8],[1884,109.7,17,18.5],[1885,87.8,21,16.5],[1886,52.9,10,12.7],[1887,81.3,18,13.5],[1888,115.7,19,41.9],[1889,42.0,11,10.2],[1890,51.9,9,15.2],[1891,67.8,11,20.3],[1892,41.5,9,15.2],[1893,69.6,17,15.2],[1894,27.1,12,3.8],[1895,17.8,5,10.2],[1896,56.0,12,25.4],[1897,83.1,12,21.6],[1898,52.3,13,12.7],[1899,69.5,17,12.7],[1900,34.8,10,14.7],[1901,8.5,6,3.8],[1902,63.3,9,25.4],[1903,48.9,8,16.5],[1904,72.1,17,19.1],[1905,99.7,18,25.4],[1906,35.6,6,15.2],[1907,103.2,16,15.2],[1908,38.7,10,10.9],[1909,39.1,11,10.9],[1910,53.9,9,24.1],[1911,34.5,12,11.4],[1912,75.1,19,17.8],[1913,39.0,9,29.0],[1914,103.1,18,34.3],[1915,73.4,23,25.4],[1916,129.0,28,19.3],[1917,128.9,24,32.3],[1918,87.7,24,20.3],[1919,9.8,6,3.6],[1920,121.2,29,15.0],[1921,47.4,9,31.8],[1922,70.4,14,13.7],[1923,153.3,27,19.8],[1924,69.8,18,21.6],[1925,75.2,12,29.2],[1926,82.5,19,26.4],[1927,56.9,22,20.1],[1928,36.9,8,13.5],[1929,35.2,12,20.3],[1930,34.8,12,9.9],[1931,29.6,15,7.1],[1932,13.5,9,5.1],[1933,68.7,12,25.4],[1934,132.1,20,28.4],[1935,85.7,18,32.5],[1936,84.7,26,22.9],[1937,39.8,13,14.5],[1938,38.5,16,8.4],[1939,94.8,21,19.8],[1940,65.4,16,19.6],[1941,99.2,16,39.9],[1942,28.7,14,7.1],[1943,75.0,21,18.0],[1944,60.4,10,16.5],[1945,68.9,16,17.0],[1946,80.0,17,20.3],[1947,77.7,13,16.5],[1948,162.5,28,66.3],[1949,118.5,11,40.1],[1950,35.6,13,8.9],[1951,23.6,10,7.4],[1952,50.3,14,14.0],[1953,38.5,13,7.6],[1954,40.3,12,13.7],[1955,29.4,13,9.1],[1956,85.3,19,19.8],[1957,55.9,18,16.0],[1958,113.6,16,19.1],[1959,33.2,16,14.0],[1960,99.9,22,31.8],[1961,139.0,19,29.5],[1962,46.1,18,8.6],[1963,41.5,16,7.6],[1964,113.3,23,29.2],[1965,62.0,16,16.0],[1966,54.3,11,14.7],[1967,131.0,21,31.8],[1968,49.5,14,14.0],[1969,76.8,10,35.6],[1970,65.1,15,10.7],[1971,39.5,9,16.3],[1972,58.1,11,14.5],[1973,7.1,3,4.6],[1974,59.7,14,15.2],[1975,33.5,8,19.8],[1976,44.0,12,10.2],[1977,62.2,18,12.7],[1978,128.8,16,39.4],[1979,74.8,11,32.3],[1980,32.5,6,9.1],[1981,49.2,11,21.8],[1982,62.6,13,24.4],[1983,69.2,8,31.8],[1984,64.6,20,13.0],[1985,61.2,13,12.2],[1986,33.1,14,11.4],[1987,58.8,11,20.6],[1988,48.5,10,13.2],[1989,20.7,4,12.7],[1990,34.1,10,11.2],[1991,63.3,9,21.3],[1992,31.9,7,15.7],[1993,62.1,15,25.9],[1994,135.8,23,32.5],[1995,30.0,4,27.4],[1996,192.1,26,34.5],[1997,25.4,8,8.9],[1998,14.0,2,12.7],[1999,32.4,7,10.2],[2000,41.4,7,14.0],[2001,89.1,14,30.5],[2002,8.9,2,7.6],[2003,125.3,16,41.4],[2004,108.1,13,20.3],[2005,104.4,20,21.6],[2006,101.6,9,61.2],[2007,31.6,12,14.0],[2008,30.2,7,15.2],[2009,70.1,13,16.5],[2010,130.5,12,29.2],[2011,157.1,15,31.2],[2012,18.8,3,10.9],[2013,66.4,12,16.0],[2014,145.8,19,27.9],[2015,127.7,19,19.1],[2016,83.4,8,69.3],[2017,76.6,9,23.9],[2018,103.9,14,24.9],[2019,52.2,11,16.3],[2020,12.2,6,5.3],[2021,98.0,12,37.6],[2022,45.3,9,18.5],[2023,5.9,4,2.3],[2024,19.0,6,8.1],[2025,32.8,13,7.6],[2026,110.4,13,29.0]];      // [anno, cm, giorni, maxGiorno]
+const MESI=[19.19,20.81,11.52,1.96,0.0,0.0,0.0,0.0,0.0,0.08,1.72,13.08];   // cm medi, gennaio..dicembre
+const DEC=[[1870,82.8],[1880,80.7],[1890,53.7],[1900,54.4],[1910,73.4],[1920,74.9],[1930,62.2],[1940,83.6],[1950,50.6],[1960,81.3],[1970,57.3],[1980,50.0],[1990,62.1],[2000,71.1],[2010,96.2],[2020,46.2]];    // [decennio, cm medi]
+const EV=[["2016-01-23",69.3],["1947-12-26",66.3],["2006-02-12",61.2],["1872-12-26",45.7],["1888-03-12",41.9],["2003-02-17",41.4],["1948-12-19",40.1],["1941-03-08",39.9],["1978-02-06",39.4],["2021-02-01",37.6],["1969-02-09",35.6],["1996-01-07",34.5],["1914-03-01",34.3],["1879-01-16",33.0],["1935-01-23",32.5]];      // [data ISO, cm]
+const REF=60.7;           // media 1961-1990
+const NM=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+const f1=v=>v.toFixed(1).replace(".",",");
+const f0=v=>Math.round(v).toLocaleString("it-IT");
+const SVGNS="http://www.w3.org/2000/svg";
+function el(n,a,p){const e=document.createElementNS(SVGNS,n);
+  for(const k in a)e.setAttribute(k,a[k]); if(p)p.appendChild(e); return e;}
+function mk(host,W,H){host.innerHTML="";
+  const s=el("svg",{viewBox:"0 0 "+W+" "+H,width:"100%",preserveAspectRatio:"xMidYMid meet",role:"img"});
+  host.appendChild(s); return s;}
+function roll(a,n){return a.map((_,i)=>{ if(i<n-1)return null;
+  let t=0; for(let k=i-n+1;k<=i;k++)t+=a[k]; return t/n;});}
+
+/* ---------- grafico stagioni ---------- */
+const host=document.getElementById("ch-stag");
+const rF=document.getElementById("rF"), rT=document.getElementById("rT");
+rF.max=SEAS.length-1; rT.max=SEAS.length-1; rT.value=SEAS.length-1;
+
+function drawStag(){
+  let f=+rF.value, t=+rT.value; if(f>=t){ if(this===rF) f=t-1; else t=f+1; rF.value=f; rT.value=t; }
+  const D=SEAS.slice(f,t+1);
+  document.getElementById("lF").textContent=(D[0][0]-1)+"/"+String(D[0][0]).slice(2);
+  const L=D[D.length-1];
+  document.getElementById("lT").textContent=(L[0]-1)+"/"+String(L[0]).slice(2);
+
+  const W=1000,H=300,mL=42,mR=12,mT=14,mB=34;
+  const iw=W-mL-mR, ih=H-mT-mB;
+  const vals=D.map(d=>d[1]);
+  let ymax=Math.max(...vals,REF); ymax=Math.ceil(ymax/25)*25;
+  const x=i=>mL+iw*(i+.5)/D.length;
+  const y=v=>mT+ih*(1-v/ymax);
+  const s=mk(host,W,H);
+
+  for(let g=0;g<=4;g++){const v=ymax*g/4, yy=y(v);
+    el("line",{x1:mL,y1:yy,x2:W-mR,y2:yy,stroke:"var(--line-soft)"},s);
+    const tx=el("text",{x:mL-6,y:yy+3,class:"ax","text-anchor":"end"},s); tx.textContent=f0(v);}
+
+  const bw=Math.max(1.2,Math.min(14,iw/D.length-1.6));
+  D.forEach((d,i)=>{
+    const h=y(0)-y(d[1]);
+    const r=el("rect",{x:x(i)-bw/2,y:y(d[1]),width:bw,height:Math.max(h,.6),rx:bw>4?2:0,
+      fill:"color-mix(in srgb,var(--snow) 45%,var(--panel))"},s);
+    const tt=el("title",{},r);
+    tt.textContent=(d[0]-1)+"/"+String(d[0]).slice(2)+" · "+f1(d[1])+" cm · "+d[2]+" giorni con neve · max "+f1(d[3])+" cm in un giorno";
+  });
+
+  // media mobile 11
+  const rm=roll(vals,11); let p="";
+  rm.forEach((v,i)=>{ if(v==null)return; p+=(p?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)+" "; });
+  if(p) el("path",{d:p,fill:"none",stroke:"var(--snow)","stroke-width":2.2,
+    "stroke-linejoin":"round","stroke-linecap":"round"},s);
+
+  // riferimento 1961-1990
+  el("line",{x1:mL,y1:y(REF),x2:W-mR,y2:y(REF),stroke:"var(--amber)",
+    "stroke-width":1.4,"stroke-dasharray":"5 4",opacity:.9},s);
+
+  // etichette x
+  const step=Math.max(1,Math.round(D.length/14));
+  D.forEach((d,i)=>{ if(i%step)return;
+    const tx=el("text",{x:x(i),y:H-12,class:"ax","text-anchor":"middle"},s); tx.textContent=d[0]; });
+}
+rF.addEventListener("input",drawStag); rT.addEventListener("input",drawStag);
+drawStag();
+
+/* ---------- mesi ---------- */
+(function(){
+  const order=[9,10,11,0,1,2,3];               // ott..apr
+  const D=order.map(m=>[NM[m],MESI[m]]);
+  const W=520,H=250,mL=38,mR=10,mT=12,mB=32, iw=W-mL-mR, ih=H-mT-mB;
+  let ymax=Math.ceil(Math.max(...D.map(d=>d[1]))/5)*5;
+  const s=mk(document.getElementById("ch-mesi"),W,H);
+  const y=v=>mT+ih*(1-v/ymax), gw=iw/D.length;
+  for(let g=0;g<=4;g++){const v=ymax*g/4,yy=y(v);
+    el("line",{x1:mL,y1:yy,x2:W-mR,y2:yy,stroke:"var(--line-soft)"},s);
+    const t=el("text",{x:mL-6,y:yy+3,class:"ax","text-anchor":"end"},s);t.textContent=f0(v);}
+  D.forEach((d,i)=>{const cx=mL+gw*(i+.5), bw=Math.min(40,gw-10), mx=d[1]===Math.max(...D.map(z=>z[1]));
+    const r=el("rect",{x:cx-bw/2,y:y(d[1]),width:bw,height:y(0)-y(d[1]),rx:4,
+      fill:mx?"var(--snow)":"color-mix(in srgb,var(--snow) 45%,var(--panel))"},s);
+    el("title",{},r).textContent=d[0]+": "+f1(d[1])+" cm in media";
+    const v=el("text",{x:cx,y:y(d[1])-5,class:"val","text-anchor":"middle"},s);v.textContent=f1(d[1]);
+    const t=el("text",{x:cx,y:H-11,class:"ax","text-anchor":"middle"},s);t.textContent=d[0];});
+})();
+
+/* ---------- decenni ---------- */
+(function(){
+  const W=520,H=250,mL=38,mR=10,mT=12,mB=40, iw=W-mL-mR, ih=H-mT-mB;
+  let ymax=Math.ceil(Math.max(...DEC.map(d=>d[1]))/25)*25;
+  const s=mk(document.getElementById("ch-dec"),W,H);
+  const y=v=>mT+ih*(1-v/ymax), gw=iw/DEC.length;
+  for(let g=0;g<=4;g++){const v=ymax*g/4,yy=y(v);
+    el("line",{x1:mL,y1:yy,x2:W-mR,y2:yy,stroke:"var(--line-soft)"},s);
+    const t=el("text",{x:mL-6,y:yy+3,class:"ax","text-anchor":"end"},s);t.textContent=f0(v);}
+  const mx=Math.max(...DEC.map(d=>d[1]));
+  DEC.forEach((d,i)=>{const cx=mL+gw*(i+.5), bw=Math.min(26,gw-5);
+    const r=el("rect",{x:cx-bw/2,y:y(d[1]),width:bw,height:y(0)-y(d[1]),rx:3,
+      fill:d[1]===mx?"var(--amber)":"color-mix(in srgb,var(--snow) 45%,var(--panel))"},s);
+    el("title",{},r).textContent="anni "+d[0]+": "+f1(d[1])+" cm in media a stagione";
+    const t=el("text",{x:cx,y:H-14,class:"ax","text-anchor":"end"},s);
+    t.setAttribute("transform","rotate(-55 "+cx+" "+(H-14)+")"); t.textContent=d[0];});
+})();
+
+/* ---------- tabelle ---------- */
+function rank(i){return '<span class="rank p'+(i<3?i+1:"")+'">'+(i+1)+"</span>";}
+(function(){
+  let h="<tr><th>Data</th><th style='text-align:right'>Neve</th></tr>";
+  EV.forEach((e,i)=>{const p=e[0].split("-");
+    h+="<tr><td>"+rank(i)+p[2].replace(/^0/,"")+" "+NM[+p[1]-1]+" "+p[0]+
+       "</td><td class='n'><b>"+f1(e[1])+"</b> cm</td></tr>";});
+  document.getElementById("t-ev").innerHTML=h;
+})();
+(function(){
+  const top=SEAS.slice().sort((a,b)=>b[1]-a[1]).slice(0,15);
+  let h="<tr><th>Inverno</th><th style='text-align:right'>Totale</th><th style='text-align:right'>Giorni</th></tr>";
+  top.forEach((d,i)=>{h+="<tr><td>"+rank(i)+(d[0]-1)+"/"+String(d[0]).slice(2)+
+    "</td><td class='n'><b>"+f1(d[1])+"</b> cm</td><td class='n'>"+d[2]+"</td></tr>";});
+  document.getElementById("t-st").innerHTML=h;
+})();
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
