@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  issues: write             # segnalazione del mattino per classificare la foto della nebbia
 
 concurrency:                   # mai due aggiornamenti insieme
   group: update-data
@@ -102,3 +103,9 @@ jobs:
           else
             echo "nessuna variazione"
           fi
+
+      - name: Segnalazione per classificare la foto della nebbia
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/nebbia_issue.py apri

@@ -57,6 +57,17 @@ def misure_immagine(img):
     return round(media, 1), (round(dev / media, 3) if media > 0 else None)
 
 
+def contrasto_sfondo(img):
+    """Contrasto della parte alta dell'inquadratura (colline e cielo sopra il lago, senza la scritta in alto e senza
+    la palma in primo piano a sinistra). Con la nebbia lo sfondo diventa un grigio uniforme. È una misura grezza,
+    registrata per verificare più avanti se basta a riconoscere la nebbia; non classifica nulla."""
+    from PIL import ImageStat
+    g = img.convert("L")
+    w, h = g.size
+    s = ImageStat.Stat(g.crop((int(w * 0.42), int(h * 0.06), int(w * 0.92), int(h * 0.62))))
+    return round(s.stddev[0] / s.mean[0], 3) if s.mean[0] > 0 else None
+
+
 def condizioni():
     out, T = {}, {}
     try:
@@ -124,23 +135,43 @@ def previsione_notte(oggi):
     spesso la nebbia stessa (o lo strato basso) che il modello vede. Registra anche punto di rugiada e umidità
     all'alba, il «crossover» (minima della notte meno il punto di rugiada del pomeriggio prima), la pioggia delle
     24 ore precedenti, l'umidità del suolo, la pressione, l'inversione in quota (850 hPa) e lo strato limite."""
-    v = ["temperature_2m", "dew_point_2m", "wind_speed_10m", "cloud_cover"]
     giorni_fa = (dt.datetime.now(ROMA).date() - dt.date.fromisoformat(oggi)).days
     q = (f"latitude={LAT}&longitude={LON}&timezone=Europe%2FRome&past_days={giorni_fa + 1}&forecast_days=1"
          "&wind_speed_unit=ms&hourly=")
-    url = "https://previous-runs-api.open-meteo.com/v1/forecast?" + q
-    h = json.loads(scarica(url + ",".join(x + "_previous_day1" for x in v)))["hourly"]
+    return riassumi(chiedi("https://previous-runs-api.open-meteo.com/v1/forecast?" + q, "_previous_day1"),
+                    oggi, "_previous_day1")
+
+
+def previsione_sera(prossima):
+    """La previsione corrente (Open-Meteo, best match) per la notte che finisce all'alba del giorno «prossima».
+    È la stessa che la pagina mostra la sera: a differenza dell'archivio Previous Runs contiene anche le nuvole
+    per strato, l'umidità del suolo, la temperatura a 850 hPa e lo strato limite."""
+    q = (f"latitude={LAT}&longitude={LON}&timezone=Europe%2FRome&past_days=1&forecast_days=3"
+         "&wind_speed_unit=ms&hourly=")
+    out = riassumi(chiedi("https://api.open-meteo.com/v1/forecast?" + q, ""), prossima, "")
+    out["emessa"] = dt.datetime.now(ROMA).strftime("%Y-%m-%dT%H:%M")
+    return out
+
+
+def chiedi(url, suff):
+    v = ["temperature_2m", "dew_point_2m", "wind_speed_10m", "cloud_cover"]
+    h = json.loads(scarica(url + ",".join(x + suff for x in v)))["hourly"]
     for gruppo in EXTRA:
         try:
-            r = json.loads(scarica(url + ",".join(x + "_previous_day1" for x in gruppo)))["hourly"]
+            r = json.loads(scarica(url + ",".join(x + suff for x in gruppo)))["hourly"]
             if r.get("time") == h["time"]:
                 h.update(r)
         except Exception as e:
             print("nebbia-alba: non lette", ",".join(gruppo), e, file=sys.stderr)
+    return h
+
+
+def riassumi(h, oggi, suff):
+    v = ["temperature_2m", "dew_point_2m", "wind_speed_10m", "cloud_cover"]
     ieri = (dt.date.fromisoformat(oggi) - dt.timedelta(days=1)).isoformat()
     sorge = alba(oggi)
     alb = ore_alba(sorge)
-    val = lambda x, i: (h.get(x + "_previous_day1") or [None] * len(h["time"]))[i]
+    val = lambda x, i: (h.get(x + suff) or [None] * len(h["time"]))[i]
     notte, mattina = [], []
     for i, t in enumerate(h["time"]):
         if not ((t[:10] == ieri and t[11:13] >= "20") or (t[:10] == oggi and t[11:13] <= "08")):
@@ -198,6 +229,9 @@ def completa(giorni, oggi):
     """Rifà la previsione dei giorni già archiviati registrati con una versione precedente (fino a 60 giorni fa)."""
     limite = (dt.date.fromisoformat(oggi) - dt.timedelta(days=60)).isoformat()
     for d, r in giorni.items():
+        if r.get("foto") and "contrasto_sfondo" not in r and os.path.exists(os.path.join(HERE, r["foto"])):
+            from PIL import Image
+            r["contrasto_sfondo"] = contrasto_sfondo(Image.open(os.path.join(HERE, r["foto"])))
         p = r.get("previsione") or {}
         if d < oggi and d >= limite and p.get("v", 0) < VERSIONE:
             try:
@@ -227,6 +261,16 @@ def main():
     D["webcam"] = WEBCAM
     giorni = D.setdefault("giorni", {})
     completa(giorni, oggi)
+    # previsione «della sera prima»: dalle 14 a mezzanotte per l'alba di domani, poi fino a 2 ore prima dell'alba
+    # per quella di oggi; ogni esecuzione la aggiorna, così resta l'ultima emessa prima della notte
+    prossima = oggi if ora < alba(oggi) - dt.timedelta(hours=2) else \
+        (ora.date() + dt.timedelta(days=1)).isoformat() if ora.hour >= 14 else None
+    if prossima:
+        try:
+            giorni.setdefault(prossima, {"nebbia": None})["previsione_sera"] = previsione_sera(prossima)
+            print(f"nebbia-alba: previsione della sera per il {prossima} salvata")
+        except Exception as e:
+            print("nebbia-alba: previsione della sera non letta", e, file=sys.stderr)
     # i veli di nebbia sottili si dissolvono poco dopo l'alba: la foto si scatta il prima possibile con la luce,
     # da 10 minuti dopo il sorgere del sole (e non prima delle 7) fino alle 10:30
     sorge = alba(oggi)
@@ -239,6 +283,8 @@ def main():
         return
     rec = {"ora": ora.strftime("%H:%M"), "dopo_alba": round((ora - sorge).total_seconds() / 60),
            "nebbia": giorni.get(oggi, {}).get("nebbia")}
+    if giorni.get(oggi, {}).get("previsione_sera"):
+        rec["previsione_sera"] = giorni[oggi]["previsione_sera"]
     rec.update(condizioni())
     try:
         rec["previsione"] = previsione_notte(oggi)
@@ -254,6 +300,7 @@ def main():
         rec["hash"] = h
         rec["ferma"] = bool(prec and prec[-1]["hash"] == h)
         rec["luce"], rec["contrasto"] = misure_immagine(img)
+        rec["contrasto_sfondo"] = contrasto_sfondo(img)
         img = img.convert("RGB")
         img.thumbnail((640, 640))
         os.makedirs(FOTO, exist_ok=True)

@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: write
+  issues: write             # segnalazione del mattino per classificare la foto
 
 concurrency:
   group: nebbia-alba
@@ -58,3 +59,9 @@ jobs:
             sleep 15
           done
           exit 1
+
+      - name: Segnalazione per classificare la foto (rispondi «sì», «no» o «?»)
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/nebbia_issue.py apri
