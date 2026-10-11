@@ -31,6 +31,7 @@
   /* mappa scura: sempre, anche con il tema chiaro del sito */
   #map{height:min(72vh,720px);min-height:440px;width:100%;border-radius:var(--r);overflow:hidden;border:1px solid #263039;background:#0e1114;box-shadow:var(--shadow)}
   .leaflet-container{font-family:var(--sans);background:#0e1114}
+  .leaflet-tile-pane .scuro{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.6)}
   .leaflet-control-attribution{background:rgba(14,17,20,.75)!important;color:#9aa5ad!important}
   .leaflet-control-attribution a{color:#c6d0d6!important}
   .leaflet-bar a{background:#1a2026;color:#e6edf1;border-bottom-color:#2b343c}
@@ -101,7 +102,7 @@
       <div class="sh"><h2>La mappa</h2><span class="src" id="agg">anteprime aggiornate ogni 5 minuti</span></div>
       <div id="map" role="region" aria-label="Mappa delle webcam del Mugello"></div>
       <div class="grid" id="list"></div>
-      <p class="note">Le immagini restano di chi gestisce ogni webcam (la fonte è indicata sotto ogni anteprima): il sito le mostra così come sono pubblicate e rimanda alla pagina originale per la diretta. Alcune webcam pubblicano solo un video o un link e non hanno un'anteprima. Mappa: © OpenStreetMap, stile scuro © CARTO.</p>
+      <p class="note">Le immagini restano di chi gestisce ogni webcam (la fonte è indicata sotto ogni anteprima): il sito le mostra così come sono pubblicate e rimanda alla pagina originale per la diretta. Alcune webcam pubblicano solo un video o un link e non hanno un'anteprima. Mappa: © OpenStreetMap, in versione scura.</p>
     </section>
 
     <section>
@@ -146,8 +147,9 @@
 
   // ---------- mappa
   const map=L.map("map",{scrollWheelZoom:false,zoomControl:true}).setView([44.0,11.42],10);
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{maxZoom:19,subdomains:"abcd",
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
+  // tessere OpenStreetMap standard (nessuna chiave richiesta), rese scure con un filtro CSS sul solo strato delle tessere
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,className:"scuro",
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
   map.on("focus",()=>map.scrollWheelZoom.enable());
   L.marker([43.958,11.391],{icon:L.divIcon({className:"",html:'<div class="me" title="Borgo San Lorenzo"></div>',iconSize:[14,14]}),interactive:false}).addTo(map);
   const gruppo=L.markerClusterGroup({maxClusterRadius:90,showCoverageOnHover:false,spiderfyDistanceMultiplier:2.6,
