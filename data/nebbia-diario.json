@@ -54,7 +54,8 @@
    "ferma": false,
    "luce": 148.8,
    "contrasto": 0.318,
-   "foto": "reports/nebbia/2026-10-10.jpg"
+   "foto": "reports/nebbia/2026-10-10.jpg",
+   "contrasto_sfondo": 0.137
   },
   "2026-10-11": {
    "ora": "08:24",
@@ -106,7 +107,8 @@
    "ferma": false,
    "luce": 134.7,
    "contrasto": 0.343,
-   "foto": "reports/nebbia/2026-10-11.jpg"
+   "foto": "reports/nebbia/2026-10-11.jpg",
+   "contrasto_sfondo": 0.051
   }
  }
 }
