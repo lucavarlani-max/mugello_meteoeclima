@@ -59,7 +59,7 @@
   "2026-10-11": {
    "ora": "08:24",
    "dopo_alba": 62,
-   "nebbia": null,
+   "nebbia": true,
    "termo_ora": "2026-10-11T07:15",
    "tmin_borgo": 11.4,
    "tmin_giovi": 9.8,
