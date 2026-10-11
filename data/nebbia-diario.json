@@ -122,17 +122,17 @@
     "alba": "07:23",
     "scarto_alba": 0.0,
     "vento_alba": 0.5,
-    "dp_alba": 13.3,
-    "nuvole_alte": 91,
-    "nubi_basse_alba": 99,
+    "dp_alba": 13.2,
+    "nuvole_alte": 88,
+    "nubi_basse_alba": 100,
     "ur_alba": 100,
     "suolo_alba": 0.205,
-    "inv850_alba": -4.3,
-    "blh_alba": 25,
+    "inv850_alba": -3.9,
+    "blh_alba": 30,
     "pressione": 1013,
-    "crossover": -0.4,
+    "crossover": -0.5,
     "pioggia_24h": 0.0,
-    "emessa": "2026-10-11T20:27"
+    "emessa": "2026-10-12T00:26"
    }
   }
  }
