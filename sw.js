@@ -18,6 +18,7 @@ const SHELL = [
   './comune.html',
   './neve.html',
   './neve-firenze.html',
+  './neve-new-york.html',
   './clima-firenze.html',
   './mappe.html',
   './proverbi.html',
