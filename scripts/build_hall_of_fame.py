@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
 Gli estremi del Mugello (pagina MeteoGeek geek-hall-of-fame.html): record di temperatura e di pioggia giornaliera
-delle stazioni del Servizio Idrologico Regionale (SIR) nel Mugello e nell'alto Mugello, con controllo di qualità.
+delle stazioni del Servizio Idrologico Regionale (SIR) nel Mugello e nell'alto Mugello e delle stazioni ARPAE
+Emilia-Romagna nei comuni toscani del versante adriatico (Firenzuola, Bibbiana, Palazzuolo sul Senio, Marradi), con controllo
+di qualità.
 
 Ingresso: data/sir/stazioni.csv e data/sir/<ID>/temp.csv (data;max;min), data/sir/<ID>/prec024.csv (data;mm);
 per Borgo S. Lorenzo (TOS01000999) la serie aggiornata di data/bsl/borgo.json.
@@ -51,6 +53,17 @@ def stazioni():
         if t or p:
             S[r["id"]] = {"nome": r["nome"], "comune": r["comune"].replace(" (FI)", ""), "quota": round(float(r["quota"] or 0)),
                           "t": t, "p": {d: v[0] for d, v in p.items() if v[0] is not None}}
+    # stazioni ARPAE Emilia-Romagna (rete idro-meteo) nei comuni toscani dell'alto Mugello: data/arpae/stazioni.csv
+    # e data/arpae/<id>/temp.csv, prec024.csv nello stesso formato del SIR (scripts/fetch_arpae_stazioni.py)
+    pa = os.path.join(HERE, "data", "arpae", "stazioni.csv")
+    if os.path.exists(pa):
+        for r in csv.DictReader(open(pa, encoding="utf-8"), delimiter=";"):
+            d = os.path.join(HERE, "data", "arpae", r["id"])
+            t = leggi_csv(os.path.join(d, "temp.csv"), 2)
+            p = leggi_csv(os.path.join(d, "prec024.csv"), 1)
+            if t or p:
+                S[r["id"]] = {"nome": r["nome"], "comune": r["comune"], "quota": round(float(r["quota"] or 0)), "fonte": "ARPAE",
+                              "t": t, "p": {k: v[0] for k, v in p.items() if v[0] is not None}}
     # Borgo: serie aggiornata (stessa stazione SIR/CFR), già ripulita dei periodi esclusi in build_bsl.py
     try:
         B = json.load(open(os.path.join(HERE, "data", "bsl", "borgo.json"), encoding="utf-8"))
@@ -170,7 +183,7 @@ def main():
     # record per stazione
     record = []
     for sid, s in sorted(S.items(), key=lambda kv: kv[1]["quota"]):
-        r = {"id": sid, "nome": s["nome"], "comune": s["comune"], "quota": s["quota"]}
+        r = {"id": sid, "nome": s["nome"], "comune": s["comune"], "quota": s["quota"], "fonte": s.get("fonte", "SIR")}
         if s["t"] and anni(s["t"]) >= MIN_ANNI:
             dd = sorted(s["t"])
             r["t_dal"], r["t_al"], r["t_giorni"] = dd[0], dd[-1], len(dd)
@@ -189,7 +202,7 @@ def main():
             if vp:
                 v, d, m = max(vp)
                 r["pmax"] = {"v": v, "d": d, "verificato": m is None}
-        if len(r) > 4:
+        if len(r) > 5:
             record.append(r)
 
     # giornate: per ogni data il valore più estremo fra le stazioni valide, con le altre stazioni dello stesso giorno
@@ -257,7 +270,7 @@ def main():
     tot_p = sum(len(s["p"]) for s in S.values())
     out = {
         "agg": dt.date.today().isoformat(),
-        "fonte": "Servizio Idrologico Regionale e Centro Funzionale della Regione Toscana (dati CC BY-SA 4.0)",
+        "fonte": "Servizio Idrologico Regionale e Centro Funzionale della Regione Toscana (CC BY-SA 4.0); ARPAE Emilia-Romagna, SIMC (dati aperti)",
         "metodo": {"soglia_spaziale_max": SOGLIA_SPAZIO["x"], "soglia_spaziale_min": SOGLIA_SPAZIO["n"], "soglia_salto": SOGLIA_SALTO, "min_anni": MIN_ANNI},
         "conteggi": {"stazioni": len(record), "giorni_temperatura": tot_t, "giorni_pioggia": tot_p,
                      "scartati_t": sum(1 for x in scart if x["tipo"] != "pioggia"),

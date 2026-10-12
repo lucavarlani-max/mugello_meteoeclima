@@ -83,7 +83,7 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **Mont Aigoual 1896–2026** (`mont-aigoual.html`, osservatorio di Météo-France a 1567 m nelle Cevenne, dati NOAA GHCN-Daily: pioggia dal 1896, temperatura dal 1949, media giornaliera completata con TAVG, opzione `--tavg` di `build_serie.py`) e
   **De Bilt 1901–2026** (`de-bilt.html`, stazione di riferimento del KNMI nei Paesi Bassi, stazione centenaria OMM) e
   **Bangalore 1901–2026** (`bangalore.html`, India Meteorological Department, stazione centenaria OMM come osservatorio pluviometrico dal 1867: pioggia dal 1901, temperatura dal 1973, media giornaliera completata con TAVG e soglia di giorni validi per anno abbassata a 275 con `--min-anno=275` di `build_serie.py`, introdotta per questa serie) e
-  **Firenzuola 1961–2026** (`firenzuola.html`, la prima serie di un comune del Mugello stesso: stazione 01429 di ARPAE Emilia-Romagna, archivio opendata Eraclito, 66 anni praticamente senza lacune) e
+  **Firenzuola 1961–2026** (`firenzuola.html`, la prima serie di un comune del Mugello stesso: cella 01469 (5 km, quota media 580 m, contiene il capoluogo) del dataset su griglia Eraclito di ARPAE Emilia-Romagna, interpolato dalle stazioni; aggiornata da `scripts/fetch_arpae_firenzuola.py`, 66 anni praticamente senza lacune) e
   **Oxford 1815–2025** (`oxford.html`, Radcliffe Meteorological Station dell'Università di Oxford, stazione centenaria OMM: temperatura dal 1815, pioggia dal 1827, 211 anni con appena 5 valori mancanti) e
   **Domodossola 1872–2013** (`domodossola.html`, Osservatorio del Collegio Rosmini, stazione centenaria OMM: unica serie del sito senza dati giornalieri, costruita a mano dalle tabelle annuali e mensili pubblicate su *Nimbus* 72 della Società Meteorologica Italiana — niente massime/minime separate né "un giorno nella storia"; script di estrazione via `pdftotext -bbox` non versionato, dati finali in `domodossola.js` e `data/serie/domodossola.json`).
   Analisi d'insieme **Italia, stazioni NOAA** (`italia-ghcn.html` + `italia-ghcn.js`): 100 stazioni
@@ -170,6 +170,11 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   delle stazioni SIR (`data/sir/`, Borgo da `data/bsl/borgo.json`) con controllo di qualità dichiarato (limiti fisici,
   picchi isolati, coerenza spaziale delle anomalie, piogge non confermate): `scripts/build_hall_of_fame.py` →
   `data/hall-of-fame.json`, rigenerato da `update-data.yml`.
+  Comprende le stazioni ARPAE Emilia-Romagna di Firenzuola (476 m) e Bibbiana (858 m, Palazzuolo sul Senio), dal 2006, e i pluviometri di Palazzuolo sul Senio
+  e Marradi:
+  `scripts/fetch_arpae_stazioni.py` legge l'archivio mensile delle osservazioni ARPAE (BUFR-JSON) e scrive
+  `data/arpae/stazioni.csv` e `data/arpae/<id>/temp.csv`, `prec024.csv` nel formato del SIR (una volta al giorno;
+  `--dal 2006-01` ricostruisce tutto).
 - **Nebbia in valle** (`geek-nebbia.html`, MeteoGeek) — inversione termica notturna misurata (termometri CFR,
   minime SIR di Borgo S. Lorenzo e Monte Giovi), umidità e vento CFR (`scripts/fetch_nebbia.py` → `data/nebbia.json`)
   e **diario della nebbia**: l'Action `nebbia-alba.yml` ogni mattina (appena dopo l'alba, entro le 10:30) salva la foto della webcam del lago di
