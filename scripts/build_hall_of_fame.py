@@ -2,7 +2,7 @@
 """
 Gli estremi del Mugello (pagina MeteoGeek geek-hall-of-fame.html): record di temperatura e di pioggia giornaliera
 delle stazioni del Servizio Idrologico Regionale (SIR) nel Mugello e nell'alto Mugello e delle stazioni ARPAE
-Emilia-Romagna nei comuni toscani del versante adriatico (Firenzuola, Palazzuolo sul Senio, Marradi), con controllo
+Emilia-Romagna nei comuni toscani del versante adriatico (Firenzuola, Bibbiana, Palazzuolo sul Senio, Marradi), con controllo
 di qualità.
 
 Ingresso: data/sir/stazioni.csv e data/sir/<ID>/temp.csv (data;max;min), data/sir/<ID>/prec024.csv (data;mm);

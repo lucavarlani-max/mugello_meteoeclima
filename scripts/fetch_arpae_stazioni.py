@@ -27,7 +27,8 @@ URL = "https://dati-simc.arpae.it/opendata/osservati/meteo/storico/{m}.json.gz"
 # Palazzuolo sul Senio e Marradi sono pluviometri: solo precipitazione
 STAZIONI = [("firenzuola", "simnbo", "Firenzuola", "Firenzuola", 476),
             ("palazzuolo", "simnbo", "Palazzuolo sul Senio", "Palazzuolo sul Senio", 500),
-            ("marradi", "spdsra", "Marradi", "Marradi", 350)]
+            ("marradi", "spdsra", "Marradi", "Marradi", 350),
+            ("bibbiana", "spdsra", "Bibbiana", "Palazzuolo sul Senio", 858)]
 
 
 def mese(m):
