@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Firenzuola 1961–2026 · Serie storiche · Mugello Meteo & Clima</title>
-<meta name="description" content="66 anni di osservazioni giornaliere a Firenzuola, nel Mugello, dati ARPAE Emilia-Romagna: riscaldamento, stagioni, giorni estremi, pioggia, record e il meteo di ogni giorno dal 1961, praticamente senza lacune.">
+<meta name="description" content="66 anni di dati giornalieri per Firenzuola, nel Mugello, dal dataset su griglia Eraclito di ARPAE Emilia-Romagna: riscaldamento, stagioni, giorni estremi, pioggia, record e il meteo di ogni giorno dal 1961, praticamente senza lacune.">
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/firenzuola.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="Firenzuola, il clima nel Mugello dal 1961">
-<meta property="og:description" content="66 anni di osservazioni giornaliere a Firenzuola, nel Mugello: riscaldamento, stagioni, giorni estremi, pioggia, record e il meteo di ogni giorno dal 1961, praticamente senza lacune.">
+<meta property="og:description" content="66 anni di dati giornalieri per Firenzuola, nel Mugello: riscaldamento, stagioni, giorni estremi, pioggia, record e il meteo di ogni giorno dal 1961, praticamente senza lacune.">
 <meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/firenzuola.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
@@ -41,7 +41,7 @@
     <header class="head">
       <div class="eyebrow">Serie storica · dal 1961</div>
       <h1>Firenzuola, 1961–2026</h1>
-      <p class="lead">A Firenzuola, uno dei nove comuni del Mugello, ARPAE Emilia-Romagna misura temperatura e pioggia ogni giorno dal 1961: oltre sei decenni di dati, praticamente senza lacune, per capire come è cambiato il clima proprio qui, nella vallata di cui si occupa questo sito. <span id="lead-n"></span></p>
+      <p class="lead">Per Firenzuola, uno dei nove comuni del Mugello, ARPAE Emilia-Romagna ricostruisce temperatura e pioggia di ogni giorno dal 1961 interpolando le misure delle stazioni della zona: oltre sei decenni di dati senza lacune, per capire come è cambiato il clima proprio qui, nella vallata di cui si occupa questo sito. <span id="lead-n"></span></p>
       <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
     </header>
 
@@ -146,10 +146,11 @@
       <div class="sh"><h2>Dati e metodo</h2></div>
       <div class="card">
         <ul class="note">
-          <li><b>Fonte:</b> ARPAE Emilia-Romagna, Servizio Idro-Meteo-Clima (SIMC), archivio opendata <a href="https://dati-simc.arpae.it/opendata/eraclito/timeseries/01429/" target="_blank" rel="noopener">Eraclito</a>, stazione 01429 «Firenzuola». Serie giornaliera di temperatura massima, minima e precipitazione dal 1° gennaio 1961 al 3 ottobre 2026.</li>
+          <li><b>Fonte:</b> ARPAE Emilia-Romagna, Servizio Idro-Meteo-Clima (SIMC), dataset climatico <a href="https://dati-simc.arpae.it/opendata/eraclito/timeseries/01429/" target="_blank" rel="noopener">Eraclito</a>, cella 01429. Serie giornaliera di temperatura massima, minima e precipitazione dal 1° gennaio 1961, aggiornata in automatico.</li>
+          <li><b>Non è una stazione:</b> Eraclito è una griglia di circa 5 km ottenuta interpolando le misure delle stazioni (per la temperatura con correzione per la quota). La cella 01429 è centrata a 44,14° N 11,34° E, a ovest del capoluogo, con quota media di 681 m: i suoi valori rappresentano la media del quadrato, non un punto preciso, e sono di solito meno estremi di quelli di una singola stazione. ARPAE ricalcola gli ultimi mesi quando arrivano nuove misure, quindi i valori recenti possono cambiare di qualche decimo.</li>
           <li>Temperatura media = (massima + minima) / 2. Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330: qui manca solo il 2026, ancora in corso (compare comunque nei grafici mensili e in "Un giorno nella storia").</li>
-          <li>Copertura pressoché perfetta: 24.017 giorni su altrettanti attesi in oltre sei decenni, nessun giorno mancante.</li>
-          <li>Anomalie calcolate rispetto al trentennio 1961–1990, il primo della serie; normali climatiche 1961–1990 e 1991–2020. In oltre sei decenni può essere cambiata la strumentazione della stazione: i confronti tra le epoche più lontane vanno letti come indicativi.</li>
+          <li>Nessun giorno mancante: essendo una ricostruzione su griglia, la serie è completa anche quando qualche stazione non ha misurato.</li>
+          <li>Anomalie calcolate rispetto al trentennio 1961–1990, il primo della serie; normali climatiche 1961–1990 e 1991–2020. In oltre sei decenni è cambiata la rete di stazioni da cui la griglia è ricostruita: i confronti tra le epoche più lontane vanno letti come indicativi.</li>
         </ul>
         <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
           <a class="btn ghost" href="data/serie/firenzuola.csv" download>⬇ Serie giornaliera (CSV)</a>
