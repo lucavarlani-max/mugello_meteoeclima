@@ -39,6 +39,24 @@
   ],
   "esperimenti": [
     {
+      "id": "hall-of-fame",
+      "titolo": "Gli estremi del Mugello",
+      "tipo": "esperimento",
+      "tema": "clima",
+      "data": "2026-10-12",
+      "stato": "nuovo",
+      "testo": "I record di temperatura e di pioggia giornaliera delle stazioni del Servizio Idrologico Regionale nel Mugello dal 1951, con un controllo di qualità dichiarato: 41,6 °C a Borgo San Lorenzo nel luglio 1952, −22,0 °C nel gennaio 1985, 175,4 mm a Razzuolo il 14 marzo 2025. Le giornate più estreme e i valori scartati perché sbagliati.",
+      "link": "geek-hall-of-fame.html",
+      "tag": [
+        "record",
+        "estremi",
+        "temperatura",
+        "pioggia",
+        "SIR",
+        "controllo di qualità"
+      ]
+    },
+    {
       "id": "nebbia",
       "titolo": "Nebbia in valle: la trappola fredda del Mugello",
       "tipo": "esperimento",

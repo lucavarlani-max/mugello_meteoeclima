@@ -166,6 +166,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   si risponde con i numeri e la categoria (`2 tramonto, 5 arcobaleno`) o `no`, e `webcam-galleria.yml` aggiunge le
   foto scelte. Per temporali e arcobaleni: tab Actions → «Galleria webcam» → Run workflow (scatta subito). Una webcam
   si esclude dalla galleria con `"galleria": false` in `data/webcam.json`.
+- **Gli estremi del Mugello** (`geek-hall-of-fame.html`, MeteoGeek) — record di temperatura e pioggia giornaliera
+  delle stazioni SIR (`data/sir/`, Borgo da `data/bsl/borgo.json`) con controllo di qualità dichiarato (limiti fisici,
+  picchi isolati, coerenza spaziale delle anomalie, piogge non confermate): `scripts/build_hall_of_fame.py` →
+  `data/hall-of-fame.json`, rigenerato da `update-data.yml`.
 - **Nebbia in valle** (`geek-nebbia.html`, MeteoGeek) — inversione termica notturna misurata (termometri CFR,
   minime SIR di Borgo S. Lorenzo e Monte Giovi), umidità e vento CFR (`scripts/fetch_nebbia.py` → `data/nebbia.json`)
   e **diario della nebbia**: l'Action `nebbia-alba.yml` ogni mattina (appena dopo l'alba, entro le 10:30) salva la foto della webcam del lago di

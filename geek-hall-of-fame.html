@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gli estremi del Mugello · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Record di temperatura massima, minima e pioggia giornaliera delle stazioni del Servizio Idrologico Regionale nel Mugello dal 1951, con controllo di qualità dei dati, le giornate più estreme e i valori scartati.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-hall-of-fame.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Gli estremi del Mugello · MeteoGeek">
+<meta property="og:description" content="I record delle stazioni SIR del Mugello dal 1951, con controllo di qualità: caldo, freddo e pioggia giornaliera.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-hall-of-fame.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  :root{--hot:#eb6834;--cold:#2a78d6;--rain:#1baf7a}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--hot:#d95926;--cold:#3987e5;--rain:#199e6f}}
+  :root[data-theme="dark"]{--hot:#d95926;--cold:#3987e5;--rain:#199e6f}
+  section{margin-top:30px}
+  .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px;min-width:0}
+  .tile span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .tile b{display:block;font-family:var(--serif);font-weight:800;font-size:30px;letter-spacing:-.02em;margin:4px 0 2px}
+  .tile small{font-size:12.5px;color:var(--ink-soft)}
+  .tbl{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:7px 8px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  td small{color:var(--ink-faint);font-size:11.5px}
+  .nv{color:var(--ink-faint)}
+  .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .three h3{font-family:var(--serif);font-size:16px;margin:0 0 8px}
+  .hf{list-style:none;margin:0;padding:0}
+  .hf li{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:13px}
+  .hf .r{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-align:right}
+  .hf .c{min-width:0;line-height:1.4}
+  .hf .alt{display:block;color:var(--ink-soft);font-size:12px}
+  .hf .v{font-family:var(--serif);font-weight:800;font-size:15px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .chart{width:100%;height:auto;position:relative}
+  .chart svg{display:block;width:100%;height:auto;overflow:visible}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  svg .ttl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-soft);letter-spacing:.04em}
+  svg .grid{stroke:var(--line);stroke-width:1}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+    padding:8px 11px;font-size:12.5px;line-height:1.5;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+  .tip i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:0 0 8px}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+  .qc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .qc div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px}
+  .qc b{font-family:var(--mono);font-size:12px}
+  .qc p{margin:4px 0 0;font-size:13px;color:var(--ink-soft)}
+  @media (max-width:980px){ .three{grid-template-columns:1fr} }
+  @media (max-width:860px){ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))} .qc{grid-template-columns:1fr} }
+  @media (max-width:520px){ .tile b{font-size:22px} .tile{padding:12px} h1{font-size:32px} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="meteogeek.html">← MeteoGeek</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Gli estremi del Mugello</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · archivio · valori estremi</div>
+      <h1>Gli estremi del Mugello</h1>
+      <p class="lead">Valori massimi e minimi di temperatura e massimi di precipitazione giornaliera misurati dalle stazioni del Servizio Idrologico Regionale della Toscana nel Mugello, in Val di Sieve e sul crinale appenninico. Ogni valore è stato sottoposto a un controllo di qualità; quelli che non lo superano sono esclusi dalle classifiche ed elencati a parte.</p>
+      <div class="tiles" id="tiles"><div class="tile"><small>Carico i dati…</small></div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Record per stazione</h2><span class="src" id="rec-src">SIR Toscana</span></div>
+      <div class="card"><div class="tbl"><table id="rec"></table></div>
+        <p class="note">Stazioni ordinate per quota. Il periodo indica il primo e l'ultimo giorno disponibili, non la continuità: diverse serie hanno lacune anche di anni (Borgo S. Lorenzo, per esempio, non ha temperature dalla metà del 1989 alla fine del 1999). Sono incluse solo le stazioni con almeno 5 anni di dati. † = valore che ha superato i controlli interni ma che non è stato possibile confrontare con almeno due altre stazioni attive lo stesso giorno.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Le giornate più estreme</h2><span class="src">un solo giorno per episodio</span></div>
+      <div class="three">
+        <div class="card"><h3>Temperatura massima</h3><ol class="hf" id="g-caldo"></ol></div>
+        <div class="card"><h3>Temperatura minima</h3><ol class="hf" id="g-freddo"></ol></div>
+        <div class="card"><h3>Precipitazione giornaliera</h3><ol class="hf" id="g-pioggia"></ol></div>
+      </div>
+      <p class="note">Per ogni giorno si considera il valore più estremo fra tutte le stazioni valide; i giorni distanti meno di 4 giorni da uno già in classifica appartengono allo stesso episodio e non vengono ripetuti. Sotto il valore, le altre stazioni dello stesso giorno. Le classifiche di temperatura sono dominate da Borgo S. Lorenzo per due ragioni: è la serie più lunga (dal 1951) ed è in fondovalle, dove d'estate si raggiungono le massime più alte e d'inverno, con l'inversione termica, le minime più basse. La precipitazione è disponibile solo dal 1993 (Borgo S. Lorenzo 2) e per la maggior parte delle stazioni dal 2004.</p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Borgo San Lorenzo, anno per anno</h2><span class="src" id="b-src">TOS01000999 · 196 m</span></div>
+      <div class="card">
+        <div class="legend"><span><i style="background:var(--hot)"></i>massima più alta dell'anno</span><span><i style="background:var(--cold)"></i>minima più bassa dell'anno</span></div>
+        <div class="chart" id="annuale"><div class="tip"></div></div>
+        <p class="note" id="b-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Controllo di qualità</h2><span class="src" id="qc-src"></span></div>
+      <div class="card">
+        <div class="qc">
+          <div><b>T1 · Limiti fisici</b><p>Temperatura fuori dall'intervallo da −30 a +45 °C, oppure massima inferiore alla minima dello stesso giorno.</p></div>
+          <div><b>T2 · Picco isolato</b><p>Il valore si stacca di oltre 12 °C, nello stesso verso, sia dal giorno precedente sia dal successivo.</p></div>
+          <div><b>T3 · Coerenza spaziale</b><p>Si calcola l'anomalia del valore rispetto alla climatologia della stazione (media del giorno dell'anno, finestra di ±15 giorni) e la si confronta con la mediana delle anomalie delle altre stazioni attive lo stesso giorno, se sono almeno due. Scarto oltre 7 °C per le massime e oltre 10 °C per le minime: nelle notti di inversione il fondovalle si stacca legittimamente dalla collina.</p></div>
+          <div><b>P1–P2 · Precipitazione</b><p>Oltre 400 mm in un giorno; oppure oltre 80 mm mentre nessuna altra stazione attiva supera il 20% del valore (il 10% se le stazioni attive sono una o due).</p></div>
+        </div>
+        <h3 style="font-family:var(--serif);font-size:16px;margin:20px 0 8px">I valori più estremi esclusi</h3>
+        <div class="tbl"><table id="scart"></table></div>
+        <p class="note">I controlli individuano errori evidenti (trascrizioni, sensori guasti, valori fuori scala), non errori sistematici. Un sensore esposto al sole o una schermatura inadeguata producono valori coerenti fra loro giorno dopo giorno e superano i controlli. Esempio: i 38,8 °C di Monte Giovi (960 m) del 1° agosto 2017 superano di appena 1,0 °C Borgo S. Lorenzo 2 (280 m), nonostante 680 m di dislivello, e vanno considerati dubbi.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Fonte e limiti</h2></div>
+      <div class="card">
+        <p class="note" style="margin-top:0;max-width:none">Dati giornalieri di temperatura massima e minima e di precipitazione del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a>, licenza CC BY-SA 4.0. Per Borgo S. Lorenzo la serie è integrata con i dati giornalieri recenti del Centro Funzionale. Le serie non sono omogeneizzate: nel corso dei decenni sono cambiati strumenti (da termometri a lettura manuale a sensori automatici), posizioni e orari di osservazione, e i valori di epoche diverse non sono confrontabili con la precisione di un decimo di grado. A Borgo S. Lorenzo oltre l'80% delle massime degli anni Settanta e Ottanta è un multiplo esatto di mezzo grado, contro circa il 20% atteso e osservato dopo il 2000: sono letture manuali arrotondate. Questa pagina non usa rianalisi né modelli: ogni numero è una misura di stazione. Elaborazione: <code>scripts/build_hall_of_fame.py</code>, dati in <code>data/hall-of-fame.json</code>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR e CFR Toscana</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  const $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
+  const MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const fmt=(v,d=1)=>v==null||isNaN(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const data=iso=>{const [a,m,g]=iso.split("-");return `${+g} ${MESI[+m-1]} ${a}`;};
+  const num=n=>n.toLocaleString("it-IT");
+  const el=(t,a,x)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;};
+  const nv=r=>r&&!r.verificato?'<span class="nv" title="non confrontabile con altre stazioni">†</span>':"";
+
+  fetch("./data/hall-of-fame.json?t="+Date.now(),{cache:"no-cache"}).then(r=>r.json()).then(D=>{
+    const c=D.conteggi, R=D.record;
+    const best=(k,s)=>R.filter(r=>r[k]).reduce((a,r)=>!a||s*(r[k].v-a[k].v)>0?r:a,null);
+    const bx=best("tmax",1), bn=best("tmin",-1), bp=best("pmax",1);
+    $("tiles").innerHTML=
+      `<div class="tile"><span>Temperatura massima</span><b>${fmt(bx.tmax.v)} °C</b><small>${bx.nome}, ${data(bx.tmax.d)}${bx.tmax.verificato?"":" †"}</small></div>`+
+      `<div class="tile"><span>Temperatura minima</span><b>${fmt(bn.tmin.v)} °C</b><small>${bn.nome}, ${data(bn.tmin.d)}${bn.tmin.verificato?"":" †"}</small></div>`+
+      `<div class="tile"><span>Pioggia in un giorno</span><b>${fmt(bp.pmax.v)} mm</b><small>${bp.nome}, ${data(bp.pmax.d)}</small></div>`+
+      `<div class="tile"><span>Dati esaminati</span><b>${c.stazioni} stazioni</b><small>${num(c.giorni_temperatura)} giorni di temperatura dal ${c.t_dal.slice(0,4)}, ${num(c.giorni_pioggia)} di pioggia dal ${c.p_dal.slice(0,4)}</small></div>`;
+    $("rec-src").textContent=`SIR Toscana · elaborazione del ${data(D.agg)}`;
+
+    $("rec").innerHTML=`<thead><tr><th>Stazione</th><th class="n">Quota</th><th>Temperatura dal–al</th><th class="n">Massima</th><th class="n">Minima</th><th>Pioggia dal–al</th><th class="n">Max in 24 h</th></tr></thead><tbody>`+
+      R.map(r=>`<tr><td>${r.nome}<br><small>${r.comune} · ${r.id}</small></td><td class="n">${r.quota} m</td>`+
+        `<td>${r.t_dal?`${r.t_dal.slice(0,4)}–${r.t_al.slice(0,4)}<br><small>${num(r.t_giorni)} giorni</small>`:"–"}</td>`+
+        `<td class="n">${r.tmax?`<b>${fmt(r.tmax.v)}</b>${nv(r.tmax)}<br><small>${data(r.tmax.d)}</small>`:"–"}</td>`+
+        `<td class="n">${r.tmin?`<b>${fmt(r.tmin.v)}</b>${nv(r.tmin)}<br><small>${data(r.tmin.d)}</small>`:"–"}</td>`+
+        `<td>${r.p_dal?`${r.p_dal.slice(0,4)}–${r.p_al.slice(0,4)}<br><small>${num(r.p_giorni)} giorni</small>`:"–"}</td>`+
+        `<td class="n">${r.pmax?`<b>${fmt(r.pmax.v)}</b>${nv(r.pmax)}<br><small>${data(r.pmax.d)}</small>`:"–"}</td></tr>`).join("")+"</tbody>";
+
+    const classifica=(id,L,u,extra)=>{$(id).innerHTML=
+      L.map((g,i)=>`<li><span class="r">${i+1}</span><div class="c"><b>${data(g.d)}</b> · ${g.nome}${g.altre.length?`<span class="alt">${g.altre.slice(0,3).map(a=>`${a.nome} ${fmt(a.v)}`).join(" · ")}</span>`:`<span class="alt nv">nessuna altra stazione attiva</span>`}${extra?extra(g):""}</div><span class="v">${fmt(g.v)} ${u}</span></li>`).join("");};
+    classifica("g-caldo",D.caldo,"°C"); classifica("g-freddo",D.freddo,"°C");
+    classifica("g-pioggia",D.pioggia,"mm",g=>`<span class="alt">media di ${g.stazioni} stazioni: ${fmt(g.media)} mm</span>`);
+
+    const S=D.scartati, tipi=[["massima","Massima","°C"],["minima","Minima","°C"],["pioggia","Pioggia","mm"]];
+    $("qc-src").textContent=`${num(c.scartati_t)} temperature e ${num(c.scartati_p)} piogge escluse`;
+    $("scart").innerHTML=`<thead><tr><th>Grandezza</th><th>Stazione</th><th>Giorno</th><th class="n">Valore</th><th>Motivo</th></tr></thead><tbody>`+
+      tipi.flatMap(([k,l,u])=>S[k].slice(0,5).map(x=>`<tr><td>${l}</td><td>${x.nome}</td><td>${data(x.d)}</td><td class="n">${fmt(x.v)} ${u}</td><td>${x.motivo}</td></tr>`)).join("")+"</tbody>";
+
+    // ---------- Borgo: estremi annuali, due pannelli con il proprio asse
+    const B=D.borgo, box=$("annuale"), tip=box.querySelector(".tip");
+    const anni=B.map(b=>b.a), a0=anni[0], a1=anni[anni.length-1];
+    const mancanti=[]; for(let a=a0;a<=a1;a++) if(!anni.includes(a)) mancanti.push(a);
+    $("b-src").textContent=`TOS01000999 · 196 m · ${B.length} anni con almeno l'85% dei giorni`;
+    function disegna(){
+      box.querySelectorAll("svg").forEach(s=>s.remove());
+      const W=Math.max(300,box.clientWidth), sm=W<600, ml=36, mr=8, top=16, H1=sm?140:180, gap=34, H2=sm?140:180, H=top+H1+gap+H2+24;
+      const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Massima e minima annuali a Borgo San Lorenzo"});
+      const x=a=>ml+(a-a0)/(a1-a0)*(W-ml-mr);
+      const pannello=(y0,h,k,lo,hi,step,col,tit)=>{
+        const y=v=>y0+h-(v-lo)/(hi-lo)*h;
+        svg.appendChild(el("text",{x:ml,y:y0-5,class:"ttl"},tit));
+        for(let v=lo;v<=hi+1e-9;v+=step){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:y(v),y2:y(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:y(v)+3.5,"text-anchor":"end",class:"axl"},fmt(v,0)));}
+        // linea spezzata dove mancano anni
+        let d="", prev=null;
+        B.forEach(b=>{d+=(prev!=null&&b.a===prev+1?"L":"M")+x(b.a).toFixed(1)+","+y(b[k]).toFixed(1); prev=b.a;});
+        svg.appendChild(el("path",{d,fill:"none",stroke:col,"stroke-width":2,"stroke-linejoin":"round"}));
+        B.forEach(b=>svg.appendChild(el("circle",{cx:x(b.a),cy:y(b[k]),r:2.6,fill:col})));
+        return y;
+      };
+      const xs=B.map(b=>b.x), ns=B.map(b=>b.n);
+      const lo1=Math.floor(Math.min(...xs)/2)*2, hi1=Math.ceil(Math.max(...xs)/2)*2;
+      const lo2=Math.floor(Math.min(...ns)/4)*4, hi2=Math.ceil(Math.max(...ns)/4)*4;
+      pannello(top,H1,"x",lo1,hi1,2,"var(--hot)","MASSIMA PIÙ ALTA DELL'ANNO (°C)");
+      pannello(top+H1+gap,H2,"n",lo2,hi2,4,"var(--cold)","MINIMA PIÙ BASSA DELL'ANNO (°C)");
+      for(let a=Math.ceil(a0/10)*10;a<=a1;a+=10) svg.appendChild(el("text",{x:x(a),y:H-6,"text-anchor":"middle",class:"axl"},a));
+      const cross=el("line",{y1:top,y2:H-22,stroke:"var(--ink-faint)","stroke-width":1,opacity:0}); svg.appendChild(cross);
+      const hit=el("rect",{x:ml,y:top,width:W-ml-mr,height:H-top-22,fill:"transparent"}); svg.appendChild(hit);
+      const muovi=e=>{const r=svg.getBoundingClientRect(), px=(e.clientX-r.left)*W/r.width;
+        const b=B.reduce((p,q)=>Math.abs(x(q.a)-px)<Math.abs(x(p.a)-px)?q:p);
+        cross.setAttribute("x1",x(b.a)); cross.setAttribute("x2",x(b.a)); cross.setAttribute("opacity",.6);
+        tip.innerHTML=`<b>${b.a}</b><br><i style="background:var(--hot)"></i>${fmt(b.x)} °C il ${data(b.xd)}<br><i style="background:var(--cold)"></i>${fmt(b.n)} °C il ${data(b.nd)}<br><small>${b.g35} giorni ≥ 35 °C · ${b.gm5} notti ≤ −5 °C</small>`;
+        tip.style.opacity=1; const tx=x(b.a)/W*box.clientWidth; tip.style.left=Math.min(box.clientWidth-tip.offsetWidth,Math.max(0,tx-tip.offsetWidth/2))+"px"; tip.style.top="0px";};
+      hit.addEventListener("pointermove",muovi); hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;cross.setAttribute("opacity",0);});
+      box.insertBefore(svg,tip);
+    }
+    disegna(); let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(disegna,150);});
+    const gruppi=[]; mancanti.forEach(a=>{const g=gruppi[gruppi.length-1]; if(g&&g[1]===a-1) g[1]=a; else gruppi.push([a,a]);});
+    $("b-note").innerHTML=`Ogni punto è l'estremo di un anno solare; la linea si interrompe negli anni mancanti o con meno dell'85% dei giorni misurati (${gruppi.map(g=>g[0]===g[1]?g[0]:g[0]+"–"+g[1]).join(", ")}). Le due grandezze hanno scale diverse e sono in pannelli separati. Passando sul grafico si leggono la data di ogni estremo e il numero di giorni con massima di almeno 35 °C e di notti con minima fino a −5 °C. Per le tendenze di lungo periodo, con le avvertenze sull'omogeneità della serie, vedi <a href="geek-giorni-estremi.html">Giorni che non esistevano</a>.`;
+  }).catch(e=>{$("tiles").innerHTML=`<div class="tile"><small>Dati non disponibili (${e.message}).</small></div>`;});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
