@@ -3,11 +3,12 @@
 Aggiorna la serie di Firenzuola (firenzuola.html) con gli ultimi dati del dataset ARPAE Emilia-Romagna Eraclito.
 
 Eraclito non è una stazione: è un dataset giornaliero su griglia di circa 5 km (temperatura massima e minima,
-precipitazione, dal 1961), ottenuto da ARPAE interpolando le misure delle stazioni. La serie del sito è la cella 01429
-(centro 44,1375 N 11,3403 E, quota media 681 m). ARPAE ricalcola i valori recenti quando arrivano nuovi dati di
+precipitazione, dal 1961), ottenuto da ARPAE interpolando le misure delle stazioni. La serie del sito è la cella 01469
+(centro 44,1375 N 11,4033 E, quota media 580 m), quella che contiene il capoluogo (fino all'ottobre 2026 era la 01429,
+la cella a ovest, quota media 681 m). ARPAE ricalcola i valori recenti quando arrivano nuovi dati di
 stazione, quindi si riscaricano l'anno in corso e quello precedente e si sostituiscono i giorni già presenti.
 
-Scarica https://dati-simc.arpae.it/opendata/eraclito/timeseries/01429/01429_<anno>.zip (CSV
+Scarica https://dati-simc.arpae.it/opendata/eraclito/timeseries/01469/01469_<anno>.zip (CSV
 PragaDate,DAILY_TMIN,DAILY_TMAX,DAILY_PREC), aggiorna data/serie/firenzuola.csv (data,prec,tmax,tmin)
 e rigenera data/serie/firenzuola.json con scripts/build_serie.py.
 """
@@ -15,7 +16,7 @@ import datetime as dt, io, os, subprocess, sys, urllib.request, zipfile
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSV = os.path.join(HERE, "data", "serie", "firenzuola.csv")
-CELLA = "01429"
+CELLA = "01469"
 URL = "https://dati-simc.arpae.it/opendata/eraclito/timeseries/{c}/{c}_{a}.zip"
 
 
