@@ -58,6 +58,10 @@ jobs:
         continue-on-error: true
         run: python scripts/fetch_arpae_firenzuola.py
 
+      - name: Stazione ARPAE di Firenzuola (misure giornaliere, una volta al giorno)
+        continue-on-error: true
+        run: python scripts/fetch_arpae_stazioni.py
+
       - name: Estremi del Mugello (record delle stazioni SIR con controllo di qualità)
         continue-on-error: true
         run: python scripts/build_hall_of_fame.py
@@ -101,7 +105,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/*.json data/bsl/borgo.json data/verifica/*.json data/serie/firenzuola.csv data/serie/firenzuola.json
+          git add data/*.json data/bsl/borgo.json data/verifica/*.json data/serie/firenzuola.csv data/serie/firenzuola.json data/arpae
           if [ -f data/netatmo-token.enc ]; then git add data/netatmo-token.enc; fi
           if [ -d reports/nebbia ]; then git add reports/nebbia; fi
           if ! git diff --cached --quiet; then

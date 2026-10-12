@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gli estremi del Mugello · MeteoGeek · Mugello Meteo & Clima</title>
-<meta name="description" content="Record di temperatura massima, minima e pioggia giornaliera delle stazioni del Servizio Idrologico Regionale nel Mugello dal 1951, con controllo di qualità dei dati, le giornate più estreme e i valori scartati.">
+<meta name="description" content="Record di temperatura massima, minima e pioggia giornaliera delle stazioni del Servizio Idrologico Regionale e di ARPAE Emilia-Romagna nel Mugello dal 1951, con controllo di qualità dei dati, le giornate più estreme e i valori scartati.">
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-hall-of-fame.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:type" content="article">
@@ -79,7 +79,7 @@
     <header class="head">
       <div class="eyebrow">MeteoGeek · archivio · valori estremi</div>
       <h1>Gli estremi del Mugello</h1>
-      <p class="lead">Valori massimi e minimi di temperatura e massimi di precipitazione giornaliera misurati dalle stazioni del Servizio Idrologico Regionale della Toscana nel Mugello, in Val di Sieve e sul crinale appenninico. Ogni valore è stato sottoposto a un controllo di qualità; quelli che non lo superano sono esclusi dalle classifiche ed elencati a parte.</p>
+      <p class="lead">Valori massimi e minimi di temperatura e massimi di precipitazione giornaliera misurati dalle stazioni del Servizio Idrologico Regionale della Toscana nel Mugello, in Val di Sieve e sul crinale appenninico, e dalla stazione di ARPAE Emilia-Romagna a Firenzuola, sul versante adriatico. Ogni valore è stato sottoposto a un controllo di qualità; quelli che non lo superano sono esclusi dalle classifiche ed elencati a parte.</p>
       <div class="tiles" id="tiles"><div class="tile"><small>Carico i dati…</small></div></div>
     </header>
 
@@ -127,12 +127,12 @@
     <section>
       <div class="sh"><h2>Fonte e limiti</h2></div>
       <div class="card">
-        <p class="note" style="margin-top:0;max-width:none">Dati giornalieri di temperatura massima e minima e di precipitazione del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a>, licenza CC BY-SA 4.0. Per Borgo S. Lorenzo la serie è integrata con i dati giornalieri recenti del Centro Funzionale. Le serie non sono omogeneizzate: nel corso dei decenni sono cambiati strumenti (da termometri a lettura manuale a sensori automatici), posizioni e orari di osservazione, e i valori di epoche diverse non sono confrontabili con la precisione di un decimo di grado. A Borgo S. Lorenzo oltre l'80% delle massime degli anni Settanta e Ottanta è un multiplo esatto di mezzo grado, contro circa il 20% atteso e osservato dopo il 2000: sono letture manuali arrotondate. Questa pagina non usa rianalisi né modelli: ogni numero è una misura di stazione. Elaborazione: <code>scripts/build_hall_of_fame.py</code>, dati in <code>data/hall-of-fame.json</code>.</p>
+        <p class="note" style="margin-top:0;max-width:none">Dati giornalieri di temperatura massima e minima e di precipitazione del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a>, licenza CC BY-SA 4.0, e misure giornaliere della stazione di Firenzuola (476 m) della rete idro-meteo di <a href="https://dati-simc.arpae.it/opendata/osservati/meteo/storico/" target="_blank" rel="noopener">ARPAE Emilia-Romagna</a> (archivio delle osservazioni dal 2006; il valore giornaliero è riferito alle 24 ore che terminano a mezzanotte UTC). Per Borgo S. Lorenzo la serie è integrata con i dati giornalieri recenti del Centro Funzionale. Le serie non sono omogeneizzate: nel corso dei decenni sono cambiati strumenti (da termometri a lettura manuale a sensori automatici), posizioni e orari di osservazione, e i valori di epoche diverse non sono confrontabili con la precisione di un decimo di grado. A Borgo S. Lorenzo oltre l'80% delle massime degli anni Settanta e Ottanta è un multiplo esatto di mezzo grado, contro circa il 20% atteso e osservato dopo il 2000: sono letture manuali arrotondate. Questa pagina non usa rianalisi né modelli: ogni numero è una misura di stazione. Elaborazione: <code>scripts/build_hall_of_fame.py</code>, dati in <code>data/hall-of-fame.json</code>.</p>
       </div>
     </section>
   </main>
 
-  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR e CFR Toscana</div></footer>
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR e CFR Toscana, ARPAE Emilia-Romagna</div></footer>
 
 <script>
 (function(){
@@ -154,10 +154,10 @@
       `<div class="tile"><span>Temperatura minima</span><b>${fmt(bn.tmin.v)} °C</b><small>${bn.nome}, ${data(bn.tmin.d)}${bn.tmin.verificato?"":" †"}</small></div>`+
       `<div class="tile"><span>Pioggia in un giorno</span><b>${fmt(bp.pmax.v)} mm</b><small>${bp.nome}, ${data(bp.pmax.d)}</small></div>`+
       `<div class="tile"><span>Dati esaminati</span><b>${c.stazioni} stazioni</b><small>${num(c.giorni_temperatura)} giorni di temperatura dal ${c.t_dal.slice(0,4)}, ${num(c.giorni_pioggia)} di pioggia dal ${c.p_dal.slice(0,4)}</small></div>`;
-    $("rec-src").textContent=`SIR Toscana · elaborazione del ${data(D.agg)}`;
+    $("rec-src").textContent=`SIR Toscana e ARPAE Emilia-Romagna · elaborazione del ${data(D.agg)}`;
 
     $("rec").innerHTML=`<thead><tr><th>Stazione</th><th class="n">Quota</th><th>Temperatura dal–al</th><th class="n">Massima</th><th class="n">Minima</th><th>Pioggia dal–al</th><th class="n">Max in 24 h</th></tr></thead><tbody>`+
-      R.map(r=>`<tr><td>${r.nome}<br><small>${r.comune} · ${r.id}</small></td><td class="n">${r.quota} m</td>`+
+      R.map(r=>`<tr><td>${r.nome}<br><small>${r.comune} · ${r.fonte==="ARPAE"?"ARPAE, rete idro-meteo":r.id}</small></td><td class="n">${r.quota} m</td>`+
         `<td>${r.t_dal?`${r.t_dal.slice(0,4)}–${r.t_al.slice(0,4)}<br><small>${num(r.t_giorni)} giorni</small>`:"–"}</td>`+
         `<td class="n">${r.tmax?`<b>${fmt(r.tmax.v)}</b>${nv(r.tmax)}<br><small>${data(r.tmax.d)}</small>`:"–"}</td>`+
         `<td class="n">${r.tmin?`<b>${fmt(r.tmin.v)}</b>${nv(r.tmin)}<br><small>${data(r.tmin.d)}</small>`:"–"}</td>`+

@@ -170,6 +170,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   delle stazioni SIR (`data/sir/`, Borgo da `data/bsl/borgo.json`) con controllo di qualità dichiarato (limiti fisici,
   picchi isolati, coerenza spaziale delle anomalie, piogge non confermate): `scripts/build_hall_of_fame.py` →
   `data/hall-of-fame.json`, rigenerato da `update-data.yml`.
+  Comprende la stazione ARPAE Emilia-Romagna di Firenzuola (476 m, rete idro-meteo, dal 2006):
+  `scripts/fetch_arpae_stazioni.py` legge l'archivio mensile delle osservazioni ARPAE (BUFR-JSON) e scrive
+  `data/arpae/stazioni.csv` e `data/arpae/<id>/temp.csv`, `prec024.csv` nel formato del SIR (una volta al giorno;
+  `--dal 2006-01` ricostruisce tutto).
 - **Nebbia in valle** (`geek-nebbia.html`, MeteoGeek) — inversione termica notturna misurata (termometri CFR,
   minime SIR di Borgo S. Lorenzo e Monte Giovi), umidità e vento CFR (`scripts/fetch_nebbia.py` → `data/nebbia.json`)
   e **diario della nebbia**: l'Action `nebbia-alba.yml` ogni mattina (appena dopo l'alba, entro le 10:30) salva la foto della webcam del lago di
