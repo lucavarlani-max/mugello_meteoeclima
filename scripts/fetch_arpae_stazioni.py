@@ -24,7 +24,10 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.path.join(HERE, "data", "arpae")
 URL = "https://dati-simc.arpae.it/opendata/osservati/meteo/storico/{m}.json.gz"
 # stazioni scelte: (id del sito, rete ARPAE, nome ARPAE, comune, quota); la posizione si legge dai dati
-STAZIONI = [("firenzuola", "simnbo", "Firenzuola", "Firenzuola", 476)]
+# Palazzuolo sul Senio e Marradi sono pluviometri: solo precipitazione
+STAZIONI = [("firenzuola", "simnbo", "Firenzuola", "Firenzuola", 476),
+            ("palazzuolo", "simnbo", "Palazzuolo sul Senio", "Palazzuolo sul Senio", 500),
+            ("marradi", "spdsra", "Marradi", "Marradi", 350)]
 
 
 def mese(m):
@@ -119,7 +122,8 @@ def main():
             vecchie[r.split(";")[0]] = r.split(";")
     for sid, rete, nome, comune, quota in STAZIONI:
         e = elenco[sid]
-        scrivi(os.path.join(BASE, sid, "temp.csv"), "data;max;min", e["t"])
+        if e["t"]:
+            scrivi(os.path.join(BASE, sid, "temp.csv"), "data;max;min", e["t"])
         scrivi(os.path.join(BASE, sid, "prec024.csv"), "data;mm", e["p"])
         lat, lon = e["pos"] or (vecchie.get(sid, [None] * 5)[3], vecchie.get(sid, [None] * 5)[4])
         righe.append(f"{sid};{nome};{comune};{lat};{lon};{quota};{rete}")

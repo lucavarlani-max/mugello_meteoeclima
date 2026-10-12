@@ -170,7 +170,8 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   delle stazioni SIR (`data/sir/`, Borgo da `data/bsl/borgo.json`) con controllo di qualità dichiarato (limiti fisici,
   picchi isolati, coerenza spaziale delle anomalie, piogge non confermate): `scripts/build_hall_of_fame.py` →
   `data/hall-of-fame.json`, rigenerato da `update-data.yml`.
-  Comprende la stazione ARPAE Emilia-Romagna di Firenzuola (476 m, rete idro-meteo, dal 2006):
+  Comprende le stazioni ARPAE Emilia-Romagna di Firenzuola (476 m, dal 2006) e i pluviometri di Palazzuolo sul Senio
+  e Marradi:
   `scripts/fetch_arpae_stazioni.py` legge l'archivio mensile delle osservazioni ARPAE (BUFR-JSON) e scrive
   `data/arpae/stazioni.csv` e `data/arpae/<id>/temp.csv`, `prec024.csv` nel formato del SIR (una volta al giorno;
   `--dal 2006-01` ricostruisce tutto).
