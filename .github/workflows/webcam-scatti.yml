@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 355
     env:
-      WEBCAM_CANDIDATI: ${{ runner.temp }}/candidati
+      WEBCAM_CANDIDATI: /tmp/webcam-candidati   # runner.temp non è disponibile nell'env del job
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
