@@ -91,6 +91,32 @@ def momento(ora):
     return None
 
 
+MAX_ATTESA = 5 * 3600 + 30 * 60          # un job di GitHub Actions dura al massimo 6 ore
+
+
+def attendi():
+    """Per la catena di esecuzioni (webcam-scatti.yml): quanti secondi aspettare prima del prossimo scatto.
+    Bersagli: 10 minuti dopo il sorgere del sole e 15 minuti prima del tramonto (dentro le finestre di momento()).
+    Se il bersaglio è oltre 5 ore e mezza, si aspetta il massimo e si passa la mano all'esecuzione successiva.
+    Scrive in GITHUB_OUTPUT attesa=<secondi> e scatta=1 se allo scadere si è dentro una finestra."""
+    ora = dt.datetime.now(ROMA)
+    bersagli = []
+    for g in (ora.date(), ora.date() + dt.timedelta(days=1)):
+        for nome, t in (("alba", sole(g, True) + dt.timedelta(minutes=10)), ("tramonto", sole(g, False) - dt.timedelta(minutes=15))):
+            fatto = os.path.isdir(os.path.join(CAND, g.isoformat())) and \
+                any(f.startswith(nome + "-") for f in os.listdir(os.path.join(CAND, g.isoformat())))
+            if not fatto and t > ora - dt.timedelta(minutes=20):
+                bersagli.append((t, nome))
+    t, nome = min(bersagli)
+    secondi = max(0, int((t - ora).total_seconds()))
+    scatta = secondi <= MAX_ATTESA
+    attesa = secondi if scatta else MAX_ATTESA
+    with open(os.environ.get("GITHUB_OUTPUT", os.devnull), "a") as f:
+        f.write(f"attesa={attesa}\nscatta={int(scatta)}\nmomento={nome}\n")
+    print(f"webcam-scatti: prossimo bersaglio {nome} alle {t:%d/%m %H:%M}; attesa {attesa // 60} minuti, "
+          f"{'poi scatto' if scatta else 'poi passo alla prossima esecuzione'}")
+
+
 def scatta():
     from PIL import Image
     ora = dt.datetime.now(ROMA)
@@ -238,4 +264,4 @@ def scegli():
 
 
 if __name__ == "__main__":
-    {"scatta": scatta, "apri": apri, "scegli": scegli}[sys.argv[1]]()
+    {"scatta": scatta, "apri": apri, "scegli": scegli, "attendi": attendi}[sys.argv[1]]()

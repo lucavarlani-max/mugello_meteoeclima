@@ -5,7 +5,7 @@ e le condizioni misurate nella notte dalle stazioni del Centro Funzionale. Serve
 inverno, l'archivio di «nebbia sì / nebbia no» con cui calibrare una probabilità di nebbia per il Mugello
 (pagina MeteoGeek geek-nebbia.html).
 
-Ogni giorno, alla prima esecuzione fra l'alba (non prima delle 7) e le 10:30 (ora italiana):
+Ogni giorno, alla prima esecuzione fra 10 minuti dopo l'alba e le 10:30 (ora italiana):
   - scarica la foto della webcam, la rimpicciolisce (640 px) e la salva in reports/nebbia/AAAA-MM-GG.jpg;
     se è identica a quella del giorno prima la segna come «ferma» (webcam bloccata);
   - calcola due misure grezze dell'immagine, luminosità media e contrasto (deviazione standard / media della
@@ -272,9 +272,9 @@ def main():
         except Exception as e:
             print("nebbia-alba: previsione della sera non letta", e, file=sys.stderr)
     # i veli di nebbia sottili si dissolvono poco dopo l'alba: la foto si scatta il prima possibile con la luce,
-    # da 10 minuti dopo il sorgere del sole (e non prima delle 7) fino alle 10:30
+    # da 10 minuti dopo il sorgere del sole fino alle 10:30 (la catena webcam-scatti.yml la avvia proprio a quell'ora)
     sorge = alba(oggi)
-    inizio = max(dt.time(7, 0), (sorge + dt.timedelta(minutes=10)).time())
+    inizio = (sorge + dt.timedelta(minutes=10)).time()
     finestra = inizio <= ora.time() <= dt.time(10, 30)
     if not forza and (not finestra or (oggi in giorni and giorni[oggi].get("foto"))):
         print(f"nebbia-alba: niente da fare ({'fuori finestra' if not finestra else 'giorno già archiviato'})")

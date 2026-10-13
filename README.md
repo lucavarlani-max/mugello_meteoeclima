@@ -161,7 +161,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   salvato cifrato in `data/netatmo-token.enc`. Senza segreti la scheda Netatmo mostra «in arrivo».
 - **Webcam del Mugello** (`webcam.html`) — mappa grande in stile scuro (OpenStreetMap / CARTO) con l'anteprima di ogni
   webcam di `data/webcam.json` (aggiornata ogni 5 minuti) e **galleria** delle foto migliori (`data/galleria.json`,
-  foto in `reports/webcam/galleria/`). L'Action `webcam-scatti.yml` all'alba e al tramonto salva una foto da ogni webcam
+  foto in `reports/webcam/galleria/`). L'Action `webcam-scatti.yml` (una catena di esecuzioni che aspettano l'ora giusta e si riavviano da sole,
+  perché le esecuzioni programmate di GitHub arrivano in ritardo di ore; all'alba avvia anche `nebbia-alba.yml`)
+  10 minuti dopo l'alba e 15 minuti prima del tramonto salva una foto da ogni webcam
   nel ramo `webcam-candidati` (un solo commit, riscritto ogni volta) e apre una segnalazione «Galleria AAAA-MM-GG …»:
   si risponde con i numeri e la categoria (`2 tramonto, 5 arcobaleno`) o `no`, e `webcam-galleria.yml` aggiunge le
   foto scelte. Per temporali e arcobaleni: tab Actions → «Galleria webcam» → Run workflow (scatta subito). Una webcam
