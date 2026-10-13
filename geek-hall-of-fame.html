@@ -55,6 +55,8 @@
   .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
     padding:8px 11px;font-size:12.5px;line-height:1.5;opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
   .tip i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .selst{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:13px;font-weight:600;color:var(--ink-soft);margin:0 0 12px}
+  .selst select{flex:1 1 220px;min-width:0;max-width:420px;font:inherit;font-weight:500;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;max-width:100%}
   .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:0 0 8px}
   .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
   .qc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -101,8 +103,9 @@
     </section>
 
     <section>
-      <div class="sh"><h2>Borgo San Lorenzo, anno per anno</h2><span class="src" id="b-src">TOS01000999 · 196 m</span></div>
+      <div class="sh"><h2>Anno per anno</h2><span class="src" id="b-src"></span></div>
       <div class="card">
+        <label class="selst">Stazione <select id="b-sel" aria-label="Stazione del grafico annuale"></select></label>
         <div class="legend"><span><i style="background:var(--hot)"></i>massima più alta dell'anno</span><span><i style="background:var(--cold)"></i>minima più bassa dell'anno</span></div>
         <div class="chart" id="annuale"><div class="tip"></div></div>
         <p class="note" id="b-note"></p>
@@ -174,16 +177,20 @@
     $("scart").innerHTML=`<thead><tr><th>Grandezza</th><th>Stazione</th><th>Giorno</th><th class="n">Valore</th><th>Motivo</th></tr></thead><tbody>`+
       tipi.flatMap(([k,l,u])=>S[k].slice(0,5).map(x=>`<tr><td>${l}</td><td>${x.nome}</td><td>${data(x.d)}</td><td class="n">${fmt(x.v)} ${u}</td><td>${x.motivo}</td></tr>`)).join("")+"</tbody>";
 
-    // ---------- Borgo: estremi annuali, due pannelli con il proprio asse
-    const B=D.borgo, box=$("annuale"), tip=box.querySelector(".tip");
-    const anni=B.map(b=>b.a), a0=anni[0], a1=anni[anni.length-1];
-    const mancanti=[]; for(let a=a0;a<=a1;a++) if(!anni.includes(a)) mancanti.push(a);
-    $("b-src").textContent=`TOS01000999 · 196 m · ${B.length} anni con almeno l'85% dei giorni`;
+    // ---------- estremi annuali di una stazione a scelta, due pannelli con il proprio asse
+    const box=$("annuale"), tip=box.querySelector(".tip"), sel=$("b-sel");
+    const info=Object.fromEntries(R.map(r=>[r.id,r]));
+    const ids=Object.keys(D.annuale).filter(id=>info[id]).sort((a,b)=>info[a].quota-info[b].quota);
+    sel.innerHTML=ids.map(id=>`<option value="${id}">${info[id].nome} · ${info[id].quota} m · ${D.annuale[id].length} anni${info[id].fonte==="ARPAE"?" · ARPAE":""}</option>`).join("");
+    const iniziale=(location.hash.match(/stazione=([\w-]+)/)||[])[1];
+    sel.value=ids.includes(iniziale)?iniziale:(ids.includes("TOS01000999")?"TOS01000999":ids[0]);
+    let B, a0, a1;
     function disegna(){
       box.querySelectorAll("svg").forEach(s=>s.remove());
       const W=Math.max(300,box.clientWidth), sm=W<600, ml=36, mr=8, top=16, H1=sm?140:180, gap=34, H2=sm?140:180, H=top+H1+gap+H2+24;
-      const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Massima e minima annuali a Borgo San Lorenzo"});
-      const x=a=>ml+(a-a0)/(a1-a0)*(W-ml-mr);
+      const nome=info[sel.value].nome;
+      const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Massima e minima annuali a ${nome}`});
+      const pad=0.5, x=a=>ml+(a-a0+pad)/(a1-a0+2*pad)*(W-ml-mr);
       const pannello=(y0,h,k,lo,hi,step,col,tit)=>{
         const y=v=>y0+h-(v-lo)/(hi-lo)*h;
         svg.appendChild(el("text",{x:ml,y:y0-5,class:"ttl"},tit));
@@ -193,14 +200,14 @@
         B.forEach(b=>{d+=(prev!=null&&b.a===prev+1?"L":"M")+x(b.a).toFixed(1)+","+y(b[k]).toFixed(1); prev=b.a;});
         svg.appendChild(el("path",{d,fill:"none",stroke:col,"stroke-width":2,"stroke-linejoin":"round"}));
         B.forEach(b=>svg.appendChild(el("circle",{cx:x(b.a),cy:y(b[k]),r:2.6,fill:col})));
-        return y;
       };
       const xs=B.map(b=>b.x), ns=B.map(b=>b.n);
-      const lo1=Math.floor(Math.min(...xs)/2)*2, hi1=Math.ceil(Math.max(...xs)/2)*2;
-      const lo2=Math.floor(Math.min(...ns)/4)*4, hi2=Math.ceil(Math.max(...ns)/4)*4;
+      const lo1=Math.floor(Math.min(...xs)/2)*2, hi1=Math.max(lo1+4,Math.ceil(Math.max(...xs)/2)*2);
+      const lo2=Math.floor(Math.min(...ns)/4)*4, hi2=Math.max(lo2+8,Math.ceil(Math.max(...ns)/4)*4);
       pannello(top,H1,"x",lo1,hi1,2,"var(--hot)","MASSIMA PIÙ ALTA DELL'ANNO (°C)");
       pannello(top+H1+gap,H2,"n",lo2,hi2,4,"var(--cold)","MINIMA PIÙ BASSA DELL'ANNO (°C)");
-      for(let a=Math.ceil(a0/10)*10;a<=a1;a+=10) svg.appendChild(el("text",{x:x(a),y:H-6,"text-anchor":"middle",class:"axl"},a));
+      const span=a1-a0, passo=span>40?10:span>15?5:span>6?2:1;
+      for(let a=Math.ceil(a0/passo)*passo;a<=a1;a+=passo) svg.appendChild(el("text",{x:x(a),y:H-6,"text-anchor":"middle",class:"axl"},a));
       const cross=el("line",{y1:top,y2:H-22,stroke:"var(--ink-faint)","stroke-width":1,opacity:0}); svg.appendChild(cross);
       const hit=el("rect",{x:ml,y:top,width:W-ml-mr,height:H-top-22,fill:"transparent"}); svg.appendChild(hit);
       const muovi=e=>{const r=svg.getBoundingClientRect(), px=(e.clientX-r.left)*W/r.width;
@@ -211,9 +218,16 @@
       hit.addEventListener("pointermove",muovi); hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;cross.setAttribute("opacity",0);});
       box.insertBefore(svg,tip);
     }
-    disegna(); let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(disegna,150);});
-    const gruppi=[]; mancanti.forEach(a=>{const g=gruppi[gruppi.length-1]; if(g&&g[1]===a-1) g[1]=a; else gruppi.push([a,a]);});
-    $("b-note").innerHTML=`Ogni punto è l'estremo di un anno solare; la linea si interrompe negli anni mancanti o con meno dell'85% dei giorni misurati (${gruppi.map(g=>g[0]===g[1]?g[0]:g[0]+"–"+g[1]).join(", ")}). Le due grandezze hanno scale diverse e sono in pannelli separati. Passando sul grafico si leggono la data di ogni estremo e il numero di giorni con massima di almeno 35 °C e di notti con minima fino a −5 °C. Per le tendenze di lungo periodo, con le avvertenze sull'omogeneità della serie, vedi <a href="geek-giorni-estremi.html">Giorni che non esistevano</a>.`;
+    function scegli(){
+      const r=info[sel.value]; B=D.annuale[sel.value]; a0=B[0].a; a1=B[B.length-1].a;
+      const mancanti=[]; for(let a=a0;a<=a1;a++) if(!B.some(b=>b.a===a)) mancanti.push(a);
+      const gruppi=[]; mancanti.forEach(a=>{const g=gruppi[gruppi.length-1]; if(g&&g[1]===a-1) g[1]=a; else gruppi.push([a,a]);});
+      $("b-src").textContent=`${r.fonte==="ARPAE"?"ARPAE Emilia-Romagna":r.id} · ${r.quota} m · ${B.length} anni con almeno l'85% dei giorni`;
+      $("b-note").innerHTML=`Ogni punto è l'estremo di un anno solare a ${r.nome}; la linea si interrompe negli anni mancanti o con meno dell'85% dei giorni misurati${gruppi.length?` (${gruppi.map(g=>g[0]===g[1]?g[0]:g[0]+"–"+g[1]).join(", ")})`:""}. Le due grandezze hanno scale diverse e sono in pannelli separati; ogni stazione ha la propria scala. Passando sul grafico si leggono la data di ogni estremo e il numero di giorni con massima di almeno 35 °C e di notti con minima fino a −5 °C. Per le tendenze di lungo periodo, con le avvertenze sull'omogeneità delle serie, vedi <a href="geek-giorni-estremi.html">Giorni che non esistevano</a>.`;
+      disegna();
+    }
+    sel.addEventListener("change",()=>{scegli(); try{history.replaceState(null,"","#stazione="+sel.value);}catch(e){}});
+    scegli(); let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(disegna,150);});
   }).catch(e=>{$("tiles").innerHTML=`<div class="tile"><small>Dati non disponibili (${e.message}).</small></div>`;});
 })();
 </script>
