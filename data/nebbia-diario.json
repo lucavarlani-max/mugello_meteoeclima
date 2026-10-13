@@ -188,7 +188,7 @@
   "2026-10-13": {
    "ora": "09:00",
    "dopo_alba": 96,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.4,
