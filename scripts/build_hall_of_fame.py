@@ -250,21 +250,27 @@ def main():
     def peggiori(tipo, segno, n=8):
         return sorted([x for x in scart if x["tipo"] == tipo], key=lambda x: -segno * x["v"])[:n]
 
-    # Borgo S. Lorenzo: massima e minima di ogni anno (anni con almeno l'85% dei giorni)
-    anni_b = {}
-    for d, (v, m) in T[(BORGO, "x")].items():
-        if ok(m):
-            anni_b.setdefault(d[:4], {"x": [], "n": []})["x"].append((v, d))
-    for d, (v, m) in T[(BORGO, "n")].items():
-        if ok(m):
-            anni_b.setdefault(d[:4], {"x": [], "n": []})["n"].append((v, d))
-    serie_b = []
-    for a, z in sorted(anni_b.items()):
-        giorni = 366 if int(a) % 4 == 0 else 365
-        if len(z["x"]) >= 0.85 * giorni and len(z["n"]) >= 0.85 * giorni:
-            mx, mn = max(z["x"]), min(z["n"])
-            serie_b.append({"a": int(a), "x": mx[0], "xd": mx[1], "n": mn[0], "nd": mn[1],
+    # massima e minima di ogni anno per ogni stazione con temperatura (anni con almeno l'85% dei giorni validi)
+    def estremi_annui(sid):
+        anni = {}
+        for k in ("x", "n"):
+            for d, (v, m) in T[(sid, k)].items():
+                if ok(m):
+                    anni.setdefault(d[:4], {"x": [], "n": []})[k].append((v, d))
+        out = []
+        for a, z in sorted(anni.items()):
+            giorni = 366 if int(a) % 4 == 0 else 365
+            if len(z["x"]) >= 0.85 * giorni and len(z["n"]) >= 0.85 * giorni:
+                mx, mn = max(z["x"]), min(z["n"])
+                out.append({"a": int(a), "x": mx[0], "xd": mx[1], "n": mn[0], "nd": mn[1],
                             "g35": sum(1 for v, _ in z["x"] if v >= 35), "gm5": sum(1 for v, _ in z["n"] if v <= -5)})
+        return out
+    annuale = {}
+    for sid in S:
+        if (sid, "x") in T:
+            serie = estremi_annui(sid)
+            if len(serie) >= 3:
+                annuale[sid] = serie
 
     tot_t = sum(len(s["t"]) for s in S.values())
     tot_p = sum(len(s["p"]) for s in S.values())
@@ -280,7 +286,7 @@ def main():
         "record": record,
         "caldo": giornate("x", 1), "freddo": giornate("n", -1), "pioggia": giornate_pioggia(),
         "scartati": {"massima": peggiori("massima", 1), "minima": peggiori("minima", -1), "pioggia": peggiori("pioggia", 1)},
-        "borgo": serie_b,
+        "annuale": annuale,
     }
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
