@@ -1,7 +1,274 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-09",
+ "aggiornato": "2026-10-14",
  "numeri": [
+  {
+   "data": "2026-10-14",
+   "apertura": {
+    "cat": "vulcani",
+    "titolo": "Un pianeta inquieto: 24 vulcani attivi in una settimana",
+    "testo": "Il bollettino del Global Volcanism Program dall'1 al 7 ottobre elenca 24 vulcani attivi: l'Ambrym in allerta 3 su 5, oltre 170 eruzioni freatiche al Rincón de la Vieja, una colata piroclastica al Merapi, Etna e Stromboli in allerta gialla.",
+    "fonte": "Smithsonian GVP",
+    "url": "https://volcano.si.edu/reports_weekly.cfm",
+    "foto": "kilauea1"
+   },
+   "numero": {
+    "valore": "29,70 °C",
+    "testo": "La temperatura superficiale media di settembre nella regione Niño 3.4 del Pacifico: massimo storico assoluto, oltre i picchi dei grandi El Niño del 1982-83, 1997-98 e 2015-16.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc"
+   },
+   "storie": [
+    {
+     "cat": "clima",
+     "titolo": "Settembre 2026, il secondo più caldo mai registrato",
+     "testo": "Temperatura media globale di 16,27 °C, 1,63 °C sopra il periodo preindustriale.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc",
+     "foto": "terra2"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Mari ai massimi",
+     "testo": "La temperatura media della superficie del mare ha toccato il record di 21,05 °C; la regione Niño 3.4 è a 29,70 °C.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc",
+     "foto": "oceano"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Isaias, primo uragano atlantico del 2026",
+     "testo": "Mai prima d'ora la stagione atlantica era arrivata a ottobre senza un uragano: Isaias chiude un'attesa record.",
+     "fonte": "The Weather Channel",
+     "url": "https://weather.com/2026/10/08/storms/hurricane/isaias-first-hurricane-2026-record-late",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Magnitudo 6,7 sulla Dorsale medio-atlantica",
+     "testo": "Il 13 ottobre una scossa a 10 km di profondità ha colpito la dorsale in mezzo all'Atlantico, senza tsunami.",
+     "fonte": "The Watchers",
+     "url": "https://watchers.news/2026/10/13/shallow-m6-7-earthquake-hits-central-mid-atlantic-ridge/",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna e Stromboli, attività in corso",
+     "testo": "I due vulcani italiani proseguono l'attività; l'allerta resta gialla (INGV).",
+     "fonte": "Smithsonian GVP / INGV",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "etna"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Fiumi europei in secca",
+     "testo": "A settembre portate minime record per il Reno, il Danubio, la Vistola e la Garonna.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Mercoledì 14 ottobre a Borgo San Lorenzo: minima 9 °C e massima 21 °C con l'anticiclone delle Azzorre, sereno con nebbie al mattino in valle; prossimi giorni stabili.",
+     "fonte": "Meteo.it / LaMMA",
+     "url": "https://www.meteo.it/meteo/borgo-san-lorenzo-oggi-48004"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1909: tornado di intensità F3 in Tennessee, 23 morti. 1969: gelo a −14 °C nelle Grandi Pianure. 1981: i resti dell'uragano Norma portano 533 mm di pioggia in Texas.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_oct_14"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Il valore di 29,70 °C nella regione Niño 3.4 supera anche i picchi dei grandi El Niño del passato.",
+     "fonte": "Copernicus C3S"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:28 e tramonta alle 18:34, circa 11 ore e 7 minuti di luce, 2 minuti meno di ieri. Sono attive le Orionidi, le stelle cadenti della cometa di Halley: il picco è atteso il 21 ottobre.",
+     "fonte": "EarthSky",
+     "url": "https://earthsky.org/astronomy-essentials/everything-you-need-to-know-orionid-meteor-shower"
+    }
+   ]
+  },
+  {
+   "data": "2026-10-13",
+   "apertura": {
+    "cat": "terremoti",
+    "titolo": "Magnitudo 6,0 nel Pacifico panamense",
+    "testo": "La scossa del 10 ottobre, a 7 km da La Tronosa (Panama) e a 10 km di profondità, ha dato uno scuotimento «severo» (7,6 sulla scala Mercalli modificata). Il sistema PAGER dell'USGS ha emesso un'allerta gialla; dieci repliche in tre giorni.",
+    "fonte": "USGS",
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1cf/executive",
+    "foto": "sismo2"
+   },
+   "numero": {
+    "valore": "29,70 °C",
+    "testo": "La temperatura media della superficie del mare nella regione Niño 3.4 del Pacifico a settembre 2026: un record assoluto, segno di un El Niño intenso.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc"
+   },
+   "storie": [
+    {
+     "cat": "clima",
+     "titolo": "Settembre 2026, il secondo più caldo di sempre",
+     "testo": "La temperatura media globale è stata di 16,27 °C, 1,63 °C sopra il periodo preindustriale e a soli 0,11 °C dal primato del 2023.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc",
+     "foto": "terra"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Pacifico ai massimi, El Niño si rafforza",
+     "testo": "La regione Niño 3.4 è arrivata a 29,70 °C e la superficie dei mari fra 60° sud e 60° nord a 21,05 °C: entrambi record per settembre.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc",
+     "foto": "oceano"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Ambrym, allerta di livello 3",
+     "testo": "Sul vulcano di Vanuatu l'eruzione continua con sismicità in aumento; l'8 ottobre le zone di esclusione sono state ampliate.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Atlantico: otto tempeste, nessun uragano",
+     "testo": "Il primo uragano della stagione atlantica non è ancora arrivato: è il ritardo più lungo di tutta l'era dei satelliti.",
+     "fonte": "WeatherBug",
+     "url": "https://www.weatherbug.com/news/Could%20October%20Break%20the%20Hurricane%20Drought",
+     "foto": "uragano3"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Rincón de la Vieja, oltre 170 esplosioni in una settimana",
+     "testo": "Sul vulcano della Costa Rica si sono contate più di 170 esplosioni freatiche in sette giorni; l'allerta è al livello 3.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Ghiaccio marino sotto la media ai due poli",
+     "testo": "In Antartide l'estensione è circa il 6% sotto la media, il terzo valore più basso; nell'Artico il minimo di fine estate è stato il sedicesimo più basso.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc",
+     "foto": "ghiaccio2"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Martedì 13 ottobre a Borgo San Lorenzo: sereno o poco nuvoloso, minima 10 °C e massima 20 °C, vento debole da nord-nord-est. Tempo stabile e mite fino al fine settimana; lunedì 19 è attesa una perturbazione veloce.",
+     "fonte": "Meteo Giornale / LaMMA"
+    },
+    {
+     "tipo": "storia",
+     "testo": "2006: nevicata da «effetto lago» su Buffalo, fino a 61 cm. 1983 e 2011: serie di tornado in Virginia.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/This_Day_in_Weather_History_Oct_13"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "I 29,70 °C di settembre nella regione Niño 3.4 sono il valore più alto mai misurato in quella zona del Pacifico.",
+     "fonte": "Copernicus C3S"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:27 e tramonta alle 18:36, circa 11 ore e 9 minuti di luce, 3 minuti meno di ieri. La Luna è una sottile falce crescente: serate buie, ideali per osservare il cielo. L'ora solare torna nella notte fra il 24 e il 25 ottobre."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-12",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Sud-Ovest americano: dopo l'ottobre più caldo, una tempesta tropicale",
+    "testo": "Los Angeles ha superato i 38 °C per cinque giorni di fila, record per ottobre. Ora una saccatura spegne il caldo, mentre il National Hurricane Center emette un'allerta per la tempesta tropicale Rachel diretta verso San Diego: è la seconda nella storia della regione.",
+    "fonte": "Weather West",
+    "url": "https://weatherwest.com/archives/44111",
+    "foto": "uragano1"
+   },
+   "numero": {
+    "valore": "56,7 °C",
+    "testo": "La temperatura dell'aria più alta mai verificata sulla Terra (Furnace Creek, Death Valley, 10 luglio 1913), ancora oggi record ufficiale dell'Organizzazione meteorologica mondiale.",
+    "fonte": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Highest_temperature_recorded_on_Earth"
+   },
+   "storie": [
+    {
+     "cat": "uragani",
+     "titolo": "Simon diventa uragano e punta sul Messico",
+     "testo": "L'uragano Simon ha raggiunto la categoria 2, con venti a 155 km/h, e si dirige verso la costa pacifica del Messico: allerta sullo stato di Jalisco.",
+     "fonte": "FOX5 Las Vegas / NHC",
+     "url": "https://www.fox5vegas.com/2026/10/09/hurricane-simon-strengthens-category-2-storm-national-hurricane-center-says/",
+     "foto": "uragano2"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Magnitudo 7,7 a Panama, allerta tsunami",
+     "testo": "Una forte scossa a Panama ha fatto scattare l'allerta tsunami in cinque Paesi; sono seguite una replica di magnitudo 6,6 e oltre 45 scosse.",
+     "fonte": "ABC7",
+     "url": "https://abc7ny.com/story/panama-earthquake-76-shakes-region/19925359/",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Artico, raggiunto il minimo stagionale",
+     "testo": "Il ghiaccio marino artico ha toccato il minimo dell'anno: 4,6 milioni di km², il decimo valore più basso in 47 anni di osservazioni da satellite.",
+     "fonte": "NASA",
+     "url": "https://science.nasa.gov/science-research/earth-science/climate-science/sea-ice/arctic-sea-ice-2026-min/",
+     "foto": "ghiaccio1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Da Vanuatu alla Costa Rica, vulcani inquieti",
+     "testo": "L'Ambrym, a Vanuatu, è in allerta di livello 3; il Rincón de la Vieja, in Costa Rica, ha superato le 170 eruzioni freatiche (esplosioni di vapore).",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna e Stromboli sotto osservazione",
+     "testo": "Sui due vulcani italiani prosegue l'attività di fondo; l'allerta resta gialla.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "etna"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Le emissioni «naturali» spinte dal caldo",
+     "testo": "Il carbonio liberato dal disgelo del permafrost, dalle zone umide e dagli incendi a causa del riscaldamento potrebbe aggiungere da 0,2 a 0,4 °C entro il 2100.",
+     "fonte": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/2026_in_climate_change"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Lunedì 12 ottobre a Borgo San Lorenzo: minima 11 °C e massima 20 °C, nubi sparse al mattino e poi sole, venti deboli o moderati da nord e nord-ovest. Tendenza stabile con il ritorno dell'anticiclone delle Azzorre.",
+     "fonte": "Meteo.it",
+     "url": "https://www.meteo.it/meteo/borgo-san-lorenzo-oggi-48004"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1918: il grande incendio di Cloquet, in Minnesota, con almeno 450 vittime. 1962: la Columbus Day Storm sulla costa nord-occidentale degli Stati Uniti. 1979: il tifone Tip tocca 870 hPa, la pressione più bassa mai registrata.",
+     "fonte": "NWS",
+     "url": "https://www.weather.gov/abr/this_day_in_weather_history_oct_12"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "I 56,7 °C di Furnace Creek, nella Valle della Morte, restano dal 1913 il record mondiale di temperatura dell'aria."
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:25 e tramonta alle 18:38, circa 11 ore e 12 minuti di luce, 3 minuti meno di ieri. Andando verso il solstizio d'inverno le giornate si accorciano di quasi tre minuti al giorno."
+    }
+   ]
+  },
   {
    "data": "2026-10-09",
    "apertura": {
