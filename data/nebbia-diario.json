@@ -338,7 +338,7 @@
   "2026-10-15": {
    "ora": "07:40",
    "dopo_alba": 13,
-   "nebbia": null,
+   "nebbia": true,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.0,
