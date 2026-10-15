@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  issues: write             # segnalazione del mattino per classificare la foto della nebbia
 
 concurrency:                   # mai due aggiornamenti insieme
   group: update-data
@@ -27,7 +28,7 @@ jobs:
           python-version: "3.12"
 
       - name: Dipendenze
-        run: pip install pdfplumber cryptography
+        run: pip install pdfplumber cryptography pillow
 
       - name: Aggiorna previsioni (WeatherNext / Google Weather API)
         env:
@@ -49,8 +50,40 @@ jobs:
       - name: Aggiorna idrometri Mugello (CFR)
         run: python scripts/fetch_idro.py
 
+      - name: Aggiorna pluviometri Mugello per la verifica dei modelli (CFR, ogni 3 ore)
+        continue-on-error: true
+        run: python scripts/fetch_pluvio_mugello.py
+
+      - name: Serie di Firenzuola (ARPAE Eraclito, ultimi giorni)
+        continue-on-error: true
+        run: python scripts/fetch_arpae_firenzuola.py
+
+      - name: Stazione ARPAE di Firenzuola (misure giornaliere, una volta al giorno)
+        continue-on-error: true
+        run: python scripts/fetch_arpae_stazioni.py
+
+      - name: Estremi del Mugello (record delle stazioni SIR con controllo di qualità)
+        continue-on-error: true
+        run: python scripts/build_hall_of_fame.py
+
+      - name: Aggiorna umidità e vento del Mugello per la pagina della nebbia (CFR)
+        continue-on-error: true
+        run: python scripts/fetch_nebbia.py
+
+      - name: Diario della nebbia (foto all'alba di Bilancino, una volta al giorno fra le 7 e le 10:30)
+        continue-on-error: true
+        run: python scripts/fetch_nebbia_alba.py
+
       - name: Aggiorna carte sinottiche (ogni 6 ore)
         run: python scripts/fetch_sinottica.py
+
+      - name: Aggiorna ensemble ECMWF (spaghetti plot, ogni 6 ore)
+        continue-on-error: true
+        run: python scripts/fetch_ensemble.py
+
+      - name: Aggiorna profili verticali per lo skew-T (ogni 6 ore)
+        continue-on-error: true
+        run: python scripts/fetch_skewt.py
 
       - name: Aggiorna estremi meteo nel mondo (OGIMET)
         run: python scripts/fetch_estremi.py
@@ -64,12 +97,17 @@ jobs:
           NETATMO_KEY: ${{ secrets.NETATMO_KEY }}
         run: python scripts/fetch_netatmo.py
 
+      - name: Archivia previsioni e misure ISCARP2 (verifica del modello)
+        continue-on-error: true
+        run: python scripts/fetch_verifica.py
+
       - name: Commit se cambiato
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/*.json data/bsl/borgo.json
+          git add data/*.json data/bsl/borgo.json data/verifica/*.json data/serie/firenzuola.csv data/serie/firenzuola.json data/arpae
           if [ -f data/netatmo-token.enc ]; then git add data/netatmo-token.enc; fi
+          if [ -d reports/nebbia ]; then git add reports/nebbia; fi
           if ! git diff --cached --quiet; then
             git commit -m "dati: aggiornamento automatico"
             git pull --rebase origin main || true   # se nel frattempo main è cambiato
@@ -77,3 +115,9 @@ jobs:
           else
             echo "nessuna variazione"
           fi
+
+      - name: Segnalazione per classificare la foto della nebbia
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/nebbia_issue.py apri

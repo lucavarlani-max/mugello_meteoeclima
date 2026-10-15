@@ -60,6 +60,23 @@
   .exp .go{font-weight:600;color:var(--pine);font-size:13px}
   .exp.soon{border-style:dashed;box-shadow:none;background:transparent}
   .vuoto{color:var(--ink-faint);font-family:var(--mono);font-size:12px;padding:20px 0}
+  .temi{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:22px 0 4px}
+  .tema-b{font:inherit;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;padding:13px 14px;border:1px solid var(--line);border-radius:var(--r);
+    background:var(--panel);color:var(--ink);box-shadow:var(--shadow);border-top:3px solid var(--c);transition:transform .15s,box-shadow .15s}
+  .tema-b:hover:not(:disabled){transform:translateY(-2px)}
+  .tema-b[aria-pressed="true"]{background:color-mix(in srgb,var(--c) 11%,var(--panel));border-color:var(--c)}
+  .tema-b:disabled{opacity:.45;cursor:default;box-shadow:none}
+  .tema-b .ic{font-size:22px;line-height:1}
+  .tema-b b{font-family:var(--serif);font-size:15.5px;letter-spacing:-.01em;line-height:1.2;margin-top:4px}
+  .tema-b small{color:var(--ink-soft);font-size:12px;line-height:1.35}
+  .tema-b .cnt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:4px}
+  .tema-b .cnt i{font-style:normal;color:var(--amber);margin-left:6px}
+  .grp{margin:28px 0 8px}
+  .grp .gh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .grp h2{font-family:var(--serif);font-size:20px;margin:0;letter-spacing:-.01em}
+  .grp .gh a{font-size:13px;font-weight:600;color:var(--pine);text-decoration:none;margin-left:auto}
+  .grp .gd{color:var(--ink-soft);font-size:13.5px;margin:0 0 12px}
+  @media(max-width:640px){.temi{grid-template-columns:repeat(2,minmax(0,1fr))}.tema-b small{display:none}}
 </style>
 <script src="analytics.js" defer></script>
 <script src="menu.js" defer></script>
@@ -73,6 +90,8 @@
       <p class="lead">Qui raccolgo le mie sperimentazioni: grafici nati per curiosità, statistiche particolari, tabelle, confronti insoliti e piccole scoperte nei dati del tempo e del clima. Alcune diventano sezioni del sito, altre restano prove di laboratorio.</p>
       <div class="cmd" id="cmd">$ ls esperimenti/</div>
     </header>
+
+    <div class="temi" id="temi" role="group" aria-label="Temi"></div>
 
     <div class="ctl">
       <div class="chips" id="filtri" role="group" aria-label="Tipo"></div>
@@ -91,40 +110,69 @@
               tabella:["🗂️","Tabella","#0f6b52"],esperimento:["🧪","Esperimento","#c8452b"]};
   const MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
   const dIt=s=>{if(!s)return"";const [y,m,d]=s.split("-").map(Number);return d+" "+MES[m-1]+" "+y;};
-  let E=[], tipo="", q="";
+  const TEMA_ALTRO={id:"altro",icona:"🧩",nome:"Altre prove",testo:"Esperimenti che non rientrano ancora in un tema.",colore:"#6f7c74"};
+  let E=[], TEMI=[], tipo="", q="", tema="";
 
   fetch("./data/meteogeek.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{
     E=(d.esperimenti||[]).slice().sort((a,b)=>(b.data||"").localeCompare(a.data||""));
-    const t0=new URLSearchParams(location.search).get("tipo"); if(TIPI[t0]) tipo=t0;
-    filtri(); disegna();
+    TEMI=(d.temi||[]).slice();
+    const noti=new Set(TEMI.map(t=>t.id));
+    E.forEach(e=>{if(!noti.has(e.tema)) e.tema="altro";});
+    if(E.some(e=>e.tema==="altro")) TEMI.push(TEMA_ALTRO);
+    const sp=new URLSearchParams(location.search), t0=sp.get("tipo"), th=sp.get("tema");
+    if(TIPI[t0]) tipo=t0;
+    if(TEMI.some(t=>t.id===th)) tema=th;
+    disegna();
   }).catch(()=>{$("exps").innerHTML='<div class="vuoto">Il laboratorio non è raggiungibile in questo momento.</div>';});
 
+  const matchQ=e=>{const qq=q.trim().toLowerCase();return !qq||[e.titolo,e.testo,(e.tag||[]).join(" ")].join(" ").toLowerCase().includes(qq);};
+  const match=(e,conTema)=>(!tipo||e.tipo===tipo)&&(!conTema||!tema||e.tema===tema)&&matchQ(e);
+  function url(){const sp=new URLSearchParams();if(tema)sp.set("tema",tema);if(tipo)sp.set("tipo",tipo);
+    try{history.replaceState(null,"",location.pathname+(sp.toString()?"?"+sp:""));}catch(_){}}
+  function temi(){
+    $("temi").innerHTML=TEMI.map(t=>{const n=E.filter(e=>e.tema===t.id&&match(e,false)).length, nuovi=E.filter(e=>e.tema===t.id&&match(e,false)&&e.stato==="nuovo").length;
+      return `<button class="tema-b" data-t="${esc(t.id)}" style="--c:${esc(t.colore||"#0f6b52")}" aria-pressed="${t.id===tema}"${n?"":" disabled"}>
+        <span class="ic" aria-hidden="true">${t.icona||""}</span><b>${esc(t.nome)}</b><small>${esc(t.testo||"")}</small>
+        <span class="cnt">${n} ${n===1?"prova":"prove"}${nuovi?`<i>${nuovi} ${nuovi===1?"nuova":"nuove"}</i>`:""}</span></button>`;}).join("");
+    $("temi").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{tema=tema===b.dataset.t?"":b.dataset.t;disegna();}));
+  }
   function filtri(){
-    const n=k=>E.filter(e=>!k||e.tipo===k).length;
-    $("filtri").innerHTML=[["","Tutti"]].concat(Object.entries(TIPI).filter(([k])=>n(k)).map(([k,v])=>[k,v[0]+" "+v[1]]))
+    const n=k=>E.filter(e=>(!k||e.tipo===k)&&(!tema||e.tema===tema)&&matchQ(e)).length;
+    $("filtri").innerHTML=[["","Tutti i tipi"]].concat(Object.entries(TIPI).filter(([k])=>n(k)||k===tipo).map(([k,v])=>[k,v[0]+" "+v[1]]))
       .map(([k,l])=>`<button class="chip" data-k="${k}" aria-pressed="${k===tipo}">${l}<span class="n">${n(k)}</span></button>`).join("");
-    $("filtri").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{tipo=b.dataset.k;filtri();disegna();}));
+    $("filtri").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{tipo=b.dataset.k;disegna();}));
   }
+  function card(e){const t=TIPI[e.tipo]||TIPI.esperimento;
+    const ext=/^https?:/.test(e.link||""), file=/\.(pdf|csv|xlsx?|zip|json)$/i.test(e.link||"");
+    const tag=e.link?"a":"div", attr=e.link?` href="${esc(e.link)}"${ext||file?' target="_blank" rel="noopener"':""}`:"";
+    return `<${tag} class="exp" style="--c:${t[2]}"${attr}>
+      ${e.anteprima?`<div class="img" style="background-image:url('${esc(e.anteprima)}')"></div>`:""}
+      <div class="bd">
+        <div class="meta"><span class="tipo">${t[0]} ${t[1]}</span>${e.data?`<span>${dIt(e.data)}</span>`:""}${e.stato?`<span class="stato">${e.stato==="in-corso"?"in corso":esc(e.stato)}</span>`:""}</div>
+        <h3>${esc(e.titolo)}</h3>
+        <p>${esc(e.testo)}</p>
+        <div class="tags">${(e.tag||[]).map(x=>`<span>#${esc(x)}</span>`).join("")}</div>
+        ${e.link?`<span class="go">${file?"Apri il file →":"Apri →"}</span>`:""}
+      </div></${tag}>`;}
+  const PREVIEW=3;
   function disegna(){
-    const qq=q.trim().toLowerCase();
-    const F=E.filter(e=>(!tipo||e.tipo===tipo)&&(!qq||[e.titolo,e.testo,(e.tag||[]).join(" ")].join(" ").toLowerCase().includes(qq)));
-    $("cmd").innerHTML=`$ ls esperimenti/${tipo?"<b>"+tipo+"</b>/":""} <span style="opacity:.7">→ ${F.length} ${F.length===1?"risultato":"risultati"}</span>`;
-    $("exps").innerHTML=F.map(e=>{const t=TIPI[e.tipo]||TIPI.esperimento;
-      const ext=/^https?:/.test(e.link||""), file=/\.(pdf|csv|xlsx?|zip|json)$/i.test(e.link||"");
-      const tag=e.link?"a":"div", attr=e.link?` href="${esc(e.link)}"${ext||file?' target="_blank" rel="noopener"':""}`:"";
-      return `<${tag} class="exp" style="--c:${t[2]}"${attr}>
-        ${e.anteprima?`<div class="img" style="background-image:url('${esc(e.anteprima)}')"></div>`:""}
-        <div class="bd">
-          <div class="meta"><span class="tipo">${t[0]} ${t[1]}</span>${e.data?`<span>${dIt(e.data)}</span>`:""}${e.stato?`<span class="stato">${e.stato==="in-corso"?"in corso":esc(e.stato)}</span>`:""}</div>
-          <h3>${esc(e.titolo)}</h3>
-          <p>${esc(e.testo)}</p>
-          <div class="tags">${(e.tag||[]).map(x=>`<span>#${esc(x)}</span>`).join("")}</div>
-          ${e.link?`<span class="go">${file?"Apri il file →":"Apri →"}</span>`:""}
-        </div></${tag}>`;}).join("")+
-      (tipo||qq?"":`<div class="exp soon"><div class="bd"><div class="meta"><span>⏳ In arrivo</span></div><h3>Prossimi esperimenti</h3><p>Il laboratorio è sempre aperto: nuove prove, grafici e statistiche si aggiungeranno qui man mano.</p></div></div>`);
-    if(!F.length) $("exps").innerHTML='<div class="vuoto">Nessuna sperimentazione corrisponde alla ricerca.</div>';
+    url();temi();filtri();
+    const qq=q.trim().toLowerCase(), F=E.filter(e=>match(e,true)), panoramica=!tema&&!tipo&&!qq;
+        $("cmd").innerHTML=`$ ls esperimenti/${tema?"<b>"+esc(tema)+"</b>/":""}${tipo?"<b>"+tipo+"</b>/":""} <span style="opacity:.7">→ ${F.length} ${F.length===1?"risultato":"risultati"}</span>`;
+    if(!F.length){$("exps").className="";$("exps").innerHTML='<div class="vuoto">Nessuna sperimentazione corrisponde ai filtri.</div>';return;}
+    if(panoramica){
+      $("exps").className="";
+      $("exps").innerHTML=TEMI.map(t=>{const L=E.filter(e=>e.tema===t.id);if(!L.length)return"";
+        return `<section class="grp"><div class="gh"><h2>${t.icona||""} ${esc(t.nome)}</h2>${L.length>PREVIEW?`<a href="?tema=${esc(t.id)}" data-t="${esc(t.id)}">Tutte le ${L.length} prove →</a>`:""}</div>
+          <p class="gd">${esc(t.testo||"")}</p><div class="exps">${L.slice(0,PREVIEW).map(card).join("")}</div></section>`;}).join("")+
+        `<div class="exps" style="margin-top:20px"><div class="exp soon"><div class="bd"><div class="meta"><span>⏳ In arrivo</span></div><h3>Prossimi esperimenti</h3><p>Il laboratorio è sempre aperto: nuove prove, grafici e statistiche si aggiungeranno qui man mano.</p></div></div></div>`;
+      $("exps").querySelectorAll("a[data-t]").forEach(a=>a.addEventListener("click",ev=>{ev.preventDefault();tema=a.dataset.t;disegna();scrollTo({top:0,behavior:"smooth"});}));
+    }else{
+      $("exps").className="exps";
+      $("exps").innerHTML=F.map(card).join("");
+    }
   }
-  $("q").addEventListener("input",e=>{q=e.target.value;disegna();});
+  $("q").addEventListener("input",e=>{q=e.target.value;if(q.trim())tema="";disegna();});
 })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>

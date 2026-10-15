@@ -1,11 +1,13 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v60';
+const CACHE = 'mmc-v74';
 const SHELL = [
   './',
   './index.html',
   './menu.js',
   './stazioni.html',
   './stazioni.js',
+  './stazioni-mugello.html',
+  './data/sir/mugello.json',
   './meteogeek.html',
   './ecmwf-carte.js',
   './piogge-estreme.html',
@@ -16,6 +18,7 @@ const SHELL = [
   './comune.html',
   './neve.html',
   './neve-firenze.html',
+  './neve-new-york.html',
   './clima-firenze.html',
   './mappe.html',
   './proverbi.html',
@@ -42,6 +45,7 @@ const SHELL = [
   './oxford.html',
   './domodossola.html',
   './sodankyla.html',
+  './webcam.html',
   './webcam-panomax.html',
   './webcam-panomax.js',
   './italia-ghcn.html',

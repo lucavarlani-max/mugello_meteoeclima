@@ -1,12 +1,15 @@
+<html lang="it">
+<head>
 <meta charset="utf-8">
-<title>Mugello Meteo &amp; Clima</title>
+<title>Mugello Meteo &amp; Clima · Previsioni, radar e dati in tempo reale del Mugello</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Meteo, dati in tempo reale e clima della vallata del Mugello">
+<meta name="description" content="Previsioni meteo per i 9 comuni del Mugello, stazione in tempo reale, radar, livelli della Sieve e del lago di Bilancino, allerte e clima storico di Borgo San Lorenzo e Firenzuola.">
+<meta name="google-site-verification" content="cqgihxkqcmbAQ7CUCB3gqK1GpzjEo34cJEW03Zui7qg" />
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
-<meta property="og:title" content="Mugello Meteo &amp; Clima">
+<meta property="og:title" content="Mugello Meteo &amp; Clima · Previsioni, radar e dati in tempo reale del Mugello">
 <meta property="og:description" content="Previsioni per i 9 comuni del Mugello, stazione meteo in tempo reale, radar, livelli della Sieve e di Bilancino, allerte meteo.">
 <meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
@@ -16,6 +19,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/#website","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/","name":"Mugello Meteo & Clima","description":"Meteo, dati in tempo reale e clima della vallata del Mugello","inLanguage":"it-IT"},{"@type":"WebPage","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/","name":"Mugello Meteo & Clima","isPartOf":{"@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/#website"},"about":{"@type":"Place","name":"Mugello","address":{"@type":"PostalAddress","addressRegion":"Toscana","addressCountry":"IT"},"geo":{"@type":"GeoCoordinates","latitude":43.95,"longitude":11.35}},"primaryImageOfPage":"https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg","inLanguage":"it-IT"}]}</script>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0f6b52">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -1011,6 +1015,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <script src="previsioni-allinea.js"></script>
 <script src="astro.js"></script>
 <script src="cielo.js" defer></script>
+</head>
+<body>
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="#">
@@ -1020,20 +1026,27 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <nav class="main">
       <a href="#comuni" class="active">Previsioni</a>
       <a href="./radar.html">Radar &amp; dati</a>
-      <a href="./stazioni.html">Stazioni</a>
+      <div class="dd">
+        <button type="button" onclick="this.parentNode.classList.toggle('open')">Stazioni ▾</button>
+        <div class="dd-menu">
+          <a href="./stazioni.html">📡 Le mie stazioni</a>
+          <a href="./stazioni-mugello.html">📍 Stazioni del Mugello (SIR)</a>
+        </div>
+      </div>
       <a href="./mappe.html">Mappe</a>
       <div class="dd">
         <button type="button" onclick="this.parentNode.classList.toggle('open')">Neve ▾</button>
         <div class="dd-menu">
           <a href="./neve.html">❄️ Neve oggi</a>
           <a href="./neve-firenze.html">📜 La neve a Firenze</a>
+          <a href="./neve-new-york.html">🗽 La neve a New York</a>
         </div>
       </div>
       <a href="./effemeridi.html">Cielo</a>
       <div class="dd">
         <button type="button" onclick="this.parentNode.classList.toggle('open')">Webcam ▾</button>
         <div class="dd-menu">
-          <a href="#webcam">📷 Webcam Mugello</a>
+          <a href="./webcam.html">📷 Webcam Mugello</a>
           <a href="./webcam-panomax.html">🌍 Webcam Panomax</a>
         </div>
       </div>
@@ -1367,7 +1380,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </section>
 
   <section class="sec" id="webcam">
-    <div class="sec-head"><h2>Webcam del Mugello</h2><a href="./webcam-panomax.html">Webcam Panomax: 650 panorami a 360° →</a></div>
+    <div class="sec-head"><h2>Webcam del Mugello</h2><a href="./webcam.html">Mappa grande, anteprime e galleria →</a></div>
     <div class="card">
       <div class="ch"><span class="ei">📷</span><h3>Mappa delle webcam</h3><span class="tag" id="wc-count">—</span></div>
       <div class="cb">
@@ -1396,7 +1409,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <li><a href="#">Monitoraggio fiumi</a></li>
         <li><a href="#">Report climatici</a></li>
         <li><a href="./notizie.html">Curiosità e notizie</a></li>
-        <li><a href="#webcam">Webcam Mugello</a></li>
+        <li><a href="./webcam.html">Webcam Mugello</a></li>
         <li><a href="./webcam-panomax.html">Webcam Panomax</a></li>
         <li><a href="./fb-post.html">Crea post per Facebook</a></li>
       </ul>
@@ -1905,3 +1918,5 @@ svg.leaflet-image-layer.leaflet-interactive path {
 })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+name: Diario della nebbia (classificazione dalle segnalazioni)
+
+# Ogni mattina scripts/nebbia_issue.py apre una segnalazione «Nebbia AAAA-MM-GG» con la foto della webcam.
+# Quando il proprietario del repository risponde «sì», «no» o «?» (o apre la segnalazione dai pulsanti di
+# geek-nebbia.html?classifica), questa Action scrive la classificazione nel diario e chiude la segnalazione.
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: nebbia-diario
+  cancel-in-progress: false
+
+jobs:
+  classifica:
+    if: >-
+      github.event.sender.login == github.repository_owner &&
+      startsWith(github.event.issue.title, 'Nebbia 20') &&
+      !github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Scrivi la classificazione nel diario
+        id: cl
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          TESTO: ${{ github.event_name == 'issue_comment' && github.event.comment.body || github.event.issue.body }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3 4; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            python scripts/nebbia_issue.py classifica
+            if git diff --quiet data/nebbia-diario.json; then
+              # risposta capita ma il diario aveva già quel valore: si risponde e si chiude lo stesso
+              echo "nessuna variazione"
+              if grep -q '^giorno=' "$GITHUB_OUTPUT"; then echo "fatto=1" >> "$GITHUB_OUTPUT"; fi
+              exit 0
+            fi
+            git add data/nebbia-diario.json
+            git commit -q -m "diario della nebbia: classificazione da segnalazione ($ISSUE_TITLE)"
+            if git push -q origin HEAD:main; then echo "fatto=1" >> "$GITHUB_OUTPUT"; exit 0; fi
+            sleep 10
+          done
+          exit 1
+
+      - name: Rispondi e chiudi la segnalazione
+        if: steps.cl.outputs.fatto == '1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GIORNO: ${{ steps.cl.outputs.giorno }}
+          VALORE: ${{ steps.cl.outputs.valore }}
+        run: python scripts/nebbia_issue.py chiudi

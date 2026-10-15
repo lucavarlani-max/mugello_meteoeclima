@@ -1,0 +1,67 @@
+name: Galleria webcam (scelta delle foto dalle segnalazioni)
+
+# Sulla risposta del proprietario a una segnalazione «Galleria AAAA-MM-GG …» (es. «2 tramonto, 5 arcobaleno»
+# oppure «no») copia le foto scelte in reports/webcam/galleria/, aggiorna data/galleria.json e chiude la segnalazione.
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: webcam-galleria
+  cancel-in-progress: false
+
+jobs:
+  scegli:
+    if: >-
+      github.event.sender.login == github.repository_owner &&
+      startsWith(github.event.issue.title, 'Galleria 20') &&
+      !github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Aggiungi le foto scelte alla galleria
+        id: g
+        env:
+          WEBCAM_CANDIDATI: ${{ runner.temp }}/candidati
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          TESTO: ${{ github.event.comment.body }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p "$WEBCAM_CANDIDATI"
+          git fetch -q --depth=1 origin webcam-candidati
+          git --work-tree="$WEBCAM_CANDIDATI" checkout FETCH_HEAD -- . && git reset -q
+          for i in 1 2 3 4; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            : > "$RUNNER_TEMP/esito"
+            GITHUB_OUTPUT="$RUNNER_TEMP/esito" python scripts/webcam_scatti.py scegli
+            cat "$RUNNER_TEMP/esito" >> "$GITHUB_OUTPUT"
+            git add data/galleria.json reports/webcam/galleria 2>/dev/null || true
+            if git diff --cached --quiet; then echo "chiudi=$(grep -q 'Non ho capito' "$RUNNER_TEMP/esito" && echo 0 || echo 1)" >> "$GITHUB_OUTPUT"; exit 0; fi
+            git commit -q -m "galleria webcam: foto scelte ($ISSUE_TITLE)"
+            if git push -q origin HEAD:main; then echo "chiudi=1" >> "$GITHUB_OUTPUT"; exit 0; fi
+            sleep 10
+          done
+          exit 1
+
+      - name: Rispondi e chiudi la segnalazione
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ESITO: ${{ steps.g.outputs.esito }}
+          CHIUDI: ${{ steps.g.outputs.chiudi }}
+          N: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$N" --repo "${{ github.repository }}" --body "$ESITO"
+          if [ "$CHIUDI" = "1" ]; then gh issue close "$N" --repo "${{ github.repository }}" --reason completed; fi

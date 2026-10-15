@@ -1,0 +1,23 @@
+{
+ "nota": "Foto scelte dalle webcam del Mugello (scripts/webcam_scatti.py).",
+ "foto": [
+  {
+   "file": "reports/webcam/galleria/2026-10-14-alba-passo-della-futa.jpg",
+   "data": "2026-10-14",
+   "momento": "alba",
+   "categoria": "tramonto",
+   "webcam": "Passo della Futa (983 m) · LIVE",
+   "fonte": "Meteo-Project",
+   "link": "https://stream-meteoproject.eu/"
+  },
+  {
+   "file": "reports/webcam/galleria/2026-10-14-alba-passo-del-muraglione.jpg",
+   "data": "2026-10-14",
+   "momento": "alba",
+   "categoria": "tramonto",
+   "webcam": "Passo del Muraglione (907 m) · LIVE",
+   "fonte": "Meteo Pedemontana Forlivese",
+   "link": "https://stream-meteoproject.eu/"
+  }
+ ]
+}

@@ -1,79 +1,396 @@
 {
- "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una: un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
- "esperimenti": [
-  {
-   "id": "riscaldamento-stazioni",
-   "titolo": "Il riscaldamento di otto stazioni storiche a confronto",
-   "tipo": "grafico",
-   "data": "2026-09-28",
-   "testo": "Milano, Padova, Genova, New York, San Francisco e le altre sullo stesso grafico: l'anomalia rispetto al 1961–1990 con media mobile su 11 anni, la tendenza dal 1971 e l'anno più caldo di ciascuna.",
-   "link": "serie-storiche.html#riscaldamento",
-   "tag": [
-    "serie storiche",
-    "riscaldamento"
-   ]
-  },
-  {
-   "id": "piogge-estreme",
-   "titolo": "Un secolo di piogge estreme in Toscana",
-   "tipo": "grafico",
-   "data": "2026-10-01",
-   "testo": "Quanta pioggia può cadere in 5 minuti, in un'ora, in un giorno: i record dei pluviografi toscani dal 1923 su un grafico durata–pioggia a scala logaritmica, con il 19 giugno 1996 che li detiene tutti.",
-   "link": "piogge-estreme.html",
-   "tag": [
-    "Toscana",
-    "pioggia",
-    "record"
-   ]
-  },
-  {
-   "id": "carte-sinottiche",
-   "titolo": "Carte sinottiche disegnate dal sito",
-   "tipo": "esperimento",
-   "data": "2026-09-20",
-   "testo": "Geopotenziale a 500 hPa, temperatura a 850 hPa e pressione al suolo sull'Europa, disegnati direttamente nel browser dai dati del modello ECMWF in proiezione conica di Lambert, ogni 12 ore fino a 5 giorni.",
-   "link": "radar.html#carte",
-   "tag": [
-    "modelli",
-    "Europa"
-   ]
-  },
-  {
-   "id": "effemeridi",
-   "titolo": "Il cielo del Mugello calcolato nel browser",
-   "tipo": "esperimento",
-   "data": "2026-09-28",
-   "testo": "Alba, tramonto, crepuscoli, ora d'oro, fasi lunari, pianeti visibili ed equinozi calcolati con gli algoritmi astronomici di Meeus, per qualsiasi giorno dal 1950 al 2050.",
-   "link": "effemeridi.html",
-   "tag": [
-    "astronomia",
-    "Sole",
-    "Luna"
-   ]
-  },
-  {
-   "id": "stazioni-centenarie",
-   "titolo": "Le 474 stazioni centenarie del mondo",
-   "tipo": "tabella",
-   "data": "2026-09-26",
-   "testo": "Il catalogo dell'Organizzazione meteorologica mondiale delle stazioni che misurano da oltre cento anni, con mappa, filtri e scheda di ciascuna: 22 sono in Italia.",
-   "link": "stazioni-centenarie.html",
-   "tag": [
-    "OMM",
-    "serie storiche"
-   ]
-  },
-  {
-   "id": "estremi-mondo",
-   "titolo": "Gli estremi del pianeta nelle ultime 24 ore",
-   "tipo": "curiosita",
-   "data": "2026-10-03",
-   "testo": "Il posto più caldo, il più freddo (con una sola stazione in Antartide) e il più piovoso della Terra, dai bollettini delle stazioni sinottiche di tutto il mondo, aggiornati più volte al giorno.",
-   "link": "radar.html#estremi",
-   "tag": [
-    "mondo",
-    "record"
-   ]
-  }
- ]
+  "nota": "Le sperimentazioni di MeteoGeek. Per aggiungerne una (scegli anche il suo \"tema\" tra quelli di \"temi\" qui sotto; senza tema finisce in \"Altre prove\"): un elemento IN CIMA a \"esperimenti\". tipo: grafico | statistica | curiosita | tabella | esperimento. link: una pagina del sito (le nuove si chiamano geek-<nome>.html, partendo da geek-modello.html) oppure un file (PDF, CSV…). stato facoltativo: nuovo | in-corso. anteprima facoltativa: percorso di un'immagine (es. reports/geek/nome.png).",
+  "temi": [
+    {
+      "id": "clima",
+      "icona": "🌡️",
+      "nome": "Clima e temperature",
+      "testo": "Come cambia il caldo: strisce del clima, climatologie, riscaldamento delle stazioni.",
+      "colore": "#c8452b"
+    },
+    {
+      "id": "pioggia",
+      "icona": "🌧️",
+      "nome": "Pioggia e acqua",
+      "testo": "Calendari, probabilità e record di pioggia nel Mugello e in Toscana.",
+      "colore": "#2a78d6"
+    },
+    {
+      "id": "previsioni",
+      "icona": "🔮",
+      "nome": "Previsioni e modelli",
+      "testo": "Quanto ci azzeccano i modelli e come si leggono le carte sinottiche.",
+      "colore": "#7a5bc0"
+    },
+    {
+      "id": "stazioni",
+      "icona": "📡",
+      "nome": "Stazioni e serie storiche",
+      "testo": "Schede, mappe e confronti tra le stazioni meteo più antiche e lunghe.",
+      "colore": "#0f6b52"
+    },
+    {
+      "id": "mondo",
+      "icona": "🌍",
+      "nome": "Mondo e curiosità",
+      "testo": "Record planetari, astronomia e piccole scoperte fuori dal Mugello.",
+      "colore": "#c9671f"
+    }
+  ],
+  "esperimenti": [
+    {
+      "id": "hall-of-fame",
+      "titolo": "Gli estremi del Mugello",
+      "tipo": "esperimento",
+      "tema": "clima",
+      "data": "2026-10-12",
+      "stato": "nuovo",
+      "testo": "I record di temperatura e di pioggia giornaliera delle stazioni del Servizio Idrologico Regionale nel Mugello dal 1951, con un controllo di qualità dichiarato: 41,6 °C a Borgo San Lorenzo nel luglio 1952, −22,0 °C nel gennaio 1985, 175,4 mm a Razzuolo il 14 marzo 2025. Le giornate più estreme e i valori scartati perché sbagliati.",
+      "link": "geek-hall-of-fame.html",
+      "tag": [
+        "record",
+        "estremi",
+        "temperatura",
+        "pioggia",
+        "SIR",
+        "controllo di qualità"
+      ]
+    },
+    {
+      "id": "nebbia",
+      "titolo": "Nebbia in valle: la trappola fredda del Mugello",
+      "tipo": "esperimento",
+      "tema": "clima",
+      "data": "2026-10-09",
+      "stato": "nuovo",
+      "testo": "Perché le nebbie nascono in fondovalle: l'inversione termica notturna misurata dalle stazioni del Centro Funzionale. In quasi metà delle notti Borgo San Lorenzo è più freddo di Monte Giovi, 760 m più in alto; il profilo delle temperature di adesso, il calendario notte per notte e le condizioni previste per le prossime notti.",
+      "link": "geek-nebbia.html",
+      "tag": [
+        "nebbia",
+        "inversione termica",
+        "fondovalle",
+        "Sieve",
+        "Monte Giovi",
+        "umidità"
+      ]
+    },
+    {
+      "id": "modelli",
+      "titolo": "Sei modelli a confronto",
+      "tipo": "esperimento",
+      "tema": "previsioni",
+      "data": "2026-10-09",
+      "stato": "nuovo",
+      "testo": "ECMWF, GFS, ICON, UKMO, Météo-France e GEM ora per ora su Borgo San Lorenzo, più WeatherNext di Google: quanto vanno d'accordo nei prossimi 7 giorni e chi ha previsto meglio la massima e la minima di ieri, verificate con la stazione del Centro Funzionale.",
+      "link": "geek-modelli.html",
+      "tag": [
+        "modelli",
+        "ECMWF",
+        "GFS",
+        "ICON",
+        "WeatherNext",
+        "verifica"
+      ]
+    },
+    {
+      "id": "bilancino",
+      "titolo": "Quanta pioggia serve a Bilancino?",
+      "tipo": "esperimento",
+      "tema": "pioggia",
+      "data": "2026-10-09",
+      "stato": "nuovo",
+      "testo": "La pioggia sul bacino e la quota del lago giorno per giorno: quanti millimetri servono per far salire Bilancino di 10 cm, dopo quanto arriva l'acqua e perché d'estate la pioggia non basta.",
+      "link": "geek-bilancino.html",
+      "tag": [
+        "Bilancino",
+        "lago",
+        "pioggia",
+        "bilancio idrico",
+        "Sieve"
+      ]
+    },
+    {
+      "id": "weathergami",
+      "titolo": "Weathergami: il clima di una stazione in un colpo d'occhio",
+      "tipo": "grafico",
+      "tema": "clima",
+      "data": "2026-10-08",
+      "stato": "nuovo",
+      "testo": "Ogni giorno ha una massima e una minima: il Weathergami le raggruppa in esagoni colorati per frequenza. Si sceglie la stazione (Borgo San Lorenzo, le stazioni del Mugello e della Toscana, Firenzuola, Genova, Milano, New York e altre) e si filtra per stagione, mese e periodo per confrontare le forme.",
+      "link": "geek-weathergami.html",
+      "tag": [
+        "weathergami",
+        "temperature",
+        "massima e minima",
+        "esagoni",
+        "serie storiche",
+        "stazioni"
+      ]
+    },
+    {
+      "id": "giorni-estremi",
+      "titolo": "Giorni che non esistevano",
+      "tipo": "statistica",
+      "tema": "clima",
+      "data": "2026-10-08",
+      "stato": "nuovo",
+      "testo": "Notti tropicali, giornate sopra i 35 °C, giorni di gelo e di ghiaccio: quanti ce n'erano ogni anno e quanti ce ne sono oggi? Il conteggio per anno e per decennio a Borgo San Lorenzo, Firenzuola e altre stazioni storiche, con il confronto dell'anno in corso.",
+      "link": "geek-giorni-estremi.html",
+      "tag": [
+        "notti tropicali",
+        "gelo",
+        "ondate di calore",
+        "soglie",
+        "serie storiche"
+      ]
+    },
+    {
+      "id": "microclima",
+      "titolo": "Il microclima del Mugello: l'inversione termica",
+      "tipo": "statistica",
+      "tema": "stazioni",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Il profilo della temperatura da 196 a 960 metri in tempo reale con otto stazioni della Regione, ISCARP2 e Netatmo a confronto nelle ultime 24 ore, e quante notti d'inversione termica ci sono state dal 1992: a Borgo la minima è più bassa di quella a 820 m in oltre metà delle notti.",
+      "link": "geek-microclima.html",
+      "tag": [
+        "microclima",
+        "inversione termica",
+        "quota",
+        "ISCARP2",
+        "Netatmo"
+      ]
+    },
+    {
+      "id": "skewt",
+      "titolo": "Lo skew-T del Mugello",
+      "tipo": "esperimento",
+      "tema": "previsioni",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Il diagramma dei meteorologi calcolato dal profilo previsto sopra Borgo San Lorenzo e Firenzuola: temperatura e punto di rugiada a tutte le quote, particella d'aria, CAPE, CIN, base delle nubi, zero termico, vento. Ogni 3 ore per 5 giorni, con la spiegazione in italiano.",
+      "link": "geek-skewt.html",
+      "tag": [
+        "skew-T",
+        "CAPE",
+        "temporali",
+        "sondaggio",
+        "ECMWF"
+      ]
+    },
+    {
+      "id": "spaghetti-ensemble",
+      "titolo": "51 futuri possibili: lo spaghetti plot ECMWF",
+      "tipo": "grafico",
+      "tema": "previsioni",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "I 51 membri dell'ensemble ECMWF per Borgo San Lorenzo e Firenzuola, fino a 15 giorni: temperatura a 2 m, pioggia cumulata, pressione e temperatura a 850 e 500 hPa (masse d'aria e aria fredda in quota). Quando la previsione è affidabile e quando si apre a ventaglio, con probabilità di pioggia e incertezza giorno per giorno.",
+      "link": "geek-ensemble.html",
+      "tag": [
+        "ECMWF",
+        "ensemble",
+        "incertezza",
+        "previsioni",
+        "850 hPa",
+        "500 hPa"
+      ]
+    },
+    {
+      "id": "compleanno-clima",
+      "titolo": "Il tuo compleanno nel clima",
+      "tipo": "statistica",
+      "tema": "clima",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Scegli una data e una stazione: com'era il tempo quel giorno in tutti gli anni di misure? Record di caldo e freddo, tendenza, confronto tra primi e ultimi 30 anni, e se scrivi l'anno in cui sei nato, come era il tuo giorno.",
+      "link": "geek-compleanno-clima.html",
+      "tag": [
+        "compleanno",
+        "temperatura",
+        "record",
+        "tendenza",
+        "serie storiche"
+      ]
+    },
+    {
+      "id": "verifica-modello",
+      "titolo": "Chi ci azzecca di più? Il modello contro le misure",
+      "tipo": "statistica",
+      "data": "2026-10-07",
+      "stato": "in-corso",
+      "testo": "WeatherNext 3 e Open-Meteo messi ogni giorno alla prova contro ISCARP2 e il pluviometro SIR di Borgo, con due avversari senza intelligenza: la persistenza e la media del periodo. Errori su massima e minima, probabilità di pioggia e Brier score. L'archivio è appena partito e si arricchisce da solo.",
+      "link": "geek-verifica-modello.html",
+      "tag": [
+        "previsioni",
+        "WeatherNext",
+        "ISCARP2",
+        "verifica",
+        "Brier"
+      ],
+      "tema": "previsioni"
+    },
+    {
+      "id": "pioggia-calendario",
+      "titolo": "Il calendario della pioggia",
+      "tipo": "grafico",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Un quadratino per ogni giorno, più scuro quanto più piove, e le statistiche della serie: piove di più di lunedì o di sabato? Quali date non hanno mai visto pioggia? Quanto è probabile che piova nel tuo compleanno? Borgo San Lorenzo, Firenzuola e i pluviometri della Regione Toscana.",
+      "link": "geek-pioggia-calendario.html",
+      "tag": [
+        "pioggia",
+        "calendario",
+        "heatmap",
+        "SIR",
+        "Mugello",
+        "statistica",
+        "probabilità"
+      ],
+      "tema": "pioggia"
+    },
+    {
+      "id": "warming-stripes",
+      "titolo": "Warming stripes del Mugello",
+      "tipo": "grafico",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Un colore per ogni anno, dal blu al rosso: la storia del clima di Borgo San Lorenzo, Firenzuola e altre 11 serie lunghe, italiane e mondiali, sulla stessa scala e con download in PNG.",
+      "link": "geek-stripes.html",
+      "tag": [
+        "warming stripes",
+        "temperatura",
+        "Mugello",
+        "clima"
+      ],
+      "tema": "clima"
+    },
+    {
+      "id": "ghcn-stazione",
+      "titolo": "Scheda completa di ogni stazione NOAA",
+      "tipo": "tabella",
+      "data": "2026-10-07",
+      "stato": "nuovo",
+      "testo": "Metadati, coordinate, quota, periodo di attività, copertura, climatologia mensile, serie annuale, indicatori e link diretti ai dati ufficiali NOAA per ogni stazione GHCN-Daily.",
+      "link": "geek-ghcn-stazione.html?id=IT000016090",
+      "tag": [
+        "NOAA",
+        "GHCN",
+        "stazioni",
+        "clima"
+      ],
+      "tema": "stazioni"
+    },
+    {
+      "id": "ghcn-climatologia",
+      "titolo": "Climatologia di 49 stazioni italiane NOAA",
+      "tipo": "grafico",
+      "data": "2026-10-05",
+      "stato": "nuovo",
+      "testo": "Climatologia mensile 1991–2020 e medie annuali (massime, minime e medie) di 49 stazioni italiane del catalogo NOAA GHCN-Daily, con il confronto fra più stazioni sullo stesso grafico: da Monte Cimone a Pisa, da Verona a Palermo.",
+      "link": "geek-ghcn-climatologia.html",
+      "tag": [
+        "NOAA",
+        "GHCN",
+        "climatologia"
+      ],
+      "tema": "clima"
+    },
+    {
+      "id": "ghcn-stazioni",
+      "titolo": "La mappa delle stazioni NOAA GHCN-Daily",
+      "tipo": "esperimento",
+      "data": "2026-10-05",
+      "stato": "nuovo",
+      "testo": "Tutte le stazioni del catalogo NOAA GHCN-Daily su una mappa interattiva: ricerca per nome o codice, filtro per paese e anni di attività, classifica dei paesi, copertura nel tempo ed esportazione CSV delle stazioni filtrate.",
+      "link": "geek-ghcn-stazioni.html",
+      "tag": [
+        "NOAA",
+        "GHCN",
+        "stazioni",
+        "mappa"
+      ],
+      "tema": "stazioni"
+    },
+    {
+      "id": "riscaldamento-stazioni",
+      "titolo": "Il riscaldamento di otto stazioni storiche a confronto",
+      "tipo": "grafico",
+      "data": "2026-09-28",
+      "testo": "Milano, Padova, Genova, New York, San Francisco e le altre sullo stesso grafico: l'anomalia rispetto al 1961–1990 con media mobile su 11 anni, la tendenza dal 1971 e l'anno più caldo di ciascuna.",
+      "link": "serie-storiche.html#riscaldamento",
+      "tag": [
+        "serie storiche",
+        "riscaldamento"
+      ],
+      "tema": "clima"
+    },
+    {
+      "id": "piogge-estreme",
+      "titolo": "Un secolo di piogge estreme in Toscana",
+      "tipo": "grafico",
+      "data": "2026-10-01",
+      "testo": "Quanta pioggia può cadere in 5 minuti, in un'ora, in un giorno: i record dei pluviografi toscani dal 1923 su un grafico durata–pioggia a scala logaritmica, con il 19 giugno 1996 che li detiene tutti.",
+      "link": "piogge-estreme.html",
+      "tag": [
+        "Toscana",
+        "pioggia",
+        "record"
+      ],
+      "tema": "pioggia"
+    },
+    {
+      "id": "carte-sinottiche",
+      "titolo": "Carte sinottiche disegnate dal sito",
+      "tipo": "esperimento",
+      "data": "2026-09-20",
+      "testo": "Geopotenziale a 500 hPa, temperatura a 850 hPa e pressione al suolo sull'Europa, disegnati direttamente nel browser dai dati del modello ECMWF in proiezione conica di Lambert, ogni 12 ore fino a 5 giorni.",
+      "link": "radar.html#carte",
+      "tag": [
+        "modelli",
+        "Europa"
+      ],
+      "tema": "previsioni"
+    },
+    {
+      "id": "effemeridi",
+      "titolo": "Il cielo del Mugello calcolato nel browser",
+      "tipo": "esperimento",
+      "data": "2026-09-28",
+      "testo": "Alba, tramonto, crepuscoli, ora d'oro, fasi lunari, pianeti visibili ed equinozi calcolati con gli algoritmi astronomici di Meeus, per qualsiasi giorno dal 1950 al 2050.",
+      "link": "effemeridi.html",
+      "tag": [
+        "astronomia",
+        "Sole",
+        "Luna"
+      ],
+      "tema": "mondo"
+    },
+    {
+      "id": "stazioni-centenarie",
+      "titolo": "Le 474 stazioni centenarie del mondo",
+      "tipo": "tabella",
+      "data": "2026-09-26",
+      "testo": "Il catalogo dell'Organizzazione meteorologica mondiale delle stazioni che misurano da oltre cento anni, con mappa, filtri e scheda di ciascuna: 22 sono in Italia.",
+      "link": "stazioni-centenarie.html",
+      "tag": [
+        "OMM",
+        "serie storiche"
+      ],
+      "tema": "stazioni"
+    },
+    {
+      "id": "estremi-mondo",
+      "titolo": "Gli estremi del pianeta nelle ultime 24 ore",
+      "tipo": "curiosita",
+      "data": "2026-10-03",
+      "testo": "Il posto più caldo, il più freddo (con una sola stazione in Antartide) e il più piovoso della Terra, dai bollettini delle stazioni sinottiche di tutto il mondo, aggiornati più volte al giorno.",
+      "link": "radar.html#estremi",
+      "tag": [
+        "mondo",
+        "record"
+      ],
+      "tema": "mondo"
+    }
+  ]
 }

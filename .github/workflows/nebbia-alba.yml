@@ -1,0 +1,67 @@
+name: Diario della nebbia (foto all'alba e condizioni della notte)
+
+on:
+  schedule:
+    # più tentativi al mattino: lo script archivia una sola volta al giorno, alla prima esecuzione
+    # fra le 7 e le 10:30 ora italiana. GitHub ritarda o salta spesso le esecuzioni programmate:
+    # lo stesso script gira anche dentro update-data.yml, che parte più spesso.
+    - cron: "52 4,5,6,7,8 * * *"
+    - cron: "22 5,6,7 * * *"
+  workflow_dispatch:           # esecuzione manuale dal tab Actions
+    inputs:
+      forza:
+        description: "Scatta la foto anche fuori dall'orario o se oggi c'è già"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write             # segnalazione del mattino per classificare la foto
+
+concurrency:
+  group: nebbia-alba
+  cancel-in-progress: false
+
+jobs:
+  alba:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installa Pillow
+        run: pip install pillow
+
+      - name: Temperature, umidità e vento della notte (CFR)
+        continue-on-error: true
+        run: |
+          python scripts/fetch_termo.py
+          python scripts/fetch_nebbia.py
+
+      - name: Foto della webcam di Bilancino e diario
+        run: python scripts/fetch_nebbia_alba.py ${{ inputs.forza && '--forza' || '' }}
+
+      - name: Commit se cambiato
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for f in data/nebbia-diario.json data/nebbia.json reports/nebbia; do
+            if [ -e "$f" ]; then git add "$f"; fi
+          done
+          if git diff --cached --quiet; then echo "nessuna variazione"; exit 0; fi
+          git commit -m "dati: diario della nebbia"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "$GITHUB_REF_NAME" && git push && exit 0
+            sleep 15
+          done
+          exit 1
+
+      - name: Segnalazione per classificare la foto (rispondi «sì», «no» o «?»)
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/nebbia_issue.py apri

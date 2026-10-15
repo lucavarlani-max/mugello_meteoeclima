@@ -83,7 +83,7 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **Mont Aigoual 1896–2026** (`mont-aigoual.html`, osservatorio di Météo-France a 1567 m nelle Cevenne, dati NOAA GHCN-Daily: pioggia dal 1896, temperatura dal 1949, media giornaliera completata con TAVG, opzione `--tavg` di `build_serie.py`) e
   **De Bilt 1901–2026** (`de-bilt.html`, stazione di riferimento del KNMI nei Paesi Bassi, stazione centenaria OMM) e
   **Bangalore 1901–2026** (`bangalore.html`, India Meteorological Department, stazione centenaria OMM come osservatorio pluviometrico dal 1867: pioggia dal 1901, temperatura dal 1973, media giornaliera completata con TAVG e soglia di giorni validi per anno abbassata a 275 con `--min-anno=275` di `build_serie.py`, introdotta per questa serie) e
-  **Firenzuola 1961–2026** (`firenzuola.html`, la prima serie di un comune del Mugello stesso: stazione 01429 di ARPAE Emilia-Romagna, archivio opendata Eraclito, 66 anni praticamente senza lacune) e
+  **Firenzuola 1961–2026** (`firenzuola.html`, la prima serie di un comune del Mugello stesso: cella 01469 (5 km, quota media 580 m, contiene il capoluogo) del dataset su griglia Eraclito di ARPAE Emilia-Romagna, interpolato dalle stazioni; aggiornata da `scripts/fetch_arpae_firenzuola.py`, 66 anni praticamente senza lacune) e
   **Oxford 1815–2025** (`oxford.html`, Radcliffe Meteorological Station dell'Università di Oxford, stazione centenaria OMM: temperatura dal 1815, pioggia dal 1827, 211 anni con appena 5 valori mancanti) e
   **Domodossola 1872–2013** (`domodossola.html`, Osservatorio del Collegio Rosmini, stazione centenaria OMM: unica serie del sito senza dati giornalieri, costruita a mano dalle tabelle annuali e mensili pubblicate su *Nimbus* 72 della Società Meteorologica Italiana — niente massime/minime separate né "un giorno nella storia"; script di estrazione via `pdftotext -bbox` non versionato, dati finali in `domodossola.js` e `data/serie/domodossola.json`) e
   **Sodankylä 1908–2026** (`sodankyla.html`, Lapponia finlandese, ~90 km a nord del circolo polare artico, stazione centenaria OMM, dati NOAA GHCN-Daily: media giornaliera completata con TAVG, opzione `--tavg` di `build_serie.py`; il file NOAA ha anche l'altezza della neve al suolo, SNWD, non la neve caduta letta da `build_serie.py` — niente sezione neve per questa stazione).
@@ -109,6 +109,16 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   (clima, oceani, vulcani, terremoti, uragani, ghiacci, ozono, cielo, temporali, mugello) e,
   se serve, `foto` (id in `data/notizie-foto.json`, foto di Wikimedia Commons con autore e
   licenza). Le ultime tre notizie compaiono anche in home.
+- **Storico SIR del Mugello** (`data/sir/`, script `scripts/fetch_sir_storico.py`) — serie giornaliere
+  delle 47 stazioni del Servizio Idrologico Regionale dei comuni del Mugello, scaricate dall'archivio
+  storico pubblico (sir.toscana.it): `temp.csv` (massima e minima, dal 1951), `prec024.csv` (pioggia
+  0→24, dal 2004) e `prec99.csv` (pioggia 9→9, dal 1916), più `stato.json` (stato di validazione di ogni
+  anno) e `stazioni.csv`. Si aggiorna con `python3 scripts/fetch_sir_storico.py --mugello --pluvio9`
+  (riprende da dove si era fermato). Dati Regione Toscana - SIR, licenza CC BY-SA 4.0.
+- **Stazioni del Mugello** (`stazioni-mugello.html`) — confronto fra le stazioni SIR dei comuni del
+  Mugello: classifica e andamento della pioggia annua con la quota, temperature massime e minime,
+  confronto interattivo fino a quattro stazioni (clima mensile e pioggia anno per anno) ed elenco ordinabile.
+  Dati sintetizzati in `data/sir/mugello.json` da `scripts/build_sir_mugello.py`.
 - **Webcam** — nel menu un sottomenu con *Webcam Mugello* (mappa delle webcam della vallata in
   home, `data/webcam.json`) e *Webcam Panomax* (`webcam-panomax.html` + `webcam-panomax.js`):
   le 668 webcam panoramiche pubbliche Panomax su mappa Leaflet con ricerca, filtri per paese e
@@ -120,9 +130,29 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   una pagina al menu della home, va aggiunta anche lì.
 - **MeteoGeek** (`meteogeek.html`, voce 🧪 MeteoGeek del menu) — il laboratorio: sperimentazioni, grafici insoliti,
   statistiche, curiosità e tabelle, come schede filtrabili per tipo e con ricerca. Elenco in `data/meteogeek.json`
-  (un elemento in cima a `esperimenti`: titolo, tipo grafico/statistica/curiosita/tabella/esperimento, data, testo, link,
-  tag, stato e anteprima facoltativi). Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
+  (un elemento in cima a `esperimenti`: titolo, tipo grafico/statistica/curiosita/tabella/esperimento, **tema**, data, testo,
+  link, tag, stato e anteprima facoltativi). I **temi** (le sottosezioni della home: clima, pioggia, previsioni, stazioni,
+  mondo) sono definiti nel blocco `temi` dello stesso file (id, icona, nome, testo, colore): per aggiungerne uno basta
+  una voce lì. La home mostra i temi come riquadri e, senza filtri, le ultime 3 prove di ciascuno con "Tutte le N prove →";
+  i filtri tema, tipo e ricerca si combinano e il tema è nell'indirizzo (`meteogeek.html?tema=pioggia`). Una scheda senza
+  tema (o con un tema sconosciuto) finisce in "Altre prove". Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
   dal modello `geek-modello.html` (non indicizzato); nel menu evidenziano MeteoGeek.
+  **Verifica delle previsioni** (`geek-verifica-modello.html`): `scripts/fetch_verifica.py` (nel giro dell'Action `update-data`)
+  archivia le previsioni a 7 giorni dei nove comuni di WeatherNext 3 (solo se tutti da Google) e di Open-Meteo in
+  `data/verifica/log.json` (per ogni giorno e anticipo, la previsione emessa entro le 12) e il riepilogo giornaliero di
+  ISCARP2 (Weather Underground, chiave pubblica di `stazioni.js`) in `data/verifica/iscarp2.json`. La pagina li confronta con le misure
+  (ISCARP2 per Scarperia e San Piero, SIR per Borgo San Lorenzo) e con persistenza e climatologia. Una tantum,
+  `python scripts/fetch_verifica.py --da-git` recupera dalla storia git le previsioni WeatherNext passate.
+  **Spaghetti plot** (`geek-ensemble.html`): i 51 membri dell'ensemble ECMWF IFS (Open-Meteo Ensemble API; riserva NOAA GFS)
+  per Borgo San Lorenzo e Firenzuola, fino a 15 giorni (temperatura a 2 m, pioggia cumulata, pressione, temperatura a 850 e 500 hPa), in `data/ensemble.json` scritto da `scripts/fetch_ensemble.py` nel giro
+  dell'Action (scarica al massimo ogni 6 ore). La pagina disegna i membri, la media e la fascia 10°–90°, e calcola
+  probabilità di pioggia e incertezza per giorno.
+  **Microclima** (`geek-microclima.html`): profilo verticale della temperatura con le otto stazioni attive della rete regionale tra
+  196 e 960 m (`data/termo.json`), ISCARP2 (Weather Underground, dal browser) e Netatmo, confronto ISCARP2/Netatmo sulle ultime 24 ore e
+  statistiche storiche sulle notti d'inversione termica da `data/sir/<id>/temp.csv` (minima in basso < minima in alto).
+  **Skew-T** (`geek-skewt.html`): `scripts/fetch_skewt.py` scarica da Open-Meteo (ECMWF IFS, riserva GFS) i profili su livelli di
+  pressione da 1000 a 200 hPa per Borgo San Lorenzo e Firenzuola, ogni 3 ore fino a 5 giorni, in `data/skewt.json` (al massimo ogni 6 ore).
+  La pagina ricalcola punto di rugiada, LCL, particella, CAPE/CIN, zero termico, indice K e acqua precipitabile e disegna il diagramma.
 - **Le mie stazioni** (`stazioni.html` + `stazioni.js`, voce Stazioni del menu) — la stazione ISCARP2 di Scarperia
   (Weather Underground, letta dal browser come in home) e la stazione Netatmo: valori attuali, min/max di oggi,
   temperature delle ultime 24 ore a confronto e ultimi 7 giorni di ISCARP2. La Netatmo è letta dall'Action con
@@ -130,6 +160,42 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   coordinate. Servono i segreti `NETATMO_CLIENT_ID`, `NETATMO_CLIENT_SECRET`, `NETATMO_REFRESH_TOKEN` (permesso
   read_station) e `NETATMO_KEY` (frase a piacere): il refresh token che Netatmo rinnova a ogni accesso viene
   salvato cifrato in `data/netatmo-token.enc`. Senza segreti la scheda Netatmo mostra «in arrivo».
+- **Webcam del Mugello** (`webcam.html`) — mappa grande in stile scuro (OpenStreetMap / CARTO) con l'anteprima di ogni
+  webcam di `data/webcam.json` (aggiornata ogni 5 minuti) e **galleria** delle foto migliori (`data/galleria.json`,
+  foto in `reports/webcam/galleria/`). L'Action `webcam-scatti.yml` (una catena di esecuzioni che aspettano l'ora giusta e si riavviano da sole,
+  perché le esecuzioni programmate di GitHub arrivano in ritardo di ore; all'alba avvia anche `nebbia-alba.yml`)
+  10 minuti dopo l'alba e 15 minuti prima del tramonto salva una foto da ogni webcam
+  nel ramo `webcam-candidati` (un solo commit, riscritto ogni volta) e apre una segnalazione «Galleria AAAA-MM-GG …»:
+  si risponde con i numeri e la categoria (`2 tramonto, 5 arcobaleno`) o `no`, e `webcam-galleria.yml` aggiunge le
+  foto scelte. Per temporali e arcobaleni: tab Actions → «Galleria webcam» → Run workflow (scatta subito). Una webcam
+  si esclude dalla galleria con `"galleria": false` in `data/webcam.json`.
+- **Gli estremi del Mugello** (`geek-hall-of-fame.html`, MeteoGeek) — record di temperatura e pioggia giornaliera
+  delle stazioni SIR (`data/sir/`, Borgo da `data/bsl/borgo.json`) con controllo di qualità dichiarato (limiti fisici,
+  picchi isolati, coerenza spaziale delle anomalie, piogge non confermate): `scripts/build_hall_of_fame.py` →
+  `data/hall-of-fame.json`, rigenerato da `update-data.yml`.
+  Comprende le stazioni ARPAE Emilia-Romagna di Firenzuola (476 m) e Bibbiana (858 m, Palazzuolo sul Senio), dal 2006, e i pluviometri di Palazzuolo sul Senio
+  e Marradi:
+  `scripts/fetch_arpae_stazioni.py` legge l'archivio mensile delle osservazioni ARPAE (BUFR-JSON) e scrive
+  `data/arpae/stazioni.csv` e `data/arpae/<id>/temp.csv`, `prec024.csv` nel formato del SIR (una volta al giorno;
+  `--dal 2006-01` ricostruisce tutto).
+- **Nebbia in valle** (`geek-nebbia.html`, MeteoGeek) — inversione termica notturna misurata (termometri CFR,
+  minime SIR di Borgo S. Lorenzo e Monte Giovi), umidità e vento CFR (`scripts/fetch_nebbia.py` → `data/nebbia.json`)
+  e **diario della nebbia**: l'Action `nebbia-alba.yml` ogni mattina (appena dopo l'alba, entro le 10:30) salva la foto della webcam del lago di
+  Bilancino in `reports/nebbia/AAAA-MM-GG.jpg` e le condizioni della notte, più la previsione emessa il giorno prima,
+  in `data/nebbia-diario.json` (`scripts/fetch_nebbia_alba.py`). **Classificare le mattine**: in
+  `data/nebbia-diario.json` mettere `"nebbia": true` (nebbia o banchi in valle), `false` (limpido) o `"incerto"`
+  guardando la foto. **Metodo rapido**: ogni mattina `scripts/nebbia_issue.py apri` apre una segnalazione GitHub
+  «Nebbia AAAA-MM-GG» con la foto (arriva come notifica nell'app GitHub o per email): basta rispondere con un commento
+  «sì», «no» o «?» e l'Action `nebbia-classifica.yml` aggiorna il diario e chiude la segnalazione. In alternativa,
+  `geek-nebbia.html?classifica` mostra sotto ogni foto i pulsanti nebbia / limpido / incerto. Contano solo le risposte
+  del proprietario del repository. La sera lo script salva anche la previsione corrente per l'alba successiva
+  (`previsione_sera`, con nuvole per strato, suolo, 850 hPa e strato limite che l'archivio Previous Runs non ha). Con almeno 60 mattine classificate (15 con nebbia e 15 senza) la pagina calibra da sola una
+  regressione logistica e mostra la probabilità di nebbia delle prossime notti, solo se batte la frequenza climatologica.
+  Le grandezze sono quelle delle ore dell'alba (da 3 ore prima a 1 dopo il sorgere del sole: scarto temperatura–rugiada,
+  vento) più le nuvole medie e alte della notte; sei candidati aggiungono uno alla volta nubi basse, punto di rugiada,
+  crossover (minima meno rugiada delle 15 del giorno prima), pioggia delle 24 ore prima, umidità del suolo o inversione
+  a 850 hPa; si tiene il candidato con il Brier score più basso in leave-one-out. Il diario registra anche umidità
+  all'alba, pressione, strato limite e il punto di rugiada misurato a Borgo S. Lorenzo 2.
 - **Contatore visite** (`analytics.js`, incluso in tutte le pagine) — GoatCounter, gratuito e
   senza cookie, account `mugellometeoeclima`. In fondo a ogni pagina mostra il totale delle
   visite (serve l'opzione "Allow adding visitor counts on your website" in GoatCounter).
