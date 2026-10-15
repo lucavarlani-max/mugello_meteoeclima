@@ -15,8 +15,8 @@
     D=d; A=d.anni; AC=A.filter(a=>a.tm!=null);
     AT=C.tdal?A.filter(a=>a.y>=C.tdal):A;   // anni dei grafici di temperatura (C.tdal se la temperatura parte dopo la pioggia)
     ["tm","tx","tn"].forEach(k=>{BASE[k]=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[k]));});
-    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); fonti(); dayInit();
-    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();fonti();},150);});
+    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); neveSuolo(); fonti(); dayInit();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();neveSuoloChart();fonti();},150);});
     if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",stripes);
   }).catch(()=>{$("tiles").innerHTML='<div class="loading">Dati non disponibili.</div>';});
 
@@ -175,6 +175,29 @@
     const avg=movAvg(pts,11), base=mean(N.filter(s=>s.y>=1992&&s.y<=2021).map(s=>s.cm));
     lineChart($("ch-neve"),{pts,avg,bars:true,barCls:"sky",avgCls:"sky",ref:{y:base},unit:"",label:"Neve caduta per stagione invernale a "+C.nome,
       tip:(x,v,a)=>{const s=byY.get(x);return `<b>Inverno ${x-1}/${String(x).slice(2)}</b><br>Neve caduta <b>${v==null?"—":Math.round(v)+" cm"}</b>`+(s?`<br><span class="m">${s.g25} giorni con almeno 2,5 cm · massimo in un giorno ${f1(s.max)} cm</span>`:"")+(a!=null?`<br><span class="m">media 11 stagioni ${Math.round(a)} cm · media 1991–2020 ${Math.round(base)} cm</span>`:"");}});
+  }
+
+  /* ---------- neve al suolo (solo se la serie ce l'ha): altezza del manto misurata, non la neve caduta.
+     Dato diverso da "neve" sopra (SNWD invece di SNOW): qui non sappiamo quanto è caduto, solo quanto
+     è rimasto a terra il giorno della misura, e la copertura può avere interruzioni. ---------- */
+  function neveSuolo(){
+    const sec=$("sec-neve-suolo"); if(!sec||!D.neve_suolo||!D.neve_suolo.stagioni.length) return; sec.hidden=false;
+    const N=D.neve_suolo.stagioni, lab=y=>(y-1)+"/"+String(y).slice(2);
+    const top=[...N].sort((a,b)=>b.max-a.max), low=[...N].sort((a,b)=>a.max-b.max);
+    const e=mean(N.filter(s=>s.y>=1992&&s.y<=2021).map(s=>s.max)), L10=N.slice(-10), l=mean(L10.map(s=>s.max));
+    const buchi=[]; for(let y=N[0].y+1;y<N[N.length-1].y;y++) if(!N.some(s=>s.y===y)) buchi.push(y);
+    $("neve-suolo-note").textContent=`In media un manto massimo di ${Math.round(e)} cm a stagione nel 1991–2020, ${Math.round(l)} cm nelle ultime dieci stagioni misurate (${lab(L10[0].y)}–${lab(L10[9].y)}). Il manto più alto: ${lab(top[0].y)}, ${Math.round(top[0].max)} cm il ${dIt(top[0].data_max)}; il più basso tra le stagioni misurate: ${lab(low[0].y)}, ${f1(low[0].max)} cm.`+(buchi.length?` Mancano dati per le stagioni ${lab(buchi[0])}–${lab(buchi[buchi.length-1])}.`:"");
+    const rows=L=>"<tbody>"+L.map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${r.a}</td><td class="v">${r.b}</td></tr>`).join("")+"</tbody>";
+    $("r-neve-suolo").innerHTML=rows(D.neve_suolo.record.slice(0,10).map(r=>({a:dIt(r.d),b:f1(r.v)+" cm"})));
+    $("r-stag-suolo").innerHTML=rows(top.slice(0,10).map(s=>({a:"inverno "+lab(s.y),b:Math.round(s.max)+" cm · "+dIt(s.data_max)})));
+    neveSuoloChart();
+  }
+  function neveSuoloChart(){
+    if(!D||!D.neve_suolo||!$("ch-neve-suolo")) return; const N=D.neve_suolo.stagioni, byY=new Map(N.map(s=>[s.y,s]));
+    const pts=[]; for(let y=N[0].y;y<=N[N.length-1].y;y++) pts.push([y,byY.has(y)?byY.get(y).max:null]);
+    const avg=movAvg(pts,11), base=mean(N.filter(s=>s.y>=1992&&s.y<=2021).map(s=>s.max));
+    lineChart($("ch-neve-suolo"),{pts,avg,bars:true,barCls:"sky",avgCls:"sky",ref:{y:base},unit:"",label:"Manto nevoso massimo per stagione invernale a "+C.nome,
+      tip:(x,v,a)=>{const s=byY.get(x);return `<b>Inverno ${x-1}/${String(x).slice(2)}</b><br>Manto massimo <b>${v==null?"— (non misurato)":Math.round(v)+" cm"}</b>`+(s?`<br><span class="m">${s.giorni} giorni con una misura · il ${dIt(s.data_max)}</span>`:"")+(a!=null?`<br><span class="m">media 11 stagioni ${Math.round(a)} cm · media 1991–2020 ${Math.round(base)} cm</span>`:"");}});
   }
 
   /* ---------- fonti della serie (solo se la serie le indica, es. Padova) ---------- */

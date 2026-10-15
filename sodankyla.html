@@ -124,6 +124,22 @@
       </div>
     </section>
 
+    <section id="sec-neve-suolo" hidden>
+      <div class="sh"><h2>Neve al suolo</h2><span class="src">manto massimo per stagione invernale (luglio–giugno) · dal 1973</span></div>
+      <p class="sub">Non è la neve caduta (non misurata qui): è quanta ne è rimasta a terra il giorno della misura, dai dati NOAA di altezza del manto (SNWD). Copertura dal 1973, con un'interruzione negli anni '70; nessun dato prima, quando la serie ha solo temperatura e pioggia.</p>
+      <div class="two">
+        <div class="card">
+          <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Manto massimo della stagione</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 stagioni</span><span><i class="dash"></i>Media 1991–2020</span></div>
+          <div class="chart" id="ch-neve-suolo"></div>
+          <p class="note" id="neve-suolo-note"></p>
+        </div>
+        <div class="card">
+          <h3>❄️ I manti più alti mai misurati</h3><table id="r-neve-suolo"></table>
+          <h3 style="margin-top:16px">Le stagioni con più neve al suolo</h3><table id="r-stag-suolo"></table>
+        </div>
+      </div>
+    </section>
+
     <section>
       <div class="sh"><h2>I record</h2><span class="src">valori giornalieri 1908–2026</span></div>
       <div class="three">
@@ -153,7 +169,7 @@
           <li><b>Fonte:</b> NOAA, National Centers for Environmental Information, archivio <a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily" target="_blank" rel="noopener">GHCN-Daily</a>, stazione FI000007501 «Sodankylä AWS» (67,37° N, 26,63° E, 179 m). Serie giornaliera di temperatura massima e minima e precipitazione dal 1° gennaio 1908 al 31 agosto 2026.</li>
           <li>Temperatura media = (massima + minima) / 2, oppure la media giornaliera NOAA (TAVG) quando manca la massima o la minima: capita spesso nei mesi più bui dell'inverno artico. Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330: il 2026, ancora in corso, compare nei grafici mensili e in "Un giorno nella storia" ma non nelle statistiche annuali.</li>
           <li>Pulizia dei dati: scartati 256 valori di temperatura (massima o minima) che si discostavano di oltre 15 °C dalla media NOAA (TAVG) dello stesso giorno, segno di un probabile errore di trascrizione.</li>
-          <li>Il file NOAA include anche l'altezza della neve al suolo (SNWD): è una misura diversa dalla neve caduta usata per le altre stazioni di questo sito, e non è stata inclusa in questa pagina.</li>
+          <li>Il file NOAA include anche l'altezza della neve al suolo (SNWD, non la neve caduta usata per le altre stazioni di questo sito): sezione "Neve al suolo" a parte, 8.991 misure dal 1973 al 2025 su 45 stagioni invernali (con un'interruzione negli anni '70), manto massimo per stagione e i giorni con più neve a terra mai misurati.</li>
           <li>Anomalie calcolate rispetto al trentennio 1961–1990; normali climatiche 1961–1990 e 1991–2020. In oltre un secolo sono cambiati strumenti e dintorni della stazione: i confronti tra epoche lontane vanno letti come indicativi.</li>
         </ul>
         <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
