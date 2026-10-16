@@ -14,8 +14,8 @@
   fetch("./data/serie/kremsmuenster.json").then(r=>r.json()).then(d=>{
     D=d; A=d.anni.filter(a=>a.y>=1768);
     ["tm","txm","tnm"].forEach(k=>{BASE[k]=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[k]));});
-    tiles(); stripes(); yearChart(); monthInit(); precChart(); sommerChart(); normTable(); records(); confronto();
-    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();precChart();sommerChart();},150);});
+    tiles(); stripes(); yearChart(); monthInit(); precChart(); sommerChart(); neveInit(); normTable(); records(); confronto();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();precChart();sommerChart();neveChart();},150);});
     if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",stripes);
   }).catch(()=>{$("tiles").innerHTML='<div class="loading">Dati non disponibili.</div>';});
 
@@ -130,6 +130,24 @@
     const r=mean(pts.filter(p=>p[0]>=1991&&p[0]<=2020).map(p=>p[1]));
     $("som-note").textContent=`In media ${Math.round(base)} giorni estivi l'anno nel 1961–1990, ${Math.round(r)} nel 1991–2020.`;
   }
+  /* ---------- neve, per stagione invernale (luglio–giugno) ---------- */
+  const NV={gn:{n:"Giorni con neve al suolo",u:" giorni"},gf:{n:"Giorni con nevicata",u:" giorni"},h:{n:"Altezza massima della neve",u:" cm"}};
+  let nv="gn"; const stag=y=>(y-1)+"/"+String(y).slice(2);
+  function neveInit(){
+    if(!D.neve||!D.neve.length){$("sec-neve").hidden=true;return;}
+    segInit("seg-neve",v=>{nv=v;neveChart();}); neveChart();
+  }
+  function neveChart(){
+    if(!D.neve||!D.neve.length) return;
+    const c=NV[nv], y0=(D.neve.find(s=>s[nv]!=null)||{}).y, N=D.neve.filter(s=>s.y>=y0), pts=N.map(s=>[s.y,s[nv]]), avg=movAvg(pts,11);
+    const base=mean(N.filter(s=>s.y>=1962&&s.y<=1991).map(s=>s[nv])), rec=mean(N.filter(s=>s.y>=1992&&s.y<=2021).map(s=>s[nv]));
+    lineChart($("ch-neve"),{pts,avg,bars:true,barCls:"sky",avgCls:"sky",ref:{y:base},label:c.n+" per stagione a Kremsmünster",
+      tip:(x,v,a)=>`<b>Inverno ${stag(x)}</b><br>${c.n} <b>${v==null?"—":Math.round(v)+c.u}</b>`+(a!=null?`<br><span class="m">media 11 stagioni ${Math.round(a)}${c.u} · media 1961–1990 ${Math.round(base)}${c.u}</span>`:"")});
+    const ok=N.filter(s=>s[nv]!=null), top=[...ok].sort((a,b)=>b[nv]-a[nv]), L10=ok.slice(-10);
+    const min=Math.min(...ok.map(s=>s[nv])), zero=ok.filter(s=>s[nv]===min).map(s=>stag(s.y));
+    $("neve-note").textContent=`${c.n}, dati dall'inverno ${stag(ok[0].y)}: in media ${Math.round(base)}${c.u} a stagione nel 1961–1990, ${Math.round(rec)} nel 1991–2020 e ${Math.round(mean(L10.map(s=>s[nv])))} nelle ultime dieci stagioni (${stag(L10[0].y)}–${stag(L10[9].y)}). `+
+      `Il massimo è dell'inverno ${stag(top[0].y)}, con ${Math.round(top[0][nv])}${c.u}; il minimo (${Math.round(min)}${c.u}) ${zero.length>3?"in "+zero.length+" stagioni, l'ultima il "+zero[zero.length-1]:"nell'inverno "+zero.join(", ")}.`;
+  }
   function normTable(){
     const a=D.normali["1961-1990"], b=D.normali["1991-2020"];
     $("norm").innerHTML=`<thead><tr><th>Mese</th><th>Max 91–20</th><th>Min 91–20</th><th>Δ media</th><th>Pioggia</th></tr></thead><tbody>`+
@@ -141,9 +159,10 @@
   }
   function confronto(){
     const c=D.confronto, s=c&&c.scarti; if(!s||!s.tm){$("conf").textContent="Il confronto fra le due stazioni non è disponibile.";return;}
-    const nome={tm:"temperatura media",txm:"massima media",tnm:"minima media",rr:"precipitazione mensile"};
+    const U={tm:"°C",txm:"°C",tnm:"°C",rr:"mm",gneve:"giorni",gnevic:"giorni"};
+    const nome={tm:"temperatura media",txm:"massima media",tnm:"minima media",rr:"precipitazione mensile",gneve:"giorni con neve al suolo",gnevic:"giorni con nevicata"};
     $("conf").innerHTML=`<p class="sub" style="margin-top:0">Dal ${mIt(c.periodo[0])} al ${mIt(c.periodo[1])} le due stazioni hanno misurato insieme. Differenza media della stazione automatica rispetto a quella storica:</p><ul class="note">`+
-      Object.entries(s).map(([k,v])=>`<li><b>${nome[k]}</b>: ${k==="rr"?sg(v.media)+" mm":sg(v.media)+" °C"} in media su ${v.n} mesi (da ${k==="rr"?sg(Math.min(...v.mesi))+" a "+sg(Math.max(...v.mesi))+" mm":sg(Math.min(...v.mesi))+" a "+sg(Math.max(...v.mesi))+" °C"} a seconda del mese)</li>`).join("")+
+      Object.entries(s).map(([k,v])=>`<li><b>${nome[k]}</b>: ${sg(v.media)} ${U[k]} in media su ${v.n} mesi (da ${sg(Math.min(...v.mesi.filter(x=>x!=null)))} a ${sg(Math.max(...v.mesi.filter(x=>x!=null)))} ${U[k]} a seconda del mese)</li>`).join("")+
       `</ul><p class="note">La serie unita usa la stazione storica fino al 2008 e quella automatica dal 2009, senza correzioni: queste differenze danno l'ordine di grandezza dell'errore possibile nel punto di giunzione.</p>`;
   }
 })();
