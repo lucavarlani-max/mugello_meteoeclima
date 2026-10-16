@@ -75,6 +75,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   della home.
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
+  **Kremsmünster 1767–2026** (`kremsmuenster.html` + `kremsmuenster.js`, dati mensili di GeoSphere Austria: stazione
+  storica 5010 fino al 2008 in `data/serie/kremsmuenster-5010.csv`, stazione automatica 5012 dal 2009 scaricata
+  ogni giorno da `scripts/fetch_kremsmuenster.py`, che calcola anche lo scarto fra le due nel 1988–2008) e
   **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve) e
   **Padova 1725–2023** (`padova.html`, serie omogeneizzata di sola temperatura, con la fonte di ogni anno),
   **Moncalieri 1865–2025** (`moncalieri.html`, Collegio Carlo Alberto, Società Meteorologica Italiana, sola temperatura),

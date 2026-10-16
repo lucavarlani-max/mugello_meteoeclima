@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kremsmünster 1767–2026 · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="Oltre 250 anni di temperature mensili a Kremsmünster, in Alta Austria, dal dicembre 1767: una delle serie meteorologiche continue più lunghe del mondo. Riscaldamento, stagioni, precipitazioni, giorni estivi e record, con i dati di GeoSphere Austria.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/kremsmuenster.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Kremsmünster, oltre 250 anni di clima (1767–2026)">
+<meta property="og:description" content="Oltre 250 anni di temperature mensili a Kremsmünster, in Alta Austria, dal dicembre 1767: una delle serie meteorologiche continue più lunghe del mondo. Riscaldamento, stagioni, precipitazioni, giorni estivi e record, con i dati di GeoSphere Austria.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/kremsmuenster.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="serie-storiche.html">← Serie storiche</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Kremsmünster</div>
+    <header class="head">
+      <div class="eyebrow">Serie storica · dal 1767</div>
+      <h1>Kremsmünster, 1767–2026</h1>
+      <p class="lead">Nell'abbazia benedettina di Kremsmünster, in Alta Austria, a 383 m di quota, la temperatura si misura dal dicembre 1767: con Milano Brera è una delle serie meteorologiche continue più lunghe del mondo. Le osservazioni sono iniziate nella torre della specola dell'abbazia e proseguono oggi con la stazione automatica di GeoSphere Austria. <span id="lead-n"></span></p>
+      <div class="tiles" id="tiles"><div class="loading">Carico i dati…</div></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Oltre due secoli e mezzo in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
+      <p class="sub">Ogni riga verticale è un anno: blu più freddo, rosso più caldo della media 1961–1990. Passa sopra per leggere il valore. Le righe rosse dei primi decenni vanno lette con cautela: sono le letture dei termometri del Settecento (vedi «Dati e metodo»).</p>
+      <div class="card">
+        <div class="stripes" id="stripes"></div>
+        <div class="axis-y" id="stripes-ax"></div>
+        <div class="scale"><span>−2 °C</span><i></i><span>+2 °C</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura anno per anno</h2><span class="src">media mobile su 21 anni</span></div>
+      <div class="card">
+        <div class="ctrl">
+          <div class="seg" id="seg-var" role="group" aria-label="Variabile">
+            <button data-v="tm" aria-pressed="true">Media</button><button data-v="txm" aria-pressed="false">Massime</button><button data-v="tnm" aria-pressed="false">Minime</button>
+          </div>
+        </div>
+        <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+        <div class="chart" id="ch-year"></div>
+        <p class="note" id="trend-note"></p>
+        <p class="note">La temperatura media c'è dal 1768, le medie delle massime e delle minime dal 1851. La fascia grigia segna le letture fino al 1850, probabilmente troppo calde d'estate.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Mese per mese, stagione per stagione</h2><span class="src">scegli il periodo</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="ctrl">
+            <select id="sel-per" aria-label="Periodo"></select>
+            <div class="seg" id="seg-mvar" role="group" aria-label="Variabile">
+              <button data-v="0" aria-pressed="true">Media</button><button data-v="1" aria-pressed="false">Massime</button><button data-v="2" aria-pressed="false">Minime</button>
+            </div>
+          </div>
+          <div class="legend"><span><i style="background:var(--ctx)"></i>Valore dell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 21 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+          <div class="chart" id="ch-month"></div>
+        </div>
+        <div class="card">
+          <h3 id="ep-title">Per epoca</h3>
+          <div class="tbl"><table id="ep"></table></div>
+          <h3 style="margin-top:16px">I più caldi e i più freddi</h3>
+          <div class="tbl"><table id="rk"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Precipitazioni</h2><span class="src">totale annuo dal 1821 · media mobile 11 anni</span></div>
+      <div class="card">
+        <div class="legend"><span><i class="th" style="background:var(--sky)"></i>Precipitazione dell'anno</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 anni</span><span><i class="dash"></i>Media 1991–2020</span></div>
+        <div class="chart" id="ch-prec"></div>
+        <p class="note" id="prec-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Giorni estivi</h2><span class="src">giorni con massima di almeno 25 °C, dal 1876 · media mobile 11 anni</span></div>
+      <div class="card">
+        <div class="legend"><span><i class="th" style="background:var(--ctx)"></i>Giorni nell'anno</span><span><i class="th" style="background:var(--amber)"></i>Media mobile 11 anni</span><span><i class="dash"></i>Media 1961–1990</span></div>
+        <div class="chart" id="ch-som"></div>
+        <p class="note" id="som-note"></p>
+        <p class="note">Dal 2009 i conteggi vengono dalla stazione automatica, che misura massime in media 0,4 °C più alte di quella storica: una parte dell'aumento recente può dipendere dal cambio di strumento.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>I record</h2><span class="src">estremi mensili dal 1808 · pioggia giornaliera dal 1820</span></div>
+      <div class="three">
+        <div class="card"><h3>🔥 Le massime più alte</h3><table id="r-tx"></table></div>
+        <div class="card"><h3>🧊 Le minime più basse</h3><table id="r-tn"></table></div>
+        <div class="card"><h3>🌧️ La pioggia più forte in un giorno</h3><table id="r-p"></table></div>
+      </div>
+      <p class="note">I dati sono mensili: per ogni mese si conosce il valore più alto e più basso, non il giorno in cui è stato misurato.</p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il clima mese per mese</h2><span class="src">medie 1991–2020</span></div>
+      <div class="two">
+        <div class="card"><div class="tbl"><table id="norm"></table></div><p class="note">Massime e minime medie e pioggia del 1991–2020; Δ media è la differenza della temperatura media rispetto al 1961–1990.</p></div>
+        <div class="card"><h3>Due stazioni, una serie</h3><div id="conf"></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> GeoSphere Austria (il servizio meteorologico austriaco, già ZAMG), «Stationsdaten v2.1» in risoluzione mensile, licenza <a href="https://creativecommons.org/licenses/by/4.0/deed.it" target="_blank" rel="noopener">CC BY 4.0</a>. Stazione storica <b>5010</b> (dicembre 1767 – dicembre 2008) e stazione automatica <b>5012</b> (dal 1988), entrambe a Kremsmünster, 382–383 m. I dati dal 2009 si aggiornano dall'<a href="https://dataset.api.hub.geosphere.at/v1/docs/" target="_blank" rel="noopener">API di GeoSphere</a>.</li>
+          <li><b>Serie unita:</b> stazione storica fino al 2008, automatica dal 2009, senza correzioni. Le differenze misurate nei 21 anni in comune sono riportate qui sopra.</li>
+          <li><b>Le letture più antiche:</b> fino a metà Ottocento i termometri non erano schermati come oggi e le estati risultano troppo calde: per esempio il 1790 è ancora al 13° posto fra gli anni più caldi e il luglio 1772 resta il mese più caldo di tutta la serie. Per questo il riscaldamento si calcola rispetto al 1851–1900 e la tendenza dal 1851. Per confronti rigorosi con il Settecento serve la serie omogeneizzata (HISTALP).</li>
+          <li>Un anno conta solo se ha tutti i 12 mesi. Temperatura media dal 1768, estremi mensili dal 1808, precipitazione dal 1821, medie delle massime e delle minime dal 1851, giorni estivi dal 1876. Anomalie rispetto al 1961–1990.</li>
+        </ul>
+        <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="data/serie/kremsmuenster-5010.csv" download>⬇ Stazione storica, mensili (CSV)</a>
+          <a class="btn ghost" href="data/serie/kremsmuenster-5012.csv" download>⬇ Stazione automatica, mensili (CSV)</a>
+          <a class="btn ghost" href="data/serie/kremsmuenster.json" download>⬇ Aggregati annuali e mensili (JSON)</a>
+        </p>
+        <p class="note">Elaborazioni L. Varlani.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="serie-storiche.html">serie storiche</a> · <a href="index.html">torna alla home</a></div></footer>
+
+<script src="kremsmuenster.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
