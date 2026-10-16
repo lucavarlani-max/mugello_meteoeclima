@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v74';
+const CACHE = 'mmc-v77';
 const SHELL = [
   './',
   './index.html',
@@ -34,6 +34,8 @@ const SHELL = [
   './archivio-climatico.html',
   './milano-brera.html',
   './new-york-central-park.html',
+  './kremsmuenster.html',
+  './kremsmuenster.js',
   './padova.html',
   './moncalieri.html',
   './san-francisco.html',

@@ -14,7 +14,8 @@
     {id:"firenzuola",n:"Firenzuola",c:"Firenzuola"},
     {id:"oxford",n:"Oxford",c:"Oxford"},
     {id:"domodossola",n:"Domodossola",c:"Domodossola"},
-    {id:"sodankyla",n:"Sodankylä",c:"Sodankylä"}
+    {id:"sodankyla",n:"Sodankylä",c:"Sodankylä"},
+    {id:"kremsmuenster",n:"Kremsmünster",c:"Kremsmünster"}
   ];
   ST.forEach((s,i)=>s.col="var(--s"+(i+1)+")");
   const B0=1961,B1=1990,WIN=5,MINW=6;

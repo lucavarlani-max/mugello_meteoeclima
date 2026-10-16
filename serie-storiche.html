@@ -119,9 +119,9 @@
   .card h3{font-family:var(--serif);font-size:17px;margin:0 0 8px}
   .more{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#fff;background:var(--pine);border-radius:var(--r-pill);padding:10px 18px;text-decoration:none;margin-top:14px}
   /* confronto del riscaldamento tra le stazioni */
-  .rs{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--s8:#e34948;--s9:#0e8f98;--s10:#8a6d23;--s11:#6b4fa0;--s12:#4d7c0f;--s13:#1b6ca8}
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rs{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s9:#2bb8c2;--s10:#c9a548;--s11:#a390d4;--s12:#8cc34a;--s13:#4fa8db}}
-  :root[data-theme="dark"] .rs{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s9:#2bb8c2;--s10:#c9a548;--s11:#a390d4;--s12:#8cc34a;--s13:#4fa8db}
+  .rs{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--s8:#e34948;--s9:#0e8f98;--s10:#8a6d23;--s11:#6b4fa0;--s12:#4d7c0f;--s13:#1b6ca8;--s14:#9b2d5f}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rs{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s9:#2bb8c2;--s10:#c9a548;--s11:#a390d4;--s12:#8cc34a;--s13:#4fa8db;--s14:#d0679a}}
+  :root[data-theme="dark"] .rs{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s9:#2bb8c2;--s10:#c9a548;--s11:#a390d4;--s12:#8cc34a;--s13:#4fa8db;--s14:#d0679a}
   .rs .ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
   .seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:3px;gap:2px;flex-wrap:wrap}
   .seg button{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:none;border:0;border-radius:var(--r-pill);padding:6px 12px;cursor:pointer}
@@ -184,6 +184,16 @@
           <div class="years">1763 – 2024 · LOMBARDIA</div>
           <h2>Milano Brera</h2>
           <p>Con Kremsmünster è la serie meteorologica continua più lunga del mondo, stazione centenaria OMM dal 2021: 262 anni di temperature giornaliere e oltre un secolo di piogge. Riscaldamento, stagioni, giorni estremi, record e il meteo di ogni giorno dal 1763.</p>
+          <div class="kpi"></div>
+          <span class="go">Apri l'analisi →</span>
+        </div>
+      </a>
+      <a class="st" href="kremsmuenster.html" data-serie="kremsmuenster" data-early="1851-1900">
+        <div class="band" aria-hidden="true"></div>
+        <div class="body ph" style="--foto:url('https://commons.wikimedia.org/wiki/Special:FilePath/Kremsm%C3%BCnster_Stift_Sternwarte-3004.jpg?width=800')">
+          <div class="years">1767 – 2026 · AUSTRIA</div>
+          <h2>Kremsmünster</h2>
+          <p>L'osservatorio dell'abbazia benedettina, in Alta Austria: con Milano Brera la serie meteorologica continua più lunga del mondo, oltre 250 anni di temperature mensili dal dicembre 1767 e due secoli di precipitazioni. Riscaldamento, stagioni, neve, giorni estivi e record, con i dati di GeoSphere Austria.</p>
           <div class="kpi"></div>
           <span class="go">Apri l'analisi →</span>
         </div>
