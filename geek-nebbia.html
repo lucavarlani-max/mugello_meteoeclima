@@ -285,15 +285,18 @@
   function diario(c,d){
     const g=c.g.slice().sort((a,b)=>a.d<b.d?1:-1);
     const foto=g.filter(r=>r.foto).length, dacl=g.filter(r=>r.foto&&r.nebbia==null).length;
+    // tutte le mattine verificate a vista; la calibrazione usa solo quelle con la previsione completa (c.n, c.pos, c.neg)
+    const si=g.filter(r=>r.nebbia===true).length, no=g.filter(r=>r.nebbia===false).length, inc=g.filter(r=>r.nebbia==="incerto").length;
+    const usate=new Set((c.ok||[]).map(r=>r.d)), fuori=usate.size?g.filter(r=>(r.nebbia===true||r.nebbia===false)&&!usate.has(r.d)).map(r=>r.d).sort():[];
     const pctN=Math.min(100,c.n/MIN_N*100), pctP=Math.min(100,c.pos/MIN_CLASSE*100);
     $("dia-tiles").innerHTML=
       `<div class="tile"><span>Mattine archiviate</span><b>${foto}</b><small>${g.length?"dal "+dl(g[g.length-1].d)+" "+g[g.length-1].d.slice(0,4):"si comincia domattina"}</small></div>`+
-      `<div class="tile"><span>Classificate</span><b>${c.n}</b><small>${dacl} da classificare</small></div>`+
-      `<div class="tile"><span>Con nebbia / senza</span><b>${c.pos} / ${c.neg}</b><small>servono almeno ${MIN_CLASSE} e ${MIN_CLASSE}</small></div>`+
+      `<div class="tile"><span>Classificate</span><b>${si+no+inc}</b><small>${dacl} da classificare${inc?` · ${inc} incert${inc>1?"e":"a"}`:""}</small></div>`+
+      `<div class="tile"><span>Con nebbia / senza</span><b>${si} / ${no}</b><small>${fuori.length?`nella calibrazione ${c.pos} / ${c.neg}`:"tutte nella calibrazione"} · servono ${MIN_CLASSE} e ${MIN_CLASSE}</small></div>`+
       `<div class="tile"><span>Calibrazione</span><b>${c.pronto?"attiva":c.skill!=null?"non utile":fmt(Math.min(pctN,pctP),0)+"%"}</b>`+
         `<small>${c.pronto?`Brier ${fmt(c.brier,3)}, ${fmt(c.skill*100,0)}% meglio della frequenza di nebbia (${fmt(c.clim*100,0)}%) · modello: ${c.M.nome}`
           : c.skill!=null?`il modello non batte la frequenza climatologica (${fmt(c.clim*100,0)}%): la probabilità resta nascosta`
-          : "mancano "+[c.n<MIN_N?`${MIN_N-c.n} mattine classificate`:"",c.pos<MIN_CLASSE?`${MIN_CLASSE-c.pos} mattine di nebbia`:"",c.neg<MIN_CLASSE?`${MIN_CLASSE-c.neg} mattine limpide`:""].filter(Boolean).join(", ")}</small><div class="bar"><i style="width:${Math.min(pctN,pctP)}%"></i></div></div>`;
+          : "mancano "+[c.n<MIN_N?`${MIN_N-c.n} mattine utilizzabili`:"",c.pos<MIN_CLASSE?`${MIN_CLASSE-c.pos} mattine di nebbia`:"",c.neg<MIN_CLASSE?`${MIN_CLASSE-c.neg} mattine limpide`:""].filter(Boolean).join(", ")}</small><div class="bar"><i style="width:${Math.min(pctN,pctP)}%"></i></div></div>`;
     $("dia-gal").innerHTML=g.filter(r=>r.foto).slice(0,12).map(r=>{const t=new Date(r.d+"T12:00:00");
       const et=r.nebbia===true?'<span class="et si">NEBBIA</span>':r.nebbia===false?'<span class="et no">LIMPIDO</span>':r.nebbia==="incerto"?'<span class="et">INCERTO</span>':'<span class="et">DA CLASSIFICARE</span>';
       const ur=r.umidita_max&&r.umidita_max.TOS11000017, inv=r.inversione;
@@ -301,7 +304,8 @@
         `inversione ${inv==null?"–":sg(inv)+" °C"} · umidità max ${ur==null?"–":fmt(ur,0)+"%"}${r.rugiada_ora!=null?` · rugiada ${fmt(r.rugiada_ora,1)} °C`:""}`+
         (r.previsione?(p=>p.scarto_alba!=null?`<br>previsto all'alba: scarto ${fmt(p.scarto_alba,1)} °C, vento ${fmt(p.vento_alba,1)} m/s`+(p.nuvole_alte!=null?`<br>nuvole medie e alte ${fmt(p.nuvole_alte,0)}% · nubi basse ${fmt(p.nubi_basse_alba,0)}%`:""):`<br>previsto: scarto ${fmt(p.scarto_min,1)} °C, vento ${fmt(p.vento_medio,1)} m/s, nuvole ${fmt(p.nuvole_medie,0)}%`)(r.previsione_sera||r.previsione):"")+
         (CLASSIFICA?`<span class="cl">${[["sì","nebbia"],["no","limpido"],["?","incerto"]].map(([v,l])=>`<a href="${URL_ISSUE}?title=${encodeURIComponent("Nebbia "+r.d)}&body=${encodeURIComponent(v)}&labels=diario-nebbia" target="_blank" rel="noopener">${l}</a>`).join("")}</span>`:"")+`</figcaption></figure>`;}).join("");
-    $("dia-note").innerHTML=`La probabilità comparirà nella tabella delle prossime notti quando ci saranno almeno ${MIN_N} mattine classificate, con almeno ${MIN_CLASSE} di nebbia e ${MIN_CLASSE} senza. Il modello è una regressione logistica sulle grandezze previste il giorno prima. La base usa scarto temperatura–rugiada e vento nelle ore dell'alba e le nuvole medie e alte della notte. Altri sei candidati aggiungono, uno alla volta, nubi basse, punto di rugiada, crossover, pioggia del giorno prima, umidità del suolo o inversione a 850 hPa. Si tiene il candidato che sbaglia meno. Sarà mostrato solo se, verificato mattina per mattina su giorni che non ha usato per imparare, prevede meglio della semplice frequenza della nebbia. «Inversione» è la minima di Monte Giovi meno quella di Borgo; «umidità max» è il valore massimo dalla mezzanotte a Borgo S. Lorenzo 2.`;
+    $("dia-note").innerHTML=`La probabilità comparirà nella tabella delle prossime notti quando ci saranno almeno ${MIN_N} mattine classificate, con almeno ${MIN_CLASSE} di nebbia e ${MIN_CLASSE} senza. Il modello è una regressione logistica sulle grandezze previste il giorno prima. La base usa scarto temperatura–rugiada e vento nelle ore dell'alba e le nuvole medie e alte della notte. Altri sei candidati aggiungono, uno alla volta, nubi basse, punto di rugiada, crossover, pioggia del giorno prima, umidità del suolo o inversione a 850 hPa. Si tiene il candidato che sbaglia meno. Sarà mostrato solo se, verificato mattina per mattina su giorni che non ha usato per imparare, prevede meglio della semplice frequenza della nebbia. «Inversione» è la minima di Monte Giovi meno quella di Borgo; «umidità max» è il valore massimo dalla mezzanotte a Borgo S. Lorenzo 2.`+
+      (fuori.length?` Le mattine del ${(l=>l.length>1?l.slice(0,-1).join(", ")+" e "+l[l.length-1]:l[0])(fuori.map(d=>dl(d)))} sono verificate ma restano fuori dalla calibrazione: per quelle notti manca la previsione completa della sera prima, con le nuvole separate per strato, che il sito ha cominciato a salvare dopo.`:"");
   }
 
   // ---------- le prossime notti (Open-Meteo) + diario
