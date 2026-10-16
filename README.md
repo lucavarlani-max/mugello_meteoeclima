@@ -105,6 +105,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   italiane); il catalogo completo delle 474 stazioni centenarie OMM, con mappa Mondo/Europa,
   filtri, tabella e scheda di ogni stazione, è in `stazioni-centenarie.html`
   (componente `wmo-catalogo.js`, dati in `data/serie/wmo-centenarie.json`).
+- **Foto storiche degli osservatori** (`img/osservatori/<slug>.jpg`) — in testa a ogni pagina delle serie storiche
+  un'immagine antica dell'osservatorio (stampe e fotografie dal 1842 al 1946) da Wikimedia Commons, salvata nel sito
+  (lato lungo 1000 px) con autore, licenza e link alla pagina del file nella didascalia. Stile in `serie-storica.css`
+  (`.foto-testa`). San Francisco, Bangalore e Firenzuola non hanno immagini storiche adatte.
 - **Curiosità e notizie** (`notizie.html` + `notizie.js`) — i numeri della rassegna quotidiana
   *Terra & Cielo*: in cima l'ultimo numero (apertura, numero del giorno, notizie, rubriche),
   sotto l'archivio con ricerca e filtro per argomento. Dati in `data/notizie.json`, un elemento
