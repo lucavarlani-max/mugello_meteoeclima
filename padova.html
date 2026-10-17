@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Padova 1725–2023 · Serie storiche · Mugello Meteo & Clima</title>
-<meta name="description" content="Quasi tre secoli di temperature giornaliere a Padova, dal 1725 al 2023: la serie omogeneizzata che unisce le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, record e il tempo di ogni giorno.">
+<title>Padova 1725–2025 · Serie storiche · Mugello Meteo & Clima</title>
+<meta name="description" content="Tre secoli di temperature giornaliere a Padova, dal 1725 al 2025: la serie omogeneizzata che unisce le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, record e il tempo di ogni giorno.">
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/padova.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
-<meta property="og:title" content="Padova, tre secoli di temperature (1725–2023)">
-<meta property="og:description" content="Quasi tre secoli di temperature giornaliere a Padova, dal 1725 al 2023: la serie omogeneizzata che unisce le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, record e il tempo di ogni giorno.">
+<meta property="og:title" content="Padova, tre secoli di temperature (1725–2025)">
+<meta property="og:description" content="Tre secoli di temperature giornaliere a Padova, dal 1725 al 2025: la serie omogeneizzata che unisce le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, record e il tempo di ogni giorno.">
 <meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/padova.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
@@ -50,7 +50,7 @@
     <div class="crumb"><a href="index.html">Home</a> / <a href="serie-storiche.html">Serie storiche</a> / Padova</div>
     <header class="head">
       <div class="eyebrow">Serie storica · dal 1725</div>
-      <h1>Padova, 1725–2023</h1>
+      <h1>Padova, 1725–2025</h1>
       <p class="lead">A Padova la temperatura si misura ogni giorno dal 1725, quando il fisico Giovanni Poleni iniziò a registrarla: è una delle serie di temperatura giornaliera più lunghe al mondo. Qui è ricostruita nella versione omogeneizzata, che collega le osservazioni di sette serie diverse, dagli strumenti del Settecento alle stazioni di oggi, e le rende confrontabili tra loro. <span id="lead-n"></span></p>
       <figure class="foto-testa ritratto">
         <img src="img/osservatori/padova.jpg" alt="La Specola di Padova, l'osservatorio astronomico dell'Università, in una stampa del 1842" width="697" height="1000" loading="eager">
@@ -60,7 +60,7 @@
     </header>
 
     <section>
-      <div class="sh"><h2>Quasi tre secoli in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
+      <div class="sh"><h2>Tre secoli in una striscia</h2><span class="src">anomalia della temperatura media annua rispetto al 1961–1990</span></div>
       <p class="sub">Ogni riga verticale è un anno: blu più freddo, rosso più caldo della media 1961–1990. Passa sopra per leggere il valore. La riga più blu è il 1740, l'anno del grande freddo in tutta Europa.</p>
       <div class="card">
         <div class="stripes" id="stripes"></div>
@@ -137,6 +137,14 @@
     </section>
 
     <section>
+      <div class="sh"><h2>Dove si sovrappongono gli strumenti</h2><span class="src">periodo di attività di ciascuna serie grezza</span></div>
+      <div class="card">
+        <p class="sub" style="margin-top:0">La fascia qui sopra mostra la fonte scelta per ogni anno, ma gli strumenti si sono quasi sempre sovrapposti per un tratto: è proprio lì, confrontando le due serie negli stessi giorni, che si calcolano le funzioni di trasferimento mese per mese usate per correggerle (es. da Poleni a Specola a Idrografico, fino a oggi). Passa sopra una barra per il periodo esatto.</p>
+        <div class="fonti" id="strumenti" style="height:auto"></div>
+      </div>
+    </section>
+
+    <section>
       <div class="sh"><h2>I record</h2><span class="src">valori giornalieri dal 1774</span></div>
       <div class="three">
         <div class="card"><h3>🔥 I giorni più caldi</h3><table id="r-tx"></table></div>
@@ -151,7 +159,7 @@
         <div class="pick">
           <select id="d-day" aria-label="Giorno"></select>
           <select id="d-mon" aria-label="Mese"></select>
-          <label>anno <input type="number" id="d-year" min="1725" max="2023" style="width:90px" aria-label="Anno"></label>
+          <label>anno <input type="number" id="d-year" min="1725" max="2025" style="width:90px" aria-label="Anno"></label>
           <button class="btn" id="d-go" type="button">Mostra</button>
         </div>
         <div class="res" id="d-res"><span class="loading">Scegli giorno e mese: vedi come è andato quel giorno in tutti gli anni dal 1725.</span></div>
@@ -162,11 +170,12 @@
       <div class="sh"><h2>Dati e metodo</h2></div>
       <div class="card">
         <ul class="note">
-          <li><b>Fonte:</b> serie giornaliera omogeneizzata della temperatura di Padova, 12 gennaio 1725 – 31 dicembre 2023 (C. Stefanini e coautori, 2023, rivista <i>Climate</i>, <a href="https://doi.org/10.3390/cli11120244" target="_blank" rel="noopener">doi:10.3390/cli11120244</a>), che si basa sul lavoro di D. Camuffo e C. Bertolin sulle serie storiche padovane (<a href="https://doi.org/10.1016/j.pce.2010.02.002" target="_blank" rel="noopener">doi:10.1016/j.pce.2010.02.002</a>).</li>
-          <li>Dal 1725 al 1773 si conosce solo la temperatura media del giorno; dal 1774 anche massima e minima, e la media è (massima + minima) / 2. Le serie più antiche sono state corrette con la ricostruzione climatica europea ModE-RA; quelle dell'Ottocento e del Novecento con funzioni di trasferimento mese per mese tra una serie e la successiva.</li>
+          <li><b>Fonte:</b> serie giornaliera omogeneizzata della temperatura di Padova, aggiornata al 12 gennaio 1725 – 31 dicembre 2025 (C. Stefanini e coautori, 2023, rivista <i>Climate</i>, <a href="https://doi.org/10.3390/cli11120244" target="_blank" rel="noopener">doi:10.3390/cli11120244</a>), che si basa sul lavoro di D. Camuffo e C. Bertolin sulle serie storiche padovane e sulla conversione da Bologna (<a href="https://doi.org/10.1016/j.pce.2010.02.002" target="_blank" rel="noopener">doi:10.1016/j.pce.2010.02.002</a>) e sul lavoro di P. Cocheo e D. Camuffo sulla conversione da Milano e Mantova (<a href="https://doi.org/10.1023/A:1014958506923" target="_blank" rel="noopener">doi:10.1023/A:1014958506923</a>).</li>
+          <li>Dal 1725 al 1773 si conosce solo la temperatura media del giorno; dal 1774 anche massima e minima, e la media è (massima + minima) / 2. Le serie più antiche sono state corrette con la ricostruzione climatica europea ModE-RA; quelle dell'Ottocento e del Novecento con funzioni di trasferimento mese per mese tra una serie e la successiva (coefficiente di correlazione r² tra 0,93 e 0,99 a seconda del mese e della coppia di strumenti).</li>
           <li>Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330. Nessun giorno manca: i periodi senza misure a Padova sono stati ricostruiti dalle serie di Milano, Mantova e Bologna.</li>
+          <li>Rispetto alla versione di questo file pubblicata in precedenza su questo sito (ferma al 31 dicembre 2023), gli autori hanno anche rivisto lievemente la calibrazione del periodo 2000–2004 (differenza media 0,3 °C, massima 0,5 °C il 28 maggio 2004): la serie qui sotto è quella più recente.</li>
           <li>La serie non contiene la pioggia.</li>
-          <li>Anomalie calcolate rispetto al trentennio 1961–1990. In quasi tre secoli sono cambiati strumenti, posizioni e ambiente urbano: l'omogeneizzazione ne corregge gli effetti, ma i confronti con il Settecento vanno letti come indicativi.</li>
+          <li>Anomalie calcolate rispetto al trentennio 1961–1990. In tre secoli sono cambiati strumenti, posizioni e ambiente urbano: l'omogeneizzazione ne corregge gli effetti, ma i confronti con il Settecento vanno letti come indicativi.</li>
         </ul>
         <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
           <a class="btn ghost" href="data/serie/padova.csv" download>⬇ Serie giornaliera (CSV)</a>
@@ -181,7 +190,7 @@
 
 <script>
 window.SERIE={slug:"padova",nome:"Padova",citta:"Padova",luogo:"a Padova",
-  early:[1725,1800],epoche:[[1725,1799],[1800,1899],[1900,1949],[1950,1999],[2000,2023]],tacche:[[1800,1900,2000],[1750,1800,1850,1900,1950,2000]],
+  early:[1725,1800],epoche:[[1725,1799],[1800,1899],[1900,1949],[1950,1999],[2000,2025]],tacche:[[1800,1900,2000],[1750,1800,1850,1900,1950,2000]],
   fonti:{
     1:{nome:"Giovanni Poleni",col:"#8c6a3f",nota:"letture in casa convertite all'aperto e corrette con ModE-RA"},
     2:{nome:"G. B. Morgagni",col:"#b3884f",nota:"corretta con ModE-RA"},
@@ -193,7 +202,16 @@ window.SERIE={slug:"padova",nome:"Padova",citta:"Padova",luogo:"a Padova",
     7:{nome:"Ufficio Idrografico",col:"#0f6b52",nota:"corretta mese per mese"},
     8:{nome:"Aeronautica Militare",col:"#c9671f",nota:"corretta mese per mese"},
     9:{nome:"stazione attuale",col:"#4fb38e",nota:"serie di riferimento, dal 1980"}
-  }};
+  },
+  strumenti:[
+    {nome:"Giovanni Poleni",dal:1725,al:1764,col:"#8c6a3f",giorni:14599},
+    {nome:"G. B. Morgagni",dal:1740,al:1768,col:"#b3884f",giorni:9221},
+    {nome:"Giuseppe Toaldo",dal:1766,al:1773,col:"#d2ab6f",giorni:2728},
+    {nome:"Specola",dal:1774,al:1955,col:"#2f7cc4",giorni:66472},
+    {nome:"Ufficio Idrografico",dal:1920,al:1996,col:"#0f6b52",giorni:22620},
+    {nome:"Aeronautica Militare",dal:1951,al:1990,col:"#c9671f",giorni:14595},
+    {nome:"stazione attuale (OB)",dal:1980,al:2025,col:"#4fb38e",giorni:16802}
+  ]};
 </script>
 <script src="serie-storica.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>

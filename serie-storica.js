@@ -15,8 +15,8 @@
     D=d; A=d.anni; AC=A.filter(a=>a.tm!=null);
     AT=C.tdal?A.filter(a=>a.y>=C.tdal):A;   // anni dei grafici di temperatura (C.tdal se la temperatura parte dopo la pioggia)
     ["tm","tx","tn"].forEach(k=>{BASE[k]=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[k]));});
-    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); neveSuolo(); fonti(); dayInit();
-    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();neveSuoloChart();fonti();},150);});
+    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); neveSuolo(); fonti(); strumenti(); dayInit();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();neveSuoloChart();fonti();strumenti();},150);});
     if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",stripes);
   }).catch(()=>{$("tiles").innerHTML='<div class="loading">Dati non disponibili.</div>';});
 
@@ -215,6 +215,28 @@
     const ax=$("fonti-ax"); if(ax) ax.innerHTML=[y0,...(W<560?C.tacche[0]:C.tacche[1]),y1].map(y=>`<span style="left:${((y-y0+(y===y1?1:0))/n*100).toFixed(2)}%">${y}</span>`).join("");
     const leg=$("fonti-leg"); if(leg&&!leg.innerHTML){const usati=[...new Set(F.map(f=>f[1]))].sort((a,b)=>F.find(f=>f[1]===a)[0]-F.find(f=>f[1]===b)[0]);
       leg.innerHTML=usati.map(c=>{const f=C.fonti[c]||{};const ys=F.filter(x=>x[1]===c).map(x=>x[0]);return `<span><i style="background:${col(c)}"></i>${f.nome||c} <s>${ys.length===1?ys[0]:ys[0]+"–"+ys[ys.length-1]}${ys.length<ys[ys.length-1]-ys[0]+1?", non continuo":""}</s></span>`;}).join("");}
+  }
+
+  /* ---------- periodo di ciascuno strumento grezzo, sovrapposizioni comprese (solo se C.strumenti c'è, es. Padova):
+     a differenza di fonti() sopra (la fonte prevalente di ogni anno nella serie finale), qui si vede dove due
+     strumenti sono stati attivi nello stesso periodo — le sovrapposizioni usate per calibrare le funzioni di
+     trasferimento tra una serie e la successiva. ---------- */
+  function strumenti(){
+    const el=$("strumenti"); if(!el||!C.strumenti) return;
+    const S=C.strumenti, y0=Math.min(...S.map(s=>s.dal)), y1=Math.max(...S.map(s=>s.al)), n=y1-y0+1;
+    const rowH=30, m={l:150,r:10,t:4,b:22}, W=Math.max(480,el.clientWidth||640), H=S.length*rowH+m.t+m.b;
+    const X=y=>m.l+(y-y0)/n*(W-m.l-m.r);
+    let g=S.map((s,i)=>`<rect x="${X(s.dal).toFixed(1)}" y="${(m.t+i*rowH+4).toFixed(1)}" width="${Math.max(2,X(s.al+1)-X(s.dal)).toFixed(1)}" height="${rowH-10}" rx="4" fill="${s.col}" data-i="${i}" style="cursor:pointer"/>`+
+      `<text x="${m.l-10}" y="${(m.t+i*rowH+rowH/2+4).toFixed(1)}" text-anchor="end" font-size="12">${s.nome}</text>`).join("");
+    const tacche=[y0,...(W<560?[]:[1750,1800,1850,1900,1950,2000]).filter(y=>y>y0&&y<y1),y1];
+    g+=tacche.map(y=>`<text x="${X(y).toFixed(1)}" y="${H-6}" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">${y}</text>`).join("");
+    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="Periodo di attività di ciascuno strumento storico">${g}</svg><div class="tip"></div>`;
+    const svg=el.querySelector("svg"),tip=el.querySelector(".tip");
+    svg.querySelectorAll("rect[data-i]").forEach(r=>{
+      const s=S[+r.dataset.i];
+      r.addEventListener("pointermove",e=>{const b=el.getBoundingClientRect();tip.innerHTML=`<b>${s.nome}</b><br>${s.dal}–${s.al}`+(s.giorni?`<br><span class="m">${s.giorni.toLocaleString("it-IT")} giorni misurati</span>`:"");place(el,tip,e.clientX-b.left,e.clientY-b.top-20);});
+      r.addEventListener("pointerleave",()=>tip.style.opacity=0);
+    });
   }
 
   /* ---------- un giorno nella storia ---------- */
