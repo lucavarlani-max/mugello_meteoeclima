@@ -1,7 +1,185 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-14",
+ "aggiornato": "2026-10-16",
  "numeri": [
+  {
+   "data": "2026-10-16",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Due cicloni gemelli sul Pacifico",
+    "testo": "La tempesta tropicale Champi punta su Guam e le Marianne e potrebbe diventare un super tifone, mentre l'uragano Trudy (categoria 1, venti fino a 120 km/h) si avvicina al Messico. La stagione del Pacifico orientale è la più energica di sempre, con un indice ACE oltre 319.",
+    "fonte": "AccuWeather",
+    "url": "https://www.accuweather.com/en/hurricane/hurricane-simon-impacts-are-lingering-new-threat-brewing-from-trudy-in-mexico/1946224",
+    "foto": "uragano3"
+   },
+   "numero": {
+    "valore": "29,70 °C",
+    "testo": "La temperatura media del mare nella regione Niño 3.4 del Pacifico a settembre: il valore mensile più alto mai registrato.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc"
+   },
+   "storie": [
+    {
+     "cat": "clima",
+     "titolo": "Settembre 2026, il secondo più caldo di sempre",
+     "testo": "Temperatura media globale di 16,27 °C, 1,63 °C sopra il periodo preindustriale.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc",
+     "foto": "terra2"
+    },
+    {
+     "cat": "oceani",
+     "titolo": "Mari ai massimi per un settembre",
+     "testo": "La temperatura media della superficie del mare ha raggiunto 21,05 °C, record per il mese.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc",
+     "foto": "oceano"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Ventisette vulcani attivi, il Krakatau alza l'allerta",
+     "testo": "Nel bollettino settimanale i vulcani in attività sono 27; per l'Anak Krakatau, in Indonesia, il livello di allerta è stato alzato.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm?tab=5",
+     "foto": "krakatau"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Ghiaccio marino ancora sotto la media",
+     "testo": "Nell'Artico l'estensione è circa il 10% sotto la media; in Antartide è la terza più bassa per il periodo.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc",
+     "foto": "ghiaccio1"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Pacifico orientale, la stagione più energica di sempre",
+     "testo": "L'energia accumulata dai cicloni (indice ACE) ha superato quota 319, un record per il bacino.",
+     "fonte": "AccuWeather",
+     "url": "https://www.accuweather.com/en/hurricane/hurricane-simon-impacts-are-lingering-new-threat-brewing-from-trudy-in-mexico/1946224"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna e Stromboli, l'Italia che brontola",
+     "testo": "I due vulcani italiani proseguono la loro attività.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm?tab=5",
+     "foto": "etna"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Venerdì 16 ottobre a Borgo San Lorenzo: minima 12 °C e massima 23 °C, nuvoloso al mattino e poi sole, vento debole da nord-est; fine settimana più fresco.",
+     "fonte": "Meteo.it",
+     "url": "https://www.meteo.it/meteo/borgo-san-lorenzo-oggi-48004"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1910: un uragano di categoria 4 colpisce Cuba con 924 hPa di pressione. 1913: San Francisco tocca 38,3 °C. 2004: San Diego arriva a 182 giorni senza pioggia.",
+     "fonte": "Newport RI Weather",
+     "url": "https://newportriweather.com/mwd/history/oct/oct16.html"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "I 29,70 °C della regione Niño 3.4 a settembre sono il valore mensile più alto mai misurato in quella zona del Pacifico, segno di un El Niño intenso.",
+     "fonte": "Copernicus C3S"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:30 e tramonta alle 18:31, circa 11 ore e 1 minuto di luce, 3 minuti meno di ieri. La Luna è crescente: il primo quarto è domenica 18 ottobre alle 18:12."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-15",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Settembre 2026, il secondo più caldo mai registrato",
+    "testo": "Per il secondo mese di fila la temperatura globale resta oltre 1,5 °C sopra i livelli preindustriali: settembre 2026 è il secondo settembre più caldo della serie.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/",
+    "foto": "terra"
+   },
+   "numero": {
+    "valore": "16,27 °C",
+    "testo": "La temperatura media globale di settembre 2026, il secondo valore più alto mai registrato per il mese.",
+    "fonte": "Copernicus C3S",
+    "url": "https://climate.copernicus.eu/"
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Panama, magnitudo 7,7 e allerta tsunami",
+     "testo": "Una forte scossa a Panama ha fatto scattare l'allerta tsunami in diversi Paesi del Pacifico latinoamericano.",
+     "fonte": "Al Jazeera",
+     "url": "https://www.aljazeera.com/news/2026/10/9/tsunami-warnings-across-latin-america-after-7-7-magnitude-earthquake-hits",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna e Stromboli restano attivi",
+     "testo": "I due vulcani più attivi d'Italia continuano la loro attività.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "etna"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, magma in risalita e 130 terremoti",
+     "testo": "Alle Hawaii un'intrusione di magma sotto il vulcano è accompagnata da uno sciame di circa 130 terremoti.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Merapi, colata piroclastica di 1,6 km",
+     "testo": "Sul vulcano indonesiano una colata piroclastica, cioè una valanga di gas e frammenti di roccia incandescenti, ha percorso circa 1,6 km.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm",
+     "foto": "kilauea1"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Fiumi europei ai minimi",
+     "testo": "Il Reno, il Danubio e la Vistola sono in secca, con portate tra le più basse registrate.",
+     "fonte": "Copernicus C3S",
+     "url": "https://climate.copernicus.eu/"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Rincón de la Vieja, oltre 170 eruzioni freatiche",
+     "testo": "Sul vulcano della Costa Rica si sono contate più di 170 esplosioni di vapore.",
+     "fonte": "Smithsonian GVP",
+     "url": "https://volcano.si.edu/reports_weekly.cfm"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Giovedì 15 ottobre a Borgo San Lorenzo: minima 11 °C e massima 20 °C, giornata stabile sotto l'anticiclone delle Azzorre, venti deboli da nord-est.",
+     "fonte": "Meteo.it",
+     "url": "https://www.meteo.it/meteo/borgo-san-lorenzo-oggi-48004"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1880: una bufera di neve precoce colpisce Minnesota e Dakota. 1954: l'uragano Hazel arriva sulla North Carolina. 1966: il tornado di Belmond, in Iowa.",
+     "fonte": "Newport RI Weather",
+     "url": "https://newportriweather.com/mwd/history/oct/oct15.html"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "56,7 °C è la temperatura dell'aria più alta mai misurata sulla Terra: Valle della Morte, 10 luglio 1913, record ufficiale dell'Organizzazione meteorologica mondiale.",
+     "fonte": "WMO",
+     "url": "https://wmo.int/news/media-centre/wmo-verifies-3rd-and-4th-hottest-temperature-recorded-earth"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:29 e tramonta alle 18:33, circa 11 ore e 4 minuti di luce, 3 minuti meno di ieri. Le giornate continueranno ad accorciarsi fino al solstizio del 21 dicembre."
+    }
+   ]
+  },
   {
    "data": "2026-10-14",
    "apertura": {
