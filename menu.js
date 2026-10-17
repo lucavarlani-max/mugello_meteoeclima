@@ -12,8 +12,8 @@
     ["Neve",[["❄️ Neve oggi","neve.html"],["📜 La neve a Firenze","neve-firenze.html"],["🗽 La neve a New York","neve-new-york.html"]],["neve","neve-firenze","neve-new-york"]],
     ["Cielo","effemeridi.html",["effemeridi"]],
     ["Webcam",[["📷 Webcam Mugello","webcam.html"],["🌍 Webcam Panomax","webcam-panomax.html"]],["webcam","webcam-panomax"]],
-    ["Toscana",[["Temperature"],["🌡️ Oggi e ieri","temperature-toscana.html"],["Firenze"],["🏛️ Clima di Firenze","clima-firenze.html"],["Borgo S. Lorenzo"],["📊 Oggi nella storia","borgo-storico.html"],["Report mensili"],["📅 Archivio climatico","archivio-climatico.html"],["Record storici"],["🔴 Massime","estremi-massime.html"],["🔵 Minime","estremi-minime.html"],["Piogge"],["🌧️ Piogge estreme","piogge-estreme.html"]],
-      ["temperature-toscana","clima-firenze","borgo-storico","archivio-climatico","estremi-massime","estremi-minime","piogge-estreme"]],
+    ["Toscana",[["Temperature"],["🌡️ Oggi e ieri","temperature-toscana.html"],["Firenze"],["🏛️ Clima di Firenze","clima-firenze.html"],["Borgo S. Lorenzo"],["📊 Oggi nella storia","borgo-storico.html"],["🔥 Le serie più lunghe","borgo-serie-lunghe.html"],["Report mensili"],["📅 Archivio climatico","archivio-climatico.html"],["Record storici"],["🔴 Massime","estremi-massime.html"],["🔵 Minime","estremi-minime.html"],["Piogge"],["🌧️ Piogge estreme","piogge-estreme.html"]],
+      ["temperature-toscana","clima-firenze","borgo-storico","borgo-serie-lunghe","archivio-climatico","estremi-massime","estremi-minime","piogge-estreme"]],
     ["Serie storiche","serie-storiche.html",["serie-storiche","stazioni-centenarie","italia-ghcn","milano-brera","kremsmuenster","new-york-central-park","padova","moncalieri","de-bilt","san-francisco","genova","mont-aigoual","bangalore","firenzuola","oxford","domodossola","sodankyla"]],
     ["Notizie",[["📰 Terra & Cielo","notizie.html"],["📜 Proverbi del cielo","proverbi.html"]],["notizie","proverbi"]],
     ["🧪 MeteoGeek","meteogeek.html",["meteogeek","geek-*"]]   // geek-*: tutte le pagine delle sperimentazioni
