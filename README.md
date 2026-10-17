@@ -105,6 +105,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   italiane); il catalogo completo delle 474 stazioni centenarie OMM, con mappa Mondo/Europa,
   filtri, tabella e scheda di ogni stazione, è in `stazioni-centenarie.html`
   (componente `wmo-catalogo.js`, dati in `data/serie/wmo-centenarie.json`).
+- **Le serie più lunghe di Borgo San Lorenzo** (`borgo-serie-lunghe.html`, menu Toscana › Borgo S. Lorenzo) — quanti
+  giorni di fila sopra o sotto una soglia (caldo, gelo, notti tropicali, siccità, pioggia o soglia libera), per periodo
+  dell'anno e intervallo di anni, con il dettaglio giorno per giorno e la serie più lunga di ogni anno. Serie composita
+  SIR Borgo S. Lorenzo (TOS01000999, dal 1951) con le lacune colmate da Borgo S. Lorenzo 2 (TOS11000017, dal 1993)
+  corretto con lo scarto mensile. I dati giornalieri sono incorporati nella pagina (fino al 16 ottobre 2026) e
+  coincidono con l'archivio `data/sir/`.
 - **Foto storiche degli osservatori** (`img/osservatori/<slug>.jpg`) — in testa a ogni pagina delle serie storiche
   un'immagine antica dell'osservatorio (stampe e fotografie dal 1842 al 1946) da Wikimedia Commons, salvata nel sito
   (lato lungo 1000 px) con autore, licenza e link alla pagina del file nella didascalia. Stile in `serie-storica.css`

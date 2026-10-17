@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v80';
+const CACHE = 'mmc-v81';
 const SHELL = [
   './',
   './index.html',
@@ -24,6 +24,7 @@ const SHELL = [
   './proverbi.html',
   './temperature-toscana.html',
   './borgo-storico.html',
+  './borgo-serie-lunghe.html',
   './borgo-storico.js',
   './serie-confronto.js',
   './effemeridi.html',
