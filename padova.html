@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Padova 1725–2025 · Serie storiche · Mugello Meteo & Clima</title>
-<meta name="description" content="Tre secoli di temperature giornaliere a Padova, dal 1725 al 2025: la serie omogeneizzata che unisce le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, record e il tempo di ogni giorno.">
+<meta name="description" content="Tre secoli di temperature e piogge giornaliere a Padova, dal 1725 al 2025: le serie omogeneizzate che uniscono le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, pioggia, record e il tempo di ogni giorno.">
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/padova.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="Padova, tre secoli di temperature (1725–2025)">
-<meta property="og:description" content="Tre secoli di temperature giornaliere a Padova, dal 1725 al 2025: la serie omogeneizzata che unisce le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, record e il tempo di ogni giorno.">
+<meta property="og:description" content="Tre secoli di temperature e piogge giornaliere a Padova, dal 1725 al 2025: le serie omogeneizzate che uniscono le osservazioni di Poleni, Morgagni, Toaldo, della Specola e delle stazioni moderne. Riscaldamento, stagioni, giorni estremi, pioggia, record e il tempo di ogni giorno.">
 <meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/padova.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
@@ -51,7 +51,7 @@
     <header class="head">
       <div class="eyebrow">Serie storica · dal 1725</div>
       <h1>Padova, 1725–2025</h1>
-      <p class="lead">A Padova la temperatura si misura ogni giorno dal 1725, quando il fisico Giovanni Poleni iniziò a registrarla: è una delle serie di temperatura giornaliera più lunghe al mondo. Qui è ricostruita nella versione omogeneizzata, che collega le osservazioni di sette serie diverse, dagli strumenti del Settecento alle stazioni di oggi, e le rende confrontabili tra loro. <span id="lead-n"></span></p>
+      <p class="lead">A Padova la temperatura e la pioggia si misurano ogni giorno dal 1725, quando il fisico Giovanni Poleni iniziò a registrarle: è una delle serie climatiche giornaliere più lunghe al mondo. Qui sono ricostruite nella versione omogeneizzata, che collega le osservazioni di sette serie diverse, dagli strumenti del Settecento alle stazioni di oggi, e le rende confrontabili tra loro. <span id="lead-n"></span></p>
       <figure class="foto-testa ritratto">
         <img src="img/osservatori/padova.jpg" alt="La Specola di Padova, l'osservatorio astronomico dell'Università, in una stampa del 1842" width="697" height="1000" loading="eager">
         <figcaption>La Specola di Padova, l'osservatorio astronomico dell'Università, in una stampa del 1842. Immagine: G. B. Cecchini, <a href="https://commons.wikimedia.org/wiki/File:Padova%2C_Osservatorio_astronomico.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, pubblico dominio.</figcaption>
@@ -121,6 +121,21 @@
     </section>
 
     <section>
+      <div class="sh"><h2>Precipitazioni</h2><span class="src">dal 1725 · totale annuo e media mobile 11 anni</span></div>
+      <div class="two">
+        <div class="card">
+          <div class="legend"><span><i class="th" style="background:color-mix(in srgb,var(--sky) 45%,var(--panel))"></i>Totale dell'anno</span><span><i class="th" style="background:var(--sky)"></i>Media mobile 11 anni</span></div>
+          <div class="chart" id="ch-prec"></div>
+        </div>
+        <div class="card">
+          <h3>Il clima mese per mese</h3>
+          <div class="tbl"><table id="norm"></table></div>
+          <p class="note">Medie mensili nei due trentenni di riferimento; la differenza mostra quanto è cambiato.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <div class="sh"><h2>Sette serie, una sola storia</h2><span class="src">da quale osservatorio viene il dato di ogni anno</span></div>
       <div class="card">
         <p class="sub" style="margin-top:0">Nessuno strumento è rimasto al suo posto per tre secoli. La serie di Padova è stata ricostruita collegando le osservazioni di diversi osservatori e correggendole una per una, con formule mese per mese, perché risultino confrontabili con le misure di oggi. Dove un periodo mancava, i valori sono stati ricavati dalle serie di Milano, Mantova o Bologna. Passa sopra la barra per vedere la fonte di ogni anno.</p>
@@ -145,11 +160,11 @@
     </section>
 
     <section>
-      <div class="sh"><h2>I record</h2><span class="src">valori giornalieri dal 1774</span></div>
+      <div class="sh"><h2>I record</h2><span class="src">temperatura dal 1774 · pioggia dal 1725</span></div>
       <div class="three">
         <div class="card"><h3>🔥 I giorni più caldi</h3><table id="r-tx"></table></div>
         <div class="card"><h3>🧊 I giorni più freddi</h3><table id="r-tn"></table></div>
-        <div class="card"><h3>Il clima mese per mese</h3><div class="tbl"><table id="norm"></table></div><p class="note">Medie 1991–2020 e differenza della temperatura media rispetto al 1961–1990.</p></div>
+        <div class="card"><h3>🌧️ I giorni più piovosi</h3><table id="r-p"></table></div>
       </div>
     </section>
 
@@ -174,7 +189,7 @@
           <li>Dal 1725 al 1773 si conosce solo la temperatura media del giorno; dal 1774 anche massima e minima, e la media è (massima + minima) / 2. Le serie più antiche sono state corrette con la ricostruzione climatica europea ModE-RA; quelle dell'Ottocento e del Novecento con funzioni di trasferimento mese per mese tra una serie e la successiva (coefficiente di correlazione r² tra 0,93 e 0,99 a seconda del mese e della coppia di strumenti).</li>
           <li>Un mese è considerato con almeno 25 giorni validi, un anno con almeno 330. Nessun giorno manca: i periodi senza misure a Padova sono stati ricostruiti dalle serie di Milano, Mantova e Bologna.</li>
           <li>Rispetto alla versione di questo file pubblicata in precedenza su questo sito (ferma al 31 dicembre 2023), gli autori hanno anche rivisto lievemente la calibrazione del periodo 2000–2004 (differenza media 0,3 °C, massima 0,5 °C il 28 maggio 2004): la serie qui sotto è quella più recente.</li>
-          <li>La serie non contiene la pioggia.</li>
+          <li><b>Pioggia:</b> serie giornaliera omogeneizzata separata, disponibile anch'essa dal 12 gennaio 1725, costruita dagli stessi autori a partire dalle osservazioni di Giovanni e Francesco Poleni e di Morgagni (D. Camuffo e coautori, 2020, rivista <i>Climatic Change</i>, <a href="https://doi.org/10.1007/s10584-020-02717-2" target="_blank" rel="noopener">doi:10.1007/s10584-020-02717-2</a>; D. Camuffo e coautori, 2022, <a href="https://doi.org/10.1007/s12665-022-10467-w" target="_blank" rel="noopener">doi:10.1007/s12665-022-10467-w</a>), dalla Specola (A. della Valle e coautori, 2023, <a href="https://doi.org/10.1007/s10584-023-03485-5" target="_blank" rel="noopener">doi:10.1007/s10584-023-03485-5</a>) e dalle stazioni dell'Ufficio Idrografico, dell'Aeronautica Militare, dell'Università di Padova e di ARPAV nel Novecento, in parte riallineate all'intervallo 0–24h con la rianalisi ERA5 (L. Becherini e coautori, 2024, <a href="https://doi.org/10.3390/atmos15040412" target="_blank" rel="noopener">doi:10.3390/atmos15040412</a>).</li>
           <li>Anomalie calcolate rispetto al trentennio 1961–1990. In tre secoli sono cambiati strumenti, posizioni e ambiente urbano: l'omogeneizzazione ne corregge gli effetti, ma i confronti con il Settecento vanno letti come indicativi.</li>
         </ul>
         <p style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
