@@ -571,18 +571,18 @@
     "ore": 13,
     "alba": "07:31",
     "scarto_alba": 0.0,
-    "vento_alba": 0.3,
-    "dp_alba": 12.0,
-    "nuvole_alte": 55,
-    "nubi_basse_alba": 86,
+    "vento_alba": 0.2,
+    "dp_alba": 11.7,
+    "nuvole_alte": 66,
+    "nubi_basse_alba": 100,
     "ur_alba": 100,
     "suolo_alba": 0.163,
-    "inv850_alba": -2.6,
+    "inv850_alba": -1.7,
     "blh_alba": 25,
     "pressione": 1017,
-    "crossover": -0.1,
+    "crossover": -0.6,
     "pioggia_24h": 0.0,
-    "emessa": "2026-10-17T15:11"
+    "emessa": "2026-10-17T18:39"
    }
   }
  }
