@@ -79,7 +79,7 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   storica 5010 fino al 2008 in `data/serie/kremsmuenster-5010.csv`, stazione automatica 5012 dal 2009 scaricata
   ogni giorno da `scripts/fetch_kremsmuenster.py`, che aggiunge la neve per stagione e calcola lo scarto fra le due nel 1988–2008) e
   **New York Central Park 1869–2026** (`new-york-central-park.html`, con la neve) e
-  **Padova 1725–2025** (`padova.html`, serie omogeneizzata di sola temperatura, aggiornata al 2025 con la fonte di ogni anno e il periodo di sovrapposizione di ciascuno dei sette strumenti grezzi sorgente),
+  **Padova 1725–2025** (`padova.html`, serie omogeneizzata di temperatura e, dal 1725, anche pioggia (serie separata degli stessi autori, Camuffo et al. e coautori, unita con il terzo argomento `src_pioggia` di `build_serie.py`), con la fonte di ogni anno e il periodo di sovrapposizione di ciascuno dei sette strumenti grezzi sorgente),
   **Moncalieri 1865–2025** (`moncalieri.html`, Collegio Carlo Alberto, Società Meteorologica Italiana, sola temperatura),
   **San Francisco 1921–2026** (`san-francisco.html`, stazione San Francisco Downtown, dati NOAA trascritti dai moduli storici in PDF),
   **Genova 1833–2025** (`genova.html`, Osservatorio Meteorologico Storico dell'Università di Genova, dati aperti HistObs UniGe, temperatura e pioggia),

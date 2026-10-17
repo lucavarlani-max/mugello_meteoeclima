@@ -127,10 +127,18 @@ def leggi(src, tavg=False):
 
 
 def leggi_pioggia(src):
-    """Pioggia giornaliera da un file separato (HistObs UniGe): {data: mm}."""
+    """Pioggia giornaliera da un file separato: {data: mm}.
+    Due formati: HistObs UniGe (Year,Month,Day,Daily rainfall (mm)) oppure serie
+    omogeneizzata gg/mm/aaaa (Date;Prec[;Prec_metadata], come la serie di temperatura di Padova)."""
     out = {}
     with open(src, encoding="utf-8-sig") as f:
-        for row in csv.DictReader(f):
+        sep = ";" if ";" in f.readline() else ","
+        f.seek(0)
+        for row in csv.DictReader(f, delimiter=sep):
+            if "Date" in row and "Prec" in row:
+                g_, m_, a_ = map(int, row["Date"].split("/"))
+                out[datetime.date(a_, m_, g_)] = val(row["Prec"])
+                continue
             out[datetime.date(int(row["Year"]), int(row["Month"]), int(row["Day"]))] = val(row["Daily rainfall (mm)"])
     return out
 
