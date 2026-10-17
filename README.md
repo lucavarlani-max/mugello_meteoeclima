@@ -109,8 +109,16 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   giorni di fila sopra o sotto una soglia (caldo, gelo, notti tropicali, siccità, pioggia o soglia libera), per periodo
   dell'anno e intervallo di anni, con il dettaglio giorno per giorno e la serie più lunga di ogni anno. Serie composita
   SIR Borgo S. Lorenzo (TOS01000999, dal 1951) con le lacune colmate da Borgo S. Lorenzo 2 (TOS11000017, dal 1993)
-  corretto con lo scarto mensile. I dati giornalieri sono incorporati nella pagina (fino al 16 ottobre 2026) e
-  coincidono con l'archivio `data/sir/`.
+  corretto con lo scarto mensile. I dati sono in `data/borgo-serie-lunghe.json`, rigenerato da
+  `scripts/build_borgo_serie.py` dall'archivio `data/sir/` (con lo scarto mensile ricalcolato e i giorni con massima
+  più bassa della minima scartati).
+- **Contatti** (`contatti.js`) — in fondo a ogni pagina, sopra il piè di pagina, la sezione «Contatti» con Facebook,
+  Instagram, LinkedIn ed email (l'indirizzo si compone al caricamento, non compare intero nel codice). Si carica da
+  `menu.js` nelle pagine interne e direttamente in `index.html`; i contatti si cambiano solo in `contatti.js`.
+- **Archivio SIR automatico** (Action `sir-archivio.yml`, ogni mattina): `fetch_sir_storico.py --mugello --pluvio9
+  --recenti` scarica l'anno in corso e il precedente delle 47 stazioni SIR del Mugello (circa 15 minuti); il giorno 1
+  del mese, o a mano con «giro completo», ricontrolla anche gli anni pre-validati. Poi rigenera `data/sir/mugello.json`
+  e `data/borgo-serie-lunghe.json`; le altre pagine leggono direttamente i CSV di `data/sir/`.
 - **Foto storiche degli osservatori** (`img/osservatori/<slug>.jpg`) — in testa a ogni pagina delle serie storiche
   un'immagine antica dell'osservatorio (stampe e fotografie dal 1842 al 1946) da Wikimedia Commons, salvata nel sito
   (lato lungo 1000 px) con autore, licenza e link alla pagina del file nella didascalia. Stile in `serie-storica.css`

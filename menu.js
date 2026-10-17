@@ -2,6 +2,11 @@
    Uso: <script src="menu.js" defer></script> nella pagina. Sostituisce la barra in alto della pagina
    (.top / .site-top / .topbar con il link "← Torna alla home") con lo stesso menu della home,
    fisso in alto durante lo scorrimento. Le voci si cambiano solo qui (e in index.html). */
+// sezione «Contatti» in fondo alla pagina (contatti.js)
+(function(){
+  if(document.querySelector('script[src$="contatti.js"]')) return;
+  const c=document.createElement("script"); c.src="contatti.js"; c.defer=true; document.head.appendChild(c);
+})();
 (function(){
   if(document.querySelector(".mm-top")) return;
   const VOCI=[

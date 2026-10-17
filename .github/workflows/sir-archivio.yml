@@ -1,0 +1,63 @@
+name: Archivio SIR del Mugello (aggiornamento quotidiano)
+
+# Aggiorna data/sir/ (serie giornaliere di temperatura e pioggia delle stazioni SIR dei comuni del Mugello) e le
+# pagine che ne dipendono: Stazioni del Mugello (data/sir/mugello.json), Le serie più lunghe di Borgo San Lorenzo
+# (data/borgo-serie-lunghe.json); le altre pagine leggono direttamente i CSV di data/sir/ e Gli estremi del
+# Mugello (data/hall-of-fame.json) si rigenera da sé a ogni aggiornamento dei dati (update-data.yml).
+# Ogni giorno si scaricano solo l'anno in corso e il precedente (--recenti, circa 15 minuti); il giorno 1 di ogni
+# mese, o a mano con «giro completo», si ricontrollano anche gli anni pre-validati, che il SIR valida nel tempo.
+on:
+  schedule:
+    - cron: "23 5 * * *"          # ogni mattina (ora UTC); il SIR pubblica i dati del giorno prima
+  workflow_dispatch:
+    inputs:
+      completo:
+        description: "Giro completo (ricontrolla anche gli anni pre-validati, circa un'ora e mezza)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sir-archivio
+  cancel-in-progress: false
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Scarica i dati del SIR
+        run: |
+          if [ "${{ inputs.completo }}" = "true" ] || [ "$(date -u +%d)" = "01" ]; then
+            echo "giro completo"; python scripts/fetch_sir_storico.py --mugello --pluvio9
+          else
+            python scripts/fetch_sir_storico.py --mugello --pluvio9 --recenti
+          fi
+
+      - name: Rigenera i dati delle pagine
+        run: |
+          python scripts/build_sir_mugello.py
+          python scripts/build_borgo_serie.py
+
+      - name: Commit se cambiato
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/sir data/borgo-serie-lunghe.json
+          if git diff --cached --quiet; then echo "nessuna variazione"; exit 0; fi
+          git commit -q -m "dati: archivio SIR del Mugello"
+          for i in 1 2 3 4; do
+            git pull -q --rebase origin main && git push -q && exit 0
+            sleep 15
+          done
+          exit 1
