@@ -65,6 +65,25 @@
   .gal .et{font-family:var(--mono);font-size:10px;letter-spacing:.05em;border-radius:999px;padding:1px 7px;border:1px solid var(--line);display:inline-block;margin-bottom:4px}
   .gal .et.si{background:var(--inv);border-color:var(--inv);color:#fff} .gal .et.no{border-color:var(--pine);color:var(--pine)}
   .gal .cl{display:flex;gap:6px;margin-top:6px} .gal .cl a{flex:1;text-align:center;padding:7px 0;border:1px solid var(--line);border-radius:8px;font-weight:600;color:var(--ink);text-decoration:none;background:var(--panel)}
+  /* calendario del diario: un blocco per mese, settimane da lunedì */
+  .cal{display:flex;flex-wrap:wrap;gap:18px 26px;margin-top:16px}
+  .cal .mese h4{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .cal .mese h4 b{color:var(--ink);font-weight:600}
+  .cal .gg{display:grid;grid-template-columns:repeat(7,30px);gap:3px}
+  .cal .gg span{font-family:var(--mono);font-size:9.5px;color:var(--ink-faint);text-align:center}
+  .cal .gg i,.cal .gg a{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11px;font-weight:600;text-decoration:none;box-sizing:border-box;position:relative}
+  .cal .k-si{background:var(--inv);color:#fff}
+  .cal .k-no{background:color-mix(in srgb,var(--pine) 22%,var(--panel));color:var(--pine-deep);border:1px solid color-mix(in srgb,var(--pine) 45%,transparent)}
+  .cal .k-inc{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--amber) 35%,var(--panel)) 0 4px,var(--panel) 4px 8px);color:var(--ink);border:1px solid color-mix(in srgb,var(--amber) 60%,transparent)}
+  .cal .k-da{border:1.5px dashed var(--ink-faint);color:var(--ink-soft)}
+  .cal .k-0{background:var(--line-soft);color:var(--ink-faint)}
+  .cal .k-fut{color:var(--ink-faint);opacity:.45}
+  .cal .gg a:hover{outline:2px solid var(--ink);outline-offset:1px}
+  .cal .oggi{box-shadow:0 0 0 2px var(--panel),0 0 0 3.5px var(--ink)}
+  .cal-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;font-size:12px;color:var(--ink-soft)}
+  .cal-leg span{display:inline-flex;align-items:center;gap:6px}
+  .cal-leg i{width:14px;height:14px;border-radius:4px;display:inline-block;box-sizing:border-box}
+  .cal-sum{font-size:12.5px;color:var(--ink-soft);margin:8px 0 0}
   .bar{height:8px;border-radius:999px;background:var(--line-soft);overflow:hidden;margin-top:6px} .bar i{display:block;height:100%;background:var(--pine);border-radius:999px}
   @media (max-width:860px){ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))} .two,.phys{grid-template-columns:1fr} }
 </style>
@@ -121,6 +140,10 @@
       <div class="card">
         <p class="note" style="margin-top:0">Per dare una probabilità di nebbia calibrata sul Mugello servono mattine in cui sappiamo se la nebbia c'era. Nessuno lo registra, quindi il sito ha iniziato a farlo. Ogni mattina, appena c'è luce dopo l'alba, salva una foto della webcam sul lago di Bilancino, in fondovalle, insieme alle misure della notte e alla previsione che il modello aveva fatto il giorno prima. Ogni foto viene poi classificata a vista: nebbia sì o no.</p>
         <div class="tiles" id="dia-tiles"></div>
+        <h3 style="margin:18px 0 0">Il calendario della nebbia</h3>
+        <div class="cal" id="dia-cal" aria-label="Calendario delle mattine con e senza nebbia"></div>
+        <div class="cal-leg"><span><i class="k-si" style="background:var(--inv)"></i>nebbia</span><span><i style="background:color-mix(in srgb,var(--pine) 22%,var(--panel));border:1px solid color-mix(in srgb,var(--pine) 45%,transparent)"></i>senza nebbia</span><span><i style="background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--amber) 35%,var(--panel)) 0 3px,var(--panel) 3px 6px);border:1px solid color-mix(in srgb,var(--amber) 60%,transparent)"></i>incerto</span><span><i style="border:1.5px dashed var(--ink-faint)"></i>foto da classificare</span><span><i style="background:var(--line-soft)"></i>nessuna foto</span></div>
+        <p class="cal-sum" id="dia-cal-sum"></p>
         <div class="gal" id="dia-gal"></div>
         <p class="note">Foto: <a href="https://www.ilfilo.net/stazione-meteo-del-lago-di-bilancino/" target="_blank" rel="noopener">webcam di Bilancino del Filo</a>, lago di Bilancino (252 m).</p>
         <p class="note" id="dia-note"></p>
@@ -282,6 +305,33 @@
   // Vale solo per le segnalazioni aperte dal proprietario del repository.
   const CLASSIFICA=/[?&]classifica\b/.test(location.search);
   const URL_ISSUE="https://github.com/lucavarlani-max/mugello_meteoeclima/issues/new";
+  // calendario progressivo: un blocco per mese dal primo giorno del diario a oggi; ogni giorno colorato secondo
+  // la classificazione della foto dell'alba (nebbia, senza nebbia, incerto, da classificare, nessuna foto)
+  function calendario(g){
+    const el=$("dia-cal"); if(!g.length){el.innerHTML='<p class="note">Il calendario si riempie dalla prima mattina archiviata.</p>';return;}
+    const by=new Map(g.map(r=>[r.d,r])), iso=t=>t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0");
+    const oggi=iso(new Date()), primo=g[g.length-1].d, [y0,m0]=primo.split("-").map(Number), [y1,m1]=oggi.split("-").map(Number);
+    const stato=r=>!r||!r.foto?["k-0","nessuna foto"]:r.nebbia===true?["k-si","nebbia"]:r.nebbia===false?["k-no","senza nebbia"]:r.nebbia==="incerto"?["k-inc","incerto"]:["k-da","foto da classificare"];
+    let h="", tot={si:0,no:0};
+    for(let y=y0,m=m0;y<y1||(y===y1&&m<=m1);m===12?(y++,m=1):m++){
+      const n=new Date(y,m,0).getDate(), off=(new Date(y,m-1,1).getDay()+6)%7;
+      let si=0,no=0,c="";
+      for(let k=0;k<off;k++) c+="<i></i>";
+      for(let d=1;d<=n;d++){
+        const ds=`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`, r=by.get(ds);
+        if(ds>oggi||ds<primo){c+=`<i class="k-fut">${d}</i>`;continue;}
+        const [k,lab]=stato(r); if(k==="k-si")si++; if(k==="k-no")no++;
+        const t=`${GG[new Date(ds+"T12:00:00").getDay()]} ${d} ${MESI_L[m-1]}: ${lab}${r&&r.ora?` (foto delle ${r.ora})`:""}`, cls=k+(ds===oggi?" oggi":"");
+        c+=r&&r.foto?`<a class="${cls}" href="${r.foto}" target="_blank" rel="noopener" title="${t}" aria-label="${t}">${d}</a>`:`<i class="${cls}" title="${t}">${d}</i>`;
+      }
+      tot.si+=si; tot.no+=no;
+      h+=`<div class="mese"><h4><b>${MESI_L[m-1]} ${y}</b> · ${si} con nebbia, ${no} senza</h4><div class="gg">${["lu","ma","me","gi","ve","sa","do"].map(x=>`<span>${x}</span>`).join("")}${c}</div></div>`;
+    }
+    el.innerHTML=h;
+    const cl=tot.si+tot.no;
+    $("dia-cal-sum").textContent=cl?`Dal ${dl(primo)} ${primo.slice(0,4)}: nebbia in ${tot.si} mattine su ${cl} classificate (${fmt(tot.si/cl*100,0)}%). Tocca un giorno per vedere la foto dell'alba.`:"";
+  }
+
   function diario(c,d){
     const g=c.g.slice().sort((a,b)=>a.d<b.d?1:-1);
     const foto=g.filter(r=>r.foto).length, dacl=g.filter(r=>r.foto&&r.nebbia==null).length;
@@ -297,6 +347,7 @@
         `<small>${c.pronto?`Brier ${fmt(c.brier,3)}, ${fmt(c.skill*100,0)}% meglio della frequenza di nebbia (${fmt(c.clim*100,0)}%) · modello: ${c.M.nome}`
           : c.skill!=null?`il modello non batte la frequenza climatologica (${fmt(c.clim*100,0)}%): la probabilità resta nascosta`
           : "mancano "+[c.n<MIN_N?`${MIN_N-c.n} mattine utilizzabili`:"",c.pos<MIN_CLASSE?`${MIN_CLASSE-c.pos} mattine di nebbia`:"",c.neg<MIN_CLASSE?`${MIN_CLASSE-c.neg} mattine limpide`:""].filter(Boolean).join(", ")}</small><div class="bar"><i style="width:${Math.min(pctN,pctP)}%"></i></div></div>`;
+    calendario(g);
     $("dia-gal").innerHTML=g.filter(r=>r.foto).slice(0,12).map(r=>{const t=new Date(r.d+"T12:00:00");
       const et=r.nebbia===true?'<span class="et si">NEBBIA</span>':r.nebbia===false?'<span class="et no">LIMPIDO</span>':r.nebbia==="incerto"?'<span class="et">INCERTO</span>':'<span class="et">DA CLASSIFICARE</span>';
       const ur=r.umidita_max&&r.umidita_max.TOS11000017, inv=r.inversione;
