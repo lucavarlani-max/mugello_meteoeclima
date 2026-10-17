@@ -15,8 +15,8 @@
     D=d; A=d.anni; AC=A.filter(a=>a.tm!=null);
     AT=C.tdal?A.filter(a=>a.y>=C.tdal):A;   // anni dei grafici di temperatura (C.tdal se la temperatura parte dopo la pioggia)
     ["tm","tx","tn"].forEach(k=>{BASE[k]=mean(A.filter(a=>a.y>=1961&&a.y<=1990).map(a=>a[k]));});
-    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); fonti(); dayInit();
-    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();fonti();},150);});
+    tiles(); stripes(); yearChart(); monthInit(); exInit(); precChart(); normTable(); records(); neve(); neveSuolo(); fonti(); strumenti(); dayInit();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{stripes();yearChart();monthChart();exChart();precChart();neveChart();neveSuoloChart();fonti();strumenti();},150);});
     if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",stripes);
   }).catch(()=>{$("tiles").innerHTML='<div class="loading">Dati non disponibili.</div>';});
 
@@ -177,6 +177,29 @@
       tip:(x,v,a)=>{const s=byY.get(x);return `<b>Inverno ${x-1}/${String(x).slice(2)}</b><br>Neve caduta <b>${v==null?"—":Math.round(v)+" cm"}</b>`+(s?`<br><span class="m">${s.g25} giorni con almeno 2,5 cm · massimo in un giorno ${f1(s.max)} cm</span>`:"")+(a!=null?`<br><span class="m">media 11 stagioni ${Math.round(a)} cm · media 1991–2020 ${Math.round(base)} cm</span>`:"");}});
   }
 
+  /* ---------- neve al suolo (solo se la serie ce l'ha): altezza del manto misurata, non la neve caduta.
+     Dato diverso da "neve" sopra (SNWD invece di SNOW): qui non sappiamo quanto è caduto, solo quanto
+     è rimasto a terra il giorno della misura, e la copertura può avere interruzioni. ---------- */
+  function neveSuolo(){
+    const sec=$("sec-neve-suolo"); if(!sec||!D.neve_suolo||!D.neve_suolo.stagioni.length) return; sec.hidden=false;
+    const N=D.neve_suolo.stagioni, lab=y=>(y-1)+"/"+String(y).slice(2);
+    const top=[...N].sort((a,b)=>b.max-a.max), low=[...N].sort((a,b)=>a.max-b.max);
+    const e=mean(N.filter(s=>s.y>=1992&&s.y<=2021).map(s=>s.max)), L10=N.slice(-10), l=mean(L10.map(s=>s.max));
+    const buchi=[]; for(let y=N[0].y+1;y<N[N.length-1].y;y++) if(!N.some(s=>s.y===y)) buchi.push(y);
+    $("neve-suolo-note").textContent=`In media un manto massimo di ${Math.round(e)} cm a stagione nel 1991–2020, ${Math.round(l)} cm nelle ultime dieci stagioni misurate (${lab(L10[0].y)}–${lab(L10[9].y)}). Il manto più alto: ${lab(top[0].y)}, ${Math.round(top[0].max)} cm il ${dIt(top[0].data_max)}; il più basso tra le stagioni misurate: ${lab(low[0].y)}, ${f1(low[0].max)} cm.`+(buchi.length?` Mancano dati per le stagioni ${lab(buchi[0])}–${lab(buchi[buchi.length-1])}.`:"");
+    const rows=L=>"<tbody>"+L.map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${r.a}</td><td class="v">${r.b}</td></tr>`).join("")+"</tbody>";
+    $("r-neve-suolo").innerHTML=rows(D.neve_suolo.record.slice(0,10).map(r=>({a:dIt(r.d),b:f1(r.v)+" cm"})));
+    $("r-stag-suolo").innerHTML=rows(top.slice(0,10).map(s=>({a:"inverno "+lab(s.y),b:Math.round(s.max)+" cm · "+dIt(s.data_max)})));
+    neveSuoloChart();
+  }
+  function neveSuoloChart(){
+    if(!D||!D.neve_suolo||!$("ch-neve-suolo")) return; const N=D.neve_suolo.stagioni, byY=new Map(N.map(s=>[s.y,s]));
+    const pts=[]; for(let y=N[0].y;y<=N[N.length-1].y;y++) pts.push([y,byY.has(y)?byY.get(y).max:null]);
+    const avg=movAvg(pts,11), base=mean(N.filter(s=>s.y>=1992&&s.y<=2021).map(s=>s.max));
+    lineChart($("ch-neve-suolo"),{pts,avg,bars:true,barCls:"sky",avgCls:"sky",ref:{y:base},unit:"",label:"Manto nevoso massimo per stagione invernale a "+C.nome,
+      tip:(x,v,a)=>{const s=byY.get(x);return `<b>Inverno ${x-1}/${String(x).slice(2)}</b><br>Manto massimo <b>${v==null?"— (non misurato)":Math.round(v)+" cm"}</b>`+(s?`<br><span class="m">${s.giorni} giorni con una misura · il ${dIt(s.data_max)}</span>`:"")+(a!=null?`<br><span class="m">media 11 stagioni ${Math.round(a)} cm · media 1991–2020 ${Math.round(base)} cm</span>`:"");}});
+  }
+
   /* ---------- fonti della serie (solo se la serie le indica, es. Padova) ---------- */
   function fonti(){
     const el=$("fonti"); if(!el||!D.fonti||!C.fonti) return;
@@ -192,6 +215,28 @@
     const ax=$("fonti-ax"); if(ax) ax.innerHTML=[y0,...(W<560?C.tacche[0]:C.tacche[1]),y1].map(y=>`<span style="left:${((y-y0+(y===y1?1:0))/n*100).toFixed(2)}%">${y}</span>`).join("");
     const leg=$("fonti-leg"); if(leg&&!leg.innerHTML){const usati=[...new Set(F.map(f=>f[1]))].sort((a,b)=>F.find(f=>f[1]===a)[0]-F.find(f=>f[1]===b)[0]);
       leg.innerHTML=usati.map(c=>{const f=C.fonti[c]||{};const ys=F.filter(x=>x[1]===c).map(x=>x[0]);return `<span><i style="background:${col(c)}"></i>${f.nome||c} <s>${ys.length===1?ys[0]:ys[0]+"–"+ys[ys.length-1]}${ys.length<ys[ys.length-1]-ys[0]+1?", non continuo":""}</s></span>`;}).join("");}
+  }
+
+  /* ---------- periodo di ciascuno strumento grezzo, sovrapposizioni comprese (solo se C.strumenti c'è, es. Padova):
+     a differenza di fonti() sopra (la fonte prevalente di ogni anno nella serie finale), qui si vede dove due
+     strumenti sono stati attivi nello stesso periodo — le sovrapposizioni usate per calibrare le funzioni di
+     trasferimento tra una serie e la successiva. ---------- */
+  function strumenti(){
+    const el=$("strumenti"); if(!el||!C.strumenti) return;
+    const S=C.strumenti, y0=Math.min(...S.map(s=>s.dal)), y1=Math.max(...S.map(s=>s.al)), n=y1-y0+1;
+    const rowH=30, m={l:150,r:10,t:4,b:22}, W=Math.max(480,el.clientWidth||640), H=S.length*rowH+m.t+m.b;
+    const X=y=>m.l+(y-y0)/n*(W-m.l-m.r);
+    let g=S.map((s,i)=>`<rect x="${X(s.dal).toFixed(1)}" y="${(m.t+i*rowH+4).toFixed(1)}" width="${Math.max(2,X(s.al+1)-X(s.dal)).toFixed(1)}" height="${rowH-10}" rx="4" fill="${s.col}" data-i="${i}" style="cursor:pointer"/>`+
+      `<text x="${m.l-10}" y="${(m.t+i*rowH+rowH/2+4).toFixed(1)}" text-anchor="end" font-size="12">${s.nome}</text>`).join("");
+    const tacche=[y0,...(W<560?[]:[1750,1800,1850,1900,1950,2000]).filter(y=>y>y0&&y<y1),y1];
+    g+=tacche.map(y=>`<text x="${X(y).toFixed(1)}" y="${H-6}" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">${y}</text>`).join("");
+    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="Periodo di attività di ciascuno strumento storico">${g}</svg><div class="tip"></div>`;
+    const svg=el.querySelector("svg"),tip=el.querySelector(".tip");
+    svg.querySelectorAll("rect[data-i]").forEach(r=>{
+      const s=S[+r.dataset.i];
+      r.addEventListener("pointermove",e=>{const b=el.getBoundingClientRect();tip.innerHTML=`<b>${s.nome}</b><br>${s.dal}–${s.al}`+(s.giorni?`<br><span class="m">${s.giorni.toLocaleString("it-IT")} giorni misurati</span>`:"");place(el,tip,e.clientX-b.left,e.clientY-b.top-20);});
+      r.addEventListener("pointerleave",()=>tip.style.opacity=0);
+    });
   }
 
   /* ---------- un giorno nella storia ---------- */
