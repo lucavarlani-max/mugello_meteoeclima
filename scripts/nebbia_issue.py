@@ -5,15 +5,21 @@ Classificazione rapida del diario della nebbia con le segnalazioni (issue) di Gi
   python scripts/nebbia_issue.py apri
       Per ogni mattina con la foto ma ancora da classificare (ultimi 7 giorni) apre, se non c'è già, una segnalazione
       «Nebbia AAAA-MM-GG» con la foto e le misure. GitHub manda la notifica (app o email): basta rispondere
-      con un commento «sì», «no» o «?».
+      con un commento: 1 sereno, 2 nuvoloso, 3 pioggia, 4 nebbia, ? non giudicabile.
 
   python scripts/nebbia_issue.py classifica
       Lanciato dall'Action nebbia-classifica.yml quando il proprietario del repository commenta o apre una
-      segnalazione «Nebbia AAAA-MM-GG». Legge la risposta, scrive "nebbia" in data/nebbia-diario.json,
+      segnalazione «Nebbia AAAA-MM-GG». Legge la risposta, scrive "cielo" e "nebbia" in data/nebbia-diario.json,
       risponde e chiude la segnalazione. Variabili: ISSUE_NUMBER, ISSUE_TITLE, TESTO (commento o corpo).
 
-Risposte riconosciute (prima parola, maiuscole e punteggiatura ignorate):
-  sì / si / s / nebbia / banchi  → true      no / n / limpido / sereno → false      ? / incerto / boh → "incerto"
+Risposte riconosciute (prima parola, maiuscole e punteggiatura ignorate) → campo "cielo" e campo "nebbia":
+  1 / sereno / limpido / sole        → cielo "sereno",   nebbia false
+  2 / nuvoloso / nuvole / coperto    → cielo "nuvoloso", nebbia false
+  3 / pioggia / piove / neve         → cielo "pioggia",  nebbia false
+  4 / nebbia / sì / si / s / banchi  → cielo "nebbia",   nebbia true
+  no / n                             → nebbia false, cielo non indicato
+  ? / incerto / boh                  → nebbia "incerto", cielo non indicato
+Il campo "nebbia" (vero/falso) resta quello usato dalla calibrazione; "cielo" dice che tempo c'era.
 Variabili sempre necessarie: GITHUB_TOKEN, GITHUB_REPOSITORY.
 """
 import datetime as dt, json, os, re, sys, urllib.request
@@ -22,10 +28,13 @@ from zoneinfo import ZoneInfo
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIARIO = os.path.join(HERE, "data", "nebbia-diario.json")
 ETICHETTA = "diario-nebbia"
-RISPOSTE = {True: {"sì", "si", "s", "nebbia", "banchi", "yes", "y"},
-            False: {"no", "n", "limpido", "sereno", "niente"},
-            "incerto": {"?", "incerto", "boh", "forse", "dubbio"}}
-NOMI = {True: "nebbia", False: "limpido", "incerto": "incerto"}
+# risposta → (cielo, nebbia)
+RISPOSTE = {("sereno", False): {"1", "sereno", "limpido", "sole", "soleggiato"},
+            ("nuvoloso", False): {"2", "nuvoloso", "nuvole", "nuvolo", "coperto"},
+            ("pioggia", False): {"3", "pioggia", "piove", "pioviggine", "neve"},
+            ("nebbia", True): {"4", "nebbia", "sì", "si", "s", "banchi", "yes", "y"},
+            (None, False): {"no", "n", "niente"},
+            (None, "incerto"): {"?", "incerto", "boh", "forse", "dubbio"}}
 
 
 def api(metodo, percorso, dati=None):
@@ -37,6 +46,10 @@ def api(metodo, percorso, dati=None):
     with urllib.request.urlopen(req, timeout=30) as r:
         corpo = r.read()
         return json.loads(corpo) if corpo else None
+
+
+def nome(cielo, nebbia):
+    return cielo or {True: "nebbia", False: "senza nebbia", "incerto": "incerto"}[nebbia]
 
 
 def leggi():
@@ -51,7 +64,7 @@ def scrivi(D):
 def interpreta(testo):
     t = (testo or "").strip().lower()
     if t.startswith("?"):
-        return "incerto"
+        return (None, "incerto")
     parola = re.sub(r"[^\wàèéìòù?]", "", (t.split() or [""])[0])
     for valore, parole in RISPOSTE.items():
         if parola in parole:
@@ -80,8 +93,8 @@ def apri():
             continue
         foto = f"https://raw.githubusercontent.com/{os.environ['GITHUB_REPOSITORY']}/{ramo}/{r['foto']}"
         b2 = (r.get("umidita_max") or {}).get("TOS11000017")
-        corpo = (f"**C'era nebbia a Bilancino la mattina del {d}?**\n\n"
-                 f"Rispondi con un commento: **sì**, **no** oppure **?** (foto non giudicabile).\n\n"
+        corpo = (f"**Che tempo c'era a Bilancino la mattina del {d}?**\n\n"
+                 f"Rispondi con un commento: **1** sereno · **2** nuvoloso · **3** pioggia · **4** nebbia · **?** foto non giudicabile.\n\n"
                  f"![Lago di Bilancino, {d} ore {r.get('ora')}]({foto})\n\n"
                  f"Foto delle {r.get('ora')}" + (f", {r['dopo_alba']} minuti dopo l'alba" if r.get("dopo_alba") is not None else "") +
                  f" · webcam di Bilancino del Filo\n\n"
@@ -99,7 +112,7 @@ def classifica():
     valore = interpreta(testo)
     if not m or valore is None:
         api("POST", f"/issues/{numero}/comments",
-            {"body": "Non ho capito la risposta: scrivi solo **sì**, **no** oppure **?**."})
+            {"body": "Non ho capito la risposta: scrivi solo **1** (sereno), **2** (nuvoloso), **3** (pioggia), **4** (nebbia) oppure **?**."})
         print("nebbia-issue: risposta non riconosciuta", repr(testo[:40]))
         return
     d = m.group(1)
@@ -108,11 +121,16 @@ def classifica():
     if d not in giorni:
         api("POST", f"/issues/{numero}/comments", {"body": f"Nel diario non c'è la mattina del {d}."})
         return
-    giorni[d]["nebbia"] = valore
+    cielo, nebbia = valore
+    giorni[d]["nebbia"] = nebbia
+    if cielo:
+        giorni[d]["cielo"] = cielo
+    else:
+        giorni[d].pop("cielo", None)
     scrivi(D)
     with open(os.environ.get("GITHUB_OUTPUT", os.devnull), "a") as f:
-        f.write(f"giorno={d}\nvalore={NOMI[valore]}\n")
-    print(f"nebbia-issue: {d} → {NOMI[valore]}")
+        f.write(f"giorno={d}\nvalore={nome(cielo, nebbia)}\n")
+    print(f"nebbia-issue: {d} → {nome(cielo, nebbia)}")
 
 
 def chiudi():

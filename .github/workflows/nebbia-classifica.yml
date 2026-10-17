@@ -1,7 +1,7 @@
 name: Diario della nebbia (classificazione dalle segnalazioni)
 
 # Ogni mattina scripts/nebbia_issue.py apre una segnalazione «Nebbia AAAA-MM-GG» con la foto della webcam.
-# Quando il proprietario del repository risponde «sì», «no» o «?» (o apre la segnalazione dai pulsanti di
+# Quando il proprietario del repository risponde 1 (sereno), 2 (nuvoloso), 3 (pioggia), 4 (nebbia) o «?» (o apre la segnalazione dai pulsanti di
 # geek-nebbia.html?classifica), questa Action scrive la classificazione nel diario e chiude la segnalazione.
 on:
   issue_comment:
