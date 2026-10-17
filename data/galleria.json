@@ -2,6 +2,24 @@
  "nota": "Foto scelte dalle webcam del Mugello (scripts/webcam_scatti.py).",
  "foto": [
   {
+   "file": "reports/webcam/galleria/2026-10-17-alba-valle-del-diaterna.jpg",
+   "data": "2026-10-17",
+   "momento": "alba",
+   "categoria": "alba",
+   "webcam": "Valle del Diaterna (770 m)",
+   "fonte": "FirenzeMeteo",
+   "link": "https://www.firenzemeteo.it/webcam/appennino/toscana/"
+  },
+  {
+   "file": "reports/webcam/galleria/2026-10-17-alba-passo-del-muraglione.jpg",
+   "data": "2026-10-17",
+   "momento": "alba",
+   "categoria": "alba",
+   "webcam": "Passo del Muraglione (907 m) · LIVE",
+   "fonte": "Meteo Pedemontana Forlivese",
+   "link": "https://stream-meteoproject.eu/"
+  },
+  {
    "file": "reports/webcam/galleria/2026-10-14-alba-passo-della-futa.jpg",
    "data": "2026-10-14",
    "momento": "alba",
