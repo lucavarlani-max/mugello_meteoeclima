@@ -193,8 +193,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   `data/nebbia-diario.json` mettere `"nebbia": true` (nebbia o banchi in valle), `false` (limpido) o `"incerto"`
   guardando la foto. **Metodo rapido**: ogni mattina `scripts/nebbia_issue.py apri` apre una segnalazione GitHub
   «Nebbia AAAA-MM-GG» con la foto (arriva come notifica nell'app GitHub o per email): basta rispondere con un commento
-  «sì», «no» o «?» e l'Action `nebbia-classifica.yml` aggiorna il diario e chiude la segnalazione. In alternativa,
-  `geek-nebbia.html?classifica` mostra sotto ogni foto i pulsanti nebbia / limpido / incerto. Contano solo le risposte
+  **1** (sereno), **2** (nuvoloso), **3** (pioggia), **4** (nebbia) o **?** e l'Action `nebbia-classifica.yml` scrive
+  `"cielo"` e `"nebbia"` nel diario e chiude la segnalazione («sì» e «no» valgono ancora). In alternativa,
+  `geek-nebbia.html?classifica` mostra sotto ogni foto i pulsanti sereno / nuvoloso / pioggia / nebbia / incerto. Il
+  calendario della nebbia colora ogni giorno secondo il cielo (nebbia in grigio). Contano solo le risposte
   del proprietario del repository. La sera lo script salva anche la previsione corrente per l'alba successiva
   (`previsione_sera`, con nuvole per strato, suolo, 850 hPa e strato limite che l'archivio Previous Runs non ha). Con almeno 60 mattine classificate (15 con nebbia e 15 senza) la pagina calibra da sola una
   regressione logistica e mostra la probabilità di nebbia delle prossime notti, solo se batte la frequenza climatologica.
