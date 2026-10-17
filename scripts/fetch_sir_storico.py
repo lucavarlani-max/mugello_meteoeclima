@@ -17,7 +17,9 @@ Uscita, in data/sir/ (una cartella per stazione):
   data/sir/<ID>/stato.json           anni scaricati e relativo stato (VALIDATO / PRE-VALIDATO ...)
 
 Si può interrompere e rilanciare: gli anni già scaricati e validati non si riscaricano
-(il corrente e l'ultimo si riscaricano sempre, perché pre-validati).
+(il corrente e l'ultimo si riscaricano sempre, perché pre-validati). Con --recenti si scaricano solo
+l'anno in corso e il precedente: è l'aggiornamento quotidiano dell'Action sir-archivio.yml, che una volta
+al mese fa anche il giro completo per raccogliere gli anni nel frattempo validati.
 Pausa tra le richieste (--pausa, default 0.4 s) per non appesantire il server.
 
 Esempi:
@@ -41,6 +43,7 @@ _jar = http.cookiejar.CookieJar()
 _op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(_jar))
 _ultima = [0.0]
 PAUSA = [0.4]
+RECENTI = [False]          # --recenti: solo l'anno in corso e il precedente
 
 
 def get(path, tentativi=4):
@@ -172,6 +175,8 @@ def scarica(st, prodotto, nome, colonne, forza):
     for a in anni:
         if not forza and str(a) in sk and a < oggi - 1 and "PRE" not in sk[str(a)].upper():
             continue
+        if RECENTI[0] and a < oggi - 1:
+            continue
         h = get(f"archivio/dati.php?A={a}&IDS={ids}&IDST={prodotto}")
         s, d = parse_anno(h, prodotto, a)
         sk[str(a)] = s
@@ -197,9 +202,13 @@ def main():
     ap.add_argument("--pausa", type=float, default=0.4, help="secondi fra una richiesta e l'altra")
     ap.add_argument("--pluvio9", action="store_true", help="scarica anche la pioggia 9->9")
     ap.add_argument("--forza", action="store_true", help="riscarica anche gli anni già presenti")
+    ap.add_argument("--recenti", action="store_true",
+                    help="solo l'anno in corso e il precedente (aggiornamento quotidiano; gli anni pre-validati "
+                         "più vecchi si ricontrollano con il giro completo, senza questa opzione)")
     ap.add_argument("--max", type=int, default=0, help="si ferma dopo N stazioni (prove)")
     a = ap.parse_args()
     PAUSA[0] = a.pausa
+    RECENTI[0] = a.recenti
     elenco = stazioni(BBOX_MUGELLO if a.mugello else a.bbox or "7,40,15,46")
     if a.mugello:
         elenco = [s for s in elenco if re.sub(r"\s+", " ", s["comune"]).rsplit(" (", 1)[0].strip() in MUGELLO]
