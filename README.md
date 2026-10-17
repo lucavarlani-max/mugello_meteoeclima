@@ -112,6 +112,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   corretto con lo scarto mensile. I dati sono in `data/borgo-serie-lunghe.json`, rigenerato da
   `scripts/build_borgo_serie.py` dall'archivio `data/sir/` (con lo scarto mensile ricalcolato e i giorni con massima
   più bassa della minima scartati).
+- **Contatti** (`contatti.js`) — in fondo a ogni pagina, sopra il piè di pagina, la sezione «Contatti» con Facebook,
+  Instagram, LinkedIn ed email (l'indirizzo si compone al caricamento, non compare intero nel codice). Si carica da
+  `menu.js` nelle pagine interne e direttamente in `index.html`; i contatti si cambiano solo in `contatti.js`.
 - **Archivio SIR automatico** (Action `sir-archivio.yml`, ogni mattina): `fetch_sir_storico.py --mugello --pluvio9
   --recenti` scarica l'anno in corso e il precedente delle 47 stazioni SIR del Mugello (circa 15 minuti); il giorno 1
   del mese, o a mano con «giro completo», ricontrolla anche gli anni pre-validati. Poi rigenera `data/sir/mugello.json`
