@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""
+Estremi giornalieri di temperatura di tre stazioni di montagna intorno al Mugello, per la pagina
+«Stazioni in montagna» (stazioni-montagna.html).
+
+Le stazioni pubblicano solo i valori del momento e gli estremi del giorno in corso: lo storico degli ultimi giorni lo
+costruisce questo script, che gira con update-data.yml ogni mezz'ora e conserva per ogni giorno la massima più alta
+e la minima più bassa lette. Fonti:
+  futa       Passo della Futa (Firenzuola, 963 m), Davis Vantage Pro2 dell'Associazione Il Filo, rete Meteo Project
+             https://stazioni.meteoproject.it/dati/passofuta/index-vuoto.php (la pagina incorporata da ilfilo.net)
+             «Dati aggiornati il 18/10/26 alle ore 19.00», «Estremi Oggi» con l'ora della massima e della minima
+  montegiovi Montegiovi (Monte Giovi), stazione della rete toscana-meteo.it
+             https://www.toscana-meteo.it/stazioni.php?id=135
+             «Dati aggiornati 18:59-18/10/2026», «Estremi Oggi: <max> °C <min> °C»; la pagina contiene anche il grafico
+             della temperatura del giorno (Highcharts, un punto ogni 15 minuti), da cui si ricava l'ora degli estremi
+  colla      Passo della Colla (971 m), Davis Pro della rete Meteo Pedemontana Forlivese
+             https://meteo-pedemontanaforlivese.it/index.php#stazioni
+             scheda «Passo della Colla · Media montagna · 971 m», «min 12,8° · max 17,9°», «Online · 3 min fa»
+             (nessuna data: l'istante della misura è l'ora della lettura meno i minuti indicati)
+
+Oltre agli estremi di temperatura si tengono, quando la stazione li pubblica, la pioggia del giorno (mm, la più
+alta letta: il pluviometro si azzera a mezzanotte) e la raffica massima del giorno (km/h, Futa e Montegiovi), e per il
+momento attuale la pioggia del mese e dell'anno.
+
+Controlli: una lettura vale solo se la misura è di oggi o di ieri (ora italiana), non più vecchia di 3 ore, e con la
+minima non più alta della massima; gli estremi con un'ora successiva all'ultimo aggiornamento (residui del giorno
+prima subito dopo la mezzanotte) si scartano. Si tengono gli ultimi 10 giorni.
+
+Per i grafici si conserva anche la temperatura di ogni lettura (serie degli ultimi 4 giorni, un punto ogni mezz'ora;
+per Montegiovi si aggiungono i punti ogni 15 minuti del grafico della stazione).
+
+Scrive data/montagna.json.
+"""
+import datetime as dt, html, json, os, re, sys, urllib.request
+from zoneinfo import ZoneInfo
+
+HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(HERE, "data", "montagna.json")
+ROMA = ZoneInfo("Europe/Rome")
+UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36 mugello-meteo/1.0"
+GIORNI = 10
+ORE_SERIE = 96
+
+STAZIONI = [
+    {"id": "futa", "nome": "Passo della Futa", "comune": "Firenzuola", "quota": 963,
+     "rete": "Associazione Il Filo · Meteo Project", "pagina": "https://www.ilfilo.net/stazione-meteo-del-passo-della-futa/",
+     "url": "https://stazioni.meteoproject.it/dati/passofuta/index-vuoto.php", "referer": "https://www.ilfilo.net/"},
+    {"id": "montegiovi", "nome": "Montegiovi", "comune": "Vicchio", "quota": None,
+     "rete": "toscana-meteo.it", "pagina": "https://www.toscana-meteo.it/stazioni.php?id=135",
+     "url": "https://www.toscana-meteo.it/stazioni.php?id=135", "referer": "https://www.toscana-meteo.it/"},
+    {"id": "colla", "nome": "Passo della Colla", "comune": "Borgo San Lorenzo · Marradi", "quota": 971,
+     "rete": "Meteo Pedemontana Forlivese", "pagina": "https://meteo-pedemontanaforlivese.it/index.php#stazioni",
+     "url": "https://meteo-pedemontanaforlivese.it/index.php", "referer": "https://meteo-pedemontanaforlivese.it/"},
+]
+
+
+def scarica(url, referer, cod="utf-8"):
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Referer": referer})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return r.read().decode(cod, "replace")
+
+
+def testo(s):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s)))
+
+
+def num(s):
+    return float(s.replace(".", "").replace(",", ".")) if "," in s else float(s)
+
+
+def futa(s):
+    m = re.search(r"Dati aggiornati il.*?(\d\d)/(\d\d)/(\d\d)\s*</strong>.*?alle ore\s*</span>\s*<strong[^>]*>\s*(\d\d)\.(\d\d)", s, re.S)
+    g, me, a, hh, mm = (int(x) for x in m.groups())
+    quando = dt.datetime(2000 + a, me, g, hh, mm, tzinfo=ROMA)
+    t = re.search(r"thermometer\.php\?t=(-?[\d.]+)", s)
+    e = s[s.index("Estremi Oggi"):]
+    mx = re.search(r'class="max"><strong>(-?[\d.]+)</strong>.*?maxpiccolo">\(<strong>(\d\d)\.(\d\d)</strong>', e, re.S)
+    mn = re.search(r'class="blu"><strong>(-?[\d.]+)</strong>.*?minpiccolo">\(<strong>(\d\d)\.(\d\d)</strong>', e, re.S)
+    x = testo(s)
+    out = {"quando": quando, "t": float(t.group(1)) if t else None,
+           "max": float(mx.group(1)), "hmax": f"{mx.group(2)}:{mx.group(3)}",
+           "min": float(mn.group(1)), "hmin": f"{mn.group(2)}:{mn.group(3)}"}
+    for k, rx in (("pioggia", r"Pioggia giorno: (-?[\d.]+) mm"), ("raffica", r"Raffica giornaliera: ([\d.]+) Km/h"),
+                  ("p_mese", r"Pioggia Mese: ([\d.]+) mm"), ("p_anno", r"Pioggia Anno: ([\d.]+) mm")):
+        m = re.search(rx, x)
+        if m:
+            out[k] = float(m.group(1))
+    m = re.search(r"Ora Raffica: (\d\d)\.(\d\d)", x)
+    if m and "raffica" in out:
+        out["hraffica"] = f"{m.group(1)}:{m.group(2)}"
+    return out
+
+
+def montegiovi(s):
+    x = testo(s)
+    m = re.search(r"Dati aggiornati (\d\d):(\d\d)-(\d\d)/(\d\d)/(\d{4})", x)
+    hh, mm, g, me, a = (int(v) for v in m.groups())
+    quando = dt.datetime(a, me, g, hh, mm, tzinfo=ROMA)
+    t = re.search(r"Temperatura: (-?[\d.]+) °C", x)
+    e = re.search(r"Estremi Oggi: (-?[\d.]+) °C (-?[\d.]+) °C", x)
+    a1, a2 = float(e.group(1)), float(e.group(2))
+    out = {"quando": quando, "t": float(t.group(1)) if t else None, "max": max(a1, a2), "min": min(a1, a2)}
+    for k, rx in (("pioggia", r"Pioggia giorno: (-?[\d.]+) mm"), ("raffica", r"Raffica giornaliera: ([\d.]+) Km/h")):
+        m = re.search(rx, x)
+        if m:
+            out[k] = float(m.group(1))
+    # ora degli estremi dal grafico della temperatura del giorno, se il grafico arriva allo stesso valore
+    g = re.search(r"name:'Temperatura',data:(\[\[.*?\]\])\}", s)
+    if g:
+        # i tempi del grafico sono l'ora locale scritta come se fosse sempre ora solare (UTC+1): con l'ora legale
+        # l'ultimo punto risulterebbe un'ora dopo «Dati aggiornati». Si rilegge l'ora come ora locale.
+        cet = dt.timezone(dt.timedelta(hours=1))
+        punti = [(dt.datetime.fromtimestamp(ms / 1000, cet).replace(tzinfo=ROMA), v) for ms, v in json.loads(g.group(1))]
+        punti = [(q, v) for q, v in punti if q.date() == quando.date() and v is not None]
+        out["punti"] = [(q.replace(second=0, microsecond=0), v) for q, v in punti if -40 < v < 45 and q <= quando]
+        if punti:
+            qx, vx = max(punti, key=lambda p: p[1])
+            qn, vn = min(punti, key=lambda p: p[1])
+            if abs(vx - out["max"]) <= 0.2:
+                out["hmax"] = qx.strftime("%H:%M")
+            if abs(vn - out["min"]) <= 0.2:
+                out["hmin"] = qn.strftime("%H:%M")
+    return out
+
+
+def colla(s, adesso):
+    i = next(m.start() for m in re.finditer(r">Passo della Colla</div>", s) if "montagna" in s[m.start():m.start() + 1500])
+    j = s.find("rounded-xl p-3.5", i)
+    c = s[i:j if j > 0 else i + 8000]
+    x = testo(c)
+    stato = re.search(r"(Online|Offline) · (?:(\d+) (min|ora|ore) fa|adesso|ora)", x)
+    if not stato or stato.group(1) != "Online":
+        raise ValueError("stazione non in linea: " + (stato.group(0) if stato else x[-80:]))
+    n = int(stato.group(2) or 0) * (60 if stato.group(3) in ("ora", "ore") else 1)
+    t = re.search(r"m (-?[\d.,]+) ?°C", x)
+    e = re.search(r"min (-?[\d.,]+)° · max (-?[\d.,]+)°", x)
+    out = {"quando": (adesso - dt.timedelta(minutes=n)).replace(second=0, microsecond=0),
+           "t": num(t.group(1)) if t else None, "max": num(e.group(2)), "min": num(e.group(1))}
+    p = re.search(r"oggi (-?[\d.,]+) · mese ([\d.,]+) · anno ([\d.,]+) mm", x)
+    if p:
+        # numeri all'italiana: «1.250» è milleduecentocinquanta, «41,6» quarantuno e sei
+        out["pioggia"], out["p_mese"], out["p_anno"] = (float(v.replace(".", "").replace(",", ".")) for v in p.groups())
+    return out
+
+
+def main():
+    adesso = dt.datetime.now(ROMA)
+    prima = json.load(open(OUT, encoding="utf-8")) if os.path.exists(OUT) else {}
+    vecchie = {s["id"]: s for s in prima.get("stazioni", [])}
+    ok = 0
+    stazioni = []
+    for st in STAZIONI:
+        rec = dict(st)
+        rec.pop("referer")
+        v = vecchie.get(st["id"], {})
+        rec["giorni"] = dict(v.get("giorni", {}))
+        rec["ora"] = v.get("ora")
+        serie = {q: t for q, t in v.get("serie", [])}
+        if st["quota"] is None and v.get("quota"):
+            rec["quota"] = v["quota"]
+        try:
+            s = scarica(st["url"], st["referer"], "latin-1" if st["id"] == "montegiovi" else "utf-8")
+            if st["id"] == "futa":
+                l = futa(s)
+            elif st["id"] == "montegiovi":
+                l = montegiovi(s)
+            else:
+                l = colla(s, adesso)
+            q = l["quando"]
+            if adesso - q > dt.timedelta(hours=3) or q - adesso > dt.timedelta(minutes=30):
+                raise ValueError(f"misura non recente: {q:%Y-%m-%d %H:%M}")
+            if not (-40 < l["min"] <= l["max"] < 45):
+                raise ValueError(f"estremi non validi: {l['min']} / {l['max']}")
+            giorno = q.date().isoformat()
+            g = dict(rec["giorni"].get(giorno, {}))
+            for k, piu in (("max", True), ("min", False)):
+                h = l.get("h" + k)
+                if h and h > q.strftime("%H:%M"):
+                    continue   # estremo con un'ora dopo l'aggiornamento: residuo del giorno prima
+                if k not in g or (l[k] > g[k] if piu else l[k] < g[k]):
+                    g[k] = l[k]
+                    if h:
+                        g["h" + k] = h
+                    else:
+                        g.pop("h" + k, None)
+            for k in ("pioggia", "raffica"):
+                h = l.get("h" + k)
+                if l.get(k) is None or not (0 <= l[k] < (600 if k == "pioggia" else 300)) or (h and h > q.strftime("%H:%M")):
+                    continue
+                if k not in g or l[k] > g[k]:
+                    g[k] = l[k]
+                    if h:
+                        g["h" + k] = h
+                    else:
+                        g.pop("h" + k, None)
+            g["ultima"] = q.strftime("%H:%M")
+            g["letture"] = g.get("letture", 0) + 1
+            rec["giorni"][giorno] = g
+            rec["ora"] = {"t": l["t"], "quando": q.isoformat(timespec="minutes")}
+            for qq, tt in l.get("punti", []) + ([(q, l["t"])] if l["t"] is not None and -40 < l["t"] < 45 else []):
+                serie[qq.isoformat(timespec="minutes")] = tt
+            for k in ("p_mese", "p_anno"):
+                if l.get(k) is not None:
+                    rec["ora"][k] = l[k]
+            ok += 1
+            print(f"montagna: {st['nome']} {q:%d/%m %H:%M} t={l['t']} max={l['max']} {l.get('hmax','')} min={l['min']} {l.get('hmin','')} pioggia={l.get('pioggia')} raffica={l.get('raffica')} {l.get('hraffica','')}")
+        except Exception as e:
+            print(f"montagna: {st['nome']} non letta: {e}", file=sys.stderr)
+        rec["giorni"] = dict(sorted(rec["giorni"].items())[-GIORNI:])
+        limite = adesso - dt.timedelta(hours=ORE_SERIE)
+        rec["serie"] = [[q, t] for q, t in sorted(serie.items(), key=lambda x: dt.datetime.fromisoformat(x[0]))
+                        if dt.datetime.fromisoformat(q) >= limite]
+        stazioni.append(rec)
+    if not ok:
+        print("montagna: nessuna stazione letta, file invariato", file=sys.stderr)
+        return
+    json.dump({"aggiornato": adesso.isoformat(timespec="minutes"), "stazioni": stazioni},
+              open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
+if __name__ == "__main__":
+    main()

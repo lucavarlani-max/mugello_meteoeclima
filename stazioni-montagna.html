@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stazioni in montagna · Mugello Meteo &amp; Clima</title>
+<meta name="description" content="Massime, minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi e al Passo della Colla, le stazioni di montagna intorno al Mugello, aggiornate ogni mezz'ora.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Stazioni in montagna · Mugello Meteo &amp; Clima">
+<meta property="og:description" content="Massime e minime degli ultimi tre giorni al Passo della Futa, a Montegiovi e al Passo della Colla, aggiornate ogni mezz'ora.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#6f7d75;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --warm:#c0392b; --cold:#2a64a8; --today:#fff7e6;
+    --serif:"Bricolage Grotesque",Georgia,serif;
+    --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --r:18px; --r-sm:13px;
+    --shadow:0 1px 2px rgba(16,38,31,.05),0 1px 12px -6px rgba(16,38,31,.12);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0c1512; --panel:#111d19; --panel-2:#0f1a16;
+      --ink:#eaf1ec; --ink-soft:#b3c3ba; --ink-faint:#8a9b92;
+      --line:#1e2c26; --line-soft:#182420;
+      --pine:#3fae8b; --pine-deep:#8fd9c1; --pine-tint:#132a22;
+      --warm:#f08a7c; --cold:#7fb3ec; --today:#1c1a12;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c1512; --panel:#111d19; --panel-2:#0f1a16;
+    --ink:#eaf1ec; --ink-soft:#b3c3ba; --ink-faint:#8a9b92;
+    --line:#1e2c26; --line-soft:#182420;
+    --pine:#3fae8b; --pine-deep:#8fd9c1; --pine-tint:#132a22;
+    --warm:#f08a7c; --cold:#7fb3ec; --today:#1c1a12;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--pine)}
+  .wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 20px}
+  @media (max-width:520px){.wrap{padding:0 16px}}
+  h1,h2{font-family:var(--serif);letter-spacing:-.02em;line-height:1.08;margin:0}
+  h1 em{font-style:italic;color:var(--pine)}
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;align-items:center;height:58px}
+  .back{font-size:13.5px;font-weight:500;color:var(--ink-soft);text-decoration:none}
+  .hero{padding:44px 0 18px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
+  .hero h1{font-size:clamp(34px,5.6vw,60px);font-weight:800}
+  .hero p{max-width:60ch;color:var(--ink-soft);font-size:16px;margin:16px 0 0}
+  section.blk{padding:20px 0}
+  .tabhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px 20px;flex-wrap:wrap;margin-bottom:12px}
+  .tabhead h2{font-size:clamp(22px,3vw,30px);font-weight:700}
+  .agg{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+  .tabwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th,td{padding:12px 14px;text-align:left;border-top:1px solid var(--line-soft);vertical-align:top}
+  thead th{border-top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);background:var(--panel-2);white-space:nowrap}
+  thead th small{display:block;letter-spacing:.02em;text-transform:none;font-size:11px;margin-top:2px}
+  th.oggi,td.oggi{background:var(--today)}
+  tbody th{font-weight:600;min-width:150px;position:sticky;left:0;background:var(--panel);z-index:1}
+  tbody th small{display:block;font-weight:400;color:var(--ink-faint);font-size:12px}
+  .ora{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1;white-space:nowrap}
+  .ora small{display:block;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ink-faint);margin-top:5px}
+  .ex{display:grid;grid-template-columns:auto auto;gap:3px 8px;align-items:baseline;white-space:nowrap}
+  .ex b{font-size:16px}
+  .ex i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .ex .mk{font-size:11px}
+  .mk.x{color:var(--warm)} .mk.n{color:var(--cold)}
+  .nd{color:var(--ink-faint)}
+  .alt{margin-top:8px;padding-top:7px;border-top:1px dashed var(--line);display:grid;gap:3px;font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+  .alt b{color:var(--ink);font-weight:600}
+  .alt i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .ora .cum{display:block;font-family:var(--sans);font-size:12px;font-weight:400;color:var(--ink-soft);margin-top:8px;white-space:nowrap}
+  .parz{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);display:block;margin-top:4px}
+  .legenda{display:flex;gap:6px 18px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-faint);margin-top:10px}
+  .note{max-width:72ch;color:var(--ink-soft);font-size:14.5px}
+  .note h2{font-size:22px;font-weight:700;color:var(--ink);margin:0 0 10px}
+  .note p{margin:0 0 12px}
+  .note ul{margin:0 0 12px;padding-left:20px}
+  .note li{margin-bottom:6px}
+  /* grafici */
+  :root{--s-futa:#00805a;--s-montegiovi:#2f7cc4;--s-colla:#c9671f;--grid:#e9ede7}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-futa:#279a72;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--grid:#1c2924}}
+  :root[data-theme="dark"]{--s-futa:#279a72;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--grid:#1c2924}
+  .chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:16px 16px 10px;margin-bottom:22px;position:relative}
+  .chart h3{font-family:var(--serif);font-size:19px;font-weight:700;margin:0 0 4px}
+  .chart p.sub{margin:0 0 10px;font-size:13px;color:var(--ink-faint)}
+  .leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-soft);margin-bottom:6px}
+  .leg span{display:inline-flex;align-items:center;gap:6px}
+  .leg i{width:14px;height:3px;border-radius:2px;display:inline-block}
+  .chart svg{display:block;width:100%;height:auto;overflow:visible}
+  .chart svg text{font-family:var(--sans);font-size:11px;fill:var(--ink-faint)}
+  .chart svg .gl{stroke:var(--grid);stroke-width:1}
+  .chart svg .lab{font-size:12px;font-weight:600;fill:var(--ink-soft)}
+  .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px;
+    font-size:12.5px;box-shadow:0 8px 24px -10px rgba(0,0,0,.35);white-space:nowrap;display:none;z-index:3;color:var(--ink)}
+  .tip b{font-weight:600}
+  .tip .r{display:flex;align-items:center;gap:7px}
+  .tip .r i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .tip .h{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:4px}
+  .vuoto{color:var(--ink-faint);font-size:14px;padding:30px 0;text-align:center}
+  .foot{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;color:var(--ink-faint);font-size:12.5px}
+  .foot .wrap{display:flex;gap:8px 18px;flex-wrap:wrap}
+  .foot a{font-weight:600}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+
+  <div class="topbar"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+  </div></div>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Stazioni · crinale appenninico</div>
+      <h1>Le stazioni<br><em>in montagna.</em></h1>
+      <p>Massime e minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi e al Passo della
+        Colla, le stazioni sopra il Mugello. I dati si leggono dalle pagine delle reti che le gestiscono ogni mezz'ora.</p>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="tabhead">
+        <h2>Gli ultimi 3 giorni</h2>
+        <span class="agg" id="agg">caricamento…</span>
+      </div>
+      <div class="tabwrap"><table id="tab" aria-describedby="agg"><thead></thead><tbody></tbody></table></div>
+      <div class="legenda">
+        <span><span class="mk x">▲</span> massima</span>
+        <span><span class="mk n">▼</span> minima</span>
+        <span><b>pioggia</b> caduta nel giorno</span>
+        <span><b>raffica</b> massima del giorno (solo Futa e Montegiovi)</span>
+        <span>accanto al valore, l'ora in cui è stato misurato (quando la stazione la indica)</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="tabhead"><h2>Grafici</h2></div>
+      <div class="chart" id="g-temp">
+        <h3>Temperatura delle ultime 72 ore</h3>
+        <p class="sub">Una lettura ogni mezz'ora (per Montegiovi ogni 15 minuti, dal grafico della stazione).</p>
+        <div class="leg" id="leg-temp"></div>
+        <div class="plot"></div>
+      </div>
+      <div class="chart" id="g-giorni">
+        <h3>Massime e minime giorno per giorno</h3>
+        <p class="sub">Ogni barra va dalla minima alla massima del giorno. Passa sopra una barra per pioggia e raffica.</p>
+        <div class="leg" id="leg-giorni"></div>
+        <div class="plot"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap note">
+      <h2>Come sono raccolti i dati</h2>
+      <p>Queste stazioni pubblicano solo la temperatura del momento e gli estremi del giorno in corso. Lo storico lo costruisce
+        il sito: ogni mezz'ora legge le tre pagine e, per ogni giorno, conserva la massima più alta e la minima più bassa
+        indicate dalla stazione, la pioggia del giorno più alta (il pluviometro si azzera a mezzanotte) e la raffica più forte.
+        Sotto la temperatura del momento ci sono la pioggia del mese e dell'anno, quando la stazione le pubblica.</p>
+      <ul>
+        <li>Un giorno passato è <b>parziale</b> quando l'ultima lettura è prima delle 23:00, perché la stazione era
+          irraggiungibile o il sito non è riuscito a leggerla. Le sue massime e minime potrebbero non essere quelle vere.</li>
+        <li>Si scartano le letture più vecchie di tre ore e quelle con la minima più alta della massima.</li>
+        <li>Le tre stazioni appartengono a reti diverse e hanno strumenti e collocazioni diverse. I valori sono quelli
+          pubblicati dalle reti, senza correzioni.</li>
+      </ul>
+      <p>Fonti:
+        <a href="https://www.ilfilo.net/stazione-meteo-del-passo-della-futa/" target="_blank" rel="noopener">Passo della Futa</a>
+        (Davis Vantage Pro2, Associazione Il Filo, rete Meteo Project) ·
+        <a href="https://www.toscana-meteo.it/stazioni.php?id=135" target="_blank" rel="noopener">Montegiovi</a>
+        (rete toscana-meteo.it) ·
+        <a href="https://meteo-pedemontanaforlivese.it/index.php#stazioni" target="_blank" rel="noopener">Passo della Colla</a>
+        (Davis Pro, Meteo Pedemontana Forlivese).</p>
+    </div>
+  </section>
+
+  <footer class="foot"><div class="wrap">
+    <span>Mugello Meteo &amp; Clima · <a href="stazioni.html">le mie stazioni</a> · <a href="stazioni-mugello.html">stazioni del Mugello (SIR)</a></span>
+    <span>Dati: Il Filo / Meteo Project, toscana-meteo.it, Meteo Pedemontana Forlivese</span>
+  </div></footer>
+
+<script>
+(function(){
+  const GG=["dom","lun","mar","mer","gio","ven","sab"];
+  const f1=v=>v==null?"—":v.toFixed(1).replace(".",",")+"°";
+  const fn=(v,d=1)=>v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  // data di oggi in ora italiana, come le date del file
+  const iso=d=>new Intl.DateTimeFormat("sv-SE",{timeZone:"Europe/Rome"}).format(d);
+  const tab=document.getElementById("tab"), agg=document.getElementById("agg");
+
+
+  // ---------- grafici (SVG disegnati a mano, ridisegnati quando cambia la larghezza) ----------
+  const SVGNS="http://www.w3.org/2000/svg";
+  const el=(n,a,p)=>{const e=document.createElementNS(SVGNS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+  const col=id=>`var(--s-${id})`;
+  const hhmm=d=>d.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"});
+  const giornoL=d=>d.toLocaleDateString("it-IT",{weekday:"short",day:"numeric",timeZone:"Europe/Rome"});
+  function legenda(box,S){ box.innerHTML=S.map(s=>`<span><i style="background:${col(s.id)}"></i>${esc(s.nome)}</span>`).join(""); }
+  function tip(box){ let t=box.querySelector(".tip"); if(!t){t=document.createElement("div");t.className="tip";box.appendChild(t);} return t; }
+  function posTip(box,t,x,y){ const W=box.clientWidth; t.style.display="block"; const w=t.offsetWidth;
+    t.style.left=Math.max(4,Math.min(W-w-4,x+14))+"px"; t.style.top=Math.max(4,y-10)+"px"; }
+  function scalaY(lo,hi,H,top,bot){ const pad=Math.max(0.5,(hi-lo)*0.08); lo=Math.floor(lo-pad); hi=Math.ceil(hi+pad);
+    const passo=[1,2,5,10].find(p=>(hi-lo)/p<=6)||10; lo=Math.floor(lo/passo)*passo; hi=Math.ceil(hi/passo)*passo;
+    return {lo,hi,passo,y:v=>top+(hi-v)/(hi-lo)*(H-top-bot)}; }
+
+  function graficoTemp(D){
+    const box=document.querySelector("#g-temp .plot"), card=document.getElementById("g-temp");
+    const fine=Date.now(), inizio=fine-72*36e5;
+    const S=D.stazioni.map(s=>({id:s.id,nome:s.nome,p:(s.serie||[]).map(([q,t])=>[Date.parse(q),t]).filter(([q])=>q>=inizio)})).filter(s=>s.p.length);
+    legenda(document.getElementById("leg-temp"),S);
+    if(!S.length||S.every(s=>s.p.length<2)){ box.innerHTML='<div class="vuoto">Il grafico si riempie con le prossime letture.</div>'; return; }
+    const W=box.clientWidth||600, H=W<520?240:300, L=34, R=W<520?12:96, T=10, B=26;
+    const tutti=S.flatMap(s=>s.p.map(p=>p[1]));
+    const sy=scalaY(Math.min(...tutti),Math.max(...tutti),H,T,B);
+    const x0=Math.min(inizio,...S.map(s=>s.p[0][0])), x=q=>L+(q-x0)/(fine-x0)*(W-L-R);
+    box.innerHTML=""; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Temperatura delle ultime 72 ore nelle tre stazioni"},box);
+    for(let v=sy.lo;v<=sy.hi;v+=sy.passo){ el("line",{x1:L,x2:W-R,y1:sy.y(v),y2:sy.y(v),class:"gl"},svg);
+      el("text",{x:L-6,y:sy.y(v)+4,"text-anchor":"end"},svg).textContent=v+"°"; }
+    // mezzanotti
+    const mezz=[], ora=q=>new Date(q).toLocaleTimeString("it-IT",{hour:"2-digit",hourCycle:"h23",timeZone:"Europe/Rome"});
+    for(let q=Math.ceil(x0/9e5)*9e5, ph=null; q<=fine; q+=9e5){ const h=ora(q); if(h==="00"&&ph==="23") mezz.push(q); ph=h; }
+    mezz.forEach(q=>{ el("line",{x1:x(q),x2:x(q),y1:T,y2:H-B,class:"gl"},svg);
+      el("text",{x:x(q)+4,y:H-8},svg).textContent=giornoL(new Date(q+12*36e5)); });
+    if(!mezz.length||x(mezz[0])-L>60) el("text",{x:L+2,y:H-8},svg).textContent=giornoL(new Date(x0));
+    S.forEach(s=>{
+      // linea spezzata dove mancano letture per più di 2 ore
+      let d="", prec=null;
+      s.p.forEach(([q,t])=>{ d+=(prec&&q-prec<2*36e5?"L":"M")+x(q).toFixed(1)+" "+sy.y(t).toFixed(1); prec=q; });
+      el("path",{d,fill:"none",stroke:col(s.id),"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+      const [lq,lt]=s.p[s.p.length-1];
+      el("circle",{cx:x(lq),cy:sy.y(lt),r:3.5,fill:col(s.id),stroke:"var(--panel)","stroke-width":2},svg);
+      if(R>40) s.ly=sy.y(lt), s.lx=x(lq);
+    });
+    // etichette dirette a destra, distanziate
+    if(R>40){ const ord=[...S].sort((a,b)=>a.ly-b.ly); for(let i=1;i<ord.length;i++) if(ord[i].ly-ord[i-1].ly<14) ord[i].ly=ord[i-1].ly+14;
+      ord.forEach(s=>{ const t=el("text",{x:W-R+8,y:s.ly+4,class:"lab"},svg); t.textContent=s.nome.replace("Passo della ",""); }); }
+    // crosshair + tooltip
+    const cross=el("line",{y1:T,y2:H-B,stroke:"var(--ink-faint)","stroke-width":1,"stroke-dasharray":"3 3",visibility:"hidden"},svg);
+    const pt=S.map(s=>el("circle",{r:4,fill:col(s.id),stroke:"var(--panel)","stroke-width":2,visibility:"hidden"},svg));
+    const hit=el("rect",{x:L,y:T,width:W-L-R,height:H-T-B,fill:"transparent"},svg), tp=tip(card);
+    const muovi=ev=>{ const r=svg.getBoundingClientRect(), px=(ev.clientX-r.left)*W/r.width;
+      const q=x0+(px-L)/(W-L-R)*(fine-x0); let righe=[];
+      cross.setAttribute("x1",px);cross.setAttribute("x2",px);cross.setAttribute("visibility","visible");
+      S.forEach((s,i)=>{ let b=null; s.p.forEach(p=>{ if(!b||Math.abs(p[0]-q)<Math.abs(b[0]-q)) b=p; });
+        if(b&&Math.abs(b[0]-q)<90*6e4){ pt[i].setAttribute("cx",x(b[0]));pt[i].setAttribute("cy",sy.y(b[1]));pt[i].setAttribute("visibility","visible");
+          righe.push(`<div class="r"><i style="background:${col(s.id)}"></i>${esc(s.nome)} <b>${f1(b[1])}</b></div>`); }
+        else pt[i].setAttribute("visibility","hidden"); });
+      const d=new Date(q); tp.innerHTML=`<div class="h">${d.toLocaleString("it-IT",{weekday:"short",day:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"})}</div>`+(righe.join("")||"nessuna lettura");
+      const cr=card.getBoundingClientRect(); posTip(card,tp,ev.clientX-cr.left,ev.clientY-cr.top); };
+    hit.addEventListener("pointermove",muovi); hit.addEventListener("pointerdown",muovi);
+    hit.addEventListener("pointerleave",()=>{ tp.style.display="none"; cross.setAttribute("visibility","hidden"); pt.forEach(c=>c.setAttribute("visibility","hidden")); });
+  }
+
+  function graficoGiorni(D){
+    const box=document.querySelector("#g-giorni .plot"), card=document.getElementById("g-giorni");
+    const S=D.stazioni; legenda(document.getElementById("leg-giorni"),S);
+    const giorni=[...new Set(S.flatMap(s=>Object.keys(s.giorni||{})))].sort().slice(-7);
+    if(!giorni.length){ box.innerHTML='<div class="vuoto">Nessun dato.</div>'; return; }
+    const W=box.clientWidth||600, H=W<520?240:280, L=34, R=8, T=18, B=34;
+    const val=S.flatMap(s=>giorni.flatMap(g=>s.giorni[g]?[s.giorni[g].max,s.giorni[g].min]:[]));
+    const sy=scalaY(Math.min(...val),Math.max(...val),H,T,B);
+    box.innerHTML=""; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Massime e minime giornaliere delle tre stazioni"},box);
+    for(let v=sy.lo;v<=sy.hi;v+=sy.passo){ el("line",{x1:L,x2:W-R,y1:sy.y(v),y2:sy.y(v),class:"gl"},svg);
+      el("text",{x:L-6,y:sy.y(v)+4,"text-anchor":"end"},svg).textContent=v+"°"; }
+    const gw=(W-L-R)/giorni.length, bw=Math.min(22,(gw-18)/S.length-2), tp=tip(card), oggi=iso(new Date());
+    giorni.forEach((g,gi)=>{
+      const cx=L+gw*gi+gw/2;
+      el("text",{x:cx,y:H-12,"text-anchor":"middle"},svg).textContent=(g===oggi?"oggi":giornoL(new Date(g+"T12:00:00Z")));
+      S.forEach((s,si)=>{ const v=s.giorni[g]; if(!v) return;
+        const bx=cx+(si-(S.length-1)/2)*(bw+2)-bw/2, y1=sy.y(v.max), y2=sy.y(v.min);
+        const r=el("rect",{x:bx,y:y1,width:bw,height:Math.max(3,y2-y1),rx:Math.min(4,bw/2),fill:col(s.id)},svg);
+        if(g===oggi) r.setAttribute("opacity",".75");
+        const h=el("rect",{x:bx-1,y:T,width:bw+2,height:H-T-B,fill:"transparent"},svg);
+        const mostra=ev=>{ const cr=card.getBoundingClientRect();
+          tp.innerHTML=`<div class="h">${esc(s.nome)} · ${g===oggi?"oggi, finora":new Date(g+"T12:00:00Z").toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long"})}</div>`+
+            `<div>▲ massima <b>${f1(v.max)}</b>${v.hmax?" alle "+v.hmax:""}</div><div>▼ minima <b>${f1(v.min)}</b>${v.hmin?" alle "+v.hmin:""}</div>`+
+            (v.pioggia!=null?`<div>pioggia <b>${fn(v.pioggia)}</b> mm</div>`:"")+(v.raffica!=null?`<div>raffica <b>${fn(v.raffica)}</b> km/h${v.hraffica?" alle "+v.hraffica:""}</div>`:"");
+          posTip(card,tp,ev.clientX-cr.left,ev.clientY-cr.top); };
+        h.addEventListener("pointermove",mostra); h.addEventListener("pointerdown",mostra);
+        h.addEventListener("pointerleave",()=>{tp.style.display="none";});
+      });
+    });
+  }
+  let ultimoD=null, rit=null;
+  function grafici(D){ ultimoD=D; graficoTemp(D); graficoGiorni(D); }
+  window.addEventListener("resize",()=>{ clearTimeout(rit); rit=setTimeout(()=>{ if(ultimoD) grafici(ultimoD); },150); });
+
+  fetch("data/montagna.json",{cache:"no-cache"}).then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); }).then(D=>{
+    const oggi=iso(new Date());
+    const giorni=[0,1,2].map(k=>iso(new Date(Date.now()-k*864e5)));
+    const nomeG=(g,k)=>k===0?"Oggi":k===1?"Ieri":GG[new Date(g+"T12:00:00Z").getUTCDay()];
+    const dm=g=>g.slice(8,10)+"/"+g.slice(5,7);
+    tab.tHead.innerHTML="<tr><th scope=\"col\">Stazione</th><th scope=\"col\">Adesso</th>"+
+      giorni.map((g,k)=>`<th scope="col"${k===0?' class="oggi"':""}>${nomeG(g,k)}<small>${dm(g)}${k===0?" · finora":""}</small></th>`).join("")+"</tr>";
+    tab.tBodies[0].innerHTML=D.stazioni.map(s=>{
+      const sotto=[s.quota?s.quota+" m":null,s.comune].filter(Boolean).join(" · ");
+      let ora="<span class=\"nd\">—</span>";
+      if(s.ora&&s.ora.t!=null){
+        const q=new Date(s.ora.quando), vecchia=Date.now()-q>3*36e5;
+        ora=`<div class="ora">${f1(s.ora.t)}<small>${vecchia?"dato del ":"alle "}${vecchia?q.toLocaleString("it-IT",{day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"}):q.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"})}</small>${s.ora.p_mese!=null?`<span class="cum">pioggia: mese <b>${fn(s.ora.p_mese)}</b> mm${s.ora.p_anno!=null?` · anno <b>${fn(s.ora.p_anno,0)}</b> mm`:""}</span>`:""}</div>`;
+      }
+      const celle=giorni.map((g,k)=>{
+        const v=s.giorni&&s.giorni[g], cl=k===0?' class="oggi"':"";
+        if(!v) return `<td${cl}><span class="nd">nessun dato</span></td>`;
+        const parz=g<oggi&&v.ultima<"23:00";
+        return `<td${cl}><div class="ex"><span><span class="mk x" aria-label="massima">▲</span> <b>${f1(v.max)}</b></span><i>${v.hmax||""}</i>`+
+          `<span><span class="mk n" aria-label="minima">▼</span> <b>${f1(v.min)}</b></span><i>${v.hmin||""}</i></div>`+
+          (v.pioggia!=null||v.raffica!=null?`<div class="alt">`+
+            (v.pioggia!=null?`<span>pioggia <b>${fn(v.pioggia)}</b> mm</span>`:"")+
+            (v.raffica!=null?`<span>raffica <b>${fn(v.raffica)}</b> km/h${v.hraffica?` <i>${v.hraffica}</i>`:""}</span>`:"")+`</div>`:"")+
+          (parz?`<span class="parz" title="ultima lettura alle ${esc(v.ultima)}">parziale · fino alle ${esc(v.ultima)}</span>`:"")+`</td>`;
+      }).join("");
+      return `<tr><th scope="row"><a href="${esc(s.pagina)}" target="_blank" rel="noopener">${esc(s.nome)}</a><small>${esc(sotto)}</small></th><td>${ora}</td>${celle}</tr>`;
+    }).join("");
+    const a=new Date(D.aggiornato);
+    grafici(D);
+    agg.textContent="aggiornato il "+a.toLocaleString("it-IT",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"});
+  }).catch(e=>{ agg.textContent="dati non disponibili ("+e.message+")"; });
+})();
+</script>
+</body>
+</html>
