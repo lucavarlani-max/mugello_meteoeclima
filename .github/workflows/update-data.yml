@@ -62,6 +62,10 @@ jobs:
         continue-on-error: true
         run: python scripts/fetch_arpae_stazioni.py
 
+      - name: Stazioni in montagna (estremi del giorno di Futa, Montegiovi e Colla)
+        continue-on-error: true
+        run: python scripts/fetch_montagna.py
+
       - name: Serie di Kremsmünster (dati mensili GeoSphere Austria, una volta al giorno)
         continue-on-error: true
         run: python scripts/fetch_kremsmuenster.py

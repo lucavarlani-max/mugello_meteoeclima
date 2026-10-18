@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v83';
+const CACHE = 'mmc-v84';
 const SHELL = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const SHELL = [
   './stazioni.html',
   './stazioni.js',
   './stazioni-mugello.html',
+  './stazioni-montagna.html',
   './data/sir/mugello.json',
   './meteogeek.html',
   './ecmwf-carte.js',
