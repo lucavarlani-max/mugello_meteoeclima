@@ -488,7 +488,7 @@
   "2026-10-17": {
    "ora": "07:40",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": true,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.0,
@@ -558,7 +558,8 @@
    "luce": 138.6,
    "contrasto": 0.34,
    "contrasto_sfondo": 0.052,
-   "foto": "reports/nebbia/2026-10-17.jpg"
+   "foto": "reports/nebbia/2026-10-17.jpg",
+   "cielo": "nebbia"
   },
   "2026-10-18": {
    "ora": "07:41",
