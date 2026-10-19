@@ -45,6 +45,24 @@
    "webcam": "Passo del Muraglione (907 m) · LIVE",
    "fonte": "Meteo Pedemontana Forlivese",
    "link": "https://stream-meteoproject.eu/"
+  },
+  {
+   "file": "reports/webcam/galleria/2026-10-13-tramonto-valle-del-diaterna-1.jpg",
+   "data": "2026-10-13",
+   "momento": "tramonto",
+   "categoria": "altro",
+   "webcam": "Valle del Diaterna 1 (770 m)",
+   "fonte": "Meteo-Project",
+   "link": "https://stazioni.meteoproject.it/webcam/vallediaterna1/vallediaterna.jpg"
+  },
+  {
+   "file": "reports/webcam/galleria/2026-10-13-tramonto-passo-del-muraglione.jpg",
+   "data": "2026-10-13",
+   "momento": "tramonto",
+   "categoria": "altro",
+   "webcam": "Passo del Muraglione (907 m) · LIVE",
+   "fonte": "Meteo Pedemontana Forlivese",
+   "link": "https://stream-meteoproject.eu/"
   }
  ]
 }
