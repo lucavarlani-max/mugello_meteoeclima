@@ -39,6 +39,25 @@
   ],
   "esperimenti": [
     {
+      "id": "bioclima",
+      "titolo": "Bioclimatico Mugello: quanto si sta bene fuori",
+      "tipo": "esperimento",
+      "tema": "clima",
+      "data": "2026-10-20",
+      "stato": "nuovo",
+      "testo": "Humidex, wind chill e UTCI calcolati con le formule ufficiali per San Piero a Sieve, Barberino, Scarperia e il Passo della Futa: adesso, nelle prossime 72 ore e ora per ora negli ultimi 12 mesi, con le misure delle stazioni del Centro Funzionale e la temperatura radiante del sole.",
+      "link": "geek-bioclima.html",
+      "tag": [
+        "humidex",
+        "wind chill",
+        "UTCI",
+        "comfort",
+        "microclima",
+        "Open-Meteo",
+        "CFR"
+      ]
+    },
+    {
       "id": "hall-of-fame",
       "titolo": "Gli estremi del Mugello",
       "tipo": "esperimento",
