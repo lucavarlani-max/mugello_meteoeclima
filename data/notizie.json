@@ -1,7 +1,179 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-16",
+ "aggiornato": "2026-10-20",
  "numeri": [
+  {
+   "data": "2026-10-20",
+   "apertura": {
+    "cat": "temporali",
+    "titolo": "Toscana in giallo, mercoledì il giorno peggiore",
+    "testo": "Per martedì 20 ottobre la Protezione civile toscana ha emesso il codice giallo per temporali forti: dalle 15 su costa, isole e nord-ovest, dalle 20 in altre zone interne, tra cui la zona Reno. La zona Mugello-Val di Sieve non è nell'elenco. La fase più intensa è attesa mercoledì 21 e la Regione non esclude un aggravamento dell'allerta. In Liguria è allerta arancione e a Genova le scuole sono chiuse.",
+    "fonte": "MeteoToscana",
+    "url": "https://www.meteotoscana.it/2026/10/allerta-meteo-toscana-da-domani-20-ottobre-possibile-aggravamento-con-il-prossimo-bollettino/",
+    "foto": "fulmine"
+   },
+   "numero": {
+    "valore": "24 milioni di km²",
+    "testo": "L'area del buco dell'ozono sull'Antartide al 19 ottobre: più grande di qualsiasi anno dell'ultimo decennio in questo periodo.",
+    "fonte": "British Antarctic Survey",
+    "url": "https://legacy.bas.ac.uk/met/jds/ozone/index.html"
+   },
+   "storie": [
+    {
+     "cat": "uragani",
+     "titolo": "Champi punta su Taiwan",
+     "testo": "Dopo Guam il tifone si è indebolito per la sostituzione della parete dell'occhio, scendendo a circa 225 km/h. Porterà piogge forti e vento su Taiwan da giovedì 22 a sabato 24 ottobre, poi sulla Cina orientale fino a domenica 25.",
+     "fonte": "AccuWeather",
+     "url": "https://www.accuweather.com/en/hurricane/super-typhoon-champi-damages-guam-bound-for-taiwan/1948344",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "ozono",
+     "titolo": "Buco dell'ozono più ampio dell'ultimo decennio",
+     "testo": "Ha raggiunto un massimo di 25 milioni di km² a metà settembre e ne copre ancora circa 24. Sul polo l'ozono scende fino a circa 130 unità Dobson.",
+     "fonte": "British Antarctic Survey",
+     "url": "https://legacy.bas.ac.uk/met/jds/ozone/index.html",
+     "foto": "ozono"
+    },
+    {
+     "cat": "ghiacci",
+     "titolo": "Artico, il ghiaccio torna a crescere",
+     "testo": "Dal minimo di 4,60 milioni di km² del 12 settembre, il decimo più basso alla pari con 2008, 2010 e 2025, l'estensione è cresciuta di circa il 40%. Al 15 ottobre era la quattordicesima più bassa per la data.",
+     "fonte": "Alaska Climate (dati NSIDC)",
+     "url": "https://alaskaclimate.substack.com/p/arctic-sea-ice-mid-october-2026",
+     "foto": "ghiaccio2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea in pausa, il vulcano si rigonfia",
+     "testo": "Dopo la fine dell'episodio 55 i tiltmetri della sommità mostrano un rigonfiamento continuo: il magma torna ad accumularsi. Il livello di allerta resta ADVISORY, codice aviazione giallo.",
+     "fonte": "USGS HVO",
+     "url": "https://www.usgs.gov/volcanoes/kilauea/volcano-updates",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna, attività invariata",
+     "testo": "Nel bollettino settimanale dell'INGV il flusso di anidride solforosa è su un livello medio, con un picco di 1,43 kilotonnellate misurato dal satellite Sentinel-5P; l'attività dei crateri sommitali non è cambiata.",
+     "fonte": "INGV Osservatorio Etneo",
+     "url": "https://www.ct.ingv.it/index.php/monitoraggio-e-sorveglianza/prodotti-del-monitoraggio/bollettini-settimanali-multidisciplinari/1174-bollettino-Settimanale-sul-monitoraggio-vulcanico-geochimico-e-sismico-del-vulcano-Etna-del-2026-10-13/file",
+     "foto": "etna"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Martedì 20 ottobre a Borgo San Lorenzo: nubi basse e nebbia al mattino, minima intorno a 9 °C e massima di 22 °C, deboli piogge in serata. Mercoledì 21 la giornata più piovosa.",
+     "fonte": "3B Meteo",
+     "url": "https://www.3bmeteo.com/meteo/borgo+san+lorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1991: sulle colline di Oakland, in California, i venti di Diablo riaccendono un incendio creduto spento. Muoiono 25 persone e bruciano circa 3.000 abitazioni.",
+     "fonte": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Oakland_firestorm_of_1991"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Il buco dell'ozono vive dentro il vortice polare, la corrente d'aria fredda che gira attorno all'Antartide: quest'anno il vortice copre circa 34 milioni di km², più della media del periodo.",
+     "fonte": "British Antarctic Survey"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:35 e tramonta alle 18:23, circa 10 ore e 48 minuti di luce, 2 minuti meno di ieri. Domani, 21 ottobre, è atteso il picco delle Orionidi, le stelle cadenti della cometa di Halley: il momento migliore è prima dell'alba, meteo permettendo."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-19",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Champi sfiora Guam e diventa un super tifone di categoria 5",
+    "testo": "Il centro del tifone Champi è passato a circa 20 km dalla punta meridionale di Guam nella notte tra il 17 e il 18 ottobre. Sei ore dopo il Joint Typhoon Warning Center lo ha classificato di categoria 5, con venti sostenuti di 265 km/h. La parete dell'occhio è rimasta in mare: sull'isola alberi abbattuti, case danneggiate, interruzioni di luce e acqua.",
+    "fonte": "Yale Climate Connections",
+    "url": "https://yaleclimateconnections.org/2026/10/super-typhoon-champi-intensifies-to-a-cat-5-after-battering-guam/",
+    "foto": "uragano2"
+   },
+   "numero": {
+    "valore": "265 km/h",
+    "testo": "I venti sostenuti stimati per Champi alla mezzanotte UTC del 18 ottobre, quando è diventato un super tifone di categoria 5.",
+    "fonte": "Yale Climate Connections (dati JTWC)",
+    "url": "https://yaleclimateconnections.org/2026/10/super-typhoon-champi-intensifies-to-a-cat-5-after-battering-guam/"
+   },
+   "storie": [
+    {
+     "cat": "uragani",
+     "titolo": "Guam e Marianne, oltre mille persone nei rifugi",
+     "testo": "La Croce Rossa ha sostenuto 15 rifugi su quattro isole, con più di mille persone ospitate. Per Guam e per le Marianne Settentrionali è stato dichiarato lo stato di emergenza federale.",
+     "fonte": "Croce Rossa americana",
+     "url": "https://www.redcross.org/about-us/news-and-events/news/2026/tropical-cyclone-heads-to-the-islands.html",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, sei ore di fontane di lava",
+     "testo": "L'episodio 55 dell'eruzione è iniziato alle 3:19 del 17 ottobre, ora delle Hawaii, ed è finito di colpo alle 9:03. La fontana della bocca nord ha superato i 220 metri di altezza.",
+     "fonte": "USGS HVO",
+     "url": "https://www.usgs.gov/observatories/hvo/news/photo-video-chronology-kilauea-summit-episode-55-0",
+     "foto": "kilauea1"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Kamchatka, magnitudo 6,9 in profondità",
+     "testo": "Il terremoto del 16 ottobre, alle 3:35 UTC, è avvenuto a circa 76 km da Ozernovskiy e a circa 140 km di profondità. Nessun danno né ferito segnalato e nessun allarme tsunami.",
+     "fonte": "Bernama (dati USGS)",
+     "url": "https://bernama.com/en/world/news.php?id=2621296",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "clima",
+     "titolo": "El Niño continua a rafforzarsi",
+     "testo": "Secondo il Climate Prediction Center della NOAA, un El Niño forte o molto forte resterà probabile fino a gennaio-marzo 2027, con una probabilità superiore all'83%.",
+     "fonte": "NOAA CPC",
+     "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_disc_oct2026/ensodisc.shtml",
+     "foto": "oceano"
+    },
+    {
+     "cat": "clima",
+     "titolo": "L'inverno di El Niño negli Stati Uniti",
+     "testo": "Le previsioni stagionali della NOAA per dicembre-febbraio indicano un inverno più mite del normale in gran parte del nord del Paese e più piovoso dalla California alla Florida e lungo la costa atlantica.",
+     "fonte": "The Watchers",
+     "url": "https://watchers.news/2026/10/16/very-strong-el-nino-favors-wetter-south-and-warmer-north-in-noaas-2026-27-winter-outlook-u-s/",
+     "foto": "terra"
+    },
+    {
+     "cat": "temporali",
+     "titolo": "Allerta gialla in sei regioni",
+     "testo": "Lunedì 19 ottobre la Protezione civile ha emesso l'allerta gialla per rischio idraulico, idrogeologico e temporali in Calabria, Liguria, Piemonte, Sardegna, Sicilia e Toscana.",
+     "fonte": "Meteo.it",
+     "url": "https://www.meteo.it/notizie/meteo-allerta-gialla-19-ottobre-2026-italia-dove-8af9f0af",
+     "foto": "fulmine"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Lunedì 19 ottobre a Borgo San Lorenzo: pomeriggio sereno e mite, fino a circa 24 °C. Da martedì sera il tempo peggiora, con le piogge più forti attese mercoledì.",
+     "fonte": "iLMeteo",
+     "url": "https://www.ilmeteo.it/meteo/borgo+san+lorenzo"
+    },
+    {
+     "tipo": "storia",
+     "testo": "2005: l'uragano Wilma raggiunge 882 hPa di pressione centrale stimata, il valore più basso mai registrato per un uragano atlantico, con venti di circa 295 km/h.",
+     "fonte": "NOAA NHC",
+     "url": "https://www.nhc.noaa.gov/data/tcr/AL252005_Wilma.pdf"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Champi è passato vicinissimo a Guam senza colpirla in pieno: i venti più forti di un tifone soffiano nella parete dell'occhio, che è rimasta in mare, a poche miglia dalla costa.",
+     "fonte": "Yale Climate Connections"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:34 e tramonta alle 18:24, circa 10 ore e 50 minuti di luce, 3 minuti meno di ieri. La Luna è crescente, oltre il primo quarto: la Luna piena è lunedì 26 ottobre alle 5:12, il giorno dopo il ritorno all'ora solare."
+    }
+   ]
+  },
   {
    "data": "2026-10-16",
    "apertura": {
