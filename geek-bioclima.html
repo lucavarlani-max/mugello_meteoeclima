@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bioclimatico Mugello: quanto si sta bene fuori · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Humidex, wind chill e UTCI nel Mugello: come si sta davvero fuori a San Piero a Sieve, Barberino, Scarperia e al Passo della Futa, adesso, nelle prossime 72 ore e negli ultimi 12 mesi. Indici calcolati nel browser con le formule ufficiali.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-bioclima.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Bioclimatico Mugello: quanto si sta bene fuori · MeteoGeek">
+<meta property="og:description" content="Humidex, wind chill e UTCI per quattro microclimi del Mugello: fondovalle, piana, collina e crinale.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-bioclima.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  /* un colore per luogo, sempre lo stesso in schede, grafici, tabelle e mappa (palette verificata, anche per i daltonici) */
+  :root{--p1:#c2457f;--p2:#c9671f;--p3:#2f7cc4;--p4:#00805a;
+        --i-t:var(--ink-soft);--i-h:#c8452b;--i-u:#00805a;--i-w:#2a78d6;--comfort:rgba(0,128,90,.09)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--p1:#d55a93;--p2:#d0782c;--p3:#5b8fe0;--p4:#279a72;
+        --i-h:#e0603f;--i-u:#279a72;--i-w:#5b8fe0;--comfort:rgba(39,154,114,.12)}}
+  :root[data-theme="dark"]{--p1:#d55a93;--p2:#d0782c;--p3:#5b8fe0;--p4:#279a72;--i-h:#e0603f;--i-u:#279a72;--i-w:#5b8fe0;--comfort:rgba(39,154,114,.12)}
+  .cmd{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:10px}
+  .cmd b{color:var(--pine)}
+  .idx h3{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .idx h3 small{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .idx p{font-size:13.5px;color:var(--ink-soft);margin:0 0 10px}
+  .idx code,.met code{font-family:var(--mono);font-size:11.5px;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:6px;padding:1px 5px}
+  .formula{font-family:var(--mono);font-size:11.5px;line-height:1.6;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;padding:8px 10px;margin:0 0 10px;overflow-x:auto;white-space:nowrap}
+  .bands{list-style:none;margin:0;padding:0;font-size:12.5px}
+  .bands li{display:flex;gap:8px;align-items:baseline;padding:3px 0;border-top:1px solid var(--line-soft)}
+  .bands li:first-child{border-top:0}
+  .bands b{font-family:var(--mono);font-size:11.5px;min-width:72px;font-weight:600}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none;transform:translateY(1px)}
+  .four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .pl{border-top:4px solid var(--c)}
+  .pl .nm{font-family:var(--serif);font-weight:700;font-size:17px;margin:0}
+  .pl .q{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .pl .tt{font-family:var(--serif);font-weight:800;font-size:34px;line-height:1.05;margin:8px 0 0}
+  .pl .tt s{font-size:15px;text-decoration:none;color:var(--ink-faint);font-weight:600}
+  .pl .mt{font-size:12.5px;color:var(--ink-soft);margin:2px 0 10px}
+  .pl dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin:0;font-size:12.5px}
+  .pl dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);padding-top:2px}
+  .pl dd{margin:0}
+  .pl dd b{font-weight:700}
+  .pl .gv{font-size:12.5px;color:var(--ink-soft);margin:10px 0 0;padding-top:8px;border-top:1px solid var(--line-soft)}
+  .ctl{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .legend button{font:inherit;font-size:12.5px;color:var(--ink-soft);background:none;border:0;padding:2px 0;cursor:pointer}
+  .legend button.off{opacity:.4;text-decoration:line-through}
+  .legend i.sq{width:10px;height:10px;border-radius:3px;vertical-align:0}
+  .chart.tall{height:auto} .chart.tall svg{height:auto}
+  svg .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  svg .night{fill:var(--panel-2)}
+  svg .band{fill:var(--comfort)}
+  .tip i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  .tip i.sq{height:10px;width:10px;vertical-align:-1px}
+  .ins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+  .ins div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:11px 13px;font-size:13px;color:var(--ink-soft)}
+  .ins b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:3px}
+  .ins strong{color:var(--ink)}
+  td i.sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+  td small{color:var(--ink-faint)}
+  .scale{display:flex;border-radius:8px;overflow:hidden;margin:6px 0 4px;font-family:var(--mono);font-size:10px}
+  .scale span{flex:1;text-align:center;padding:6px 0;color:#fff;white-space:nowrap}
+  .scale-lab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ink-faint)}
+  #mappa{height:420px;border-radius:12px;overflow:hidden;border:1px solid var(--line);z-index:0}
+  .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--panel);color:var(--ink)}
+  .leaflet-popup-content{font-family:var(--sans);font-size:12.5px;line-height:1.5;margin:11px 13px}
+  .leaflet-container a.leaflet-popup-close-button{color:var(--ink-faint)}
+  .met li{margin:6px 0}
+  .rk{display:inline-block;min-width:24px;font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink-faint)}
+  td.yr{font-variant-numeric:tabular-nums}
+  #cls td.lg,#cls th.lg{text-align:left;white-space:normal;min-width:140px}
+  #cls td.lg small{display:block;color:var(--ink-faint)}
+  #cls th.yr{text-align:right}
+  td.yr small{display:block;font-family:var(--mono);font-size:10px}
+  td.yr.top{background:color-mix(in srgb,var(--c) 14%,transparent);font-weight:700}
+  .mbar{display:inline-block;height:8px;border-radius:0 4px 4px 0;background:var(--c);vertical-align:0;margin-right:8px}
+  @media (max-width:980px){ .four{grid-template-columns:repeat(2,minmax(0,1fr))} .ins{grid-template-columns:1fr} }
+  @media (max-width:560px){ .four{grid-template-columns:1fr} #mappa{height:340px} .bands b{min-width:64px} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Bioclimatico Mugello</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · clima e temperature</div>
+      <h1>Bioclimatico Mugello</h1>
+      <p class="lead"><b>Quanto si sta bene fuori, davvero?</b> Trenta gradi con l'aria umida del fondovalle non sono trenta gradi con l'aria secca della collina, e dieci gradi con il vento del crinale sembrano molti meno. Tre indici, calcolati con le formule ufficiali, misurano il caldo e il freddo come li sente il corpo: l'Humidex per l'afa, il wind chill per il vento freddo, l'UTCI per tutto l'anno. Li metto a confronto in quattro microclimi del Mugello: il fondovalle di San Piero a Sieve, la piana di Barberino, la collina di Scarperia e il crinale del Passo della Futa.</p>
+      <div class="cmd" id="cmd">$ python bioclimatico.py --mugello --indici humidex,wind_chill,utci</div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Tre indici per tre stagioni</h2><span class="src">Environment Canada · NWS · ISB Commission 6</span></div>
+      <div class="three">
+        <div class="card idx">
+          <h3>Humidex <small>estate · caldo umido</small></h3>
+          <p>L'indice canadese dell'afa: combina temperatura e punto di rugiada. Serve nei pomeriggi estivi di fondovalle, quando l'umidità impedisce al sudore di evaporare.</p>
+          <div class="formula">e = 6,11 · exp[5417,753 · (1/273,16 − 1/(273,15 + Td))]<br>H = T + 0,5555 · (e − 10)</div>
+          <ul class="bands">
+            <li><b>20 – 29</b>poco o nessun disagio</li>
+            <li><b>30 – 39</b>un certo disagio</li>
+            <li><b>40 – 45</b>forte disagio: evitare gli sforzi</li>
+            <li><b>46 – 53</b>pericoloso</li>
+            <li><b>54 e oltre</b>colpo di calore imminente</li>
+          </ul>
+          <p class="note" style="margin-top:8px">Si calcola solo con almeno 20 °C, come fa Environment Canada.</p>
+        </div>
+        <div class="card idx">
+          <h3>Wind chill <small>inverno · vento freddo</small></h3>
+          <p>La temperatura che sente la pelle scoperta del viso con il vento. È la formula del 2001 di Environment Canada e del National Weather Service, ricavata da prove su volontari. Serve sui crinali, dalla Futa al Giogo, nelle giornate di tramontana.</p>
+          <div class="formula">WC = 13,12 + 0,6215·T − 11,37·V<sup>0,16</sup> + 0,3965·T·V<sup>0,16</sup></div>
+          <ul class="bands">
+            <li><b>0 / −9</b>rischio basso</li>
+            <li><b>−10 / −27</b>rischio moderato: freddo, ipotermia se si resta fuori a lungo</li>
+            <li><b>−28 / −39</b>rischio alto: la pelle scoperta può congelare in 10-30 minuti</li>
+            <li><b>−40 e meno</b>rischio molto alto: congelamento in pochi minuti</li>
+          </ul>
+          <p class="note" style="margin-top:8px">Vale per temperature fino a 10 °C e vento oltre 4,8 km/h; V è il vento a 10 m in km/h.</p>
+        </div>
+        <div class="card idx">
+          <h3>UTCI <small>tutto l'anno · all'aperto</small></h3>
+          <p>L'Universal Thermal Climate Index usa un modello del corpo umano che cammina all'aperto vestito secondo la stagione. Tiene conto di temperatura, umidità, vento e radiazione del sole. Serve a chi corre, pedala o lavora fuori.</p>
+          <div class="formula">UTCI = f(T, Tmrt − T, V<sub>10m</sub>, pressione di vapore)<br>polinomio di 6° grado, Bröde et al. 2012</div>
+          <div class="scale" id="utci-scala" aria-hidden="true"></div>
+          <div class="scale-lab"><span>freddo</span><span>9 – 26 nessuno stress</span><span>caldo</span></div>
+          <p class="note" style="margin-top:8px">Tmrt è la temperatura media radiante: al sole è più alta dell'aria. Qui la stimo dalla radiazione solare prevista (vedi il metodo).</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Adesso, quattro microclimi a confronto</h2><span class="src" id="now-src">modello Open-Meteo · ora per ora</span></div>
+      <div class="four" id="now"><div class="card loading">Carico le condizioni attuali…</div></div>
+      <p class="note" style="margin-top:10px">Valori del modello meteorologico nel punto scelto, riportati alla quota del paese: non sono misure. Le misure vere delle stazioni sono nella tabella qui sotto.</p>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Misurato dalle stazioni del Centro Funzionale</h2><span class="src" id="cfr-src">CFR Toscana · dati provvisori</span></div>
+      <div class="card">
+        <div class="tbl"><table id="cfr"><tbody><tr><td class="loading">Carico le stazioni…</td></tr></tbody></table></div>
+        <p class="note" id="cfr-note">Le stazioni del Mugello che misurano insieme temperatura, umidità e vento. L'UTCI è calcolato all'ombra (temperatura radiante uguale a quella dell'aria), perché le stazioni non misurano la radiazione.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Le prossime 72 ore: temperatura e percepita</h2><span class="src">Open-Meteo · ora per ora</span></div>
+      <div class="card">
+        <div class="ctl">
+          <div class="seg" id="seg-luogo" role="group" aria-label="Luogo"></div>
+          <div class="legend" id="leg72"></div>
+        </div>
+        <div class="chart tall" id="ch72"><div class="tip"></div><div class="loading">Carico le previsioni…</div></div>
+        <p class="note">La fascia verde è la zona di comfort dell'UTCI (da 9 a 26 °C); le fasce grigie sono le notti. Humidex e wind chill compaiono solo quando valgono: il primo da 20 °C in su, il secondo fino a 10 °C e con vento.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il calendario del disagio: gli ultimi 12 mesi</h2><span class="src" id="cal-src">archivio delle previsioni Open-Meteo · ore al mese</span></div>
+      <div class="card">
+        <div class="ctl">
+          <div class="seg" id="seg-cal" role="group" aria-label="Indicatore"></div>
+          <div class="legend" id="leg-cal"></div>
+        </div>
+        <div class="chart tall" id="ch-cal"><div class="tip"></div><div class="loading">Carico un anno di dati orari…</div></div>
+        <p class="note" id="cal-note"></p>
+        <div class="ins" id="cal-ins"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Gli estremi degli ultimi 12 mesi</h2><span class="src">ora più calda e più fredda percepita</span></div>
+      <div class="card"><div class="tbl"><table id="estr"><tbody><tr><td class="loading">Carico…</td></tr></tbody></table></div>
+        <p class="note">Per ogni luogo l'ora con l'Humidex e l'UTCI più alti e quella con il wind chill e l'UTCI più bassi, dalle stesse serie orarie del calendario.</p></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dove si sta peggio, anno per anno</h2><span class="src" id="cls-src">archivio delle previsioni Open-Meteo · dal 2022</span></div>
+      <div class="card">
+        <p class="sub" style="margin-top:0">La classifica dei capoluoghi del Mugello e del Passo della Futa per ore di disagio all'aperto: in cima chi ne ha di più. Ogni anno ha il suo posto in classifica; l'ordine generale segue la media degli anni completi.</p>
+        <div class="ctl"><div class="seg" id="seg-cls" role="group" aria-label="Tipo di disagio"></div></div>
+        <div class="tbl"><table id="cls"><tbody><tr><td class="loading">Carico la classifica…</td></tr></tbody></table></div>
+        <p class="note" id="cls-note"></p>
+        <div class="ins" id="cls-ins"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Salute e attività: come leggere i numeri</h2><span class="src">scale ufficiali</span></div>
+      <div class="two">
+        <div class="card">
+          <h3>La scala dell'UTCI</h3>
+          <div class="tbl"><table id="utci-tab"><thead><tr><th>UTCI (°C)</th><th style="text-align:left">Stress termico</th></tr></thead><tbody></tbody></table></div>
+          <p class="note">Le dieci classi dell'UTCI (Błażejczyk et al. 2013). Sopra 32 °C lo stress da caldo è «forte», sotto −13 °C quello da freddo.</p>
+        </div>
+        <div class="card">
+          <h3>Ondate di calore e freddo</h3>
+          <ul class="note met">
+            <li>In estate il Ministero della Salute pubblica ogni giorno i <a href="https://www.salute.gov.it/new/it/tema/ondate-di-calore/" target="_blank" rel="noopener">bollettini sulle ondate di calore</a> per 27 città, Firenze compresa, con livelli da 0 a 3. Quei livelli usano un indice diverso, la temperatura apparente: non si confrontano numero per numero con l'Humidex o l'UTCI di questa pagina.</li>
+            <li>Con l'Humidex sopra 40 Environment Canada consiglia di evitare gli sforzi; sopra 45 il caldo è pericoloso.</li>
+            <li>Con il wind chill sotto −28 la pelle scoperta può congelare in 10-30 minuti: sui crinali conviene coprire viso e mani.</li>
+            <li>Gli indici descrivono una persona media. Bambini, anziani e chi ha malattie croniche risentono del caldo e del freddo prima degli altri.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Mappa: dove si sta meglio adesso</h2><span class="src">colore = classe dell'UTCI</span></div>
+      <div class="card"><div id="mappa" role="region" aria-label="Mappa dei luoghi con l'UTCI attuale"></div>
+        <p class="note" style="margin-top:10px">I cerchi grandi sono i quattro punti del modello; quelli piccoli, con il bordo scuro, sono le stazioni del Centro Funzionale. Tocca un punto per leggere i valori.</p></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note met">
+          <li><b>Luoghi:</b> San Piero a Sieve (fondovalle, 212 m), Barberino di Mugello (piana di Bilancino, 270 m), Scarperia (collina, 292 m), Passo della Futa (crinale, 903 m). A <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> passo la quota di ogni paese, così la temperatura del modello viene corretta per l'altitudine.</li>
+          <li><b>Adesso e prossime 72 ore:</b> previsione oraria Open-Meteo con il modello scelto automaticamente per l'Italia (nei primi giorni ICON-D2 a 2 km): temperatura, punto di rugiada, umidità, vento a 10 m, radiazione solare diretta e diffusa. Si aggiorna ogni volta che apri la pagina.</li>
+          <li><b>Ultimi 12 mesi:</b> <a href="https://open-meteo.com/en/docs/historical-forecast-api" target="_blank" rel="noopener">archivio delle previsioni di Open-Meteo</a>, ora per ora, sugli stessi quattro punti. Sono le prime ore di ogni corsa dei modelli, cioè la stima più vicina all'osservazione che esista per ogni ora e per ogni paese, ma restano dati di modello.</li>
+          <li><b>Classifica anno per anno:</b> stesso archivio orario dal 1° gennaio 2022 (prima non c'è a questa risoluzione), per i nove capoluoghi del Mugello e il Passo della Futa, ciascuno alla sua quota. Gli indici sono calcolati ora per ora con le formule di questa pagina da <code>scripts/build_bioclima.py</code>, che ogni lunedì aggiorna <code>data/bioclima-anni.json</code>. Un anno entra in classifica se ha almeno 300 giorni di dati; la media usa solo gli anni completi. L'archivio mette insieme le corse dei modelli disponibili in ogni periodo: il confronto fra luoghi nello stesso anno è più solido di quello fra un anno e l'altro.</li>
+          <li><b>Stazioni:</b> temperatura (<code>data/termo.json</code>), umidità relativa e vento medio (<code>data/nebbia.json</code>) delle stazioni del Centro Funzionale Regione Toscana nella zona Mugello–Val di Sieve, aggiornati dall'Action del sito. Dati in tempo reale, provvisori.</li>
+          <li><b>Humidex:</b> formula di Masterson e Richardson (1979) adottata da Environment Canada, con il punto di rugiada; calcolato con almeno 20 °C.</li>
+          <li><b>Wind chill:</b> formula JAG/TI del 2001 (Environment Canada e NWS), valida fino a 10 °C e con vento oltre 4,8 km/h. Le classi di rischio sono quelle di Environment Canada.</li>
+          <li><b>UTCI:</b> approssimazione polinomiale ufficiale (Bröde et al. 2012) in <code>utci.js</code>, verificata con la libreria <a href="https://pythermalcomfort.readthedocs.io/" target="_blank" rel="noopener">pythermalcomfort</a>. Il vento sotto 0,5 m/s, il minimo del modello, si conta come 0,5 m/s; sopra 17 m/s l'UTCI non si calcola.</li>
+          <li><b>Temperatura media radiante:</b> metodo SolarCal dell'ASHRAE 55 (Arens et al. 2015) per una persona in piedi all'aperto. Uso la radiazione diretta e diffusa del modello, l'altezza del Sole calcolata per ogni ora, una media sulle direzioni rispetto al Sole, l'assorbimento della pelle e dei vestiti 0,7 e la riflessione del suolo 0,2. Di notte la temperatura radiante è posta uguale a quella dell'aria. Con il cielo sereno, in realtà, è più bassa, quindi di notte l'UTCI è un po' sovrastimato.</li>
+          <li><b>Limiti:</b> i quattro punti distano pochi chilometri e il modello, anche a 2 km, non vede tutte le differenze di un fondovalle: le inversioni notturne e l'umidità della Sieve sono spesso più marcate del previsto. Per questo la pagina affianca le misure delle stazioni. Il file originale di questo esperimento conteneva valori dimostrativi; qui ogni numero è calcolato dai dati e cambia con loro.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · previsioni e archivio Open-Meteo (CC BY 4.0) · osservazioni CFR Toscana · mappa © OpenStreetMap</div></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="utci.js"></script>
+<script>
+(function(){
+  "use strict";
+  const LUOGHI=[
+    {id:"sp",nome:"San Piero a Sieve",tipo:"fondovalle",lat:43.9637,lon:11.3253,q:212,c:"--p1"},
+    {id:"ba",nome:"Barberino di Mugello",tipo:"piana di Bilancino",lat:43.9998,lon:11.2386,q:270,c:"--p2"},
+    {id:"sc",nome:"Scarperia",tipo:"collina",lat:43.9944,lon:11.3545,q:292,c:"--p3"},
+    {id:"fu",nome:"Passo della Futa",tipo:"crinale",lat:44.0917,lon:11.2833,q:903,c:"--p4"}];
+  const VAR="temperature_2m,relative_humidity_2m,dew_point_2m,wind_speed_10m,direct_normal_irradiance_instant,diffuse_radiation_instant";
+  const $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
+  const fmt=(v,d=1)=>v==null||isNaN(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
+  const get=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+  // Open-Meteo a volte risponde 503 per un momento: riprovo due volte prima di arrendermi
+  const getR=(u,n=2)=>get(u).catch(e=>n?new Promise(r=>setTimeout(r,2000)).then(()=>getR(u,n-1)):Promise.reject(e));
+  const qs=o=>Object.entries(o).map(([k,v])=>k+"="+encodeURIComponent(v)).join("&");
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const GG=["dom","lun","mar","mer","gio","ven","sab"], MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const glab=iso=>{const t=new Date(iso.slice(0,10)+"T12:00:00Z");return GG[t.getUTCDay()]+" "+t.getUTCDate();};
+  const dlab=iso=>{const t=new Date(iso.slice(0,10)+"T12:00:00Z");return t.getUTCDate()+" "+MESI[t.getUTCMonth()]+" "+t.getUTCFullYear();};
+
+  // ---------- indici
+  function humidex(T,Td){
+    if(T==null||Td==null||T<20) return null;
+    const e=6.11*Math.exp(5417.7530*(1/273.16-1/(273.15+Td))); return T+0.5555*(e-10);
+  }
+  function windChill(T,V){ // V in km/h
+    if(T==null||V==null||T>10||V<=4.8) return null;
+    const p=Math.pow(V,0.16); return 13.12+0.6215*T-11.37*p+0.3965*T*p;
+  }
+  // altezza del Sole (gradi) all'istante ms, formule approssimate dell'Astronomical Almanac
+  function altSole(ms,lat,lon){
+    const r=Math.PI/180, d=ms/86400000-10957.5, g=(357.529+0.98560028*d)*r, q=280.459+0.98564736*d;
+    const L=(q+1.915*Math.sin(g)+0.020*Math.sin(2*g))*r, e=(23.439-0.00000036*d)*r;
+    const ra=Math.atan2(Math.cos(e)*Math.sin(L),Math.cos(L)), dec=Math.asin(Math.sin(e)*Math.sin(L));
+    const gmst=((18.697374558+24.06570982441908*d)%24+24)%24, ha=(gmst*15+lon)*r-ra;
+    return Math.asin(Math.sin(lat*r)*Math.sin(dec)+Math.cos(lat*r)*Math.cos(dec)*Math.cos(ha))/r;
+  }
+  // SolarCal (ASHRAE 55, App. C): fattore di area proiettata di una persona in piedi, medio sugli azimut, per altezze 0,15,…,90°
+  const FP=[0.303,0.303,0.272,0.222,0.176,0.123,0.082];
+  function deltaMrt(alt,dni,dif){
+    if(alt==null||alt<=0||dni==null||dif==null) return 0;
+    const k=Math.min(5,Math.floor(alt/15)), fp=FP[k]+(FP[k+1]-FP[k])*(alt-15*k)/15;
+    const feff=0.725, asw=0.7, rho=0.2, hr=6;
+    const erf=feff*(0.5*dif+fp*dni+0.5*(dni*Math.sin(alt*Math.PI/180)+dif)*rho)*asw/0.95;
+    return erf/(hr*feff);
+  }
+  function utciDa(T,rh,Vkmh,dmrt){
+    if(T==null||rh==null||Vkmh==null) return null;
+    return utci(T,T+(dmrt||0),Math.max(0.5,Vkmh/3.6),rh);
+  }
+  const UTCI_CL=[[46,"stress estremo da caldo","#7a1414"],[38,"stress molto forte da caldo","#b0281a"],[32,"stress forte da caldo","#d9572b"],[26,"stress moderato da caldo","#e39a35"],
+    [9,"nessuno stress termico","#2f9a5e"],[0,"stress lieve da freddo","#6aaed6"],[-13,"stress moderato da freddo","#3b82c4"],[-27,"stress forte da freddo","#2a5ea8"],
+    [-40,"stress molto forte da freddo","#203f86"],[-Infinity,"stress estremo da freddo","#15275a"]];
+  const clU=u=>u==null?null:UTCI_CL.find(c=>u>c[0])||UTCI_CL[UTCI_CL.length-1];
+  const clH=h=>h==null?null:h<30?"poco o nessun disagio":h<40?"un certo disagio":h<46?"forte disagio":h<54?"pericoloso":"colpo di calore imminente";
+  const clW=w=>w==null?null:w>-10?"rischio basso":w>-28?"rischio moderato":w>-40?"rischio alto":"rischio molto alto";
+
+  // scala UTCI in testata e tabella
+  $("utci-scala").innerHTML=UTCI_CL.slice().reverse().map(c=>`<span style="background:${c[2]}" title="${c[1]}">${c[0]===-Infinity?"":fmt(c[0],0)}</span>`).join("");
+  $("utci-tab").querySelector("tbody").innerHTML=UTCI_CL.map((c,i)=>{const hi=i?UTCI_CL[i-1][0]:null;
+    const r=c[0]===-Infinity?"sotto −40":hi==null?"oltre 46":`da ${fmt(c[0],0)} a ${fmt(hi,0)}`;
+    return `<tr><td>${r.replace("-","−")}</td><td style="text-align:left"><span class="dot" style="background:${c[2]};margin-right:8px"></span>${c[1]}</td></tr>`;}).join("");
+
+  // serie oraria Open-Meteo -> righe con indici
+  function righe(o,L){
+    const h=o.hourly, off=o.utc_offset_seconds||0;
+    return h.time.map((t,i)=>{const ms=t*1000, T=h.temperature_2m[i], rh=h.relative_humidity_2m[i], Td=h.dew_point_2m[i], V=h.wind_speed_10m[i];
+      const alt=altSole(ms,L.lat,L.lon), dm=deltaMrt(alt,h.direct_normal_irradiance_instant[i],h.diffuse_radiation_instant[i]);
+      return {ms,iso:new Date(ms+off*1000).toISOString().slice(0,16),T,rh,Td,V,alt,dm,H:humidex(T,Td),W:windChill(T,V),U:utciDa(T,rh,V,dm)};});
+  }
+  const elev=LUOGHI.map(l=>l.q).join(","), LAT=LUOGHI.map(l=>l.lat).join(","), LON=LUOGHI.map(l=>l.lon).join(",");
+  let P=null, luogo=0, nasc=new Set(), C=null, ind="afa", mappa=null;
+
+  // ---------- adesso + 72 ore
+  getR("https://api.open-meteo.com/v1/forecast?"+qs({latitude:LAT,longitude:LON,elevation:elev,hourly:VAR,timezone:"Europe/Rome",timeformat:"unixtime",past_days:1,forecast_days:4}))
+    .then(arr=>{
+      if(!Array.isArray(arr)) arr=[arr];
+      const now=Date.now();
+      P=arr.map((o,k)=>{const R=righe(o,LUOGHI[k]); let i0=R.findIndex(r=>r.ms>now-30*60000); if(i0<0)i0=R.length-1; return {R,i0};});
+      adesso(); segLuogo(); legenda72(); disegna72(); mappaPunti();
+      let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{disegna72(); if(C) disegnaCal();},150);});
+    }).catch(e=>{$("now").innerHTML=`<div class="card loading">Le previsioni di Open-Meteo non sono raggiungibili in questo momento (${esc(e.message)}). Riprova più tardi.</div>`;
+      $("ch72").querySelector(".loading").textContent="Previsioni non disponibili.";});
+
+  function giudizio(r){
+    const u=clU(r.U), parti=[];
+    if(u) parti.push("UTCI "+fmt(r.U,0)+": "+u[1]+".");
+    if(r.H!=null&&r.H>=30) parti.push("Humidex "+fmt(r.H,0)+": "+clH(r.H)+".");
+    if(r.W!=null&&r.W<=-10) parti.push("Wind chill "+fmt(r.W,0)+": "+clW(r.W)+".");
+    if(r.V>=40) parti.push("Vento forte, "+fmt(r.V,0)+" km/h.");
+    if(r.dm>3) parti.push("Al sole si percepiscono circa "+fmt(r.dm,0)+" °C di radiazione in più.");
+    return parti.join(" ");
+  }
+  function adesso(){
+    const r0=P[0].R[P[0].i0];
+    $("now-src").textContent="modello Open-Meteo · ore "+r0.iso.slice(11,16)+" di "+glab(r0.iso);
+    $("now").innerHTML=LUOGHI.map((L,k)=>{const r=P[k].R[P[k].i0], u=clU(r.U);
+      return `<div class="card pl" style="--c:var(${L.c})">
+        <p class="nm">${esc(L.nome)}</p><span class="q">${esc(L.tipo)} · ${L.q} m</span>
+        <p class="tt">${fmt(r.T,1)}<s> °C</s></p>
+        <p class="mt">umidità ${fmt(r.rh,0)}% · rugiada ${fmt(r.Td,1)} °C · vento ${fmt(r.V,0)} km/h</p>
+        <dl>
+          <dt>UTCI</dt><dd>${u?`<span class="dot" style="background:${u[2]};margin-right:6px"></span><b>${fmt(r.U,1)} °C</b> · ${u[1]}`:"–"}</dd>
+          <dt>Humidex</dt><dd>${r.H!=null?`<b>${fmt(r.H,1)}</b> · ${clH(r.H)}`:"<span class='m'>non si calcola sotto 20 °C</span>"}</dd>
+          <dt>Wind chill</dt><dd>${r.W!=null?`<b>${fmt(r.W,1)} °C</b> · ${clW(r.W)}`:`<span class='m'>${r.T>10?"non si calcola sopra 10 °C":"vento troppo debole"}</span>`}</dd>
+        </dl>
+        <p class="gv">${esc(giudizio(r))}</p></div>`;}).join("");
+  }
+
+  function segLuogo(){
+    $("seg-luogo").innerHTML=LUOGHI.map((L,k)=>`<button type="button" data-k="${k}" aria-pressed="${k===luogo}">${esc(L.nome.replace(" di Mugello","").replace("Passo della ",""))}</button>`).join("");
+    $("seg-luogo").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{luogo=+b.dataset.k;
+      $("seg-luogo").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); disegna72();}));
+  }
+  const IND=[["T","Temperatura","--i-t"],["H","Humidex","--i-h"],["U","UTCI","--i-u"],["W","Wind chill","--i-w"]];
+  function legenda72(){
+    $("leg72").innerHTML=IND.map(([k,n,c])=>`<button type="button" data-k="${k}" aria-pressed="true"><i class="th" style="background:var(${c})${k==="T"?";height:2px":""}"></i>${n}</button>`).join("");
+    $("leg72").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.k; nasc.has(k)?nasc.delete(k):nasc.add(k);
+      b.classList.toggle("off",nasc.has(k)); b.setAttribute("aria-pressed",!nasc.has(k)); disegna72();}));
+  }
+  function disegna72(){
+    const box=$("ch72"), tip=box.querySelector(".tip"); box.querySelectorAll("svg,.loading").forEach(x=>x.remove());
+    const {R,i0}=P[luogo], S=R.slice(i0,i0+73), n=S.length; if(n<2) return;
+    const W=Math.max(300,box.clientWidth), sm=W<600, H=sm?260:330, ml=36, mr=10, top=10, bot=26, hp=H-top-bot;
+    const X=i=>ml+i/(n-1)*(W-ml-mr), vis=IND.filter(x=>!nasc.has(x[0]));
+    let lo=Infinity, hi=-Infinity; vis.forEach(([k])=>S.forEach(r=>{const v=r[k]; if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v);}}));
+    if(!isFinite(lo)){lo=0;hi=30;}
+    lo=Math.min(lo,9); hi=Math.max(hi,26);
+    const passo=hi-lo>30?10:5; lo=Math.floor(lo/passo)*passo; hi=Math.ceil(hi/passo)*passo;
+    const Y=v=>top+hp-(v-lo)/(hi-lo)*hp;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Temperatura, Humidex, UTCI e wind chill previsti per le prossime 72 ore a "+LUOGHI[luogo].nome});
+    for(let i=0;i<n;i++){const hh=+S[i].iso.slice(11,13); if(hh===20||(i===0&&(hh>20||hh<7))){let j=i; while(j<n-1&&!(+S[j].iso.slice(11,13)===7))j++;
+      svg.appendChild(el("rect",{x:X(i),y:top,width:Math.max(0,X(j)-X(i)),height:hp,class:"night"}));}}
+    svg.appendChild(el("rect",{x:ml,y:Y(26),width:W-ml-mr,height:Y(9)-Y(26),class:"band"}));
+    for(let v=lo;v<=hi+1e-9;v+=passo){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));
+      svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},fmt(v,0)+"°"));}
+    for(let i=0;i<n;i++) if(S[i].iso.endsWith("T12:00")) svg.appendChild(el("text",{x:X(i),y:H-7,"text-anchor":"middle",class:"axl"},glab(S[i].iso)));
+    vis.forEach(([k,,c])=>{let d="",pen=false; S.forEach((r,i)=>{const v=r[k]; if(v==null){pen=false;return;} d+=(pen?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1); pen=true;});
+      if(d) svg.appendChild(el("path",{d,class:"ln",stroke:`var(${c})`,"stroke-width":k==="T"?1.5:2,"stroke-dasharray":k==="T"?"4 3":"none"}));});
+    const cr=el("line",{y1:top,y2:top+hp,class:"cross",opacity:0}); svg.appendChild(cr);
+    const hit=el("rect",{x:ml,y:top,width:W-ml-mr,height:hp,fill:"transparent"}); svg.appendChild(hit);
+    hit.addEventListener("pointermove",ev=>{const rc=svg.getBoundingClientRect(); const k=Math.max(0,Math.min(n-1,Math.round(((ev.clientX-rc.left)/rc.width*W-ml)/(W-ml-mr)*(n-1))));
+      cr.setAttribute("x1",X(k));cr.setAttribute("x2",X(k));cr.setAttribute("opacity",1);
+      const r=S[k], u=clU(r.U);
+      tip.innerHTML=`<b>${glab(r.iso)} · ore ${r.iso.slice(11,16)}</b><br>`+IND.filter(x=>!nasc.has(x[0])).map(([kk,nm,c])=>`<i style="background:var(${c})"></i>${nm}: <b>${r[kk]==null?"–":fmt(r[kk],1)+" °C"}</b>`).join("<br>")+
+        `<br><span class="m">UR ${fmt(r.rh,0)}% · vento ${fmt(r.V,0)} km/h${u?" · "+u[1]:""}</span>`;
+      const px=X(k)/W*rc.width; tip.style.left=(px>rc.width/2?px-tip.offsetWidth-12:px+12)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
+    hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;cr.setAttribute("opacity",0);});
+    box.insertBefore(svg,tip);
+  }
+
+  // ---------- stazioni CFR
+  Promise.all([get("./data/termo.json?t="+Date.now()),get("./data/nebbia.json?t="+Date.now())]).then(([T,N])=>{
+    const tt={}; (T.stazioni||[]).forEach(s=>{tt[s.id]=s;});
+    const S=Object.entries(N.stazioni||{}).map(([id,s])=>({id,...s,t:tt[id]})).filter(s=>s.ur&&s.vento&&s.t&&s.t.t!=null&&s.ur.v!=null&&s.vento.v!=null);
+    S.sort((a,b)=>a.quota-b.quota);
+    if(!S.length){$("cfr").innerHTML="<tbody><tr><td>Nessuna stazione con temperatura, umidità e vento in questo momento.</td></tr></tbody>";return;}
+    $("cfr-src").textContent="CFR Toscana · ore "+(N.rif||"").slice(11,16)+" · dati provvisori";
+    const rows=S.map(s=>{const Tv=s.t.t, rh=s.ur.v, V=s.vento.v*3.6;
+      const Td=dewPoint(Tv,rh), H=humidex(Tv,Td), Wc=windChill(Tv,V), U=utciDa(Tv,rh,V,0), u=clU(U);
+      s.calc={T:Tv,rh,V,H,W:Wc,U};
+      return `<tr><td>${esc(s.nome)} <small>${fmt(s.quota,0)} m</small></td><td>${esc(s.t.ora||"")}</td><td class="v">${fmt(Tv,1)} °C</td><td>${fmt(rh,0)}%</td><td>${fmt(V,0)} km/h</td>
+        <td>${H==null?"–":fmt(H,1)}</td><td>${Wc==null?"–":fmt(Wc,1)+" °C"}</td><td>${u?`<span class="dot" style="background:${u[2]};margin-right:6px"></span>${fmt(U,1)} °C`:"–"}</td></tr>`;});
+    $("cfr").innerHTML="<thead><tr><th>Stazione</th><th>Ora</th><th>Temp.</th><th>Umidità</th><th>Vento</th><th>Humidex</th><th>Wind chill</th><th>UTCI all'ombra</th></tr></thead><tbody>"+rows.join("")+"</tbody>";
+    coordP.then(()=>{STAZ=S; mappaPunti();});
+  }).catch(()=>{$("cfr").innerHTML="<tbody><tr><td>Le misure delle stazioni non sono disponibili in questo momento.</td></tr></tbody>";});
+  let STAZ=null;
+  // punto di rugiada dalla formula di Magnus (Alduchov e Eskridge 1996)
+  function dewPoint(T,rh){if(T==null||rh==null||rh<=0)return null; const a=17.625,b=243.04, g=Math.log(rh/100)+a*T/(b+T); return b*g/(a-g);}
+  // coordinate delle stazioni dall'anagrafica SIR del sito
+  let COORD={};
+  const coordP=fetch("./data/sir/stazioni.csv").then(r=>r.ok?r.text():"").then(t=>{t.split("\n").slice(1).forEach(l=>{const c=l.split(";");
+    if(c[0]&&+c[3]&&+c[4]) COORD[c[0]]=[+c[3],+c[4]];});}).catch(()=>{});
+
+  // ---------- mappa
+  function mappaPunti(){
+    if(typeof L==="undefined"||!P) return;
+    if(!mappa){
+      mappa=L.map("mappa",{scrollWheelZoom:false}).setView([44.01,11.33],11);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:16,attribution:"© OpenStreetMap"}).addTo(mappa);
+      LUOGHI.forEach((Lg,k)=>{const r=P[k].R[P[k].i0], u=clU(r.U);
+        L.circleMarker([Lg.lat,Lg.lon],{radius:13,weight:3,color:css(Lg.c)||"#555",fillColor:u?u[2]:"#999",fillOpacity:.9})
+          .bindPopup(`<b>${esc(Lg.nome)}</b> · ${Lg.q} m<br>${fmt(r.T,1)} °C · UR ${fmt(r.rh,0)}% · vento ${fmt(r.V,0)} km/h<br>UTCI <b>${fmt(r.U,1)} °C</b>${u?" · "+u[1]:""}<br><span class="m">modello Open-Meteo</span>`).addTo(mappa);});
+    }
+    if(STAZ&&!mappa._staz){mappa._staz=true;
+      STAZ.forEach(s=>{const c=COORD[s.id]; if(!c) return; const u=clU(s.calc.U);
+        L.circleMarker(c,{radius:7,weight:2,color:css("--ink")||"#222",fillColor:u?u[2]:"#999",fillOpacity:.95})
+          .bindPopup(`<b>${esc(s.nome)}</b> · ${fmt(s.quota,0)} m<br>${fmt(s.calc.T,1)} °C · UR ${fmt(s.calc.rh,0)}% · vento ${fmt(s.calc.V,0)} km/h<br>UTCI all'ombra <b>${fmt(s.calc.U,1)} °C</b>${u?" · "+u[1]:""}<br><span class="m">stazione CFR, misura delle ${esc(s.t.ora||"")}</span>`).addTo(mappa);});
+    }
+  }
+
+  // ---------- ultimi 12 mesi
+  const CAL={
+    afa:{nome:"Afa",desc:"ore con Humidex pari o superiore a 30 (almeno «un certo disagio»)",f:r=>r.H!=null&&r.H>=30},
+    caldo:{nome:"Stress da caldo",desc:"ore con UTCI pari o superiore a 32 °C (stress forte da caldo o peggio)",f:r=>r.U!=null&&r.U>=32},
+    comfort:{nome:"Comfort",desc:"ore fra le 8 e le 20 con UTCI fra 9 e 26 °C (nessuno stress termico)",f:r=>{const h=+r.iso.slice(11,13);return h>=8&&h<20&&r.U!=null&&r.U>=9&&r.U<=26;}},
+    vento:{nome:"Vento freddo",desc:"ore con wind chill pari o inferiore a −10 °C (rischio moderato o peggio)",f:r=>r.W!=null&&r.W<=-10},
+    freddo:{nome:"Stress da freddo",desc:"ore con UTCI sotto −13 °C (stress forte da freddo o peggio)",f:r=>r.U!=null&&r.U<-13}};
+  const oggi=new Date(), fine=new Date(oggi.getTime()-86400000), inizio=new Date(fine.getFullYear()-1,fine.getMonth(),fine.getDate()+1);
+  const d10=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  getR("https://historical-forecast-api.open-meteo.com/v1/forecast?"+qs({latitude:LAT,longitude:LON,elevation:elev,hourly:VAR,timezone:"Europe/Rome",timeformat:"unixtime",start_date:d10(inizio),end_date:d10(fine)}))
+    .then(arr=>{
+      if(!Array.isArray(arr)) arr=[arr];
+      const R=arr.map((o,k)=>righe(o,LUOGHI[k]));
+      const mesi=[...new Set(R[0].map(r=>r.iso.slice(0,7)))];
+      C={R,mesi};
+      $("cal-src").textContent="archivio delle previsioni Open-Meteo · "+dlab(d10(inizio))+" – "+dlab(d10(fine));
+      $("seg-cal").innerHTML=Object.entries(CAL).map(([k,v])=>`<button type="button" data-k="${k}" aria-pressed="${k===ind}">${v.nome}</button>`).join("");
+      $("seg-cal").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{ind=b.dataset.k;
+        $("seg-cal").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); disegnaCal();}));
+      $("leg-cal").innerHTML=LUOGHI.map(Lg=>`<span><i class="sq" style="background:var(${Lg.c})"></i>${esc(Lg.nome)}</span>`).join("");
+      disegnaCal(); estremi();
+    }).catch(e=>{$("ch-cal").querySelector(".loading").textContent="L'archivio di Open-Meteo non è raggiungibile in questo momento ("+e.message+").";
+      $("estr").innerHTML="<tbody><tr><td>Non disponibile.</td></tr></tbody>";});
+
+  function conta(k){const f=CAL[k].f; return C.R.map(R=>C.mesi.map(m=>R.filter(r=>r.iso.startsWith(m)&&f(r)).length));}
+  function disegnaCal(){
+    const box=$("ch-cal"), tip=box.querySelector(".tip"); box.querySelectorAll("svg,.loading").forEach(x=>x.remove());
+    const N=conta(ind), nm=C.mesi.length, nl=LUOGHI.length;
+    const W=Math.max(300,box.clientWidth), sm=W<600, H=sm?240:300, ml=36, mr=8, top=10, bot=26, hp=H-top-bot;
+    const gw=(W-ml-mr)/nm, gap=sm?1:2, bw=Math.max(1.5,(gw*0.82-gap*(nl-1))/nl);
+    let hi=Math.max(1,...N.flat()); const passo=hi>200?100:hi>80?40:hi>40?20:hi>16?10:hi>8?4:2; hi=Math.ceil(hi/passo)*passo;
+    const Y=v=>top+hp-v/hi*hp;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Ore al mese: "+CAL[ind].desc});
+    for(let v=0;v<=hi+1e-9;v+=passo){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));
+      svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},fmt(v,0)));}
+    C.mesi.forEach((m,j)=>{const x0=ml+j*gw+gw*0.09;
+      svg.appendChild(el("text",{x:ml+j*gw+gw/2,y:H-7,"text-anchor":"middle",class:"axl"},sm?MESI[+m.slice(5)-1][0].toUpperCase():MESI[+m.slice(5)-1]));
+      LUOGHI.forEach((Lg,k)=>{const v=N[k][j]; if(!v) return; const x=x0+k*(bw+gap), y=Y(v), h=top+hp-y, rr=Math.min(3,bw/2,h);
+        svg.appendChild(el("path",{d:`M${x} ${top+hp}V${y+rr}Q${x} ${y} ${x+rr} ${y}H${x+bw-rr}Q${x+bw} ${y} ${x+bw} ${y+rr}V${top+hp}Z`,fill:`var(${Lg.c})`}));});
+      const hit=el("rect",{x:ml+j*gw,y:top,width:gw,height:hp,fill:"transparent"}); svg.appendChild(hit);
+      hit.addEventListener("pointermove",ev=>{const rc=svg.getBoundingClientRect();
+        tip.innerHTML=`<b>${MESI[+m.slice(5)-1]} ${m.slice(0,4)}</b><br>`+LUOGHI.map((Lg,k)=>`<i class="sq" style="background:var(${Lg.c})"></i>${esc(Lg.nome)}: <b>${N[k][j]} ore</b>`).join("<br>");
+        const px=(ml+j*gw+gw/2)/W*rc.width; tip.style.left=(px>rc.width/2?px-tip.offsetWidth-12:px+12)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
+      hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;});
+    });
+    svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:top+hp,y2:top+hp,stroke:"var(--ink-faint)","stroke-width":1}));
+    box.insertBefore(svg,tip);
+    const tot=N.map(a=>a.reduce((s,v)=>s+v,0));
+    $("cal-note").textContent="Ore al mese con "+CAL[ind].desc+". Passa sopra un mese per leggere i numeri.";
+    const ord=tot.map((v,k)=>[v,k]).sort((a,b)=>b[0]-a[0]), [vM,kM]=ord[0], [vm,km]=ord[ord.length-1];
+    const mm=N[kM].indexOf(Math.max(...N[kM]));
+    $("cal-ins").innerHTML=!vM?`<div><b>${CAL[ind].nome}</b>Negli ultimi 12 mesi nessun luogo ha avuto ore così.</div>`:
+      `<div><b>In 12 mesi</b>${LUOGHI.map((Lg,k)=>`${esc(Lg.nome)}: <strong>${tot[k]} ore</strong>`).join("<br>")}</div>`+
+      `<div><b>Chi ne ha di più</b><strong>${esc(LUOGHI[kM].nome)}</strong> con ${vM} ore${vm?`, ${fmt(vM/vm,1)} volte ${esc(LUOGHI[km].nome)}`:`; ${esc(LUOGHI[km].nome)} nessuna`}.</div>`+
+      `<div><b>Il mese più segnato</b><strong>${MESI[+C.mesi[mm].slice(5)-1]} ${C.mesi[mm].slice(0,4)}</strong> a ${esc(LUOGHI[kM].nome)}, con ${N[kM][mm]} ore.</div>`;
+  }
+  function estremi(){
+    const cella=(r,k,u)=>r?`<b>${fmt(r[k],1)}${u}</b><br><small>${dlab(r.iso)} · ore ${r.iso.slice(11,16)}</small>`:"–";
+    const best=(R,k,seg)=>R.reduce((b,r)=>r[k]==null?b:(!b||seg*(r[k]-b[k])>0?r:b),null);
+    $("estr").innerHTML="<thead><tr><th>Luogo</th><th>Humidex massimo</th><th>UTCI massimo</th><th>UTCI minimo</th><th>Wind chill minimo</th></tr></thead><tbody>"+
+      LUOGHI.map((Lg,k)=>{const R=C.R[k];
+        return `<tr><td><i class="sw" style="background:var(${Lg.c})"></i>${esc(Lg.nome)}</td><td>${cella(best(R,"H",1),"H","")}</td><td>${cella(best(R,"U",1),"U"," °C")}</td><td>${cella(best(R,"U",-1),"U"," °C")}</td><td>${cella(best(R,"W",-1),"W"," °C")}</td></tr>`;}).join("")+"</tbody>";
+  }
+  // ---------- classifica anno per anno (data/bioclima-anni.json, calcolato da scripts/build_bioclima.py)
+  const CLS={
+    tot:{nome:"Disagio totale",desc:"ore di stress termico moderato o peggiore, da caldo (UTCI da 26 °C) o da freddo (UTCI sotto 0 °C)",f:a=>a.caldo+a.freddo,c:"--amber"},
+    caldo:{nome:"Caldo",desc:"ore di stress da caldo moderato o peggiore (UTCI da 26 °C)",f:a=>a.caldo,c:"--i-h"},
+    caldo_forte:{nome:"Caldo forte",desc:"ore di stress da caldo forte o peggiore (UTCI da 32 °C)",f:a=>a.caldo_forte,c:"--i-h"},
+    afa:{nome:"Afa",desc:"ore con Humidex da 30 in su",f:a=>a.afa,c:"--i-h"},
+    freddo:{nome:"Freddo",desc:"ore di stress da freddo moderato o peggiore (UTCI sotto 0 °C)",f:a=>a.freddo,c:"--i-w"},
+    vento:{nome:"Vento freddo",desc:"ore con wind chill di −10 °C o meno",f:a=>a.vento,c:"--i-w"}};
+  let B=null, cls="tot";
+  get("./data/bioclima-anni.json?t="+Date.now()).then(d=>{
+    B=d;
+    $("cls-src").textContent="archivio delle previsioni Open-Meteo · "+dlab(d.dal)+" – "+dlab(d.al);
+    $("seg-cls").innerHTML=Object.entries(CLS).map(([k,v])=>`<button type="button" data-k="${k}" aria-pressed="${k===cls}">${v.nome}</button>`).join("");
+    $("seg-cls").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{cls=b.dataset.k;
+      $("seg-cls").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); classifica();}));
+    classifica();
+  }).catch(()=>{$("cls").innerHTML="<tbody><tr><td>La classifica non è disponibile in questo momento.</td></tr></tbody>";});
+
+  function classifica(){
+    const C0=CLS[cls], anni=Object.keys(B.anni).sort(), ultimo=anni[anni.length-1];
+    const parziale=a=>a===ultimo&&B.al.slice(5)!=="12-31";
+    const completi=anni.filter(a=>!parziale(a));
+    // un anno completo conta se ha almeno 300 giorni di dati; quello in corso si mostra da 30 giorni in su
+    const val=(a,id)=>{const x=(B.anni[a]||{})[id]; return x&&x.ore>=24*(parziale(a)?30:300)?C0.f(x):null;};
+    const posti={}; anni.forEach(a=>{const L=B.luoghi.map(l=>[l.id,val(a,l.id)]).filter(x=>x[1]!=null).sort((p,q)=>q[1]-p[1]);
+      posti[a]={}; L.forEach(([id],i)=>{posti[a][id]=i+1;});});
+    const R=B.luoghi.map(l=>{const v=completi.map(a=>val(a,l.id)).filter(x=>x!=null); return {l,media:v.length?v.reduce((p,q)=>p+q,0)/v.length:null};})
+      .filter(r=>r.media!=null).sort((p,q)=>q.media-p.media);
+    const mx=Math.max(1,...R.map(r=>r.media));
+    $("cls").innerHTML=`<thead><tr><th></th><th class="lg">Luogo</th><th style="text-align:left">Media annua</th>${anni.map(a=>`<th class="yr">${a}${parziale(a)?"*":""}</th>`).join("")}</tr></thead><tbody>`+
+      R.map((r,i)=>`<tr style="--c:var(${C0.c})"><td class="rank">${i+1}</td><td class="lg">${esc(r.l.nome)} <small>${esc(r.l.tipo)} · ${r.l.q} m</small></td>
+        <td style="text-align:left"><span class="mbar" style="width:${Math.max(2,r.media/mx*(innerWidth<600?44:90)).toFixed(0)}px"></span><b>${fmt(r.media,0)}</b> <small>ore</small></td>`+
+        anni.map(a=>{const v=val(a,r.l.id), p=posti[a][r.l.id];
+          return v==null?"<td class='yr'>–</td>":`<td class="yr${p===1?" top":""}">${fmt(v,0)}<small>${p}° posto</small></td>`;}).join("")+"</tr>").join("")+"</tbody>";
+    $("cls-note").textContent="Ore all'anno con "+C0.desc+". Il numero piccolo è il posto in classifica di quell'anno; in evidenza il primo. "+
+      (parziale(ultimo)?"* "+ultimo+": anno in corso, fino al "+dlab(B.al)+", escluso dalla media.":"");
+    // chi è stato primo più spesso, chi è salito o sceso di più
+    const primi={}; completi.forEach(a=>{const id=Object.keys(posti[a]).find(k=>posti[a][k]===1); if(id) primi[id]=(primi[id]||0)+1;});
+    const nomeDi=id=>(B.luoghi.find(l=>l.id===id)||{}).nome||id;
+    const re=Object.entries(primi).sort((p,q)=>q[1]-p[1])[0];
+    const a0=completi[0], a1=completi[completi.length-1];
+    const mov=R.map(r=>[r.l.id,(posti[a0][r.l.id]||0)-(posti[a1][r.l.id]||0)]).filter(x=>posti[a0][x[0]]&&posti[a1][x[0]]).sort((p,q)=>q[1]-p[1]);
+    const ultimoR=R[R.length-1];
+    $("cls-ins").innerHTML=
+      `<div><b>Dove si sta peggio</b><strong>${esc(R[0].l.nome)}</strong>, con ${fmt(R[0].media,0)} ore all'anno in media${re?`; primo in classifica ${re[1]} ${re[1]===1?"anno":"anni"} su ${completi.length}${re[0]!==R[0].l.id?" (il più spesso primo è "+esc(nomeDi(re[0]))+")":""}`:""}.</div>`+
+      `<div><b>Dove si sta meglio</b><strong>${esc(ultimoR.l.nome)}</strong>, con ${fmt(ultimoR.media,0)} ore all'anno, contro le ${fmt(R[0].media,0)} del primo in classifica.</div>`+
+      (mov.length&&completi.length>1&&mov[0][1]?`<div><b>Dal ${a0} al ${a1}</b><strong>${esc(nomeDi(mov[0][0]))}</strong> sale di ${mov[0][1]} ${mov[0][1]===1?"posto":"posti"}${mov[mov.length-1][1]<0?`, <strong>${esc(nomeDi(mov[mov.length-1][0]))}</strong> scende di ${-mov[mov.length-1][1]}`:""}.</div>`:
+        `<div><b>Dal ${a0} al ${a1}</b>La classifica resta quasi uguale: le differenze fra i luoghi dipendono soprattutto dalla posizione, non dall'annata.</div>`);
+  }
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
