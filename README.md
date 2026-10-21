@@ -231,6 +231,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   rigenerate dall'Action a ogni aggiornamento delle previsioni: non modificarle a mano, cambia `comune.html` o lo
   script (i testi introduttivi sono nell'elenco `COMUNI` dello script). Le vecchie URL `comune.html?c=N`
   rimandano alla pagina del comune. Dopo aver aggiunto pagine esegui `python scripts/gen_sitemap.py`.
+- **Feed RSS** (`feed.xml`) — gli ultimi 20 numeri di *Terra & Cielo* per lettori RSS e aggregatori, con un
+  elemento per numero (link a `notizie.html#n-AAAA-MM-GG`). Generato da `data/notizie.json` con
+  `python scripts/build_rss.py` e rigenerato dall'Action; non va modificato a mano. È deterministico: se
+  `notizie.json` non cambia, `feed.xml` non cambia. Le pagine lo annunciano con il tag `<link rel="alternate">`.
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
   e pubblicare su Facebook, con didascalia automatica.
 - **PWA** — installabile su telefono (icona in home, apertura a schermo intero, cache offline della struttura).
