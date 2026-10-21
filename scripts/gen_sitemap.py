@@ -2,7 +2,7 @@
 """Rigenera sitemap.xml dalle pagine HTML pubblicate (esclude quelle con noindex o di servizio)."""
 import glob, os, re, subprocess
 BASE = "https://lucavarlani-max.github.io/mugello_meteoeclima/"
-SKIP = {"index_1.html", "fb-post.html", "geek-modello.html"}
+SKIP = {"index_1.html", "fb-post.html", "geek-modello.html", "comune.html"}
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 os.chdir(root)
 rows = []
