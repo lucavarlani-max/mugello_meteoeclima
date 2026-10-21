@@ -235,15 +235,29 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   elemento per numero (link a `notizie.html#n-AAAA-MM-GG`). Generato da `data/notizie.json` con
   `python scripts/build_rss.py` e rigenerato dall'Action; non va modificato a mano. È deterministico: se
   `notizie.json` non cambia, `feed.xml` non cambia. Le pagine lo annunciano con il tag `<link rel="alternate">`.
-- **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
-  e pubblicare su Facebook, con didascalia automatica.
+- **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare e pubblicare su Facebook e
+  Instagram: **Feed 4:5** (1080×1350), **Quadrato** (1080×1080) e **Storie 9:16** (1080×1920, con le zone alta e bassa
+  lasciate libere dall'interfaccia di Instagram). Il **canale** (Facebook/Instagram) cambia la didascalia: su Facebook
+  il link è nel testo e gli hashtag sono 4, su Instagram i link nel testo non sono cliccabili quindi si rimanda alla
+  bio e gli hashtag sono 10, per le Storie il testo è breve e il link va nell'adesivo «Link». Gli **hashtag** sono locali
+  (#mugello #meteomugello #valdisieve…) più quello del comune scelto e del tempo del giorno (#nebbia, #pioggia, #sole…).
+  Il **link** ha i parametri UTM (`utm_source` = facebook/instagram, `utm_medium` = social/story, `utm_campaign` =
+  previsione-oggi/domani) e può puntare alla home, a una delle 9 pagine dei comuni, al radar o alla pagina sulla nebbia;
+  in GoatCounter e GA4 si vede così quale canale porta visite.
+- **Condividi e installa l'app** (`condividi.js`) — sopra i «Contatti», in fondo a ogni pagina: pulsanti WhatsApp,
+  Facebook, «Copia link» e, sui telefoni, «Altro…» (menu di condivisione del sistema). I link portano l'UTM
+  `utm_source` = whatsapp/facebook/link/share, `utm_campaign` = condividi-pagina. Sotto, l'invito a installare l'app:
+  su Chrome/Edge/Android il pulsante «Installa l'app» (evento `beforeinstallprompt`), su iPhone/iPad l'istruzione
+  «Condividi → Aggiungi alla schermata Home»; non compare se l'app è già installata e «Non ora» lo nasconde per 30
+  giorni. Se GoatCounter è attivo conta anche i clic come eventi (`evento/condividi-whatsapp`, `evento/installa-si`…).
+  Si carica da `menu.js` nelle pagine interne e direttamente in `index.html`.
 - **PWA** — installabile su telefono (icona in home, apertura a schermo intero, cache offline della struttura).
 
 ## Struttura del repo
 
 ```
 index.html                     home
-fb-post.html                   generatore immagini per Facebook
+fb-post.html                   generatore immagini per Facebook e Instagram (feed, quadrato, Storie)
 manifest.webmanifest           PWA
 sw.js                          service worker (cache offline)
 icon-192.png / icon-512.png / icon-maskable-512.png / favicon-64.png

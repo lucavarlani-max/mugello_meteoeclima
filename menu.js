@@ -7,6 +7,11 @@
   if(document.querySelector('script[src$="contatti.js"]')) return;
   const c=document.createElement("script"); c.src="contatti.js"; c.defer=true; document.head.appendChild(c);
 })();
+// blocco «Condividi» e invito a installare l'app, sopra i «Contatti» (condividi.js)
+(function(){
+  if(document.querySelector('script[src$="condividi.js"]')) return;
+  const c=document.createElement("script"); c.src="condividi.js"; c.defer=true; document.head.appendChild(c);
+})();
 (function(){
   if(document.querySelector(".mm-top")) return;
   const VOCI=[
