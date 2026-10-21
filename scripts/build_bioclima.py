@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Classifica bioclimatica del Mugello anno per anno, per la pagina MeteoGeek «Bioclimatico Mugello» (geek-bioclima.html).
+Classifica bioclimatica del Mugello anno per anno, per la pagina MeteoGeek «Comfort e stress termico nel Mugello» (geek-bioclima.html).
 
 Per i nove capoluoghi del Mugello e il Passo della Futa scarica dall'archivio delle previsioni di Open-Meteo
 (https://historical-forecast-api.open-meteo.com, modello scelto automaticamente: per l'Italia ICON-D2 a 2 km e

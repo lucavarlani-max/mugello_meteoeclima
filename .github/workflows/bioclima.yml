@@ -1,7 +1,7 @@
 name: Classifica bioclimatica del Mugello (aggiornamento settimanale)
 
 # Rigenera data/bioclima-anni.json (ore di disagio anno per anno per i capoluoghi del Mugello e il Passo della Futa)
-# per la pagina MeteoGeek «Bioclimatico Mugello». Scarica dall'archivio delle previsioni di Open-Meteo le serie orarie
+# per la pagina MeteoGeek «Comfort e stress termico nel Mugello». Scarica dall'archivio delle previsioni di Open-Meteo le serie orarie
 # dal 2022 a ieri (pochi minuti) e calcola Humidex, wind chill e UTCI con le formule della pagina.
 on:
   schedule:
