@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v88';
+const CACHE = 'mmc-v89';
 const SHELL = [
   './',
   './index.html',
@@ -33,6 +33,9 @@ const SHELL = [
   './neve-new-york.html',
   './clima-firenze.html',
   './mappe.html',
+  './capitali.html',
+  './capitali.js',
+  './capitali-dati.js',
   './proverbi.html',
   './temperature-toscana.html',
   './borgo-storico.html',

@@ -18,7 +18,7 @@
     ["Previsioni","index.html#comuni",["comune"]],
     ["Radar & dati","radar.html",["radar"]],
     ["Stazioni",[["📡 Le mie stazioni","stazioni.html"],["📍 Stazioni del Mugello (SIR)","stazioni-mugello.html"],["⛰️ Stazioni in montagna","stazioni-montagna.html"]],["stazioni","stazioni-mugello","stazioni-montagna"]],
-    ["Mappe","mappe.html",["mappe"]],
+    ["Mappe",[["🗺️ Mugello","mappe.html"],["🌍 Capitali del mondo","capitali.html"]],["mappe","capitali"]],
     ["Neve",[["❄️ Neve oggi","neve.html"],["📜 La neve a Firenze","neve-firenze.html"],["🗽 La neve a New York","neve-new-york.html"]],["neve","neve-firenze","neve-new-york"]],
     ["Cielo","effemeridi.html",["effemeridi"]],
     ["Webcam",[["📷 Webcam Mugello","webcam.html"],["🌍 Webcam Panomax","webcam-panomax.html"]],["webcam","webcam-panomax"]],

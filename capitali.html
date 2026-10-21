@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Temperatura in tempo reale nelle capitali del mondo | Mugello</title>
+<meta name="description" content="Temperatura attuale in tutte le capitali del mondo su una mappa, aggiornata ogni 10 minuti: le più calde, le più fredde, ricerca per città o paese.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/capitali.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Temperatura in tempo reale nelle capitali del mondo | Mugello">
+<meta property="og:description" content="Temperatura attuale in tutte le capitali del mondo su una mappa, aggiornata ogni 10 minuti.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/capitali.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#7d8a82;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#67aef0; --sky-tint:#152634;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);}}
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#67aef0; --sky-tint:#152634;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);}
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .back:hover{box-shadow:var(--shadow)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px}
+  .brand b{color:var(--pine)}
+  .head{padding:24px 0 6px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:38px;margin:.12em 0 .05em}
+  .lead{color:var(--ink-soft);font-size:14.5px;max-width:70ch;margin:0}
+  .ctrls{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;margin:18px 0 12px}
+  .cg{display:flex;flex-direction:column;gap:7px}
+  .cl{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-family:inherit;font-size:13px;padding:6px 12px;border-radius:var(--r-pill);border:1px solid var(--line);
+    background:var(--panel);color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--pine)}
+  .chip.on{background:var(--pine);border-color:var(--pine);color:#fff}
+  .src{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .mapcard{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);position:relative;z-index:1}
+  #map{height:520px;width:100%;background:var(--panel-2)}
+  @media (max-width:640px){ #map{height:420px} h1{font-size:30px} }
+  .leaflet-container{font-family:var(--sans)}
+  .bub{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;
+    border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 4px rgba(0,0,0,.35);color:#10241c;font-weight:700}
+  .bub b{font-family:var(--serif);font-size:15px;line-height:1}
+  .bub s{font-size:8.5px;text-decoration:none;font-weight:600;opacity:.75;margin-top:1px;white-space:nowrap}
+  .legend{display:flex;align-items:center;gap:12px;margin:14px 0 40px;flex-wrap:wrap}
+  .legend .bar{height:12px;width:min(360px,70vw);border-radius:6px;border:1px solid var(--line)}
+  .legend .lab{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .legend .ttl{font-weight:600;font-size:13px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:0 0 28px}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px}
+  .box h2{font-family:var(--serif);font-size:18px;margin:0 0 8px}
+  .rk{list-style:none;margin:0;padding:0}
+  .rk li{display:flex;gap:8px;align-items:baseline;padding:5px 0;border-top:1px solid var(--line-soft);cursor:pointer}
+  .rk li:first-child{border-top:0}
+  .rk span{flex:1}.rk small{color:var(--ink-faint)}
+  .rk b{font-family:var(--mono);font-size:14px}
+  .find{font:inherit;font-size:14px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:9px 12px;width:100%;max-width:340px}
+  .tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+  .tbl th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);text-align:left;padding:6px 8px;cursor:pointer;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel)}
+  .tbl td{padding:6px 8px;border-bottom:1px solid var(--line-soft)}
+  .tbl td.t{font-family:var(--mono);font-weight:600;text-align:right}.tbl th.t{text-align:right}
+  .tbl tr[data-i]{cursor:pointer}.tbl tr[data-i]:hover{background:var(--pine-tint)}
+  .scroll{max-height:460px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:10px}
+  .bub.sm{width:34px;height:34px}
+  .bub.sm b{font-size:12.5px}
+  .foot{border-top:1px solid var(--line);padding:20px 0 40px;color:var(--ink-faint);font-size:12.5px}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <header class="head">
+      <div class="eyebrow">Mappe</div>
+      <h1>Capitali del mondo, adesso</h1>
+      <p class="lead">La temperatura attuale delle <strong id="n">197</strong> capitali, sulla mappa e in classifica. Dati Open-Meteo (modelli meteorologici nazionali), aggiornati ogni 10 minuti.</p>
+      <div class="ctrls"><span class="src" id="src" style="margin-left:0">Carico i dati…</span></div>
+    </header>
+
+    <div class="mapcard"><div id="map"></div></div>
+    <div class="legend">
+      <span class="ttl">Temperatura</span><div class="bar" id="leg-bar"></div>
+      <span class="lab">−30°</span><span class="lab">+45°</span>
+    </div>
+
+    <div class="grid">
+      <div class="box"><h2>🔥 Le più calde</h2><ol class="rk" id="hot" style="padding:0"></ol></div>
+      <div class="box"><h2>🧊 Le più fredde</h2><ol class="rk" id="cold" style="padding:0"></ol></div>
+    </div>
+
+    <section>
+      <div class="eyebrow">Elenco</div>
+      <input class="find" id="find" type="search" placeholder="Cerca capitale o paese…" aria-label="Cerca capitale o paese">
+      <div class="scroll"><table class="tbl"><thead><tr>
+        <th data-k="c">Capitale</th><th data-k="p">Paese</th><th data-k="h">Ora locale</th><th class="t" data-k="t">Temp.</th>
+      </tr></thead><tbody id="rows"></tbody></table></div>
+    </section>
+    <p class="foot">Dati: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> (CC BY 4.0), valore corrente al punto griglia più vicino alla capitale: può differire di qualche grado dalla stazione ufficiale. Mappa © OpenStreetMap. Le coordinate sono quelle della città, non necessariamente della sede del governo.</p>
+  </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="capitali-dati.js"></script>
+<script src="capitali.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
