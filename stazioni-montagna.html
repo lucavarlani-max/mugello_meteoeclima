@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stazioni in montagna · Mugello Meteo &amp; Clima</title>
-<meta name="description" content="Massime, minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi e al Passo della Colla, le stazioni di montagna intorno al Mugello, aggiornate ogni mezz'ora.">
+<meta name="description" content="Massime, minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi, al Passo della Colla, al Passo del Giogo e alla Consuma, le stazioni di montagna intorno al Mugello.">
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="Stazioni in montagna · Mugello Meteo &amp; Clima">
-<meta property="og:description" content="Massime e minime degli ultimi tre giorni al Passo della Futa, a Montegiovi e al Passo della Colla, aggiornate ogni mezz'ora.">
+<meta property="og:description" content="Massime e minime degli ultimi tre giorni al Passo della Futa, a Montegiovi, al Passo della Colla, al Passo del Giogo e alla Consuma.">
 <meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
@@ -101,9 +101,10 @@
   .note ul{margin:0 0 12px;padding-left:20px}
   .note li{margin-bottom:6px}
   /* grafici */
-  :root{--s-futa:#00805a;--s-montegiovi:#2f7cc4;--s-colla:#c9671f;--grid:#e9ede7}
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-futa:#279a72;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--grid:#1c2924}}
-  :root[data-theme="dark"]{--s-futa:#279a72;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--grid:#1c2924}
+  /* un colore per stazione (palette verificata anche per i daltonici; le linee hanno anche l'etichetta diretta) */
+  :root{--s-futa:#00805a;--s-montegiovi:#2f7cc4;--s-colla:#c9671f;--s-giogo:#c2457f;--s-consuma:#7a3fb0;--grid:#e9ede7}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-futa:#2a9d6a;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--s-giogo:#d9609a;--s-consuma:#8e4fc4;--grid:#1c2924}}
+  :root[data-theme="dark"]{--s-futa:#2a9d6a;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--s-giogo:#d9609a;--s-consuma:#8e4fc4;--grid:#1c2924}
   .chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:16px 16px 10px;margin-bottom:22px;position:relative}
   .chart h3{font-family:var(--serif);font-size:19px;font-weight:700;margin:0 0 4px}
   .chart p.sub{margin:0 0 10px;font-size:13px;color:var(--ink-faint)}
@@ -138,8 +139,9 @@
     <div class="wrap">
       <div class="eyebrow">Stazioni · crinale appenninico</div>
       <h1>Le stazioni<br><em>in montagna.</em></h1>
-      <p>Massime e minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi e al Passo della
-        Colla, le stazioni sopra il Mugello. I dati si leggono dalle pagine delle reti che le gestiscono ogni mezz'ora.</p>
+      <p>Massime e minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi, al Passo della
+        Colla, al Passo del Giogo e alla Consuma, le stazioni sopra il Mugello. I dati si leggono dalle pagine delle reti
+        che le gestiscono.</p>
     </div>
   </section>
 
@@ -154,7 +156,7 @@
         <span><span class="mk x">▲</span> massima</span>
         <span><span class="mk n">▼</span> minima</span>
         <span><b>pioggia</b> caduta nel giorno</span>
-        <span><b>raffica</b> massima del giorno (solo Futa e Montegiovi)</span>
+        <span><b>raffica</b> massima del giorno (Futa, Montegiovi e Giogo)</span>
         <span>accanto al valore, l'ora in cui è stato misurato (quando la stazione la indica)</span>
       </div>
     </div>
@@ -165,7 +167,7 @@
       <div class="tabhead"><h2>Grafici</h2></div>
       <div class="chart" id="g-temp">
         <h3>Temperatura delle ultime 72 ore</h3>
-        <p class="sub">Una lettura ogni mezz'ora (per Montegiovi ogni 15 minuti, dal grafico della stazione).</p>
+        <p class="sub">Montegiovi, Giogo e Consuma hanno un dato ogni 15 minuti. Futa e Colla pubblicano solo il valore del momento: ogni punto è una lettura del sito, e il tratteggio unisce le letture lontane più di due ore.</p>
         <div class="leg" id="leg-temp"></div>
         <div class="plot"></div>
       </div>
@@ -181,16 +183,23 @@
   <section class="blk">
     <div class="wrap note">
       <h2>Come sono raccolti i dati</h2>
-      <p>Queste stazioni pubblicano solo la temperatura del momento e gli estremi del giorno in corso. Lo storico lo costruisce
-        il sito: ogni mezz'ora legge le tre pagine e, per ogni giorno, conserva la massima più alta e la minima più bassa
+      <p>Futa, Montegiovi e Colla pubblicano solo la temperatura del momento e gli estremi del giorno in corso. Lo storico lo costruisce
+        il sito: a ogni aggiornamento automatico legge le pagine e, per ogni giorno, conserva la massima più alta e la minima più bassa
         indicate dalla stazione, la pioggia del giorno più alta (il pluviometro si azzera a mezzanotte) e la raffica più forte.
-        Sotto la temperatura del momento ci sono la pioggia del mese e dell'anno, quando la stazione le pubblica.</p>
+        Sotto la temperatura del momento ci sono la pioggia del mese e dell'anno, quando la stazione le pubblica.
+        Per il Passo del Giogo e la Consuma il Centro Funzionale pubblica i valori ogni 15 minuti da ieri a mezzanotte:
+        massime, minime, pioggia e raffiche si calcolano da quei valori (la pioggia del mese dai totali giornalieri del CFR).</p>
       <ul>
         <li>Un giorno passato è <b>parziale</b> quando l'ultima lettura è prima delle 23:00, perché la stazione era
-          irraggiungibile o il sito non è riuscito a leggerla. Le sue massime e minime potrebbero non essere quelle vere.</li>
-        <li>Si scartano le letture più vecchie di tre ore e quelle con la minima più alta della massima.</li>
-        <li>Le tre stazioni appartengono a reti diverse e hanno strumenti e collocazioni diverse. I valori sono quelli
-          pubblicati dalle reti, senza correzioni.</li>
+          irraggiungibile o il sito non è riuscito a leggerla, oppure quando le letture cominciano dopo mezzanotte e mezza.
+          Le sue massime e minime potrebbero non essere quelle vere.</li>
+        <li>L'aggiornamento automatico è programmato ogni mezz'ora, ma GitHub, che lo esegue, spesso lo fa partire
+          solo ogni due-quattro ore: per Futa e Colla le letture sono quindi più rade, e un picco fra due letture può sfuggire.</li>
+        <li>Si scartano le letture più vecchie di tre ore e quelle con la minima più alta della massima. Per Montegiovi,
+          se la massima o la minima di un giorno si discostano di oltre 1 °C dal grafico ogni 15 minuti della stazione,
+          si usa il grafico: è il caso degli «estremi di oggi» letti poco dopo mezzanotte, quando la stazione mostra ancora quelli del giorno prima.</li>
+        <li>Le stazioni appartengono a reti diverse e hanno strumenti e collocazioni diverse. I valori sono quelli
+          pubblicati dalle reti, senza altre correzioni. Gli orari del Centro Funzionale sono in ora solare e qui sono riportati all'ora italiana.</li>
       </ul>
       <p>Fonti:
         <a href="https://www.ilfilo.net/stazione-meteo-del-passo-della-futa/" target="_blank" rel="noopener">Passo della Futa</a>
@@ -198,13 +207,16 @@
         <a href="https://www.toscana-meteo.it/stazioni.php?id=135" target="_blank" rel="noopener">Montegiovi</a>
         (rete toscana-meteo.it) ·
         <a href="https://meteo-pedemontanaforlivese.it/index.php#stazioni" target="_blank" rel="noopener">Passo della Colla</a>
-        (Davis Pro, Meteo Pedemontana Forlivese).</p>
+        (Davis Pro, Meteo Pedemontana Forlivese) ·
+        <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS11000108&amp;title=TOS11000108_termo&amp;type=termo" target="_blank" rel="noopener">Passo del Giogo</a>
+        e <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS01001041&amp;title=TOS01001041_termo&amp;type=termo" target="_blank" rel="noopener">Consuma</a>
+        (Centro Funzionale Regione Toscana, dati provvisori).</p>
     </div>
   </section>
 
   <footer class="foot"><div class="wrap">
     <span>Mugello Meteo &amp; Clima · <a href="stazioni.html">le mie stazioni</a> · <a href="stazioni-mugello.html">stazioni del Mugello (SIR)</a></span>
-    <span>Dati: Il Filo / Meteo Project, toscana-meteo.it, Meteo Pedemontana Forlivese</span>
+    <span>Dati: Il Filo / Meteo Project, toscana-meteo.it, Meteo Pedemontana Forlivese, Centro Funzionale Regione Toscana</span>
   </div></footer>
 
 <script>
@@ -242,7 +254,7 @@
     const tutti=S.flatMap(s=>s.p.map(p=>p[1]));
     const sy=scalaY(Math.min(...tutti),Math.max(...tutti),H,T,B);
     const x0=Math.min(inizio,...S.map(s=>s.p[0][0])), x=q=>L+(q-x0)/(fine-x0)*(W-L-R);
-    box.innerHTML=""; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Temperatura delle ultime 72 ore nelle tre stazioni"},box);
+    box.innerHTML=""; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Temperatura delle ultime 72 ore nelle stazioni di montagna"},box);
     for(let v=sy.lo;v<=sy.hi;v+=sy.passo){ el("line",{x1:L,x2:W-R,y1:sy.y(v),y2:sy.y(v),class:"gl"},svg);
       el("text",{x:L-6,y:sy.y(v)+4,"text-anchor":"end"},svg).textContent=v+"°"; }
     // mezzanotti
@@ -252,17 +264,23 @@
       el("text",{x:x(q)+4,y:H-8},svg).textContent=giornoL(new Date(q+12*36e5)); });
     if(!mezz.length||x(mezz[0])-L>60) el("text",{x:L+2,y:H-8},svg).textContent=giornoL(new Date(x0));
     S.forEach(s=>{
-      // linea spezzata dove mancano letture per più di 2 ore
-      let d="", prec=null;
-      s.p.forEach(([q,t])=>{ d+=(prec&&q-prec<2*36e5?"L":"M")+x(q).toFixed(1)+" "+sy.y(t).toFixed(1); prec=q; });
+      // linea piena fra letture vicine (fino a 2 ore); tratteggio sottile sui buchi fino a 8 ore, oltre la linea si interrompe
+      let d="", dd="", prec=null;
+      s.p.forEach(([q,t])=>{ const X=x(q).toFixed(1), Y=sy.y(t).toFixed(1);
+        if(prec&&q-prec[0]>=2*36e5&&q-prec[0]<=8*36e5) dd+="M"+x(prec[0]).toFixed(1)+" "+sy.y(prec[1]).toFixed(1)+"L"+X+" "+Y;
+        d+=(prec&&q-prec[0]<2*36e5?"L":"M")+X+" "+Y; prec=[q,t]; });
+      if(dd) el("path",{d:dd,fill:"none",stroke:col(s.id),"stroke-width":1.2,"stroke-dasharray":"3 4",opacity:.8},svg);
       el("path",{d,fill:"none",stroke:col(s.id),"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+      // letture rade (più di 30 minuti l'una dall'altra in media): un punto per lettura
+      if(s.p.length>1&&(s.p[s.p.length-1][0]-s.p[0][0])/(s.p.length-1)>36e5/2)
+        s.p.forEach(([q,t])=>el("circle",{cx:x(q),cy:sy.y(t),r:2.6,fill:col(s.id),stroke:"var(--panel)","stroke-width":1.2},svg));
       const [lq,lt]=s.p[s.p.length-1];
       el("circle",{cx:x(lq),cy:sy.y(lt),r:3.5,fill:col(s.id),stroke:"var(--panel)","stroke-width":2},svg);
       if(R>40) s.ly=sy.y(lt), s.lx=x(lq);
     });
     // etichette dirette a destra, distanziate
     if(R>40){ const ord=[...S].sort((a,b)=>a.ly-b.ly); for(let i=1;i<ord.length;i++) if(ord[i].ly-ord[i-1].ly<14) ord[i].ly=ord[i-1].ly+14;
-      ord.forEach(s=>{ const t=el("text",{x:W-R+8,y:s.ly+4,class:"lab"},svg); t.textContent=s.nome.replace("Passo della ",""); }); }
+      ord.forEach(s=>{ const t=el("text",{x:W-R+8,y:s.ly+4,class:"lab"},svg); t.textContent=s.nome.replace(/^Passo del(la)? /,""); }); }
     // crosshair + tooltip
     const cross=el("line",{y1:T,y2:H-B,stroke:"var(--ink-faint)","stroke-width":1,"stroke-dasharray":"3 3",visibility:"hidden"},svg);
     const pt=S.map(s=>el("circle",{r:4,fill:col(s.id),stroke:"var(--panel)","stroke-width":2,visibility:"hidden"},svg));
@@ -288,7 +306,7 @@
     const W=box.clientWidth||600, H=W<520?240:280, L=34, R=8, T=18, B=34;
     const val=S.flatMap(s=>giorni.flatMap(g=>s.giorni[g]?[s.giorni[g].max,s.giorni[g].min]:[]));
     const sy=scalaY(Math.min(...val),Math.max(...val),H,T,B);
-    box.innerHTML=""; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Massime e minime giornaliere delle tre stazioni"},box);
+    box.innerHTML=""; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Massime e minime giornaliere delle stazioni di montagna"},box);
     for(let v=sy.lo;v<=sy.hi;v+=sy.passo){ el("line",{x1:L,x2:W-R,y1:sy.y(v),y2:sy.y(v),class:"gl"},svg);
       el("text",{x:L-6,y:sy.y(v)+4,"text-anchor":"end"},svg).textContent=v+"°"; }
     const gw=(W-L-R)/giorni.length, bw=Math.min(22,(gw-18)/S.length-2), tp=tip(card), oggi=iso(new Date());
@@ -331,13 +349,13 @@
       const celle=giorni.map((g,k)=>{
         const v=s.giorni&&s.giorni[g], cl=k===0?' class="oggi"':"";
         if(!v) return `<td${cl}><span class="nd">nessun dato</span></td>`;
-        const parz=g<oggi&&v.ultima<"23:00";
+        const parz=g<oggi&&(v.ultima<"23:00"||(v.prima&&v.prima>"00:30"));
         return `<td${cl}><div class="ex"><span><span class="mk x" aria-label="massima">▲</span> <b>${f1(v.max)}</b></span><i>${v.hmax||""}</i>`+
           `<span><span class="mk n" aria-label="minima">▼</span> <b>${f1(v.min)}</b></span><i>${v.hmin||""}</i></div>`+
           (v.pioggia!=null||v.raffica!=null?`<div class="alt">`+
             (v.pioggia!=null?`<span>pioggia <b>${fn(v.pioggia)}</b> mm</span>`:"")+
             (v.raffica!=null?`<span>raffica <b>${fn(v.raffica)}</b> km/h${v.hraffica?` <i>${v.hraffica}</i>`:""}</span>`:"")+`</div>`:"")+
-          (parz?`<span class="parz" title="ultima lettura alle ${esc(v.ultima)}">parziale · fino alle ${esc(v.ultima)}</span>`:"")+`</td>`;
+          (parz?`<span class="parz" title="letture dalle ${esc(v.prima||"00:00")} alle ${esc(v.ultima)}">parziale · ${v.ultima<"23:00"?"fino alle "+esc(v.ultima):"dalle "+esc(v.prima)}</span>`:"")+`</td>`;
       }).join("");
       return `<tr><th scope="row"><a href="${esc(s.pagina)}" target="_blank" rel="noopener">${esc(s.nome)}</a><small>${esc(sotto)}</small></th><td>${ora}</td>${celle}</tr>`;
     }).join("");

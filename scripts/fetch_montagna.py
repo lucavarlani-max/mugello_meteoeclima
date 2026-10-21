@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Estremi giornalieri di temperatura di tre stazioni di montagna intorno al Mugello, per la pagina
+Estremi giornalieri di temperatura di cinque stazioni di montagna intorno al Mugello, per la pagina
 «Stazioni in montagna» (stazioni-montagna.html).
 
 Le stazioni pubblicano solo i valori del momento e gli estremi del giorno in corso: lo storico degli ultimi giorni lo
@@ -17,6 +17,16 @@ e la minima più bassa lette. Fonti:
              https://meteo-pedemontanaforlivese.it/index.php#stazioni
              scheda «Passo della Colla · Media montagna · 971 m», «min 12,8° · max 17,9°», «Online · 3 min fa»
              (nessuna data: l'istante della misura è l'ora della lettura meno i minuti indicati)
+
+  giogo      Passo del Giogo (Firenzuola, 880 m) e
+  consuma    Consuma (Pelago, 955 m), stazioni del Centro Funzionale Regione Toscana (TOS11000108, TOS01001041).
+             Le pagine di dettaglio del CFR danno i valori ogni 15 minuti da ieri a mezzanotte:
+             https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=<id>&title=<id>_termo&type=termo  (temperatura)
+             ... type=pluvio (pioggia nei 15 minuti), type=anemo (vento medio/raffica in m/s, solo Giogo),
+             ... type=pluvio_men (pioggia giornaliera degli ultimi 30 giorni, per il totale del mese).
+             Gli orari del CFR sono in ora solare (UTC+1) e si riportano all'ora italiana. Estremi, pioggia e raffica
+             di ieri e di oggi si calcolano dalle letture ogni 15 minuti; il primo giorno della finestra comincia
+             all'01:00 quando c'è l'ora legale, e resta «parziale» finché le letture successive non lo completano.
 
 Oltre agli estremi di temperatura si tengono, quando la stazione li pubblica, la pioggia del giorno (mm, la più
 alta letta: il pluviometro si azzera a mezzanotte) e la raffica massima del giorno (km/h, Futa e Montegiovi), e per il
@@ -41,6 +51,9 @@ UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chr
 GIORNI = 10
 ORE_SERIE = 96
 
+CFR_DETT = "https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id={id}&title={id}_{ty}&type={ty}"
+CET = dt.timezone(dt.timedelta(hours=1))   # gli orari del CFR sono in ora solare
+
 STAZIONI = [
     {"id": "futa", "nome": "Passo della Futa", "comune": "Firenzuola", "quota": 963,
      "rete": "Associazione Il Filo · Meteo Project", "pagina": "https://www.ilfilo.net/stazione-meteo-del-passo-della-futa/",
@@ -51,6 +64,12 @@ STAZIONI = [
     {"id": "colla", "nome": "Passo della Colla", "comune": "Borgo San Lorenzo · Marradi", "quota": 971,
      "rete": "Meteo Pedemontana Forlivese", "pagina": "https://meteo-pedemontanaforlivese.it/index.php#stazioni",
      "url": "https://meteo-pedemontanaforlivese.it/index.php", "referer": "https://meteo-pedemontanaforlivese.it/"},
+    {"id": "giogo", "nome": "Passo del Giogo", "comune": "Firenzuola", "quota": 880, "cfr": "TOS11000108",
+     "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS11000108", ty="termo"),
+     "url": None, "referer": None},
+    {"id": "consuma", "nome": "Consuma", "comune": "Pelago", "quota": 955, "cfr": "TOS01001041",
+     "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS01001041", ty="termo"),
+     "url": None, "referer": None},
 ]
 
 
@@ -143,6 +162,75 @@ def colla(s, adesso):
     return out
 
 
+def cfr_righe(sid, ty):
+    """righe [istante in ora italiana, colonne...] della pagina di dettaglio del CFR."""
+    s = scarica(CFR_DETT.format(id=sid, ty=ty), "https://www.cfr.toscana.it/")
+    nome = re.search(r"var (\w+) = new Array\(\);", s).group(1)
+    out = []
+    for a in re.findall(nome + r"\[\d+\] = new Array\(([^)]*)\)", s):
+        c = re.findall(r'"([^"]*)"', a)
+        m = re.fullmatch(r"(\d\d)/(\d\d)/(\d{4})(?: (\d\d)\.(\d\d))?", c[1].strip())
+        if not m:
+            continue
+        g, me, a_, hh, mm = (int(x) if x else 0 for x in m.groups())
+        out.append([dt.datetime(a_, me, g, hh, mm, tzinfo=CET).astimezone(ROMA)] + c[2:])
+    return out
+
+
+def fnum(x):
+    try:
+        return float(x.replace(",", "."))
+    except (AttributeError, ValueError):
+        return None
+
+
+def cfr(st, adesso):
+    """estremi di ieri e di oggi, pioggia, raffica e serie dalle letture ogni 15 minuti del CFR."""
+    sid = st["cfr"]
+    temp = [(q, fnum(c[0])) for q, *c in cfr_righe(sid, "termo")]
+    temp = [(q, v) for q, v in temp if v is not None and -40 < v < 45 and q <= adesso]
+    if not temp:
+        raise ValueError("nessuna temperatura")
+    giorni = {}
+    for q, v in temp:
+        g = giorni.setdefault(q.date().isoformat(), {})
+        h = q.strftime("%H:%M")
+        if "max" not in g or v > g["max"]:
+            g["max"], g["hmax"] = v, h
+        if "min" not in g or v < g["min"]:
+            g["min"], g["hmin"] = v, h
+        g["prima"] = min(g.get("prima", h), h)
+        g["ultima"] = max(g.get("ultima", h), h)
+    # pioggia nei 15 minuti: l'intervallo che finisce a mezzanotte appartiene al giorno prima
+    for q, *c in cfr_righe(sid, "pluvio"):
+        v = fnum(c[1]) if len(c) > 1 else None
+        d = (q - dt.timedelta(minutes=1)).date().isoformat()
+        if d in giorni:
+            giorni[d]["pioggia"] = round(giorni[d].get("pioggia", 0.0) + (v if v and 0 <= v < 200 else 0.0), 1)
+    if sid == "TOS11000108":
+        for q, *c in cfr_righe(sid, "anemo"):
+            m = re.fullmatch(r"([\d.]+)/([\d.]+)", (c[0] if c else "").strip())
+            d = q.date().isoformat()
+            if not m or d not in giorni:
+                continue
+            r = round(float(m.group(2)) * 3.6, 1)
+            if r < 300 and r > giorni[d].get("raffica", -1):
+                giorni[d]["raffica"], giorni[d]["hraffica"] = r, q.strftime("%H:%M")
+    q, t = temp[-1]
+    out = {k: v for k, v in giorni[q.date().isoformat()].items() if k not in ("prima", "ultima")}
+    out.update({"quando": q, "t": t, "giorni": giorni, "punti": temp})
+    # pioggia del mese: giorni passati dalla pagina dei 30 giorni più quella di oggi
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from fetch_pluvio_mugello import giornaliera
+        mese = q.strftime("%Y-%m")
+        out["p_mese"] = round(sum(v for d, v in giornaliera(sid).items() if d.startswith(mese) and d < q.date().isoformat())
+                              + giorni[q.date().isoformat()].get("pioggia", 0.0), 1)
+    except Exception as e:
+        print(f"montagna: {st['nome']} pioggia del mese non letta: {e}", file=sys.stderr)
+    return out
+
+
 def main():
     adesso = dt.datetime.now(ROMA)
     prima = json.load(open(OUT, encoding="utf-8")) if os.path.exists(OUT) else {}
@@ -159,13 +247,11 @@ def main():
         if st["quota"] is None and v.get("quota"):
             rec["quota"] = v["quota"]
         try:
-            s = scarica(st["url"], st["referer"], "latin-1" if st["id"] == "montegiovi" else "utf-8")
-            if st["id"] == "futa":
-                l = futa(s)
-            elif st["id"] == "montegiovi":
-                l = montegiovi(s)
+            if st.get("cfr"):
+                l = cfr(st, adesso)
             else:
-                l = colla(s, adesso)
+                s = scarica(st["url"], st["referer"], "latin-1" if st["id"] == "montegiovi" else "utf-8")
+                l = futa(s) if st["id"] == "futa" else montegiovi(s) if st["id"] == "montegiovi" else colla(s, adesso)
             q = l["quando"]
             if adesso - q > dt.timedelta(hours=3) or q - adesso > dt.timedelta(minutes=30):
                 raise ValueError(f"misura non recente: {q:%Y-%m-%d %H:%M}")
@@ -196,6 +282,19 @@ def main():
             g["ultima"] = q.strftime("%H:%M")
             g["letture"] = g.get("letture", 0) + 1
             rec["giorni"][giorno] = g
+            # CFR: anche ieri, dalle letture ogni 15 minuti (si tengono gli estremi più ampi fra una lettura e l'altra)
+            for gg, n in l.get("giorni", {}).items():
+                g = dict(rec["giorni"].get(gg, {}))
+                if gg != giorno:
+                    for k, piu in (("max", True), ("min", False), ("pioggia", True), ("raffica", True)):
+                        if k in n and (k not in g or (n[k] > g[k] if piu else n[k] < g[k])):
+                            g[k] = n[k]
+                            if "h" + k in n:
+                                g["h" + k] = n["h" + k]
+                    g["ultima"] = max(g.get("ultima", n["ultima"]), n["ultima"])
+                    g["letture"] = g.get("letture", 0) + 1
+                g["prima"] = min(g.get("prima", n["prima"]), n["prima"])
+                rec["giorni"][gg] = g
             rec["ora"] = {"t": l["t"], "quando": q.isoformat(timespec="minutes")}
             for qq, tt in l.get("punti", []) + ([(q, l["t"])] if l["t"] is not None and -40 < l["t"] < 45 else []):
                 serie[qq.isoformat(timespec="minutes")] = tt
@@ -206,6 +305,24 @@ def main():
             print(f"montagna: {st['nome']} {q:%d/%m %H:%M} t={l['t']} max={l['max']} {l.get('hmax','')} min={l['min']} {l.get('hmin','')} pioggia={l.get('pioggia')} raffica={l.get('raffica')} {l.get('hraffica','')}")
         except Exception as e:
             print(f"montagna: {st['nome']} non letta: {e}", file=sys.stderr)
+        # controllo con la serie ogni 15 minuti (Montegiovi, CFR): se il giorno è coperto quasi per intero e un estremo
+        # si discosta di oltre 1 °C dai valori della serie, è un residuo del giorno prima (la stazione non aveva ancora
+        # azzerato gli «Estremi Oggi» quando è stata letta): si sostituisce con l'estremo della serie
+        per_giorno = {}
+        for qq, tt in serie.items():
+            per_giorno.setdefault(qq[:10], []).append((qq[11:16], tt))
+        for gg, pts in per_giorno.items():
+            g = rec["giorni"].get(gg)
+            if not g or len(pts) < 80:
+                continue
+            hx, vx = max(pts, key=lambda p: p[1])
+            hn, vn = min(pts, key=lambda p: p[1])
+            if g.get("max") is not None and g["max"] - vx > 1.0:
+                print(f"montagna: {st['nome']} {gg} massima {g['max']} corretta con la serie ({vx} alle {hx})", file=sys.stderr)
+                g["max"], g["hmax"] = vx, hx
+            if g.get("min") is not None and vn - g["min"] > 1.0:
+                print(f"montagna: {st['nome']} {gg} minima {g['min']} corretta con la serie ({vn} alle {hn})", file=sys.stderr)
+                g["min"], g["hmin"] = vn, hn
         rec["giorni"] = dict(sorted(rec["giorni"].items())[-GIORNI:])
         limite = adesso - dt.timedelta(hours=ORE_SERIE)
         rec["serie"] = [[q, t] for q, t in sorted(serie.items(), key=lambda x: dt.datetime.fromisoformat(x[0]))
