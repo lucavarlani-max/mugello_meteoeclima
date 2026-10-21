@@ -189,14 +189,16 @@ def build(idx):
 
 """
     s = sub(r'    <p class="note" id="note">', blocco + '    <p class="note" id="note">', s)
-    s = sub(r"</style>\n<script src=\"analytics.js\"",
+    s = sub(r"</style>\n<script>\(function\(\)\{var S=",
             "  .seo p{margin:0 0 12px;line-height:1.6;color:var(--ink-soft)} .seo p:last-child{margin:0}\n"
             "  .seo a{color:var(--pine);font-weight:600}\n"
             "  .altri{display:flex;flex-wrap:wrap;gap:8px 10px}\n"
             "  .altri a{padding:7px 13px;border:1px solid var(--line);border-radius:var(--r-pill);color:var(--pine);"
             "text-decoration:none;font-size:14px;font-weight:500}\n"
             "  .altri a:hover{background:var(--pine-tint)}\n"
-            "</style>\n<script src=\"analytics.js\"", s)
+            "</style>\n<script>(function(){var S=", s)
+    # il rimando delle vecchie URL ?c=N serve solo in comune.html
+    s = sub(r"<script>\(function\(\)\{var S=.*?</script>\n", "", s, flags=re.S)
     open(f"meteo-{slug}.html", "w", encoding="utf-8").write(s)
     return slug
 
