@@ -35,6 +35,10 @@ jobs:
           GMAPS_WEATHER_KEY: ${{ secrets.GMAPS_WEATHER_KEY }}
         run: python fetch_previsioni.py
 
+      - name: Rigenera le pagine meteo dei 9 comuni (previsioni nel codice per i motori di ricerca)
+        continue-on-error: true
+        run: python scripts/build_pagine_comuni.py
+
       - name: Aggiorna fiumi e invaso
         run: python scripts/fetch_fiumi.py
 
@@ -113,7 +117,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/*.json data/bsl/borgo.json data/verifica/*.json data/serie/firenzuola.csv data/serie/firenzuola.json data/arpae data/serie/kremsmuenster-5012.csv data/serie/kremsmuenster.json
+          git add meteo-*.html data/*.json data/bsl/borgo.json data/verifica/*.json data/serie/firenzuola.csv data/serie/firenzuola.json data/arpae data/serie/kremsmuenster-5012.csv data/serie/kremsmuenster.json
           if [ -f data/netatmo-token.enc ]; then git add data/netatmo-token.enc; fi
           if [ -d reports/nebbia ]; then git add reports/nebbia; fi
           if ! git diff --cached --quiet; then

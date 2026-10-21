@@ -225,6 +225,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **Google Analytics 4** (facoltativo, sempre in `analytics.js`): si attiva scrivendo l'ID di misurazione
   (`G-...`) in `GA_ID`. Usa cookie, quindi parte solo se il visitatore accetta nel banner; la scelta resta nel
   browser e si cambia con il link "Preferenze cookie" in fondo a ogni pagina. GoatCounter continua a contare tutti.
+- **Pagine meteo per comune** (`meteo-<comune>.html`, 9 pagine) — una pagina statica indicizzabile per ogni comune
+  (titolo, descrizione, dati strutturati e testo propri, 7 giorni già scritti nel codice per i motori di ricerca,
+  link agli altri comuni). Sono **generate** da `comune.html` con `python scripts/build_pagine_comuni.py` e
+  rigenerate dall'Action a ogni aggiornamento delle previsioni: non modificarle a mano, cambia `comune.html` o lo
+  script (i testi introduttivi sono nell'elenco `COMUNI` dello script). Le vecchie URL `comune.html?c=N`
+  rimandano alla pagina del comune. Dopo aver aggiunto pagine esegui `python scripts/gen_sitemap.py`.
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare
   e pubblicare su Facebook, con didascalia automatica.
 - **PWA** — installabile su telefono (icona in home, apertura a schermo intero, cache offline della struttura).

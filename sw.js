@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v85';
+const CACHE = 'mmc-v86';
 const SHELL = [
   './',
   './index.html',
@@ -18,6 +18,15 @@ const SHELL = [
   './radar.html',
   './sinottica.js',
   './comune.html',
+  './meteo-firenzuola.html',
+  './meteo-palazzuolo-sul-senio.html',
+  './meteo-marradi.html',
+  './meteo-barberino-di-mugello.html',
+  './meteo-scarperia-e-san-piero.html',
+  './meteo-san-piero-a-sieve.html',
+  './meteo-borgo-san-lorenzo.html',
+  './meteo-vicchio.html',
+  './meteo-dicomano.html',
   './neve.html',
   './neve-firenze.html',
   './neve-new-york.html',

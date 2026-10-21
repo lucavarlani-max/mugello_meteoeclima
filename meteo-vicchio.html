@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meteo Vicchio: previsioni oggi, domani e 7 giorni | Mugello Meteo</title>
+<meta name="description" content="Previsioni meteo a Vicchio (203 m, Mugello): temperatura e pioggia ora per ora, prossimi 7 giorni, radar delle precipitazioni e dati in tempo reale.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/meteo-vicchio.html">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/meteo-vicchio.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Meteo Vicchio: previsioni oggi, domani e 7 giorni | Mugello Meteo">
+<meta property="og:description" content="Previsioni meteo a Vicchio (203 m, Mugello): temperatura e pioggia ora per ora, prossimi 7 giorni, radar delle precipitazioni e dati in tempo reale.">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Il lago di Bilancino e la vallata del Mugello visti dall'alto">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteo-vicchio.html","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteo-vicchio.html","name":"Meteo Vicchio","description":"Previsioni meteo a Vicchio (203 m, Mugello): temperatura e pioggia ora per ora, prossimi 7 giorni, radar delle precipitazioni e dati in tempo reale.","inLanguage":"it-IT","isPartOf":{"@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/#website"},"about":{"@type":"Place","name":"Vicchio","address":{"@type":"PostalAddress","addressLocality":"Vicchio","addressRegion":"Toscana","addressCountry":"IT"},"geo":{"@type":"GeoCoordinates","latitude":43.9339,"longitude":11.465,"elevation":203}},"primaryImageOfPage":"https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg","breadcrumb":{"@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteo-vicchio.html#breadcrumb"}},{"@type":"BreadcrumbList","@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteo-vicchio.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Mugello Meteo & Clima","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},{"@type":"ListItem","position":2,"name":"Meteo Vicchio","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteo-vicchio.html"}]}]}</script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --panel-2:#fbfcfa;
+    --ink:#16261f; --ink-soft:#48584f; --ink-faint:#7d8a82;
+    --line:#e3e8e1; --line-soft:#eef1ec;
+    --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
+    --sky:#2f7cc4; --sky-tint:#e4eff9;
+    --amber:#c9671f; --amber-tint:#fbeadc;
+    --rain:#3566b0;
+    --shadow:0 1px 2px rgba(16,38,31,.05), 0 8px 24px -12px rgba(16,38,31,.18);
+    --shadow-lift:0 2px 6px rgba(16,38,31,.07), 0 20px 44px -20px rgba(16,38,31,.28);
+    --r:16px; --r-sm:11px; --r-pill:999px; --maxw:1180px;
+    --serif:"Bricolage Grotesque",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+      --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+      --line:#26332c; --line-soft:#1e2a24;
+      --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+      --sky:#67aef0; --sky-tint:#152634;
+      --amber:#e0975a; --amber-tint:#2e2115;
+      --rain:#6a9be0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+      --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 24px 50px -22px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1613; --panel:#16211c; --panel-2:#131d18;
+    --ink:#eaf2ec; --ink-soft:#adbcb2; --ink-faint:#7f8f85;
+    --line:#26332c; --line-soft:#1e2a24;
+    --pine:#3ba883; --pine-deep:#69c8a4; --pine-tint:#183028;
+    --sky:#67aef0; --sky-tint:#152634;
+    --amber:#e0975a; --amber-tint:#2e2115; --rain:#6a9be0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -16px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 24px 50px -22px rgba(0,0,0,.8);
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+  a{color:var(--pine)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  /* topbar */
+  .top{position:sticky;top:env(safe-area-inset-top,0);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .top .wrap{display:flex;align-items:center;gap:12px}
+  .back{display:inline-flex;align-items:center;gap:7px;font-weight:600;text-decoration:none;color:var(--ink-soft);
+    font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--panel)}
+  .back:hover{box-shadow:var(--shadow)}
+  .brand{font-family:var(--serif);font-weight:800;font-size:15px;margin-left:2px;letter-spacing:-.01em}
+  .brand b{color:var(--pine)}
+  /* header comune */
+  .head{padding:26px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--pine);font-weight:600}
+  h1{font-family:var(--serif);font-weight:800;letter-spacing:-.02em;font-size:40px;margin:.12em 0 .05em}
+  .meta{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint)}
+  /* now card */
+  .now{display:flex;flex-wrap:wrap;align-items:center;gap:20px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--r);box-shadow:var(--shadow);padding:20px 22px;margin-top:16px}
+  .now .ico{font-size:60px;line-height:1;flex:none}
+  .now .big{font-family:var(--serif);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.02em}
+  .now .desc{font-size:15px;color:var(--ink-soft);margin-top:3px}
+  .now .desc b{color:var(--ink)}
+  .now .grid{margin-left:auto;display:grid;grid-template-columns:repeat(3,minmax(78px,1fr));gap:10px 22px}
+  .kv{display:flex;flex-direction:column}
+  .kv .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .kv .v{font-weight:600;font-size:16px;margin-top:1px}
+  /* sections */
+  section{margin:30px 0}
+  .sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .sh h2{font-family:var(--serif);font-weight:700;font-size:21px;margin:0;letter-spacing:-.01em}
+  .sh .src{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px}
+  /* hourly strip */
+  .hours{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+  .hr{flex:0 0 auto;width:70px;text-align:center;padding:10px 4px;border-right:1px solid var(--line-soft);scroll-snap-align:start}
+  .hr:last-child{border-right:0}
+  .hr .h{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .hr .i{font-size:24px;margin:6px 0 3px}
+  .hr .t{font-weight:700;font-size:16px;font-family:var(--serif)}
+  .hr .p{font-family:var(--mono);font-size:10.5px;color:var(--rain);margin-top:3px;min-height:14px}
+  .hr .w{font-family:var(--mono);font-size:10px;color:var(--ink-faint);margin-top:2px}
+  .hr .w small,.hr .p small{font-size:9px}
+  .hr.night{background:var(--panel-2)}
+  /* chart */
+  .chart-wrap{margin-top:4px}
+  svg .axl{font-family:var(--mono);font-size:10px;fill:var(--ink-faint)}
+  /* 7 giorni */
+  .days{display:flex;flex-direction:column}
+  .day{display:flex;align-items:center;gap:14px;padding:13px 4px;border-top:1px solid var(--line-soft)}
+  .day:first-child{border-top:0}
+  .day .dow{width:64px;font-weight:600;text-transform:capitalize}
+  .day .di{font-size:28px;width:40px;text-align:center;flex:none}
+  .day .dd{flex:1;color:var(--ink-soft);font-size:13.5px}
+  .day .pp{font-family:var(--mono);font-size:12px;color:var(--rain);width:74px;text-align:right;line-height:1.3;white-space:nowrap;flex:none}
+  .day .pp small{display:block;font-size:11px;opacity:.85;white-space:nowrap}
+  .day .tp{width:96px;text-align:right;font-family:var(--serif);font-weight:700}
+  .day .tp s{color:var(--ink-faint);text-decoration:none;font-weight:600;margin-left:6px}
+  @media (max-width:520px){ .day{gap:8px} .day .dow{width:auto;min-width:56px} .day .di{width:30px;font-size:24px} .day .tp{width:auto;flex:none} .day .dd{min-width:0} }
+  /* sun row */
+  .sun{display:flex;gap:26px;flex-wrap:wrap}
+  .sun .kv .v{font-size:18px}
+  .locmap{height:340px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);margin:16px 0 2px;position:relative;z-index:1}
+  .locmap .leaflet-container{height:100%;width:100%;background:var(--panel-2);font-family:var(--sans)}
+  @media (max-width:640px){ .locmap{height:250px} }
+  /* radar */
+  .radar-card{padding:0;overflow:hidden}
+  .radar-card iframe{display:block;width:100%;height:440px;border:0}
+  @media (max-width:640px){ .radar-card iframe{height:340px} }
+  /* wikipedia */
+  .wiki{display:flex;gap:18px;align-items:flex-start}
+  .wiki img{width:150px;height:150px;object-fit:cover;border-radius:var(--r-sm);flex:none;border:1px solid var(--line)}
+  .wiki .body{flex:1;min-width:0}
+  .wiki p{margin:0 0 10px;color:var(--ink-soft);font-size:14px;line-height:1.6}
+  .wiki a.more{display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none;color:var(--pine);font-size:13px}
+  .wiki a.more:hover{text-decoration:underline}
+  @media (max-width:560px){ .wiki{flex-direction:column} .wiki img{width:100%;height:180px} }
+  .note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin:26px 0 40px;text-align:center}
+  .foot{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink-faint);font-size:12.5px}
+  @media (max-width:640px){
+    h1{font-size:32px} .now .grid{margin-left:0;width:100%}
+    .now .big{font-size:46px} .now .ico{font-size:48px}
+  }
+  .seo p{margin:0 0 12px;line-height:1.6;color:var(--ink-soft)} .seo p:last-child{margin:0}
+  .seo a{color:var(--pine);font-weight:600}
+  .altri{display:flex;flex-wrap:wrap;gap:8px 10px}
+  .altri a{padding:7px 13px;border:1px solid var(--line);border-radius:var(--r-pill);color:var(--pine);text-decoration:none;font-size:14px;font-weight:500}
+  .altri a:hover{background:var(--pine-tint)}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+<script src="previsioni-allinea.js"></script>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="back" href="index.html">← Torna alla home</a>
+    <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
+  </div></div>
+
+  <main class="wrap">
+    <header class="head">
+      <div class="eyebrow" id="eyebrow">Previsione dettagliata</div>
+      <h1 id="nome">Meteo Vicchio</h1>
+      <div class="meta" id="meta">203 m s.l.m. · media valle · Mugello</div>
+
+      <div class="locmap" id="map"></div>
+
+      <div class="now">
+        <div class="ico" id="now-ico">⛅</div>
+        <div>
+          <div class="big"><span id="now-t">—</span>°</div>
+          <div class="desc" id="now-desc">—</div>
+        </div>
+        <div class="grid">
+          <div class="kv"><span class="l">Percepita</span><span class="v" id="k-app">—</span></div>
+          <div class="kv"><span class="l">Vento</span><span class="v" id="k-wind">—</span></div>
+          <div class="kv"><span class="l">Raffiche</span><span class="v" id="k-gust">—</span></div>
+          <div class="kv"><span class="l">Umidità</span><span class="v" id="k-hum">—</span></div>
+          <div class="kv"><span class="l">Pressione</span><span class="v" id="k-press">—</span></div>
+          <div class="kv"><span class="l">Nuvole</span><span class="v" id="k-cloud">—</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Prossime 48 ore</h2><span class="src">dettaglio orario · Open-Meteo</span></div>
+      <div class="card"><div class="hours" id="hours"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Temperatura e pioggia</h2><span class="src">48 ore</span></div>
+      <div class="card chart-wrap" id="chart"></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Prossimi 7 giorni</h2><span class="src" id="days-src">WeatherNext 3 (Google)</span></div>
+      <div class="card"><div class="days" id="days"><div class="day"><div class="dow">Oggi</div><div class="di">🌦</div><div class="dd">Pioggia debole · 21/10</div><div class="pp">💧 55%<small>4,5 mm</small></div><div class="tp">17°<s>13°</s></div></div><div class="day"><div class="dow">Giovedì</div><div class="di">⛅</div><div class="dd">Parz. nuvoloso · 22/10</div><div class="pp">💧 15%<small>0,1 mm</small></div><div class="tp">18°<s>8°</s></div></div><div class="day"><div class="dow">Venerdì</div><div class="di">🌦</div><div class="dd">Pioggia debole · 23/10</div><div class="pp">💧 45%<small>2,6 mm</small></div><div class="tp">17°<s>8°</s></div></div><div class="day"><div class="dow">Sabato</div><div class="di">🌦</div><div class="dd">Pioggia debole · 24/10</div><div class="pp">💧 55%<small>4,6 mm</small></div><div class="tp">14°<s>8°</s></div></div><div class="day"><div class="dow">Domenica</div><div class="di">☁️</div><div class="dd">Coperto · 25/10</div><div class="pp">💧 10%</div><div class="tp">14°<s>8°</s></div></div><div class="day"><div class="dow">Lunedì</div><div class="di">⛅</div><div class="dd">Parz. nuvoloso · 26/10</div><div class="pp">💧 10%</div><div class="tp">17°<s>8°</s></div></div><div class="day"><div class="dow">Martedì</div><div class="di">☀️</div><div class="dd">Sereno · 27/10</div><div class="pp">💧 0%</div><div class="tp">18°<s>8°</s></div></div></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Radar precipitazioni</h2><span class="src">live · Windy</span></div>
+      <div class="card radar-card"><iframe id="radar" title="Radar precipitazioni" loading="lazy" allow="fullscreen"></iframe></div>
+    </section>
+
+    <section id="wiki-sec" hidden>
+      <div class="sh"><h2>La località</h2><span class="src">Wikipedia</span></div>
+      <div class="card">
+        <div class="wiki">
+          <img id="wiki-img" alt="" hidden>
+          <div class="body">
+            <p id="wiki-text">—</p>
+            <a class="more" id="wiki-link" href="#" target="_blank" rel="noopener">Leggi su Wikipedia →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Sole</h2><span class="src">oggi</span></div>
+      <div class="card sun">
+        <div class="kv"><span class="l">Alba</span><span class="v" id="sun-rise">—</span></div>
+        <div class="kv"><span class="l">Tramonto</span><span class="v" id="sun-set">—</span></div>
+        <div class="kv"><span class="l">Ore di luce</span><span class="v" id="sun-len">—</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il meteo a Vicchio</h2></div>
+      <div class="card seo">
+        <p>Vicchio si trova nella media valle della Sieve, nella terra che ha dato i natali a Giotto e al Beato Angelico. È una zona di colline e vigneti dove nebbie e brinate sono frequenti nelle notti limpide d&#x27;autunno e d&#x27;inverno.</p>
+        <p>Nei prossimi 7 giorni a Vicchio le temperature massime arrivano fino a 18° e le minime scendono fino a 8°; 3 giorni con pioggia probabile (la prima mercoledì 21/10).</p>
+        <p>Le previsioni giornaliere sono del modello AI WeatherNext 3 di Google, il dettaglio orario è di Open-Meteo.
+        Per i livelli dei fiumi, le allerte e il radar di tutta la vallata vai alla pagina
+        <a href="radar.html">Radar &amp; dati</a>; per il clima storico guarda l'<a href="archivio-climatico.html">archivio climatico</a>.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Meteo negli altri comuni del Mugello</h2></div>
+      <nav class="card altri" aria-label="Altri comuni"><a href="meteo-firenzuola.html">Firenzuola</a><a href="meteo-palazzuolo-sul-senio.html">Palazzuolo sul Senio</a><a href="meteo-marradi.html">Marradi</a><a href="meteo-barberino-di-mugello.html">Barberino di Mugello</a><a href="meteo-scarperia-e-san-piero.html">Scarperia e San Piero</a><a href="meteo-san-piero-a-sieve.html">San Piero a Sieve</a><a href="meteo-borgo-san-lorenzo.html">Borgo San Lorenzo</a><a href="meteo-dicomano.html">Dicomano</a></nav>
+    </section>
+
+    <p class="note" id="note">Previsione giornaliera: WeatherNext 3 (Google) · Dettaglio orario: Open-Meteo · elaborazioni L. Varlani</p>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="index.html">torna alla home</a></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+(function(){
+  const COMUNI=[
+    {n:"Firenzuola",           lat:44.1206,lon:11.3789,elev:422,zona:"Appennino",     wiki:"Firenzuola"},
+    {n:"Palazzuolo sul Senio", lat:44.1131,lon:11.5433,elev:437,zona:"alta valle",    wiki:"Palazzuolo sul Senio"},
+    {n:"Marradi",              lat:44.0722,lon:11.6142,elev:328,zona:"val di Lamone",  wiki:"Marradi"},
+    {n:"Barberino di Mugello", lat:43.9908,lon:11.2386,elev:268,zona:"lago",          wiki:"Barberino di Mugello"},
+    {n:"Scarperia e San Piero",lat:43.9928,lon:11.3549,elev:292,zona:"autodromo",     wiki:"Scarperia e San Piero"},
+    {n:"San Piero a Sieve",    lat:43.9631,lon:11.3283,elev:210,zona:"fondovalle",    wiki:"San Piero a Sieve"},
+    {n:"Borgo San Lorenzo",    lat:43.9547,lon:11.3861,elev:193,zona:"fondovalle",    wiki:"Borgo San Lorenzo"},
+    {n:"Vicchio",              lat:43.9339,lon:11.4650,elev:203,zona:"media valle",   wiki:"Vicchio"},
+    {n:"Dicomano",             lat:43.8917,lon:11.5222,elev:165,zona:"confluenza",    wiki:"Dicomano"},
+  ];
+  const WM={0:['☀️','Sereno'],1:['🌤','Poco nuvoloso'],2:['⛅','Parz. nuvoloso'],3:['☁️','Coperto'],
+    45:['🌫','Nebbia'],48:['🌫','Nebbia'],51:['🌦','Pioviggine'],53:['🌦','Pioviggine'],55:['🌦','Pioviggine'],
+    56:['🌧','Piogg. gelata'],57:['🌧','Piogg. gelata'],61:['🌦','Pioggia debole'],63:['🌧','Pioggia'],65:['🌧','Pioggia forte'],
+    66:['🌧','Piogg. gelata'],67:['🌧','Piogg. gelata'],71:['🌨','Neve debole'],73:['🌨','Neve'],75:['❄️','Neve forte'],
+    77:['🌨','Nevischio'],80:['🌦','Rovesci'],81:['🌧','Rovesci'],82:['⛈','Rovesci forti'],85:['🌨','Rovesci di neve'],86:['🌨','Rovesci di neve'],
+    95:['⛈','Temporale'],96:['⛈','Temp. + grandine'],99:['⛈','Temp. + grandine']};
+  const wmo=c=>WM[c]||['⛅','—'];
+  const DOW=['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  const CARD=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+  const card=d=>CARD[Math.round(((d%360)/22.5))%16];
+  const r=n=>Math.round(n);
+  // pioggia prevista in mm: niente sotto 0,1; una cifra decimale sotto i 10 mm
+  const mmTxt=v=>(v==null||v<0.1)?'':(v<10?v.toFixed(1).replace('.',','):String(Math.round(v)))+' mm';
+  const set=(id,t)=>{const e=document.getElementById(id); if(e)e.textContent=t;};
+
+  const ci=7;
+  const C=COMUNI[ci];
+
+  
+  set('meta',C.elev+' m s.l.m. · '+C.zona+' · Mugello');
+
+  // ---- mappa della localita' (Leaflet + OpenStreetMap) ----
+  function initMap(){
+    try{
+      if(typeof L==='undefined'){ document.getElementById('map').style.display='none'; return; }
+      const map=L.map('map',{scrollWheelZoom:false,attributionControl:true}).setView([C.lat,C.lon],12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        maxZoom:18, attribution:'© OpenStreetMap'
+      }).addTo(map);
+      L.marker([C.lat,C.lon]).addTo(map).bindPopup('<b>'+C.n+'</b><br>'+C.elev+' m s.l.m.');
+      map.on('click',()=>map.scrollWheelZoom.enable());
+      setTimeout(()=>map.invalidateSize(),200);
+    }catch(e){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
+  }
+  initMap();
+
+  // ---- radar precipitazioni (Windy) ----
+  function initRadar(){
+    const f=document.getElementById('radar'); if(!f) return;
+    const q='lat='+C.lat+'&lon='+C.lon+'&detailLat='+C.lat+'&detailLon='+C.lon+
+      '&zoom=9&level=surface&overlay=rain&menu=&message=true&marker=true&calendar=now'+
+      '&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1';
+    f.src='https://embed.windy.com/embed2.html?'+q;
+  }
+  initRadar();
+
+  // ---- scheda Wikipedia ----
+  async function wiki(){
+    if(!C.wiki) return;
+    try{
+      const url='https://it.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(C.wiki);
+      const res=await fetch(url,{headers:{'accept':'application/json'}});
+      if(!res.ok) throw 0;
+      const j=await res.json();
+      const ex=j.extract||''; if(!ex) throw 0;
+      set('wiki-text', ex);
+      const link=document.getElementById('wiki-link');
+      link.href=(j.content_urls&&j.content_urls.desktop&&j.content_urls.desktop.page)||('https://it.wikipedia.org/wiki/'+encodeURIComponent(C.wiki));
+      const img=document.getElementById('wiki-img');
+      if(j.thumbnail&&j.thumbnail.source){ img.src=j.thumbnail.source; img.alt=C.n; img.hidden=false; }
+      document.getElementById('wiki-sec').hidden=false;
+    }catch(e){ /* scheda assente: sezione resta nascosta */ }
+  }
+  wiki();
+
+  // ---- 7 giorni da previsioni.json (WeatherNext, con fallback Open-Meteo lato server) ----
+  async function giorni(){
+    try{
+      const res=await fetch('./data/previsioni.json',{cache:'no-store'});
+      if(!res.ok) throw 0;
+      const P=window.allineaPrevisioni?window.allineaPrevisioni(await res.json()):await res.json();
+      const rec=(P.comuni||[])[ci];
+      if(!rec||!rec.giorni||!rec.giorni.length) throw 0;
+      if(P.fonte) set('days-src',P.fonte);
+      renderDays(rec.giorni);
+      if(rec.now&&rec.now.t!=null){ set('now-t',r(rec.now.t)); set('now-ico',wmo(rec.now.code)[0]); }
+      return true;
+    }catch(e){ return false; }
+  }
+  function renderDays(g){
+    const box=document.getElementById('days'); box.innerHTML='';
+    g.slice(0,7).forEach((d,i)=>{
+      const dt=new Date(d.iso+'T12:00');
+      const w=wmo(d.code);
+      const el=document.createElement('div'); el.className='day';
+      el.innerHTML='<div class="dow">'+(i===0?'Oggi':DOW[dt.getDay()])+'</div>'+
+        '<div class="di">'+w[0]+'</div>'+
+        '<div class="dd">'+w[1]+' · '+dt.getDate()+'/'+(dt.getMonth()+1)+'</div>'+
+        '<div class="pp">💧 '+(d.pp??0)+'%'+(mmTxt(d.mm)?'<small>'+mmTxt(d.mm)+'</small>':'')+'</div>'+
+        '<div class="tp">'+r(d.tmax)+'°<s>'+r(d.tmin)+'°</s></div>';
+      box.appendChild(el);
+    });
+  }
+
+  // ---- dettaglio orario live (Open-Meteo) ----
+  async function orario(){
+    const url='https://api.open-meteo.com/v1/forecast?latitude='+C.lat+'&longitude='+C.lon+
+      '&current=temperature_2m,apparent_temperature,relative_humidity_2m,pressure_msl,wind_speed_10m,wind_gusts_10m,wind_direction_10m,cloud_cover,weather_code'+
+      '&hourly=temperature_2m,precipitation,precipitation_probability,weather_code,wind_speed_10m,is_day'+
+      '&daily=sunrise,sunset&timezone=Europe%2FRome&forecast_days=3';
+    const res=await fetch(url,{cache:'no-store'}); if(!res.ok) throw new Error('http '+res.status);
+    const d=await res.json();
+
+    // condizioni attuali
+    const cur=d.current;
+    if(!document.getElementById('now-t').textContent.match(/[0-9]/)) set('now-t',r(cur.temperature_2m));
+    set('now-ico',wmo(cur.weather_code)[0]);
+    set('now-desc',wmo(cur.weather_code)[1]);
+    set('k-app',r(cur.apparent_temperature)+'°');
+    set('k-wind',r(cur.wind_speed_10m)+' km/h '+card(cur.wind_direction_10m));
+    set('k-gust',r(cur.wind_gusts_10m)+' km/h');
+    set('k-hum',r(cur.relative_humidity_2m)+'%');
+    set('k-press',r(cur.pressure_msl)+' hPa');
+    set('k-cloud',r(cur.cloud_cover)+'%');
+
+    // trova l'indice dell'ora corrente
+    const H=d.hourly, now=new Date();
+    let start=0;
+    for(let i=0;i<H.time.length;i++){ if(new Date(H.time[i])>=now){ start=Math.max(0,i-1); break; } }
+    const idx=[]; for(let i=start;i<Math.min(start+48,H.time.length);i++) idx.push(i);
+
+    // strip orario
+    const hs=document.getElementById('hours'); hs.innerHTML='';
+    idx.forEach(i=>{
+      const t=new Date(H.time[i]); const hh=String(t.getHours()).padStart(2,'0');
+      const night=H.is_day[i]===0;
+      const pp=H.precipitation_probability?H.precipitation_probability[i]:null;
+      const mm=H.precipitation[i];
+      const el=document.createElement('div'); el.className='hr'+(night?' night':'');
+      el.innerHTML='<div class="h">'+(t.getHours()===0?(t.getDate()+'/'+(t.getMonth()+1)):hh)+'</div>'+
+        '<div class="i">'+wmo(H.weather_code[i])[0]+'</div>'+
+        '<div class="t">'+r(H.temperature_2m[i])+'°</div>'+
+        '<div class="p">'+(pp!=null&&pp>0?('💧'+pp+'%'):'')+(mm>=0.1?((pp>0?'<br>':'💧')+'<small>'+mmTxt(mm)+'</small>'):'')+'</div>'+
+        '<div class="w" title="Vento medio">💨 '+r(H.wind_speed_10m[i])+' <small>km/h</small></div>';
+      hs.appendChild(el);
+    });
+
+    // grafico temp + pioggia
+    drawChart(idx.map(i=>({t:new Date(H.time[i]),temp:H.temperature_2m[i],
+      pp:H.precipitation_probability?H.precipitation_probability[i]:0, mm:H.precipitation[i]})));
+
+    // sole (oggi)
+    if(d.daily&&d.daily.sunrise){
+      set('sun-rise',d.daily.sunrise[0].slice(11,16));
+      set('sun-set',d.daily.sunset[0].slice(11,16));
+      const m=(new Date(d.daily.sunset[0])-new Date(d.daily.sunrise[0]))/60000;
+      set('sun-len',Math.floor(m/60)+'h '+r(m%60)+'m');
+    }
+  }
+
+  function drawChart(rows){
+    if(!rows.length) return;
+    const W=920,H=220, padL=34,padR=14,padT=16,padB=42;
+    const iw=W-padL-padR, ih=H-padT-padB;
+    const temps=rows.map(r=>r.temp);
+    let tmin=Math.min(...temps), tmax=Math.max(...temps);
+    if(tmax-tmin<4){ tmax+=2; tmin-=2; }
+    tmin=Math.floor(tmin/2)*2; tmax=Math.ceil(tmax/2)*2;
+    const x=i=>padL+ (rows.length<2?iw/2: iw*i/(rows.length-1));
+    const y=t=>padT+ ih*(1-(t-tmin)/(tmax-tmin));
+    const ppMax=Math.max(20,...rows.map(r=>r.pp||0));
+    let bars='';
+    const bw=Math.max(2, iw/rows.length*0.6);
+    rows.forEach((r,i)=>{ if(r.pp>0){ const bh=ih*(r.pp/100); bars+='<rect x="'+(x(i)-bw/2)+'" y="'+(padT+ih-bh)+'" width="'+bw+'" height="'+bh+'" rx="1.5" fill="var(--sky)" opacity=".22"/>'; }});
+    let dline='M'; rows.forEach((r,i)=>{ dline+= (i?'L':'')+x(i).toFixed(1)+' '+y(r.temp).toFixed(1)+' '; });
+    // griglia orizzontale + etichette temp
+    let grid=''; const steps=4;
+    for(let s=0;s<=steps;s++){ const tv=tmin+(tmax-tmin)*s/steps; const yy=y(tv);
+      grid+='<line x1="'+padL+'" y1="'+yy+'" x2="'+(W-padR)+'" y2="'+yy+'" stroke="var(--line-soft)"/>';
+      grid+='<text class="axl" x="'+(padL-6)+'" y="'+(yy+3)+'" text-anchor="end">'+r(tv)+'°</text>';
+    }
+    // etichette ore (ogni 6h)
+    let xl='';
+    rows.forEach((rw,i)=>{ const hr=rw.t.getHours(); if(hr%6===0){
+      xl+='<text class="axl" x="'+x(i)+'" y="'+(H-padB+16)+'" text-anchor="middle">'+String(hr).padStart(2,'0')+'</text>';
+      xl+='<line x1="'+x(i)+'" y1="'+padT+'" x2="'+x(i)+'" y2="'+(padT+ih)+'" stroke="var(--line-soft)"/>';
+      if(hr===0) xl+='<text class="axl" x="'+x(i)+'" y="'+(H-padB+30)+'" text-anchor="middle" opacity=".8">'+rw.t.getDate()+'/'+(rw.t.getMonth()+1)+'</text>';
+    }});
+    const svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Temperatura e probabilità di pioggia, 48 ore">'+
+      grid+bars+xl+
+      '<path d="'+dline+'" fill="none" stroke="var(--pine)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>'+
+      '</svg>'+
+      '<div style="display:flex;gap:18px;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:6px">'+
+      '<span><span style="display:inline-block;width:14px;height:3px;background:var(--pine);vertical-align:middle;border-radius:2px"></span> temperatura</span>'+
+      '<span><span style="display:inline-block;width:11px;height:11px;background:var(--sky);opacity:.35;vertical-align:middle;border-radius:2px"></span> prob. pioggia</span></div>';
+    document.getElementById('chart').innerHTML=svg;
+  }
+
+  giorni().then(function(){ return orario(); }).catch(function(e){
+    console.log('orario n/d',e);
+    document.getElementById('now-desc').textContent='Dati non disponibili al momento.';
+  });
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
