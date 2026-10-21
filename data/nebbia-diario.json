@@ -791,7 +791,7 @@
   "2026-10-21": {
    "ora": "07:45",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.6,
