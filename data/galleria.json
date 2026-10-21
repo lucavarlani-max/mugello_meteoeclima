@@ -2,6 +2,15 @@
  "nota": "Foto scelte dalle webcam del Mugello (scripts/webcam_scatti.py).",
  "foto": [
   {
+   "file": "reports/webcam/galleria/2026-10-17-tramonto-passo-della-colla.jpg",
+   "data": "2026-10-17",
+   "momento": "tramonto",
+   "categoria": "alba",
+   "webcam": "Passo della Colla (913 m) · LIVE",
+   "fonte": "Meteo Pedemontana Forlivese",
+   "link": "https://stream-meteoproject.eu/"
+  },
+  {
    "file": "reports/webcam/galleria/2026-10-17-alba-valle-del-diaterna.jpg",
    "data": "2026-10-17",
    "momento": "alba",
