@@ -39,6 +39,23 @@
   ],
   "esperimenti": [
     {
+      "id": "capitali",
+      "titolo": "Le capitali del mondo, adesso",
+      "tipo": "curiosita",
+      "tema": "mondo",
+      "data": "2026-10-21",
+      "stato": "nuovo",
+      "testo": "La temperatura attuale delle 197 capitali su una mappa, con le dieci più calde e le dieci più fredde del momento e un elenco ricercabile con l'ora locale. Si aggiorna da sola ogni 10 minuti.",
+      "link": "geek-capitali.html",
+      "tag": [
+        "capitali",
+        "mondo",
+        "tempo reale",
+        "temperatura",
+        "mappa"
+      ]
+    },
+    {
       "id": "bioclima",
       "titolo": "Comfort e stress termico nel Mugello: Humidex, wind chill e UTCI",
       "tipo": "esperimento",
