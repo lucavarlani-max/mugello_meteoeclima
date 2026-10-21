@@ -56,7 +56,7 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   `data/ecmwf.json`, raccolti da `scripts/fetch_ecmwf.py` nel workflow dedicato `.github/workflows/ecmwf.yml`
   (00:41, 02:41, 12:41 e 14:41 UTC; ~150 richieste distanziate di 4 s, perché l'API limita le richieste):
   una corsa nuova (00 o 12 UTC, vecchia almeno 12 ore) viene mostrata solo quando è completa.
-- **Capitali del mondo** (`capitali.html` + `capitali.js` + `capitali-dati.js`, menu Mappe) — temperatura attuale
+- **Capitali del mondo** (`geek-capitali.html` + `capitali.js` + `capitali-dati.js`, MeteoGeek) — temperatura attuale
   delle 197 capitali su mappa Leaflet, con le 10 più calde e le 10 più fredde e un elenco ordinabile con ricerca e ora
   locale. Nessun file di dati né Action: il browser chiede a Open-Meteo 4 blocchi da 50 città (una richiesta per
   blocco), tiene il risultato 10 minuti in `localStorage` e si aggiorna da solo. Elenco e coordinate in `capitali-dati.js`.
