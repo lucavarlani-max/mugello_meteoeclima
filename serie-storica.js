@@ -46,13 +46,17 @@
   function mix(a,b,t){return "rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";}
   function stripeColor(an){const c=hex(css("--cold")),n=hex(css("--neutral")),w=hex(css("--warm"));const t=Math.max(-1,Math.min(1,an/2));return t<0?mix(n,c,-t):mix(n,w,t);}
   function stripes(){
-    const A=AT, el=$("stripes"), W=el.clientWidth, H=el.clientHeight, n=A.length, bw=W/n;
-    let g=""; A.forEach((a,i)=>{if(a.tm!=null)g+=`<rect x="${(i*bw).toFixed(2)}" y="0" width="${(bw+0.6).toFixed(2)}" height="${H}" fill="${stripeColor(a.tm-BASE.tm)}"/>`;});
-    $("stripes-ax").innerHTML=[A[0].y,...(W<560?C.tacche[0]:C.tacche[1]),A[n-1].y].map(y=>`<span style="left:${((y-A[0].y+(y===A[n-1].y?1:0))/n*100).toFixed(2)}%">${y}</span>`).join("");
-    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Strisce del riscaldamento: anomalia della temperatura media annua a ${C.nome} dal ${A[0].y} al ${A[n-1].y}">${g}<rect id="st-hl" x="-9" y="0" width="${Math.max(2,bw)}" height="${H}" fill="none" stroke="${css("--ink")}" stroke-width="1.5"/></svg><div class="tip"></div>`;
+    // n = anni di calendario nell'intervallo (non A.length): alcune serie hanno anni interi senza
+    // nessun dato (es. Palermo, 1799-1821 e 1840-1852), e vanno lasciati come spazio vuoto nella
+    // striscia invece di comprimerla, altrimenti griglia ed etichette dell'asse non coinciderebbero.
+    const A=AT, el=$("stripes"), W=el.clientWidth, H=el.clientHeight, y0=A[0].y, y1=A[A.length-1].y, n=y1-y0+1, bw=W/n;
+    const byY=new Map(A.map(a=>[a.y,a]));
+    let g=""; A.forEach(a=>{if(a.tm!=null)g+=`<rect x="${((a.y-y0)*bw).toFixed(2)}" y="0" width="${(bw+0.6).toFixed(2)}" height="${H}" fill="${stripeColor(a.tm-BASE.tm)}"/>`;});
+    $("stripes-ax").innerHTML=[y0,...(W<560?C.tacche[0]:C.tacche[1]),y1].map(y=>`<span style="left:${((y-y0+(y===y1?1:0))/n*100).toFixed(2)}%">${y}</span>`).join("");
+    el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Strisce del riscaldamento: anomalia della temperatura media annua a ${C.nome} dal ${y0} al ${y1}">${g}<rect id="st-hl" x="-9" y="0" width="${Math.max(2,bw)}" height="${H}" fill="none" stroke="${css("--ink")}" stroke-width="1.5"/></svg><div class="tip"></div>`;
     const svg=el.querySelector("svg"),tip=el.querySelector(".tip"),hl=el.querySelector("#st-hl");
-    svg.addEventListener("pointermove",e=>{const r=svg.getBoundingClientRect();const i=Math.max(0,Math.min(n-1,Math.floor((e.clientX-r.left)/r.width*n)));const a=A[i];
-      hl.setAttribute("x",i*bw);tip.innerHTML=a.tm==null?`<b>${a.y}</b> · anno incompleto`:`<b>${a.y}</b> · media ${f1(a.tm)}°C<br><span class="m">${sg(a.tm-BASE.tm)}° rispetto al 1961–1990</span>`;place(el,tip,i*bw,10);});
+    svg.addEventListener("pointermove",e=>{const r=svg.getBoundingClientRect();const y=Math.max(y0,Math.min(y1,y0+Math.floor((e.clientX-r.left)/r.width*n)));const a=byY.get(y);const x=(y-y0)*bw;
+      hl.setAttribute("x",x);tip.innerHTML=!a?`<b>${y}</b> · nessun dato`:a.tm==null?`<b>${y}</b> · anno incompleto`:`<b>${y}</b> · media ${f1(a.tm)}°C<br><span class="m">${sg(a.tm-BASE.tm)}° rispetto al 1961–1990</span>`;place(el,tip,x,10);});
     svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;hl.setAttribute("x",-9);});
   }
 
