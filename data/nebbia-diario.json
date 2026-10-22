@@ -933,6 +933,31 @@
    "contrasto": 0.411,
    "contrasto_sfondo": 0.213,
    "foto": "reports/nebbia/2026-10-22.jpg"
+  },
+  "2026-10-23": {
+   "nebbia": null,
+   "previsione_sera": {
+    "v": 3,
+    "scarto_min": 1.2,
+    "vento_medio": 0.4,
+    "nuvole_medie": 53,
+    "ore_soglie": 0,
+    "ore": 13,
+    "alba": "07:37",
+    "scarto_alba": 2.0,
+    "vento_alba": 0.3,
+    "dp_alba": 5.3,
+    "nuvole_alte": 38,
+    "nubi_basse_alba": 83,
+    "ur_alba": 87,
+    "suolo_alba": 0.199,
+    "inv850_alba": -1.8,
+    "blh_alba": 15,
+    "pressione": 1022,
+    "crossover": -3.3,
+    "pioggia_24h": 0.0,
+    "emessa": "2026-10-22T19:07"
+   }
   }
  }
 }
