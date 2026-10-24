@@ -11,6 +11,15 @@
    "link": "https://www.firenzemeteo.it/webcam/appennino/toscana/"
   },
   {
+   "file": "reports/webcam/galleria/2026-10-18-alba-lago-di-bilancino.jpg",
+   "data": "2026-10-18",
+   "momento": "alba",
+   "categoria": "nebbia",
+   "webcam": "Lago di Bilancino (252 m)",
+   "fonte": "Il Filo",
+   "link": "https://www.ilfilo.net/stazione-meteo-del-lago-di-bilancino/"
+  },
+  {
    "file": "reports/webcam/galleria/2026-10-17-tramonto-passo-della-colla.jpg",
    "data": "2026-10-17",
    "momento": "tramonto",
