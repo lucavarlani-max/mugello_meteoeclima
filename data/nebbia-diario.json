@@ -1092,24 +1092,24 @@
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.0,
-    "vento_medio": 0.3,
-    "nuvole_medie": 63,
-    "ore_soglie": 2,
+    "vento_medio": 0.4,
+    "nuvole_medie": 61,
+    "ore_soglie": 1,
     "ore": 13,
     "alba": "06:40",
     "scarto_alba": 0.0,
     "vento_alba": 0.3,
-    "dp_alba": 6.0,
-    "nuvole_alte": 19,
+    "dp_alba": 5.4,
+    "nuvole_alte": 27,
     "nubi_basse_alba": 100,
     "ur_alba": 100,
     "suolo_alba": 0.203,
-    "inv850_alba": -1.3,
+    "inv850_alba": -1.0,
     "blh_alba": 20,
     "pressione": 1020,
-    "crossover": -0.1,
+    "crossover": -0.8,
     "pioggia_24h": 0.0,
-    "emessa": "2026-10-24T15:19"
+    "emessa": "2026-10-24T18:20"
    }
   }
  }
