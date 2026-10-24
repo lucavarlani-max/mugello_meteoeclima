@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Estremi giornalieri di temperatura di cinque stazioni di montagna intorno al Mugello, per la pagina
+Estremi giornalieri di temperatura di otto stazioni di montagna intorno al Mugello, per la pagina
 «Stazioni in montagna» (stazioni-montagna.html).
 
 Le stazioni pubblicano solo i valori del momento e gli estremi del giorno in corso: lo storico degli ultimi giorni lo
@@ -20,8 +20,13 @@ e la minima più bassa lette. Fonti:
              scheda «Passo della Colla · Media montagna · 971 m», «min 12,8° · max 17,9°», «Online · 3 min fa»
              (nessuna data: l'istante della misura è l'ora della lettura meno i minuti indicati)
 
-  giogo      Passo del Giogo (Firenzuola, 880 m) e
-  consuma    Consuma (Pelago, 955 m), stazioni del Centro Funzionale Regione Toscana (TOS11000108, TOS01001041).
+  giogo      Passo del Giogo (Firenzuola, 880 m),
+  consuma    Consuma (Pelago, 955 m),
+  montedifo  Monte di Fò (820 m, bacino della Sieve),
+  bibbiana   Bibbiana (786 m, bacino del Reno) e
+  barco      Barco (780 m, bacino del Santerno), stazioni del Centro Funzionale Regione Toscana
+             (TOS11000108, TOS01001041, TOS01000916, TOS30248000, TOS30287500). Le ultime tre hanno temperatura e pioggia,
+             senza vento, con una lettura ogni 5, 30 e 15 minuti (la serie dei grafici si riduce a un punto ogni 15).
              Le pagine di dettaglio del CFR danno i valori ogni 15 minuti da ieri a mezzanotte:
              https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=<id>&title=<id>_termo&type=termo  (temperatura)
              ... type=pluvio (pioggia nei 15 minuti), type=anemo (vento medio/raffica in m/s, solo Giogo),
@@ -71,6 +76,15 @@ STAZIONI = [
      "url": None, "referer": None},
     {"id": "consuma", "nome": "Consuma", "comune": "Pelago", "quota": 955, "cfr": "TOS01001041",
      "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS01001041", ty="termo"),
+     "url": None, "referer": None},
+    {"id": "montedifo", "nome": "Monte di Fò", "comune": "Barberino di Mugello", "quota": 820, "cfr": "TOS01000916",
+     "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS01000916", ty="termo"),
+     "url": None, "referer": None},
+    {"id": "bibbiana", "nome": "Bibbiana", "comune": "bacino del Reno", "quota": 786, "cfr": "TOS30248000",
+     "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS30248000", ty="termo"),
+     "url": None, "referer": None},
+    {"id": "barco", "nome": "Barco", "comune": "bacino del Santerno", "quota": 780, "cfr": "TOS30287500",
+     "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS30287500", ty="termo"),
      "url": None, "referer": None},
 ]
 
@@ -223,7 +237,9 @@ def cfr(st, adesso):
                 giorni[d]["raffica"], giorni[d]["hraffica"] = r, q.strftime("%H:%M")
     q, t = temp[-1]
     out = {k: v for k, v in giorni[q.date().isoformat()].items() if k not in ("prima", "ultima")}
-    out.update({"quando": q, "t": t, "giorni": giorni, "punti": temp})
+    # la serie dei grafici ha un punto ogni 15 minuti (alcune stazioni ne danno uno ogni 5), più l'ultima lettura
+    punti = [(qq, v) for qq, v in temp if qq.minute % 15 == 0 or qq == q]
+    out.update({"quando": q, "t": t, "giorni": giorni, "punti": punti})
     # pioggia del mese: giorni passati dalla pagina dei 30 giorni più quella di oggi
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

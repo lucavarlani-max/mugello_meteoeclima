@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stazioni in montagna · Mugello Meteo &amp; Clima</title>
-<meta name="description" content="Massime, minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi, al Passo della Colla, al Passo del Giogo e alla Consuma, le stazioni di montagna intorno al Mugello.">
+<meta name="description" content="Massime, minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi, al Passo della Colla, al Passo del Giogo, alla Consuma, a Monte di Fò, a Bibbiana e a Barco, le stazioni di montagna intorno al Mugello.">
 <link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mugello Meteo &amp; Clima">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="Stazioni in montagna · Mugello Meteo &amp; Clima">
-<meta property="og:description" content="Massime e minime degli ultimi tre giorni al Passo della Futa, a Montegiovi, al Passo della Colla, al Passo del Giogo e alla Consuma.">
+<meta property="og:description" content="Massime e minime degli ultimi tre giorni in otto stazioni di montagna intorno al Mugello: Futa, Montegiovi, Colla, Giogo, Consuma, Monte di Fò, Bibbiana e Barco.">
 <meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html">
 <meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
 <meta property="og:image:secure_url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
@@ -105,9 +105,9 @@
   .note li{margin-bottom:6px}
   /* grafici */
   /* un colore per stazione (palette verificata anche per i daltonici; le linee hanno anche l'etichetta diretta) */
-  :root{--s-futa:#00805a;--s-montegiovi:#2f7cc4;--s-colla:#c9671f;--s-giogo:#c2457f;--s-consuma:#7a3fb0;--grid:#e9ede7}
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-futa:#2a9d6a;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--s-giogo:#d9609a;--s-consuma:#8e4fc4;--grid:#1c2924}}
-  :root[data-theme="dark"]{--s-futa:#2a9d6a;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--s-giogo:#d9609a;--s-consuma:#8e4fc4;--grid:#1c2924}
+  :root{--s-futa:#00805a;--s-montegiovi:#2f7cc4;--s-colla:#c9671f;--s-giogo:#c2457f;--s-consuma:#7a3fb0;--s-montedifo:#a0761a;--s-bibbiana:#5a6f7a;--s-barco:#6d9b00;--grid:#e9ede7}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s-futa:#2a9d6a;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--s-giogo:#d9609a;--s-consuma:#8e4fc4;--s-montedifo:#d4a43a;--s-bibbiana:#94a7b2;--s-barco:#9cc93a;--grid:#1c2924}}
+  :root[data-theme="dark"]{--s-futa:#2a9d6a;--s-montegiovi:#5b8fe0;--s-colla:#d0782c;--s-giogo:#d9609a;--s-consuma:#8e4fc4;--s-montedifo:#d4a43a;--s-bibbiana:#94a7b2;--s-barco:#9cc93a;--grid:#1c2924}
   .chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:16px 16px 10px;margin-bottom:22px;position:relative}
   .chart h3{font-family:var(--serif);font-size:19px;font-weight:700;margin:0 0 4px}
   .chart p.sub{margin:0 0 10px;font-size:13px;color:var(--ink-faint)}
@@ -190,7 +190,7 @@
       <div class="eyebrow">Stazioni · crinale appenninico</div>
       <h1>Le stazioni<br><em>in montagna.</em></h1>
       <p>Massime e minime, pioggia e raffiche degli ultimi tre giorni al Passo della Futa, a Montegiovi, al Passo della
-        Colla, al Passo del Giogo e alla Consuma, le stazioni sopra il Mugello. I dati si leggono dalle pagine delle reti
+        Colla, al Passo del Giogo, alla Consuma, a Monte di Fò, a Bibbiana e a Barco, le stazioni sopra il Mugello. I dati si leggono dalle pagine delle reti
         che le gestiscono.</p>
     </div>
   </section>
@@ -241,7 +241,7 @@
       <div class="tabhead"><h2>Grafici</h2></div>
       <div class="chart" id="g-temp">
         <h3>Temperatura delle ultime 72 ore</h3>
-        <p class="sub">Montegiovi, Giogo e Consuma hanno un dato ogni 15 minuti. Futa e Colla pubblicano solo il valore del momento: ogni punto è una lettura del sito, e il tratteggio unisce le letture lontane più di due ore.</p>
+        <p class="sub">Montegiovi e le stazioni del Centro Funzionale (Giogo, Consuma, Monte di Fò, Bibbiana, Barco) hanno un dato ogni 5-30 minuti. Futa e Colla pubblicano solo il valore del momento: ogni punto è una lettura del sito, e il tratteggio unisce le letture lontane più di due ore.</p>
         <div class="leg" id="leg-temp"></div>
         <div class="plot"></div>
       </div>
@@ -256,7 +256,7 @@
 
   <section class="blk">
     <div class="wrap">
-      <div class="tabhead"><h2>Le cinque stazioni</h2></div>
+      <div class="tabhead"><h2>Le stazioni</h2></div>
       <div id="schede"></div>
     </div>
   </section>
@@ -272,7 +272,7 @@
         il sito: a ogni aggiornamento automatico legge le pagine e, per ogni giorno, conserva la massima più alta e la minima più bassa
         indicate dalla stazione, la pioggia del giorno più alta (il pluviometro si azzera a mezzanotte) e la raffica più forte.
         Sotto la temperatura del momento ci sono la pioggia del mese e dell'anno, quando la stazione le pubblica.
-        Per il Passo del Giogo e la Consuma il Centro Funzionale pubblica i valori ogni 15 minuti da ieri a mezzanotte:
+        Per il Passo del Giogo, la Consuma, Monte di Fò, Bibbiana e Barco il Centro Funzionale pubblica i valori (ogni 5, 15 o 30 minuti, secondo la stazione) da ieri a mezzanotte:
         massime, minime, pioggia e raffiche si calcolano da quei valori (la pioggia del mese dai totali giornalieri del CFR).</p>
       <ul>
         <li>Un giorno passato è <b>parziale</b> quando l'ultima lettura è prima delle 23:00, perché la stazione era
@@ -293,8 +293,9 @@
         (rete toscana-meteo.it) ·
         <a href="https://meteo-pedemontanaforlivese.it/index.php#stazioni" target="_blank" rel="noopener">Passo della Colla</a>
         (Davis Pro, Meteo Pedemontana Forlivese) ·
-        <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS11000108&amp;title=TOS11000108_termo&amp;type=termo" target="_blank" rel="noopener">Passo del Giogo</a>
-        e <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS01001041&amp;title=TOS01001041_termo&amp;type=termo" target="_blank" rel="noopener">Consuma</a>
+        <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS11000108&amp;title=TOS11000108_termo&amp;type=termo" target="_blank" rel="noopener">Passo del Giogo</a>, <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS01001041&amp;title=TOS01001041_termo&amp;type=termo" target="_blank" rel="noopener">Consuma</a>,
+        <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS01000916&amp;title=TOS01000916_termo&amp;type=termo" target="_blank" rel="noopener">Monte di Fò</a>, <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS30248000&amp;title=TOS30248000_termo&amp;type=termo" target="_blank" rel="noopener">Bibbiana</a>
+        e <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS30287500&amp;title=TOS30287500_termo&amp;type=termo" target="_blank" rel="noopener">Barco</a>
         (Centro Funzionale Regione Toscana, dati provvisori).</p>
         </div>
       </details>
@@ -331,9 +332,12 @@
     montegiovi:{strumento:"Froggit 2000"},
     colla:{strumento:"Davis Pro",webcam:"webcam.html"},
     giogo:{strumento:"stazione termo-pluvio-anemometrica del Centro Funzionale"},
-    consuma:{strumento:"stazione termo-pluviometrica del Centro Funzionale"}
+    consuma:{strumento:"stazione termo-pluviometrica del Centro Funzionale"},
+    montedifo:{strumento:"stazione termo-pluviometrica del Centro Funzionale"},
+    bibbiana:{strumento:"stazione termo-pluviometrica del Centro Funzionale"},
+    barco:{strumento:"stazione termo-pluviometrica del Centro Funzionale"}
   };
-  const FREQ={futa:"solo il valore del momento",montegiovi:"un punto ogni 15 minuti",colla:"solo il valore del momento",giogo:"un valore ogni 15 minuti",consuma:"un valore ogni 15 minuti"};
+  const FREQ={futa:"solo il valore del momento",montegiovi:"un punto ogni 15 minuti",colla:"solo il valore del momento",giogo:"un valore ogni 15 minuti",consuma:"un valore ogni 15 minuti",montedifo:"un valore ogni 5 minuti",bibbiana:"un valore ogni 30 minuti",barco:"un valore ogni 15 minuti"};
 
   // vincitori di un giorno: la più fredda (minima), la più calda (massima), la più ventosa (raffica), la più piovosa (pioggia)
   function vincitori(D,g){
