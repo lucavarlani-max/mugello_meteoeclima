@@ -2,6 +2,15 @@
  "nota": "Foto scelte dalle webcam del Mugello (scripts/webcam_scatti.py).",
  "foto": [
   {
+   "file": "reports/webcam/galleria/2026-10-19-alba-passo-della-futa.jpg",
+   "data": "2026-10-19",
+   "momento": "alba",
+   "categoria": "alba",
+   "webcam": "Passo della Futa (983 m) · LIVE",
+   "fonte": "Meteo-Project",
+   "link": "https://stream-meteoproject.eu/"
+  },
+  {
    "file": "reports/webcam/galleria/2026-10-18-alba-valle-del-diaterna.jpg",
    "data": "2026-10-18",
    "momento": "alba",
