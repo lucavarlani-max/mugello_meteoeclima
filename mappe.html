@@ -190,10 +190,12 @@
     {n:"Marradi",              lat:44.0722,lon:11.6142},
     {n:"Barberino di Mugello", lat:43.9908,lon:11.2386},
     {n:"Scarperia e San Piero",lat:43.9928,lon:11.3549},
-    {n:"San Piero a Sieve",    lat:43.9631,lon:11.3283},
+    {n:"San Piero a Sieve",    lat:43.9631,lon:11.3283,short:"S. Piero"},
     {n:"Borgo San Lorenzo",    lat:43.9547,lon:11.3861},
     {n:"Vicchio",              lat:43.9339,lon:11.4650},
     {n:"Dicomano",             lat:43.8917,lon:11.5222},
+    {n:"Londa",                lat:43.8628,lon:11.5700},
+    {n:"San Godenzo",          lat:43.9300,lon:11.6300,short:"S. Godenzo"},
   ];
   const DOW=['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
   const r=n=>Math.round(n);
@@ -240,7 +242,7 @@
       const light=isRain? (v!=null && v<45) : (v!=null && v>=8 && v<=30);
       const icon=L.divIcon({className:'',iconSize:[size,size],iconAnchor:[size/2,size/2],
         html:'<div class="bub" style="width:'+size+'px;height:'+size+'px;background:'+col+';color:'+(light?'#10241c':'#fff')+'">'+
-             '<b>'+txt+'</b><s>'+c.n.split(' ')[0]+'</s></div>'});
+             '<b>'+txt+'</b><s>'+(c.short||c.n.split(' ')[0])+'</s></div>'});
       const m=L.marker([c.lat,c.lon],{icon:icon}).addTo(layer);
       const rec=(P.comuni||[])[i], g=rec&&rec.giorni?rec.giorni[day]:null;
       if(g) m.bindPopup('<b>'+c.n+'</b><br>Max '+r(g.tmax)+'° · Min '+r(g.tmin)+'°<br>Prob. pioggia '+(g.pp??0)+'%');
