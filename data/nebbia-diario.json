@@ -1097,19 +1097,19 @@
     "ore_soglie": 0,
     "ore": 13,
     "alba": "06:40",
-    "scarto_alba": 0.1,
+    "scarto_alba": 0.0,
     "vento_alba": 0.4,
-    "dp_alba": 5.3,
-    "nuvole_alte": 39,
-    "nubi_basse_alba": 100,
-    "ur_alba": 99,
+    "dp_alba": 5.4,
+    "nuvole_alte": 57,
+    "nubi_basse_alba": 81,
+    "ur_alba": 100,
     "suolo_alba": 0.203,
-    "inv850_alba": -1.2,
+    "inv850_alba": -0.7,
     "blh_alba": 20,
     "pressione": 1019,
-    "crossover": -0.7,
+    "crossover": -1.1,
     "pioggia_24h": 0.0,
-    "emessa": "2026-10-24T19:58"
+    "emessa": "2026-10-24T21:29"
    }
   }
  }
