@@ -11,6 +11,24 @@
    "link": "https://www.firenzemeteo.it/webcam/appennino/toscana/"
   },
   {
+   "file": "reports/webcam/galleria/2026-10-23-alba-valle-del-diaterna.jpg",
+   "data": "2026-10-23",
+   "momento": "alba",
+   "categoria": "alba",
+   "webcam": "Valle del Diaterna (770 m)",
+   "fonte": "FirenzeMeteo",
+   "link": "https://www.firenzemeteo.it/webcam/appennino/toscana/"
+  },
+  {
+   "file": "reports/webcam/galleria/2026-10-23-alba-passo-del-muraglione.jpg",
+   "data": "2026-10-23",
+   "momento": "alba",
+   "categoria": "alba",
+   "webcam": "Passo del Muraglione (907 m) · LIVE",
+   "fonte": "Meteo Pedemontana Forlivese",
+   "link": "https://stream-meteoproject.eu/"
+  },
+  {
    "file": "reports/webcam/galleria/2026-10-19-alba-passo-della-futa.jpg",
    "data": "2026-10-19",
    "momento": "alba",
