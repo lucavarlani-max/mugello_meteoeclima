@@ -1013,7 +1013,7 @@
   "2026-10-24": {
    "ora": "07:49",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.9,
@@ -1083,7 +1083,8 @@
    "luce": 124.4,
    "contrasto": 0.478,
    "contrasto_sfondo": 0.255,
-   "foto": "reports/nebbia/2026-10-24.jpg"
+   "foto": "reports/nebbia/2026-10-24.jpg",
+   "cielo": "nuvoloso"
   }
  }
 }
