@@ -269,7 +269,7 @@
       <p>Fonti:
         <a href="https://www.ilfilo.net/stazione-meteo-del-passo-della-futa/" target="_blank" rel="noopener">Passo della Futa</a>
         (Davis Vantage Pro2, Associazione Il Filo, rete Meteo Project) ·
-        <a href="https://www.toscana-meteo.it/stazioni.php?id=135" target="_blank" rel="noopener">Montegiovi</a>
+        <a href="https://www.toscana-meteo.it/localita/vicchio1/" target="_blank" rel="noopener">Montegiovi</a>
         (rete toscana-meteo.it) ·
         <a href="https://meteo-pedemontanaforlivese.it/index.php#stazioni" target="_blank" rel="noopener">Passo della Colla</a>
         (Davis Pro, Meteo Pedemontana Forlivese) ·
@@ -308,7 +308,7 @@
   const quando=s=>s.ora&&s.ora.quando?Date.parse(s.ora.quando):null;
   const SCHEDA={
     futa:{strumento:"Davis Vantage Pro2",webcam:"webcam.html"},
-    montegiovi:{},
+    montegiovi:{strumento:"Froggit 2000"},
     colla:{strumento:"Davis Pro",webcam:"webcam.html"},
     giogo:{strumento:"stazione termo-pluvio-anemometrica del Centro Funzionale"},
     consuma:{strumento:"stazione termo-pluviometrica del Centro Funzionale"}
