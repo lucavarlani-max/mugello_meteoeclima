@@ -33,6 +33,7 @@
     --line:#e3e8e1; --line-soft:#eef1ec;
     --pine:#0f6b52; --pine-deep:#0a4f3c; --pine-tint:#e3f1eb;
     --warm:#c0392b; --cold:#2a64a8; --today:#fff7e6;
+    --ok:#1f8a4c; --warn:#b7791f; --bad:#c0392b;
     --serif:"Bricolage Grotesque",Georgia,serif;
     --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
     --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -46,6 +47,7 @@
       --line:#1e2c26; --line-soft:#182420;
       --pine:#3fae8b; --pine-deep:#8fd9c1; --pine-tint:#132a22;
       --warm:#f08a7c; --cold:#7fb3ec; --today:#1c1a12;
+      --ok:#4cc38a; --warn:#e0b04a; --bad:#f08a7c;
     }
   }
   :root[data-theme="dark"]{
@@ -54,6 +56,7 @@
     --line:#1e2c26; --line-soft:#182420;
     --pine:#3fae8b; --pine-deep:#8fd9c1; --pine-tint:#132a22;
     --warm:#f08a7c; --cold:#7fb3ec; --today:#1c1a12;
+    --ok:#4cc38a; --warn:#e0b04a; --bad:#f08a7c;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -122,6 +125,39 @@
   .tip .r i{width:9px;height:9px;border-radius:50%;display:inline-block}
   .tip .h{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:4px}
   .vuoto{color:var(--ink-faint);font-size:14px;padding:30px 0;text-align:center}
+  /* sintesi del giorno */
+  .sintesi{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:16px 18px}
+  .sintesi h2{font-size:clamp(19px,2.4vw,24px);font-weight:700;margin-bottom:12px}
+  .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+  .sg>div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:11px 13px}
+  .sg .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  .sg .v{font-family:var(--serif);font-size:24px;font-weight:700;line-height:1.1;margin-top:5px}
+  .sg .n{font-size:13.5px;color:var(--ink-soft);margin-top:2px}
+  .sintesi .nb{font-size:12.5px;color:var(--ink-faint);margin:10px 0 0}
+  .cmp td,.cmp th{white-space:nowrap}
+  .cmp td b{font-weight:600}
+  .cmp td small{color:var(--ink-faint)}
+  .cmp th[scope=row]{min-width:130px}
+  /* stato delle stazioni */
+  .st{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);white-space:nowrap}
+  .st i{width:10px;height:10px;border-radius:50%;background:var(--ok);flex:none}
+  .st.warn i{background:var(--warn)} .st.bad i{background:var(--bad)}
+  tbody th .st{margin-top:5px;font-weight:400}
+  .agg .st{font-family:var(--sans)}
+  .aggnota{font-size:12.5px;color:var(--ink-faint);margin:8px 0 0}
+  /* schede tecniche e dettagli */
+  details.acc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow);margin-bottom:10px}
+  details.acc>summary{cursor:pointer;list-style:none;padding:13px 16px;display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;font-weight:600}
+  details.acc>summary::-webkit-details-marker{display:none}
+  details.acc>summary::after{content:"▾";margin-left:auto;color:var(--ink-faint);transition:transform .15s}
+  details.acc[open]>summary::after{transform:rotate(180deg)}
+  details.acc>summary small{font-weight:400;color:var(--ink-faint);font-size:13px}
+  details.acc>summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:var(--r-sm)}
+  .acc dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0;padding:2px 16px 16px;font-size:14px}
+  .acc dt{color:var(--ink-faint)} .acc dd{margin:0}
+  .acc .corpo{padding:2px 16px 16px;font-size:14.5px;color:var(--ink-soft)}
+  details.note-acc{max-width:none}
+  details.note-acc .corpo{max-width:72ch}
   .foot{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;color:var(--ink-faint);font-size:12.5px}
   .foot .wrap{display:flex;gap:8px 18px;flex-wrap:wrap}
   .foot a{font-weight:600}
@@ -145,6 +181,12 @@
     </div>
   </section>
 
+  <section class="blk" id="sintesi-sez">
+    <div class="wrap">
+      <div class="sintesi" id="sintesi"><h2>Oggi sul crinale</h2><div class="sg"><div><div class="k">caricamento…</div></div></div></div>
+    </div>
+  </section>
+
   <section class="blk">
     <div class="wrap">
       <div class="tabhead">
@@ -159,6 +201,18 @@
         <span><b>raffica</b> massima del giorno (Futa, Montegiovi e Giogo)</span>
         <span>accanto al valore, l'ora in cui è stato misurato (quando la stazione la indica)</span>
       </div>
+      <p class="aggnota">Il sito si aggiorna ogni 30 minuti, ma GitHub, che lo esegue, a volte lo fa partire solo ogni 2-4 ore.
+        Il pallino accanto a ogni stazione dice quanto è fresca la sua ultima lettura:
+        <span class="st"><i></i>aggiornata</span> (meno di 2 ore) ·
+        <span class="st warn"><i></i>in ritardo</span> (2-6 ore) ·
+        <span class="st bad"><i></i>ferma</span> (oltre 6 ore o nessun dato).</p>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="tabhead"><h2>Chi vince, giorno per giorno</h2><span class="agg" id="cmp-nota"></span></div>
+      <div class="tabwrap"><table class="cmp" id="cmp"><thead></thead><tbody></tbody></table></div>
     </div>
   </section>
 
@@ -181,8 +235,19 @@
   </section>
 
   <section class="blk">
-    <div class="wrap note">
-      <h2>Come sono raccolti i dati</h2>
+    <div class="wrap">
+      <div class="tabhead"><h2>Le cinque stazioni</h2></div>
+      <div id="schede"></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <details class="acc note-acc" id="perche">
+        <summary>Perché a volte manca un dato? <small>come leggiamo i dati, in breve</small></summary>
+        <div class="corpo note">
+      <p>In breve: le stazioni sono di cinque reti diverse e solo alcune tengono lo storico, quindi se un valore manca o è segnato
+        «parziale» di solito è perché la stazione era irraggiungibile in quel momento. Qui sotto trovi i dettagli.</p>
       <p>Futa, Montegiovi e Colla pubblicano solo la temperatura del momento e gli estremi del giorno in corso. Lo storico lo costruisce
         il sito: a ogni aggiornamento automatico legge le pagine e, per ogni giorno, conserva la massima più alta e la minima più bassa
         indicate dalla stazione, la pioggia del giorno più alta (il pluviometro si azzera a mezzanotte) e la raffica più forte.
@@ -211,6 +276,8 @@
         <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS11000108&amp;title=TOS11000108_termo&amp;type=termo" target="_blank" rel="noopener">Passo del Giogo</a>
         e <a href="https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=TOS01001041&amp;title=TOS01001041_termo&amp;type=termo" target="_blank" rel="noopener">Consuma</a>
         (Centro Funzionale Regione Toscana, dati provvisori).</p>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -228,6 +295,85 @@
   // data di oggi in ora italiana, come le date del file
   const iso=d=>new Intl.DateTimeFormat("sv-SE",{timeZone:"Europe/Rome"}).format(d);
   const tab=document.getElementById("tab"), agg=document.getElementById("agg");
+  const ore=h=>h<48?Math.round(h)+(Math.round(h)===1?" ora":" ore"):Math.round(h/24)+" giorni";
+  // freschezza dell'ultima lettura: verde fino a 2 ore, giallo fino a 6, poi rosso
+  function stato(q){
+    if(q==null||!isFinite(q)) return {c:"bad",t:"nessun dato",d:"nessuna lettura disponibile"};
+    const h=(Date.now()-q)/36e5;
+    if(h<=2) return {c:"ok",t:"aggiornata",d:"ultima lettura "+ore(h)+" fa"};
+    if(h<=6) return {c:"warn",t:"in ritardo",d:"ultima lettura "+ore(h)+" fa"};
+    return {c:"bad",t:"ferma da "+ore(h),d:"ultima lettura "+ore(h)+" fa"};
+  }
+  const badge=st=>`<span class="st ${st.c==="ok"?"":st.c}" title="${esc(st.d)}"><i></i>${esc(st.t)}</span>`;
+  const quando=s=>s.ora&&s.ora.quando?Date.parse(s.ora.quando):null;
+  const SCHEDA={
+    futa:{strumento:"Davis Vantage Pro2",webcam:"webcam.html"},
+    montegiovi:{},
+    colla:{strumento:"Davis Pro",webcam:"webcam.html"},
+    giogo:{strumento:"stazione termo-pluvio-anemometrica del Centro Funzionale"},
+    consuma:{strumento:"stazione termo-pluviometrica del Centro Funzionale"}
+  };
+  const FREQ={futa:"solo il valore del momento",montegiovi:"un punto ogni 15 minuti",colla:"solo il valore del momento",giogo:"un valore ogni 15 minuti",consuma:"un valore ogni 15 minuti"};
+
+  // vincitori di un giorno: la più fredda (minima), la più calda (massima), la più ventosa (raffica), la più piovosa (pioggia)
+  function vincitori(D,g){
+    const r=D.stazioni.map(s=>({s,v:s.giorni&&s.giorni[g]})).filter(x=>x.v);
+    const best=(k,cmp)=>{let b=null; r.forEach(x=>{ if(x.v[k]!=null&&(!b||cmp(x.v[k],b.v[k]))) b=x; }); return b;};
+    const pioggia=best("pioggia",(a,b)=>a>b);
+    return {n:r.length, freddo:best("min",(a,b)=>a<b), caldo:best("max",(a,b)=>a>b), vento:best("raffica",(a,b)=>a>b),
+      pioggia:pioggia&&pioggia.v.pioggia>0?pioggia:null, asciutto:pioggia&&pioggia.v.pioggia===0,
+      senza:D.stazioni.filter(s=>!(s.giorni&&s.giorni[g])).map(s=>s.nome)};
+  }
+  const parziale=(v,g,oggi)=>g<oggi&&(v.ultima<"23:00"||(v.prima&&v.prima>"00:30"));
+  function sintesi(D,oggi,ieri){
+    const box=document.getElementById("sintesi");
+    let g=oggi, w=vincitori(D,g), titolo="Oggi sul crinale";
+    if(!w.n){ g=ieri; w=vincitori(D,g); titolo="Ieri sul crinale"; }
+    if(!w.n){ box.innerHTML='<h2>Oggi sul crinale</h2><p class="nb">Nessun dato disponibile al momento.</p>'; return; }
+    const c=(k,v,n)=>`<div><div class="k">${k}</div><div class="v">${v}</div><div class="n">${n}</div></div>`;
+    const nome=x=>esc(x.s.nome.replace(/^Passo del(la)? /,""));
+    const parti=[
+      w.freddo?c("la più fredda",f1(w.freddo.v.min),nome(w.freddo)+" · minima"+(g===oggi?" finora":"")):"",
+      w.caldo?c("la più calda",f1(w.caldo.v.max),nome(w.caldo)+" · massima"+(g===oggi?" finora":"")):"",
+      w.vento?c("la più ventosa",fn(w.vento.v.raffica,0)+" km/h",nome(w.vento)+" · raffica massima"):c("la più ventosa","—","nessuna raffica misurata"),
+      w.pioggia?c("la più piovosa",fn(w.pioggia.v.pioggia)+" mm",nome(w.pioggia)+" · pioggia"+(g===oggi?" finora":"")):c("la più piovosa",w.asciutto?"asciutto":"—",w.asciutto?"nessuna pioggia":"pioggia non misurata")
+    ].join("");
+    box.innerHTML=`<h2>${titolo}</h2><div class="sg">${parti}</div>`+
+      `<p class="nb">Il vento lo misurano solo Futa, Montegiovi e Passo del Giogo.`+
+      (w.senza.length?` Senza dati ${g===oggi?"di oggi":"di ieri"}: ${esc(w.senza.join(", "))}.`:"")+`</p>`;
+  }
+  function confronto(D,giorni,oggi,nomeG,dm){
+    const t=document.getElementById("cmp");
+    t.tHead.innerHTML='<tr><th scope="col"></th>'+giorni.map((g,k)=>`<th scope="col"${k===0?' class="oggi"':""}>${nomeG(g,k)}<small>${dm(g)}${k===0?" · finora":""}</small></th>`).join("")+"</tr>";
+    const W=giorni.map(g=>vincitori(D,g));
+    const cella=(x,fmt,g,k,ok=true)=>{
+      if(!x) return `<td${k===0?' class="oggi"':""}><span class="nd">—</span></td>`;
+      const pz=parziale(x.v,g,oggi);
+      return `<td${k===0?' class="oggi"':""}>${esc(x.s.nome.replace(/^Passo del(la)? /,""))} <b>${fmt(x.v)}</b>${pz?' <small title="giorno con letture incomplete">*</small>':""}</td>`;
+    };
+    const righe=[
+      ["La più fredda","freddo",v=>f1(v.min)],["La più calda","caldo",v=>f1(v.max)],
+      ["La più ventosa","vento",v=>fn(v.raffica,0)+" km/h"],["La più piovosa","pioggia",v=>fn(v.pioggia)+" mm"]];
+    t.tBodies[0].innerHTML=righe.map(([tit,k,fmt])=>`<tr><th scope="row">${tit}</th>`+
+      giorni.map((g,i)=>k==="pioggia"&&!W[i].pioggia&&W[i].asciutto?`<td${i===0?' class="oggi"':""}><span class="nd">asciutto</span></td>`:cella(W[i][k],fmt,g,i)).join("")+"</tr>").join("");
+    const unaParz=D.stazioni.some(s=>giorni.some((g,i)=>g<oggi&&s.giorni&&s.giorni[g]&&parziale(s.giorni[g],g,oggi)));
+    document.getElementById("cmp-nota").textContent=unaParz?"* giorno con letture incomplete: i valori potrebbero non essere quelli veri":"";
+  }
+  function schede(D){
+    document.getElementById("schede").innerHTML=D.stazioni.map(s=>{
+      const sc=SCHEDA[s.id]||{}, st=stato(quando(s));
+      const g=Object.values(s.giorni||{});
+      const misura=["temperatura"].concat(g.some(v=>v.pioggia!=null)?["pioggia"]:[],g.some(v=>v.raffica!=null)?["raffiche"]:[]).join(", ");
+      const rig=[
+        ["Comune",esc(s.comune||"")], ["Quota",s.quota?s.quota+" m s.l.m.":null], ["Rete",esc(s.rete||"")], ["Strumento",sc.strumento],
+        ["Misura",misura], ["Dati",FREQ[s.id]], ["Stato",badge(st)+(s.ora&&s.ora.quando?" · "+new Date(s.ora.quando).toLocaleString("it-IT",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"}):"")],
+        ["Webcam",sc.webcam?`<a href="${sc.webcam}">guarda le webcam del sito</a>`:null],
+        ["Pagina della stazione",s.pagina?`<a href="${esc(s.pagina)}" target="_blank" rel="noopener">${esc(new URL(s.pagina).hostname.replace(/^www\./,""))}</a>`:null]
+      ].filter(r=>r[1]);   // i valori sono già HTML sicuro (testi fissi o escapati)
+      return `<details class="acc"><summary>${esc(s.nome)} <small>${[s.quota?s.quota+" m":null,s.comune].filter(Boolean).join(" · ")}</small> ${badge(st)}</summary><dl>`+
+        rig.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")+`</dl></details>`;
+    }).join("");
+  }
 
 
   // ---------- grafici (SVG disegnati a mano, ridisegnati quando cambia la larghezza) ----------
@@ -357,11 +503,14 @@
             (v.raffica!=null?`<span>raffica <b>${fn(v.raffica)}</b> km/h${v.hraffica?` <i>${v.hraffica}</i>`:""}</span>`:"")+`</div>`:"")+
           (parz?`<span class="parz" title="letture dalle ${esc(v.prima||"00:00")} alle ${esc(v.ultima)}">parziale · ${v.ultima<"23:00"?"fino alle "+esc(v.ultima):"dalle "+esc(v.prima)}</span>`:"")+`</td>`;
       }).join("");
-      return `<tr><th scope="row"><a href="${esc(s.pagina)}" target="_blank" rel="noopener">${esc(s.nome)}</a><small>${esc(sotto)}</small></th><td>${ora}</td>${celle}</tr>`;
+      return `<tr><th scope="row"><a href="${esc(s.pagina)}" target="_blank" rel="noopener">${esc(s.nome)}</a><small>${esc(sotto)}</small>${badge(stato(quando(s)))}</th><td>${ora}</td>${celle}</tr>`;
     }).join("");
     const a=new Date(D.aggiornato);
     grafici(D);
-    agg.textContent="aggiornato il "+a.toLocaleString("it-IT",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"});
+    const sg=stato(a.getTime());
+    agg.innerHTML="ultimo giro: <b>"+a.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"})+"</b> del "+
+      a.toLocaleDateString("it-IT",{day:"numeric",month:"long",timeZone:"Europe/Rome"})+" · "+badge(sg);
+    sintesi(D,oggi,giorni[1]); confronto(D,giorni,oggi,nomeG,dm); schede(D);
   }).catch(e=>{ agg.textContent="dati non disponibili ("+e.message+")"; });
 })();
 </script>
