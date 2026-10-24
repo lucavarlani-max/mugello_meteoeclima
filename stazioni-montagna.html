@@ -502,7 +502,8 @@
   (function(){
     const box=document.getElementById("cam"), sel=document.getElementById("cam-sel"), img=document.getElementById("cam-img"),
       lnk=document.getElementById("cam-link"), nota=document.getElementById("cam-nota");
-    const VOCI=[["Futa",/^Passo della Futa/],["Colla",/^Passo della Colla/],["Monte Giovi",/^Monte Giovi/],["Consuma",/^Passo della Consuma/]];
+    const VOCI=[["Futa",/^Passo della Futa/],["Colla",/^Passo della Colla/],["Monte Giovi",/^Monte Giovi/],["Consuma",/^Passo della Consuma/],
+      ["Muraglione",/^Passo del Muraglione/],["Diaterna",/^Valle del Diaterna \(/],["Pietramala",/^Pietramala/]];
     let cams=[], cur=0;
     const nome=w=>w.nome.replace(/\s*·\s*LIVE\s*$/i,"");
     const fresca=u=>u+(u.includes("?")?"&":"?")+"_t="+Math.floor(Date.now()/3e5);   // aggira la copia in cache del browser
