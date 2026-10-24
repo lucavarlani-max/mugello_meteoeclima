@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Estremi giornalieri di temperatura di cinque stazioni di montagna intorno al Mugello, per la pagina
+Estremi giornalieri di temperatura di otto stazioni di montagna intorno al Mugello, per la pagina
 «Stazioni in montagna» (stazioni-montagna.html).
 
 Le stazioni pubblicano solo i valori del momento e gli estremi del giorno in corso: lo storico degli ultimi giorni lo
@@ -9,17 +9,24 @@ e la minima più bassa lette. Fonti:
   futa       Passo della Futa (Firenzuola, 963 m), Davis Vantage Pro2 dell'Associazione Il Filo, rete Meteo Project
              https://stazioni.meteoproject.it/dati/passofuta/index-vuoto.php (la pagina incorporata da ilfilo.net)
              «Dati aggiornati il 18/10/26 alle ore 19.00», «Estremi Oggi» con l'ora della massima e della minima
-  montegiovi Montegiovi (Monte Giovi), stazione della rete toscana-meteo.it
-             https://www.toscana-meteo.it/stazioni.php?id=135
-             «Dati aggiornati 18:59-18/10/2026», «Estremi Oggi: <max> °C <min> °C»; la pagina contiene anche il grafico
-             della temperatura del giorno (Highcharts, un punto ogni 15 minuti), da cui si ricava l'ora degli estremi
+  montegiovi Montegiovi (Monte Giovi, Vicchio), stazione Froggit 2000 della rete toscana-meteo.it
+             https://www.toscana-meteo.it/localita/vicchio1/ (la pagina si compone da sola con JavaScript: i dati
+             vengono da due API JSON del sito, lette direttamente)
+             /api/v1/network  -> localities[slug=vicchio1].values: temp, lowtemp e hitemp (minima e massima del giorno),
+                                 rain (pioggia del giorno, mm), hiwind (raffica massima del giorno, km/h), observedAt
+             /api/history/vicchio1?metric=temp&period=24h -> temperatura ogni 15 minuti, da cui si ricava l'ora degli estremi
   colla      Passo della Colla (971 m), Davis Pro della rete Meteo Pedemontana Forlivese
              https://meteo-pedemontanaforlivese.it/index.php#stazioni
              scheda «Passo della Colla · Media montagna · 971 m», «min 12,8° · max 17,9°», «Online · 3 min fa»
              (nessuna data: l'istante della misura è l'ora della lettura meno i minuti indicati)
 
-  giogo      Passo del Giogo (Firenzuola, 880 m) e
-  consuma    Consuma (Pelago, 955 m), stazioni del Centro Funzionale Regione Toscana (TOS11000108, TOS01001041).
+  giogo      Passo del Giogo (Firenzuola, 880 m),
+  consuma    Consuma (Pelago, 955 m),
+  montedifo  Monte di Fò (820 m, bacino della Sieve),
+  bibbiana   Bibbiana (786 m, bacino del Reno) e
+  barco      Barco (780 m, bacino del Santerno), stazioni del Centro Funzionale Regione Toscana
+             (TOS11000108, TOS01001041, TOS01000916, TOS30248000, TOS30287500). Le ultime tre hanno temperatura e pioggia,
+             senza vento, con una lettura ogni 5, 30 e 15 minuti (la serie dei grafici si riduce a un punto ogni 15).
              Le pagine di dettaglio del CFR danno i valori ogni 15 minuti da ieri a mezzanotte:
              https://www.cfr.toscana.it/monitoraggio/dettaglio.php?id=<id>&title=<id>_termo&type=termo  (temperatura)
              ... type=pluvio (pioggia nei 15 minuti), type=anemo (vento medio/raffica in m/s, solo Giogo),
@@ -59,8 +66,8 @@ STAZIONI = [
      "rete": "Associazione Il Filo · Meteo Project", "pagina": "https://www.ilfilo.net/stazione-meteo-del-passo-della-futa/",
      "url": "https://stazioni.meteoproject.it/dati/passofuta/index-vuoto.php", "referer": "https://www.ilfilo.net/"},
     {"id": "montegiovi", "nome": "Montegiovi", "comune": "Vicchio", "quota": None,
-     "rete": "toscana-meteo.it", "pagina": "https://www.toscana-meteo.it/stazioni.php?id=135",
-     "url": "https://www.toscana-meteo.it/stazioni.php?id=135", "referer": "https://www.toscana-meteo.it/"},
+     "rete": "toscana-meteo.it", "pagina": "https://www.toscana-meteo.it/localita/vicchio1/",
+     "url": "https://www.toscana-meteo.it/api/", "referer": "https://www.toscana-meteo.it/localita/vicchio1/"},
     {"id": "colla", "nome": "Passo della Colla", "comune": "Borgo San Lorenzo · Marradi", "quota": 971,
      "rete": "Meteo Pedemontana Forlivese", "pagina": "https://meteo-pedemontanaforlivese.it/index.php#stazioni",
      "url": "https://meteo-pedemontanaforlivese.it/index.php", "referer": "https://meteo-pedemontanaforlivese.it/"},
@@ -69,6 +76,15 @@ STAZIONI = [
      "url": None, "referer": None},
     {"id": "consuma", "nome": "Consuma", "comune": "Pelago", "quota": 955, "cfr": "TOS01001041",
      "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS01001041", ty="termo"),
+     "url": None, "referer": None},
+    {"id": "montedifo", "nome": "Monte di Fò", "comune": "Barberino di Mugello", "quota": 820, "cfr": "TOS01000916",
+     "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS01000916", ty="termo"),
+     "url": None, "referer": None},
+    {"id": "bibbiana", "nome": "Bibbiana", "comune": "bacino del Reno", "quota": 786, "cfr": "TOS30248000",
+     "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS30248000", ty="termo"),
+     "url": None, "referer": None},
+    {"id": "barco", "nome": "Barco", "comune": "bacino del Santerno", "quota": 780, "cfr": "TOS30287500",
+     "rete": "Centro Funzionale Regione Toscana", "pagina": CFR_DETT.format(id="TOS30287500", ty="termo"),
      "url": None, "referer": None},
 ]
 
@@ -110,35 +126,38 @@ def futa(s):
     return out
 
 
-def montegiovi(s):
-    x = testo(s)
-    m = re.search(r"Dati aggiornati (\d\d):(\d\d)-(\d\d)/(\d\d)/(\d{4})", x)
-    hh, mm, g, me, a = (int(v) for v in m.groups())
-    quando = dt.datetime(a, me, g, hh, mm, tzinfo=ROMA)
-    t = re.search(r"Temperatura: (-?[\d.]+) °C", x)
-    e = re.search(r"Estremi Oggi: (-?[\d.]+) °C (-?[\d.]+) °C", x)
-    a1, a2 = float(e.group(1)), float(e.group(2))
-    out = {"quando": quando, "t": float(t.group(1)) if t else None, "max": max(a1, a2), "min": min(a1, a2)}
-    for k, rx in (("pioggia", r"Pioggia giorno: (-?[\d.]+) mm"), ("raffica", r"Raffica giornaliera: ([\d.]+) Km/h")):
-        m = re.search(rx, x)
-        if m:
-            out[k] = float(m.group(1))
-    # ora degli estremi dal grafico della temperatura del giorno, se il grafico arriva allo stesso valore
-    g = re.search(r"name:'Temperatura',data:(\[\[.*?\]\])\}", s)
-    if g:
-        # i tempi del grafico sono l'ora locale scritta come se fosse sempre ora solare (UTC+1): con l'ora legale
-        # l'ultimo punto risulterebbe un'ora dopo «Dati aggiornati». Si rilegge l'ora come ora locale.
-        cet = dt.timezone(dt.timedelta(hours=1))
-        punti = [(dt.datetime.fromtimestamp(ms / 1000, cet).replace(tzinfo=ROMA), v) for ms, v in json.loads(g.group(1))]
-        punti = [(q, v) for q, v in punti if q.date() == quando.date() and v is not None]
-        out["punti"] = [(q.replace(second=0, microsecond=0), v) for q, v in punti if -40 < v < 45 and q <= quando]
-        if punti:
-            qx, vx = max(punti, key=lambda p: p[1])
-            qn, vn = min(punti, key=lambda p: p[1])
-            if abs(vx - out["max"]) <= 0.2:
-                out["hmax"] = qx.strftime("%H:%M")
-            if abs(vn - out["min"]) <= 0.2:
-                out["hmin"] = qn.strftime("%H:%M")
+def montegiovi(st):
+    """Montegiovi dalle API JSON di toscana-meteo.it (la pagina della stazione è composta da JavaScript)."""
+    rete = json.loads(scarica(st["url"] + "v1/network", st["referer"]))
+    loc = next(l for l in rete["localities"] if l.get("slug") == "vicchio1")
+    v, qual = loc["values"], loc.get("quality", {})
+    quando = dt.datetime.fromisoformat(loc["observedAt"]).astimezone(ROMA).replace(second=0, microsecond=0)
+
+    def val(k):
+        return v.get(k) if v.get(k) is not None and qual.get(k, "ok") == "ok" else None
+    # hitemp, lowtemp e hiwind sono gli estremi del giorno (la pagina li presenta come tali)
+    if val("hitemp") is None or val("lowtemp") is None:
+        raise ValueError("estremi di temperatura non disponibili")
+    out = {"quando": quando, "t": val("temp"), "max": val("hitemp"), "min": val("lowtemp")}
+    if val("rain") is not None:
+        out["pioggia"] = val("rain")      # pioggia del giorno, mm
+    if val("hiwind") is not None:
+        out["raffica"] = val("hiwind")    # raffica massima del giorno, km/h
+    # ora degli estremi dal grafico della temperatura (un punto ogni 15 minuti), se arriva a un valore vicino
+    # a quello della stazione (i punti sono campioni: la massima vera può essere un po' più alta)
+    storia = json.loads(scarica(st["url"] + "history/vicchio1?metric=temp&period=24h", st["referer"]))
+    punti = [(dt.datetime.fromtimestamp(ms / 1000, ROMA).replace(second=0, microsecond=0), t)
+             for ms, t in storia.get("points", []) if t is not None and -40 < t < 45]
+    punti = [(q, t) for q, t in punti if q <= quando]
+    out["punti"] = punti
+    oggi = [(q, t) for q, t in punti if q.date() == quando.date()]
+    if oggi:
+        qx, vx = max(oggi, key=lambda p: p[1])
+        qn, vn = min(oggi, key=lambda p: p[1])
+        if abs(vx - out["max"]) <= 0.5:
+            out["hmax"] = qx.strftime("%H:%M")
+        if abs(vn - out["min"]) <= 0.5:
+            out["hmin"] = qn.strftime("%H:%M")
     return out
 
 
@@ -218,7 +237,9 @@ def cfr(st, adesso):
                 giorni[d]["raffica"], giorni[d]["hraffica"] = r, q.strftime("%H:%M")
     q, t = temp[-1]
     out = {k: v for k, v in giorni[q.date().isoformat()].items() if k not in ("prima", "ultima")}
-    out.update({"quando": q, "t": t, "giorni": giorni, "punti": temp})
+    # la serie dei grafici ha un punto ogni 15 minuti (alcune stazioni ne danno uno ogni 5), più l'ultima lettura
+    punti = [(qq, v) for qq, v in temp if qq.minute % 15 == 0 or qq == q]
+    out.update({"quando": q, "t": t, "giorni": giorni, "punti": punti})
     # pioggia del mese: giorni passati dalla pagina dei 30 giorni più quella di oggi
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -249,9 +270,11 @@ def main():
         try:
             if st.get("cfr"):
                 l = cfr(st, adesso)
+            elif st["id"] == "montegiovi":
+                l = montegiovi(st)
             else:
-                s = scarica(st["url"], st["referer"], "latin-1" if st["id"] == "montegiovi" else "utf-8")
-                l = futa(s) if st["id"] == "futa" else montegiovi(s) if st["id"] == "montegiovi" else colla(s, adesso)
+                s = scarica(st["url"], st["referer"])
+                l = futa(s) if st["id"] == "futa" else colla(s, adesso)
             q = l["quando"]
             if adesso - q > dt.timedelta(hours=3) or q - adesso > dt.timedelta(minutes=30):
                 raise ValueError(f"misura non recente: {q:%Y-%m-%d %H:%M}")
