@@ -1,7 +1,233 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-20",
+ "aggiornato": "2026-10-23",
  "numeri": [
+  {
+   "data": "2026-10-23",
+   "apertura": {
+    "cat": "terremoti",
+    "titolo": "Terremoto Mw 5,5 nel Tirreno meridionale, allerta maremoto poi revocata",
+    "testo": "Alle 12:19 del 23 ottobre, a nord-ovest delle Eolie, una scossa Mw 5,5 (prima stima ML 5,0) a circa 9 km di profondità, avvertita a Palermo, Messina, Trapani e nelle isole. L'allerta tsunami di livello Advisory delle 12:29 è stata revocata alle 13:22 perché i mareografi non hanno visto variazioni; a Palermo lezioni sospese e scuole evacuate, nessun danno segnalato.",
+    "fonte": "INGV Terremoti",
+    "url": "https://ingvterremoti.com/2026/10/23/allerta-tsunami-diramata-e-poi-cancellata-per-il-terremoto-mw-5-5-nel-tirreno-meridionale-23-ottobre-2026/",
+    "foto": "sismo1"
+   },
+   "numero": {
+    "valore": "5,5",
+    "testo": "La magnitudo momento del terremoto avvenuto a nord-ovest delle Eolie alle 12:19 del 23 ottobre, secondo l'INGV (la prima stima era ML 5,0)."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Una sequenza di oltre 60 scosse",
+     "testo": "Alla scossa principale sono seguite decine di repliche e l'INGV parla di sequenza ancora attiva: una scossa delle 15:55, stimata all'inizio fra 5,0 e 5,5, è stata poi portata a magnitudo 4,6.",
+     "fonte": "Il Messaggero / Giornale di Sicilia",
+     "url": "https://www.ilmessaggero.it/scienza/terremoto_tirreno_sicilia_60_scosse_magnitudo_5_5-9844278.html",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Vance, uragano al largo del Messico",
+     "testo": "Il National Hurricane Center segue l'uragano Vance a diverse centinaia di miglia a sud-sud-ovest di Acapulco; nell'Atlantico nessun ciclone attivo e nessuna formazione prevista nei prossimi sette giorni.",
+     "fonte": "NOAA National Hurricane Center",
+     "url": "https://www.nhc.noaa.gov/gtwo.php",
+     "foto": "uragano2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Champi, piogge forti su Batanes",
+     "testo": "Il super tifone, chiamato Rosal nelle Filippine, continua a portare piogge da moderate a forti sull'isola di Batanes, ma non è previsto che tocchi terra nel Paese.",
+     "fonte": "Rappler / PAGASA",
+     "url": "https://www.rappler.com/philippines/weather/typhoon-rosal-update-pagasa-forecast-october-23-2026-5am/",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "temporali",
+     "titolo": "Torna il maltempo sulla Toscana nord-occidentale",
+     "testo": "Venerdì 23 ottobre allerta gialla per temporali forti su Versilia, Lunigiana, Garfagnana e bacino della Lima, con piogge intense nel nord-ovest; nel weekend tempo instabile e il primo vero freddo della stagione.",
+     "fonte": "PisaToday / LaMMA Toscana",
+     "url": "https://www.pisatoday.it/meteo/allerta-temporali-toscana-23-ottobre-2026.html",
+     "foto": "fulmine"
+    },
+    {
+     "cat": "cielo",
+     "titolo": "Una CME in arrivo, possibile tempesta geomagnetica",
+     "testo": "Un'espulsione di massa coronale potrebbe sfiorare la Terra il 24 ottobre: i previsori danno attività moderata (Kp 4) e una possibilità di tempesta G1 alle alte latitudini; la regione più attiva ha prodotto solo un brillamento C3,3.",
+     "fonte": "EarthSky",
+     "url": "https://earthsky.org/sun/sun-news-activity-solar-flare-cme-aurora-updates/",
+     "foto": "tramonto2"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Venerdì 23 ottobre rovesci e temporali nel pomeriggio, più probabili a nord-ovest; sabato piogge nella notte e al mattino soprattutto nelle zone interne, poi migliora; domenica da poco a parzialmente nuvoloso, con minime sotto i 10 °C, nebbie nei fondovalle interni e massime attorno a 13–15 °C in diverse città.",
+     "fonte": "LaMMA Toscana / Corriere Toscano"
+    },
+    {
+     "tipo": "storia",
+     "testo": "2015: il 23 ottobre l'uragano Patricia, nel Pacifico messicano, tocca 872 hPa di pressione centrale e venti di circa 345 km/h: il più intenso uragano mai registrato nell'emisfero occidentale. Tocca terra in Messico, in Jalisco, poche ore dopo.",
+     "fonte": "NOAA AOML / Wikipedia"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "La pressione più bassa mai misurata a livello del mare in un ciclone tropicale è di 870 hPa, nel tifone Tip del 1979: circa il 14% in meno della pressione media di 1013 hPa.",
+     "fonte": "NOAA / WMO"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:38 e tramonta alle 18:18, circa 10 ore e 39 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa crescente, illuminata al 91%; domenica 25 ottobre alle 3 le lancette tornano indietro di un'ora (ora solare) e lunedì alle 5:11 c'è la Luna piena."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-22",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "2026 anno più caldo? Berkeley Earth dice 96%, altri sono più prudenti",
+    "testo": "Dopo un settembre 2026 secondo più caldo mai registrato (1,65 °C sopra l'era preindustriale) e con gli oceani da record, Berkeley Earth stima circa il 96% di probabilità che il 2026 sia l'anno più caldo; la NASA e Zeke Hausfather indicano invece il primo o il secondo posto, con un record quasi certo nel 2027.",
+    "fonte": "Berkeley Earth / Yale Climate Connections",
+    "url": "https://berkeleyearth.org/september-2026-temperature-update/",
+    "foto": "terra"
+   },
+   "numero": {
+    "valore": "96%",
+    "testo": "La probabilità, secondo Berkeley Earth, che il 2026 diventi l'anno più caldo mai registrato; un mese fa era circa il 93%."
+   },
+   "storie": [
+    {
+     "cat": "temporali",
+     "titolo": "Ultime piogge, poi il Maestrale",
+     "testo": "Giovedì 22 ottobre le ultime piogge si esauriscono con qualche schiarita, mentre il Maestrale rinforza e lascia i mari molto mossi lungo la costa; venerdì è atteso un nuovo peggioramento.",
+     "fonte": "Meteo.it / La Nazione",
+     "url": "https://www.meteo.it/notizie/meteo-oggi-giovedi-22-ottobre-ultime-piogge-ma-arriva-il-maestrale-34b53e13",
+     "foto": "tornado"
+    },
+    {
+     "cat": "cielo",
+     "titolo": "Tempesta geomagnetica minore nella notte",
+     "testo": "Il vento solare veloce di un buco coronale ha superato la soglia di tempesta geomagnetica (Kp 5, livello G1) alle 23:59 UTC del 21 ottobre; i brillamenti restano deboli, di classe C.",
+     "fonte": "EarthSky / NOAA SWPC",
+     "url": "https://earthsky.org/sun/sun-news-activity-solar-flare-cme-aurora-updates/",
+     "foto": "tramonto"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Taiwan si prepara a Champi",
+     "testo": "Il super tifone, il più forte dell'anno, si avvicina all'isola con previsioni di traiettoria ancora incerte: attese piogge molto intense e voli cancellati in Asia orientale.",
+     "fonte": "IBTimes",
+     "url": "https://www.ibtimes.co.uk/typhoon-champi-taiwan-east-asia-travel-disruption-1827570",
+     "foto": "uragano2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Sakurajima, esplosioni quasi quotidiane",
+     "testo": "Nel corso di ottobre il vulcano giapponese ha avuto eruzioni quasi ogni giorno, senza nubi di cenere significative visibili dai satelliti.",
+     "fonte": "VolcanoDiscovery / JMA",
+     "url": "https://www.volcanodiscovery.com/volcano-activity/news/382329/Volcanic-activity-worldwide-18-Oct-2026-Santiaguito-volcano-Fuego-Krakatau-Semeru-Ibu-Dukono-.html",
+     "foto": "krakatau"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Giovedì 22 ottobre ultime piogge e schiarite, nuvolosità sui rilievi nel pomeriggio, vento moderato e temperature stabili, con minime attorno a 11–12 °C nelle valli. Venerdì nuovo peggioramento; nel weekend il primo vero freddo della stagione.",
+     "fonte": "LaMMA Toscana / La Nazione"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1976: il 22 ottobre una nevicata precoce e pesante, fino a 30 cm a Cherry Creek (stato di New York), fa cadere i rami sui cavi elettrici e provoca blackout nella parte occidentale dello Stato.",
+     "fonte": "NWS Buffalo"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "L'indice Kp misura da 0 a 9 il disturbo del campo magnetico terrestre; a Kp 5, il livello G1 delle tempeste geomagnetiche, le aurore si vedono alle alte latitudini.",
+     "fonte": "NOAA SWPC"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:37 e tramonta alle 18:19, circa 10 ore e 42 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa crescente, illuminata all'84%; la Luna piena è lunedì 26 ottobre alle 5:11."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-21",
+   "apertura": {
+    "cat": "terremoti",
+    "titolo": "Terremoto di magnitudo 3,8 sull'Etna, scuole evacuate nel Catanese",
+    "testo": "Alle 8:49 del 21 ottobre una scossa ML 3,8 (alcune fonti indicano 3,9), a circa 4 km di profondità e 7 km a ovest di Milo, nella Valle del Bove, è stata avvertita in tutta l'area ionico-etnea; scuole evacuate o chiuse per i controlli, nessun danno segnalato.",
+    "fonte": "INGV / NewSicilia",
+    "url": "https://newsicilia.it/terremoto-catania/terremoto/terremoto-etna-milo-valle-del-bove-scuole/1119561/",
+    "foto": "etna"
+   },
+   "numero": {
+    "valore": "3,8",
+    "testo": "La magnitudo ML della scossa registrata sull'Etna alle 8:49, nella Valle del Bove: la più forte della giornata in Italia."
+   },
+   "storie": [
+    {
+     "cat": "temporali",
+     "titolo": "Allerta su tutta la Toscana",
+     "testo": "Il 21 ottobre allerta gialla per temporali e rischio idrogeologico sull'intera regione fino a mezzogiorno, arancione per temporali all'Elba e nell'Arcipelago; vento forte sull'Alto Mugello, con raffiche di 80–100 km/h dal tardo pomeriggio.",
+     "fonte": "Telegranducato / CFR Toscana",
+     "url": "https://www.telegranducato.it/2026/10/20/nuova-allerta-meteo-in-tutta-la-toscana-il-21-ottobre/",
+     "foto": "fulmine"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Champi, il tifone più forte del 2026",
+     "testo": "Il super tifone, chiamato Rosal nelle Filippine, ha raggiunto circa 296 km/h il 20 ottobre secondo le stime NASA, valore che ne fa il ciclone tropicale più intenso dell'anno; le altre agenzie danno cifre diverse. Su Batanes resta il segnale n. 2.",
+     "fonte": "The Watchers",
+     "url": "https://watchers.news/2026/10/21/super-typhoon-champi-becomes-the-strongest-tropical-cyclone-of-2026-signal-no-2-remains-over-batanes-philippines/",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Tirreno meridionale, scossa di magnitudo 3,6",
+     "testo": "Poco dopo mezzanotte, alle 00:07 del 21 ottobre, l'INGV ha localizzato in mare un terremoto ML 3,6 (4,1 con il calcolo del tensore di momento), seguito da una scossa ML 2,2 e da una ML 2,6 al mattino.",
+     "fonte": "INGV",
+     "url": "http://terremoti.ingv.it/event/47587872",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "clima",
+     "titolo": "NOAA: El Niño forte almeno fino a inizio 2027",
+     "testo": "Il bollettino di ottobre del Climate Prediction Center indica come molto probabile, con oltre l'83%, un evento da forte a molto forte fino a gennaio-marzo 2027.",
+     "fonte": "NOAA Climate Prediction Center",
+     "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_disc_oct2026/ensodisc.shtml",
+     "foto": "oceano"
+    },
+    {
+     "cat": "cielo",
+     "titolo": "Orionidi, la notte del picco",
+     "testo": "Fra il 21 e il 22 ottobre il massimo delle «stelle cadenti d'autunno», fino a circa 20 meteore all'ora in condizioni ideali, ma con la Luna all'80% che copre le più deboli: meglio osservare nelle ultime ore della notte.",
+     "fonte": "Geopop / American Meteor Society",
+     "url": "https://www.geopop.it/arrivano-le-orionidi-le-stelle-cadenti-dautunno-quando-e-come-vedere-il-picco-del-21-22-ottobre/",
+     "foto": "tramonto2"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Mercoledì 21 ottobre piogge e temporali con allerta gialla sull'intera Toscana fino a mezzogiorno; sull'Alto Mugello allerta gialla per vento forte da metà pomeriggio, con raffiche fino a 80–100 km/h. Giovedì miglioramento, ma temporaneo.",
+     "fonte": "CFR Toscana / La Nazione"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1805: il 21 ottobre la battaglia di Trafalgar. Il giorno dopo una violenta tempesta affonda o disperde gran parte delle navi francesi e spagnole catturate dagli inglesi.",
+     "fonte": "Wikipedia"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Le Orionidi sono i detriti della cometa di Halley: la Terra attraversa la scia due volte l'anno, a ottobre (Orionidi) e a maggio (Eta Aquaridi). I granelli, grandi come la polvere, bruciano a circa 66 km/s.",
+     "fonte": "NASA"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:36 e tramonta alle 18:21, circa 10 ore e 45 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa crescente, illuminata al 76%; la Luna piena è lunedì 26 ottobre alle 5:11."
+    }
+   ]
+  },
   {
    "data": "2026-10-20",
    "apertura": {
