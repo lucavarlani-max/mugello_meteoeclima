@@ -863,7 +863,7 @@
   "2026-10-22": {
    "ora": "07:47",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.6,
@@ -932,7 +932,8 @@
    "luce": 126.7,
    "contrasto": 0.411,
    "contrasto_sfondo": 0.213,
-   "foto": "reports/nebbia/2026-10-22.jpg"
+   "foto": "reports/nebbia/2026-10-22.jpg",
+   "cielo": "nuvoloso"
   },
   "2026-10-23": {
    "ora": "07:48",
