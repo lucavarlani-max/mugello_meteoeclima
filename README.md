@@ -1,7 +1,7 @@
 # Mugello Meteo & Clima
 
 Portale meteo-climatico della vallata del Mugello (Toscana): previsioni, dati in
-tempo reale e analisi per i nove comuni, da Firenzuola a Dicomano.
+tempo reale e analisi per gli undici comuni, da Firenzuola a San Godenzo.
 
 Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice inclusi).
 
@@ -10,7 +10,7 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
 - **Adesso** — dati in tempo reale dalla stazione personale **ISCARP2** (Scarperia)
   su Weather Underground: temperatura, vento, umidità, pressione, pioggia.
   Aggiornamento ogni 5 minuti; se la stazione è offline ripiega su Open-Meteo.
-- **Previsioni 9 comuni + 7 giorni** — modello AI **WeatherNext 3** di Google
+- **Previsioni 11 comuni + 7 giorni** — modello AI **WeatherNext 3** di Google
   (DeepMind), tramite la Google Weather API, aggiornate dalla GitHub Action che
   scrive `data/previsioni.json`. Per ogni giorno: icona, massima, minima, probabilità di pioggia (`pp`, %)
   e pioggia prevista (`mm`, somma di giorno e notte dalla `qpf` di Google, `precipitation_sum` con Open-Meteo). Se la chiave manca o l'API non risponde, ripiega
@@ -164,7 +164,7 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   tema (o con un tema sconosciuto) finisce in "Altre prove". Le pagine delle nuove sperimentazioni si chiamano `geek-<nome>.html` e partono
   dal modello `geek-modello.html` (non indicizzato); nel menu evidenziano MeteoGeek.
   **Verifica delle previsioni** (`geek-verifica-modello.html`): `scripts/fetch_verifica.py` (nel giro dell'Action `update-data`)
-  archivia le previsioni a 7 giorni dei nove comuni di WeatherNext 3 (solo se tutti da Google) e di Open-Meteo in
+  archivia le previsioni a 7 giorni degli undici comuni di WeatherNext 3 (solo se tutti da Google) e di Open-Meteo in
   `data/verifica/log.json` (per ogni giorno e anticipo, la previsione emessa entro le 12) e il riepilogo giornaliero di
   ISCARP2 (Weather Underground, chiave pubblica di `stazioni.js`) in `data/verifica/iscarp2.json`. La pagina li confronta con le misure
   (ISCARP2 per Scarperia e San Piero, SIR per Borgo San Lorenzo) e con persistenza e climatologia. Una tantum,
@@ -266,7 +266,7 @@ fb-post.html                   generatore immagini per Facebook e Instagram (fee
 manifest.webmanifest           PWA
 sw.js                          service worker (cache offline)
 icon-192.png / icon-512.png / icon-maskable-512.png / favicon-64.png
-data/previsioni.json           previsioni 9 comuni + 7 giorni (WeatherNext/Open-Meteo)
+data/previsioni.json           previsioni 11 comuni + 7 giorni (WeatherNext/Open-Meteo)
 data/fiumi.json                livelli fiumi + invaso (aggiornato dall'Action)
 data/bilancino.json            serie giornaliera invaso Bilancino (grafico)
 data/allerta.json              avviso criticità meteo mostrato nel banner in alto
@@ -302,7 +302,7 @@ Se una fonte non risponde, lo script mantiene l'ultimo valore valido.
 
 ## Previsioni WeatherNext (Google Weather API) — setup della chiave
 
-Le previsioni dei 9 comuni usano il modello AI **WeatherNext 3** di Google
+Le previsioni degli 11 comuni usano il modello AI **WeatherNext 3** di Google
 DeepMind tramite la **Google Weather API** (Google Maps Platform). La chiave NON
 sta nel sito statico: la legge solo la GitHub Action, da un *secret*.
 
