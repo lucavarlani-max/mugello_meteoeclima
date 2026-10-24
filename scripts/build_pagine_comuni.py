@@ -52,6 +52,10 @@ COMUNI = [
      "Dicomano è alla confluenza fra la Sieve e il torrente Comano, nella parte più orientale e più bassa "
      "del Mugello. Le temperature sono spesso un po' più miti rispetto ai paesi dell'alta valle, "
      "con estati calde e afose."),
+    ("londa", "Londa",
+     "Londa è l'ultimo comune del Mugello prima di Pontassieve, nella bassa valle della Sieve, dove il fiume si fa più stretto fra i versanti del Falterona e della Consuma. Le temperature sono simili a quelle del fondovalle di Dicomano, con notti fresche e nebbie nelle mattine tranquille d'autunno."),
+    ("san-godenzo", "San Godenzo",
+     "San Godenzo sorge sul versante appenninico del Mugello orientale, ai piedi dell'Alpe di San Benedetto e del Falterona, tra boschi di faggi e castagni. La quota e la vicinanza al crinale lo rendono più fresco e piovoso del fondovalle, con la neve che arriva prima."),
 ]
 
 SRC = open("comune.html", encoding="utf-8").read()
@@ -65,7 +69,7 @@ esc = html.escape
 # dati dei comuni (nome, quota, zona, wiki) letti dall'array COMUNI di comune.html
 J = re.search(r"const COMUNI=\[(.*?)\n  \];", SRC, re.S).group(1)
 ANAG = re.findall(r'n:"([^"]+)",\s*lat:([\d.]+),lon:([\d.]+),elev:(\d+),zona:"([^"]+)"', J)
-assert len(ANAG) == len(COMUNI) == 9, "elenco comuni non allineato a comune.html"
+assert len(ANAG) == len(COMUNI) == 11, "elenco comuni non allineato a comune.html"
 
 
 def mm_txt(v):
@@ -141,8 +145,8 @@ def build(idx):
     title = f"Meteo {nome}: previsioni oggi, domani e 7 giorni | Mugello Meteo"
     desc = (f"Previsioni meteo a {nome} ({quota} m, Mugello): temperatura e pioggia ora per ora, "
             f"prossimi 7 giorni, radar delle precipitazioni e dati in tempo reale.")
-    rec = prev["comuni"][idx]
-    assert rec["n"] == nome, (rec["n"], nome)
+    # i comuni aggiunti da poco possono non essere ancora in previsioni.json: la pagina resta dinamica
+    rec = next((c for c in prev["comuni"] if c["n"] == nome), {})
     giorni = rec.get("giorni") or []
 
     s = SRC
@@ -175,7 +179,7 @@ def build(idx):
       <div class="sh"><h2>Il meteo a {esc(nome)}</h2></div>
       <div class="card seo">
         <p>{esc(intro)}</p>
-        <p>{esc(riepilogo(nome, giorni))}</p>
+        {('<p>' + esc(riepilogo(nome, giorni)) + '</p>') if giorni else ''}
         <p>Le previsioni giornaliere sono del modello AI WeatherNext 3 di Google, il dettaglio orario è di Open-Meteo.
         Per i livelli dei fiumi, le allerte e il radar di tutta la vallata vai alla pagina
         <a href="radar.html">Radar &amp; dati</a>; per il clima storico guarda l'<a href="archivio-climatico.html">archivio climatico</a>.</p>

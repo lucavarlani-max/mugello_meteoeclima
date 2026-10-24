@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v90';
+const CACHE = 'mmc-v91';
 const SHELL = [
   './',
   './index.html',
@@ -28,6 +28,8 @@ const SHELL = [
   './meteo-borgo-san-lorenzo.html',
   './meteo-vicchio.html',
   './meteo-dicomano.html',
+  './meteo-londa.html',
+  './meteo-san-godenzo.html',
   './neve.html',
   './neve-firenze.html',
   './neve-new-york.html',

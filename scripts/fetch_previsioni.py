@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Previsioni per i 9 comuni del Mugello.
+Previsioni per gli 11 comuni del Mugello.
 
 Fonte primaria: Google Weather API (powered by WeatherNext 3, Google DeepMind).
   - forecast/days:lookup  -> 7 giorni (tmax, tmin, prob. pioggia, condizione)
@@ -30,6 +30,8 @@ COMUNI = [
     {"n": "Borgo San Lorenzo",      "lat": 43.9547, "lon": 11.3861},
     {"n": "Vicchio",                "lat": 43.9339, "lon": 11.4650},
     {"n": "Dicomano",               "lat": 43.8917, "lon": 11.5222},
+    {"n": "Londa",               "lat": 43.8628, "lon": 11.57},
+    {"n": "San Godenzo",         "lat": 43.93, "lon": 11.63},
 ]
 FCAST = 6  # Borgo San Lorenzo: riferimento 7 giorni / sole
 
