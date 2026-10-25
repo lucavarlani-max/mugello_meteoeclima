@@ -1168,23 +1168,23 @@
     "v": 3,
     "scarto_min": 0.0,
     "vento_medio": 0.6,
-    "nuvole_medie": 82,
+    "nuvole_medie": 88,
     "ore_soglie": 0,
     "ore": 13,
     "alba": "06:41",
     "scarto_alba": 0.0,
     "vento_alba": 0.5,
-    "dp_alba": 8.6,
-    "nuvole_alte": 17,
+    "dp_alba": 8.3,
+    "nuvole_alte": 20,
     "nubi_basse_alba": 100,
     "ur_alba": 100,
-    "suolo_alba": 0.201,
+    "suolo_alba": 0.2,
     "inv850_alba": 0.9,
-    "blh_alba": 55,
+    "blh_alba": 60,
     "pressione": 1016,
-    "crossover": -0.7,
+    "crossover": -1.1,
     "pioggia_24h": 0.0,
-    "emessa": "2026-10-25T18:52"
+    "emessa": "2026-10-25T21:47"
    }
   }
  }
