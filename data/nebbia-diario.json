@@ -1090,7 +1090,7 @@
   "2026-10-25": {
    "ora": "06:50",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": true,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.0,
@@ -1160,7 +1160,8 @@
    "luce": 132.6,
    "contrasto": 0.369,
    "contrasto_sfondo": 0.045,
-   "foto": "reports/nebbia/2026-10-25.jpg"
+   "foto": "reports/nebbia/2026-10-25.jpg",
+   "cielo": "nebbia"
   },
   "2026-10-26": {
    "ora": "06:52",
