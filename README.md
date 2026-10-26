@@ -204,6 +204,11 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   `scripts/fetch_arpae_stazioni.py` legge l'archivio mensile delle osservazioni ARPAE (BUFR-JSON) e scrive
   `data/arpae/stazioni.csv` e `data/arpae/<id>/temp.csv`, `prec024.csv` nel formato del SIR (una volta al giorno;
   `--dal 2006-01` ricostruisce tutto).
+- **Giornate tipo** (`geek-giornate-tipo.html`, MeteoGeek) — diagramma di flusso (Sankey) fra le 13 «giornate tipo» (gelata,
+  caldo secco, afa estrema, piovoso…) di Borgo San Lorenzo, 2000-2026 (9.605 giorni, SIR): come un tipo di giornata si trasforma
+  nel giorno dopo, con persistenza, cambi più frequenti e stagionalità. Dati in `data/geek/giornate-tipo.json` (conteggi per tipo,
+  per stagione e successioni da almeno 20 volte), fissi: non c'è uno script che li rigeneri. Il layout è di `vendor/d3-sankey.min.js`
+  (d3-sankey 0.12.3 in un file unico da 9 KB, senza CDN).
 - **Nebbia in valle** (`geek-nebbia.html`, MeteoGeek) — inversione termica notturna misurata (termometri CFR,
   minime SIR di Borgo S. Lorenzo e Monte Giovi), umidità e vento CFR (`scripts/fetch_nebbia.py` → `data/nebbia.json`)
   e **diario della nebbia**: l'Action `nebbia-alba.yml` ogni mattina (appena dopo l'alba, entro le 10:30) salva la foto della webcam del lago di

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giornate tipo: che tempo fa dopo una gelata o un'afa? · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="Dopo un giorno di gelata, di afa o di pioggia forte, che giornata arriva il giorno dopo? Un diagramma di flusso su 9.605 giorni di dati reali di Borgo San Lorenzo, 2000-2026.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-giornate-tipo.html">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-giornate-tipo.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Giornate tipo: che tempo fa dopo una gelata o un'afa? · MeteoGeek">
+<meta property="og:description" content="Un diagramma di flusso su 9.605 giorni di dati reali di Borgo San Lorenzo: come una giornata tipo si trasforma nella successiva.">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  #sk{position:relative}
+  #sk svg{display:block;width:100%;height:auto;overflow:visible}
+  #sk .col{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px}
+  #sk .lk{fill:none;stroke-opacity:.6;transition:stroke-opacity .12s}
+  #sk .lk:hover,#sk .lk.on{stroke-opacity:.95}
+  #sk svg.dim .lk:not(.on){stroke-opacity:.1}
+  #sk .nd{stroke:rgba(0,0,0,.28);stroke-width:.6;cursor:pointer}
+  #sk .nl{font-size:11.5px;fill:var(--ink);pointer-events:none;font-family:var(--sans)}
+  #sk.piccolo .nl{font-size:10px}
+  #tt{position:fixed;pointer-events:none;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:12.5px;
+    opacity:0;z-index:40;box-shadow:var(--shadow);max-width:280px;transition:opacity .1s}
+  #tt.on{opacity:1}
+  #tt b{font-weight:600}
+  .leg{display:flex;flex-wrap:wrap;gap:6px 14px;margin:14px 0 0;font-size:12.5px;color:var(--ink-soft)}
+  .leg span{display:inline-flex;align-items:center;gap:6px}
+  .leg i{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.25)}
+  .stat8{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:0}
+  .stat8>div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:var(--r-sm);padding:10px 12px}
+  .stat8 b{display:block;font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.1}
+  .stat8 span{font-size:12.5px;color:var(--ink-soft)}
+  .emerge{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-soft);max-width:90ch}
+  .emerge li{margin:7px 0}
+  .emerge b{color:var(--ink);font-weight:600}
+  .stg{display:grid;grid-template-columns:150px 1fr 120px;gap:8px 12px;align-items:center;font-size:13px}
+  .stg .nm{color:var(--ink);font-weight:600}
+  .stg .bar{display:flex;height:16px;border-radius:5px;overflow:hidden;background:var(--line-soft)}
+  .stg .bar i{display:block;height:100%}
+  .stg .pr{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);text-align:right}
+  @media (max-width:640px){.stg{grid-template-columns:104px 1fr;}.stg .pr{grid-column:2;text-align:left;margin-top:-4px}}
+  details.tab{margin-top:14px}
+  details.tab summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--pine)}
+  .tw{overflow-x:auto;margin-top:10px;border:1px solid var(--line);border-radius:var(--r-sm)}
+  .tw table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+  .tw th,.tw td{padding:7px 12px;text-align:left;border-top:1px solid var(--line-soft);white-space:nowrap}
+  .tw thead th{border-top:0;background:var(--panel-2);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .tw td.n{text-align:right}
+  .vuoto{padding:40px 0;text-align:center;color:var(--ink-faint);font-size:14px}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Giornate tipo</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · grafico</div>
+      <h1>Giornate tipo: che tempo fa il giorno dopo?</h1>
+      <p class="lead">Ogni giorno dal 2000 a oggi è stato classificato in uno di 13 tipi, dalla gelata all'afa estrema, dalla giornata mite e asciutta alla pioggia forte. Il diagramma mostra come un tipo di giornata si trasforma nel successivo: a sinistra ieri, a destra oggi, e più è spesso il flusso più volte quella successione è accaduta.</p>
+    </header>
+
+    <section>
+      <div class="sh"><h2>Dal giorno al giorno dopo</h2><span class="src" id="src">caricamento…</span></div>
+      <div class="card">
+        <div id="sk" aria-label="Diagramma di flusso fra i tipi di giornata, da ieri a oggi" role="img">
+          <div class="col"><span>← ieri</span><span>oggi →</span></div>
+          <div id="plot"></div>
+        </div>
+        <div id="tt"></div>
+        <p class="note" style="margin-top:10px">Passa il mouse (o tocca) su un flusso per leggere il numero di casi, su un tipo di giornata per evidenziarne tutti i passaggi. Sono mostrate solo le successioni avvenute almeno 20 volte.</p>
+        <div class="leg" id="leg"></div>
+        <details class="tab"><summary>Vedi la tabella delle successioni</summary>
+          <div class="tw"><table><thead><tr><th>Ieri</th><th>Oggi</th><th class="n" style="text-align:right">Volte</th><th class="n" style="text-align:right">% dei giorni di ieri</th></tr></thead><tbody id="tbody"></tbody></table></div>
+        </details>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Cosa emerge</h2></div>
+      <div class="card"><ul class="emerge" id="emerge"></ul></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Quanti giorni per tipo</h2><span class="src" id="src2"></span></div>
+      <div class="card"><div class="stat8" id="stats"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>In che stagione capita ogni tipo</h2></div>
+      <div class="card">
+        <div class="leg" id="legs" style="margin:0 0 12px"></div>
+        <div class="stg" id="stg"></div>
+        <p class="note" style="margin-top:10px">Ogni barra è la distribuzione stagionale dei giorni di quel tipo: la gelata cade soprattutto d'inverno, l'afa estrema quasi solo d'estate.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Fonte:</b> misure giornaliere (temperatura massima e minima, pioggia) della stazione di Borgo San Lorenzo, Servizio Idrologico Regionale della Toscana. I giorni classificati sono <span id="m-n">—</span>, dal <span id="m-p">—</span>.</li>
+          <li><b>Classificazione:</b> ogni giorno ha uno e un solo tipo, in base a massima, minima e pioggia del giorno. Le soglie dichiarate nei nomi sono: gelo (massima ≤ 5° e minima ≤ 0°), gelata (minima ≤ 0°), caldo secco (massima ≥ 30°), afa estrema (massima ≥ 35°), piovoso (10–30 mm), pioggia forte (≥ 30 mm).</li>
+          <li><b>Come leggere il diagramma:</b> ogni flusso va da un tipo di ieri a un tipo di oggi; la sua larghezza è il numero di volte in cui quella successione è avvenuta. La percentuale è calcolata sui giorni di partenza di quel tipo.</li>
+          <li><b>Limiti:</b> una sola stazione, e una classificazione al giorno: non si vedono gli eventi dentro la giornata (un temporale pomeridiano o una notte fresca). Le successioni sotto le 20 volte non sono disegnate, quindi i flussi mostrati non sommano esattamente ai giorni di ogni tipo.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+<script src="vendor/d3-sankey.min.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+  var it=function(n){return n.toLocaleString("it-IT")};
+  // dal più freddo al più caldo, poi la pioggia: l'ordine verticale del diagramma
+  var ORDER=["gelo","gelata","freddo_secco","fresco_secco","fresco_umido","mite_secco","mite_umido","estivo_mite","caldo_secco","caldo_temporale","afa_estrema","piovoso","pioggia_forte"];
+  var COLORS={gelo:"#93c5fd",gelata:"#60a5fa",freddo_secco:"#38bdf8",fresco_secco:"#67e8f9",fresco_umido:"#2dd4bf",mite_secco:"#a3e635",mite_umido:"#84cc16",
+    estivo_mite:"#fbbf24",caldo_secco:"#f97316",caldo_temporale:"#a855f7",afa_estrema:"#ef4444",piovoso:"#6366f1",pioggia_forte:"#4338ca"};
+  var STAG=[["inverno","Inverno","#4f93d6"],["primavera","Primavera","#5fae5a"],["estate","Estate","#e0892f"],["autunno","Autunno","#a0693a"]];
+  var D=null, tt=$("tt");
+  var nome=function(k){return D.labels[k]||k};
+  var corto=function(k){return nome(k).replace(/ \(.*/,"")};
+
+  function tip(ev,html){tt.innerHTML=html;tt.classList.add("on");
+    var x=Math.min(ev.clientX+14,innerWidth-300),y=ev.clientY+14;tt.style.left=Math.max(6,x)+"px";tt.style.top=y+"px";}
+  function notip(){tt.classList.remove("on");}
+
+  function draw(){
+    var box=$("plot"),W=Math.max(300,box.clientWidth||700),small=W<560,H=small?560:580,M=small?84:128;
+    $("sk").classList.toggle("piccolo",small);
+    var ids={};D.links.forEach(function(l){ids["da:"+l.source]=1;ids["a:"+l.target]=1;});
+    var nodes=Object.keys(ids).map(function(id){var raw=id.replace(/^(da|a):/,"");return{id:id,raw:raw};});
+    var links=D.links.map(function(l){return{source:"da:"+l.source,target:"a:"+l.target,value:l.value,s:l.source,t:l.target};});
+    var g;
+    try{
+      g=MGSankey.sankey().nodeId(function(d){return d.id}).nodeWidth(14).nodePadding(small?8:10)
+        .nodeSort(function(a,b){return ORDER.indexOf(a.raw)-ORDER.indexOf(b.raw)})
+        .extent([[M,6],[W-M,H-6]])({nodes:nodes,links:links});
+    }catch(e){box.innerHTML='<div class="vuoto">Il diagramma non si può disegnare ora.</div>';return;}
+    var NS="http://www.w3.org/2000/svg";
+    var svg=document.createElementNS(NS,"svg");svg.setAttribute("viewBox","0 0 "+W+" "+H);svg.setAttribute("aria-hidden","true");
+    var path=MGSankey.sankeyLinkHorizontal(),lk=[];
+    g.links.forEach(function(l){
+      var p=document.createElementNS(NS,"path");p.setAttribute("class","lk");p.setAttribute("d",path(l));
+      p.setAttribute("stroke",COLORS[l.s]||"#778da9");p.setAttribute("stroke-width",Math.max(1,l.width));
+      var pct=(100*l.value/D.counts[l.s]).toFixed(1).replace(".",",");
+      p.addEventListener("pointermove",function(ev){tip(ev,"<b>"+esc(corto(l.s))+"</b> → <b>"+esc(corto(l.t))+"</b><br>"+it(l.value)+" volte · "+pct+"% dei giorni «"+esc(corto(l.s))+"»");});
+      p.addEventListener("pointerleave",notip);
+      svg.appendChild(p);l.el=p;lk.push(p);
+    });
+    g.nodes.forEach(function(n){
+      var r=document.createElementNS(NS,"rect");r.setAttribute("class","nd");r.setAttribute("x",n.x0);r.setAttribute("y",n.y0);
+      r.setAttribute("width",n.x1-n.x0);r.setAttribute("height",Math.max(1,n.y1-n.y0));r.setAttribute("rx",2);r.setAttribute("fill",COLORS[n.raw]||"#778da9");
+      var on=function(){svg.classList.add("dim");n.sourceLinks.concat(n.targetLinks).forEach(function(l){l.el.classList.add("on")});};
+      var off=function(){svg.classList.remove("dim");lk.forEach(function(p){p.classList.remove("on")});notip();};
+      r.addEventListener("pointerenter",on);r.addEventListener("pointerleave",off);
+      r.addEventListener("pointermove",function(ev){var c=D.counts[n.raw]||0;tip(ev,"<b>"+esc(nome(n.raw))+"</b><br>"+it(c)+" giorni in totale ("+(100*c/D.n_giorni).toFixed(1).replace(".",",")+"%)");});
+      svg.appendChild(r);
+      var t=document.createElementNS(NS,"text");t.setAttribute("class","nl");var left=n.x0<W/2;
+      t.setAttribute("x",left?n.x0-6:n.x1+6);t.setAttribute("y",(n.y0+n.y1)/2);t.setAttribute("dy","0.35em");t.setAttribute("text-anchor",left?"end":"start");
+      var s=corto(n.raw);if(small&&s.length>15)s=s.slice(0,14)+"…";t.textContent=s;svg.appendChild(t);
+    });
+    box.innerHTML="";box.appendChild(svg);
+  }
+
+  function testi(){
+    var C=D.counts,self={},next={};
+    D.links.forEach(function(l){
+      if(l.source===l.target)self[l.source]=l.value;
+      else if(!next[l.source]||l.value>next[l.source].v)next[l.source]={t:l.target,v:l.value};
+    });
+    var pct=function(v,k){return Math.round(100*v/C[k])};
+    var pers=Object.keys(self).filter(function(k){return C[k]>=100}).sort(function(a,b){return self[b]/C[b]-self[a]/C[a]}).slice(0,3);
+    var li=[];
+    li.push("<b>Il tempo tende a ripetersi.</b> "+pers.map(function(k){return "dopo un giorno «"+esc(corto(k).toLowerCase())+"» il giorno dopo è dello stesso tipo nel "+pct(self[k],k)+"% dei casi"}).join("; ")+".");
+    ["caldo_secco","gelata","piovoso"].forEach(function(k){
+      if(!C[k]||!next[k])return;
+      li.push("<b>Dopo «"+esc(corto(k).toLowerCase())+"»:</b> "+(self[k]?"nel "+pct(self[k],k)+"% dei casi si resta uguali; ":"")+"il cambio più frequente porta a «"+esc(corto(next[k].t).toLowerCase())+"» ("+pct(next[k].v,k)+"%).");
+    });
+    var estivi=["caldo_secco","estivo_mite"];
+    if(self.afa_estrema&&estivi.every(function(k){return self[k]&&self.afa_estrema/C.afa_estrema>self[k]/C[k]}))
+      li.push("<b>L'afa estrema è la più persistente fra i tipi estivi:</b> nel "+pct(self.afa_estrema,"afa_estrema")+"% dei casi il giorno dopo è ancora afoso."+
+        (D.links.some(function(l){return l.source==="afa_estrema"&&l.target==="pioggia_forte"})?"":" Il passaggio diretto a pioggia forte è troppo raro (meno di 20 volte) per comparire nel diagramma."));
+    $("emerge").innerHTML="<li>"+li.join("</li><li>")+"</li>";
+  }
+
+  function tabella(){
+    var C=D.counts;
+    $("tbody").innerHTML=D.links.slice().sort(function(a,b){return b.value-a.value}).map(function(l){
+      return "<tr><td>"+esc(corto(l.source))+"</td><td>"+esc(corto(l.target))+"</td><td class=\"n\">"+it(l.value)+"</td><td class=\"n\">"+(100*l.value/C[l.source]).toFixed(1).replace(".",",")+"%</td></tr>";
+    }).join("");
+  }
+  function legende(){
+    $("leg").innerHTML=ORDER.filter(function(k){return D.counts[k]}).map(function(k){return '<span><i style="background:'+COLORS[k]+'"></i>'+esc(nome(k))+"</span>"}).join("");
+    $("legs").innerHTML=STAG.map(function(s){return '<span><i style="background:'+s[2]+'"></i>'+s[1]+"</span>"}).join("");
+  }
+  function stats(){
+    $("stats").innerHTML=Object.keys(D.counts).sort(function(a,b){return D.counts[b]-D.counts[a]}).slice(0,8).map(function(k){
+      return "<div><b>"+it(D.counts[k])+"</b><span>"+esc(nome(k))+"</span></div>";}).join("");
+  }
+  function stagioni(){
+    $("stg").innerHTML=ORDER.filter(function(k){return D.counts[k]}).map(function(k){
+      var c=D.counts[k],parts=STAG.map(function(s){return{n:s[1],c:(D.stagioni[s[0]]||{})[k]||0,col:s[2]}});
+      var top=parts.slice().sort(function(a,b){return b.c-a.c})[0];
+      var bar=parts.map(function(p){return '<i style="width:'+(100*p.c/c)+'%;background:'+p.col+'" title="'+p.n+': '+Math.round(100*p.c/c)+'%"></i>'}).join("");
+      return '<div class="nm">'+esc(corto(k))+'</div><div class="bar" role="img" aria-label="'+esc(parts.map(function(p){return p.n+" "+Math.round(100*p.c/c)+"%"}).join(", "))+'">'+bar+'</div><div class="pr">'+Math.round(100*top.c/c)+"% "+top.n.toLowerCase()+"</div>";
+    }).join("");
+  }
+
+  fetch("./data/geek/giornate-tipo.json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+    D=d;
+    $("src").textContent=d.stazione+" · "+d.periodo+" · "+it(d.n_giorni)+" giorni classificati";
+    $("src2").textContent=d.stazione+" · "+d.periodo;
+    $("m-n").textContent=it(d.n_giorni);$("m-p").textContent=d.periodo.replace("–"," al ");
+    legende();tabella();testi();stats();stagioni();
+    if(typeof MGSankey==="undefined"){$("plot").innerHTML='<div class="vuoto">Il diagramma non è disponibile ora: guarda la tabella qui sotto.</div>';}
+    else{draw();var t;addEventListener("resize",function(){clearTimeout(t);t=setTimeout(draw,150);});}
+  }).catch(function(){$("src").textContent="dati non disponibili";$("plot").innerHTML='<div class="vuoto">I dati non sono raggiungibili in questo momento.</div>';});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

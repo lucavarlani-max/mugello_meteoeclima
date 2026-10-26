@@ -39,6 +39,23 @@
   ],
   "esperimenti": [
     {
+      "id": "giornate-tipo",
+      "titolo": "Giornate tipo: che tempo fa il giorno dopo?",
+      "tipo": "grafico",
+      "tema": "clima",
+      "data": "2026-10-26",
+      "stato": "nuovo",
+      "testo": "Un diagramma di flusso su 9.605 giorni di Borgo San Lorenzo (2000-2026): ogni giorno è una «giornata tipo», dalla gelata all'afa estrema, e il flusso mostra in cosa si trasforma il giorno dopo. Con le stagioni in cui cade ogni tipo.",
+      "link": "geek-giornate-tipo.html",
+      "tag": [
+        "giornate tipo",
+        "Sankey",
+        "persistenza",
+        "Borgo San Lorenzo",
+        "SIR"
+      ]
+    },
+    {
       "id": "capitali",
       "titolo": "Le capitali del mondo, adesso",
       "tipo": "curiosita",
