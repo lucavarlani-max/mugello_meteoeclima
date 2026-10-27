@@ -40,18 +40,19 @@
   "esperimenti": [
     {
       "id": "percentili",
-      "titolo": "Quanto è stato insolito ieri? Il percentile climatologico",
+      "titolo": "Quanto è stato insolito ieri? Il percentile climatologico di temperatura e pioggia",
       "tipo": "statistica",
       "tema": "clima",
       "data": "2026-10-27",
       "stato": "nuovo",
-      "testo": "La temperatura media di ieri confrontata con tutti i giorni dello stesso periodo dal 1991 al 2020, per sette stazioni del Servizio Idrologico Regionale nel Mugello: percentile, distribuzione dei giorni simili e gli ultimi 30 giorni. Si aggiorna ogni mattina.",
+      "testo": "La temperatura media di ieri confrontata con tutti i giorni dello stesso periodo dal 1991 al 2020, per sette stazioni del Servizio Idrologico Regionale nel Mugello, e la pioggia degli ultimi 7, 30 o 90 giorni confrontata con gli stessi periodi per tredici pluviometri: percentili e distribuzioni. Si aggiorna ogni mattina.",
       "link": "geek-percentili.html",
       "tag": [
         "percentile",
         "anomalia",
         "normale 1991-2020",
         "temperatura",
+        "pioggia",
         "SIR"
       ]
     },
