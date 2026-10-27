@@ -39,6 +39,24 @@
   ],
   "esperimenti": [
     {
+      "id": "tempi-ritorno",
+      "titolo": "Ogni quanti anni piove così? I tempi di ritorno delle precipitazioni intense",
+      "tipo": "esperimento",
+      "tema": "pioggia",
+      "data": "2026-10-27",
+      "stato": "nuovo",
+      "testo": "La distribuzione di Gumbel sui massimi annui di pioggia: di 1, 3, 6, 12 e 24 ore per le stazioni orarie ARPAE dell'alto Mugello dal 2006, di 1-5 giorni per i pluviometri SIR della valle dal 1992. Tempo di ritorno di una pioggia a scelta, intervalli di confidenza, carta di Gumbel e linee segnalatrici di possibilità pluviometrica.",
+      "link": "geek-tempi-ritorno.html",
+      "tag": [
+        "tempo di ritorno",
+        "Gumbel",
+        "precipitazioni intense",
+        "linee segnalatrici",
+        "ARPAE",
+        "SIR"
+      ]
+    },
+    {
       "id": "percentili",
       "titolo": "Quanto è stato insolito ieri? Il percentile climatologico di temperatura e pioggia",
       "tipo": "statistica",
