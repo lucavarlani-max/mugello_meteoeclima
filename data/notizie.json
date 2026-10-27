@@ -1,7 +1,171 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-23",
+ "aggiornato": "2026-10-27",
  "numeri": [
+  {
+   "data": "2026-10-27",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Arnab, ciclone molto severo verso la costa dell'Andhra Pradesh",
+    "testo": "Nel Golfo del Bengala il ciclone Arnab dovrebbe toccare terra la mattina del 28 ottobre fra Bapatla e Visakhapatnam, vicino a Yanam, come ciclone molto severo con venti sostenuti di 115–125 km/h e raffiche fino a 140; piogge estreme su Andhra Pradesh e Odisha e divieto di pesca fino al 29.",
+    "fonte": "The Statesman / IMD",
+    "url": "https://www.thestatesman.com/india/cyclone-arnab-explained-landfall-date-wind-speed-affected-areas-and-safety-measures-1503655324.html",
+    "foto": "uragano3"
+   },
+   "numero": {
+    "valore": "1–1,5 m",
+    "testo": "L'onda di tempesta prevista dall'IMD sopra la marea astronomica sulle coste basse dell'Andhra Pradesh, più alta fra East Godavari e Kakinada."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Eolie, lo sciame rallenta",
+     "testo": "Nei tre giorni successivi alla scossa principale del 23 ottobre sono state 164 le scosse registrate e la più forte di domenica 25 è stata di magnitudo 3,4: l'intensità è in calo e su valori bassi.",
+     "fonte": "INGV / BlogSicilia",
+     "url": "https://www.blogsicilia.it/palermo/terremoto-tirreno-sciame-sismico-scosse-ingv-25-ottobre/1319443/",
+     "foto": "sismo1"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Come ha funzionato l'allerta maremoto",
+     "testo": "Il Centro Allerta Tsunami dell'INGV ha inviato un messaggio alle 12:23 e il livello Advisory alle 12:29; i mareografi di Strombolicchio e Ginostra hanno escluso lo tsunami e l'allerta è stata revocata alle 13:22. Per l'INGV con questa magnitudo in un mare profondo il maremoto non si può verificare: è una procedura automatica di cautela.",
+     "fonte": "INGV",
+     "url": "https://cat.ingv.it/it/media-e-documenti/news-it/533-terremoto-eolie-23-ottobre-2026-e-allerta-tsunami",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Champi, ora tempesta tropicale, verso Cina e Giappone",
+     "testo": "Dopo Taiwan il tifone si è indebolito (venti di circa 100 km/h) e ha costeggiato la Cina orientale, con barche rientrate nei porti dello Zhejiang e voli e treni sospesi, per poi puntare al Giappone sud-occidentale.",
+     "fonte": "SCMP / Hong Kong Free Press",
+     "url": "https://hongkongfp.com/2026/10/25/tropical-storm-champi-nears-china-after-battering-taiwan-japan/",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kīlauea, il 56° episodio atteso fra il 31 ottobre e il 6 novembre",
+     "testo": "Le misure dicono che il rigonfiamento della caldera si è stabilizzato e l'USGS sposta la finestra delle prossime fontane di lava; il livello è Advisory e l'anidride solforosa è fra 1.000 e 5.000 tonnellate al giorno.",
+     "fonte": "USGS HVO",
+     "url": "https://www.bigislandvideonews.com/2026/10/26/kilauea-volcano-update-for-monday-october-26/",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "mugello",
+     "titolo": "Martedì sole e nebbie nelle valli",
+     "testo": "In Toscana cielo sereno o poco nuvoloso, con foschie e nebbie al mattino sul Valdarno superiore e sul Mugello e qualche nube bassa sull'Alto Mugello; vento da nord-est, minime fra 5 e 10 °C e massime fino a circa 24 °C.",
+     "fonte": "LaMMA Toscana / MeteoWeb",
+     "url": "https://www.meteoweb.eu/2026/10/meteo-toscana-stabilita-foschie-e-nebbia/1001995609/",
+     "foto": "bilancino"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Martedì 27 ottobre: sereno o poco nuvoloso, nebbie e foschie al mattino sul Mugello e nelle valli interne, qualche nube bassa sull'Alto Mugello, vento da nord-est; nessuna pioggia prevista in Italia.",
+     "fonte": "LaMMA Toscana / MeteoWeb"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1913: il 27 ottobre un tornado a Abercynon, in Galles, uccide almeno tre persone e ne ferisce oltre cento. 2010: il 26–27 ottobre un potente ciclone extratropicale sull'alto Midwest degli Stati Uniti porta pressioni fra le più basse mai misurate fuori dai tropici nella regione.",
+     "fonte": "NWS"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Nell'Oceano Indiano settentrionale i cicloni hanno nomi assegnati a turno dai paesi della regione: «Arnab» è un nome proposto dal Bangladesh.",
+     "fonte": "WMO / ESCAP"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:43 e tramonta alle 17:12, circa 10 ore e 28 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa calante, illuminata al 97%; l'ultimo quarto è domenica 1° novembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-26",
+   "apertura": {
+    "cat": "terremoti",
+    "titolo": "Eolie, la sequenza supera le 150 scosse: il terremoto più forte dal 1980 nell'area",
+    "testo": "Dopo la scossa Mw 5,5 del 23 ottobre l'INGV ha contato 154 eventi fino alle 18 del 24, quattro di magnitudo 4 o più e due di 5 o più. Nella zona non si registrava un terremoto così forte dal 28 maggio 1980; l'INGV esclude legami con il vulcano sottomarino Marsili. Domenica la scossa maggiore è stata di magnitudo 3,4: la sequenza è in calo.",
+    "fonte": "INGV / La Sicilia",
+    "url": "https://lasicilia.it/news/cronaca/3085194/l-ingv-studia-il-terremoto-del-23-ottobre-nessuna-correlazione-col-grande-vulcano-sottomarino-marsili.html",
+    "foto": "sismo1"
+   },
+   "numero": {
+    "valore": "154",
+    "testo": "Gli eventi sismici registrati dall'INGV dopo la scossa principale nel Tirreno meridionale, fino alle 18 del 24 ottobre."
+   },
+   "storie": [
+    {
+     "cat": "terremoti",
+     "titolo": "Vanuatu, magnitudo 6,9 e allerta tsunami revocata",
+     "testo": "Sabato 24 ottobre alle 02:31 UTC un terremoto di magnitudo 6,9 (stima iniziale USGS 7,2) a 10 km di profondità, 197 km a ovest-nord-ovest di Port-Olry; pochi minuti dopo una replica di 6,3. L'allerta tsunami è stata revocata e non risultano danni.",
+     "fonte": "USGS / 1News",
+     "url": "https://www.1news.co.nz/2026/10/24/shallow-69-magnitude-earthquake-rattles-vanuatu/",
+     "foto": "sismo2"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Champi sfiora Taiwan: un morto e centinaia di feriti",
+     "testo": "Il tifone non è sbarcato ma ha attraversato la costa nord-orientale dell'isola: un morto, fra 350 e oltre 500 feriti a seconda delle fonti, oltre 288.000 case senza corrente e centinaia di voli cancellati. Poi si è indebolito dirigendosi verso la Cina orientale.",
+     "fonte": "Reuters / The Weather Channel",
+     "url": "https://weather.com/2026/10/24/news/weather/typhoon-champi-kills-injures-taiwan-overnight-storm-weakens",
+     "foto": "uragano1"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Vance, categoria 2 al largo del Messico",
+     "testo": "Il 24 ottobre l'uragano aveva venti di circa 175 km/h e una pressione di 965 hPa, a circa 590 km a sud-sud-ovest di Acapulco; il National Hurricane Center lo prevede al largo della costa, con onde lunghe e correnti pericolose sulla riva.",
+     "fonte": "NOAA National Hurricane Center",
+     "url": "https://www.riotimesonline.com/hurricane-vance-mexico-pacific-coast-2026/",
+     "foto": "uragano2"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Onu: l'obiettivo di 1,5 °C non è più alla portata",
+     "testo": "L'Emissions Gap Report 2026 dell'UNEP dice che non c'è più la possibilità di restare sotto 1,5 °C senza o con poco superamento; con le politiche attuali si arriva a 2,8 °C entro fine secolo, 2,6 °C se tutti gli impegni saranno rispettati.",
+     "fonte": "UNEP",
+     "url": "https://www.unep.org/en/news-and-stories/story/temperatures-spike-new-report-outlines-humanitys-options-containing-climate",
+     "foto": "terra2"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Etna e Stromboli, bollettini del 20 ottobre",
+     "testo": "Sullo Stromboli attività stromboliana ordinaria, con un trabocco di lava il 12 ottobre e una frana lungo la Sciara del Fuoco il 18; sull'Etna degassamento variabile, emissioni di cenere discontinue da Bocca Nuova e Cratere di Nord-Est e sismicità moderata.",
+     "fonte": "INGV Osservatorio Etneo",
+     "url": "https://www.ct.ingv.it/index.php/monitoraggio-e-sorveglianza/prodotti-del-monitoraggio/bollettini-settimanali-multidisciplinari/1176-bollettino-Settimanale-sul-monitoraggio-vulcanico-geochimico-e-sismico-del-vulcano-Etna-del-2026-10-20/file",
+     "foto": "etna"
+    },
+    {
+     "cat": "mugello",
+     "titolo": "Primo freddo e nebbie nelle valli",
+     "testo": "Dopo le possibili brinate di domenica nei fondovalle, lunedì tempo stabile con foschie e banchi di nebbia al mattino su pianure e valli interne, poi schiarite; escursioni termiche marcate fra notte e giorno.",
+     "fonte": "Meteo Toscana / MeteoWeb",
+     "url": "https://www.meteoweb.eu/2026/10/meteo-toscana-stabilita-foschie-e-nebbia/1001995609/",
+     "foto": "bilancino"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Lunedì 26 ottobre tempo stabile: nubi basse e nebbie al mattino nelle valli e nelle pianure interne, qualche nube con debole pioggia residua fra notte e mattina, poi schiarite. Mattine fredde, con minime vicine allo zero nei fondovalle dopo le brinate di domenica.",
+     "fonte": "LaMMA Toscana / Meteo Toscana"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1859: nella notte fra il 25 e il 26 ottobre la «Royal Charter Storm» devasta le isole britanniche, con oltre 800 vittime; la tempesta spinse l'ammiraglio FitzRoy a organizzare i primi avvisi di burrasca. 2018: inizia la tempesta Vaia, che dal 26 al 30 ottobre abbatte intere foreste sulle Dolomiti e sulle Prealpi venete.",
+     "fonte": "Wikipedia / meteone.it"
+    },
+    {
+     "tipo": "curiosita",
+     "testo": "Con la Luna piena e con la Luna nuova le maree sono più alte del solito (maree sizigiali), perché l'attrazione di Sole e Luna si somma: oggi, con la Luna piena alle 5:11, è uno di quei giorni.",
+     "fonte": "NOAA"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:42 e tramonta alle 17:13 (dal 25 ottobre vale l'ora solare), circa 10 ore e 31 minuti di luce, 3 minuti meno di ieri. La Luna è piena alle 5:11."
+    }
+   ]
+  },
   {
    "data": "2026-10-23",
    "apertura": {
