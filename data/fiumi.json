@@ -1,14 +1,14 @@
 {
-  "aggiornato": "2026-10-27T10:54",
+  "aggiornato": "2026-10-27T15:07",
   "sieve": {
     "nome": "Sieve a Fornacina",
     "livello_m": 0.3,
     "stato": "normale",
-    "ora": "27/10 11.45"
+    "ora": "27/10 16.00"
   },
   "bilancino": {
-    "data": "28/09/2026",
-    "quota_m_slm": 247.11,
-    "volume_mmc": 46.44
+    "data": "26/10/2026",
+    "quota_m_slm": 245.68,
+    "volume_mmc": 40.34
   }
 }
