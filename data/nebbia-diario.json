@@ -1245,23 +1245,23 @@
     "v": 3,
     "scarto_min": 0.0,
     "vento_medio": 0.3,
-    "nuvole_medie": 62,
-    "ore_soglie": 1,
+    "nuvole_medie": 52,
+    "ore_soglie": 0,
     "ore": 13,
     "alba": "06:42",
     "scarto_alba": 0.0,
-    "vento_alba": 0.4,
-    "dp_alba": 7.0,
+    "vento_alba": 0.3,
+    "dp_alba": 7.5,
     "nuvole_alte": 19,
     "nubi_basse_alba": 100,
     "ur_alba": 100,
     "suolo_alba": 0.193,
-    "inv850_alba": 2.7,
+    "inv850_alba": 2.0,
     "blh_alba": 30,
     "pressione": 1022,
-    "crossover": -1.0,
+    "crossover": -0.4,
     "pioggia_24h": 0.0,
-    "emessa": "2026-10-26T21:46"
+    "emessa": "2026-10-27T01:25"
    }
   }
  }
