@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Percentile climatologico: quanto è stato insolito ieri nel Mugello</title>
+<meta name="description" content="La temperatura di ieri nel Mugello confrontata con il clima 1991-2020 delle stazioni SIR: percentile, distribuzione dei giorni simili e gli ultimi 30 giorni.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="L. Varlani">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-percentili.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Percentile climatologico: quanto è stato insolito ieri nel Mugello">
+<meta property="og:description" content="La temperatura media di ieri confrontata con tutti i giorni dello stesso periodo dal 1991 al 2020, stazione per stazione.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-percentili.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Percentile climatologico: quanto è stato insolito ieri nel Mugello","description":"La temperatura di ieri nel Mugello confrontata con il clima 1991-2020 delle stazioni SIR: percentile, distribuzione dei giorni simili e gli ultimi 30 giorni.","inLanguage":"it-IT","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-percentili.html","image":"https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg","datePublished":"2026-10-27","author":{"@type":"Person","name":"L. Varlani"},"publisher":{"@type":"Organization","name":"Mugello Meteo & Clima","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},"isPartOf":{"@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/#website"},"about":[{"@type":"Thing","name":"Percentile"},{"@type":"Thing","name":"Normale climatologica 1991-2020"},{"@type":"Thing","name":"Anomalia di temperatura"}],"spatialCoverage":{"@type":"Place","name":"Mugello, Toscana"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},{"@type":"ListItem","position":2,"name":"MeteoGeek","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteogeek.html"},{"@type":"ListItem","position":3,"name":"Percentile climatologico","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-percentili.html"}]}]}</script>
+<style>
+  .cmd{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:10px}
+  .ctl{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .ctl label{font-size:13px;color:var(--ink-soft);display:flex;gap:8px;align-items:center;min-width:0;max-width:100%}
+  .ctl select{min-width:0;max-width:100%;text-overflow:ellipsis}
+  .meter{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px}
+  .big{font-family:var(--serif);font-weight:800;font-size:46px;line-height:1;letter-spacing:-.02em}
+  .big s{font-size:20px;text-decoration:none;color:var(--ink-faint);font-weight:600}
+  .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint)}
+  .verd{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-weight:600;font-size:14px}
+  .verd i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .clima{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6}
+  .scala{position:relative;height:30px;border-radius:999px;margin:26px 0 6px;
+    background:linear-gradient(90deg,var(--cold) 0%,color-mix(in srgb,var(--cold) 35%,var(--neutral)) 25%,var(--neutral) 50%,color-mix(in srgb,var(--warm) 35%,var(--neutral)) 75%,var(--warm) 100%)}
+  .scala .band{position:absolute;top:-4px;bottom:-4px;border:1.5px dashed var(--ink-faint);border-radius:8px}
+  .scala .mk{position:absolute;top:-8px;bottom:-8px;width:4px;margin-left:-2px;border-radius:2px;background:var(--ink);box-shadow:0 0 0 2px var(--panel)}
+  .scala .mk b{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;white-space:nowrap;margin-bottom:3px}
+  .scala-lab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint)}
+  .pct{display:flex;align-items:baseline;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .pct .n{font-family:var(--serif);font-weight:800;font-size:52px;line-height:1}
+  .pct .u{font-size:17px;color:var(--ink-soft)}
+  .frase{font-size:14px;color:var(--ink-soft);margin:8px 0 0}
+  .tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+  .tri div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:9px 12px;font-size:13px}
+  .tri b{display:block;font-family:var(--serif);font-size:20px;font-weight:800}
+  .chart.tall{height:auto} .chart.tall svg{height:auto}
+  svg .barh{fill:var(--ctx)} svg .barh.on{fill:var(--ink-faint)}
+  svg .xm{stroke:var(--ink);stroke-width:2}
+  svg .pq{stroke:var(--ink-faint);stroke-width:1.2;stroke-dasharray:4 3}
+  .tip i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .legend i.sq{width:10px;height:10px;border-radius:3px;vertical-align:-1px}
+  .met li{margin:6px 0}
+  @media (max-width:760px){ .meter{grid-template-columns:1fr} .tri{grid-template-columns:1fr} .big{font-size:40px} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Percentile climatologico</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · clima e temperature</div>
+      <h1>Quanto è stato insolito ieri?</h1>
+      <p class="lead">Dire «oggi fa caldo» non basta: caldo rispetto a cosa? Il <b>percentile climatologico</b> confronta la temperatura media di ieri con tutti i giorni dello stesso periodo dell'anno (una settimana prima e una dopo) dal 1991 al 2020, il trentennio di riferimento dell'Organizzazione meteorologica mondiale. Un percentile di 90 vuol dire che ieri è stato più caldo di nove giorni simili su dieci. Uso solo misure delle stazioni del Servizio Idrologico Regionale nel Mugello.</p>
+      <div class="cmd" id="cmd">$ ./percentile-meter --stazione=borgo-s-lorenzo --periodo=1991-2020 --finestra=±7gg</div>
+    </header>
+
+    <section>
+      <div class="sh"><h2 id="tit">Ieri a Borgo S. Lorenzo</h2><span class="src" id="src">SIR Toscana · dati giornalieri</span></div>
+      <div class="ctl">
+        <label>Stazione <select id="staz" aria-label="Stazione"></select></label>
+        <label>Giorno <select id="giorno" aria-label="Giorno"></select></label>
+      </div>
+      <div class="meter">
+        <div class="card">
+          <div class="lab">Temperatura media del giorno</div>
+          <div class="big" id="tm">–<s> °C</s></div>
+          <div class="verd" id="verd"></div>
+          <div class="clima" id="clima"></div>
+        </div>
+        <div class="card">
+          <div class="lab">Dove cade nella distribuzione dei giorni simili, 1991-2020</div>
+          <div class="scala" id="scala"></div>
+          <div class="scala-lab" id="scala-lab"></div>
+          <div class="pct"><span class="n" id="pct">–</span><span class="u">° percentile</span></div>
+          <p class="frase" id="frase"></p>
+          <div class="tri" id="tri"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>La distribuzione dei giorni simili</h2><span class="src" id="dist-src"></span></div>
+      <div class="card">
+        <div class="chart tall" id="ch-dist"><div class="tip"></div><div class="loading">Carico la serie della stazione…</div></div>
+        <p class="note" id="dist-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Gli ultimi 30 giorni</h2><span class="src">percentile della temperatura media, giorno per giorno</span></div>
+      <div class="card">
+        <div class="legend"><span><i class="sq" style="background:var(--warm)"></i>più caldo della mediana</span><span><i class="sq" style="background:var(--cold)"></i>più freddo della mediana</span></div>
+        <div class="chart tall" id="ch-30"><div class="tip"></div><div class="loading">Carico…</div></div>
+        <p class="note">Ogni barra parte dalla mediana (50° percentile) e arriva al percentile del giorno; le linee tratteggiate sono il 10° e il 90°. Tocca un giorno per vederlo nel riquadro in alto.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note met">
+          <li><b>Dati:</b> temperature massime e minime giornaliere delle stazioni del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a> (licenza CC BY-SA 4.0), dall'archivio del sito (<code>data/sir/&lt;stazione&gt;/temp.csv</code>), aggiornato ogni mattina con il giorno prima. I dati degli ultimi mesi sono provvisori.</li>
+          <li><b>Temperatura media:</b> la media fra massima e minima del giorno, (Tmax + Tmin) / 2, come nelle normali climatologiche calcolate dalle temperature estreme. Per il giorno da valutare e per il clima si usa la stessa definizione.</li>
+          <li><b>Clima di riferimento:</b> tutti i giorni dal 1991 al 2020 che cadono entro 7 giorni prima o dopo la stessa data (finestra di 15 giorni), con massima e minima entrambe presenti e plausibili. Il 29 febbraio conta come 28 febbraio.</li>
+          <li><b>Percentile:</b> la quota dei giorni di riferimento più freddi del giorno valutato, contando a metà quelli con la stessa temperatura (rango medio). Sotto il minimo o sopra il massimo del trentennio il giorno è un primato per quel periodo dell'anno.</li>
+          <li><b>Classi:</b> sotto il 10° percentile molto più freddo del normale, dal 10° al 25° più freddo, dal 25° al 75° nella norma, dal 75° al 90° più caldo, sopra il 90° molto più caldo del normale.</li>
+          <li><b>Stazioni:</b> solo quelle con almeno 20 anni di dati nel 1991-2020 (il numero di anni con dati è indicato sotto il percentile). Dicomano, Scarperia e San Piero, Marradi e Palazzuolo non hanno stazioni con serie così lunghe in quel trentennio, e Firenzuola (ARPAE) comincia nel 2006: per questo non ci sono. Le serie non sono omogeneizzate.</li>
+          <li><b>Rispetto al pacchetto originale:</b> la climatologia allegata era simulata (lo dichiarava il file stesso) e quella prevista dallo script veniva da ERA5, una rianalisi con celle di circa 25 km che non distingue un paese dall'altro. Qui si usano solo misure di stazione.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR Toscana (CC BY-SA 4.0)</div></footer>
+<script>
+(function(){
+  "use strict";
+  // stazioni SIR con almeno 20 anni di dati nel 1991-2020 (controllato sull'archivio del sito)
+  const STAZ=[["TOS01000999","Borgo S. Lorenzo","Borgo San Lorenzo",196],["TOS11000017","Borgo S. Lorenzo 2","Borgo San Lorenzo",280],
+    ["TOS01001011","Villore","Vicchio",365],["TOS01000926","Le Croci","Barberino di Mugello",388],["TOS01000921","Mangona","Barberino di Mugello",540],
+    ["TOS01000916","Monte di Fò","Barberino di Mugello",820],["TOS11000108","Giogo","Firenzuola",880]];
+  const $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
+  const fmt=(v,d=1)=>v==null||isNaN(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
+  const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  const GG=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+  const dlab=iso=>{const t=new Date(iso+"T12:00:00Z");return GG[t.getUTCDay()]+" "+t.getUTCDate()+" "+MESI[t.getUTCMonth()];};
+  const dbreve=iso=>{const t=new Date(iso+"T12:00:00Z");return t.getUTCDate()+" "+MESI[t.getUTCMonth()].slice(0,3);};
+  // giorno dell'anno su un anno di 365 giorni (29 febbraio = 28 febbraio)
+  const CUM=[0,31,59,90,120,151,181,212,243,273,304,334];
+  const doy=iso=>{const m=+iso.slice(5,7), d=+iso.slice(8,10); return CUM[m-1]+Math.min(d,m===2?28:31);};
+  const CLASSI=[[10,"molto più freddo del normale","var(--cold)"],[25,"più freddo del normale","color-mix(in srgb,var(--cold) 55%,var(--neutral))"],
+    [75,"nella norma","var(--ink-faint)"],[90,"più caldo del normale","color-mix(in srgb,var(--warm) 55%,var(--neutral))"],[101,"molto più caldo del normale","var(--warm)"]];
+  const classe=p=>CLASSI.find(c=>p<c[0]);
+  let S=null, D=null, giorno=null, cache={};
+
+  $("staz").innerHTML=STAZ.map((s,i)=>`<option value="${i}">${s[1]} · ${s[2]} · ${s[3]} m</option>`).join("");
+  const sp=new URLSearchParams(location.search), si=STAZ.findIndex(s=>s[0]===sp.get("stazione"));
+  if(si>=0) $("staz").value=si;
+  $("staz").addEventListener("change",()=>carica(+$("staz").value,giorno));
+  $("giorno").addEventListener("change",()=>{giorno=$("giorno").value; mostra();});
+  carica(+$("staz").value,null);
+
+  function carica(i,g){
+    S=STAZ[i];
+    try{const u=new URL(location.href);u.searchParams.set("stazione",S[0]);history.replaceState(null,"",u);}catch(_){}
+    $("cmd").textContent=`$ ./percentile-meter --stazione=${S[1].toLowerCase().replace(/[^a-zò]+/g,"-")} --periodo=1991-2020 --finestra=±7gg`;
+    const p=cache[S[0]]||(cache[S[0]]=fetch(`./data/sir/${S[0]}/temp.csv`,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.text();}).then(leggi));
+    p.then(d=>{D=d;
+      const ult=D.giorni.slice(-60).reverse();
+      $("giorno").innerHTML=ult.map(x=>`<option value="${x.d}">${dlab(x.d)}</option>`).join("");
+      giorno=g&&ult.some(x=>x.d===g)?g:ult[0].d; $("giorno").value=giorno; mostra();
+    }).catch(e=>{$("ch-dist").querySelector(".loading").textContent="La serie della stazione non è disponibile ("+e.message+").";});
+  }
+  // serie: [{d,tx,tn,tm}] con controlli di plausibilità
+  function leggi(txt){
+    const giorni=[];
+    txt.split("\n").slice(1).forEach(l=>{const c=l.split(";"); if(c.length<3||!c[1]||!c[2])return;
+      const tx=+c[1], tn=+c[2]; if(isNaN(tx)||isNaN(tn)||tn>tx||tx>45||tn<-30) return;
+      giorni.push({d:c[0],tx,tn,tm:(tx+tn)/2});});
+    const rif=giorni.filter(x=>x.d>="1991-01-01"&&x.d<="2020-12-31");
+    const perDoy=Array.from({length:366},()=>[]);
+    rif.forEach(x=>perDoy[doy(x.d)].push(x));
+    return {giorni,perDoy,anni:new Set(rif.map(x=>x.d.slice(0,4))).size};
+  }
+  function finestra(d0){
+    const out=[]; for(let k=-7;k<=7;k++){let d=d0+k; if(d<1)d+=365; if(d>365)d-=365; out.push(...D.perDoy[d]);} return out;
+  }
+  const perc=(arr,x)=>{let lo=0,eq=0; arr.forEach(v=>{if(v<x-1e-9)lo++; else if(Math.abs(v-x)<1e-9)eq++;}); return (lo+eq/2)/arr.length*100;};
+  const quant=(sorted,q)=>{const i=(sorted.length-1)*q, a=Math.floor(i); return sorted[a]+(sorted[Math.min(a+1,sorted.length-1)]-sorted[a])*(i-a);};
+
+  function mostra(){
+    const g=D.giorni.find(x=>x.d===giorno); if(!g) return;
+    const W=finestra(doy(giorno)), tm=W.map(x=>x.tm).sort((a,b)=>a-b), tx=W.map(x=>x.tx), tn=W.map(x=>x.tn);
+    const p=perc(tm,g.tm), c=classe(p), mn=tm[0], mx=tm[tm.length-1];
+    const p10=quant(tm,.1), p50=quant(tm,.5), p90=quant(tm,.9), media=tm.reduce((a,b)=>a+b,0)/tm.length;
+    const ieri=giorno===D.giorni[D.giorni.length-1].d;
+    $("tit").textContent=(ieri?"Ieri":dlab(giorno).replace(/^./,m=>m.toUpperCase()))+" a "+S[1];
+    $("src").textContent="SIR Toscana · "+dlab(giorno)+" · "+S[3]+" m";
+    $("tm").innerHTML=fmt(g.tm,1)+"<s> °C</s>";
+    const rec=g.tm>mx?"mai così caldo in questo periodo dal 1991 al 2020":g.tm<mn?"mai così freddo in questo periodo dal 1991 al 2020":null;
+    $("verd").innerHTML=`<i style="background:${c[2]}"></i>${rec||c[1]}`;
+    $("clima").innerHTML=`massima ${fmt(g.tx,1)} °C · minima ${fmt(g.tn,1)} °C<br>clima 1991-2020: media ${fmt(media,1)} °C, 80% dei giorni fra ${fmt(p10,1)} e ${fmt(p90,1)} °C`;
+    // scala da minimo a massimo del trentennio (allargata se il giorno è un primato)
+    const lo=Math.min(mn,g.tm)-0.5, hi=Math.max(mx,g.tm)+0.5, X=v=>(v-lo)/(hi-lo)*100;
+    $("scala").innerHTML=`<div class="band" style="left:${X(p10)}%;right:${100-X(p90)}%" title="80% centrale dei giorni simili"></div><div class="mk" style="left:${X(g.tm)}%"><b>${fmt(g.tm,1)}°</b></div>`;
+    $("scala-lab").innerHTML=`<span title="il giorno più freddo del periodo">min ${fmt(mn,1)}°</span><span>mediana ${fmt(p50,1)}°</span><span title="il giorno più caldo del periodo">max ${fmt(mx,1)}°</span>`;
+    $("pct").textContent=fmt(Math.min(100,Math.max(0,p)),0);
+    $("frase").innerHTML=`Più caldo del <b>${fmt(p,0)}%</b> dei ${tm.length} giorni simili dal 1991 al 2020 (${D.anni} anni con dati); più freddo del restante <b>${fmt(100-p,0)}%</b>.`;
+    $("tri").innerHTML=[["Massima",g.tx,tx],["Minima",g.tn,tn],["Media",g.tm,tm]].map(([n,v,a])=>`<div><span class="lab">${n} · percentile</span><b>${fmt(perc(a,v),0)}°</b>${fmt(v,1)} °C</div>`).join("");
+    istogramma(tm,g.tm,p10,p90);
+    ultimi30();
+  }
+
+  function istogramma(tm,x,p10,p90){
+    const box=$("ch-dist"), tip=box.querySelector(".tip"); box.querySelectorAll("svg,.loading").forEach(e=>e.remove());
+    const lo=Math.floor(Math.min(tm[0],x)), hi=Math.ceil(Math.max(tm[tm.length-1],x)+1e-9), nb=hi-lo, cnt=new Array(nb).fill(0);
+    tm.forEach(v=>{cnt[Math.min(nb-1,Math.floor(v-lo))]++;});
+    const W=Math.max(300,box.clientWidth), H=W<600?220:260, ml=34, mr=10, top=22, bot=26, hp=H-top-bot, mx=Math.max(...cnt);
+    const bw=(W-ml-mr)/nb, X=v=>ml+(v-lo)*bw, Y=v=>top+hp-v/mx*hp;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Distribuzione della temperatura media dei giorni simili dal 1991 al 2020"});
+    const passoY=mx>80?20:mx>40?10:5;
+    for(let v=0;v<=mx;v+=passoY){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},v));}
+    const passoX=nb>24?4:nb>12?2:1;
+    cnt.forEach((n,i)=>{const on=x>=lo+i&&x<lo+i+1, h=top+hp-Y(n);
+      if(n){const r=el("rect",{x:X(lo+i)+1,y:Y(n),width:Math.max(1,bw-2),height:h,rx:Math.min(3,bw/4),class:"barh"+(on?" on":"")}); svg.appendChild(r);}
+      if((lo+i)%passoX===0) svg.appendChild(el("text",{x:X(lo+i),y:H-8,"text-anchor":"middle",class:"axl"},(lo+i)+"°"));
+      const hit=el("rect",{x:X(lo+i),y:top,width:bw,height:hp,fill:"transparent"}); svg.appendChild(hit);
+      hit.addEventListener("pointermove",ev=>{const rc=box.getBoundingClientRect();
+        tip.innerHTML=`<b>da ${lo+i} a ${lo+i+1} °C</b><br>${n} giorni su ${tm.length} (${fmt(n/tm.length*100,1)}%)`;
+        const px=ev.clientX-rc.left; tip.style.left=(px>rc.width/2?px-tip.offsetWidth-12:px+12)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
+      hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;});});
+    [[p10,"10°"],[p90,"90°"]].forEach(([v,t])=>{svg.appendChild(el("line",{x1:X(v),x2:X(v),y1:top,y2:top+hp,class:"pq"}));
+      svg.appendChild(el("text",{x:X(v),y:top-6,"text-anchor":"middle",class:"axl"},t));});
+    svg.appendChild(el("line",{x1:X(x),x2:X(x),y1:top-4,y2:top+hp,class:"xm"}));
+    svg.appendChild(el("text",{x:X(x),y:top-8,"text-anchor":X(x)>W-60?"end":X(x)<60?"start":"middle",class:"axl",style:"fill:var(--ink);font-weight:600"},(giorno===D.giorni[D.giorni.length-1].d?"ieri ":"")+fmt(x,1)+"°"));
+    svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:top+hp,y2:top+hp,stroke:"var(--ink-faint)"}));
+    box.insertBefore(svg,tip);
+    $("dist-src").textContent=tm.length+" giorni · finestra di 15 giorni · 1991-2020";
+    $("dist-note").textContent="Quanti giorni dello stesso periodo dell'anno, dal 1991 al 2020, hanno avuto ciascuna temperatura media (classi di 1 °C). La linea scura è il giorno scelto, quelle tratteggiate il 10° e il 90° percentile.";
+  }
+
+  function ultimi30(){
+    const box=$("ch-30"), tip=box.querySelector(".tip"); box.querySelectorAll("svg,.loading").forEach(e=>e.remove());
+    const G=D.giorni.slice(-30).map(g=>{const tm=finestra(doy(g.d)).map(x=>x.tm); return {...g,p:perc(tm,g.tm)};});
+    const W=Math.max(300,box.clientWidth), sm=W<600, H=sm?210:240, ml=30, mr=8, top=10, bot=26, hp=H-top-bot;
+    const bw=(W-ml-mr)/G.length, Y=p=>top+hp-p/100*hp;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Percentile della temperatura media negli ultimi 30 giorni"});
+    [0,10,25,50,75,90,100].forEach(v=>{svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:v===10||v===90?"pq":"grid"}));
+      svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},v));});
+    G.forEach((g,i)=>{const x=ml+i*bw+1, w=Math.max(1,bw-2), y1=Math.min(Y(g.p),Y(50)), h=Math.max(1.5,Math.abs(Y(g.p)-Y(50)));
+      const r=el("rect",{x,y:y1,width:w,height:h,rx:Math.min(3,w/3),fill:g.p>=50?"var(--warm)":"var(--cold)",opacity:g.d===giorno?1:.78});
+      svg.appendChild(r);
+      if(g.d===giorno) svg.appendChild(el("rect",{x:x-1,y:top,width:w+2,height:hp,fill:"none",stroke:"var(--ink-faint)","stroke-width":1,rx:3}));
+      const passo=sm?7:5; if(i%passo===0||(i===G.length-1&&i%passo>=passo/2)) svg.appendChild(el("text",{x:x+w/2,y:H-8,"text-anchor":"middle",class:"axl"},dbreve(g.d)));
+      const hit=el("rect",{x:ml+i*bw,y:top,width:bw,height:hp,fill:"transparent",style:"cursor:pointer"}); svg.appendChild(hit);
+      hit.addEventListener("pointermove",ev=>{const rc=box.getBoundingClientRect();
+        tip.innerHTML=`<b>${dlab(g.d)}</b><br>media ${fmt(g.tm,1)} °C (max ${fmt(g.tx,1)}, min ${fmt(g.tn,1)})<br><i style="background:${g.p>=50?"var(--warm)":"var(--cold)"}"></i>${fmt(g.p,0)}° percentile · ${classe(g.p)[1]}`;
+        const px=ev.clientX-rc.left; tip.style.left=(px>rc.width/2?px-tip.offsetWidth-12:px+12)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
+      hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;});
+      hit.addEventListener("click",()=>{giorno=g.d; $("giorno").value=g.d; mostra(); scrollTo({top:0,behavior:"smooth"});});});
+    box.insertBefore(svg,tip);
+  }
+  let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{if(D&&giorno)mostra();},150);});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
