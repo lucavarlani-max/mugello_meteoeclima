@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Il gelo del 1929 · MeteoGeek · Mugello Meteo &amp; Clima</title>
+<meta name="description" content="Le temperature minime e massime di febbraio 1929 trascritte dagli Annali Idrologici per 60 stazioni alpine e prealpine tra Piemonte, Lombardia, Trentino e Ticino: mappa, record, gradi-gelo e tutti i dati.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-gelo-1929.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Il gelo del 1929 · MeteoGeek">
+<meta property="og:description" content="Le temperature minime e massime di febbraio 1929 trascritte dagli Annali Idrologici per 60 stazioni alpine e prealpine tra Piemonte, Lombardia, Trentino e Ticino.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-gelo-1929.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+<style>
+  .banner{display:flex;gap:10px;align-items:flex-start;padding:12px 16px;border-radius:var(--r-sm);background:var(--amber-tint);border:1px solid var(--line);font-size:13px;color:var(--ink-soft);line-height:1.55;margin:16px 0}
+  .banner .dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--amber);margin-top:5px;flex:none}
+  .banner b{color:var(--ink)}
+  #map{height:520px;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--line)}
+  .leaflet-popup-content{font-family:var(--sans);font-size:13px}
+  .leaflet-popup-content b{font-family:var(--serif);color:var(--pine-deep)}
+  .heat-wrap{overflow-x:auto}
+  svg .axl{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+  .rk-row text{font-family:var(--sans)}
+  .box-bg{fill:transparent} .box-bg.sel{fill:var(--pine-tint)}
+  .box-wk{stroke:var(--ink-faint);stroke-width:1} .box-md{stroke:var(--ink);stroke-width:1.8}
+  .box-bx{stroke:var(--ink);stroke-width:1} .box-dt{fill:var(--ink-faint);opacity:.45}
+  .sta-ctrl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  .sta-ctrl select{font:inherit;font-size:13px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px}
+  .tbl-ctrl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .tbl-ctrl input{font:inherit;font-size:13px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;flex:1;min-width:180px}
+  .tbl-wrap{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:var(--r-sm)}
+  table.gt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px}
+  table.gt th{position:sticky;top:0;background:var(--panel);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;color:var(--ink-faint);font-weight:600;text-transform:uppercase;font-size:10.5px;letter-spacing:.05em}
+  table.gt th.num,table.gt td.num{text-align:right}
+  table.gt td{padding:7px 10px;border-bottom:1px solid var(--line-soft);font-family:var(--sans)}
+  table.gt tbody tr:hover{background:var(--bg)}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;padding:1px 7px;border-radius:999px;white-space:nowrap;background:var(--bg);color:var(--ink-faint);border:1px solid var(--line)}
+  .badge.ok{color:var(--pine);border-color:color-mix(in srgb,var(--pine) 40%,var(--line));background:var(--pine-tint)}
+  .badge.bad{color:var(--warm);border-color:color-mix(in srgb,var(--warm) 40%,var(--line));background:var(--amber-tint)}
+  .empty-cell{color:var(--ink-faint)}
+  .ramp-leg{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:4px;flex-wrap:wrap}
+  .ramp-leg .ramp{width:160px;height:10px;border-radius:5px}
+  .emptybox{display:flex;align-items:center;justify-content:center;height:220px;color:var(--ink-faint);font-size:12.5px}
+  @media(max-width:640px){#map{height:380px}}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Il gelo del 1929</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · archivio storico · Annali Idrologici 1929</div>
+      <h1>Il gelo del 1929</h1>
+      <p class="lead">Temperature minime e massime giornaliere di febbraio 1929 in 60 stazioni tra Piemonte, Lombardia, Trentino e Ticino, trascritte dagli <b>Annali Idrologici 1929</b> (Sezione di Milano, Tab. II — Temperatura massima e minima in alcune stazioni). Ogni valore riporta la pagina del PDF e il metodo di verifica usato per leggerlo. Febbraio 1929 fu uno dei mesi più freddi del Novecento in Europa, con l'ondata di gelo più intensa tra l'11 e il 15 del mese.</p>
+      <p class="lead" id="take" style="font-weight:600">Carico i dati…</p>
+    </header>
+
+    <div class="banner">
+      <span class="dot" aria-hidden="true"></span>
+      <span><b>Estrazione di prova, non ancora completa.</b> Queste 60 stazioni sono trascritte dalle pagine 10–14 dell'Annale; altre stazioni restano da trascrivere. Quattordici stazioni (Azzate, Bezzecca, Brescia, Desenzano, Edolo, Fies di Drò, Gavirate, Locarno, Marchirolo, Memmo, Monte Generoso, Palanzo, Peschiera, Tonzanico) non hanno ancora un valore leggibile per nessun giorno di febbraio: compaiono comunque in tabella, vuote. 451 righe su 1680 sono state escluse perché il valore non era leggibile con sicurezza o perché minima e massima risultavano incoerenti.</span>
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+
+    <section>
+      <div class="sh"><h2>Dove si trovano</h2><span class="src">56 di 60 stazioni · coordinate reali</span></div>
+      <p class="note">Le 56 stazioni per cui abbiamo verificato le coordinate geografiche, colorate sulla loro minima più bassa del mese. Clicca un punto per vederlo nel grafico "Stazione per stazione". Restano fuori dalla mappa 4 stazioni per cui non abbiamo trovato, da fonti indipendenti, una posizione precisa: Fies di Drò, S. Lorenzo, Sasso di Gargnano, Vedello.</p>
+      <div class="card">
+        <div id="map" role="img" aria-label="Mappa delle stazioni del rilievo del gelo del 1929"></div>
+        <div class="ramp-leg" id="mapLeg"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Altitudine e temperatura</h2><span class="src" id="altN"></span></div>
+      <p class="note">Mediana della minima di febbraio per stazione contro la quota reale sul livello del mare — quote da fonti indipendenti dall'Annale (Wikipedia, Dizionario Storico della Svizzera, Tuttitalia/ISTAT, stazioni meteo ufficiali), non stimate. La linea tratteggiata è la retta di regressione. Restano fuori le 14 stazioni senza nessun valore leggibile a febbraio (Azzate, Bezzecca, Brescia, Desenzano, Edolo, Fies di Drò, Gavirate, Locarno, Marchirolo, Memmo, Monte Generoso, Palanzo, Peschiera, Tonzanico) e altre 6 stazioni con dati ma senza una quota verificabile da fonte indipendente (Gebbo, Paglino, Paraviso, S. Lorenzo, Sasso di Gargnano, Vedello).</p>
+      <div class="card"><div class="chart" id="altChart"></div><p class="note" id="altStat" style="font-family:var(--mono);font-size:12px;margin-top:6px"></p></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>La mappa del gelo</h2><span class="src">60 stazioni × 28 giorni</span></div>
+      <p class="note">Temperatura minima per stazione e giorno. Le righe sono ordinate dalla più fredda alla meno fredda; le celle vuote sono giorni senza un valore leggibile.</p>
+      <div class="card">
+        <div class="heat-wrap"><div id="heatChart"></div></div>
+        <div class="ramp-leg" id="heatLeg"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>L'arco del gelo</h2><span class="src">minima media di rete, giorno per giorno</span></div>
+      <p class="note">Media delle minime di tutte le stazioni con un valore leggibile quel giorno; la banda chiara mostra la stazione più fredda e quella più mite dello stesso giorno. La fascia evidenziata è la settimana dell'ondata più intensa.</p>
+      <div class="card"><div class="chart" id="arcChart"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Il freddo accumulato</h2><span class="src">gradi-gelo = Σ max(0, −minima)</span></div>
+      <p class="note">Somma dei gradi sotto zero di ogni minima del mese per stazione — non quanto è stato freddo un giorno, ma quanto gelo si è accumulato in tutto febbraio. Solo giorni con un valore leggibile.</p>
+      <div class="card"><div id="rankChart"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Giorni di gelo intenso</h2><span class="src">minima ≤ −10 °C</span></div>
+      <p class="note">Non quanto freddo in totale, ma quante volte: numero di giorni in cui la minima è scesa a −10 °C o sotto, per stazione. Solo giorni con un valore leggibile.</p>
+      <div class="card"><div id="cold10Chart"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Distribuzione delle minime</h2><span class="src">quartili, mediana e singoli giorni</span></div>
+      <p class="note">Box-plot delle temperature minime di ogni stazione: la barra va dal 1° al 3° quartile, la riga interna è la mediana, i baffi coprono l'intero intervallo osservato, i punti sono i singoli giorni letti. Stessa scala per tutte le stazioni, ordinate dalla mediana più fredda alla più mite.</p>
+      <div class="card"><div id="boxChart"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Escursione termica</h2><span class="src">media di (massima − minima)</span></div>
+      <p class="note">Differenza media tra massima e minima dello stesso giorno: più ampia dove le notti serene raffreddano a fondo senza che il giorno scaldi altrettanto, più stretta dove l'aria resta più mescolata.</p>
+      <div class="card"><div id="rangeChart"></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Stazione per stazione</h2><span class="src">minima e massima giornaliera</span></div>
+      <div class="card">
+        <div class="sta-ctrl"><label for="staSel">Scegli una stazione</label><select id="staSel"></select></div>
+        <div class="chart" id="lineChart"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Tutti i dati</h2><span class="src" id="tblN">1229 righe verificate</span></div>
+      <p class="note">1680 righe, una per stazione e giorno. Clicca un'intestazione per ordinare; il campo di ricerca filtra su stazione e nota.</p>
+      <div class="card">
+        <div class="tbl-ctrl"><input type="search" id="search" placeholder="Cerca per stazione o nota…" aria-label="Cerca nella tabella"></div>
+        <div class="tbl-wrap">
+          <table class="gt" id="table">
+            <thead><tr>
+              <th data-sort="giorno">Giorno</th><th data-sort="stazione">Stazione</th>
+              <th data-sort="tmin" class="num">Minima (°C)</th><th data-sort="tmax" class="num">Massima (°C)</th>
+              <th data-sort="pagina_pdf" class="num">Pag. PDF</th><th data-sort="metodo">Verifica</th>
+            </tr></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      Fonte: <i>Annali Idrologici 1929</i>, Parte I – Osservazioni, Sezione di Milano per la Lombardia, Tab. II (pagine 10–14 del PDF). Dati trascritti e verificati a mano dalla scansione ad alta risoluzione; metodo e pagina sono riportati per ogni valore in tabella. Dove più pluviometri/termometri misuravano nello stesso periodo, si è sempre preferita la fonte più diretta. Coordinate e quote delle stazioni da fonti indipendenti dall'Annale: Wikipedia, Wikidata, Tuttitalia/ISTAT, Dizionario Storico della Svizzera, siti comunali. <a href="meteogeek.html">← Torna a MeteoGeek</a>
+    </footer>
+  </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const MESI_G=28, SOGLIA_GELO=-10;
+  const f1=v=>v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−");
+  const fmtDate=g=>"febbraio "+g;
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const mean=xs=>{xs=xs.filter(v=>v!=null);return xs.length?xs.reduce((a,b)=>a+b,0)/xs.length:null;};
+  function hex(c){c=c.trim();if(c[0]!=="#")return [120,120,120];c=c.replace("#","");if(c.length===3)c=c.split("").map(x=>x+x).join("");return [0,2,4].map(i=>parseInt(c.slice(i,i+2),16));}
+  function mix(a,b,t){return "rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";}
+  let STOPS=null;
+  function frostColor(t){ // t: 0 (più freddo) .. 1 (più mite)
+    if(!STOPS) STOPS=[hex(css("--sky-tint")),hex(css("--sky")),hex(css("--cold"))];
+    t=Math.max(0,Math.min(1,t)); const x=(1-t)*(STOPS.length-1), i=Math.min(STOPS.length-2,Math.floor(x));
+    return mix(STOPS[i],STOPS[i+1],x-i);
+  }
+  function ticks(lo,hi,n){const s0=(hi-lo)/n,m=Math.pow(10,Math.floor(Math.log10(s0)));const st=[1,2,2.5,5,10].map(k=>k*m).find(s=>s>=s0)||s0;const o=[];for(let v=Math.floor(lo/st)*st;v<hi+st-1e-9;v+=st)o.push(+v.toFixed(6));return o;}
+  function place(el,tip,x,y){tip.style.opacity=1;const tw=tip.offsetWidth,W=el.clientWidth;let lx=x+14;if(lx+tw>W)lx=x-tw-14;if(lx<0)lx=0;tip.style.left=lx+"px";tip.style.top=Math.max(0,y-10)+"px";}
+
+  let ROWS=null, COORD=null, QUOTA=null, STAZ=null, selStaz=null, map=null, markers={};
+  let sortKey="stazione", sortDir=1, searchTerm="";
+
+  fetch("./data/geek/gelo-1929.json").then(r=>r.json()).then(d=>{
+    ROWS=d.righe; COORD=d.coord; QUOTA=d.quota;
+    const byS=new Map(); ROWS.forEach(r=>{if(!byS.has(r.stazione))byS.set(r.stazione,[]);byS.get(r.stazione).push(r);});
+    STAZ=Array.from(byS,([s,rs])=>{const valid=rs.filter(r=>r.tmin!=null);const min=valid.length?Math.min(...valid.map(r=>r.tmin)):null;return {stazione:s,min,rows:rs};})
+      .sort((a,b)=>(a.min==null)-(b.min==null)||(a.min-b.min));
+    selStaz=STAZ.find(s=>s.min!=null)?.stazione||STAZ[0].stazione;
+    const sel=$("staSel");
+    sel.innerHTML=STAZ.map(s=>`<option value="${s.stazione}">${s.stazione}${s.min==null?" (nessun dato)":""}</option>`).join("");
+    sel.value=selStaz;
+    sel.addEventListener("change",()=>{selStaz=sel.value;drawLine();highlightMap();highlightBox();});
+    renderTiles();
+    try{drawMap();}catch(e){$("map").innerHTML='<div class="emptybox">Mappa non disponibile al momento (libreria cartografica non caricata).</div>';$("mapLeg").innerHTML="";}
+    drawAlt(); drawHeat(); drawArc(); drawRank(); drawCold10(); drawBox(); drawRange(); drawLine(); buildTable();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{drawAlt();drawHeat();drawArc();drawRank();drawCold10();drawBox();drawRange();drawLine();if(map)map.invalidateSize();},150);});
+  }).catch(()=>{$("take").textContent="Dati non disponibili."; $("tiles").innerHTML="";});
+
+  function renderTiles(){
+    const valid=ROWS.filter(r=>r.tmin!=null&&r.tmax!=null);
+    if(!valid.length){$("tiles").innerHTML="";$("take").textContent="Nessun dato leggibile.";return;}
+    const coldest=valid.reduce((a,b)=>b.tmin<a.tmin?b:a), warmest=valid.reduce((a,b)=>b.tmax>a.tmax?b:a);
+    const stazioni=[...new Set(ROWS.map(r=>r.stazione))];
+    const senzaDati=stazioni.filter(s=>!ROWS.some(r=>r.stazione===s&&r.tmin!=null));
+    const nValide=ROWS.filter(r=>r.tmin!=null).length;
+    const t=(lab,big,who)=>`<div class="tile"><div class="lab">${lab}</div><div class="big">${big}</div><div class="who">${who}</div></div>`;
+    $("tiles").innerHTML=
+      t("Record di freddo",f1(coldest.tmin)+"°",coldest.stazione+", "+fmtDate(coldest.giorno))+
+      t("Record di mite",f1(warmest.tmax)+"°",warmest.stazione+", "+fmtDate(warmest.giorno))+
+      t("Righe verificate",nValide+" / "+ROWS.length,"su "+stazioni.length+" stazioni")+
+      t("Senza nessun valore",senzaDati.length,senzaDati.length?"stazioni ancora da leggere":"tutte le stazioni hanno dati");
+    $("take").innerHTML=`Il punto più freddo: <b>${f1(coldest.tmin)} °C</b> a ${coldest.stazione} il ${fmtDate(coldest.giorno)}, nel pieno dell'ondata di gelo di metà mese.`;
+  }
+
+  function mkTip(parent){const t=document.createElement("div");t.className="tip";t.style.position="absolute";parent.style.position="relative";parent.appendChild(t);return t;}
+
+  function drawMap(){
+    if(map) return;
+    map=L.map("map",{scrollWheelZoom:false}).setView([46.0,9.4],8);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:17,attribution:"© OpenStreetMap contributors"}).addTo(map);
+    const vals=ROWS.filter(r=>r.tmin!=null).map(r=>r.tmin);
+    const lo=Math.min(...vals), hi=Math.max(...vals);
+    const color=v=>frostColor((v-lo)/(hi-lo||1));
+    const pts=STAZ.map(s=>({...s,coord:COORD[s.stazione]})).filter(s=>s.coord);
+    pts.forEach(p=>{
+      const approx=!!p.coord[2];
+      const m=L.circleMarker([p.coord[0],p.coord[1]],{radius:p.min==null?6:8,weight:1.5,color:"#fff",
+        fillColor:p.min==null?css("--line"):color(p.min),fillOpacity:p.min==null?.6:.92});
+      m.bindPopup(`<b>${p.stazione}</b>${approx?" <i>(posizione approssimata)</i>":""}<br>`+
+        (p.min==null?"nessun valore leggibile":"minima più bassa del mese <b>"+f1(p.min)+"°</b>"));
+      m.on("click",()=>{selStaz=p.stazione;$("staSel").value=p.stazione;drawLine();highlightMap();highlightBox();});
+      m.addTo(map); markers[p.stazione]=m;
+    });
+    const stops=[frostColor(1),frostColor(.5),frostColor(0)].join(",");
+    $("mapLeg").innerHTML=`<span>${f1(lo)}°</span><span class="ramp" style="background:linear-gradient(90deg,${stops})"></span><span>${f1(hi)}°</span>`+
+      `<span style="margin-left:10px">· ogni punto è la minima più bassa toccata da quella stazione nel mese</span>`;
+    highlightMap();
+  }
+  function highlightMap(){
+    Object.entries(markers).forEach(([name,m])=>m.setStyle({weight:name===selStaz?3:1.5,color:name===selStaz?css("--pine-deep"):"#fff"}));
+  }
+
+  function boxStats(rec){
+    const vals=rec.rows.filter(r=>r.tmin!=null).map(r=>r.tmin).sort((a,b)=>a-b);
+    if(!vals.length) return null;
+    const q=(p)=>{const idx=(vals.length-1)*p,lo=Math.floor(idx),hi=Math.ceil(idx);return vals[lo]+(vals[hi]-vals[lo])*(idx-lo);};
+    return {stazione:rec.stazione,vals,q1:q(.25),med:q(.5),q3:q(.75),min:vals[0],max:vals[vals.length-1]};
+  }
+
+  function drawAlt(){
+    const box=$("altChart"), nEl=$("altN"), statEl=$("altStat");
+    const data=STAZ.map(s=>{const bs=boxStats(s);return {stazione:s.stazione,alt:QUOTA[s.stazione],med:bs?bs.med:null};}).filter(d=>d.alt!=null&&d.med!=null);
+    nEl.textContent=data.length+" stazioni con quota verificata";
+    if(data.length<4){box.innerHTML='<div class="emptybox">Non abbastanza stazioni con quota e dati per una correlazione.</div>';statEl.textContent="";return;}
+    const n=data.length, mx=mean(data.map(d=>d.alt)), my=mean(data.map(d=>d.med));
+    let cov=0,varx=0,vary=0; data.forEach(d=>{cov+=(d.alt-mx)*(d.med-my);varx+=(d.alt-mx)**2;vary+=(d.med-my)**2;});
+    const slope=cov/varx, intercept=my-slope*mx, r=cov/Math.sqrt(varx*vary);
+    const W=Math.max(480,box.clientWidth||480), H=300, m={l:46,r:20,t:16,b:34};
+    const altLo=Math.min(...data.map(d=>d.alt)), altHi=Math.max(...data.map(d=>d.alt));
+    const medLo=Math.min(...data.map(d=>d.med)), medHi=Math.max(...data.map(d=>d.med));
+    const xT=ticks(altLo,altHi,6), yT=ticks(medLo,medHi,5);
+    const x0=Math.min(xT[0],altLo), x1=Math.max(xT[xT.length-1],altHi), y0=Math.min(yT[0],medLo), y1=Math.max(yT[yT.length-1],medHi);
+    const X=v=>m.l+(v-x0)/(x1-x0)*(W-m.l-m.r), Y=v=>H-m.b-(v-y0)/(y1-y0)*(H-m.t-m.b);
+    let g="";
+    yT.forEach(t=>g+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(t)}" y2="${Y(t)}"/><text class="axl" x="${m.l-8}" y="${(Y(t)+3.5).toFixed(1)}" text-anchor="end">${Math.round(t)}°</text>`);
+    xT.forEach(t=>g+=`<text class="axl" x="${X(t).toFixed(1)}" y="${H-m.b+16}" text-anchor="middle">${Math.round(t)} m</text>`);
+    g+=`<line class="axis-line" x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}"/>`;
+    g+=`<line class="ref" x1="${X(x0).toFixed(1)}" y1="${Y(slope*x0+intercept).toFixed(1)}" x2="${X(x1).toFixed(1)}" y2="${Y(slope*x1+intercept).toFixed(1)}"/>`;
+    const medExt=[medLo,medHi];
+    data.forEach(d=>{const c=frostColor((d.med-medExt[0])/((medExt[1]-medExt[0])||1));
+      g+=`<circle data-s="${d.stazione.replace(/"/g,"&quot;")}" cx="${X(d.alt).toFixed(1)}" cy="${Y(d.med).toFixed(1)}" r="5.5" fill="${c}" stroke="var(--panel)" stroke-width="1.2" style="cursor:pointer"/>`;});
+    box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">${g}</svg>`;
+    const svg=box.querySelector("svg"), tip=mkTip(box);
+    svg.querySelectorAll("circle").forEach(c=>{
+      const d=data.find(x=>x.stazione===c.dataset.s);
+      c.addEventListener("pointermove",e=>{const r=box.getBoundingClientRect();tip.innerHTML=`<b>${d.stazione}</b><br>${d.alt} m · mediana minima <b>${f1(d.med)}°</b>`;place(box,tip,e.clientX-r.left,e.clientY-r.top);});
+      c.addEventListener("pointerleave",()=>tip.style.opacity=0);
+      c.addEventListener("click",()=>{selStaz=d.stazione;$("staSel").value=d.stazione;drawLine();highlightMap();highlightBox();});
+    });
+    statEl.innerHTML=`r = ${r.toFixed(2)} (r² = ${(r*r).toFixed(2)}) su ${data.length} stazioni · gradiente osservato <b>${(slope*100).toFixed(2)} °C/100 m</b> `+
+      `<span style="color:var(--ink-faint)">— per confronto, l'atmosfera libera standard è circa −0,65 °C/100 m; durante un'ondata di gelo come questa, l'aria fredda può ristagnare nei fondovalle e appiattire il gradiente reale.</span>`;
+  }
+
+  function drawHeat(){
+    const box=$("heatChart");
+    const W=Math.max(640,box.clientWidth||640), rowH=22, labelW=108, dayW=Math.max(16,(W-labelW-16)/MESI_G);
+    const H=STAZ.length*rowH+26;
+    const vals=ROWS.filter(r=>r.tmin!=null).map(r=>r.tmin);
+    const lo=Math.min(...vals), hi=Math.max(...vals);
+    const color=v=>frostColor((v-lo)/(hi-lo||1));
+    let g="";
+    for(let gi=1;gi<=MESI_G;gi+=2) g+=`<text class="axl" x="${(labelW+(gi-0.5)*dayW+dayW/2).toFixed(1)}" y="10" text-anchor="middle">${gi}</text>`;
+    STAZ.forEach((s,i)=>{
+      const y=20+i*rowH;
+      g+=`<text x="${labelW-8}" y="${(y+rowH/2+4).toFixed(1)}" text-anchor="end" font-size="11" fill="var(--ink)">${s.stazione}</text>`;
+      const byDay=new Map(s.rows.map(r=>[r.giorno,r]));
+      for(let d=1;d<=MESI_G;d++){
+        const r=byDay.get(d);
+        const fill=!r||r.tmin==null?css("--line"):color(r.tmin), op=!r||r.tmin==null?.35:1;
+        g+=`<rect class="hcell" data-s="${s.stazione.replace(/"/g,"&quot;")}" data-g="${d}" x="${(labelW+(d-1)*dayW).toFixed(1)}" y="${y+1}" width="${Math.max(1,dayW-1.5).toFixed(1)}" height="${rowH-3}" rx="2" fill="${fill}" opacity="${op}"/>`;
+      }
+    });
+    box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">${g}</svg>`;
+    const svg=box.querySelector("svg"), tip=mkTip(box);
+    const byKey=new Map(ROWS.map(r=>[r.stazione+"|"+r.giorno,r]));
+    svg.querySelectorAll(".hcell").forEach(c=>{
+      c.addEventListener("pointermove",e=>{const bx=box.getBoundingClientRect();const r=byKey.get(c.dataset.s+"|"+c.dataset.g);
+        tip.innerHTML=r.tmin==null?`<b>${r.stazione}</b> · ${fmtDate(r.giorno)}<br><span class="m">nessun valore leggibile</span>`:
+          `<b>${r.stazione}</b> · ${fmtDate(r.giorno)}<br>minima <b>${f1(r.tmin)}°</b> · massima <b>${r.tmax!=null?f1(r.tmax)+"°":"—"}</b>`;
+        place(box,tip,e.clientX-bx.left,e.clientY-bx.top);});
+      c.addEventListener("pointerleave",()=>tip.style.opacity=0);
+    });
+    $("heatLeg").innerHTML=`<span>${f1(lo)}°</span><span class="ramp" style="background:linear-gradient(90deg,${[frostColor(1),frostColor(.5),frostColor(0)].join(",")})"></span><span>${f1(hi)}°</span>`+
+      `<span style="margin-left:10px;display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:var(--line);opacity:.5;display:inline-block"></span>nessun dato</span>`;
+  }
+
+  function drawArc(){
+    const box=$("arcChart");
+    const byDay=new Map();
+    ROWS.filter(r=>r.tmin!=null).forEach(r=>{if(!byDay.has(r.giorno))byDay.set(r.giorno,[]);byDay.get(r.giorno).push(r.tmin);});
+    const data=[]; for(let g=1;g<=MESI_G;g++){const vs=byDay.get(g)||[];data.push(vs.length?{giorno:g,media:mean(vs),lo:Math.min(...vs),hi:Math.max(...vs),n:vs.length}:{giorno:g,media:null,lo:null,hi:null,n:0});}
+    const W=Math.max(480,box.clientWidth||480), H=260, m={l:42,r:16,t:20,b:26};
+    const valid=data.filter(d=>d.media!=null);
+    const yLo=Math.min(...valid.map(d=>d.lo)), yHi=Math.max(...valid.map(d=>d.hi));
+    const yT=ticks(yLo,yHi,5), y0=yT[0], y1=yT[yT.length-1];
+    const X=g=>m.l+(g-1)/(MESI_G-1)*(W-m.l-m.r), Y=v=>H-m.b-(v-y0)/(y1-y0)*(H-m.t-m.b);
+    let g="";
+    yT.forEach(t=>g+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(t).toFixed(1)}" y2="${Y(t).toFixed(1)}"/><text class="axl" x="${m.l-8}" y="${(Y(t)+3.5).toFixed(1)}" text-anchor="end">${Math.round(t)}°</text>`);
+    for(let gi=1;gi<=MESI_G;gi+=3) g+=`<text class="axl" x="${X(gi).toFixed(1)}" y="${H-m.b+16}" text-anchor="middle">${gi}</text>`;
+    g+=`<line class="axis-line" x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}"/>`;
+    g+=`<rect x="${X(11).toFixed(1)}" width="${Math.max(0,X(15)-X(11)).toFixed(1)}" y="${m.t}" height="${H-m.b-m.t}" fill="var(--amber)" opacity=".08"/>`;
+    g+=`<text x="${((X(11)+X(15))/2).toFixed(1)}" y="${m.t-6}" text-anchor="middle" font-size="10" fill="var(--ink-faint)">ondata più intensa</text>`;
+    let band="", lastDef=false;
+    data.forEach(d=>{if(d.lo!=null){band+=(lastDef?"L":"M")+X(d.giorno).toFixed(1)+" "+Y(d.lo).toFixed(1);lastDef=true;}else lastDef=false;});
+    let band2=""; lastDef=false;
+    for(let i=data.length-1;i>=0;i--){const d=data[i];if(d.hi!=null){band2+=(lastDef?"L":"M")+X(d.giorno).toFixed(1)+" "+Y(d.hi).toFixed(1);lastDef=true;}else lastDef=false;}
+    g+=`<path d="${band+" "+band2+" Z"}" fill="var(--cold)" opacity=".14" stroke="none"/>`;
+    let line="", pen=false;
+    data.forEach(d=>{if(d.media==null){pen=false;return;}line+=(pen?"L":"M")+X(d.giorno).toFixed(1)+" "+Y(d.media).toFixed(1);pen=true;});
+    g+=`<path d="${line}" fill="none" stroke="var(--cold)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">${g}</svg>`;
+    const svg=box.querySelector("svg"), tip=mkTip(box);
+    svg.addEventListener("pointermove",e=>{const r=box.getBoundingClientRect();
+      const gi=Math.max(1,Math.min(MESI_G,Math.round(1+(e.clientX-r.left-m.l)/(W-m.l-m.r)*(MESI_G-1))));
+      const d=data.find(dd=>dd.giorno===gi); if(!d||d.media==null)return;
+      tip.innerHTML=`<b>${fmtDate(gi)}</b><br>minima media <b>${f1(d.media)}°</b><br><span class="m">tra ${f1(d.lo)}° e ${f1(d.hi)}°, ${d.n} stazioni</span>`;
+      place(box,tip,e.clientX-r.left,e.clientY-r.top);});
+    svg.addEventListener("pointerleave",()=>tip.style.opacity=0);
+  }
+
+  function gradiGelo(rec){return rec.rows.reduce((s,r)=>s+(r.tmin!=null&&r.tmin<0?-r.tmin:0),0);}
+  function giorniGeloIntenso(rec){return rec.rows.filter(r=>r.tmin!=null&&r.tmin<=SOGLIA_GELO).length;}
+  function escursioneMedia(rec){const v=rec.rows.filter(r=>r.tmin!=null&&r.tmax!=null);return v.length?mean(v.map(r=>r.tmax-r.tmin)):null;}
+
+  function rankChart(id,data,valFn,fmtFn,barColorFn){
+    const box=$(id);
+    const rowH=24, m={l:150,r:56,t:6,b:6};
+    const W=Math.max(480,box.clientWidth||640), H=data.length*rowH+m.t+m.b;
+    const maxV=Math.max(...data.map(valFn))||1;
+    const X=v=>v/maxV*(W-m.l-m.r);
+    let g="";
+    data.forEach((d,i)=>{
+      const v=valFn(d), y=m.t+i*rowH;
+      g+=`<g data-s="${d.stazione.replace(/"/g,"&quot;")}" transform="translate(${m.l},${y})" style="cursor:pointer">`+
+        `<text x="-10" y="${rowH/2+4}" text-anchor="end" font-size="11.5" fill="var(--ink)">${d.stazione}</text>`+
+        `<rect x="0" y="3" height="${rowH-9}" rx="3" width="${Math.max(2,X(v)).toFixed(1)}" fill="${barColorFn(v)}"/>`+
+        `<text x="${(X(v)+6).toFixed(1)}" y="${rowH/2+4}" font-size="11" font-family="var(--mono)" fill="var(--ink-faint)">${fmtFn(v)}</text>`+
+      `</g>`;
+    });
+    box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">${g}</svg>`;
+    const svg=box.querySelector("svg"), tip=mkTip(box);
+    svg.querySelectorAll("g[data-s]").forEach(el=>{
+      const d=data.find(x=>x.stazione===el.dataset.s);
+      el.addEventListener("pointermove",e=>{const r=box.getBoundingClientRect();tip.innerHTML=d.tipHtml;place(box,tip,e.clientX-r.left,e.clientY-r.top);});
+      el.addEventListener("pointerleave",()=>tip.style.opacity=0);
+      el.addEventListener("click",()=>{selStaz=d.stazione;$("staSel").value=d.stazione;drawLine();highlightMap();highlightBox();});
+    });
+  }
+
+  function drawRank(){
+    const data=STAZ.map(s=>({stazione:s.stazione,gradi:gradiGelo(s),nValidi:s.rows.filter(r=>r.tmin!=null).length}))
+      .filter(s=>s.nValidi>0).sort((a,b)=>b.gradi-a.gradi);
+    const lo=Math.min(...data.map(d=>d.gradi)), hi=Math.max(...data.map(d=>d.gradi));
+    data.forEach(d=>d.tipHtml=`<b>${d.stazione}</b><br>${f1(d.gradi)} gradi-gelo accumulati<br><span class="m">su ${d.nValidi} giorni letti</span>`);
+    rankChart("rankChart",data,d=>d.gradi,v=>f1(v),v=>frostColor(1-(v-lo)/((hi-lo)||1)));
+  }
+  function drawCold10(){
+    const data=STAZ.map(s=>({stazione:s.stazione,giorni:giorniGeloIntenso(s),nValidi:s.rows.filter(r=>r.tmin!=null).length}))
+      .filter(s=>s.nValidi>0).sort((a,b)=>b.giorni-a.giorni);
+    const maxG=Math.max(...data.map(d=>d.giorni))||1;
+    data.forEach(d=>d.tipHtml=`<b>${d.stazione}</b><br>${d.giorni} giorni con minima ≤ ${SOGLIA_GELO}°<br><span class="m">su ${d.nValidi} giorni letti</span>`);
+    rankChart("cold10Chart",data,d=>d.giorni,v=>String(v),v=>{const op=0.4+0.6*(v/maxG);return `color-mix(in srgb, var(--cold) ${Math.round(op*100)}%, var(--panel))`;});
+  }
+  function drawRange(){
+    const data=STAZ.map(s=>({stazione:s.stazione,escursione:escursioneMedia(s)})).filter(s=>s.escursione!=null).sort((a,b)=>b.escursione-a.escursione);
+    data.forEach(d=>d.tipHtml=`<b>${d.stazione}</b><br>escursione media <b>${f1(d.escursione)}°</b>`);
+    rankChart("rangeChart",data,d=>d.escursione,v=>f1(v)+"°",()=>"var(--sky)");
+  }
+
+  function drawBox(){
+    const box=$("boxChart");
+    const data=STAZ.map(s=>boxStats(s)).filter(Boolean).sort((a,b)=>a.med-b.med);
+    const rowH=26, m={l:150,r:20,t:6,b:6};
+    const W=Math.max(520,box.clientWidth||640), H=data.length*rowH+m.t+m.b;
+    const allVals=ROWS.filter(r=>r.tmin!=null).map(r=>r.tmin);
+    const xLo=Math.min(...allVals), xHi=Math.max(...allVals);
+    const X=v=>(v-xLo)/(xHi-xLo||1)*(W-m.l-m.r);
+    let g="";
+    ticks(xLo,xHi,6).forEach(t=>g+=`<line class="grid" x1="${(m.l+X(t)).toFixed(1)}" x2="${(m.l+X(t)).toFixed(1)}" y1="0" y2="${H-m.t-m.b}"/><text class="axl" x="${(m.l+X(t)).toFixed(1)}" y="-2" text-anchor="middle">${Math.round(t)}°</text>`);
+    data.forEach((d,i)=>{
+      const y=i*rowH;
+      g+=`<g class="box-bg${d.stazione===selStaz?" sel":""}" data-s="${d.stazione.replace(/"/g,"&quot;")}" style="cursor:pointer">`+
+        `<rect class="box-bg${d.stazione===selStaz?" sel":""}" x="${-m.l}" y="${y}" width="${W}" height="${rowH}"/>`+
+        `<text x="${-10}" y="${(y+rowH/2+4).toFixed(1)}" text-anchor="end" font-size="11.5" fill="var(--ink)">${d.stazione}</text>`+
+        `<line class="box-wk" x1="${(m.l+X(d.min)).toFixed(1)}" x2="${(m.l+X(d.max)).toFixed(1)}" y1="${(y+rowH/2).toFixed(1)}" y2="${(y+rowH/2).toFixed(1)}"/>`+
+        `<line class="box-wk" x1="${(m.l+X(d.min)).toFixed(1)}" x2="${(m.l+X(d.min)).toFixed(1)}" y1="${(y+rowH/2-4).toFixed(1)}" y2="${(y+rowH/2+4).toFixed(1)}"/>`+
+        `<line class="box-wk" x1="${(m.l+X(d.max)).toFixed(1)}" x2="${(m.l+X(d.max)).toFixed(1)}" y1="${(y+rowH/2-4).toFixed(1)}" y2="${(y+rowH/2+4).toFixed(1)}"/>`+
+        d.vals.map((v,vi)=>`<circle class="box-dt" cx="${(m.l+X(v)).toFixed(1)}" cy="${(y+rowH/2+((vi%5)-2)*2.6).toFixed(1)}" r="1.6"/>`).join("")+
+        `<rect class="box-bx" x="${(m.l+X(d.q1)).toFixed(1)}" width="${Math.max(1,X(d.q3)-X(d.q1)).toFixed(1)}" y="${(y+rowH/2-6).toFixed(1)}" height="12" rx="2" fill="${frostColor((d.med-xLo)/((xHi-xLo)||1))}"/>`+
+        `<line class="box-md" x1="${(m.l+X(d.med)).toFixed(1)}" x2="${(m.l+X(d.med)).toFixed(1)}" y1="${(y+rowH/2-6).toFixed(1)}" y2="${(y+rowH/2+6).toFixed(1)}"/>`+
+      `</g>`;
+    });
+    box.innerHTML=`<svg viewBox="${-m.l} 0 ${W} ${H}" width="100%" height="${H}"><g>${g}</g></svg>`;
+    const svg=box.querySelector("svg"), tip=mkTip(box);
+    svg.querySelectorAll("g[data-s]").forEach(el=>{
+      const d=data.find(x=>x.stazione===el.dataset.s);
+      el.addEventListener("pointermove",e=>{const r=box.getBoundingClientRect();
+        tip.innerHTML=`<b>${d.stazione}</b><br>mediana <b>${f1(d.med)}°</b> · q1–q3 ${f1(d.q1)}° / ${f1(d.q3)}°<br><span class="m">range ${f1(d.min)}° – ${f1(d.max)}°, ${d.vals.length} giorni</span>`;
+        place(box,tip,e.clientX-r.left,e.clientY-r.top);});
+      el.addEventListener("pointerleave",()=>tip.style.opacity=0);
+      el.addEventListener("click",()=>{selStaz=d.stazione;$("staSel").value=d.stazione;drawLine();highlightMap();drawBox();});
+    });
+  }
+  function highlightBox(){drawBox();}
+
+  function drawLine(){
+    const box=$("lineChart");
+    const rec=STAZ.find(s=>s.stazione===selStaz);
+    const rows=(rec?rec.rows:[]).slice().sort((a,b)=>a.giorno-b.giorno);
+    const valid=rows.filter(r=>r.tmin!=null&&r.tmax!=null);
+    if(!valid.length){box.innerHTML='<div class="emptybox">Nessun valore leggibile per questa stazione nel file attuale.</div>';return;}
+    const W=Math.max(480,box.clientWidth||480), H=260, m={l:42,r:16,t:14,b:26};
+    const yAll=rows.flatMap(r=>[r.tmin,r.tmax]).filter(v=>v!=null);
+    const yT=ticks(Math.min(...yAll),Math.max(...yAll),5), y0=yT[0], y1=yT[yT.length-1];
+    const X=g=>m.l+(g-1)/(MESI_G-1)*(W-m.l-m.r), Y=v=>H-m.b-(v-y0)/(y1-y0)*(H-m.t-m.b);
+    let g="";
+    yT.forEach(t=>g+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(t).toFixed(1)}" y2="${Y(t).toFixed(1)}"/><text class="axl" x="${m.l-8}" y="${(Y(t)+3.5).toFixed(1)}" text-anchor="end">${Math.round(t)}°</text>`);
+    for(let gi=1;gi<=MESI_G;gi+=3) g+=`<text class="axl" x="${X(gi).toFixed(1)}" y="${H-m.b+16}" text-anchor="middle">${gi}</text>`;
+    g+=`<line class="axis-line" x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}"/>`;
+    let band="", pen=false;
+    rows.forEach(r=>{if(r.tmin!=null&&r.tmax!=null){band+=(pen?"L":"M")+X(r.giorno).toFixed(1)+" "+Y(r.tmin).toFixed(1);pen=true;}else pen=false;});
+    let band2=""; pen=false;
+    for(let i=rows.length-1;i>=0;i--){const r=rows[i];if(r.tmin!=null&&r.tmax!=null){band2+=(pen?"L":"M")+X(r.giorno).toFixed(1)+" "+Y(r.tmax).toFixed(1);pen=true;}else pen=false;}
+    g+=`<path d="${band+" "+band2+" Z"}" fill="var(--cold)" opacity=".18" stroke="none"/>`;
+    let lMax="",lMin="",p1=false,p2=false;
+    rows.forEach(r=>{if(r.tmax!=null){lMax+=(p1?"L":"M")+X(r.giorno).toFixed(1)+" "+Y(r.tmax).toFixed(1);p1=true;}else p1=false;
+      if(r.tmin!=null){lMin+=(p2?"L":"M")+X(r.giorno).toFixed(1)+" "+Y(r.tmin).toFixed(1);p2=true;}else p2=false;});
+    g+=`<path d="${lMax}" fill="none" stroke="var(--warm)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+    g+=`<path d="${lMin}" fill="none" stroke="var(--cold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+    rows.forEach(r=>{if(r.tmax!=null)g+=`<circle cx="${X(r.giorno).toFixed(1)}" cy="${Y(r.tmax).toFixed(1)}" r="2.5" fill="var(--warm)"/>`;
+      if(r.tmin!=null)g+=`<circle cx="${X(r.giorno).toFixed(1)}" cy="${Y(r.tmin).toFixed(1)}" r="2.5" fill="var(--cold)"/>`;});
+    g+=`<text x="${W-m.r}" y="${m.t+2}" text-anchor="end" font-size="11" fill="var(--warm)">massima</text>`;
+    g+=`<text x="${W-m.r}" y="${m.t+16}" text-anchor="end" font-size="11" fill="var(--cold)">minima</text>`;
+    box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">${g}</svg>`;
+    const svg=box.querySelector("svg"), tip=mkTip(box);
+    svg.addEventListener("pointermove",e=>{const r=box.getBoundingClientRect();
+      const gi=Math.max(1,Math.min(MESI_G,Math.round(1+(e.clientX-r.left-m.l)/(W-m.l-m.r)*(MESI_G-1))));
+      const rr=rows.find(x=>x.giorno===gi); if(!rr)return;
+      tip.innerHTML=`<b>${fmtDate(gi)}</b><br>massima <b>${rr.tmax!=null?f1(rr.tmax)+"°":"—"}</b><br>minima <b>${rr.tmin!=null?f1(rr.tmin)+"°":"—"}</b>`;
+      place(box,tip,e.clientX-r.left,e.clientY-r.top);});
+    svg.addEventListener("pointerleave",()=>tip.style.opacity=0);
+  }
+
+  function badge(metodo){
+    if(metodo==="esclusa - ambigua") return '<span class="badge bad">esclusa</span>';
+    if(metodo==="lettura_visiva") return '<span class="badge ok">lettura visiva</span>';
+    return `<span class="badge">${metodo}</span>`;
+  }
+  function renderTable(){
+    let rows=ROWS.slice();
+    if(searchTerm){const t=searchTerm.toLowerCase();rows=rows.filter(r=>(r.stazione||"").toLowerCase().includes(t)||(r.nota||"").toLowerCase().includes(t));}
+    rows.sort((a,b)=>{const av=a[sortKey],bv=b[sortKey];if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;
+      if(typeof av==="string")return av.localeCompare(bv)*sortDir; return (av-bv)*sortDir;});
+    $("tbody").innerHTML=rows.map(r=>`<tr>`+
+      `<td>${fmtDate(r.giorno)}</td><td>${r.stazione}</td>`+
+      `<td class="num${r.tmin==null?" empty-cell":""}">${r.tmin!=null?f1(r.tmin):"—"}</td>`+
+      `<td class="num${r.tmax==null?" empty-cell":""}">${r.tmax!=null?f1(r.tmax):"—"}</td>`+
+      `<td class="num">${r.pagina_pdf??""}</td><td>${badge(r.metodo)}</td></tr>`).join("");
+    const nValide=ROWS.filter(r=>r.tmin!=null).length;
+    $("tblN").textContent=nValide+" righe verificate";
+  }
+  function buildTable(){
+    renderTable();
+    $("search").addEventListener("input",e=>{searchTerm=e.target.value;renderTable();});
+    document.querySelectorAll("#table th[data-sort]").forEach(th=>{
+      th.addEventListener("click",()=>{const k=th.dataset.sort;if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=1;}
+        document.querySelectorAll("#table th[data-sort]").forEach(x=>x.removeAttribute("aria-sort"));
+        th.setAttribute("aria-sort",sortDir===1?"ascending":"descending"); renderTable();});
+    });
+  }
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
