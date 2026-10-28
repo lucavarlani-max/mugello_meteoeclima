@@ -11,6 +11,12 @@ Due fonti, con durate diverse:
   SIR    pioggia giornaliera «9-9» delle stazioni del Servizio Idrologico Regionale nel Mugello (data/sir/<id>/prec99.csv,
          già nell'archivio del sito): durate 1, 2, 3 e 5 giorni, massimo annuo della somma di D giorni consecutivi.
 
+Per tutte le stazioni si aggiungono le linee segnalatrici di possibilità pluviometrica ufficiali della Regione Toscana
+(LSPP, aggiornamento 2012, https://www.sir.toscana.it/lspp-2012): per i tempi di ritorno 2, 5, 10, 20, 30, 50, 100, 150,
+200 e 500 anni, i parametri a e n di h = a·d^n (h in mm, d in ore da 1 a 24) nel punto della stazione, letti dal servizio
+lspp/ajax_lspp_2012.php con le coordinate Gauss-Boaga dell'elenco delle stazioni della stessa pagina. Non cambiano:
+si scaricano solo se mancano. Per le stazioni SIR della valle sono l'unica fonte pubblica per le durate da 1 a 24 ore.
+
 Un anno vale se ha almeno il 90% di ore (ARPAE) o di giorni (SIR) con dato; l'anno in corso è segnato come parziale.
 
 Controllo di coerenza spaziale (dati orari ARPAE): un'ora con almeno 20 mm vale solo se almeno una stazione entro 15 km,
@@ -27,12 +33,13 @@ Uso:
   python scripts/build_piogge_intense.py             ARPAE: solo l'anno in corso (e dicembre precedente per la continuità); SIR: tutto
   python scripts/build_piogge_intense.py --tutto     ARPAE dal 2006 (circa 230 file mensili, mezz'ora abbondante)
 """
-import csv, datetime as dt, gzip, io, json, math, os, sys, time, urllib.request
+import csv, datetime as dt, gzip, io, json, math, os, re, sys, time, urllib.request
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(HERE, "data", "piogge-intense.json")
 URL = "https://dati-simc.arpae.it/opendata/osservati/meteo/storico/{m}.json.gz"
 DAL = (2006, 1)
+re_lspp = re.compile(r'"(TOS\w+)": \{"stat_name":"TOS\w+ - ([^"]*?) \(\w\w\)","lat":([\d.]+),"lon":([\d.]+)\}')
 SOGLIA = 0.9
 # stazioni ARPAE nell'alto Mugello toscano: (id, rete, lat, lon arrotondate a 3 decimali, nome, quota)
 ARPAE = [("firenzuola", "simnbo", 44.122, 11.375, "Firenzuola", 476),
@@ -172,6 +179,50 @@ def sir():
     return out
 
 
+LSPP_T = [2, 5, 10, 20, 30, 50, 100, 150, 200, 500]
+# nome nell'elenco della pagina LSPP delle stazioni ARPAE (le SIR si trovano per codice)
+LSPP_NOMI = {"firenzuola": "Firenzuola", "barco": "Barco", "palazzuolo": "Palazzuolo sul Senio", "faggiola": "Monte Faggiola",
+             "bibbiana": "Bibbiana", "marradi": "Marradi", "casaglia": "Casaglia"}
+
+
+def lspp(stazioni, gia):
+    """aggiunge a ogni stazione "lspp": {T: [a, n]} (ufficiali, Regione Toscana 2012)."""
+    def get(u):
+        req = urllib.request.Request("https://www.sir.toscana.it/" + u, headers={"User-Agent": "mugello-meteoeclima/1.0 (uso non commerciale)"})
+        with urllib.request.urlopen(req, timeout=90) as r:
+            return r.read().decode("utf-8", "replace")
+    elenco = None
+    for s in stazioni:
+        if gia.get(s["id"]):
+            s["lspp"] = gia[s["id"]]
+            continue
+        try:
+            if elenco is None:
+                t = get("lspp-2012")
+                elenco = {}
+                for cod, nome, n, e in re_lspp.findall(t):
+                    elenco[cod] = (nome.strip(), float(n), float(e))
+            cod = s["id"] if s["rete"] == "SIR" else next((c for c, v in elenco.items()
+                                                        if v[0].lower() == LSPP_NOMI.get(s["id"], "").lower()), None)
+            if cod not in elenco:
+                print(f"lspp: {s['nome']} non trovata nell'elenco", file=sys.stderr)
+                continue
+            _, n, e = elenco[cod]
+            par = {}
+            for T in LSPP_T:
+                d = json.loads(get(f"lspp/ajax_lspp_2012.php?years={T}&lat={n}&lon={e}"))
+                a, nn = d.get("res_a", {}).get("mean"), d.get("res_n", {}).get("mean")
+                if a is not None and nn is not None:
+                    par[str(T)] = [round(a, 3), round(nn, 5)]
+                time.sleep(0.5)
+            if len(par) == len(LSPP_T):
+                s["lspp"] = par
+                s["lspp_staz"] = cod
+                print(f"lspp: {s['nome']} ({cod}) T=10 a={par['10'][0]} n={par['10'][1]}", file=sys.stderr)
+        except Exception as ex:
+            print(f"lspp: {s['nome']} non letta ({ex})", file=sys.stderr)
+
+
 def main():
     oggi = dt.date.today()
     prima = json.load(open(OUT, encoding="utf-8")) if os.path.exists(OUT) else {}
@@ -196,6 +247,7 @@ def main():
         stazioni.append({"id": sid, "nome": nome, "quota": quota, "lat": la, "lon": lo, "rete": "ARPAE", "unita": "h",
                          "durate": ORE, "anni": dict(sorted(anni.items()))})
     stazioni += sir()
+    lspp(stazioni, {s["id"]: s.get("lspp") for s in prima.get("stazioni", []) if s.get("lspp")})
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump({"agg": oggi.isoformat(), "soglia_copertura": SOGLIA,
                    "fonti": {"ARPAE": "ARPAE Emilia-Romagna, Servizio IdroMeteoClima, archivio delle osservazioni (dati aperti)",
