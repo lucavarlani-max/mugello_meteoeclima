@@ -1,0 +1,51 @@
+name: Massimi annui delle precipitazioni intense (aggiornamento settimanale)
+
+# Rigenera data/piogge-intense.json (massimi annui di pioggia di 1-24 ore delle stazioni ARPAE dell'alto Mugello e di
+# 1-5 giorni dei pluviometri SIR) per la pagina MeteoGeek «Tempi di ritorno delle precipitazioni intense».
+# Ogni settimana si ricalcola l'anno in corso; a mano, con «tutto», si ricostruisce l'archivio orario ARPAE dal 2006.
+on:
+  schedule:
+    - cron: "17 4 * * 2"          # ogni martedì mattina (ora UTC), dopo l'aggiornamento dell'archivio SIR
+  workflow_dispatch:
+    inputs:
+      tutto:
+        description: "Ricostruisci l'archivio ARPAE dal 2006 (circa un'ora)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: piogge-intense
+  cancel-in-progress: false
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Calcola i massimi annui
+        run: |
+          if [ "${{ inputs.tutto }}" = "true" ]; then python scripts/build_piogge_intense.py --tutto; else python scripts/build_piogge_intense.py; fi
+
+      - name: Commit se cambiato
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/piogge-intense.json
+          if git diff --cached --quiet; then echo "nessuna variazione"; exit 0; fi
+          git commit -q -m "dati: massimi annui delle precipitazioni intense"
+          for i in 1 2 3 4; do
+            git pull -q --rebase origin main && git push -q && exit 0
+            sleep 15
+          done
+          exit 1
