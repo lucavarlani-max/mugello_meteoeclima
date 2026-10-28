@@ -93,7 +93,7 @@
     <header class="head">
       <div class="eyebrow">MeteoGeek · esperimento · pioggia e acqua</div>
       <h1>Ogni quanti anni piove così?</h1>
-      <p class="lead">Il <b>tempo di ritorno</b> dice ogni quanti anni, in media, ci si può aspettare una pioggia almeno così forte in un certo intervallo di tempo: un'ora, tre ore, un giorno. Si ricava dalla statistica dei valori estremi: per ogni stazione si prende la pioggia più forte di ogni anno e si adatta ai dati la distribuzione di Gumbel, la stessa usata in idrologia per le opere idrauliche. Scegli una stazione, una durata e una quantità di pioggia.</p>
+      <p class="lead">Il <b>tempo di ritorno</b> dice ogni quanti anni, in media, ci si può aspettare una pioggia almeno così forte in un certo intervallo di tempo: un'ora, tre ore, un giorno. Si ricava dalla statistica dei valori estremi: per ogni stazione si prende la pioggia più forte di ogni anno e si adatta ai dati la distribuzione di Gumbel, la stessa usata in idrologia per le opere idrauliche. Per le durate di poche ore nella valle uso le linee segnalatrici ufficiali della Regione Toscana. Scegli una stazione, una durata e una quantità di pioggia.</p>
       <div class="cmd"><span id="cmd">$ ./tempo-di-ritorno --stazione=firenzuola --durata=1h --distribuzione=gumbel</span><span class="pill" id="pill-src">…</span><span class="pill">GUMBEL EV1 · MLE</span></div>
     </header>
 
@@ -144,7 +144,7 @@
           <div class="two2">
             <div class="card">
               <div class="sh" style="margin-bottom:2px"><h3 id="g1-tit">Curva di Gumbel</h3><span class="src">asse dei tempi di ritorno logaritmico</span></div>
-              <div class="legend"><span><i class="ln"></i>adattamento di Gumbel</span><span><i class="ln" style="opacity:.35;height:8px"></i>intervallo di confidenza 95%</span><span><i class="dx"></i>la tua pioggia</span></div>
+              <div class="legend" id="g1-leg"></div>
               <div class="chart tall" id="g1"><div class="tip"></div></div>
             </div>
             <div class="card">
@@ -171,7 +171,8 @@
               <h3>Metodo</h3>
               <ul class="note met">
                 <li><b>Dati orari (durate 1-24 ore):</b> stazioni della rete di <a href="https://dati-simc.arpae.it/opendata/osservati/meteo/storico/" target="_blank" rel="noopener">ARPAE Emilia-Romagna</a> nell'alto Mugello toscano, pioggia di ogni ora dal 2006. Il massimo di D ore è la somma più alta di D ore consecutive tutte misurate: le ore sono fisse, quindi i massimi di 1 ora sono un po' più bassi di quelli su intervalli mobili.</li>
-                <li><b>Dati giornalieri (durate 1-5 giorni):</b> pluviometri del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale</a>, pioggia «9-9» (dalle 9 alle 9 del giorno dopo) dal 1992. Per le stazioni della Toscana i dati orari storici si ottengono dal SIR solo su richiesta, per questo nella valle le durate partono da un giorno.</li>
+                <li><b>Dati giornalieri (durate 1-5 giorni):</b> pluviometri del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale</a>, pioggia «9-9» (dalle 9 alle 9 del giorno dopo) dal 1992.</li>
+                <li><b>Durate da 1 a 24 ore nella valle:</b> per i pluviometri SIR i dati orari storici si ottengono solo su richiesta, quindi non ci sono massimi annui orari della stazione. Si usano le <a href="https://www.sir.toscana.it/lspp-2012" target="_blank" rel="noopener">linee segnalatrici di possibilità pluviometrica ufficiali della Regione Toscana</a> (aggiornamento 2012): per ogni punto e per i tempi di ritorno di 2, 5, 10, 20, 30, 50, 100, 150, 200 e 500 anni danno a e n di h = a·dⁿ, stimati sui massimi annui di 1-24 ore di tutti i pluviometri toscani. Fra un tempo di ritorno ufficiale e l'altro la pioggia è interpolata nella variabile ridotta di Gumbel; fuori dall'intervallo 2-500 anni non si estrapola. Per le stazioni ARPAE la tabella confronta le stime locali con le linee ufficiali nello stesso punto.</li>
                 <li><b>Controllo di qualità:</b> un'ora con almeno 20 mm vale solo se almeno una stazione ARPAE entro 15 km, nelle 3 ore prima e dopo, ha misurato almeno il 15% di quella pioggia. Altrimenti si scarta: di solito è un pluviometro che rilascia di colpo neve o acqua accumulate. I valori scartati sono elencati accanto, sotto gli anni più piovosi.</li>
                 <li><b>Anni usati:</b> quelli con almeno il 90% di ore o di giorni misurati; l'anno in corso è escluso dalla stima perché incompleto.</li>
                 <li><b>Modello:</b> distribuzione di Gumbel (valori estremi di tipo I) stimata con la massima verosimiglianza. Il tempo di ritorno T = 1/(1−F) è l'inverso della probabilità di superare quella pioggia in un anno: T = 50 anni vuol dire il 2% ogni anno, non «una volta ogni cinquant'anni a scadenza fissa».</li>
@@ -196,15 +197,15 @@
   "use strict";
   const $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
   const fmt=(v,d=1)=>v==null||!isFinite(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
-  const fT=t=>!isFinite(t)?"oltre 10.000":t>=1000?fmt(t,0):t>=100?fmt(t,0):t>=10?fmt(t,1):fmt(t,1);
+  const fT=t=>!isFinite(t)||t>1e4?"oltre 10.000":t>=100?fmt(t,0):fmt(t,1);
   const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
   const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
   const dlab=s=>{const d=new Date(s.length>10?s:s+"T12:00:00Z"); return d.getUTCDate()+" "+MESI[d.getUTCMonth()]+" "+d.getUTCFullYear();};
-  const NOMI={h:{1:"breve",3:"intensa",6:"persistente",12:"prolungata",24:"giornaliera"},g:{1:"un giorno",2:"due giorni",3:"tre giorni",5:"cinque giorni"}};
-  const udur=(D,u)=>u==="h"?(D===1?"1 ora":D+" ore"):(D===1?"1 giorno":D+" giorni");
-  const TT=[2,5,10,20,50,100,200];
-  let J=null, S=null, D=1, x=50;
+  const NOMI={"1h":"breve","3h":"intensa","6h":"persistente","12h":"prolungata","24h":"giornaliera","1g":"un giorno","2g":"due giorni","3g":"tre giorni","5g":"cinque giorni"};
+  const udur=k=>{const d=parseInt(k), u=k.slice(-1); return u==="h"?(d===1?"1 ora":d+" ore"):(d===1?"1 giorno":d+" giorni");};
+  const TT=[2,5,10,20,50,100,200], ORE=[1,3,6,12,24];
+  let J=null, S=null, K="1h", x=50;
 
   // ---------- Gumbel: stima di massima verosimiglianza e intervalli (metodo delta)
   function gumbel(v){
@@ -218,121 +219,154 @@
     return {mu,b,n};
   }
   const yT=T=>-Math.log(-Math.log(1-1/T));
-  const q=(g,T)=>g.mu+g.b*yT(T);
-  const sdY=(g,y)=>Math.sqrt((1.1087+0.5140*y+0.6079*y*y)/g.n); // varianza del quantile / β² (Gumbel, MLE)
-  const qCI=(g,T)=>{const y=yT(T), s=g.b*sdY(g,y); return [q(g,T)-1.96*s,q(g,T)+1.96*s];};
-  const Tde=(g,xx)=>{const F=Math.exp(-Math.exp(-(xx-g.mu)/g.b)); return F>=1?Infinity:1/(1-F);};
   const TdaY=y=>{const F=Math.exp(-Math.exp(-y)); return F>=1?Infinity:1/(1-F);};
-  function TCI(g,xx){const y=(xx-g.mu)/g.b, s=sdY(g,y); return [TdaY(y-1.96*s),TdaY(y+1.96*s)];}
+  // modello Gumbel sui massimi annui della stazione
+  function modGumbel(k,L){
+    const g=gumbel(L.map(o=>o.mm)), sdY=y=>Math.sqrt((1.1087+0.5140*y+0.6079*y*y)/g.n);
+    const q=T=>g.mu+g.b*yT(T);
+    return {k,tipo:"gumbel",L,g,n:L.length,Tmin:1.1,Tmax:500,q,
+      qCI:T=>{const s=g.b*sdY(yT(T)); return [q(T)-1.96*s,q(T)+1.96*s];},
+      T:xx=>{const F=Math.exp(-Math.exp(-(xx-g.mu)/g.b)); return F>=1?Infinity:1/(1-F);},
+      TCI:xx=>{const y=(xx-g.mu)/g.b, s=sdY(y); return [TdaY(y-1.96*s),TdaY(y+1.96*s)];}};
+  }
+  // modello delle linee segnalatrici ufficiali: h = a_T·d^n_T, interpolato nella variabile ridotta di Gumbel fra i T ufficiali
+  function modLspp(k,par){
+    const d=parseInt(k), P=Object.keys(par).map(Number).sort((a,b)=>a-b).map(T=>({T,y:yT(T),h:par[T][0]*Math.pow(d,par[T][1])}));
+    const q=T=>{const y=yT(T); let i=P.findIndex(p=>p.y>=y); if(i===-1) i=P.length-1; else if(i===0) i=1;
+      const a=P[i-1], b=P[i]; return a.h+(b.h-a.h)*(y-a.y)/(b.y-a.y);};
+    const T=xx=>{if(xx<P[0].h) return Math.max(1,TdaY(P[0].y+(xx-P[0].h)*(P[1].y-P[0].y)/(P[1].h-P[0].h)));
+      let i=P.findIndex(p=>p.h>=xx); if(i<0) i=P.length-1; if(i===0) i=1; const a=P[i-1], b=P[i]; return TdaY(a.y+(xx-a.h)*(b.y-a.y)/(b.h-a.h));};
+    return {k,tipo:"lspp",par,P,Tmin:2,Tmax:500,q,T,qCI:null,TCI:null};
+  }
 
   fetch("./data/piogge-intense.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(d=>{
     J=d; const anno=new Date().getFullYear();
-    J.stazioni.forEach(s=>{s.fit={}; s.serie={};
-      s.durate.forEach(Dd=>{const L=Object.entries(s.anni).filter(([a,v])=>+a<anno&&v.cop>=(J.soglia_copertura||.9)&&v.max[Dd]).map(([a,v])=>({a:+a,mm:v.max[Dd][0],t:v.max[Dd][1]}));
-        s.serie[Dd]=L; if(L.length>=10) s.fit[Dd]=gumbel(L.map(o=>o.mm));});
-      s.ok=Object.keys(s.fit).length>0;});
+    J.stazioni.forEach(s=>{s.mod={}; s.serie={};
+      s.durate.forEach(Dd=>{const k=Dd+s.unita, L=Object.entries(s.anni).filter(([a,v])=>+a<anno&&v.cop>=(J.soglia_copertura||.9)&&v.max[Dd]).map(([a,v])=>({a:+a,mm:v.max[Dd][0],t:v.max[Dd][1]}));
+        s.serie[k]=L; if(L.length>=10) s.mod[k]=modGumbel(k,L);});
+      // per le stazioni senza dati orari, le durate di 1-24 ore vengono dalle linee segnalatrici ufficiali
+      if(s.lspp&&s.unita!=="h") ORE.forEach(h=>{s.mod[h+"h"]=modLspp(h+"h",s.lspp);});
+      s.chiavi=Object.keys(s.mod).sort((a,b)=>(a.slice(-1)==="h"?0:1e3)+parseInt(a)-((b.slice(-1)==="h"?0:1e3)+parseInt(b)));
+      s.ok=s.chiavi.length>0;});
     J.stazioni=J.stazioni.filter(s=>s.ok);
     const sp=new URLSearchParams(location.search);
     S=J.stazioni.find(s=>s.id===sp.get("stazione"))||J.stazioni.find(s=>s.id==="firenzuola")||J.stazioni[0];
-    D=+sp.get("durata")||S.durate[0]; if(!S.fit[D]) D=S.durate[0];
-    lista(); scegli(S,D,true);
+    K=sp.get("durata"); if(K&&/^\d+$/.test(K)) K+=S.unita; if(!S.mod[K]) K=S.chiavi[0];
+    lista(); scegli(S,K,true);
     let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(grafici,150);});
   }).catch(e=>{$("st-list").innerHTML=`<div class="loading">I dati non sono disponibili in questo momento (${esc(e.message)}).</div>`;});
 
   function lista(){
-    const gr=[["ARPAE","Dati orari ARPAE · 1-24 ore"],["SIR","Dati giornalieri SIR · 1-5 giorni"]];
+    const gr=[["ARPAE","Dati orari ARPAE · 1-24 ore"],["SIR","Pluviometri SIR · 1-24 ore ufficiali, 1-5 giorni"]];
     $("st-list").innerHTML=gr.map(([r,t])=>`<div class="st-grp">${t}</div>`+J.stazioni.filter(s=>s.rete===r).sort((a,b)=>a.quota-b.quota).map(s=>{
-      const g=s.fit[s.durate[0]], n=s.serie[s.durate[0]].length;
-      return `<button type="button" class="st" data-id="${s.id}" aria-pressed="false"><b>${esc(s.nome)}</b><small>μ=${fmt(g.mu,1)} β=${fmt(g.b,1)} mm (${udur(s.durate[0],s.unita)}) · ${s.quota} m · ${n} anni</small></button>`;}).join("")).join("");
-    $("st-list").querySelectorAll(".st").forEach(b=>b.addEventListener("click",()=>{const s=J.stazioni.find(z=>z.id===b.dataset.id); scegli(s,s.durate.includes(D)&&s.unita===S.unita?D:s.durate[0],true);}));
+      const m=s.mod["1h"], sub=m.tipo==="gumbel"?`μ=${fmt(m.g.mu,1)} β=${fmt(m.g.b,1)} mm (1 ora) · ${m.n} anni`:`1 ora, T=10: ${fmt(m.q(10),0)} mm (LSPP)`;
+      return `<button type="button" class="st" data-id="${s.id}" aria-pressed="false"><b>${esc(s.nome)}</b><small>${sub} · ${s.quota} m</small></button>`;}).join("")).join("");
+    $("st-list").querySelectorAll(".st").forEach(b=>b.addEventListener("click",()=>{const s=J.stazioni.find(z=>z.id===b.dataset.id); scegli(s,s.mod[K]?K:s.chiavi[0],true);}));
   }
-  function scegli(s,d,nuovaX){
-    S=s; D=d;
+  const M=()=>S.mod[K];
+  function scegli(s,k,nuovaX){
+    S=s; K=k; const m=M();
     $("st-list").querySelectorAll(".st").forEach(b=>b.setAttribute("aria-pressed",b.dataset.id===S.id));
-    $("durs").style.gridTemplateColumns=`repeat(${S.durate.length},minmax(0,1fr))`;
-    $("durs").innerHTML=S.durate.map(Dd=>`<button type="button" class="dur" data-d="${Dd}" aria-pressed="${Dd===D}"${S.fit[Dd]?"":" disabled"}><b>${Dd}${S.unita}</b></button>`).join("");
-    $("durs").querySelectorAll(".dur").forEach(b=>b.addEventListener("click",()=>scegli(S,+b.dataset.d,true)));
-    const g=S.fit[D], L=S.serie[D], mx=Math.max(...L.map(o=>o.mm));
-    if(nuovaX) x=Math.round(q(g,20));
-    const top=Math.ceil(Math.max(mx*1.5,q(g,500))/10)*10;
+    const ch=S.chiavi;
+    $("durs").style.gridTemplateColumns=`repeat(${Math.min(5,ch.length)},minmax(0,1fr))`;
+    $("durs").innerHTML=ch.map(c=>`<button type="button" class="dur" data-k="${c}" aria-pressed="${c===K}" title="${S.mod[c].tipo==="lspp"?"linea segnalatrice ufficiale":"massimi annui della stazione"}"><b>${parseInt(c)}${c.slice(-1)}</b></button>`).join("");
+    $("durs").querySelectorAll(".dur").forEach(b=>b.addEventListener("click",()=>scegli(S,b.dataset.k,true)));
+    const mx=m.L?Math.max(...m.L.map(o=>o.mm)):null;
+    if(nuovaX) x=Math.round(m.q(20));
+    const top=Math.ceil(Math.max(mx?mx*1.5:0,m.q(500))/10)*10;
     $("rng").max=top; $("mm").max=top*2;
-    $("rng-lab").innerHTML=`<span>1 mm</span><span>più alto osservato ${fmt(mx,0)}</span><span>${top} mm</span>`;
-    $("mm-u").textContent="mm in "+udur(D,S.unita);
-    $("pill-src").textContent=(S.rete==="ARPAE"?"ARPAE · pioggia oraria":"SIR · pioggia giornaliera")+" · "+L[0].a+"-"+L[L.length-1].a+" · n="+L.length;
-    $("cmd").textContent=`$ ./tempo-di-ritorno --stazione=${S.nome.toLowerCase().replace(/[^a-zà-ù0-9]+/g,"-").replace(/-+$/,"")} --durata=${D}${S.unita} --distribuzione=gumbel`;
-    $("par").innerHTML=`μ = <b>${fmt(g.mu,1)}</b> mm · β = <b>${fmt(g.b,2)}</b> mm<br>${L.length} massimi annui, ${L[0].a}-${L[L.length-1].a}`;
-    try{const u=new URL(location.href);u.searchParams.set("stazione",S.id);u.searchParams.set("durata",D);history.replaceState(null,"",u);}catch(_){}
+    $("rng-lab").innerHTML=`<span>1 mm</span><span>${mx!=null?"più alto osservato "+fmt(mx,0):"T = 500 anni "+fmt(m.q(500),0)}</span><span>${top} mm</span>`;
+    $("mm-u").textContent="mm in "+udur(K);
+    $("pill-src").textContent=m.tipo==="lspp"?"Regione Toscana · LSPP 2012":(S.rete==="ARPAE"?"ARPAE · pioggia oraria":"SIR · pioggia giornaliera")+" · "+m.L[0].a+"-"+m.L[m.L.length-1].a+" · n="+m.n;
+    $("cmd").textContent=`$ ./tempo-di-ritorno --stazione=${S.nome.toLowerCase().replace(/[^a-zà-ù0-9]+/g,"-").replace(/-+$/,"")} --durata=${K} --${m.tipo==="lspp"?"lspp=toscana-2012":"distribuzione=gumbel"}`;
+    $("par").innerHTML=m.tipo==="gumbel"?`μ = <b>${fmt(m.g.mu,1)}</b> mm · β = <b>${fmt(m.g.b,2)}</b> mm<br>${m.n} massimi annui, ${m.L[0].a}-${m.L[m.L.length-1].a}`:
+      `Linea segnalatrice ufficiale della Regione Toscana (2012): con T = 10 anni a = <b>${fmt(m.par[10][0],1)}</b>, n = <b>${fmt(m.par[10][1],3)}</b>.<br>Per le ore della valle non ci sono massimi annui pubblici della stazione.`;
+    try{const u=new URL(location.href);u.searchParams.set("stazione",S.id);u.searchParams.set("durata",K);history.replaceState(null,"",u);}catch(_){}
     tabella(); riferimenti(); aggiorna();
   }
   $("mm").addEventListener("input",()=>{const v=+$("mm").value; if(v>0){x=v; $("rng").value=Math.min(+$("rng").max,v); aggiorna();}});
   $("rng").addEventListener("input",()=>{x=+$("rng").value; $("mm").value=x; aggiorna();});
 
   function aggiorna(){
-    const g=S.fit[D], L=S.serie[D], n=L.length, T=Tde(g,x), [t1,t2]=TCI(g,x), p=1/T*100, F=1-1/T, mx=Math.max(...L.map(o=>o.mm));
+    const m=M(), T=m.T(x), p=1/T*100, F=1-1/T;
     $("mm").value=x; $("rng").value=Math.min(+$("rng").max,x);
-    $("r-lab").textContent=`Risultato · ${S.nome} · ${udur(D,S.unita)} · ${S.rete}`;
-    $("r-tit").innerHTML=`${fmt(x,0)} mm <span>in ${udur(D,S.unita)}</span> a ${esc(S.nome)}`;
-    $("r-t").textContent=fT(T);
-    const estr=T>2*n;
-    $("r-chips").innerHTML=`<span class="chip">IC 95%: ${fT(t1)} – ${fT(t2)} anni</span><span class="chip">probabilità annua ${fmt(p,p<1?2:1)}%</span>`+
-      (estr?`<span class="chip av">estrapolazione oltre ${2*n} anni</span>`:"")+(x>mx?`<span class="chip av">più del massimo osservato (${fmt(mx,1)} mm)</span>`:"");
-    const [q1,q2]=qCI(g,Math.max(1.01,Math.min(T,1e6)));
-    $("r-frase").innerHTML=`Ogni anno c'è una probabilità del <b>${fmt(p,p<1?2:1)}%</b> che a ${esc(S.nome)} cadano almeno ${fmt(x,0)} mm in ${udur(D,S.unita)}: in media una volta ogni <b>${fT(T)} anni</b>. `+
-      (isFinite(T)&&T<1e5?`Con lo stesso tempo di ritorno, l'intervallo di confidenza al 95% della pioggia è ${fmt(q1,0)}-${fmt(q2,0)} mm. `:"")+
-      (estr?"Il valore va oltre il doppio degli anni osservati: è un'estrapolazione, con incertezza alta.":"");
-    $("r-kv").innerHTML=`<span>F(x), probabilità di non superamento</span><b>${fmt(F,4)}</b><span>1 − F, superamento annuo</span><b>${fmt(1-F,4)}</b><span>Anni osservati</span><b>${n}</b><span>Volte superato nei ${n} anni</span><b>${L.filter(o=>o.mm>=x).length}</b>`;
-    const prob30=(1-Math.pow(F,30))*100;
-    $("r-int").innerHTML=`Probabilità di vederlo almeno una volta in 30 anni: <b>${fmt(Math.min(100,prob30),0)}%</b>. Il tempo di ritorno è una media: due eventi con T = 50 anni possono capitare anche a pochi anni di distanza.`;
+    $("r-lab").textContent=`Risultato · ${S.nome} · ${udur(K)} · ${m.tipo==="lspp"?"LSPP Regione Toscana":S.rete}`;
+    $("r-tit").innerHTML=`${fmt(x,0)} mm <span>in ${udur(K)}</span> a ${esc(S.nome)}`;
+    $("r-t").textContent=m.tipo==="lspp"&&T<2?"meno di 2":m.tipo==="lspp"&&T>500?"oltre 500":fT(T);
+    if(m.tipo==="gumbel"){
+      const n=m.n, [t1,t2]=m.TCI(x), mx=Math.max(...m.L.map(o=>o.mm)), estr=T>2*n;
+      $("r-chips").innerHTML=`<span class="chip">IC 95%: ${fT(t1)} – ${fT(t2)} anni</span><span class="chip">probabilità annua ${fmt(p,p<1?2:1)}%</span>`+
+        (estr?`<span class="chip av">estrapolazione oltre ${2*n} anni</span>`:"")+(x>mx?`<span class="chip av">più del massimo osservato (${fmt(mx,1)} mm)</span>`:"");
+      const [q1,q2]=m.qCI(Math.max(1.01,Math.min(T,1e6)));
+      $("r-frase").innerHTML=`Ogni anno c'è una probabilità del <b>${fmt(p,p<1?2:1)}%</b> che a ${esc(S.nome)} cadano almeno ${fmt(x,0)} mm in ${udur(K)}: in media una volta ogni <b>${fT(T)} anni</b>. `+
+        (isFinite(T)&&T<1e5?`Con lo stesso tempo di ritorno, l'intervallo di confidenza al 95% della pioggia è ${fmt(q1,0)}-${fmt(q2,0)} mm. `:"")+
+        (estr?"Il valore va oltre il doppio degli anni osservati: è un'estrapolazione, con incertezza alta.":"");
+      $("r-kv").innerHTML=`<span>F(x), probabilità di non superamento</span><b>${fmt(F,4)}</b><span>1 − F, superamento annuo</span><b>${fmt(1-F,4)}</b><span>Anni osservati</span><b>${n}</b><span>Volte superato nei ${n} anni</span><b>${m.L.filter(o=>o.mm>=x).length}</b>`;
+    }else{
+      const fuori=T<2||T>500;
+      $("r-chips").innerHTML=`<span class="chip">probabilità annua ${fuori?"–":fmt(p,p<1?2:1)+"%"}</span><span class="chip">linea segnalatrice ufficiale</span>`+(fuori?`<span class="chip av">fuori dai tempi di ritorno ufficiali (2-500 anni)</span>`:"");
+      $("r-frase").innerHTML=fuori?`${fmt(x,0)} mm in ${udur(K)} a ${esc(S.nome)} è ${T<2?"sotto la pioggia con tempo di ritorno di 2 anni":"oltre la pioggia con tempo di ritorno di 500 anni"} secondo le linee segnalatrici ufficiali.`:
+        `Secondo le linee segnalatrici ufficiali della Regione Toscana, a ${esc(S.nome)} una pioggia di almeno ${fmt(x,0)} mm in ${udur(K)} ha ogni anno una probabilità del <b>${fmt(p,p<1?2:1)}%</b>: in media una volta ogni <b>${fT(T)} anni</b>. Le linee ufficiali non danno un intervallo di confidenza.`;
+      $("r-kv").innerHTML=`<span>F(x), probabilità di non superamento</span><b>${fuori?"–":fmt(F,4)}</b><span>1 − F, superamento annuo</span><b>${fuori?"–":fmt(1-F,4)}</b><span>Fonte</span><b>LSPP 2012</b><span>Tempi di ritorno ufficiali</span><b>2-500 anni</b>`;
+    }
+    const prob30=(1-Math.pow(Math.max(0,F),30))*100;
+    $("r-int").innerHTML=isFinite(T)&&T>=1?`Probabilità di vederlo almeno una volta in 30 anni: <b>${fmt(Math.min(100,prob30),0)}%</b>. Il tempo di ritorno è una media: due eventi con T = 50 anni possono capitare anche a pochi anni di distanza.`:"";
     grafici();
   }
 
   function grafici(){ if(!S) return; curva(); carta(); }
-  function asseT(svg,X,top,H,bot,W,mr,ml){[1.1,2,5,10,20,50,100,200,500].forEach(t=>{svg.appendChild(el("line",{x1:X(t),x2:X(t),y1:top,y2:H-bot,class:"gl"}));
-    svg.appendChild(el("text",{x:X(t),y:H-bot+14,"text-anchor":"middle",class:"axl"},t===1.1?"1,1":t));});
-    svg.appendChild(el("text",{x:(ml+W-mr)/2,y:H-2,"text-anchor":"middle",class:"axl"},"tempo di ritorno (anni)"));}
   function scalaY(lo,hi){const p=[1,2,5,10,20,25,50,100].find(s=>(hi-lo)/s<=7)||200; return {lo:Math.floor(lo/p)*p,hi:Math.ceil(hi/p)*p,p};}
   function curva(){
     const box=$("g1"), tip=box.querySelector(".tip"); box.querySelectorAll("svg").forEach(e=>e.remove());
-    const g=S.fit[D], W=Math.max(300,box.clientWidth), H=W<500?250:290, ml=40, mr=12, top=12, bot=34;
-    const Tx=Math.min(Math.max(Tde(g,x),1.1),500), lx=t=>Math.log(Math.log(t)); // ascissa: variabile ridotta di Gumbel ≈ log T
-    const ys=t=>yT(t), X=t=>ml+(ys(t)-ys(1.1))/(ys(500)-ys(1.1))*(W-ml-mr);
-    const Ts=[];for(let t=1.1;t<=500;t*=1.06)Ts.push(t);Ts.push(500);
-    const lo0=Math.min(qCI(g,1.1)[0],x), hi0=Math.max(qCI(g,500)[1],x), sy=scalaY(Math.max(0,lo0),hi0), Y=v=>top+(sy.hi-v)/(sy.hi-sy.lo)*(H-top-bot);
-    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Pioggia in ${udur(D,S.unita)} in funzione del tempo di ritorno a ${S.nome}`});
+    const m=M(), W=Math.max(300,box.clientWidth), H=W<500?250:290, ml=40, mr=12, top=12, bot=34, T0=m.Tmin, T1=500;
+    const ys=t=>yT(t), X=t=>ml+(ys(t)-ys(T0))/(ys(T1)-ys(T0))*(W-ml-mr);
+    const Ts=[];for(let t=T0;t<=T1;t*=1.06)Ts.push(t);Ts.push(T1);
+    const lo0=Math.min(m.qCI?m.qCI(T0)[0]:m.q(T0),x), hi0=Math.max(m.qCI?m.qCI(T1)[1]:m.q(T1),x), sy=scalaY(Math.max(0,lo0),hi0), Y=v=>top+(sy.hi-v)/(sy.hi-sy.lo)*(H-top-bot);
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Pioggia in ${udur(K)} in funzione del tempo di ritorno a ${S.nome}`});
     for(let v=sy.lo;v<=sy.hi+1e-9;v+=sy.p){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},v));}
-    asseT(svg,X,top,H,bot,W,mr,ml);
-    const up=Ts.map(t=>[X(t),Y(qCI(g,t)[1])]), dn=Ts.map(t=>[X(t),Y(Math.max(sy.lo,qCI(g,t)[0]))]).reverse();
-    svg.appendChild(el("path",{d:"M"+up.concat(dn).map(p=>p.map(v=>v.toFixed(1)).join(" ")).join("L")+"Z",class:"bd"}));
-    svg.appendChild(el("path",{d:"M"+Ts.map(t=>X(t).toFixed(1)+" "+Y(q(g,t)).toFixed(1)).join("L"),class:"ln"}));
-    const n=S.serie[D].length; svg.appendChild(el("line",{x1:X(Math.min(500,2*n)),x2:X(Math.min(500,2*n)),y1:top,y2:H-bot,stroke:"var(--amber)","stroke-dasharray":"3 4","stroke-width":1}));
-    svg.appendChild(el("text",{x:X(Math.min(500,2*n))+4,y:top+10,class:"axl",style:"fill:var(--amber)"},"2n = "+2*n+" anni"));
-    if(isFinite(Tde(g,x))&&Tde(g,x)>=1.1&&Tde(g,x)<=500){svg.appendChild(el("circle",{cx:X(Tx),cy:Y(x),r:6,class:"ptx"}));
-      svg.appendChild(el("text",{x:X(Tx)+(X(Tx)>W-120?-9:9),y:Y(x)-9,"text-anchor":X(Tx)>W-120?"end":"start",class:"axl",style:"fill:var(--ink);font-weight:600"},`${fmt(x,0)} mm → T ${fT(Tde(g,x))} anni`));}
+    [1.1,2,5,10,20,50,100,200,500].filter(t=>t>=T0).forEach(t=>{svg.appendChild(el("line",{x1:X(t),x2:X(t),y1:top,y2:H-bot,class:"gl"}));
+      svg.appendChild(el("text",{x:X(t),y:H-bot+14,"text-anchor":"middle",class:"axl"},t===1.1?"1,1":t));});
+    svg.appendChild(el("text",{x:(ml+W-mr)/2,y:H-2,"text-anchor":"middle",class:"axl"},"tempo di ritorno (anni)"));
+    if(m.qCI){const up=Ts.map(t=>[X(t),Y(m.qCI(t)[1])]), dn=Ts.map(t=>[X(t),Y(Math.max(sy.lo,m.qCI(t)[0]))]).reverse();
+      svg.appendChild(el("path",{d:"M"+up.concat(dn).map(p=>p.map(v=>v.toFixed(1)).join(" ")).join("L")+"Z",class:"bd"}));}
+    svg.appendChild(el("path",{d:"M"+Ts.map(t=>X(t).toFixed(1)+" "+Y(m.q(t)).toFixed(1)).join("L"),class:"ln"}));
+    if(m.tipo==="lspp") m.P.forEach(p=>svg.appendChild(el("circle",{cx:X(p.T),cy:Y(p.h),r:3.5,fill:"var(--sky)",stroke:"var(--panel)","stroke-width":1.5})));
+    else{const n=m.n, t2=Math.min(500,2*n); svg.appendChild(el("line",{x1:X(t2),x2:X(t2),y1:top,y2:H-bot,stroke:"var(--amber)","stroke-dasharray":"3 4","stroke-width":1}));
+      svg.appendChild(el("text",{x:X(t2)+4,y:top+10,class:"axl",style:"fill:var(--amber)"},"2n = "+2*n+" anni"));}
+    const Tx=m.T(x);
+    if(isFinite(Tx)&&Tx>=T0&&Tx<=T1){svg.appendChild(el("circle",{cx:X(Tx),cy:Y(x),r:6,class:"ptx"}));
+      svg.appendChild(el("text",{x:X(Tx)+(X(Tx)>W-120?-9:9),y:Y(x)-9,"text-anchor":X(Tx)>W-120?"end":"start",class:"axl",style:"fill:var(--ink);font-weight:600"},`${fmt(x,0)} mm → T ${fT(Tx)} anni`));}
     const hit=el("rect",{x:ml,y:top,width:W-ml-mr,height:H-top-bot,fill:"transparent"}); svg.appendChild(hit);
-    hit.addEventListener("pointermove",ev=>{const rc=svg.getBoundingClientRect(), px=(ev.clientX-rc.left)/rc.width*W, yy=ys(1.1)+(px-ml)/(W-ml-mr)*(ys(500)-ys(1.1)), t=TdaY(yy);
-      if(!(t>=1.1&&t<=500)) return; const c=qCI(g,t);
-      tip.innerHTML=`<b>T = ${fT(t)} anni</b><br>${fmt(q(g,t),1)} mm in ${udur(D,S.unita)}<br><span class="m">IC 95%: ${fmt(c[0],0)}-${fmt(c[1],0)} mm</span>`;
+    hit.addEventListener("pointermove",ev=>{const rc=svg.getBoundingClientRect(), px=(ev.clientX-rc.left)/rc.width*W, yy=ys(T0)+(px-ml)/(W-ml-mr)*(ys(T1)-ys(T0)), t=TdaY(yy);
+      if(!(t>=T0&&t<=T1)) return; const c=m.qCI&&m.qCI(t);
+      tip.innerHTML=`<b>T = ${fT(t)} anni</b><br>${fmt(m.q(t),1)} mm in ${udur(K)}`+(c?`<br><span class="m">IC 95%: ${fmt(c[0],0)}-${fmt(c[1],0)} mm</span>`:"");
       const bx=ev.clientX-box.getBoundingClientRect().left; tip.style.left=(bx>box.clientWidth/2?bx-tip.offsetWidth-12:bx+12)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
     hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;});
     box.insertBefore(svg,tip);
-    $("g1-tit").textContent=`Curva di Gumbel · ${S.nome} · ${udur(D,S.unita)}`;
+    $("g1-tit").textContent=(m.tipo==="lspp"?"Linea segnalatrice ufficiale · ":"Curva di Gumbel · ")+S.nome+" · "+udur(K);
+    $("g1-leg").innerHTML=(m.tipo==="lspp"?`<span><i class="ln"></i>linea segnalatrice ufficiale</span><span><i class="dt" style="background:var(--sky)"></i>tempi di ritorno ufficiali</span>`:
+      `<span><i class="ln"></i>adattamento di Gumbel</span><span><i class="ln" style="opacity:.35;height:8px"></i>intervallo di confidenza 95%</span>`)+`<span><i class="dx"></i>la tua pioggia</span>`;
   }
   function carta(){
-    const box=$("g2"), tip=box.querySelector(".tip"); box.querySelectorAll("svg").forEach(e=>e.remove());
-    const g=S.fit[D], L=[...S.serie[D]].sort((a,b)=>b.mm-a.mm), n=L.length;
+    const box=$("g2"), tip=box.querySelector(".tip"); box.querySelectorAll("svg,.loading").forEach(e=>e.remove());
+    const m=M();
+    if(m.tipo!=="gumbel"){ const d=document.createElement("div"); d.className="loading"; d.style.padding="40px 0";
+      d.textContent=`Per ${udur(K)} a ${S.nome} non ci sono massimi annui pubblici della stazione: i valori vengono dalle linee segnalatrici della Regione Toscana, che sono stimate sui massimi di tutti i pluviometri toscani. Scegli una durata in giorni per vedere i massimi annui della stazione.`;
+      box.insertBefore(d,tip); $("g2-note").textContent=""; return; }
+    const g=m.g, L=[...m.L].sort((a,b)=>b.mm-a.mm), n=L.length;
     L.forEach((o,i)=>{o.T=(n+1)/(i+1);}); // posizione di Weibull: rango r (dal più alto), T = (n+1)/r
     const W=Math.max(280,box.clientWidth), H=W<500?250:290, ml=40, mr=12, top=12, bot=34;
     const ys=t=>yT(t), tmax=Math.max(n+1,60), X=t=>ml+(ys(t)-ys(1.1))/(ys(tmax)-ys(1.1))*(W-ml-mr);
-    const sy=scalaY(Math.max(0,Math.min(L[n-1].mm,q(g,1.1))),Math.max(L[0].mm,q(g,tmax))), Y=v=>top+(sy.hi-v)/(sy.hi-sy.lo)*(H-top-bot);
-    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Massimi annui di pioggia in ${udur(D,S.unita)} a ${S.nome} e adattamento di Gumbel`});
+    const sy=scalaY(Math.max(0,Math.min(L[n-1].mm,m.q(1.1))),Math.max(L[0].mm,m.q(tmax))), Y=v=>top+(sy.hi-v)/(sy.hi-sy.lo)*(H-top-bot);
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Massimi annui di pioggia in ${udur(K)} a ${S.nome} e adattamento di Gumbel`});
     for(let v=sy.lo;v<=sy.hi+1e-9;v+=sy.p){svg.appendChild(el("line",{x1:ml,x2:W-mr,y1:Y(v),y2:Y(v),class:"grid"}));svg.appendChild(el("text",{x:ml-6,y:Y(v)+3.5,"text-anchor":"end",class:"axl"},v));}
     [1.1,2,5,10,20,50].filter(t=>t<=tmax).forEach(t=>{svg.appendChild(el("line",{x1:X(t),x2:X(t),y1:top,y2:H-bot,class:"gl"}));svg.appendChild(el("text",{x:X(t),y:H-bot+14,"text-anchor":"middle",class:"axl"},t===1.1?"1,1":t));});
     svg.appendChild(el("text",{x:(ml+W-mr)/2,y:H-2,"text-anchor":"middle",class:"axl"},"tempo di ritorno empirico (anni)"));
     const Ts=[];for(let t=1.1;t<=tmax;t*=1.06)Ts.push(t);
-    svg.appendChild(el("path",{d:"M"+Ts.map(t=>X(t).toFixed(1)+" "+Y(q(g,t)).toFixed(1)).join("L"),class:"ln"}));
-    L.forEach(o=>{const c=el("circle",{cx:X(o.T),cy:Y(o.mm),r:4.5,class:"pt"}); svg.appendChild(c);
+    svg.appendChild(el("path",{d:"M"+Ts.map(t=>X(t).toFixed(1)+" "+Y(m.q(t)).toFixed(1)).join("L"),class:"ln"}));
+    L.forEach(o=>{svg.appendChild(el("circle",{cx:X(o.T),cy:Y(o.mm),r:4.5,class:"pt"}));
       const h=el("circle",{cx:X(o.T),cy:Y(o.mm),r:11,fill:"transparent"}); svg.appendChild(h);
-      h.addEventListener("pointermove",ev=>{tip.innerHTML=`<b>${o.a}: ${fmt(o.mm,1)} mm</b><br>${dlab(o.t)}<br><span class="m">T empirico ${fmt(o.T,1)} anni · Gumbel ${fT(Tde(g,o.mm))} anni</span>`;
+      h.addEventListener("pointermove",ev=>{tip.innerHTML=`<b>${o.a}: ${fmt(o.mm,1)} mm</b><br>${dlab(o.t)}<br><span class="m">T empirico ${fmt(o.T,1)} anni · Gumbel ${fT(m.T(o.mm))} anni</span>`;
         const bx=ev.clientX-box.getBoundingClientRect().left; tip.style.left=(bx>box.clientWidth/2?bx-tip.offsetWidth-12:bx+12)+"px"; tip.style.top="8px"; tip.style.opacity=1;});
       h.addEventListener("pointerleave",()=>{tip.style.opacity=0;});});
     box.insertBefore(svg,tip);
@@ -341,35 +375,45 @@
     $("g2-note").textContent=`Ogni punto è il massimo di un anno, ordinato dal più alto: T empirico = (n+1)/r. Se i punti seguono la linea, Gumbel descrive bene la stazione. Scarto massimo di Kolmogorov-Smirnov ${fmt(ks,3)} (indicativo: ${ks<1.36/Math.sqrt(n)?"compatibile":"non compatibile"} con Gumbel al 5%).`;
   }
 
+  // parametri di h = a·d^n con i minimi quadrati in scala logaritmica
+  function an(chiavi,t){const P=chiavi.map(c=>[Math.log(parseInt(c)),Math.log(S.mod[c].q(t))]), mx=P.reduce((a,p)=>a+p[0],0)/P.length, my=P.reduce((a,p)=>a+p[1],0)/P.length;
+    const n=P.reduce((a,p)=>a+(p[0]-mx)*(p[1]-my),0)/P.reduce((a,p)=>a+(p[0]-mx)**2,0); return [Math.exp(my-n*mx),n];}
   function tabella(){
-    const u=S.unita, righe=S.durate.filter(Dd=>S.fit[Dd]);
+    const gruppi=[["Massimi annui della stazione, distribuzione di Gumbel",S.chiavi.filter(c=>S.mod[c].tipo==="gumbel")],["Linee segnalatrici ufficiali della Regione Toscana (LSPP 2012)",S.chiavi.filter(c=>S.mod[c].tipo==="lspp")]];
     let html="<thead><tr><th>Durata</th>"+TT.map(t=>`<th>T = ${t}<br><small>${fmt(100/t,t>=100?1:0)}%</small></th>`).join("")+"<th>μ / β</th><th>n</th></tr></thead><tbody>";
-    righe.forEach(Dd=>{const g=S.fit[Dd], n=S.serie[Dd].length;
-      html+=`<tr class="${Dd===D?"on":""}"><td>${Dd} ${u==="h"?"h":"g"} <small class="m">${NOMI[u][Dd]}</small></td>`+TT.map(t=>`<td class="${t>2*n?"ex":""}">${fmt(q(g,t),1)}</td>`).join("")+`<td class="m">${fmt(g.mu,1)} / ${fmt(g.b,1)}</td><td class="m">${n}</td></tr>`;});
-    // linee segnalatrici h = a·d^n (minimi quadrati in scala logaritmica)
-    if(righe.length>=3){
-      html+=`<tr class="lspp"><td>h = a·dⁿ</td>`+TT.map(t=>{const P=righe.map(Dd=>[Math.log(Dd),Math.log(q(S.fit[Dd],t))]), mx=P.reduce((a,p)=>a+p[0],0)/P.length, my=P.reduce((a,p)=>a+p[1],0)/P.length;
-        const nn=P.reduce((a,p)=>a+(p[0]-mx)*(p[1]-my),0)/P.reduce((a,p)=>a+(p[0]-mx)**2,0), a=Math.exp(my-nn*mx);
-        return `<td>a ${fmt(a,1)}<br>n ${fmt(nn,2)}</td>`;}).join("")+"<td></td><td></td></tr>";}
+    gruppi.forEach(([tit,ch])=>{ if(!ch.length) return;
+      html+=`<tr><td colspan="${TT.length+3}" class="m" style="text-align:left;padding-top:12px">${tit}</td></tr>`;
+      ch.forEach(c=>{const m=S.mod[c];
+        html+=`<tr class="${c===K?"on":""}"><td>${parseInt(c)} ${c.slice(-1)} <small class="m">${NOMI[c]}</small></td>`+TT.map(t=>`<td class="${m.n&&t>2*m.n?"ex":""}">${fmt(m.q(t),1)}</td>`).join("")+
+          (m.tipo==="gumbel"?`<td class="m">${fmt(m.g.mu,1)} / ${fmt(m.g.b,1)}</td><td class="m">${m.n}</td>`:`<td class="m">ufficiale</td><td class="m">–</td>`)+"</tr>";});
+      if(ch.length>=3){
+        const uff=S.mod[ch[0]].tipo==="lspp";
+        html+=`<tr class="lspp"><td>h = a·dⁿ${uff?" ufficiale":""}</td>`+TT.map(t=>{const [a,n]=uff?S.lspp[t]:an(ch,t); return `<td>a ${fmt(a,1)}<br>n ${fmt(n,2)}</td>`;}).join("")+"<td></td><td></td></tr>";}
+    });
+    // per le stazioni orarie, il confronto con le linee ufficiali nello stesso punto
+    if(S.unita==="h"&&S.lspp) html+=`<tr class="lspp"><td>LSPP 2012 ufficiale<br><small class="m">confronto, 1 ora</small></td>`+TT.map(t=>`<td>${fmt(S.lspp[t][0],1)} mm<br>n ${fmt(S.lspp[t][1],2)}</td>`).join("")+"<td></td><td></td></tr>";
     $("cpp").innerHTML=html+"</tbody>";
     $("cpp-tit").textContent="Linee segnalatrici di possibilità pluviometrica · "+S.nome;
-    $("cpp-note").textContent=`Pioggia (mm) che per ogni durata ha, ogni anno, la probabilità indicata sotto il tempo di ritorno di essere superata. In corsivo i valori oltre il doppio degli anni osservati (estrapolazioni). Nell'ultima riga i parametri di h = a·dⁿ con d in ${u==="h"?"ore":"giorni"} e h in mm.`;
+    $("cpp-note").textContent=`Pioggia (mm) che per ogni durata ha, ogni anno, la probabilità indicata sotto il tempo di ritorno di essere superata. In corsivo i valori oltre il doppio degli anni osservati (estrapolazioni). Le righe h = a·dⁿ danno i parametri della linea, con d in ore o in giorni e h in mm.`+
+      (S.unita==="h"&&S.lspp?" L'ultima riga confronta le stime della stazione con le linee ufficiali della Regione Toscana nello stesso punto (a è la pioggia di 1 ora).":"");
   }
   $("csv").addEventListener("click",()=>{
-    const u=S.unita, righe=S.durate.filter(Dd=>S.fit[Dd]);
-    const csv=["stazione;durata_"+(u==="h"?"ore":"giorni")+";"+TT.map(t=>"T"+t).join(";")+";mu;beta;n"].concat(righe.map(Dd=>{const g=S.fit[Dd];
-      return [S.nome,Dd].concat(TT.map(t=>q(g,t).toFixed(1)),[g.mu.toFixed(2),g.b.toFixed(2),S.serie[Dd].length]).join(";");})).join("\n");
+    const csv=["stazione;durata;fonte;"+TT.map(t=>"T"+t).join(";")+";mu;beta;n"].concat(S.chiavi.map(c=>{const m=S.mod[c];
+      return [S.nome,c,m.tipo==="gumbel"?"Gumbel massimi annui":"LSPP 2012 Regione Toscana"].concat(TT.map(t=>m.q(t).toFixed(1)),m.tipo==="gumbel"?[m.g.mu.toFixed(2),m.g.b.toFixed(2),m.n]:["","",""]).join(";");})).join("\n");
     (navigator.clipboard?navigator.clipboard.writeText(csv):Promise.reject()).then(()=>{$("csv-ok").textContent="copiata negli appunti";},()=>{$("csv-ok").textContent="copia non riuscita: il browser non lo consente";});
   });
 
   function riferimenti(){
-    const L=[...S.serie[D]].sort((a,b)=>b.mm-a.mm).slice(0,5), g=S.fit[D];
-    $("ref-tit").textContent=`Gli anni più piovosi · ${S.nome} · ${udur(D,S.unita)}`;
-    $("ref").innerHTML=L.map(o=>`<div>${dlab(o.t)}<br><span>${S.rete==="ARPAE"?"fine dell'intervallo, ora UTC "+o.t.slice(11,16):"pioggia 9-9"}</span></div><div style="text-align:right"><b>${fmt(o.mm,1)} mm</b><br><span>T ≈ ${fT(Tde(g,o.mm))} anni</span></div>`).join("");
-    // il valore più alto fra tutte le stazioni con la stessa unità e durata
-    const tutti=J.stazioni.filter(s=>s.unita===S.unita&&s.serie[D]).flatMap(s=>s.serie[D].map(o=>({...o,s}))).sort((a,b)=>b.mm-a.mm)[0];
+    // con le durate ufficiali (senza massimi annui) si mostrano gli anni più piovosi in un giorno
+    const k=M().tipo==="gumbel"?K:S.chiavi.find(c=>S.mod[c].tipo==="gumbel"), m=S.mod[k];
+    if(!m){$("ref").innerHTML="";$("ref-note").innerHTML="";return;}
+    const L=[...m.L].sort((a,b)=>b.mm-a.mm).slice(0,5);
+    $("ref-tit").textContent=`Gli anni più piovosi · ${S.nome} · ${udur(k)}`;
+    $("ref").innerHTML=L.map(o=>`<div>${dlab(o.t)}<br><span>${S.rete==="ARPAE"?"fine dell'intervallo, ora UTC "+o.t.slice(11,16):"pioggia 9-9"}</span></div><div style="text-align:right"><b>${fmt(o.mm,1)} mm</b><br><span>T ≈ ${fT(m.T(o.mm))} anni</span></div>`).join("");
+    const tutti=J.stazioni.filter(s=>s.mod[k]&&s.mod[k].tipo==="gumbel").flatMap(s=>s.mod[k].L.map(o=>({...o,s}))).sort((a,b)=>b.mm-a.mm)[0];
     const sc=(J.scartati||[]).filter(z=>z.id===S.id);
-    $("ref-note").innerHTML=(tutti?`Il massimo fra tutte le stazioni ${S.rete==="ARPAE"?"ARPAE":"SIR"} per ${udur(D,S.unita)}: <b>${fmt(tutti.mm,1)} mm</b> a ${esc(tutti.s.nome)}, ${dlab(tutti.t)}.`:"")+
+    $("ref-note").innerHTML=(M().tipo!=="gumbel"?`Per le durate orarie della valle non ci sono massimi annui pubblici: qui gli anni più piovosi in ${udur(k)}.<br><br>`:"")+
+      (tutti?`Il massimo fra tutte le stazioni con massimi annui di ${udur(k)}: <b>${fmt(tutti.mm,1)} mm</b> a ${esc(tutti.s.nome)}, ${dlab(tutti.t)}.`:"")+
       (sc.length?`<br><br><b>Valori scartati dal controllo di qualità:</b> `+sc.map(z=>`${fmt(z.mm,1)} mm in un'ora il ${dlab(z.ora)} (stazioni vicine al massimo ${fmt(z.vicine_max,1)} mm)`).join("; ")+".":"");
   }
 })();
