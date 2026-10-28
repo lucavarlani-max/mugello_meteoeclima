@@ -26,6 +26,22 @@
 <script src="analytics.js" defer></script>
 <script src="menu.js" defer></script>
 <style>
+  /* Rampa sequenziale "gelo" (mite -> freddo intenso), un'unica tinta blu su 5 tappe:
+     --sky/--cold da soli sono troppo vicini come lightness per differenziare bene l'intervallo
+     -30/+18°C di questa serie. Tappe validate con dataviz/validate_palette.js --ordinal
+     (chiaro: contrasto tappa più chiara >= 2:1 su --panel; scuro: stesso floor sulla tappa più
+     scura, che è l'estremo a rischio di sparire su un pannello scuro). */
+  :root{
+    --frost-1:#8bb8e2; --frost-2:#5a93d2; --frost-3:#2f6cb0; --frost-4:#1c4a82; --frost-5:#0f2740;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --frost-1:#d7e9f7; --frost-2:#a9cfe9; --frost-3:#6fa3d6; --frost-4:#4178ae; --frost-5:#305484;
+    }
+  }
+  :root[data-theme="dark"]{
+    --frost-1:#d7e9f7; --frost-2:#a9cfe9; --frost-3:#6fa3d6; --frost-4:#4178ae; --frost-5:#305484;
+  }
   .banner{display:flex;gap:10px;align-items:flex-start;padding:12px 16px;border-radius:var(--r-sm);background:var(--amber-tint);border:1px solid var(--line);font-size:13px;color:var(--ink-soft);line-height:1.55;margin:16px 0}
   .banner .dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--amber);margin-top:5px;flex:none}
   .banner b{color:var(--ink)}
@@ -172,8 +188,11 @@
   function hex(c){c=c.trim();if(c[0]!=="#")return [120,120,120];c=c.replace("#","");if(c.length===3)c=c.split("").map(x=>x+x).join("");return [0,2,4].map(i=>parseInt(c.slice(i,i+2),16));}
   function mix(a,b,t){return "rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";}
   let STOPS=null;
-  function frostColor(t){ // t: 0 (più freddo) .. 1 (più mite)
-    if(!STOPS) STOPS=[hex(css("--sky-tint")),hex(css("--sky")),hex(css("--cold"))];
+  function frostColor(t){ // t: 0 (più freddo) .. 1 (più mite) — rampa sequenziale a 5 tappe, un'unica
+    // tinta blu dal chiaro allo scuro: --sky/--cold da soli erano troppo vicini e appiattivano le
+    // differenze; qui gli estremi (gelo intenso vs. notti più miti) restano ben distinguibili. Validata
+    // con lo script dataviz/validate_palette.js --ordinal in entrambi i temi (chiaro e scuro).
+    if(!STOPS) STOPS=["--frost-1","--frost-2","--frost-3","--frost-4","--frost-5"].map(v=>hex(css(v)));
     t=Math.max(0,Math.min(1,t)); const x=(1-t)*(STOPS.length-1), i=Math.min(STOPS.length-2,Math.floor(x));
     return mix(STOPS[i],STOPS[i+1],x-i);
   }
@@ -234,7 +253,7 @@
       m.on("click",()=>{selStaz=p.stazione;$("staSel").value=p.stazione;drawLine();highlightMap();highlightBox();});
       m.addTo(map); markers[p.stazione]=m;
     });
-    const stops=[frostColor(1),frostColor(.5),frostColor(0)].join(",");
+    const stops=[frostColor(1),frostColor(.75),frostColor(.5),frostColor(.25),frostColor(0)].join(",");
     $("mapLeg").innerHTML=`<span>${f1(lo)}°</span><span class="ramp" style="background:linear-gradient(90deg,${stops})"></span><span>${f1(hi)}°</span>`+
       `<span style="margin-left:10px">· ogni punto è la minima più bassa toccata da quella stazione nel mese</span>`;
     highlightMap();
@@ -313,7 +332,7 @@
         place(box,tip,e.clientX-bx.left,e.clientY-bx.top);});
       c.addEventListener("pointerleave",()=>tip.style.opacity=0);
     });
-    $("heatLeg").innerHTML=`<span>${f1(lo)}°</span><span class="ramp" style="background:linear-gradient(90deg,${[frostColor(1),frostColor(.5),frostColor(0)].join(",")})"></span><span>${f1(hi)}°</span>`+
+    $("heatLeg").innerHTML=`<span>${f1(lo)}°</span><span class="ramp" style="background:linear-gradient(90deg,${[frostColor(1),frostColor(.75),frostColor(.5),frostColor(.25),frostColor(0)].join(",")})"></span><span>${f1(hi)}°</span>`+
       `<span style="margin-left:10px;display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:var(--line);opacity:.5;display:inline-block"></span>nessun dato</span>`;
   }
 
