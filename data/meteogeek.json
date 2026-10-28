@@ -39,6 +39,25 @@
   ],
   "esperimenti": [
     {
+      "id": "gelo-1929",
+      "titolo": "Il gelo del 1929: la grande ondata di freddo su 60 stazioni alpine e prealpine",
+      "tipo": "esperimento",
+      "tema": "stazioni",
+      "data": "2026-10-28",
+      "stato": "nuovo",
+      "testo": "Temperature minime e massime di febbraio 1929 trascritte a mano dagli Annali Idrologici (Sezione di Milano) per 60 stazioni tra Piemonte, Lombardia, Trentino e Ticino: mappa, correlazione con la quota, mappa del gelo giorno per giorno, gradi-gelo accumulati, giorni di gelo intenso e tutti i dati, con ogni caveat sulle stazioni ancora da leggere.",
+      "link": "geek-gelo-1929.html",
+      "tag": [
+        "1929",
+        "ondata di gelo",
+        "Annali Idrologici",
+        "stazioni storiche",
+        "Piemonte",
+        "Lombardia",
+        "Trentino"
+      ]
+    },
+    {
       "id": "tempi-ritorno",
       "titolo": "Ogni quanti anni piove così? I tempi di ritorno delle precipitazioni intense",
       "tipo": "esperimento",
