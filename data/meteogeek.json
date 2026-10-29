@@ -39,6 +39,24 @@
   ],
   "esperimenti": [
     {
+      "id": "spirale",
+      "titolo": "La spirale del riscaldamento: Borgo San Lorenzo dal 1980",
+      "tipo": "grafico",
+      "tema": "clima",
+      "data": "2026-10-29",
+      "stato": "nuovo",
+      "testo": "La spirale climatica alla Ed Hawkins con le misure vere della stazione SIR di Borgo San Lorenzo: anomalie mensili e annuali rispetto alla normale 1991-2020, animazione, strisce del clima, tendenza e analisi per decennio. Si aggiorna ogni mattina.",
+      "link": "geek-spirale.html",
+      "tag": [
+        "spirale climatica",
+        "anomalia",
+        "riscaldamento",
+        "Ed Hawkins",
+        "strisce del clima",
+        "SIR"
+      ]
+    },
+    {
       "id": "gelo-1929",
       "titolo": "Il gelo del 1929: la grande ondata di freddo su 60 stazioni alpine e prealpine",
       "tipo": "esperimento",

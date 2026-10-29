@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La spirale del riscaldamento: Borgo San Lorenzo dal 1980</title>
+<meta name="description" content="Spirale climatica e strisce del clima di Borgo San Lorenzo dal 1980: anomalie mensili e annuali della temperatura rispetto alla normale 1991-2020, misurate dalle stazioni del Servizio Idrologico Regionale.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="L. Varlani">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-spirale.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="La spirale del riscaldamento: Borgo San Lorenzo dal 1980">
+<meta property="og:description" content="Mese dopo mese, quanto Borgo San Lorenzo è stato più caldo o più freddo della normale 1991-2020: la spirale climatica con dati di stazione.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-spirale.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"La spirale del riscaldamento: Borgo San Lorenzo dal 1980","description":"Spirale climatica e strisce del clima di Borgo San Lorenzo: anomalie mensili e annuali della temperatura rispetto alla normale 1991-2020.","inLanguage":"it-IT","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-spirale.html","image":"https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg","datePublished":"2026-10-29","author":{"@type":"Person","name":"L. Varlani"},"publisher":{"@type":"Organization","name":"Mugello Meteo & Clima","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},"isPartOf":{"@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/#website"},"about":[{"@type":"Thing","name":"Spirale climatica"},{"@type":"Thing","name":"Anomalia di temperatura"},{"@type":"Thing","name":"Riscaldamento globale"}],"spatialCoverage":{"@type":"Place","name":"Borgo San Lorenzo, Mugello, Toscana"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},{"@type":"ListItem","position":2,"name":"MeteoGeek","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteogeek.html"},{"@type":"ListItem","position":3,"name":"La spirale del riscaldamento","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-spirale.html"}]}]}</script>
+<style>
+  .cmd{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:10px}
+  .lay{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start}
+  .col{display:flex;flex-direction:column;gap:16px;min-width:0}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+  .spi{position:relative}
+  .spi svg{display:block;width:100%;height:auto}
+  svg .ring{fill:none;stroke:var(--line);stroke-width:1}
+  svg .ring0{fill:none;stroke:var(--ink-faint);stroke-width:1.3;stroke-dasharray:4 4}
+  svg .rl{font-family:var(--mono);font-size:10px;fill:var(--ink-faint)}
+  svg .yl{font-family:var(--mono);font-size:10px;fill:var(--ink-soft)}
+  svg .ml{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint);text-transform:uppercase}
+  .cur{display:inline-block;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:7px 12px;margin:2px 0 6px}
+  .cur b{font-family:var(--serif);font-size:22px;font-weight:800;line-height:1.05;margin:0 6px}
+  .cur span{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+  .scale{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:6px}
+  .scale i{flex:1;max-width:220px;height:8px;border-radius:4px}
+  .stripes{display:flex;height:44px;border-radius:10px;overflow:hidden;margin-top:8px;border:1px solid var(--line)}
+  .stripes span{flex:1;min-width:0}
+  .stripes span.nd{background:repeating-linear-gradient(45deg,var(--panel-2) 0 3px,var(--line) 3px 5px)}
+  .stripes-lab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:5px}
+  .notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .notes div{font-size:12.5px;color:var(--ink-soft)}
+  .notes b{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink);display:block;margin-bottom:3px}
+  .big{font-family:var(--serif);font-weight:800;font-size:52px;line-height:1;letter-spacing:-.02em}
+  .big s{font-size:16px;text-decoration:none;color:var(--ink-faint);font-weight:600;margin-left:6px}
+  .chip{display:inline-block;font-family:var(--mono);font-size:11px;border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:var(--panel-2);margin-top:8px}
+  .tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+  .tri div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;padding:8px 10px;font-size:11.5px;color:var(--ink-soft)}
+  .tri b{display:block;font-family:var(--mono);font-size:15px;color:var(--ink);margin:2px 0}
+  .box{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px;margin-top:12px;font-size:13px;color:var(--ink-soft)}
+  .box h3{font-size:14px;margin:0 0 6px}
+  .dec{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:4px 10px;align-items:center;font-size:12.5px;margin:9px 0}
+  .dec .bar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--line-soft);position:relative;overflow:hidden}
+  .dec .bar i{position:absolute;top:0;bottom:0;border-radius:3px}
+  .dec .bar u{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--ink-faint);left:50%}
+  .dec b{font-family:var(--mono)}
+  .dec span{color:var(--ink-soft)}
+  .avv{font-size:12.5px;color:var(--ink-soft);border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line));background:color-mix(in srgb,var(--amber) 7%,var(--panel));border-radius:10px;padding:9px 11px;margin-top:12px}
+  .con{font-family:var(--mono);font-size:12px;line-height:1.65;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 12px;white-space:pre-wrap;overflow-x:auto;margin:0}
+  .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .btns button{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--pine);color:var(--pine);background:none;border-radius:999px;padding:8px 12px;cursor:pointer}
+  .btns button.pri{background:var(--pine);color:#fff}
+  .ok{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:6px;min-height:14px}
+  .met li{margin:6px 0}
+  @media (max-width:980px){ .lay{grid-template-columns:minmax(0,1fr)} }
+  @media (max-width:620px){ .notes{grid-template-columns:1fr} .big{font-size:42px} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / La spirale del riscaldamento</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · clima e temperature</div>
+      <h1>La spirale del riscaldamento</h1>
+      <p class="lead">Borgo San Lorenzo, dal 1980 a oggi. Ogni punto è un mese, o un anno: la distanza dal centro dice di quanto è stato più caldo o più freddo della normale 1991-2020. È la «spirale climatica» resa celebre dal climatologo Ed Hawkins, qui con le misure vere delle stazioni del Servizio Idrologico Regionale.</p>
+      <div class="cmd" id="cmd">$ ./spirale-climatica --stazione=borgo-san-lorenzo --periodo=1980-oggi --normale=1991-2020</div>
+    </header>
+
+    <div class="lay">
+      <div class="col">
+        <div class="card">
+          <div class="top">
+            <div class="lab" id="spi-lab">Anomalia °C · distanza dal centro</div>
+            <div class="seg" id="modo" role="group" aria-label="Modalità"><button type="button" data-m="anno" aria-pressed="false">Annuale</button><button type="button" data-m="mese" aria-pressed="true">Mensile</button></div>
+          </div>
+          <div class="cur" id="cur"></div>
+          <div class="spi" id="spi"><div class="tip"></div><div class="loading">Carico la serie di Borgo San Lorenzo…</div></div>
+          <div class="scale"><span id="sc-lo">freddo</span><i id="sc-bar"></i><span id="sc-hi">caldo</span><span style="margin-left:auto" id="spi-note"></span></div>
+          <div style="margin-top:18px">
+            <div class="top" style="margin-bottom:0"><div class="lab" id="str-lab">Strisce del clima</div><div class="lab">ogni barra è un anno · tratteggio = dati insufficienti</div></div>
+            <div class="stripes" id="stripes"></div>
+            <div class="stripes-lab" id="stripes-lab"></div>
+          </div>
+        </div>
+        <div class="card notes">
+          <div><b>01 · DATI</b>Temperatura media giornaliera (massima + minima)/2 della stazione SIR di Borgo S. Lorenzo (196 m), con le lacune colmate da Borgo S. Lorenzo 2 (280 m) corretta per lo scarto medio di ogni mese.</div>
+          <div><b>02 · GRAFICO</b>Raggio = anomalia rispetto alla normale 1991-2020 dello stesso mese; angolo = mese dell'anno (mensile) o anno (annuale, un giro ogni dieci anni); colore = anomalia, dal blu al rosso.</div>
+          <div><b>03 · NOTA</b>Serie di una sola stazione, non omogeneizzata: strumenti e posizioni sono cambiati nel tempo. Dal 1989 al 1993 non ci sono dati sufficienti e la spirale si interrompe; dal 1994 al 1999 i valori vengono solo da Borgo S. Lorenzo 2, corretta con gli scarti misurati dopo il 2000.</div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <div class="top"><div class="lab">Stato attuale · Borgo S. Lorenzo</div><div class="lab" id="agg"></div></div>
+          <div class="big" id="now">–</div>
+          <div class="m" id="now-sub"></div>
+          <span class="chip" id="now-chip"></span>
+          <div class="tri" id="tri"></div>
+          <div class="box">
+            <h3>Cosa significa la normale?</h3>
+            <p style="margin:0 0 8px">L'anomalia è lo scarto della temperatura media di un mese, o di un anno, dalla media dello stesso periodo nel trentennio di riferimento 1991-2020, quello indicato dall'Organizzazione meteorologica mondiale. 0 °C vuol dire «nella media di quel trentennio»; i valori positivi sono più caldi.</p>
+            <p style="margin:0">Il cerchio tratteggiato è lo zero; ogni cerchio è mezzo grado. Più la linea si allarga e diventa rossa, più quel periodo è stato caldo rispetto alla normale.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top"><div class="lab">Analisi per decennio</div><div class="lab">anomalia media annua</div></div>
+          <div id="dec"><div class="loading">Carico…</div></div>
+          <div class="avv">L'anomalia è misurata rispetto al 1991-2020, non all'epoca preindustriale: i limiti dell'Accordo di Parigi (1,5 e 2 °C) riguardano la temperatura media globale rispetto al 1850-1900 e non si confrontano con questi numeri.</div>
+        </div>
+        <div class="card">
+          <div class="lab" style="margin-bottom:8px">Export · console</div>
+          <pre class="con" id="con">…</pre>
+          <div class="btns"><button type="button" class="pri" id="csv">Copia CSV</button><button type="button" id="rep">Ripeti animazione</button></div>
+          <div class="ok" id="ok"></div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note met">
+          <li><b>Dati:</b> temperature massime e minime giornaliere del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a> (licenza CC BY-SA 4.0) per Borgo S. Lorenzo (196 m, dal 1951) e Borgo S. Lorenzo 2 (280 m, dal 1993), la stessa serie composita della pagina <a href="borgo-serie-lunghe.html">Le serie più lunghe</a> (<code>data/borgo-serie-lunghe.json</code>, aggiornata ogni mattina). Nei giorni senza dati della prima stazione si usa la seconda, meno lo scarto medio fra le due in quel mese.</li>
+          <li><b>Anni Novanta:</b> dal 1994 al 1999 la stazione storica non ha dati e la serie viene tutta da Borgo S. Lorenzo 2, più in alto di 84 m, corretta con lo scarto medio mensile misurato fra le due stazioni dal 2000 in poi. Se quello scarto non era lo stesso negli anni Novanta, quegli anni possono risultare un po' più freddi o più caldi del vero: per questo il decennio 1990-99 va letto con cautela.</li>
+          <li><b>Medie mensili:</b> la media dei giorni con massima e minima presenti; un mese vale se ne ha almeno 25. Un anno vale se ha tutti e dodici i mesi; l'anno in corso mostra la media dei mesi già trascorsi.</li>
+          <li><b>Normale 1991-2020:</b> per ogni mese la media degli anni del trentennio con quel mese valido (27 anni su 30: dal 1991 al 1993 mancano i dati).</li>
+          <li><b>Tendenza:</b> retta dei minimi quadrati sulle anomalie annuali degli anni completi dal 1980, con l'errore standard della pendenza.</li>
+          <li><b>Limiti:</b> la serie non è omogeneizzata. Nel tempo sono cambiati strumenti (dalle letture manuali ai sensori automatici), posizione e ambiente intorno alla stazione, che è in fondovalle e risente dell'inversione termica notturna. Le tendenze sono indicative.</li>
+          <li><b>Rispetto al file originale:</b> la spirale allegata usava dati simulati, come dichiarava la pagina stessa. Valori come +1,57 °C nel 2026 o +0,47 °C per decennio erano inventati, e la soglia di +1,5 °C era applicata a un'anomalia locale rispetto al 1991-2020. Qui ogni numero è calcolato dalle misure.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR Toscana (CC BY-SA 4.0) · spirale climatica da un'idea di Ed Hawkins</div></footer>
+<script>
+(function(){
+  "use strict";
+  const $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
+  const fmt=(v,d=1)=>v==null||!isFinite(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const fa=(v,d=1)=>{if(v==null||!isFinite(v))return "–"; const r=Math.round(v*10**d)/10**d; return (r>0?"+":r<0?"−":"±")+fmt(Math.abs(r),d);};
+  const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
+  const MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"], MESIL=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  const Y0=1980, NMIN=25;
+  let A=null, modo="mese", anim=null;
+
+  // colore divergente: blu (freddo) - grigio neutro - rosso (caldo), con i colori del sito
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  function rgb(h){h=h.replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16));}
+  let C0,C1,C2;
+  function colori(){C0=rgb(css("--cold")||"#2a64a8");C1=rgb(css("--ctx")||"#b9c2bc");C2=rgb(css("--warm")||"#b8431f");}
+  const col=(a,lim)=>{const t=Math.max(-1,Math.min(1,a/lim)), c=t<0?C0:C2, k=Math.abs(t); return `rgb(${C1.map((v,i)=>Math.round(v+(c[i]-v)*k)).join(",")})`;};
+
+  fetch("./data/borgo-serie-lunghe.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(d=>{
+    A=calcola(d); colori(); tutto();
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>spirale(false),150);});
+    matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>{colori();tutto();});
+  }).catch(e=>{$("spi").querySelector(".loading").textContent="La serie non è disponibile in questo momento ("+e.message+").";});
+
+  function calcola(d){
+    const M=-32768, t0=Date.UTC(d.y0,0,1), som={}, cnt={};
+    for(let i=0;i<d.n;i++){
+      const dt=new Date(t0+i*864e5), y=dt.getUTCFullYear(), m=dt.getUTCMonth();
+      if(y<Y0) continue;
+      let x=d.tmax1[i], n=d.tmin1[i];
+      if(x===M||n===M){const j=i-d.a0; if(j>=0&&j<d.tmax2.length&&d.tmax2[j]!==M&&d.tmin2[j]!==M){x=d.tmax2[j]-d.off.tmax[m]*10; n=d.tmin2[j]-d.off.tmin[m]*10;} else continue;}
+      if(x<n) continue;
+      const k=y*12+m; som[k]=(som[k]||0)+(x+n)/20; cnt[k]=(cnt[k]||0)+1;
+    }
+    const last=d.last, yL=+last.slice(0,4), mL=+last.slice(5,7)-1, dL=+last.slice(8,10);
+    const ultimoGiorno=new Date(Date.UTC(yL,mL+1,0)).getUTCDate();
+    const mens={}; Object.keys(som).forEach(k=>{k=+k; const y=Math.floor(k/12), m=k%12;
+      const corrente=y===yL&&m===mL&&dL<ultimoGiorno; // mese in corso: non si usa finché non è finito
+      if(cnt[k]>=NMIN&&!corrente) mens[k]=som[k]/cnt[k];});
+    const norm=[];
+    for(let m=0;m<12;m++){const v=[];for(let y=1991;y<=2020;y++){const k=y*12+m;if(mens[k]!=null)v.push(mens[k]);} norm.push({m:v.reduce((a,b)=>a+b,0)/v.length,n:v.length});}
+    // il mese in corso, ancora incompleto, resta fuori dalla serie
+    const mFine=dL<ultimoGiorno?mL-1:mL;
+    const mesi=[]; for(let y=Y0;y<=yL;y++)for(let m=0;m<12;m++){const k=y*12+m; if(y===yL&&m>mFine) break; mesi.push({y,m,t:mens[k]??null,a:mens[k]!=null?mens[k]-norm[m].m:null});}
+    const anni=[]; for(let y=Y0;y<=yL;y++){const M_=mesi.filter(o=>o.y===y), ok=M_.filter(o=>o.a!=null);
+      const compl=ok.length===12, parz=y===yL&&ok.length===M_.length&&ok.length>0;
+      anni.push({y,a:compl||parz?ok.reduce((s,o)=>s+o.a,0)/ok.length:null,compl,parz:parz&&!compl,nm:ok.length});}
+    return {mesi,anni,norm,last,yL,mL};
+  }
+
+  function tutto(){ spirale(true); strisce(); stato(); decenni(); consolle(); }
+
+  $("modo").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{modo=b.dataset.m;
+    $("modo").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); spirale(true);}));
+  $("rep").addEventListener("click",()=>spirale(true));
+
+  function spirale(anima){
+    if(!A) return; if(anim) cancelAnimationFrame(anim);
+    const box=$("spi"), tip=box.querySelector(".tip"); box.querySelectorAll("svg,.loading").forEach(e=>e.remove());
+    const W=Math.max(300,box.clientWidth), H=Math.min(W,620), cx=W/2, cy=H/2, R=Math.min(W,H)/2-26, r0=R*0.12;
+    const P=modo==="mese"?A.mesi:A.anni;
+    const vals=P.filter(o=>o.a!=null).map(o=>o.a);
+    const lo=Math.floor(Math.min(-1,...vals)*2)/2, hi=Math.ceil(Math.max(1,...vals)*2)/2, lim=modo==="mese"?2.5:Math.max(Math.abs(lo),Math.abs(hi));
+    const rad=a=>r0+(a-lo)/(hi-lo)*(R-r0);
+    // angolo: mensile = mese (gennaio in alto, senso orario); annuale = un giro ogni dieci anni
+    const ang=o=>modo==="mese"?(o.m/12)*2*Math.PI:((o.y-Y0)/10)*2*Math.PI;
+    const XY=(o)=>{const r=rad(o.a), t=ang(o)-Math.PI/2; return [cx+r*Math.cos(t),cy+r*Math.sin(t)];};
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Spirale climatica di Borgo San Lorenzo, anomalie ${modo==="mese"?"mensili":"annuali"} dal 1980 rispetto al 1991-2020`});
+    for(let a=lo;a<=hi+1e-9;a+=0.5){const zero=Math.abs(a)<1e-9;
+      svg.appendChild(el("circle",{cx,cy,r:rad(a),class:zero?"ring0":"ring"}));
+      if(Math.abs(a)%1<1e-9) svg.appendChild(el("text",{x:cx+rad(a)+3,y:cy-3,class:"rl"},(zero?"0 °C":fa(a,0)+" °C")));}
+    if(modo==="mese") MESI.forEach((n,m)=>{const t=(m/12)*2*Math.PI-Math.PI/2, r=R+14; svg.appendChild(el("text",{x:cx+r*Math.cos(t),y:cy+r*Math.sin(t)+3.5,"text-anchor":"middle",class:"ml"},n));});
+    else for(let k=0;k<10;k++){const t=(k/10)*2*Math.PI-Math.PI/2, r=R+14; svg.appendChild(el("text",{x:cx+r*Math.cos(t),y:cy+r*Math.sin(t)+3.5,"text-anchor":"middle",class:"ml"},"…"+k));}
+    const g=el("g",{}); svg.appendChild(g);
+    const segs=[]; for(let i=1;i<P.length;i++){const a=P[i-1], b=P[i]; if(a.a==null||b.a==null) continue; segs.push([a,b]);}
+    const dot=el("circle",{r:5,fill:"var(--ink)",stroke:"var(--panel)","stroke-width":2}); svg.appendChild(dot);
+    const lab=el("text",{x:cx,y:cy+4,"text-anchor":"middle",class:"yl",style:"font-size:15px;font-weight:600;fill:var(--ink)"}); svg.appendChild(lab);
+    const hit=el("rect",{x:0,y:0,width:W,height:H,fill:"transparent"}); svg.appendChild(hit);
+    box.insertBefore(svg,tip);
+    const ok=P.filter(o=>o.a!=null), ultimo=ok[ok.length-1];
+    let i=0; const passo=anima?Math.max(1,Math.ceil(segs.length/240)):segs.length;
+    function disegna(){
+      const fine=Math.min(segs.length,i+passo);
+      for(;i<fine;i++){const [a,b]=segs[i], p=XY(a), q=XY(b);
+        g.appendChild(el("line",{x1:p[0].toFixed(1),y1:p[1].toFixed(1),x2:q[0].toFixed(1),y2:q[1].toFixed(1),stroke:col((a.a+b.a)/2,lim),"stroke-width":modo==="mese"?1.6:2.4,"stroke-linecap":"round"}));}
+      const o=i>0?segs[i-1][1]:ok[0], p=XY(o); dot.setAttribute("cx",p[0]); dot.setAttribute("cy",p[1]); lab.textContent=o.y;
+      if(i<segs.length) anim=requestAnimationFrame(disegna); else {const p2=XY(ultimo); dot.setAttribute("cx",p2[0]); dot.setAttribute("cy",p2[1]); lab.textContent=ultimo.y;}
+    }
+    disegna();
+    hit.addEventListener("pointermove",ev=>{const rc=svg.getBoundingClientRect(), px=(ev.clientX-rc.left)/rc.width*W, py=(ev.clientY-rc.top)/rc.height*H;
+      let best=null,bd=1e9; ok.forEach(o=>{const p=XY(o), dd=(p[0]-px)**2+(p[1]-py)**2; if(dd<bd){bd=dd;best=o;}});
+      if(!best||bd>400){tip.style.opacity=0;return;}
+      tip.innerHTML=modo==="mese"?`<b>${MESIL[best.m]} ${best.y}</b><br>media ${fmt(best.t,1)} °C · anomalia <b>${fa(best.a,1)} °C</b><br><span class="m">normale 1991-2020: ${fmt(A.norm[best.m].m,1)} °C</span>`:
+        `<b>${best.y}${best.parz?" (finora)":""}</b><br>anomalia <b>${fa(best.a,2)} °C</b>`;
+      const bx=ev.clientX-box.getBoundingClientRect().left, by=ev.clientY-box.getBoundingClientRect().top;
+      tip.style.left=(bx>box.clientWidth/2?bx-tip.offsetWidth-14:bx+14)+"px"; tip.style.top=Math.max(4,by-40)+"px"; tip.style.opacity=1;});
+    hit.addEventListener("pointerleave",()=>{tip.style.opacity=0;});
+    $("spi-lab").textContent=`Anomalia °C · distanza dal centro · ${modo==="mese"?"un punto per mese, un giro per anno":"un punto per anno, un giro ogni dieci anni"}`;
+    $("sc-bar").style.background=`linear-gradient(90deg,${col(-lim,lim)},${col(0,lim)},${col(lim,lim)})`;
+    $("sc-lo").textContent=fa(-lim,1)+" °C"; $("sc-hi").textContent=fa(lim,1)+" °C";
+    $("spi-note").textContent=`${ok.length} ${modo==="mese"?"mesi":"anni"} · ${Y0}-${A.yL}`;
+    $("cmd").textContent=`$ ./spirale-climatica --stazione=borgo-san-lorenzo --periodo=${Y0}-${A.yL} --normale=1991-2020 --modo=${modo==="mese"?"mensile":"annuale"}`;
+    const ua=A.anni.filter(o=>o.a!=null).slice(-1)[0];
+    $("cur").innerHTML=`<span class="lab">${ua.parz?"Anno in corso":"Ultimo anno"}</span> <b>${ua.y} <span style="font-size:18px;color:${col(ua.a,Math.max(1.5,lim))}">${fa(ua.a,1)} °C</span></b> <span>${ua.parz?"gennaio-"+MESIL[ua.nm-1]+", media dei mesi":"anno completo"}</span>`;
+  }
+
+  function strisce(){
+    const L=A.anni, v=L.filter(o=>o.a!=null&&o.compl).map(o=>o.a), lim=Math.max(...v.map(Math.abs));
+    $("stripes").innerHTML=L.map(o=>o.a==null?`<span class="nd" title="${o.y}: dati insufficienti"></span>`:`<span style="background:${col(o.a,lim)}" title="${o.y}${o.parz?" (finora)":""}: ${fa(o.a,2)} °C"></span>`).join("");
+    const p=L.find(o=>o.a!=null), u=L.filter(o=>o.a!=null).slice(-1)[0];
+    $("stripes-lab").innerHTML=`<span>${p.y} · ${fa(p.a,2)} °C</span><span>normale 1991-2020 = 0 °C</span><span>${u.y}${u.parz?" (finora)":""} · ${fa(u.a,2)} °C</span>`;
+    $("str-lab").textContent=`Strisce del clima · ${Y0}-${A.yL} · Borgo S. Lorenzo`;
+  }
+
+  function tendenza(){
+    const P=A.anni.filter(o=>o.compl), n=P.length, mx=P.reduce((s,o)=>s+o.y,0)/n, my=P.reduce((s,o)=>s+o.a,0)/n;
+    const sxx=P.reduce((s,o)=>s+(o.y-mx)**2,0), b=P.reduce((s,o)=>s+(o.y-mx)*(o.a-my),0)/sxx, a=my-b*mx;
+    const se=Math.sqrt(P.reduce((s,o)=>s+(o.a-(a+b*o.y))**2,0)/(n-2)/sxx);
+    return {b:b*10,se:se*10,n};
+  }
+  function stato(){
+    const c=A.anni.filter(o=>o.compl), ua=A.anni.filter(o=>o.a!=null).slice(-1)[0];
+    const ord=[...c].sort((x,y)=>y.a-x.a), rank=ord.findIndex(o=>o.y===ua.y)+1;
+    // ultimi 12 mesi validi
+    const m12=A.mesi.slice(-12), ok12=m12.every(o=>o.a!=null), a12=ok12?m12.reduce((s,o)=>s+o.a,0)/12:null;
+    $("agg").textContent="dati fino al "+(+A.last.slice(8,10))+" "+MESIL[+A.last.slice(5,7)-1]+" "+A.last.slice(0,4);
+    $("now").innerHTML=fa(ua.a,1)+"<s>°C</s>";
+    $("now-sub").textContent=ua.parz?`${ua.y}, da gennaio a ${MESIL[ua.nm-1]}, rispetto al 1991-2020`:`${ua.y}, rispetto al 1991-2020`;
+    const caldi=[...c].sort((x,y)=>y.a-x.a);
+    $("now-chip").textContent=ua.parz?(ua.a>caldi[0].a?"finora sopra l'anno più caldo della serie ("+caldi[0].y+"), confronto indicativo: l'anno non è finito":"l'anno più caldo della serie è il "+caldi[0].y):(rank===1?"anno più caldo della serie":rank+"° anno più caldo su "+c.length);
+    const t=tendenza(), p=c[0];
+    $("tri").innerHTML=`<div>Primo anno<b>${p.y}</b>${fa(p.a,2)} °C</div><div>Ultimi 12 mesi<b>${a12==null?"–":fa(a12,2)+" °C"}</b>${MESI[m12[0].m]} ${m12[0].y}-${MESI[m12[11].m]} ${m12[11].y}</div><div>Tendenza<b>${fa(t.b,2)} °C/10 anni</b>± ${fmt(t.se,2)} · ${t.n} anni completi</div>`;
+  }
+  function decenni(){
+    const D=[[1980,1989],[1990,1999],[2000,2009],[2010,2019],[2020,A.yL]], lim=1.5;
+    $("dec").innerHTML=D.map(([a,b])=>{const L=A.anni.filter(o=>o.y>=a&&o.y<=b&&o.compl);
+      if(!L.length) return `<div class="dec"><b>${a}-${String(b).slice(2)}</b><span>dati insufficienti</span><b>–</b><div class="bar"><u></u></div></div>`;
+      const m=L.reduce((s,o)=>s+o.a,0)/L.length, top=[...L].sort((x,y)=>y.a-x.a)[0], fr=[...L].sort((x,y)=>x.a-y.a)[0];
+      const w=Math.min(50,Math.abs(m)/lim*50);
+      return `<div class="dec"><b>${a}-${String(b).slice(2)}</b><span>${L.length} anni completi${a===1990?" (da Borgo S. Lorenzo 2)":""} · più caldo ${top.y} (${fa(top.a,1)}), più fresco ${fr.y} (${fa(fr.a,1)})</span><b style="color:${col(m,lim)}">${fa(m,2)} °C</b>
+        <div class="bar"><u></u><i style="background:${col(m,lim)};${m>=0?"left:50%":"right:50%"};width:${w}%"></i></div></div>`;}).join("");
+  }
+  function consolle(){
+    const c=A.anni.filter(o=>o.compl), t=tendenza(), caldi=[...c].sort((x,y)=>y.a-x.a), ua=A.anni.filter(o=>o.a!=null).slice(-1)[0];
+    const mm=A.mesi.filter(o=>o.a!=null), mx=[...mm].sort((x,y)=>y.a-x.a)[0], mn=[...mm].sort((x,y)=>x.a-y.a)[0];
+    $("con").textContent=`> spirale --stats
+  stazione: Borgo S. Lorenzo (SIR, 196 m)
+  periodo: ${Y0}-${A.yL} · normale: 1991-2020
+  anni completi: ${c.length} · mesi validi: ${mm.length}
+  ${ua.y}${ua.parz?" (finora)":""}: ${fa(ua.a,2)} °C
+  tendenza: ${fa(t.b,2)} ± ${fmt(t.se,2)} °C/decennio
+  anno più caldo: ${caldi[0].y} (${fa(caldi[0].a,2)} °C)
+  anno più fresco: ${caldi[caldi.length-1].y} (${fa(caldi[caldi.length-1].a,2)} °C)
+  mese più anomalo: ${MESIL[mx.m]} ${mx.y} (${fa(mx.a,1)} °C)
+  mese più freddo: ${MESIL[mn.m]} ${mn.y} (${fa(mn.a,1)} °C)
+  anni sopra +1 °C: ${c.filter(o=>o.a>1).map(o=>o.y).join(", ")||"nessuno"}`;
+  }
+  $("csv").addEventListener("click",()=>{
+    const r=["anno;mese;temperatura_media_C;anomalia_C"].concat(A.mesi.map(o=>[o.y,o.m+1,o.t==null?"":o.t.toFixed(2),o.a==null?"":o.a.toFixed(2)].join(";"))).join("\n");
+    (navigator.clipboard?navigator.clipboard.writeText(r):Promise.reject()).then(()=>{$("ok").textContent="CSV mensile copiato negli appunti";},()=>{$("ok").textContent="copia non riuscita: il browser non lo consente";});
+  });
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
