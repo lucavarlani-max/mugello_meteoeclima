@@ -68,7 +68,8 @@
   .dec span{color:var(--ink-soft)}
   .avv{font-size:12.5px;color:var(--ink-soft);border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line));background:color-mix(in srgb,var(--amber) 7%,var(--panel));border-radius:10px;padding:9px 11px;margin-top:12px}
   .con{font-family:var(--mono);font-size:12px;line-height:1.65;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 12px;white-space:pre-wrap;overflow-x:auto;margin:0}
-  .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .btns.sotto{justify-content:center;margin-top:12px}
   .btns button{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--pine);color:var(--pine);background:none;border-radius:999px;padding:8px 12px;cursor:pointer}
   .btns button.pri{background:var(--pine);color:#fff}
   .ok{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:6px;min-height:14px}
@@ -99,6 +100,7 @@
           <div class="cur" id="cur"></div>
           <div class="spi" id="spi"><div class="tip"></div><div class="loading">Carico la serie di Borgo San Lorenzo…</div></div>
           <div class="scale"><span id="sc-lo">freddo</span><i id="sc-bar"></i><span id="sc-hi">caldo</span><span style="margin-left:auto" id="spi-note"></span></div>
+          <div class="btns sotto"><button type="button" id="rep">Ripeti animazione</button></div>
           <div style="margin-top:18px">
             <div class="top" style="margin-bottom:0"><div class="lab" id="str-lab">Strisce del clima</div><div class="lab">ogni barra è un anno · tratteggio = dati insufficienti</div></div>
             <div class="stripes" id="stripes"></div>
@@ -133,7 +135,7 @@
         <div class="card">
           <div class="lab" style="margin-bottom:8px">Export · console</div>
           <pre class="con" id="con">…</pre>
-          <div class="btns"><button type="button" class="pri" id="csv">Copia CSV</button><button type="button" id="rep">Ripeti animazione</button></div>
+          <div class="btns"><button type="button" class="pri" id="csv">Copia CSV</button></div>
           <div class="ok" id="ok"></div>
         </div>
       </div>

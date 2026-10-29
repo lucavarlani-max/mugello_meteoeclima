@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Record giornalieri nel Mugello: il contatore dei primati</title>
+<meta name="description" content="Quanti record giornalieri di caldo, di freddo e di pioggia hanno battuto quest'anno le stazioni del Mugello, quanti se ne aspetterebbero in un clima stabile e il rapporto fra record di caldo e di freddo, anno per anno.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="L. Varlani">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-record.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Record giornalieri nel Mugello: il contatore dei primati">
+<meta property="og:description" content="Record di caldo, di freddo e di pioggia battuti quest'anno dalle stazioni del Mugello, confrontati con quelli attesi in un clima stabile.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-record.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Record giornalieri nel Mugello: il contatore dei primati","description":"Quanti record giornalieri di caldo, di freddo e di pioggia hanno battuto quest'anno le stazioni del Mugello, quanti se ne aspetterebbero in un clima stabile e il rapporto fra record di caldo e di freddo, anno per anno.","inLanguage":"it-IT","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-record.html","image":"https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg","datePublished":"2026-10-29","author":{"@type":"Person","name":"L. Varlani"},"publisher":{"@type":"Organization","name":"Mugello Meteo & Clima","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},"isPartOf":{"@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/#website"},"about":[{"@type":"Thing","name":"Record climatico"},{"@type":"Thing","name":"Rapporto fra record di caldo e di freddo"},{"@type":"Thing","name":"Riscaldamento globale"}],"spatialCoverage":{"@type":"Place","name":"Mugello, Toscana"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},{"@type":"ListItem","position":2,"name":"MeteoGeek","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteogeek.html"},{"@type":"ListItem","position":3,"name":"Il contatore dei record","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-record.html"}]}]}</script>
+<style>
+  .cmd{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:10px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .live{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+  .live i{width:8px;height:8px;border-radius:50%;background:var(--ink-faint);display:inline-block}
+  .live.on i{background:var(--warm);animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.25}}
+  @media (prefers-reduced-motion:reduce){.live.on i{animation:none}}
+  .ctl{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .ctl label{font-size:13px;color:var(--ink-soft);display:flex;gap:8px;align-items:center;min-width:0;max-width:100%}
+  .ctl select{min-width:0;max-width:100%;text-overflow:ellipsis}
+  .tiles.rec{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:0}
+  .tile .big{font-size:40px}
+  .tile .k{display:flex;align-items:center;gap:7px}
+  .tile .k i{width:10px;height:10px;border-radius:3px;display:inline-block;flex:0 0 auto}
+  .tile .who b{font-weight:600}
+  .tile.meehl{background:var(--panel-2)}
+  .bar-att{height:6px;border-radius:3px;background:var(--line-soft);margin-top:10px;position:relative;overflow:hidden}
+  .bar-att span{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+  .frase{font-size:14px;color:var(--ink-soft);margin:14px 0 0;max-width:90ch}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+  #ev .l{text-align:left}
+  td.sc{font-family:var(--mono);font-size:12px}
+  .chart.tall{height:auto} .chart.tall svg{height:auto}
+  .tip i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .legend i.sq{width:10px;height:10px;border-radius:3px;vertical-align:-1px}
+  svg .att{stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+  svg .zero{stroke:var(--ink-faint);stroke-width:1}
+  svg .hit{fill:transparent}
+  svg .col.on{fill:var(--line-soft)}
+  .met li{margin:6px 0}
+  @media (max-width:760px){ .tiles.rec{grid-template-columns:repeat(2,minmax(0,1fr))} .tile .big{font-size:32px} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Il contatore dei record</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · clima e temperature</div>
+      <h1>Il contatore dei record</h1>
+      <p class="lead">Un <b>record giornaliero</b> è un giorno che batte tutti gli anni precedenti nella stessa data: il 28 giugno più caldo, la notte del 15 gennaio più mite, il 6 maggio più piovoso da quando la stazione misura. In un clima che non cambia i record diventano sempre più rari, e quelli di caldo e di freddo sono tanti quanti. Qui conto quelli battuti dalle stazioni del Mugello, li confronto con quanti se ne aspetterebbero in un clima stabile e guardo il rapporto fra record di caldo e di freddo. Solo misure del Servizio Idrologico Regionale della Toscana e di ARPAE Emilia-Romagna.</p>
+      <div class="cmd"><span id="cmd">$ ./record-counter --year=2026 --station=tutte</span><span class="live" id="live"><i></i><span>–</span></span></div>
+    </header>
+
+    <section>
+      <div class="sh"><h2 id="tit">I record del 2026</h2><span class="src" id="src">SIR Toscana · ARPAE</span></div>
+      <div class="ctl">
+        <label>Stazione <select id="staz" aria-label="Stazione"></select></label>
+        <label>Anno <select id="anno" aria-label="Anno"></select></label>
+      </div>
+      <div class="tiles rec" id="tiles"><div class="loading">Carico i record…</div></div>
+      <p class="frase" id="frase"></p>
+    </section>
+
+    <section>
+      <div class="sh"><h2 id="ev-tit">Gli ultimi record battuti</h2><span class="src" id="ev-src"></span></div>
+      <div class="card">
+        <div class="ctl">
+          <div class="seg" id="ev-seg" role="group" aria-label="Tipo di record"><button type="button" data-t="" aria-pressed="true">Tutti</button><button type="button" data-t="hx,hn" aria-pressed="false">Caldo</button><button type="button" data-t="lx,ln" aria-pressed="false">Freddo</button><button type="button" data-t="p" aria-pressed="false">Pioggia</button></div>
+        </div>
+        <div class="tbl"><table id="ev"><thead><tr><th>Data</th><th id="ev-th-st" class="l">Stazione</th><th class="l">Tipo</th><th>Valore</th><th>Record precedente</th><th>Scarto</th><th>Anni</th></tr></thead><tbody></tbody></table></div>
+        <p class="note" id="ev-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Anno per anno</h2><span class="src" id="st-src"></span></div>
+      <p class="sub">Sopra lo zero i record di caldo, sotto quelli di freddo; il trattino nero è quanti se ne aspetterebbero in un clima stabile. Se il clima non cambiasse, le barre sopra e sotto sarebbero in media lunghe uguali e vicine al trattino.</p>
+      <div class="card">
+        <div class="ctl">
+          <div class="seg" id="st-seg" role="group" aria-label="Coppia di record"><button type="button" data-k="hx,ln" aria-pressed="true">Massime alte · minime basse</button><button type="button" data-k="hx,lx" aria-pressed="false">Solo massime</button><button type="button" data-k="hn,ln" aria-pressed="false">Solo minime</button></div>
+        </div>
+        <div class="legend" id="st-leg"></div>
+        <div class="chart tall" id="ch"><div class="tip"></div><div class="loading">Carico…</div></div>
+        <p class="note" id="st-note"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Per decennio</h2><span class="src" id="dec-src"></span></div>
+      <div class="card">
+        <div class="tbl"><table id="dec"><thead><tr><th>Decennio</th><th>Caldo: record</th><th>attesi</th><th>Freddo: record</th><th>attesi</th><th>Rapporto caldo/freddo</th></tr></thead><tbody></tbody></table></div>
+        <p class="note">Caldo = massime più alte di sempre per quella data, freddo = minime più basse (la coppia usata da Meehl e colleghi, 2009). Un rapporto vicino a 1 è quello di un clima stabile; 2 vuol dire due record di caldo per ogni record di freddo. I decenni in corso o incompleti sono indicati.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note met">
+          <li><b>Dati:</b> temperature massime e minime e pioggia giornaliera delle stazioni del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a> (licenza CC BY-SA 4.0) e di <a href="https://dati.arpae.it" target="_blank" rel="noopener">ARPAE Emilia-Romagna</a> (dati aperti), dall'archivio del sito. Per Borgo San Lorenzo la serie dal 1951. Le stazioni e il controllo di qualità sono quelli della pagina <a href="geek-hall-of-fame.html">Gli estremi del Mugello</a>: i valori scartati non entrano, quelli che non si possono verificare sì. I dati degli ultimi mesi sono provvisori.</li>
+          <li><b>Record:</b> un valore che supera tutti quelli degli anni precedenti nella stessa data (giorno e mese). Ci sono quattro record di temperatura (la massima più alta e quella più bassa, la minima più alta e quella più bassa) e uno di pioggia. Deve superare il primato di almeno 0,1 °C o 0,1 mm: a parità non è un record. Il 29 febbraio non si usa.</li>
+          <li><b>Almeno 20 anni:</b> un record conta solo se per quella data la stazione aveva già almeno 20 anni di misure. Con pochi anni quasi ogni giorno è un record e il conteggio non dice nulla: per questo il contatore di una stazione parte 20 anni dopo l'inizio della sua serie (dal 2011 per le serie SIR che cominciano nel 1991, dal 2026 per quelle ARPAE del 2006).</li>
+          <li><b>Record attesi:</b> se il clima non cambia e gli anni sono scambiabili, ognuno dei primi n+1 anni ha la stessa probabilità di essere il più caldo, quindi l'anno n+1 batte il record con probabilità 1/(n+1). Il numero atteso in un anno è la somma di 1/(n+1) sulle date con dati: con 30 anni alle spalle sono circa 365/31 ≈ 12, con 60 anni circa 6. Per un anno in corso si contano solo i giorni già misurati, così il confronto è alla pari. È il metodo di Benestad (2003) e di Meehl e colleghi (2009).</li>
+          <li><b>Pioggia:</b> serie giornaliera «9-9» del SIR (dalle 9 del mattino alle 9 del giorno dopo, <code>prec99.csv</code>, dal 1991), la pioggia giornaliera per le stazioni ARPAE. Un record di pioggia richiede almeno 1 mm. Siccome molti giorni sono asciutti e quindi uguali fra loro, per la pioggia il numero atteso è un limite superiore: un conteggio un po' sotto l'atteso è normale.</li>
+          <li><b>Tutte le stazioni:</b> somma dei record e degli attesi delle singole stazioni. Le stazioni vicine non sono indipendenti (una giornata di caldo eccezionale fa record in molte), quindi la somma esagera la precisione: va letta come tendenza, non come un conteggio di eventi distinti. Le serie non sono omogeneizzate: uno spostamento o un cambio di sensore può creare o togliere record.</li>
+          <li><b>Rispetto al pacchetto originale:</b> i record erano simulati (dati di prova); il numero atteso era fisso a 365/31 = 11,7 per una base 1993-2023, mentre dipende da quanti anni ha la serie in ogni data; la fonte citava anche Open-Meteo, che è un modello e non una misura. Qui si usano solo misure di stazione, con il numero atteso calcolato giorno per giorno.</li>
+          <li><b>Riferimenti:</b> Benestad R. E. (2003), <i>How often can we expect a record event?</i>, Climate Research 25; Meehl G. A. e altri (2009), <i>Relative increase of record high maximum temperatures compared to record low minimum temperatures in the U.S.</i>, Geophysical Research Letters 36, L23701.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR Toscana (CC BY-SA 4.0) e ARPAE Emilia-Romagna</div></footer>
+<script>
+(function(){
+  "use strict";
+  const $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
+  const fmt=(v,d=1)=>v==null||isNaN(v)?"–":v.toLocaleString("it-IT",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
+  const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  const dlab=iso=>{const t=new Date(iso+"T12:00:00Z");return t.getUTCDate()+" "+MESI[t.getUTCMonth()]+" "+t.getUTCFullYear();};
+  const TIPI={
+    hx:{n:"Giorno più caldo",b:"massima più alta",c:"var(--warm)",u:"°C"},
+    hn:{n:"Notte più calda",b:"minima più alta",c:"color-mix(in srgb,var(--warm) 55%,var(--neutral))",u:"°C"},
+    lx:{n:"Giorno più freddo",b:"massima più bassa",c:"color-mix(in srgb,var(--cold) 55%,var(--neutral))",u:"°C"},
+    ln:{n:"Notte più fredda",b:"minima più bassa",c:"var(--cold)",u:"°C"},
+    p:{n:"Pioggia",b:"pioggia giornaliera più alta",c:"var(--sky)",u:"mm"}};
+  const ORD=["hx","hn","meehl","ln","lx","p"];
+  const slug=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  let R=null, sel="tutte", anno=null, evT="", coppia=["hx","ln"];
+
+  fetch("./data/record-giornalieri.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(d=>{
+    R=d;
+    $("staz").innerHTML=`<option value="tutte">Tutte le stazioni (${d.stazioni.length})</option>`+
+      d.stazioni.map(s=>`<option value="${s.id}">${s.nome} · ${s.comune} · ${s.quota} m${s.dal_t?"":" · solo pioggia"}</option>`).join("");
+    const sp=new URLSearchParams(location.search);
+    if(d.stazioni.some(s=>s.id===sp.get("stazione"))) sel=sp.get("stazione");
+    $("staz").value=sel;
+    anno=+sp.get("anno")||+d.agg.slice(0,4);
+    $("staz").addEventListener("change",()=>{sel=$("staz").value; aggiorna();});
+    $("anno").addEventListener("change",()=>{anno=+$("anno").value; aggiorna();});
+    $("ev-seg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b)return; evT=b.dataset.t;
+      $("ev-seg").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); eventi();});
+    $("st-seg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b)return; coppia=b.dataset.k.split(",");
+      $("st-seg").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); storia();});
+    aggiorna();
+    let t; addEventListener("resize",()=>{clearTimeout(t);t=setTimeout(storia,150);});
+  }).catch(e=>{$("tiles").innerHTML=`<div class="loading">I record non sono disponibili (${e.message}).</div>`;});
+
+  const staz=()=>sel==="tutte"?R.stazioni:R.stazioni.filter(s=>s.id===sel);
+  // conteggi per anno: {anno:{tipo:[record, attesi, date, stazioni]}}
+  function perAnno(){
+    const A={};
+    staz().forEach(s=>Object.entries(s.anni).forEach(([y,t])=>Object.entries(t).forEach(([k,v])=>{
+      const Ay=A[y]||(A[y]={}), a=Ay[k]||(Ay[k]=[0,0,0,0]); a[0]+=v[0]; a[1]+=v[1]; a[2]+=v[2]; a[3]++;})));
+    return A;
+  }
+
+  function aggiorna(){
+    const A=perAnno(), anni=Object.keys(A).map(Number).sort((a,b)=>b-a);
+    if(!anni.includes(anno)) anno=anni[0];
+    $("anno").innerHTML=anni.map(y=>`<option value="${y}">${y}</option>`).join(""); $("anno").value=anno;
+    const S=staz(), nome=sel==="tutte"?"tutte":slug(S[0].nome);
+    try{const u=new URL(location.href); sel==="tutte"?u.searchParams.delete("stazione"):u.searchParams.set("stazione",sel);
+      anno===+R.agg.slice(0,4)?u.searchParams.delete("anno"):u.searchParams.set("anno",anno); history.replaceState(null,"",u);}catch(_){}
+    $("cmd").textContent=`$ ./record-counter --year=${anno} --station=${nome}`;
+    const corrente=anno===+R.agg.slice(0,4);
+    $("live").className="live"+(corrente?" on":"");
+    $("live").lastElementChild.textContent=corrente?"in corso · dati fino al "+dlab(ultimo()):"anno concluso";
+    const dove=sel==="tutte"?"nel Mugello":"a "+S[0].nome;
+    $("tit").textContent=`I record del ${anno} ${dove}`;
+    $("src").textContent=sel==="tutte"?`${S.length} stazioni SIR e ARPAE`:`${S[0].fonte==="ARPAE"?"ARPAE":"SIR Toscana"} · ${S[0].comune} · ${S[0].quota} m`;
+    tiles(A[anno]||{});
+    eventi();
+    storia(); decenni();
+  }
+  function ultimo(){let u=""; staz().forEach(s=>{if(s.fine>u)u=s.fine;}); return u||R.agg;}
+
+  function tiles(Y){
+    const corrente=anno===+R.agg.slice(0,4);
+    $("tiles").innerHTML=ORD.map(k=>{
+      if(k==="meehl"){
+        const h=Y.hx, l=Y.ln;
+        if(!h||!l) return `<div class="tile meehl"><div class="lab">Rapporto caldo / freddo</div><div class="big">–</div><div class="who">nessuna serie di temperatura</div></div>`;
+        const r=l[0]?h[0]/l[0]:null;
+        return `<div class="tile meehl"><div class="lab">Rapporto caldo / freddo</div><div class="big">${r==null?h[0]+"<s> : 0</s>":fmt(r,1)+"<s> : 1</s>"}</div>
+          <div class="who">${h[0]} record di massima alta contro ${l[0]} di minima bassa · in un clima stabile ≈ 1 : 1</div></div>`;
+      }
+      const T=TIPI[k], v=Y[k];
+      if(!v) return `<div class="tile"><div class="lab k"><i style="background:${T.c}"></i>${T.n}</div><div class="big">–</div><div class="who">${k==="p"?"nessuna serie di pioggia abbastanza lunga":"nessuna serie di temperatura abbastanza lunga"}</div></div>`;
+      const x=v[1]?v[0]/v[1]:null, cl=x==null?"":x>=1.5?"up":x<=0.67?"down":"";
+      const w=Math.min(100,v[1]?v[0]/Math.max(v[0],v[1]*2)*100:0), wa=Math.min(100,v[1]/Math.max(v[0],v[1]*2)*100);
+      return `<div class="tile"><div class="lab k"><i style="background:${T.c}"></i>${T.n}</div>
+        <div class="big">${v[0]}</div>
+        <div class="who">attesi in un clima stabile <b>${fmt(v[1],1)}</b>${x==null?"":` · <b class="${cl}">${fmt(x,1)} volte</b>`}</div>
+        <div class="bar-att" title="record (barra colorata) e attesi (tacca)"><span style="width:${w}%;background:${T.c}"></span><span style="left:${wa}%;width:2px;background:var(--ink)"></span></div>
+        <div class="who m" style="margin-top:6px">${T.b} · ${v[2]} date${sel==="tutte"?` · ${v[3]} staz.`:""}${corrente?" finora":""}</div></div>`;
+    }).join("");
+    const h=Y.hx, l=Y.ln, sTot=sel==="tutte";
+    let f="";
+    if(h&&l){
+      const caldo=(Y.hx[0]+(Y.hn?Y.hn[0]:0)), freddo=(Y.ln[0]+(Y.lx?Y.lx[0]:0)), att=(Y.hx[1]+(Y.hn?Y.hn[1]:0));
+      f=`Nel ${anno}${anno===+R.agg.slice(0,4)?" finora":""} ${sTot?"le stazioni del Mugello hanno":"la stazione ha"} battuto <b>${caldo}</b> record di caldo (di giorno o di notte) contro <b>${freddo}</b> di freddo; in un clima stabile ne avremmo aspettati circa <b>${fmt(att,0)}</b> per parte. `;
+      const x=h[1]?h[0]/h[1]:0;
+      f+= x>=1.5?"I record di caldo sono molto più frequenti dell'atteso: è il segno di un clima che si scalda.":x<=0.67?"I record di caldo sono meno dell'atteso: un anno fresco rispetto alla serie.":"I record di caldo sono in linea con l'atteso.";
+      if(sTot) f+=" La somma conta più volte la stessa giornata quando fa record in più stazioni.";
+    } else if(Y.p) f=`Questa stazione misura solo la pioggia: nel ${anno} ${Y.p[0]} record giornalieri contro ${fmt(Y.p[1],1)} attesi al massimo.`;
+    else f="Per quest'anno non ci sono date con almeno 20 anni di confronto.";
+    $("frase").innerHTML=f;
+  }
+
+  function eventi(){
+    const tipi=evT?evT.split(","):null, S=staz(), tutte=sel==="tutte";
+    const E=[]; S.forEach(s=>s.eventi.forEach(e=>{if(+e.d.slice(0,4)===anno&&(!tipi||tipi.includes(e.t))) E.push(Object.assign({s},e));}));
+    E.sort((a,b)=>b.d.localeCompare(a.d)||a.s.quota-b.s.quota);
+    const N=tutte?20:15, mostra=E.slice(0,N);
+    $("ev-th-st").style.display=tutte?"":"none";
+    $("ev-tit").textContent=`Gli ultimi record battuti nel ${anno}`;
+    $("ev-src").textContent=E.length?`${E.length} record${E.length>N?", i "+N+" più recenti":""}`:"";
+    const prima=+R.agg.slice(0,4)-2;
+    $("ev").querySelector("tbody").innerHTML=mostra.length?mostra.map(e=>{
+      const T=TIPI[e.t], sc=e.v-e.prec, d=1;
+      return `<tr><td>${dlab(e.d)}</td>${tutte?`<td class="l">${e.s.nome}</td>`:""}<td class="l"><span class="dot" style="background:${T.c}"></span>${T.n}</td>
+        <td class="v">${fmt(e.v,d)} ${T.u}</td><td>${fmt(e.prec,d)} ${T.u} (${e.anno_prec})</td>
+        <td class="sc ${sc>0&&e.t!=="p"?"up":sc<0?"down":""}">${sc>0?"+":"−"}${fmt(Math.abs(sc),1)}</td><td class="m">${e.n}</td></tr>`;
+    }).join(""):`<tr><td colspan="7" style="text-align:left;color:var(--ink-soft)">${anno<prima?`L'elenco dei singoli record è disponibile per gli anni dal ${prima}; per gli anni precedenti ci sono solo i conteggi.`:"Nessun record di questo tipo."}</td></tr>`;
+    $("ev-note").innerHTML="«Anni» è quanti anni di misure c'erano in quella data prima del record: più sono, più il record pesa. Per la pioggia vale il giorno pluviometrico del SIR, dalle 9 alle 9, con la data dell'archivio.";
+  }
+
+  function storia(){
+    const A=perAnno(), box=$("ch"), [kc,kf]=coppia;
+    const anni=Object.keys(A).map(Number).filter(y=>A[y][kc]&&A[y][kf]).sort((a,b)=>a-b);
+    $("st-leg").innerHTML=`<span><i class="sq" style="background:${TIPI[kc].c}"></i>${TIPI[kc].n.toLowerCase()} (${TIPI[kc].b})</span><span><i class="sq" style="background:${TIPI[kf].c}"></i>${TIPI[kf].n.toLowerCase()} (${TIPI[kf].b})</span><span><i style="background:var(--ink);height:2px"></i>attesi in un clima stabile</span>`;
+    box.querySelectorAll("svg").forEach(x=>x.remove());
+    const ld=box.querySelector(".loading");
+    if(!anni.length){ if(ld){ld.style.display="";ld.textContent="Questa stazione non ha serie di temperatura abbastanza lunghe.";} $("st-note").textContent=""; return;}
+    if(ld) ld.style.display="none";
+    const W=Math.max(300,box.clientWidth), H=W<560?260:320, m={l:34,r:8,t:12,b:24};
+    const y0=anni[0], y1=anni[anni.length-1], n=y1-y0+1, bw=(W-m.l-m.r)/n;
+    let mx=0; anni.forEach(y=>{mx=Math.max(mx,A[y][kc][0],A[y][kf][0],A[y][kc][1],A[y][kf][1]);});
+    const step=mx>120?50:mx>60?20:mx>25?10:5; mx=Math.ceil(mx/step)*step||step;
+    const ym=(H-m.t-m.b)/2, Z=m.t+ym, Y=v=>v/mx*ym;
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Record di ${TIPI[kc].n.toLowerCase()} e ${TIPI[kf].n.toLowerCase()} per anno`});
+    for(let v=-mx;v<=mx;v+=step){const yy=Z-Y(v); svg.appendChild(el("line",{class:"grid",x1:m.l,x2:W-m.r,y1:yy,y2:yy}));
+      svg.appendChild(el("text",{class:"axl",x:m.l-6,y:yy+3.5,"text-anchor":"end"},String(Math.abs(v))));}
+    const cols={}, gap=bw>6?2:bw>3?1:0, w=Math.max(1,bw-gap);
+    for(let y=y0;y<=y1;y++){const x=m.l+(y-y0)*bw; cols[y]=el("rect",{class:"col",x,y:m.t,width:bw,height:H-m.t-m.b,fill:"transparent"}); svg.appendChild(cols[y]);}
+    anni.forEach(y=>{
+      const x=m.l+(y-y0)*bw+gap/2, c=A[y][kc], f=A[y][kf], r=Math.min(4,w/2);
+      if(c[0]) svg.appendChild(el("path",{d:barra(x,Z,w,Y(c[0]),r,-1),fill:TIPI[kc].c}));
+      if(f[0]) svg.appendChild(el("path",{d:barra(x,Z,w,Y(f[0]),r,1),fill:TIPI[kf].c}));
+      const ax=Math.max(0,w*0.1);
+      svg.appendChild(el("line",{class:"att",x1:x+ax,x2:x+w-ax,y1:Z-Y(c[1]),y2:Z-Y(c[1])}));
+      svg.appendChild(el("line",{class:"att",x1:x+ax,x2:x+w-ax,y1:Z+Y(f[1]),y2:Z+Y(f[1])}));
+    });
+    svg.appendChild(el("line",{class:"zero",x1:m.l,x2:W-m.r,y1:Z,y2:Z}));
+    const ogni=bw*10>=40?10:20;
+    for(let y=Math.ceil(y0/ogni)*ogni;y<=y1;y+=ogni) svg.appendChild(el("text",{class:"axl",x:m.l+(y-y0+.5)*bw,y:H-6,"text-anchor":"middle"},String(y)));
+    svg.appendChild(el("text",{class:"axl",x:m.l+4,y:m.t+10},"↑ caldo"));
+    svg.appendChild(el("text",{class:"axl",x:m.l+4,y:H-m.b-4},"↓ freddo"));
+    const hit=el("rect",{class:"hit",x:m.l,y:m.t,width:W-m.l-m.r,height:H-m.t-m.b}); svg.appendChild(hit);
+    box.appendChild(svg);
+    const tip=box.querySelector(".tip"); let on=null;
+    const move=ev=>{
+      const r=svg.getBoundingClientRect(), px=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left, sx=px*W/r.width;
+      const y=Math.max(y0,Math.min(y1,y0+Math.floor((sx-m.l)/bw)));
+      if(on) on.classList.remove("on"); on=cols[y]; on.classList.add("on");
+      const a=A[y];
+      tip.innerHTML=a&&a[kc]&&a[kf]?`<b>${y}</b>${y===+R.agg.slice(0,4)?" (in corso)":""}<br><i style="background:${TIPI[kc].c}"></i>${TIPI[kc].n}: <b>${a[kc][0]}</b> <span class="m">attesi ${fmt(a[kc][1],1)}</span><br><i style="background:${TIPI[kf].c}"></i>${TIPI[kf].n}: <b>${a[kf][0]}</b> <span class="m">attesi ${fmt(a[kf][1],1)}</span><br><span class="m">rapporto ${a[kf][0]?fmt(a[kc][0]/a[kf][0],1)+" : 1":a[kc][0]+" : 0"}</span>`:`<b>${y}</b><br><span class="m">nessun dato</span>`;
+      tip.style.opacity=1;
+      const tx=(m.l+(y-y0+.5)*bw)*r.width/W, tw=tip.offsetWidth;
+      tip.style.left=Math.max(0,Math.min(r.width-tw,tx+12>r.width-tw?tx-tw-12:tx+12))+"px"; tip.style.top="8px";
+    };
+    hit.addEventListener("mousemove",move); hit.addEventListener("touchstart",move,{passive:true}); hit.addEventListener("touchmove",move,{passive:true});
+    hit.addEventListener("mouseleave",()=>{tip.style.opacity=0; if(on)on.classList.remove("on");});
+    const tc=anni.reduce((s,y)=>s+A[y][kc][0],0), tf=anni.reduce((s,y)=>s+A[y][kf][0],0), ta=anni.reduce((s,y)=>s+A[y][kc][1],0);
+    $("st-src").textContent=sel==="tutte"?"somma delle stazioni":staz()[0].nome;
+    $("st-note").innerHTML=`Dal ${y0} al ${y1}: <b>${tc}</b> record di ${TIPI[kc].b} e <b>${tf}</b> di ${TIPI[kf].b}, contro circa ${fmt(ta,0)} attesi per parte in un clima stabile. ${y1===+R.agg.slice(0,4)?"L'ultimo anno è in corso: gli attesi contano solo i giorni già misurati.":""}${sel==="tutte"?" Prima del 2011 il conteggio viene quasi solo da Borgo San Lorenzo, l'unica serie abbastanza lunga, che negli anni Novanta ha un vuoto di misure.":""}`;
+  }
+  // barra con gli angoli arrotondati solo all'estremità lontana dallo zero (dir -1 su, 1 giù)
+  function barra(x,z,w,h,r,dir){
+    r=Math.min(r,h); const e=z+dir*h;
+    return dir<0?`M${x},${z}V${e+r}Q${x},${e} ${x+r},${e}H${x+w-r}Q${x+w},${e} ${x+w},${e+r}V${z}Z`
+                :`M${x},${z}V${e-r}Q${x},${e} ${x+r},${e}H${x+w-r}Q${x+w},${e} ${x+w},${e-r}V${z}Z`;
+  }
+
+  function decenni(){
+    const A=perAnno(), D={}, ult=+R.agg.slice(0,4);
+    Object.keys(A).forEach(y=>{const a=A[y]; if(!a.hx||!a.ln)return; const k=Math.floor(y/10)*10, d=D[k]=D[k]||{c:0,ca:0,f:0,fa:0,anni:0};
+      d.c+=a.hx[0]; d.ca+=a.hx[1]; d.f+=a.ln[0]; d.fa+=a.ln[1]; d.anni++;});
+    const ks=Object.keys(D).map(Number).sort((a,b)=>a-b);
+    $("dec-src").textContent=sel==="tutte"?"somma delle stazioni":staz()[0].nome;
+    $("dec").querySelector("tbody").innerHTML=ks.length?ks.map(k=>{const d=D[k], r=d.f?d.c/d.f:null;
+      const inc=k+9>=ult?" (in corso)":d.anni<10?` (${d.anni} anni)`:"";
+      return `<tr><td>${k}-${String(k+9).slice(2)}<span class="m">${inc}</span></td><td class="v">${d.c}</td><td class="m">${fmt(d.ca,0)}</td><td class="v">${d.f}</td><td class="m">${fmt(d.fa,0)}</td>
+        <td class="v ${r==null||r>=1.5?"up":r<=0.67?"down":""}">${r==null?d.c+" : 0":fmt(r,1)+" : 1"}</td></tr>`;}).join("")
+      :`<tr><td colspan="6" style="text-align:left;color:var(--ink-soft)">Questa stazione non ha serie di temperatura abbastanza lunghe.</td></tr>`;
+  }
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

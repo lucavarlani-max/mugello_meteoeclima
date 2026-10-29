@@ -39,6 +39,24 @@
   ],
   "esperimenti": [
     {
+      "id": "record-giornalieri",
+      "titolo": "Il contatore dei record",
+      "tipo": "esperimento",
+      "tema": "clima",
+      "data": "2026-10-29",
+      "stato": "nuovo",
+      "testo": "Quanti record giornalieri di caldo, di freddo e di pioggia battono ogni anno le stazioni del Mugello, contro quanti se ne aspetterebbero in un clima stabile. Nel 2026, fino a fine ottobre, 191 record di massima più alta contro 12 di massima più bassa, con circa 80 attesi per parte; anno per anno e per decennio dal 1974.",
+      "link": "geek-record.html",
+      "tag": [
+        "record",
+        "temperatura",
+        "pioggia",
+        "clima stabile",
+        "Meehl",
+        "SIR"
+      ]
+    },
+    {
       "id": "spirale",
       "titolo": "La spirale del riscaldamento: Borgo San Lorenzo dal 1980",
       "tipo": "grafico",
