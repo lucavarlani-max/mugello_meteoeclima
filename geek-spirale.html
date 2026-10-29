@@ -226,7 +226,9 @@
     const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Spirale climatica di Borgo San Lorenzo, anomalie ${modo==="mese"?"mensili":"annuali"} dal 1980 rispetto al 1991-2020`});
     for(let a=lo;a<=hi+1e-9;a+=0.5){const zero=Math.abs(a)<1e-9;
       svg.appendChild(el("circle",{cx,cy,r:rad(a),class:zero?"ring0":"ring"}));
-      if(Math.abs(a)%1<1e-9) svg.appendChild(el("text",{x:cx+rad(a)+3,y:cy-3,class:"rl"},(zero?"0 °C":fa(a,0)+" °C")));}
+      // etichette ogni 2 °C (ogni grado se i cerchi sono pochi), lungo il raggio orizzontale a destra
+      const passoL=(hi-lo)>4?2:1;
+      if(Math.abs(a/passoL-Math.round(a/passoL))<1e-9&&rad(a)<R-18) svg.appendChild(el("text",{x:cx+rad(a)+3,y:cy-4,class:"rl"},(zero?"0°":fa(a,0)+"°")));}
     if(modo==="mese") MESI.forEach((n,m)=>{const t=(m/12)*2*Math.PI-Math.PI/2, r=R+14; svg.appendChild(el("text",{x:cx+r*Math.cos(t),y:cy+r*Math.sin(t)+3.5,"text-anchor":"middle",class:"ml"},n));});
     else for(let k=0;k<10;k++){const t=(k/10)*2*Math.PI-Math.PI/2, r=R+14; svg.appendChild(el("text",{x:cx+r*Math.cos(t),y:cy+r*Math.sin(t)+3.5,"text-anchor":"middle",class:"ml"},"…"+k));}
     const g=el("g",{}); svg.appendChild(g);
