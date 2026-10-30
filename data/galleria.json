@@ -2,6 +2,15 @@
  "nota": "Foto scelte dalle webcam del Mugello (scripts/webcam_scatti.py).",
  "foto": [
   {
+   "file": "reports/webcam/galleria/2026-10-28-tramonto-valle-del-diaterna-1.jpg",
+   "data": "2026-10-28",
+   "momento": "tramonto",
+   "categoria": "tramonto",
+   "webcam": "Valle del Diaterna 1 (770 m)",
+   "fonte": "Meteo-Project",
+   "link": "https://stazioni.meteoproject.it/webcam/vallediaterna1/vallediaterna.jpg"
+  },
+  {
    "file": "reports/webcam/galleria/2026-10-27-tramonto-valle-del-diaterna-1.jpg",
    "data": "2026-10-27",
    "momento": "tramonto",
