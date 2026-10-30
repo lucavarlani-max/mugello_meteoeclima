@@ -226,7 +226,7 @@
    "id": "montegiovi",
    "nome": "Montegiovi",
    "comune": "Vicchio",
-   "quota": null,
+   "quota": 722,
    "rete": "toscana-meteo.it",
    "pagina": "https://www.toscana-meteo.it/localita/vicchio1/",
    "url": "https://www.toscana-meteo.it/api/",
