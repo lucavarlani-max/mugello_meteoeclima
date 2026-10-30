@@ -172,6 +172,30 @@
   .acc .corpo{padding:2px 16px 16px;font-size:14.5px;color:var(--ink-soft)}
   details.note-acc{max-width:none}
   details.note-acc .corpo{max-width:72ch}
+  /* cartoline delle stazioni */
+  .cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:14px}
+  @media (max-width:560px){.cg{grid-template-columns:1fr}}
+  .cs{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 16px 14px;position:relative;min-width:0}
+  .cs .q{position:absolute;right:14px;top:12px;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-faint)}
+  .cs h3{font-family:var(--serif);font-size:18px;font-weight:700;letter-spacing:-.01em;margin:0;padding-right:54px}
+  .cs h3 a{color:inherit;text-decoration:none}.cs h3 a:hover{text-decoration:underline}
+  .cs .co{font-size:12.5px;color:var(--ink-faint)}
+  .cs .now{font-family:var(--serif);font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1;margin:10px 0 2px}
+  .cs .now small{display:block;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0;color:var(--ink-faint);margin-top:6px}
+  .cs .sp{display:block;width:100%;height:36px;margin:8px 0 4px}
+  .rg{display:grid;grid-template-columns:44px 1fr;gap:4px 8px;align-items:center;font-size:11.5px;color:var(--ink-faint);font-family:var(--mono);margin-top:6px}
+  .rg .tr{height:8px;border-radius:99px;background:linear-gradient(90deg,#2a64a8,#7fb3d0,#f0c76e,#e1783c);opacity:.28}
+  .rgw{position:relative;height:8px}.rgw .tr{position:absolute;inset:0}
+  .rgw .sel{position:absolute;top:-3px;height:14px;border-radius:99px;border:2px solid var(--c);background:var(--panel);min-width:8px}
+  .mm{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin:6px 0 0}
+  .mm b{color:var(--ink)}
+  .cs .kv{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-soft);margin-top:10px;padding-top:9px;border-top:1px dashed var(--line)}
+  .cs .kv b{color:var(--ink);font-weight:600}
+  .cs .md{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px}
+  .medal{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--pine-tint);color:var(--pine-deep)}
+  .cs .fr{margin-top:9px}
+  details.tab3{margin-top:16px}
+  details.tab3 .tabwrap{border:0;box-shadow:none;border-radius:0;border-top:1px solid var(--line)}
   .foot{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;color:var(--ink-faint);font-size:12.5px}
   .foot .wrap{display:flex;gap:8px 18px;flex-wrap:wrap}
   .foot a{font-weight:600}
@@ -210,10 +234,14 @@
   <section class="blk">
     <div class="wrap">
       <div class="tabhead">
-        <h2>Gli ultimi 3 giorni</h2>
+        <h2>Le stazioni, dalla più alta</h2>
         <span class="agg" id="agg">caricamento…</span>
       </div>
+      <div class="cg" id="cart" aria-label="Stazioni ordinate per quota"></div>
+      <details class="acc tab3" id="tab3">
+        <summary>Tabella dei 3 giorni <small>massime, minime, pioggia e raffiche con gli orari</small></summary>
       <div class="tabwrap"><table id="tab" aria-describedby="agg"><thead></thead><tbody></tbody></table></div>
+      </details>
       <div class="legenda">
         <span><span class="mk x">▲</span> massima</span>
         <span><span class="mk n">▼</span> minima</span>
@@ -365,6 +393,41 @@
     box.innerHTML=`<h2>${titolo}</h2><div class="sg">${parti}</div>`+
       `<p class="nb">Il vento lo misurano solo Futa, Montegiovi e Passo del Giogo.`+
       (w.senza.length?` Senza dati ${g===oggi?"di oggi":"di ieri"}: ${esc(w.senza.join(", "))}.`:"")+`</p>`;
+  }
+  // cartoline: una scheda per stazione, dalla più alta; il grafico a 72 ore e le barre min-max dei 3 giorni
+  function cartoline(D,giorni,oggi,nomeG,dm){
+    const S=[...D.stazioni].sort((a,b)=>(b.quota||0)-(a.quota||0));
+    const tutti=S.flatMap(s=>giorni.flatMap(g=>{const v=s.giorni&&s.giorni[g];return v?[v.min,v.max]:[];})).filter(v=>v!=null);
+    if(!tutti.length){ document.getElementById("cart").innerHTML='<p class="aggnota">Nessun dato disponibile al momento.</p>'; return; }
+    const lo=Math.min(...tutti)-1, hi=Math.max(...tutti)+1, pos=v=>((v-lo)/(hi-lo)*100).toFixed(1);
+    const w=vincitori(D,giorni[0]), medaglie={};
+    const dai=(x,t)=>{ if(x)(medaglie[x.s.id]=medaglie[x.s.id]||[]).push(t); };
+    dai(w.freddo,"❄ la più fredda"); dai(w.caldo,"☀ la più calda"); dai(w.vento,"💨 la più ventosa"); dai(w.pioggia,"🌧 la più piovosa");
+    const spark=s=>{
+      const fine=Date.now(), inizio=fine-72*36e5, p=(s.serie||[]).map(([q,t])=>[Date.parse(q),t]).filter(([q])=>q>=inizio);
+      if(p.length<2) return "";
+      const v=p.map(x=>x[1]), a=Math.min(...v)-.5, b=Math.max(...v)+.5, W=220, H=36;
+      let d="", prec=null;
+      p.forEach(([q,t])=>{ d+=(prec&&q-prec<3*36e5?"L":"M")+((q-inizio)/(fine-inizio)*W).toFixed(1)+" "+(H-(t-a)/(b-a)*H).toFixed(1); prec=q; });
+      return `<svg class="sp" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Temperatura delle ultime 72 ore"><path d="${d}" fill="none" stroke="var(--s-${s.id})" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`;
+    };
+    document.getElementById("cart").innerHTML=S.map(s=>{
+      const g0=s.giorni&&s.giorni[giorni[0]]||{}, st=stato(quando(s));
+      const sotto=s.comune||"";
+      let ora='<span class="nd">—</span>';
+      if(s.ora&&s.ora.t!=null){ const q=new Date(s.ora.quando), vec=Date.now()-q>3*36e5;
+        ora=f1(s.ora.t)+`<small>${vec?"dato del ":"alle "}${vec?q.toLocaleString("it-IT",{day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"}):q.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"})}</small>`; }
+      const righe=giorni.map((g,k)=>{ const v=s.giorni&&s.giorni[g]; if(!v) return `<span>${nomeG(g,k).slice(0,3)}</span><span class="nd">nessun dato</span>`;
+        const pz=parziale(v,g,oggi);
+        return `<span>${nomeG(g,k).slice(0,3)}</span><div><div class="rgw" title="${esc(nomeG(g,k))}: ${f1(v.min)} / ${f1(v.max)}"><div class="tr"></div><div class="sel" style="left:${pos(v.min)}%;width:${Math.max(2,pos(v.max)-pos(v.min))}%"></div></div>`+
+          `<div class="mm"><span>▼ <b>${f1(v.min)}</b>${v.hmin?" "+v.hmin:""}</span><span>▲ <b>${f1(v.max)}</b>${v.hmax?" "+v.hmax:""}</span></div>`+(pz?`<span class="parz">parziale</span>`:"")+`</div>`; }).join("");
+      const pm=s.ora&&s.ora.p_mese!=null?`<span>mese <b>${fn(s.ora.p_mese)}</b> mm${s.ora.p_anno!=null?` · anno <b>${fn(s.ora.p_anno,0)}</b> mm`:""}</span>`:"";
+      return `<article class="cs" style="--c:var(--s-${s.id})">${s.quota?`<div class="q">▲ ${s.quota} m</div>`:""}`+
+        `<h3><a href="${esc(s.pagina)}" target="_blank" rel="noopener">${esc(s.nome)}</a></h3><div class="co">${esc(sotto)}</div>`+
+        `<div class="now">${ora}</div>${spark(s)}<div class="rg">${righe}</div>`+
+        `<div class="kv"><span>pioggia oggi <b>${g0.pioggia!=null?fn(g0.pioggia):"—"}</b> mm</span><span>raffica <b>${g0.raffica!=null?fn(g0.raffica,0):"—"}</b> km/h</span>${pm}</div>`+
+        `<div class="md">${(medaglie[s.id]||[]).map(m=>`<span class="medal">${m}</span>`).join("")}</div><div class="fr">${badge(st)}</div></article>`;
+    }).join("");
   }
   function confronto(D,giorni,oggi,nomeG,dm){
     const t=document.getElementById("cmp");
@@ -562,7 +625,7 @@
     const sg=stato(a.getTime());
     agg.innerHTML="ultimo giro: <b>"+a.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"})+"</b> del "+
       a.toLocaleDateString("it-IT",{day:"numeric",month:"long",timeZone:"Europe/Rome"})+" · "+badge(sg);
-    sintesi(D,oggi,giorni[1]); confronto(D,giorni,oggi,nomeG,dm); schede(D);
+    cartoline(D,giorni,oggi,nomeG,dm); sintesi(D,oggi,giorni[1]); confronto(D,giorni,oggi,nomeG,dm); schede(D);
   }).catch(e=>{ agg.textContent="dati non disponibili ("+e.message+")"; });
 })();
 </script>
