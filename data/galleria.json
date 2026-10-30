@@ -2,6 +2,15 @@
  "nota": "Foto scelte dalle webcam del Mugello (scripts/webcam_scatti.py).",
  "foto": [
   {
+   "file": "reports/webcam/galleria/2026-10-29-tramonto-passo-del-muraglione.jpg",
+   "data": "2026-10-29",
+   "momento": "tramonto",
+   "categoria": "tramonto",
+   "webcam": "Passo del Muraglione (907 m) · LIVE",
+   "fonte": "Meteo Pedemontana Forlivese",
+   "link": "https://stream-meteoproject.eu/"
+  },
+  {
    "file": "reports/webcam/galleria/2026-10-28-tramonto-valle-del-diaterna-1.jpg",
    "data": "2026-10-28",
    "momento": "tramonto",
