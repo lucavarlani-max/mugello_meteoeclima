@@ -1470,7 +1470,7 @@
   "2026-10-30": {
    "ora": "06:57",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.0,
@@ -1540,7 +1540,8 @@
    "luce": 130.0,
    "contrasto": 0.427,
    "contrasto_sfondo": 0.273,
-   "foto": "reports/nebbia/2026-10-30.jpg"
+   "foto": "reports/nebbia/2026-10-30.jpg",
+   "cielo": "sereno"
   },
   "2026-10-31": {
    "nebbia": null,
