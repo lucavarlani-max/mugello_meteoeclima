@@ -65,7 +65,7 @@ STAZIONI = [
     {"id": "futa", "nome": "Passo della Futa", "comune": "Firenzuola", "quota": 963,
      "rete": "Associazione Il Filo · Meteo Project", "pagina": "https://www.ilfilo.net/stazione-meteo-del-passo-della-futa/",
      "url": "https://stazioni.meteoproject.it/dati/passofuta/index-vuoto.php", "referer": "https://www.ilfilo.net/"},
-    {"id": "montegiovi", "nome": "Montegiovi", "comune": "Vicchio", "quota": None,
+    {"id": "montegiovi", "nome": "Montegiovi", "comune": "Vicchio", "quota": 722,
      "rete": "toscana-meteo.it", "pagina": "https://www.toscana-meteo.it/localita/vicchio1/",
      "url": "https://www.toscana-meteo.it/api/", "referer": "https://www.toscana-meteo.it/localita/vicchio1/"},
     {"id": "colla", "nome": "Passo della Colla", "comune": "Borgo San Lorenzo · Marradi", "quota": 971,
