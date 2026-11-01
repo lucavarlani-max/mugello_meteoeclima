@@ -2,6 +2,43 @@
  "nota": "Archivio dei report climatologici mensili. Per aggiungerne uno: copia il PDF (e l'HTML interattivo, se c'è) in reports/clima/AAAA-MM-<luogo>.pdf/.html e aggiungi un elemento IN CIMA a \"report\" (senza \"html\" se il report è solo in PDF).",
  "report": [
   {
+   "mese": "2026-10",
+   "titolo": "Ottobre 2026",
+   "luogo": "Borgo San Lorenzo",
+   "sottotitolo": "Un ottobre mite e piuttosto asciutto: coda d'estate nei primi giorni, poi variabilità e un finale già tardo-autunnale.",
+   "stazione": "Stazione SIR TOS01000999 · 196 m",
+   "sintesi": "Più mite della norma di 1,1 °C, il 15° ottobre più caldo su 60 della serie: il surplus viene dalle massime (22,5 °C, +1,9 °C), mentre le minime sono quasi in linea con la norma. Piuttosto asciutto: 63,1 mm in 6 giorni piovosi, il 38% in meno della media 1993–2025, con un'intera decade asciutta dall'11 al 20. Nessuna gelata e nessuna notte tropicale.",
+   "kpi": [
+    {
+     "k": "Temp. media",
+     "v": "15,7 °C",
+     "d": "+1,1 °C vs 1961–88 · 15° su 60",
+     "t": "caldo"
+    },
+    {
+     "k": "Massima assoluta",
+     "v": "27,9 °C",
+     "d": "1 ottobre · record di ottobre 33,5 °C (1967)",
+     "t": "caldo"
+    },
+    {
+     "k": "Minima assoluta",
+     "v": "3,9 °C",
+     "d": "29 ottobre · nessuna gelata",
+     "t": "freddo"
+    },
+    {
+     "k": "Pioggia totale",
+     "v": "63,1 mm",
+     "d": "−38% vs media 1993–2025",
+     "t": "pioggia"
+    }
+   ],
+   "html": "reports/clima/2026-10-borgo-san-lorenzo.html",
+   "pdf": "reports/clima/2026-10-borgo-san-lorenzo.pdf",
+   "pdf_kb": 587
+  },
+  {
    "mese": "2026-09",
    "titolo": "Settembre 2026",
    "luogo": "Firenzuola",
