@@ -1703,6 +1703,23 @@ svg.leaflet-image-layer.leaflet-interactive path {
   async function climate(){
     const d0=new Date(); let y=d0.getFullYear(), m=d0.getMonth()-1; if(m<0){m=11;y--;}
     const mm=String(m+1).padStart(2,'0'); const last=new Date(y,m+1,0).getDate();
+    // se l'archivio climatico ha già il report del mese scorso (Borgo San Lorenzo, stazione SIR), i numeri sono quelli del report
+    try{
+      const rr=await fetch('./data/report-clima.json',{cache:'no-cache'});
+      if(rr.ok){
+        const R=((await rr.json()).report||[]).find(x=>x.mese===y+'-'+mm&&x.luogo==='Borgo San Lorenzo'&&x.kpi&&x.kpi.length);
+        if(R){
+          set('clim-eyebrow','Report climatico · '+R.titolo);
+          set('clim-title',R.sottotitolo.replace(/[:.]\s.*$/,'').replace(/\.$/,''));
+          set('clim-text',R.sintesi+' ('+(R.stazione||'')+').');
+          const bx=document.querySelectorAll('.clim .stats .s');
+          R.kpi.slice(0,4).forEach((k,i)=>{ const b=bx[i]; if(!b) return;
+            b.querySelector('.k').textContent=k.k; b.querySelector('.v').textContent=k.v.replace(/\s?°C$/,'°'); b.querySelector('.d').textContent=k.d; });
+          const a=document.querySelector('#clim-text'); if(a&&!document.getElementById('clim-link')){ const l=document.createElement('a'); l.id='clim-link'; l.href='./'+(R.html||R.pdf); l.textContent=' Leggi il report →'; l.style.whiteSpace='nowrap'; a.appendChild(l); }
+          return;
+        }
+      }
+    }catch(e){}
     const url='https://archive-api.open-meteo.com/v1/archive?latitude=43.9547&longitude=11.3861'+
       '&start_date='+y+'-'+mm+'-01&end_date='+y+'-'+mm+'-'+String(last).padStart(2,'0')+
       '&daily=temperature_2m_mean,temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe%2FRome';
