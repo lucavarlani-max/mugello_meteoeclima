@@ -220,7 +220,7 @@ const C={hot:'#D9640F',hot2:'#F5883B',cold:'#2B74C4',ink:'#1B1F2A',mute:'#5E6472
 const Y=D.years,Y26=Y[2026],yrs=Object.keys(Y).map(Number).sort((a,b)=>a-b);
 const MESI=['','gen','feb','mar','apr','mag','giu','lug','ago','set','ott'];
 Chart.defaults.font.family='"Instrument Sans",system-ui,sans-serif';Chart.defaults.font.size=12;Chart.defaults.color=C.mute;
-Chart.defaults.animation=window.__PRINT__?false:{duration:500};Chart.defaults.maintainAspectRatio=false;
+if(window.__PRINT__) Chart.defaults.animation=false; else Chart.defaults.animation.duration=500;Chart.defaults.maintainAspectRatio=false;
 Chart.defaults.plugins.legend.labels.usePointStyle=true;Chart.defaults.plugins.legend.labels.boxWidth=8;
 const grid={color:'rgba(94,100,114,.15)'};
 const days=[...Array(31)].map((_,i)=>i+1);
