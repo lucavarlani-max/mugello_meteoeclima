@@ -1013,6 +1013,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </style>
 
 <script src="analytics.js" defer></script>
+<script src="tema.js"></script>
 <script src="previsioni-allinea.js"></script>
 <script src="astro.js"></script>
 <script src="cielo.js" defer></script>
@@ -1936,6 +1937,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <script>
 (function(){
   var b=document.querySelector('.menu-btn'), h=document.querySelector('header.top');
+  if(window.mmTemaBtn&&b) mmTemaBtn(b.parentNode,b);
   if(b&&h){
     b.addEventListener('click',function(e){ e.stopPropagation(); if(!h.classList.toggle('nav-open')) h.querySelectorAll('.dd.open').forEach(function(d){d.classList.remove('open');}); });
     h.querySelectorAll('nav.main .dd>button').forEach(function(x){ x.addEventListener('click',function(){ h.querySelectorAll('.dd.open').forEach(function(d){ if(d!==x.parentNode) d.classList.remove('open'); }); }); });
