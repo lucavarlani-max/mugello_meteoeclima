@@ -2,6 +2,15 @@
  "nota": "Foto scelte dalle webcam del Mugello (scripts/webcam_scatti.py).",
  "foto": [
   {
+   "file": "reports/webcam/galleria/2026-11-01-tramonto-rifugio-monte-secchieta.jpg",
+   "data": "2026-11-01",
+   "momento": "tramonto",
+   "categoria": "neve",
+   "webcam": "Rifugio Monte Secchieta (1417 m)",
+   "fonte": "FirenzeMeteo",
+   "link": "https://www.firenzemeteo.it/webcam/appennino/toscana/"
+  },
+  {
    "file": "reports/webcam/galleria/2026-10-29-tramonto-passo-del-muraglione.jpg",
    "data": "2026-10-29",
    "momento": "tramonto",
