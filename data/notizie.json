@@ -1,7 +1,218 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-10-27",
+ "aggiornato": "2026-11-02",
  "numeri": [
+  {
+   "data": "2026-11-02",
+   "apertura": {
+    "cat": "vulcani",
+    "titolo": "Kilauea, da oggi si apre la finestra per il 56° episodio",
+    "testo": "L'USGS ha spostato al 2–9 novembre la previsione delle prossime fontane di lava all'Halemaʻumaʻu: l'eruzione resta in pausa dopo l'episodio 55 del 17 ottobre e il livello è Advisory (giallo). Non c'è ancora conferma che l'episodio sia iniziato.",
+    "fonte": "USGS HVO (via DEFCON Level)",
+    "url": "https://www.defconlevel.com/alert/2026-10-30-usgs-volcano-notices-hvo-kilauea-yellow-advisory-the-halema-uma-u-eruption-of-k-lauea-remains-paused-following-episode-55-on-october-17-the-forecast-for-episode-56-fountaining-has-been-pushed-to-nov-2-9-2026",
+    "foto": "kilauea1"
+   },
+   "numero": {
+    "valore": "2–9 nov",
+    "testo": "La finestra indicata dall'USGS per il 56° episodio di fontane di lava, dopo la pausa iniziata con l'episodio 55 del 17 ottobre."
+   },
+   "storie": [
+    {
+     "cat": "mugello",
+     "titolo": "Lunedì grecale e temperature sotto la media",
+     "testo": "Il LaMMA prevede cielo parzialmente nuvoloso, con più nubi sull'Appennino tosco-romagnolo e sulle zone interne, schiarite verso ovest, vento moderato di grecale con forti raffiche e temperature stazionarie su valori inferiori alle medie; martedì 3 novembre in lieve aumento.",
+     "fonte": "LaMMA Toscana / MeteoWeb",
+     "url": "https://www.meteoweb.eu/2026/11/meteo-toscana-domani-temperature-in-lieve-aumento-2/1001998101/",
+     "foto": "bilancino"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Ottobre 2026 e il bollettino Copernicus, atteso a giorni",
+     "testo": "Dopo l'agosto più caldo mai registrato e il secondo settembre più caldo (16,27 °C, +0,82 °C sulla media 1991–2020 e 0,11 °C meno del 2023), il servizio europeo pubblica di solito il bilancio del mese nei primi dieci giorni del successivo: il dato di ottobre non è ancora uscito.",
+     "fonte": "Copernicus C3S / LaPresse",
+     "url": "https://www.lapresse.it/ambiente/2026/10/12/copernicus-nel-2026-il-secondo-settembre-piu-caldo-mai-registrato-a-livello-globale/",
+     "foto": "terra"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Lunedì 2 novembre: nubi variabili sull'Appennino e sulle zone interne, vento di grecale moderato con forti raffiche, temperature minime e massime sotto le medie del periodo; neve debole solo oltre 1.200–1.300 metri.",
+     "fonte": "LaMMA Toscana / MeteoWeb"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:51 e tramonta alle 17:03, circa 10 ore e 12 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa calante, illuminata al 43%; l'ultimo quarto è stato ieri, domenica 1° novembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-11-01",
+   "apertura": {
+    "cat": "mugello",
+    "titolo": "Prima neve della stagione sull'Appennino toscano",
+    "testo": "Con l'arrivo di novembre e il vento di grecale, la mattina del 1° novembre ha nevicato all'Abetone a circa 1.300–1.400 metri, con una spolverata su tetti e auto e a chiazze in Val di Luce, e qualche fiocco sui monti del Casentino, fra il passo dei Mandrioli e la Consuma. Non è una nevicata consistente.",
+    "fonte": "Neve Appennino / La Nazione / Gonews",
+    "url": "https://www.neveappennino.it/news/neve-abetone-appennino-1-novembre-2026/",
+    "foto": "bilancino"
+   },
+   "numero": {
+    "valore": "1.300 m",
+    "testo": "La quota della neve all'Abetone di domenica mattina; il LaMMA aveva indicato possibili fiocchi oltre 1.100–1.300 metri."
+   },
+   "storie": [
+    {
+     "cat": "mugello",
+     "titolo": "Il LaMMA: deboli nevicate oltre i 1.100–1.300 metri",
+     "testo": "Per l'inizio di novembre il consorzio prevedeva le prime deboli nevicate della stagione sull'Appennino, con precipitazioni ancora deboli e nevose oltre 1.200–1.300 metri il giorno dopo, e temperature inferiori alle medie.",
+     "fonte": "LaMMA Toscana",
+     "url": "https://www.lanazione.it/meteo/primi-fiocchi-in-toscana-neve-allabetone-e-sui-monti-del-casentino-con-larrivo-di-novembre-torna-anche-il-freddo-gbp19dmt",
+     "foto": "ghiaccio1"
+    },
+    {
+     "cat": "clima",
+     "titolo": "Neve anche sull'Appennino centrale: Roccaraso, i fiocchi scendono di quota",
+     "testo": "Primo giorno di novembre con l'Aremogna imbiancata e fiocchi che scendono di quota sull'Appennino; le temperature restano prevalentemente sotto le medie stagionali.",
+     "fonte": "Neve Appennino",
+     "url": "https://www.neveappennino.it/news/neve-roccaraso-aremogna-appennino-1-novembre-2026/",
+     "foto": "terra"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Domenica 1° novembre: aria fredda da nord-est, nevicate deboli in Appennino sopra 1.300 metri circa; sui passi del Mugello occhio al ghiaccio la mattina presto.",
+     "fonte": "LaMMA Toscana / Neve Appennino"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1755: il 1° novembre, nella mattinata, un grande terremoto seguito da maremoto e incendi distrugge gran parte di Lisbona, e si fa sentire in gran parte dell'Europa occidentale.",
+     "fonte": "USGS"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:50 e tramonta alle 17:05, circa 10 ore e 15 minuti di luce, 3 minuti meno di ieri. Oggi la Luna è all'ultimo quarto, illuminata a circa metà."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-30",
+   "apertura": {
+    "cat": "vulcani",
+    "titolo": "Kilauea, l'episodio 56 slitta al 2–9 novembre",
+    "testo": "L'eruzione dell'Halemaʻumaʻu resta in pausa dopo l'episodio 55 del 17 ottobre e l'USGS ha spostato la previsione delle prossime fontane di lava dalla finestra del 31 ottobre–6 novembre a quella del 2–9 novembre; il livello è Advisory (giallo).",
+    "fonte": "USGS HVO (via DEFCON Level)",
+    "url": "https://www.defconlevel.com/alert/2026-10-30-usgs-volcano-notices-hvo-kilauea-yellow-advisory-the-halema-uma-u-eruption-of-k-lauea-remains-paused-following-episode-55-on-october-17-the-forecast-for-episode-56-fountaining-has-been-pushed-to-nov-2-9-2026",
+    "foto": "kilauea1"
+   },
+   "numero": {
+    "valore": "55",
+    "testo": "L'episodio di fontane di lava del 17 ottobre, iniziato alle 3:19 ora delle Hawaii: dal 25 agosto (episodio 54) erano passate quasi due mesi."
+   },
+   "storie": [
+    {
+     "cat": "mugello",
+     "titolo": "Sul crinale: 7 °C la minima più bassa, raffiche a 73 km/h al Giogo",
+     "testo": "Alle 16 di venerdì le otto stazioni in montagna intorno al Mugello segnavano fra 7,8 °C a Montegiovi e 11,4 °C a Bibbiana; la minima più bassa del giorno, 6,5 °C, è di Montegiovi, la raffica più forte, 72,7 km/h, del Passo del Giogo.",
+     "fonte": "Stazioni in montagna · Mugello Meteo & Clima",
+     "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+     "foto": "bilancino"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Venerdì 30 ottobre: sole prevalente e temperature in calo in Toscana, con un autunno che si fa sentire; il tempo resta stabile fino a Halloween e al ponte di Ognissanti.",
+     "fonte": "LaMMA Toscana / La Nazione"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:47 e tramonta alle 17:07, circa 10 ore e 20 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa calante, illuminata al 76%."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-29",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Arnab, il bilancio sale: almeno sei o sette morti in Andhra Pradesh",
+    "testo": "Dopo l'approdo del 28 ottobre vicino a Yanam, il ciclone è sceso a depressione profonda ma il bilancio è salito: le fonti indicano da sei a sette vittime in Andhra Pradesh, case distrutte, alberi e pali abbattuti con blackout in più zone. Una stima parla di circa 79.000 acri di colture danneggiate, fra banane e noci di cocco nel distretto di Konaseema.",
+    "fonte": "Kathmandu Post / The Financial Express / Khaleej Times",
+    "url": "https://kathmandupost.com/world/2026/10/29/cyclone-arnab-kills-seven-in-andhra-pradesh-as-heavy-rain-hits-eastern-india",
+    "foto": "uragano2"
+   },
+   "numero": {
+    "valore": "180.000",
+    "testo": "Le persone evacuate in Andhra Pradesh e Odisha prima dell'arrivo del ciclone."
+   },
+   "storie": [
+    {
+     "cat": "clima",
+     "titolo": "Copernicus: settembre secondo più caldo, ora si attende ottobre",
+     "testo": "A settembre la temperatura media globale è stata di 16,27 °C, +0,82 °C sulla media 1991–2020 e 0,11 °C meno del settembre 2023; dopo l'agosto più caldo mai registrato, il bollettino di ottobre arriva di solito nei primi dieci giorni di novembre.",
+     "fonte": "Copernicus C3S / LaPresse",
+     "url": "https://www.lapresse.it/ambiente/2026/10/12/copernicus-nel-2026-il-secondo-settembre-piu-caldo-mai-registrato-a-livello-globale/",
+     "foto": "terra"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Giovedì 29 ottobre: tempo stabile e asciutto, con sole prevalente; le temperature sono in calo e restano fresche fino al ponte di Ognissanti.",
+     "fonte": "LaMMA Toscana / La Nazione"
+    },
+    {
+     "tipo": "storia",
+     "testo": "2012: il 29 ottobre in serata l'uragano Sandy, diventato ciclone post-tropicale, arriva sulla costa del New Jersey con onde di tempesta record a New York e lungo la costa atlantica degli Stati Uniti.",
+     "fonte": "NOAA / NWS"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:46 e tramonta alle 17:09, circa 10 ore e 23 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa calante, illuminata all'85%; l'ultimo quarto è domenica 1° novembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-10-28",
+   "apertura": {
+    "cat": "uragani",
+    "titolo": "Arnab approda in Andhra Pradesh: oltre 180.000 evacuati",
+    "testo": "Il ciclone molto severo ha toccato terra la mattina del 28 ottobre vicino a Yanam, con venti sostenuti intorno a 125–135 km/h e raffiche fino a 150, e si è poi indebolito in depressione profonda. Al primo bilancio: tre morti, allagamenti a Visakhapatnam, tre aeroporti dell'Andhra Pradesh fermi e oltre 180.000 persone evacuate fra Andhra Pradesh e Odisha.",
+    "fonte": "IMD / The Week / Al Jazeera",
+    "url": "https://www.theweek.in/news/india/2026/10/28/cyclone-arnab-makes-landfall-andhra-pradesh.html",
+    "foto": "uragano2"
+   },
+   "numero": {
+    "valore": "180.000",
+    "testo": "Le persone evacuate fra Andhra Pradesh e Odisha prima dell'approdo del ciclone Arnab."
+   },
+   "storie": [
+    {
+     "cat": "mugello",
+     "titolo": "Mercoledì asciutto, temperature in calo",
+     "testo": "Il LaMMA prevede poche nuvole e nessuna precipitazione significativa in Toscana: il sole resta dominante ma le temperature scendono e l'autunno si fa sentire, con tempo più fresco fino al ponte di Ognissanti.",
+     "fonte": "LaMMA Toscana / La Nazione",
+     "url": "https://www.lanazione.it/meteo/meteo-toscana-torna-il-sole-ma-le-temperature-scendono-le-previsioni-fino-ad-halloween-e-ognissanti-alphnkd7",
+     "foto": "bilancino"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Mercoledì 28 ottobre: poche nuvole e nessuna pioggia in Toscana, temperature in calo; nei prossimi giorni tempo asciutto ma più fresco.",
+     "fonte": "LaMMA Toscana / La Nazione"
+    },
+    {
+     "tipo": "storia",
+     "testo": "1991: il 28 ottobre inizia la «tempesta perfetta» sull'Atlantico settentrionale, una forte tempesta extratropicale che nei giorni seguenti incorpora l'uragano Grace.",
+     "fonte": "NOAA / NWS"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:45 e tramonta alle 17:10, circa 10 ore e 26 minuti di luce, 3 minuti meno di ieri. La Luna è gibbosa calante, illuminata al 93%."
+    }
+   ]
+  },
   {
    "data": "2026-10-27",
    "apertura": {
