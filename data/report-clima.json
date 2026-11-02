@@ -4,6 +4,43 @@
   {
    "mese": "2026-10",
    "titolo": "Ottobre 2026",
+   "luogo": "Firenzuola",
+   "sottotitolo": "Giorni più tiepidi e notti più fresche del solito, e molto meno pioggia della norma.",
+   "stazione": "Stazione Arpae di Firenzuola · 476 m · confronto con gli ottobri 2006–2025",
+   "sintesi": "Temperatura media nella norma (13,4 °C, +0,1 °C) ma con andamenti opposti: massime più alte (+1,5 °C) e minime più basse (−1,2 °C). Le notti sotto i 10 °C sono state 29 su 31, a pari merito con 2011 e 2017 il valore più alto della serie. Molto asciutto: 46,9 mm, il 66% sotto la media 2006–2025, il 4° ottobre più secco su 21. Nessuna gelata e nessuna notte tropicale.",
+   "kpi": [
+    {
+     "k": "Temp. media",
+     "v": "13,4 °C",
+     "d": "+0,1 °C vs 2006–2025 · 11° su 21",
+     "t": "caldo"
+    },
+    {
+     "k": "Massima assoluta",
+     "v": "26,0 °C",
+     "d": "4 ottobre · record della serie 32,3 °C (2023)",
+     "t": "caldo"
+    },
+    {
+     "k": "Minima assoluta",
+     "v": "2,1 °C",
+     "d": "23 ottobre · nessuna gelata",
+     "t": "freddo"
+    },
+    {
+     "k": "Pioggia totale",
+     "v": "46,9 mm",
+     "d": "−66% vs media 2006–2025 (136,8 mm)",
+     "t": "pioggia"
+    }
+   ],
+   "html": "reports/clima/2026-10-firenzuola.html",
+   "pdf": "reports/clima/2026-10-firenzuola.pdf",
+   "pdf_kb": 591
+  },
+  {
+   "mese": "2026-10",
+   "titolo": "Ottobre 2026",
    "luogo": "Borgo San Lorenzo",
    "sottotitolo": "Un ottobre mite e piuttosto asciutto: coda d'estate nei primi giorni, poi variabilità e un finale già tardo-autunnale.",
    "stazione": "Stazione SIR TOS01000999 · 196 m",
