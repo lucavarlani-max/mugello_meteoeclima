@@ -5,38 +5,38 @@
    "mese": "2026-10",
    "titolo": "Ottobre 2026",
    "luogo": "Firenzuola",
-   "sottotitolo": "Giorni più tiepidi e notti più fresche del solito, e molto meno pioggia della norma.",
-   "stazione": "Stazione Arpae di Firenzuola · 476 m · confronto con gli ottobri 2006–2025",
-   "sintesi": "Temperatura media nella norma (13,4 °C, +0,1 °C) ma con andamenti opposti: massime più alte (+1,5 °C) e minime più basse (−1,2 °C). Le notti sotto i 10 °C sono state 29 su 31, a pari merito con 2011 e 2017 il valore più alto della serie. Molto asciutto: 46,9 mm, il 66% sotto la media 2006–2025, il 4° ottobre più secco su 21. Nessuna gelata e nessuna notte tropicale.",
+   "sottotitolo": "Più mite del 1961–90 ma in linea con l'ultimo trentennio: giorni tiepidi, notti fresche e molto meno pioggia.",
+   "stazione": "Cella Arpae-Eraclito di Firenzuola · quota media 580 m · confronto con gli ottobri 1961–2025",
+   "sintesi": "Più mite della norma 1961–90 di 1,2 °C ma in linea con il 1991–2020 (+0,2 °C), il 21° ottobre più caldo su 66. Il caldo viene dalle massime (+3,1 °C sul 1961–90), mentre le minime sono sotto la norma, con 29 notti su 31 sotto i 10 °C. Molto asciutto: 48,4 mm, il 68% in meno della media 1991–2020 (150,7 mm). Nessuna gelata e nessuna notte tropicale.",
    "kpi": [
     {
      "k": "Temp. media",
-     "v": "13,4 °C",
-     "d": "+0,1 °C vs 2006–2025 · 11° su 21",
+     "v": "13,2 °C",
+     "d": "+1,2 °C vs 1961–90 · 21° su 66",
      "t": "caldo"
     },
     {
      "k": "Massima assoluta",
-     "v": "26,0 °C",
-     "d": "4 ottobre · record della serie 32,3 °C (2023)",
+     "v": "25,3 °C",
+     "d": "4 ottobre · record di ottobre 31,6 °C (2023)",
      "t": "caldo"
     },
     {
      "k": "Minima assoluta",
-     "v": "2,1 °C",
-     "d": "23 ottobre · nessuna gelata",
+     "v": "2,4 °C",
+     "d": "29 ottobre · nessuna gelata",
      "t": "freddo"
     },
     {
      "k": "Pioggia totale",
-     "v": "46,9 mm",
-     "d": "−66% vs media 2006–2025 (136,8 mm)",
+     "v": "48,4 mm",
+     "d": "−68% vs media 1991–2020 (150,7 mm)",
      "t": "pioggia"
     }
    ],
    "html": "reports/clima/2026-10-firenzuola.html",
    "pdf": "reports/clima/2026-10-firenzuola.pdf",
-   "pdf_kb": 591
+   "pdf_kb": 614
   },
   {
    "mese": "2026-10",
