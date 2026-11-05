@@ -69,7 +69,10 @@
   .avv{font-size:12.5px;color:var(--ink-soft);border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line));background:color-mix(in srgb,var(--amber) 7%,var(--panel));border-radius:10px;padding:9px 11px;margin-top:12px}
   .con{font-family:var(--mono);font-size:12px;line-height:1.65;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 12px;white-space:pre-wrap;overflow-x:auto;margin:0}
   .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-  .btns.sotto{justify-content:center;margin-top:12px}
+  .btns.sotto{justify-content:center;align-items:center;gap:8px 18px;margin-top:12px}
+  .vel{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft)}
+  .vel input{width:150px;max-width:42vw;accent-color:var(--pine)}
+  .vel b{font-family:var(--mono);font-size:12px;color:var(--ink);min-width:46px}
   .btns button{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--pine);color:var(--pine);background:none;border-radius:999px;padding:8px 12px;cursor:pointer}
   .btns button.pri{background:var(--pine);color:#fff}
   .ok{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:6px;min-height:14px}
@@ -100,7 +103,8 @@
           <div class="cur" id="cur"></div>
           <div class="spi" id="spi"><div class="tip"></div><div class="loading">Carico la serie di Borgo San Lorenzo…</div></div>
           <div class="scale"><span id="sc-lo">freddo</span><i id="sc-bar"></i><span id="sc-hi">caldo</span><span style="margin-left:auto" id="spi-note"></span></div>
-          <div class="btns sotto"><button type="button" id="rep">Ripeti animazione</button></div>
+          <div class="btns sotto"><button type="button" id="rep">Ripeti animazione</button>
+            <label class="vel" for="vel">Velocità <input type="range" id="vel" min="-3" max="2" step="0.25" value="0" aria-label="Velocità dell'animazione" aria-valuetext="1×"><b id="vel-v">1×</b></label></div>
           <div style="margin-top:18px">
             <div class="top" style="margin-bottom:0"><div class="lab" id="str-lab">Strisce del clima</div><div class="lab">ogni barra è un anno · tratteggio = dati insufficienti</div></div>
             <div class="stripes" id="stripes"></div>
@@ -167,7 +171,7 @@
   const el=(tag,at,txt)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(txt!=null)e.textContent=txt;return e;};
   const MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"], MESIL=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
   const Y0=1980, NMIN=25;
-  let A=null, modo="mese", anim=null;
+  let A=null, modo="mese", anim=null, vel=1;   // vel: moltiplicatore della velocità dell'animazione (0,125× – 4×), letto a ogni fotogramma
 
   // colore divergente: blu (freddo) - grigio neutro - rosso (caldo), con i colori del sito
   const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
@@ -213,6 +217,7 @@
   $("modo").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{modo=b.dataset.m;
     $("modo").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); spirale(true);}));
   $("rep").addEventListener("click",()=>spirale(true));
+  $("vel").addEventListener("input",()=>{vel=2**parseFloat($("vel").value); const t=(vel<1?fmt(vel,vel<.25?3:2):fmt(vel,vel%1?2:0))+"×"; $("vel-v").textContent=t; $("vel").setAttribute("aria-valuetext",t);});
 
   function spirale(anima){
     if(!A) return; if(anim) cancelAnimationFrame(anim);
@@ -240,9 +245,10 @@
     const hit=el("rect",{x:0,y:0,width:W,height:H,fill:"transparent"}); svg.appendChild(hit);
     box.insertBefore(svg,tip);
     const ok=P.filter(o=>o.a!=null), ultimo=ok[ok.length-1];
-    let i=0; const passo=anima?Math.max(1,Math.ceil(segs.length/240)):segs.length;
+    let i=0, acc=0; const base=anima?Math.max(1,Math.ceil(segs.length/240)):segs.length;
     function disegna(){
-      const fine=Math.min(segs.length,i+passo);
+      acc+=anima?base*vel:base; const n=Math.floor(acc); acc-=n;   // a velocità bassa alcuni fotogrammi non disegnano nulla
+      const fine=Math.min(segs.length,i+n);
       for(;i<fine;i++){const [a,b]=segs[i], p=XY(a), q=XY(b);
         g.appendChild(el("line",{x1:p[0].toFixed(1),y1:p[1].toFixed(1),x2:q[0].toFixed(1),y2:q[1].toFixed(1),stroke:col((a.a+b.a)/2,lim),"stroke-width":modo==="mese"?1.6:2.4,"stroke-linecap":"round"}));}
       const o=i>0?segs[i-1][1]:ok[0], p=XY(o); dot.setAttribute("cx",p[0]); dot.setAttribute("cy",p[1]); lab.textContent=o.y;
