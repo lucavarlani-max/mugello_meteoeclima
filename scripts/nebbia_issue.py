@@ -12,7 +12,7 @@ Classificazione rapida del diario della nebbia con le segnalazioni (issue) di Gi
       segnalazione «Nebbia AAAA-MM-GG». Legge la risposta, scrive "cielo" e "nebbia" in data/nebbia-diario.json,
       risponde e chiude la segnalazione. Variabili: ISSUE_NUMBER, ISSUE_TITLE, TESTO (commento o corpo).
 
-Risposte riconosciute (prima parola, maiuscole e punteggiatura ignorate) → campo "cielo" e campo "nebbia":
+Risposte riconosciute (prima parola o numero, maiuscole e punteggiatura ignorate, anche attaccati da un trattino: «1-sereno») → campo "cielo" e campo "nebbia":
   1 / sereno / limpido / sole        → cielo "sereno",   nebbia false
   2 / nuvoloso / nuvole / coperto    → cielo "nuvoloso", nebbia false
   3 / pioggia / piove / neve         → cielo "pioggia",  nebbia false
@@ -65,7 +65,9 @@ def interpreta(testo):
     t = (testo or "").strip().lower()
     if t.startswith("?"):
         return (None, "incerto")
-    parola = re.sub(r"[^\wàèéìòù?]", "", (t.split() or [""])[0])
+    # prima parola o numero, anche se attaccati da un trattino o una virgola: «1», «1-sereno», «2 - nuvoloso», «sereno.»
+    m = re.match(r"[^\wàèéìòù?]*(\d+|[a-zàèéìòù]+)", t)
+    parola = m.group(1) if m else ""
     for valore, parole in RISPOSTE.items():
         if parola in parole:
             return valore
@@ -114,7 +116,7 @@ def classifica():
         api("POST", f"/issues/{numero}/comments",
             {"body": "Non ho capito la risposta: scrivi solo **1** (sereno), **2** (nuvoloso), **3** (pioggia), **4** (nebbia) oppure **?**."})
         print("nebbia-issue: risposta non riconosciuta", repr(testo[:40]))
-        return
+        sys.exit(1)     # l'Action risulta fallita: prima finiva «success» senza aver classificato nulla
     d = m.group(1)
     D = leggi()
     giorni = D.setdefault("giorni", {})
