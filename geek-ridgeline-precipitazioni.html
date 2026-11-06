@@ -83,8 +83,9 @@
         <ul class="note met">
           <li><b>Dati:</b> precipitazione giornaliera della stazione di Borgo S. Lorenzo del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a> (licenza CC BY-SA 4.0), dal novembre 1991, letta da <code>data/sir/TOS01000999/prec99.csv</code> (giornata pluviometrica 9→9).</li>
           <li><b>Anni e mesi:</b> si usano solo gli anni già conclusi con almeno 300 giorni di misure. Nei totali mensili conta un mese con almeno 25 giorni di dati e un anno con almeno 8 mesi validi; nei giorni umidi serve un anno con almeno 20 giorni umidi.</li>
-          <li><b>Giorno umido:</b> giorno con almeno 0,3 mm. È una soglia più bassa del «giorno di pioggia» (almeno 1 mm) usato nei report climatici del sito, quindi i giorni umidi sono più numerosi.</li>
+          <li><b>Giorno umido:</b> giorno con almeno 0,3 mm; il pluviometro misura a passi di 0,2 mm, quindi in pratica conta dai 0,4 mm. È una soglia più bassa del «giorno di pioggia» (almeno 1 mm) usato nei report climatici del sito, quindi i giorni umidi sono più numerosi.</li>
           <li><b>Curve:</b> densità con nucleo gaussiano (22 mm per i totali mensili, 2,2 mm per i giorni umidi), con riflessione allo zero perché la pioggia non è mai negativa; sono 12 punti per anno nei totali mensili, quindi la forma è molto approssimata.</li>
+          <li><b>Scala e anni incompleti:</b> la scala è limitata a 400 mm (mensili) e 60 mm (giorni umidi); i valori oltre, come ottobre 1992 (529 mm), sono dichiarati sotto il grafico e restano nella stima delle curve. Per gli anni con più di 5 giorni mancanti il totale annuo (e il colore) è stimato proporzionalmente ai giorni attesi, e il tooltip lo indica.</li>
           <li><b>Limiti:</b> è una sola stazione, con strumenti cambiati nel tempo. I totali annui sono quelli dell'archivio SIR e non sono stati validati oltre i controlli del servizio.</li>
         </ul>
       </div>

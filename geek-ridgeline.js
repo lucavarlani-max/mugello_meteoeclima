@@ -44,7 +44,8 @@
   const mean = a => a.reduce((s, v) => s + v, 0) / a.length;
 
   // ---------- configurazioni ----------
-  const MISS = -32768;
+  const MISS = -32768, SOGLIA = 0.3;   // soglia del giorno umido (mm)
+  const MESIL = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"];
   const CONF = {
     temperature: {
       vars: { tm: "Media giornaliera", tx: "Massime", tn: "Minime" }, v0: "tm", unit: "°C", guida: 5,
@@ -54,23 +55,35 @@
         const completo = ultimo.getUTCMonth() === 11 && ultimo.getUTCDate() === 31;
         for (let i = 0; i < D.n; i++) {
           const x = D.tmax1[i], n = D.tmin1[i]; if (x == null || n == null || x === MISS || n === MISS) continue;   // solo Borgo S. Lorenzo
-          const y = new Date(t0 + i * 864e5).getUTCFullYear(), a = per[y] || (per[y] = { tx: [], tn: [], tm: [] });
+          const dd = new Date(t0 + i * 864e5), y = dd.getUTCFullYear(), a = per[y] || (per[y] = { tx: [], tn: [], tm: [], doy: [] });
           a.tx.push(x / 10); a.tn.push(n / 10); a.tm.push((x + n) / 20);
+          a.doy.push(Math.min(365, Math.round((dd - Date.UTC(y, 0, 1)) / 864e5) + 1));
         }
         const anni = Object.keys(per).map(Number).filter(y => per[y].tm.length >= 300 && (y < yL || completo)).sort((a, b) => a - b);
         return { anni, per, ultimo: ultimo.toISOString().slice(0, 10), nota: "anni con almeno 300 giorni di misure" };
       },
       ridge: (dati, v) => {
         const a = dati.per, tutti = [].concat(...dati.anni.map(y => a[y][v]));
-        const lo = Math.floor(Math.min(...tutti) - 2), hi = Math.ceil(Math.max(...tutti) + 2);
+        const lo = Math.floor(Math.min(...tutti) - 1), hi = Math.ceil(Math.max(...tutti) + 1);   // tutto l'intervallo osservato, code comprese
         const centri = []; for (let c = lo + 0.25; c < hi; c += 0.5) centri.push(c);
-        return { centri, passo: 0.5, righe: dati.anni.map(y => ({ y, n: a[y][v].length, media: mean(a[y][v]), dens: kde(a[y][v], centri, 0.8, false) })) };
+        // climatologia giornaliera (media di ogni giorno dell'anno su tutti gli anni, liscia su 15 giorni): serve a correggere la media
+        // degli anni con giorni mancanti, che altrimenti risulterebbe più calda o più fredda solo perché mancano mesi freddi o caldi
+        const somma = new Float64Array(366), cnt = new Int32Array(366), cl = new Float64Array(366);
+        dati.anni.forEach(y => a[y].doy.forEach((d, i) => { somma[d] += a[y][v][i]; cnt[d]++; }));
+        for (let d = 1; d <= 365; d++) { let s = 0, c = 0; for (let o = -7; o <= 7; o++) { const k = ((d - 1 + o + 365) % 365) + 1; if (cnt[k]) { s += somma[k] / cnt[k]; c++; } } cl[d] = s / c; }
+        let annua = 0; for (let d = 1; d <= 365; d++) annua += cl[d] / 365;
+        const righe = dati.anni.map(y => {
+          const x = a[y][v], bis = new Date(Date.UTC(y, 1, 29)).getUTCDate() === 29, attesi = bis ? 366 : 365;
+          let an = 0; x.forEach((q, i) => { an += q - cl[a[y].doy[i]]; });
+          return { y, n: x.length, mancanti: attesi - x.length, mediaOss: mean(x), media: annua + an / x.length, dens: kde(x, centri, 0.8, false) };
+        });
+        return { centri, passo: 0.5, righe, xhi: hi, nota: "" };
       },
       colore: () => { const c0 = rgb(css("--cold") || "#2a64a8"), c1 = rgb(css("--ctx") || "#b9c2bc"), c2 = rgb(css("--warm") || "#b8431f"); return t => t < .5 ? mix(c0, c1, t * 2) : mix(c1, c2, (t - .5) * 2); },
       chiave: r => r.media, guide: (lo, hi) => { const g = []; for (let t = Math.ceil(lo / 5) * 5; t <= hi; t += 5) g.push(t); return g; }, etichetta: t => t + "°",
-      tip: (r, v) => "<b>" + r.y + "</b><br>media " + fmt(r.media, 1) + " °C<br><span class='m'>" + r.n + " giorni di misure</span>",
+      tip: (r, v) => "<b>" + r.y + "</b><br>media " + fmt(r.media, 1) + " °C<br><span class='m'>" + r.n + " giorni di misure" + (r.mancanti > 5 ? " · mancano " + r.mancanti + ": media corretta per la stagione (osservata " + fmt(r.mediaOss, 1) + " °C)" : "") + "</span>",
       titolo: v => ({ tm: "Temperatura media giornaliera", tx: "Temperatura massima giornaliera", tn: "Temperatura minima giornaliera" })[v] + " · distribuzione dei valori di ogni anno",
-      asse: "°C", soglia: () => 0.012
+      asse: "°C"
     },
     precipitazioni: {
       vars: { mensile: "Totali mensili", giorni_umidi: "Giorni umidi" }, v0: "mensile", unit: "mm", guida: 0,
@@ -88,27 +101,29 @@
         return { anni, per, ultimo, nota: "anni con almeno 300 giorni di misure; un mese conta se ha almeno 25 giorni" };
       },
       ridge: (dati, v) => {
-        const a = dati.per, centri = [], passo = v === "mensile" ? 5 : 1, N = v === "mensile" ? 80 : 80, h = v === "mensile" ? 22 : 2.2;
-        for (let i = 0; i < N; i++) centri.push((i + 0.5) * passo);
-        const righe = dati.anni.map(y => {
-          const ann = a[y].g.reduce((s, q) => s + q, 0);
-          if (v === "mensile") {
-            const mesi = Object.values(a[y].mese).filter(o => o.n >= 25).map(o => o.s);
-            if (mesi.length < 8) return null;
-            return { y, n: mesi.length, media: mean(mesi), ann, dens: kde(mesi, centri, h, true) };
-          }
-          const umidi = a[y].g.filter(q => q >= 0.3);
-          if (umidi.length < 20) return null;
-          return { y, n: umidi.length, media: mean(umidi), ann, secchi: 100 * (1 - umidi.length / a[y].g.length), dens: kde(umidi, centri, h, true) };
-        }).filter(Boolean);
-        return { centri, passo, righe };
+        const a = dati.per, mens = v === "mensile", passo = mens ? 5 : 1, h = mens ? 22 : 2.2, cap = mens ? 400 : 60;
+        const righe = [], fuori = [];
+        dati.anni.forEach(y => {
+          const attesi = new Date(Date.UTC(y, 1, 29)).getUTCDate() === 29 ? 366 : 365, n = a[y].g.length, ann = a[y].g.reduce((s, q) => s + q, 0);
+          const stima = n < attesi - 5 ? ann / n * attesi : ann;   // totale annuo riportato a un anno completo, se mancano più di 5 giorni
+          let vals;
+          if (mens) { vals = Object.entries(a[y].mese).filter(([, o]) => o.n >= 25).map(([m, o]) => ({ v: o.s, m: +m })); if (vals.length < 8) return; }
+          else { vals = a[y].g.filter(q => q >= SOGLIA).map(q => ({ v: q })); if (vals.length < 20) return; }
+          vals.forEach(o => { if (o.v > cap) fuori.push({ y, m: o.m, v: o.v }); });
+          righe.push({ y, n: mens ? vals.length : vals.length, ann, stima, mancanti: attesi - n, media: mean(vals.map(o => o.v)), secchi: 100 * (1 - a[y].g.filter(q => q >= SOGLIA).length / n), x: vals.map(o => o.v) });
+        });
+        const max = Math.max(...righe.map(r => Math.max(...r.x))), centri = [];
+        for (let c = passo / 2; c < Math.max(cap, max) + 3 * h; c += passo) centri.push(c);   // la densità tiene conto anche dei valori oltre la scala
+        righe.forEach(r => { r.dens = kde(r.x, centri, h, true); });
+        const nota = fuori.length ? " · oltre " + cap + " mm (fuori scala): " + fuori.length + (mens ? " mese" + (fuori.length > 1 ? "i" : "") + " (" + fuori.map(o => MESIL[o.m - 1] + " " + o.y + ", " + Math.round(o.v) + " mm").join("; ") + ")" : " giorni, il massimo " + Math.round(max) + " mm") : "";
+        return { centri, passo, righe, xhi: cap, nota };
       },
       colore: () => { const sc = scuro(), c0 = rgb(sc ? "#b4d4f2" : "#a8c8ea"), c1 = rgb(sc ? "#4a90e2" : "#2a64a8"); return t => mix(c0, c1, t); },
-      chiave: r => r.ann, guide: (lo, hi, v) => { const g = [], s = v === "mensile" ? 50 : 10; for (let t = 0; t <= hi; t += s) g.push(t); return g; }, etichetta: t => t,
-      tip: (r, v) => v === "mensile" ? "<b>" + r.y + "</b><br>totale annuo <b>" + Math.round(r.ann) + " mm</b><br>media mensile " + fmt(r.media, 0) + " mm<br><span class='m'>" + r.n + " mesi</span>"
-        : "<b>" + r.y + "</b><br>totale annuo <b>" + Math.round(r.ann) + " mm</b><br>" + r.n + " giorni umidi · " + fmt(r.media, 1) + " mm in media<br><span class='m'>giorni asciutti " + fmt(r.secchi, 0) + "%</span>",
+      chiave: r => r.stima, guide: (lo, hi, v) => { const g = [], s = v === "mensile" ? 50 : 10; for (let t = 0; t <= hi; t += s) g.push(t); return g; }, etichetta: t => t,
+      tip: (r, v) => v === "mensile" ? "<b>" + r.y + "</b><br>totale annuo <b>" + Math.round(r.ann) + " mm</b>" + (r.mancanti > 5 ? " <span class='m'>(" + r.mancanti + " giorni mancanti: stima sull'anno completo " + Math.round(r.stima) + " mm)</span>" : "") + "<br>media mensile " + fmt(r.media, 0) + " mm<br><span class='m'>" + r.n + " mesi</span>"
+        : "<b>" + r.y + "</b><br>totale annuo <b>" + Math.round(r.ann) + " mm</b>" + (r.mancanti > 5 ? " <span class='m'>(" + r.mancanti + " giorni mancanti: stima " + Math.round(r.stima) + " mm)</span>" : "") + "<br>" + r.n + " giorni umidi · " + fmt(r.media, 1) + " mm in media<br><span class='m'>giorni asciutti " + fmt(r.secchi, 0) + "%</span>",
       titolo: v => v === "mensile" ? "Pioggia totale di ogni mese · distribuzione dei valori di ogni anno" : "Pioggia nei giorni umidi (almeno 0,3 mm) · distribuzione dei valori di ogni anno",
-      asse: "mm", soglia: v => v === "mensile" ? 0.04 : 0.08
+      asse: "mm"
     }
   }[TIPO];
   if (!CONF) return;
@@ -126,10 +141,9 @@
     const rowH = SOVR ? (W < 520 ? 12 : 14) : (W < 520 ? 22 : 28), amp = SOVR ? rowH * 2.3 : rowH * 0.85;
     const plotW = W - ml - mr, plotH = n * rowH + 10, H = mt + amp + plotH + mb;
     const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: "img", "aria-label": CONF.titolo(VAR) + ", " + righe[0].y + "–" + righe[n - 1].y });
-    // dominio X: dal primo bin all'ultimo con densità visibile
-    let ult = 0, max = 0; righe.forEach(r => r.dens.forEach(q => { if (q > max) max = q; }));
-    righe.forEach(r => r.dens.forEach((q, j) => { if (q > max * CONF.soglia(VAR)) ult = Math.max(ult, j); }));
-    const xlo = R.centri[0] - R.passo / 2, xhi = R.centri[Math.min(R.centri.length - 1, ult + 3)] + R.passo / 2;
+    // dominio X: tutto l'intervallo dei dati (temperature) o la scala scelta (pioggia, con i valori fuori scala dichiarati sotto il grafico)
+    let max = 0; righe.forEach(r => r.dens.forEach(q => { if (q > max) max = q; }));
+    const xlo = R.centri[0] - R.passo / 2, xhi = R.xhi, ult = R.centri.length - 1;
     const x = t => ml + (t - xlo) / (xhi - xlo) * plotW, hy = d => d / max * amp;
     const colore = CONF.colore(), chi = righe.map(CONF.chiave), cmin = Math.min(...chi), cmax = Math.max(...chi);
     const col = r => colore(cmax > cmin ? (CONF.chiave(r) - cmin) / (cmax - cmin) : .5);
@@ -142,7 +156,7 @@
     const g = el("g", {}, svg);
     righe.forEach((r, i) => {
       const base = mt + amp + i * rowH + rowH * 0.5;
-      const pts = r.dens.map((q, j) => [x(R.centri[j]), base - hy(q)]).filter((_, j) => j <= ult + 3);
+      const pts = r.dens.map((q, j) => [x(R.centri[j]), base - hy(q)]).filter((_, j) => R.centri[j] <= xhi + R.passo);
       const top = basis(pts), a = pts[0][0], b = pts[pts.length - 1][0];
       const area = el("path", { d: top + `L${b.toFixed(1)} ${base.toFixed(1)}L${a.toFixed(1)} ${base.toFixed(1)}Z`, fill: col(r), "fill-opacity": SEL === r.y ? .95 : .55, class: "rg-a", "data-y": r.y }, g);
       el("path", { d: top, fill: "none", stroke: col(r), "stroke-width": SEL === r.y ? 2 : 1, "pointer-events": "none" }, g);
@@ -158,7 +172,7 @@
     });
     host.insertBefore(svg, tip);
     $("rg-tit").textContent = CONF.titolo(VAR);
-    $("rg-info").textContent = n + " anni · " + righe[0].y + "–" + righe[n - 1].y + " · " + DATI.nota;
+    $("rg-info").textContent = n + " anni · " + righe[0].y + "–" + righe[n - 1].y + " · " + DATI.nota + (R.nota || "");
     leggi(righe);
   }
   function leggi(righe) {   // lettura sotto il grafico: serve soprattutto al tocco, dove non c'è il passaggio del mouse

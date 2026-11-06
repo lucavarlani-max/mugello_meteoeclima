@@ -82,8 +82,9 @@
       <div class="card">
         <ul class="note met">
           <li><b>Dati:</b> temperature massime e minime giornaliere della stazione di Borgo S. Lorenzo (196 m, dal 1951) del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a> (licenza CC BY-SA 4.0), lette da <code>data/borgo-serie-lunghe.json</code>, lo stesso file della spirale e della pagina <a href="borgo-serie-lunghe.html">Le serie più lunghe</a>. Qui si usa solo la stazione storica, senza integrare le lacune con Borgo S. Lorenzo 2.</li>
-          <li><b>Anni:</b> si usano solo gli anni già conclusi con almeno 300 giorni di misure; l'anno in corso entra quando finisce. La temperatura media giornaliera è (massima + minima)/2.</li>
+          <li><b>Anni:</b> si usano solo gli anni già conclusi con almeno 300 giorni di misure (1982 e 2000 hanno circa 330 giorni: per questi la media è corretta per la stagione dei giorni mancanti, confrontando ogni giorno con la climatologia dell'anno-tipo, e il tooltip lo segnala); l'anno in corso entra quando finisce. La temperatura media giornaliera è (massima + minima)/2.</li>
           <li><b>Curve:</b> per ogni anno la densità dei valori giornalieri, stimata con un nucleo gaussiano largo 0,8 °C su intervalli di mezzo grado e disegnata con una curva liscia. L'altezza è la stessa per tutti gli anni, quindi le curve sono confrontabili.</li>
+          <li><b>Gobbe:</b> con circa 365 valori per anno e un nucleo di 0,8 °C, piccole gobbe nelle curve sono in parte rumore statistico, non segnali climatici.</li>
           <li><b>Limiti:</b> la serie non è omogeneizzata: cambiano strumenti (dalle letture manuali ai sensori automatici), posizione e ambiente intorno alla stazione, che è in fondovalle e risente dell'inversione termica notturna. Le differenze fra anni vicini sono indicative.</li>
         </ul>
       </div>
