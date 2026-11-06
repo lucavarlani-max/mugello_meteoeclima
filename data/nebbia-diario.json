@@ -1622,7 +1622,7 @@
   "2026-11-01": {
    "ora": "07:00",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.0,
@@ -1692,12 +1692,13 @@
    "luce": 125.2,
    "contrasto": 0.44,
    "contrasto_sfondo": 0.275,
-   "foto": "reports/nebbia/2026-11-01.jpg"
+   "foto": "reports/nebbia/2026-11-01.jpg",
+   "cielo": "sereno"
   },
   "2026-11-02": {
    "ora": "07:01",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 3.6,
@@ -1767,7 +1768,8 @@
    "luce": 142.1,
    "contrasto": 0.356,
    "contrasto_sfondo": 0.235,
-   "foto": "reports/nebbia/2026-11-02.jpg"
+   "foto": "reports/nebbia/2026-11-02.jpg",
+   "cielo": "nuvoloso"
   },
   "2026-11-03": {
    "ora": "07:03",
@@ -1848,7 +1850,7 @@
   "2026-11-04": {
    "ora": "07:04",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.0,
@@ -1918,12 +1920,13 @@
    "luce": 128.3,
    "contrasto": 0.389,
    "contrasto_sfondo": 0.237,
-   "foto": "reports/nebbia/2026-11-04.jpg"
+   "foto": "reports/nebbia/2026-11-04.jpg",
+   "cielo": "nuvoloso"
   },
   "2026-11-05": {
    "ora": "07:05",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.0,
@@ -1993,7 +1996,8 @@
    "luce": 129.1,
    "contrasto": 0.41,
    "contrasto_sfondo": 0.224,
-   "foto": "reports/nebbia/2026-11-05.jpg"
+   "foto": "reports/nebbia/2026-11-05.jpg",
+   "cielo": "sereno"
   },
   "2026-11-06": {
    "ora": "07:07",
