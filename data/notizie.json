@@ -18,12 +18,12 @@
    },
    "storie": [
     {
-     "cat": "mugello",
+     "cat": "cielo",
      "titolo": "Sei albe senza nebbia a Bilancino",
      "testo": "Dal 1° al 6 novembre le foto all'alba della webcam di Bilancino sono state classificate tre volte come serene (1, 5 e 6) e tre come nuvolose (2, 3 e 4), senza nessuna nebbia; la mattina del 6 la minima era 3,3 °C a Borgo San Lorenzo e 4,0 °C a Monte Giovi.",
      "fonte": "Diario della nebbia · Mugello Meteo & Clima",
      "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/geek-nebbia.html",
-     "foto": "fulmine"
+     "foto": "tramonto2"
     }
    ],
    "rubriche": [
@@ -64,7 +64,7 @@
     {
      "cat": "terremoti",
      "titolo": "Tirreno meridionale: sciame in corso, magnitudo fino a 2,9",
-     "testo": "Dopo la scossa Mw 5,5 del 23 ottobre l'INGV segue ancora da giorni uno sciame nel Tirreno meridionale, con gli eventi maggiori fra magnitudo 2,7 e 2,9; il 2 novembre una scossa di magnitudo 2,7 è stata registrata anche in provincia di Treviso.",
+     "testo": "Nel Tirreno meridionale prosegue da giorni uno sciame sismico seguito dall'INGV, con gli eventi maggiori fra magnitudo 2,7 e 2,9; il 2 novembre una scossa di magnitudo 2,7 è stata registrata anche in provincia di Treviso.",
      "fonte": "INGV / Centro Meteo Italiano",
      "url": "https://www.centrometeoitaliano.it/terremoti-e-geofisica/terremoto-in-italia-oggi-lunedi-2-novembre-2026-scossa-m-2-7-in-provincia-di-treviso-184443/amp/",
      "foto": "sismo1"
