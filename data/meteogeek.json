@@ -39,6 +39,40 @@
   ],
   "esperimenti": [
     {
+      "id": "ridgeline-temperature",
+      "titolo": "Ridgeline delle temperature: un crinale per ogni anno",
+      "tipo": "grafico",
+      "tema": "clima",
+      "data": "2026-11-06",
+      "stato": "nuovo",
+      "testo": "Un crinale per ogni anno dal 1951: la distribuzione di tutte le temperature giornaliere di Borgo San Lorenzo (medie, massime e minime), per vedere come si spostano e si deformano le creste, non solo la media. Si aggiorna da solo quando un anno si conclude.",
+      "link": "geek-ridgeline-temperature.html",
+      "tag": [
+        "ridgeline",
+        "distribuzione",
+        "temperatura",
+        "joyplot",
+        "SIR"
+      ]
+    },
+    {
+      "id": "ridgeline-precipitazioni",
+      "titolo": "Ridgeline delle precipitazioni: come piove, anno per anno",
+      "tipo": "grafico",
+      "tema": "pioggia",
+      "data": "2026-11-06",
+      "stato": "nuovo",
+      "testo": "Un crinale per ogni anno dal 1992: la distribuzione dei totali mensili e della pioggia nei giorni umidi a Borgo San Lorenzo, per capire se piove in modo regolare o a colpi di giorni molto intensi.",
+      "link": "geek-ridgeline-precipitazioni.html",
+      "tag": [
+        "ridgeline",
+        "distribuzione",
+        "pioggia",
+        "giorni umidi",
+        "SIR"
+      ]
+    },
+    {
       "id": "record-giornalieri",
       "titolo": "Il contatore dei record",
       "tipo": "esperimento",

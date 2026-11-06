@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ridgeline delle precipitazioni: come piove, anno per anno · Borgo San Lorenzo</title>
+<meta name="description" content="Un crinale per ogni anno dal 1992: la distribuzione dei totali mensili di pioggia e delle piogge dei giorni umidi a Borgo San Lorenzo, per vedere come piove e non solo quanto.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="L. Varlani">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ridgeline-precipitazioni.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Ridgeline delle precipitazioni: come piove, anno per anno · Borgo San Lorenzo">
+<meta property="og:description" content="Un crinale per ogni anno dal 1992: come piove a Borgo San Lorenzo, nei totali mensili e nei giorni umidi.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ridgeline-precipitazioni.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Ridgeline delle precipitazioni","description":"Un crinale per ogni anno dal 1992: la distribuzione dei totali mensili di pioggia e delle piogge dei giorni umidi a Borgo San Lorenzo, per vedere come piove e non solo quanto.","inLanguage":"it-IT","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ridgeline-precipitazioni.html","image":"https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg","datePublished":"2026-11-06","author":{"@type":"Person","name":"L. Varlani"},"publisher":{"@type":"Organization","name":"Mugello Meteo & Clima","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},"isPartOf":{"@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/#website"},"spatialCoverage":{"@type":"Place","name":"Borgo San Lorenzo, Mugello, Toscana"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},{"@type":"ListItem","position":2,"name":"MeteoGeek","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteogeek.html"},{"@type":"ListItem","position":3,"name":"Ridgeline delle precipitazioni","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ridgeline-precipitazioni.html"}]}]}</script>
+<style>
+  .rg-top{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-bottom:10px}
+  .rg-top label{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-soft);cursor:pointer}
+  .rg-top input{accent-color:var(--pine)}
+  #rg{position:relative;margin-top:6px;min-height:200px}
+  #rg svg{display:block;width:100%;height:auto;overflow:visible}
+  #rg svg text{font-family:var(--mono)}
+  #rg .rg-a{cursor:pointer;transition:fill-opacity .1s} #rg .rg-a:hover{fill-opacity:.9}
+  #rg-sel{font-size:13px;color:var(--ink-soft);margin-top:8px;min-height:20px}
+  .lab2{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.04em}
+  .scala{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:10px}
+  .scala i{flex:0 0 160px;height:8px;border-radius:4px;background:linear-gradient(90deg,#a8c8ea,#2a64a8)}
+  #rg-info{margin-left:auto}
+  @media (max-width:700px){ #rg-info{flex-basis:100%;margin-left:0} }
+  .box3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .box3 div{font-size:12.5px;color:var(--ink-soft)}
+  .box3 b{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink);display:block;margin-bottom:3px}
+  @media (max-width:700px){ .box3{grid-template-columns:1fr} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body data-grafico="precipitazioni">
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Ridgeline delle precipitazioni</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · pioggia e acqua</div>
+      <h1>Ridgeline delle precipitazioni</h1>
+      <p class="lead">Borgo San Lorenzo, dal 1992. Ogni «crinale» è un anno: non il totale, ma come la pioggia si distribuisce. Nei totali mensili si vede se piove in modo regolare o a stagioni di estremi; nei giorni umidi se la pioggia cade in tante piccole manciate o in pochi giorni molto intensi.</p>
+    </header>
+
+    <div class="card">
+      <div class="rg-top">
+        <div class="seg" id="rg-var" role="group" aria-label="Variabile"><button type="button" data-v="mensile" aria-pressed="true">Totali mensili</button><button type="button" data-v="giorni_umidi" aria-pressed="false">Giorni umidi</button></div>
+        <label><input type="checkbox" id="rg-sov" checked> sovrapposizione</label>
+      </div>
+      <div class="rg-top" style="margin:0">
+        <div class="lab" id="rg-tit">&nbsp;</div><div class="lab" id="agg"></div>
+      </div>
+      <div id="rg"><div class="tip" id="rg-tip"></div><div class="loading">Carico i dati di Borgo San Lorenzo…</div></div>
+      <div class="scala"><span>anni più asciutti</span><i></i><span>anni più piovosi</span><span id="rg-info"></span></div>
+      <div id="rg-sel" aria-live="polite"></div>
+    </div>
+
+    <div class="card box3" style="margin-top:14px">
+      <div><b>01 · COME SI LEGGE</b>Asse orizzontale = millimetri di pioggia. «Totali mensili»: i 12 totali di mese di un anno. «Giorni umidi»: la pioggia dei soli giorni con almeno 0,3 mm. Più la curva è larga, più i valori sono variabili.</div>
+      <div><b>02 · COLORE</b>Il colore dice quanto è piovoso l'anno: dal celeste (anni più asciutti) al blu (anni più piovosi), in base al totale annuo. Tocca o passa il mouse su una curva per vedere totale, media e giorni asciutti.</div>
+      <div><b>03 · NOTA</b>Pluviometro di una sola stazione. La giornata pluviometrica è 9→9, come nell'archivio SIR originale, e può differire dalle serie 0→24 usate in altre pagine del sito.</div>
+    </div>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note met">
+          <li><b>Dati:</b> precipitazione giornaliera della stazione di Borgo S. Lorenzo del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a> (licenza CC BY-SA 4.0), dal novembre 1991, letta da <code>data/sir/TOS01000999/prec99.csv</code> (giornata pluviometrica 9→9).</li>
+          <li><b>Anni e mesi:</b> si usano solo gli anni già conclusi con almeno 300 giorni di misure. Nei totali mensili conta un mese con almeno 25 giorni di dati e un anno con almeno 8 mesi validi; nei giorni umidi serve un anno con almeno 20 giorni umidi.</li>
+          <li><b>Giorno umido:</b> giorno con almeno 0,3 mm. È una soglia più bassa del «giorno di pioggia» (almeno 1 mm) usato nei report climatici del sito, quindi i giorni umidi sono più numerosi.</li>
+          <li><b>Curve:</b> densità con nucleo gaussiano (22 mm per i totali mensili, 2,2 mm per i giorni umidi), con riflessione allo zero perché la pioggia non è mai negativa; sono 12 punti per anno nei totali mensili, quindi la forma è molto approssimata.</li>
+          <li><b>Limiti:</b> è una sola stazione, con strumenti cambiati nel tempo. I totali annui sono quelli dell'archivio SIR e non sono stati validati oltre i controlli del servizio.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR Toscana (CC BY-SA 4.0) · <a href="geek-ridgeline-temperature.html">le temperature in ridgeline</a></div></footer>
+<script src="geek-ridgeline.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ridgeline delle temperature: come cambia la distribuzione, anno per anno · Borgo San Lorenzo</title>
+<meta name="description" content="Un crinale per ogni anno dal 1951: la distribuzione delle temperature giornaliere di Borgo San Lorenzo (medie, massime e minime), per vedere come si spostano e si deformano nel tempo.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="L. Varlani">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ridgeline-temperature.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Ridgeline delle temperature: come cambia la distribuzione, anno per anno · Borgo San Lorenzo">
+<meta property="og:description" content="Un crinale per ogni anno dal 1951: come cambia l'intera distribuzione delle temperature giornaliere di Borgo San Lorenzo, non solo la media.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ridgeline-temperature.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Ridgeline delle temperature","description":"Un crinale per ogni anno dal 1951: la distribuzione delle temperature giornaliere di Borgo San Lorenzo (medie, massime e minime), per vedere come si spostano e si deformano nel tempo.","inLanguage":"it-IT","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ridgeline-temperature.html","image":"https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg","datePublished":"2026-11-06","author":{"@type":"Person","name":"L. Varlani"},"publisher":{"@type":"Organization","name":"Mugello Meteo & Clima","url":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},"isPartOf":{"@id":"https://lucavarlani-max.github.io/mugello_meteoeclima/#website"},"spatialCoverage":{"@type":"Place","name":"Borgo San Lorenzo, Mugello, Toscana"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/"},{"@type":"ListItem","position":2,"name":"MeteoGeek","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/meteogeek.html"},{"@type":"ListItem","position":3,"name":"Ridgeline delle temperature","item":"https://lucavarlani-max.github.io/mugello_meteoeclima/geek-ridgeline-temperature.html"}]}]}</script>
+<style>
+  .rg-top{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-bottom:10px}
+  .rg-top label{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-soft);cursor:pointer}
+  .rg-top input{accent-color:var(--pine)}
+  #rg{position:relative;margin-top:6px;min-height:200px}
+  #rg svg{display:block;width:100%;height:auto;overflow:visible}
+  #rg svg text{font-family:var(--mono)}
+  #rg .rg-a{cursor:pointer;transition:fill-opacity .1s} #rg .rg-a:hover{fill-opacity:.9}
+  #rg-sel{font-size:13px;color:var(--ink-soft);margin-top:8px;min-height:20px}
+  .lab2{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.04em}
+  .scala{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:10px}
+  .scala i{flex:0 0 160px;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--cold),var(--ctx),var(--warm))}
+  #rg-info{margin-left:auto}
+  @media (max-width:700px){ #rg-info{flex-basis:100%;margin-left:0} }
+  .box3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .box3 div{font-size:12.5px;color:var(--ink-soft)}
+  .box3 b{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink);display:block;margin-bottom:3px}
+  @media (max-width:700px){ .box3{grid-template-columns:1fr} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body data-grafico="temperature">
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Ridgeline delle temperature</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · clima e temperature</div>
+      <h1>Ridgeline delle temperature</h1>
+      <p class="lead">Borgo San Lorenzo, dal 1951. Ogni «crinale» è un anno: la curva mostra quanti giorni sono stati freddi, miti o caldi, non solo la media. Se le creste si spostano verso destra, l'anno è più caldo in tutto il suo profilo; se si allargano, i giorni estremi sono diventati più frequenti. Si legge come i «joyplot» usati in climatologia.</p>
+    </header>
+
+    <div class="card">
+      <div class="rg-top">
+        <div class="seg" id="rg-var" role="group" aria-label="Variabile"><button type="button" data-v="tm" aria-pressed="true">Media giornaliera</button><button type="button" data-v="tx" aria-pressed="false">Massime</button><button type="button" data-v="tn" aria-pressed="false">Minime</button></div>
+        <label><input type="checkbox" id="rg-sov" checked> sovrapposizione</label>
+      </div>
+      <div class="rg-top" style="margin:0">
+        <div class="lab" id="rg-tit">&nbsp;</div><div class="lab" id="agg"></div>
+      </div>
+      <div id="rg"><div class="tip" id="rg-tip"></div><div class="loading">Carico i dati di Borgo San Lorenzo…</div></div>
+      <div class="scala"><span>anni freddi</span><i></i><span>anni caldi</span><span id="rg-info"></span></div>
+      <div id="rg-sel" aria-live="polite"></div>
+    </div>
+
+    <div class="card box3" style="margin-top:14px">
+      <div><b>01 · COME SI LEGGE</b>Asse orizzontale = temperatura (°C). Ogni curva è la densità dei valori giornalieri di un anno: più è alta in un punto, più giorni hanno avuto quella temperatura. Gli anni più recenti sono in basso.</div>
+      <div><b>02 · COLORE</b>Ogni crinale è colorato dalla media dell'anno, dal blu (anni più freddi della serie) al rosso (anni più caldi). Tocca o passa il mouse su una curva per vedere l'anno, la media e i giorni di misure.</div>
+      <div><b>03 · NOTA</b>Serie di una sola stazione, non omogeneizzata: strumenti e posizione sono cambiati nel tempo. Mancano gli anni con troppi giorni senza misure, in particolare quelli dal 1994 al 1999 e il 2001.</div>
+    </div>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note met">
+          <li><b>Dati:</b> temperature massime e minime giornaliere della stazione di Borgo S. Lorenzo (196 m, dal 1951) del <a href="https://www.sir.toscana.it" target="_blank" rel="noopener">Servizio Idrologico Regionale della Toscana</a> (licenza CC BY-SA 4.0), lette da <code>data/borgo-serie-lunghe.json</code>, lo stesso file della spirale e della pagina <a href="borgo-serie-lunghe.html">Le serie più lunghe</a>. Qui si usa solo la stazione storica, senza integrare le lacune con Borgo S. Lorenzo 2.</li>
+          <li><b>Anni:</b> si usano solo gli anni già conclusi con almeno 300 giorni di misure; l'anno in corso entra quando finisce. La temperatura media giornaliera è (massima + minima)/2.</li>
+          <li><b>Curve:</b> per ogni anno la densità dei valori giornalieri, stimata con un nucleo gaussiano largo 0,8 °C su intervalli di mezzo grado e disegnata con una curva liscia. L'altezza è la stessa per tutti gli anni, quindi le curve sono confrontabili.</li>
+          <li><b>Limiti:</b> la serie non è omogeneizzata: cambiano strumenti (dalle letture manuali ai sensori automatici), posizione e ambiente intorno alla stazione, che è in fondovalle e risente dell'inversione termica notturna. Le differenze fra anni vicini sono indicative.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR Toscana (CC BY-SA 4.0) · <a href="geek-ridgeline-precipitazioni.html">le precipitazioni in ridgeline</a></div></footer>
+<script src="geek-ridgeline.js"></script>
+</body>
+</html>
