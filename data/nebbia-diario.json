@@ -1998,7 +1998,7 @@
   "2026-11-06": {
    "ora": "07:07",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.6,
@@ -2068,7 +2068,8 @@
    "luce": 123.7,
    "contrasto": 0.429,
    "contrasto_sfondo": 0.259,
-   "foto": "reports/nebbia/2026-11-06.jpg"
+   "foto": "reports/nebbia/2026-11-06.jpg",
+   "cielo": "sereno"
   }
  }
 }
