@@ -1,7 +1,87 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-11-04",
+ "aggiornato": "2026-11-06",
  "numeri": [
+  {
+   "data": "2026-11-06",
+   "apertura": {
+    "cat": "mugello",
+    "titolo": "Sul crinale venerdì freddo e piovoso: massima non oltre 6,9 °C",
+    "testo": "Alle 13 di venerdì 6 novembre la massima più alta fra le otto stazioni in montagna intorno al Mugello era di 6,9 °C a Barco e la minima di 3,8 °C a Montegiovi, che ha raccolto anche 4,4 mm di pioggia; la raffica più forte, 47,5 km/h, è del Passo del Giogo.",
+    "fonte": "Stazioni in montagna · Mugello Meteo & Clima",
+    "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+    "foto": "bilancino"
+   },
+   "numero": {
+    "valore": "0",
+    "testo": "Le albe con nebbia a Bilancino dal 1° al 6 novembre: tre serene e tre nuvolose, secondo il diario della nebbia."
+   },
+   "storie": [
+    {
+     "cat": "cielo",
+     "titolo": "Sei albe senza nebbia a Bilancino",
+     "testo": "Dal 1° al 6 novembre le foto all'alba della webcam di Bilancino sono state classificate tre volte come serene (1, 5 e 6) e tre come nuvolose (2, 3 e 4), senza nessuna nebbia; la mattina del 6 la minima era 3,3 °C a Borgo San Lorenzo e 4,0 °C a Monte Giovi.",
+     "fonte": "Diario della nebbia · Mugello Meteo & Clima",
+     "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/geek-nebbia.html",
+     "foto": "tramonto2"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Venerdì 6 novembre: sul crinale temperature sotto i 7 °C e un po' di pioggia, vento in calo; in valle l'alba era serena, con una minima di 3,3 °C a Borgo San Lorenzo.",
+     "fonte": "Stazioni in montagna · Mugello Meteo & Clima"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:56 e tramonta alle 16:58, circa 10 ore e 2 minuti di luce, circa 3 minuti meno di ieri. La Luna è una sottile falce calante, illuminata all'8%; la Luna nuova è lunedì 9 novembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-11-05",
+   "apertura": {
+    "cat": "vulcani",
+    "titolo": "Kilauea in allerta Watch: l'episodio 56 è atteso da un momento all'altro",
+    "testo": "L'HVO ha portato il Kilauea al livello Watch (codice arancione) per l'attività eruttiva precursoria, cominciata verso le 11:43 ora hawaiana del 2 novembre al north vent dell'Halemaʻumaʻu, prima della fontana di lava dell'episodio 56; l'eruzione era in pausa dal 17 ottobre.",
+    "fonte": "USGS HVO (via DEFCON Level)",
+    "url": "https://www.defconlevel.com/alert/2026-11-03-usgs-volcano-notices-hvo-kilauea-orange-watch-precursory-low-level-eruptive-activity-before-episode-56-of-the-ongoing-halema-uma-u-eruption-began-around-11-43-a-m-hst-on-monday-november-2",
+    "foto": "kilauea1"
+   },
+   "numero": {
+    "valore": "56°",
+    "testo": "L'episodio di fontane di lava atteso al summit del Kilauea, dopo il 55° del 17 ottobre."
+   },
+   "storie": [
+    {
+     "cat": "mugello",
+     "titolo": "Sul crinale: 10,1 °C di massima e vento in calo",
+     "testo": "Giovedì 5 novembre la massima più alta fra le otto stazioni in montagna è stata di 10,1 °C a Monte di Fò (alle 12:25) e la minima di 4,3 °C a Montegiovi; la raffica più forte, 51,5 km/h, è di Montegiovi, in calo rispetto ai 100 km/h del 2 novembre al Giogo.",
+     "fonte": "Stazioni in montagna · Mugello Meteo & Clima",
+     "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+     "foto": "bilancino"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Tirreno meridionale: sciame in corso, magnitudo fino a 2,9",
+     "testo": "Nel Tirreno meridionale prosegue da giorni uno sciame sismico seguito dall'INGV, con gli eventi maggiori fra magnitudo 2,7 e 2,9; il 2 novembre una scossa di magnitudo 2,7 è stata registrata anche in provincia di Treviso.",
+     "fonte": "INGV / Centro Meteo Italiano",
+     "url": "https://www.centrometeoitaliano.it/terremoti-e-geofisica/terremoto-in-italia-oggi-lunedi-2-novembre-2026-scossa-m-2-7-in-provincia-di-treviso-184443/amp/",
+     "foto": "sismo1"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Giovedì 5 novembre: alba serena a Bilancino senza nebbia, minima di 4,8 °C a Borgo San Lorenzo; sul crinale massime intorno ai 10 °C e vento moderato.",
+     "fonte": "Diario della nebbia · Stazioni in montagna"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 6:55 e tramonta alle 16:59, circa 10 ore e 4 minuti di luce, circa 3 minuti meno di ieri. La Luna è una falce calante, illuminata al 15%; la Luna nuova è lunedì 9 novembre."
+    }
+   ]
+  },
   {
    "data": "2026-11-04",
    "apertura": {
