@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Il grande gelo del gennaio 1985 · Casi di studio · Mugello Meteo &amp; Clima</title>
+<meta name="description" content="Gennaio 1985: l'irruzione di aria artica che portò Firenzuola al minimo assoluto della sua serie storica, -24,9°C l'8 gennaio, e Borgo San Lorenzo a -22,0°C. Dati SIR Toscana e ARPAE Emilia-Romagna, giorno per giorno.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-gelo-1985.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Il grande gelo del gennaio 1985 · Casi di studio">
+<meta property="og:description" content="L'irruzione di aria artica che portò Firenzuola al minimo assoluto della sua serie storica. Dati SIR Toscana e ARPAE Emilia-Romagna, giorno per giorno.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-gelo-1985.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+<style>
+  #map{height:420px;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--line)}
+  .leaflet-popup-content{font-family:var(--sans);font-size:13px}
+  .leaflet-popup-content b{font-family:var(--serif);color:var(--pine-deep)}
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:820px){.cmp{grid-template-columns:1fr}}
+  .cmp .card h3{font-family:var(--serif);font-size:16px;margin:0 0 2px;letter-spacing:-.01em}
+  .cmp .card .sub2{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:10px}
+  .leg2{display:flex;gap:16px;align-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:6px;flex-wrap:wrap}
+  .leg2 i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:5px;vertical-align:2px}
+  .classifica{font-family:var(--mono);font-size:13px;line-height:2}
+  .rank b{color:var(--ink)}
+  .rank .r1985{color:var(--cold);font-weight:600}
+  .emptybox{display:flex;align-items:center;justify-content:center;height:220px;color:var(--ink-faint);font-size:12.5px}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Il grande gelo del gennaio 1985</div>
+    <header class="head">
+      <div class="eyebrow">Casi di studio · gennaio 1985</div>
+      <h1>Il grande gelo del gennaio 1985</h1>
+      <p class="lead">Tra il 2 e il 19 gennaio 1985 un'irruzione di aria artica continentale investì il Mugello, portando uno degli episodi di freddo più intensi dall'inizio delle osservazioni locali. A <b>Firenzuola</b> si toccarono <b>−24,9 °C l'8 gennaio</b> — il valore più basso in 65 anni di serie storica — e la stazione SIR di <b>Borgo San Lorenzo</b> scese a <b>−22,0 °C l'11</b>. È il primo di una serie di approfondimenti su singoli eventi meteorologici rilevanti per la zona.</p>
+    </header>
+
+    <div class="tiles" id="tiles">
+      <div class="tile"><div class="lab">Minima Firenzuola</div><div class="big">−24,9 °C</div><div class="who">8 gennaio · record della serie 1961–2026</div></div>
+      <div class="tile"><div class="lab">Minima Borgo San Lorenzo</div><div class="big">−22,0 °C</div><div class="who">11 gennaio · stazione SIR TOS01000999</div></div>
+      <div class="tile"><div class="lab">Giorni di gelo consecutivi</div><div class="big">13</div><div class="who">2–14 gennaio a Firenzuola, massima sempre sotto zero</div></div>
+      <div class="tile"><div class="lab">Nella classifica dei 15 giorni più freddi</div><div class="big">7 / 15</div><div class="who">di Firenzuola appartengono al gennaio 1985</div></div>
+    </div>
+
+    <section>
+      <div class="sh"><h2>Dove si trovano</h2><span class="src">2 stazioni · coordinate reali</span></div>
+      <p class="note">Firenzuola (422 m, valle del Santerno) e Borgo San Lorenzo (193 m, fondovalle della Sieve) sono circa 35 km in linea d'aria l'una dall'altra, ma con quasi 230 m di dislivello: la differenza nei valori raggiunti — circa 3 gradi — riflette in parte questo scarto di quota, oltre alle diverse caratteristiche dei due siti di misura.</p>
+      <div class="card">
+        <div id="map" role="img" aria-label="Mappa di Firenzuola e Borgo San Lorenzo"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Cronologia dell'evento</h2><span class="src">temperatura minima e massima, 1–31 gennaio 1985</span></div>
+      <p class="note">Serie giornaliere complete, non ricostruite: la griglia climatica <a href="https://dati-simc.arpae.it/opendata/eraclito/timeseries/01469/" target="_blank" rel="noopener">Eraclito</a> di ARPAE Emilia-Romagna per Firenzuola (la stessa usata dalla <a href="firenzuola.html">pagina della serie storica</a> di questo sito) e l'archivio del Servizio Idrologico Regionale della Toscana per la stazione di Borgo San Lorenzo. Il nucleo più freddo dell'episodio cade tra il 5 e il 13 gennaio; dopo il 20 le temperature tornano nella norma.</p>
+      <div class="cmp">
+        <div class="card">
+          <h3>Firenzuola</h3>
+          <div class="sub2">422 m · ARPAE Eraclito, cella 01469</div>
+          <div class="chart" id="chartFi"></div>
+          <div class="leg2"><span><i style="background:var(--warm)"></i>massima</span><span><i style="background:var(--cold)"></i>minima</span></div>
+        </div>
+        <div class="card">
+          <h3>Borgo San Lorenzo</h3>
+          <div class="sub2">193 m · SIR Toscana, TOS01000999</div>
+          <div class="chart" id="chartBsl"></div>
+          <div class="leg2"><span><i style="background:var(--warm)"></i>massima</span><span><i style="background:var(--cold)"></i>minima</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Che cosa lo ha causato</h2></div>
+      <div class="card">
+        <p class="note" style="font-size:14px">Secondo le ricostruzioni disponibili (cronache meteorologiche dell'epoca e retrospettive successive, vedi fonti), l'episodio fu innescato da un'irruzione di aria artica continentale scesa dalla Russia europea verso i Balcani e il Mediterraneo centrale, mentre un blocco di alta pressione sull'Europa occidentale ne impediva il rapido allontanamento. Il risultato fu un'invasione di aria gelida e secca che investì gran parte dell'Italia tra la prima e la seconda decade di gennaio, con minime record in diverse regioni del centro-nord: a Firenze Peretola si toccarono −23,2 °C il 12 gennaio (contro un precedente record cittadino di −12,8 °C, del 1968); a San Pietro Capofiume, in pianura padana, si scese sotto i −24 °C. La neve, caduta copiosa tra l'8 e il 9 gennaio, superò gli 80 cm nell'alto Mugello (Firenzuola e Palazzuolo sul Senio) e raggiunse i 40 cm a Firenze città.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Un confronto diretto</h2><span class="src">i 15 giorni più freddi di Firenzuola, 1961–2026</span></div>
+      <p class="note">Sette dei quindici giorni più freddi mai registrati a Firenzuola in 65 anni di serie cadono nel gennaio 1985 — in grassetto in questa classifica, tratta direttamente dai record pubblicati nella <a href="firenzuola.html">pagina della serie storica</a>.</p>
+      <div class="card">
+        <div class="classifica">
+          <div><b>1.</b> <span class="r1985">8 gen 1985</span> — −24,9 °C</div>
+          <div><b>2.</b> <span class="r1985">7 gen 1985</span> — −21,6 °C</div>
+          <div><b>3.</b> 7 feb 1991 — −21,1 °C</div>
+          <div><b>4.</b> 2 feb 1963 — −20,2 °C</div>
+          <div><b>5.</b> 25 gen 1963 — −20,1 °C</div>
+          <div><b>6.</b> 1 feb 1963 — −20,1 °C</div>
+          <div><b>7.</b> <span class="r1985">6 gen 1985</span> — −19,2 °C</div>
+          <div><b>8.</b> 28 feb 2018 — −18,3 °C</div>
+          <div><b>9.</b> <span class="r1985">9 gen 1985</span> — −18,1 °C</div>
+          <div><b>10.</b> 2 mar 2005 — −17,2 °C</div>
+          <div><b>11.</b> 3 gen 1979 — −17,1 °C</div>
+          <div><b>12.</b> <span class="r1985">11 gen 1985</span> — −16,8 °C</div>
+          <div><b>13.</b> <span class="r1985">5 gen 1985</span> — −16,3 °C</div>
+          <div><b>14.</b> 18 dic 1963 — −15,9 °C</div>
+          <div><b>15.</b> <span class="r1985">12 gen 1985</span> — −15,9 °C</div>
+        </div>
+        <p class="note" style="margin-top:12px">L'unico altro inverno a comparire più volte è quello del 1963, un'altra celebre ondata di freddo italiana — ma nessuno dei suoi giorni scende sotto i −20,2 °C, quasi 5 gradi sopra il minimo del 1985.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note">
+          <li><b>Firenzuola</b>: griglia climatica <a href="https://dati-simc.arpae.it/opendata/eraclito/timeseries/01469/" target="_blank" rel="noopener">Eraclito</a> di ARPAE Emilia-Romagna, cella 01469 — valori giornalieri interpolati da più stazioni, non misure di un singolo strumento. È la stessa fonte usata dalla pagina <a href="firenzuola.html">Firenzuola</a> di questo sito, dove tutta la serie dal 1961 è consultabile e scaricabile.</li>
+          <li><b>Borgo San Lorenzo</b>: Servizio Idrologico Regionale della Toscana (SIR), stazione TOS01000999 (196 m) — dati della stazione fisica, non di una griglia interpolata. Stessa fonte usata da <a href="borgo-storico.html">Borgo San Lorenzo nella storia</a>.</li>
+          <li>I <b>giorni di gelo consecutivi</b> sono calcolati sulla serie Firenzuola come i giorni con temperatura massima sempre sotto zero: 13 giorni, dal 2 al 14 gennaio compresi.</li>
+          <li>I dati su <b>Firenze Peretola, la neve e il contesto sinottico</b> vengono dalla stampa e dalle retrospettive meteorologiche elencate sotto: non sono (ancora) verificati su un archivio primario e vanno quindi presi come ricostruzione giornalistica, non come misura diretta.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="foot">
+      Fonti: ARPAE Emilia-Romagna, Servizio Idro-Meteo-Clima (SIMC), dataset <a href="https://dati-simc.arpae.it/opendata/eraclito/timeseries/01469/" target="_blank" rel="noopener">Eraclito</a> · Servizio Idrologico Regionale della Toscana (SIR) · <a href="https://www.lanazione.it/firenze/cronaca/quarantanni-fa-il-grande-gelo-6894fbe0" target="_blank" rel="noopener">La Nazione</a> · <a href="https://www.meteoweb.eu/2026/01/londata-di-gelo-del-gennaio-1985-quando-litalia-divenne-siberia-dalla-nevicata-storica-a-roma-ai-23c-a-firenze/1001881769/" target="_blank" rel="noopener">MeteoWeb</a> · <a href="https://www.arezzometeo.com/temperature-minime-del-gennaio-1985-ecco-i-dati/" target="_blank" rel="noopener">Arezzo Meteo</a> · <a href="https://www.3bmeteo.com/giornale-meteo/gennaio-1985--30-anni-fa-neve-e-gelo-paralizzarono-tutta-l-italia-68186" target="_blank" rel="noopener">3BMeteo</a> · <a href="https://it.wikipedia.org/wiki/Ondata_di_freddo_del_gennaio_1985" target="_blank" rel="noopener">Wikipedia</a>. <a href="meteogeek.html">← Torna a MeteoGeek</a>
+    </footer>
+  </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const MESI_G=31;
+  const f1=v=>v==null?"—":(Math.round(v*10)/10).toFixed(1).replace(".",",").replace("-","−");
+  const fmtDate=g=>g+" gennaio";
+  function ticks(lo,hi,n){const s0=(hi-lo)/n,m=Math.pow(10,Math.floor(Math.log10(s0)));const st=[1,2,2.5,5,10].map(k=>k*m).find(s=>s>=s0)||s0;const o=[];for(let v=Math.floor(lo/st)*st;v<hi+st-1e-9;v+=st)o.push(+v.toFixed(6));return o;}
+  function place(el,tip,x,y){tip.style.opacity=1;const tw=tip.offsetWidth,W=el.clientWidth;let lx=x+14;if(lx+tw>W)lx=x-tw-14;if(lx<0)lx=0;tip.style.left=lx+"px";tip.style.top=Math.max(0,y-10)+"px";}
+  function mkTip(parent){const t=document.createElement("div");t.className="tip";t.style.position="absolute";parent.style.position="relative";parent.appendChild(t);return t;}
+
+  const LUOGHI={
+    "Firenzuola":{lat:44.1206,lon:11.3789,quota:422},
+    "Borgo San Lorenzo":{lat:43.9547,lon:11.3861,quota:193}
+  };
+
+  let SERIE=null;
+
+  fetch("./data/geek/gelo-1985.json").then(r=>r.json()).then(d=>{
+    SERIE=d.serie;
+    drawMap();
+    drawChart("chartFi", SERIE["Firenzuola"]);
+    drawChart("chartBsl", SERIE["Borgo San Lorenzo"]);
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{
+      drawChart("chartFi", SERIE["Firenzuola"]); drawChart("chartBsl", SERIE["Borgo San Lorenzo"]); if(window.__map1985) window.__map1985.invalidateSize();
+    },150);});
+  }).catch(()=>{
+    $("chartFi").innerHTML='<div class="emptybox">Dati non disponibili.</div>';
+    $("chartBsl").innerHTML='<div class="emptybox">Dati non disponibili.</div>';
+  });
+
+  function drawMap(){
+    try{
+      const map=L.map("map",{scrollWheelZoom:false}).setView([44.03,11.38],10);
+      window.__map1985=map;
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:17,attribution:"© OpenStreetMap contributors"}).addTo(map);
+      const coldColor=getComputedStyle(document.documentElement).getPropertyValue("--cold").trim()||"#2a64a8";
+      Object.entries(LUOGHI).forEach(([nome,p])=>{
+        const rec=(SERIE[nome]||[]).reduce((a,b)=>(b.tmin!=null&&(!a||b.tmin<a.tmin))?b:a,null);
+        const m=L.circleMarker([p.lat,p.lon],{radius:9,weight:1.5,color:"#fff",fillColor:coldColor,fillOpacity:.9});
+        m.bindPopup(`<b>${nome}</b><br>${p.quota} m<br>${rec?("minima dell'episodio <b>"+f1(rec.tmin)+"°</b>, "+rec.giorno.slice(8,10)+" gennaio"):"dato non disponibile"}`);
+        m.addTo(map);
+      });
+    }catch(e){
+      $("map").innerHTML='<div class="emptybox">Mappa non disponibile al momento (libreria cartografica non caricata).</div>';
+    }
+  }
+
+  function drawChart(id, rows){
+    const box=$(id);
+    if(!rows||!rows.length){box.innerHTML='<div class="emptybox">Dati non disponibili.</div>';return;}
+    const W=Math.max(300,box.clientWidth||300), H=260, m={l:42,r:10,t:14,b:26};
+    const yAll=rows.flatMap(r=>[r.tmin,r.tmax]).filter(v=>v!=null);
+    const yT=ticks(Math.min(...yAll),Math.max(...yAll),5), y0=yT[0], y1=yT[yT.length-1];
+    const X=g=>m.l+(g-1)/(MESI_G-1)*(W-m.l-m.r), Y=v=>H-m.b-(v-y0)/(y1-y0)*(H-m.t-m.b);
+    let g="";
+    yT.forEach(t=>g+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(t).toFixed(1)}" y2="${Y(t).toFixed(1)}"/><text class="axl" x="${m.l-8}" y="${(Y(t)+3.5).toFixed(1)}" text-anchor="end">${Math.round(t)}°</text>`);
+    g+=`<line class="ref" x1="${m.l}" x2="${W-m.r}" y1="${Y(0).toFixed(1)}" y2="${Y(0).toFixed(1)}"/>`;
+    for(let gi=1;gi<=MESI_G;gi+=5) g+=`<text class="axl" x="${X(gi).toFixed(1)}" y="${H-m.b+16}" text-anchor="middle">${gi}</text>`;
+    g+=`<line class="axis-line" x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}"/>`;
+    let band="", pen=false;
+    rows.forEach((r,i)=>{if(r.tmin!=null&&r.tmax!=null){band+=(pen?"L":"M")+X(i+1).toFixed(1)+" "+Y(r.tmin).toFixed(1);pen=true;}else pen=false;});
+    let band2=""; pen=false;
+    for(let i=rows.length-1;i>=0;i--){const r=rows[i];if(r.tmin!=null&&r.tmax!=null){band2+=(pen?"L":"M")+X(i+1).toFixed(1)+" "+Y(r.tmax).toFixed(1);pen=true;}else pen=false;}
+    g+=`<path d="${band+" "+band2+" Z"}" fill="var(--cold)" opacity=".18" stroke="none"/>`;
+    let lMax="",lMin="",p1=false,p2=false;
+    rows.forEach((r,i)=>{if(r.tmax!=null){lMax+=(p1?"L":"M")+X(i+1).toFixed(1)+" "+Y(r.tmax).toFixed(1);p1=true;}else p1=false;
+      if(r.tmin!=null){lMin+=(p2?"L":"M")+X(i+1).toFixed(1)+" "+Y(r.tmin).toFixed(1);p2=true;}else p2=false;});
+    g+=`<path d="${lMax}" fill="none" stroke="var(--warm)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+    g+=`<path d="${lMin}" fill="none" stroke="var(--cold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+    box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">${g}</svg>`;
+    const svg=box.querySelector("svg"), tip=mkTip(box);
+    svg.addEventListener("pointermove",e=>{const r=box.getBoundingClientRect();
+      const gi=Math.max(1,Math.min(MESI_G,Math.round(1+(e.clientX-r.left-m.l)/(W-m.l-m.r)*(MESI_G-1))));
+      const rr=rows[gi-1]; if(!rr)return;
+      tip.innerHTML=`<b>${fmtDate(gi)}</b><br>massima <b>${rr.tmax!=null?f1(rr.tmax)+"°":"—"}</b><br>minima <b>${rr.tmin!=null?f1(rr.tmin)+"°":"—"}</b>`;
+      place(box,tip,e.clientX-r.left,e.clientY-r.top);});
+    svg.addEventListener("pointerleave",()=>tip.style.opacity=0);
+  }
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>

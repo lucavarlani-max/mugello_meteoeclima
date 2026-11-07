@@ -39,6 +39,25 @@
   ],
   "esperimenti": [
     {
+      "id": "gelo-1985",
+      "titolo": "Il grande gelo del gennaio 1985: Firenzuola al suo record assoluto",
+      "tipo": "esperimento",
+      "tema": "clima",
+      "data": "2026-11-07",
+      "stato": "nuovo",
+      "testo": "Tra il 2 e il 19 gennaio 1985 un'irruzione di aria artica portò Firenzuola al minimo della sua intera serie storica, -24,9°C l'8 gennaio, e Borgo San Lorenzo a -22,0°C l'11. Cronologia giorno per giorno dalle serie ARPAE Eraclito e SIR Toscana, confronto diretto con gli altri 14 giorni più freddi mai registrati a Firenzuola. Primo di una serie di casi di studio su singoli eventi meteorologici rilevanti per il Mugello.",
+      "link": "geek-gelo-1985.html",
+      "tag": [
+        "casi di studio",
+        "1985",
+        "ondata di gelo",
+        "Firenzuola",
+        "Borgo San Lorenzo",
+        "SIR",
+        "ARPAE"
+      ]
+    },
+    {
       "id": "record-giornalieri",
       "titolo": "Il contatore dei record",
       "tipo": "esperimento",
