@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Scarica anteprima pubblica e metadati di schede Alinari.
+"""Cerca e scarica anteprima pubblica e metadati di schede Alinari.
 
 Uso:
     python3 scripts/alinari_scrape.py 268305 268306
     python3 scripts/alinari_scrape.py https://www.alinari.it/item/it/1/268305
     python3 scripts/alinari_scrape.py -f ids.txt -o alinari --delay 2
+    python3 scripts/alinari_scrape.py --search "Salaiole"              # elenca i risultati
+    python3 scripts/alinari_scrape.py --search "Borgo San Lorenzo" --max 50 --ids-out ids.txt
+    python3 scripts/alinari_scrape.py --search "Salaiole" --download   # scarica i risultati
 
 Scarica solo l'anteprima a bassa risoluzione servita pubblicamente
 (Image<ID>.jpg) e la scheda metadati. Non tocca l'alta risoluzione,
@@ -17,6 +20,7 @@ import json
 import re
 import sys
 import time
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -50,6 +54,29 @@ def item_id(s):
     return m.group(1)
 
 
+def search(keyword, max_results, delay):
+    """Cerca per parola chiave; restituisce [(id, didascalia)] (100 per pagina)."""
+    q = urllib.parse.quote(keyword)
+    found, seen, total, pg = [], set(), None, 1
+    while True:
+        url = f"https://www.alinari.it/search/it/{pg}/{q}?searchbar={q}"
+        page = get(url).decode("utf-8", "ignore")
+        if total is None:
+            t = re.search(r"trovati\s+([\d.]+)\s+risultat", page)
+            total = int(t.group(1).replace(".", "")) if t else 0
+            print(f"Risultati trovati: {total}", file=sys.stderr)
+        new = 0
+        for m in re.finditer(r'class="alinari-item-link" href="[^"]*/item/\w+/\d+/(\d+)[^"]*".*?alt="([^"]*)"', page, re.S):
+            if m.group(1) not in seen:
+                seen.add(m.group(1))
+                found.append((m.group(1), html.unescape(m.group(2))))
+                new += 1
+        if len(found) >= max_results or len(found) >= total or not new:
+            return found[:max_results], total
+        pg += 1
+        time.sleep(delay)
+
+
 def parse(page, iid):
     og = re.search(r'property="og:image"\s+content="([^"]+)"', page)
     url = re.search(r'property="og:url"\s+content="([^"]+)"', page)
@@ -68,13 +95,38 @@ def main():
     ap.add_argument("-f", "--file", help="file con un ID/URL per riga")
     ap.add_argument("-o", "--out", default="alinari", help="cartella di output")
     ap.add_argument("--delay", type=float, default=2.0, help="secondi tra le richieste")
+    ap.add_argument("-s", "--search", help="cerca per parola chiave (elenca i risultati)")
+    ap.add_argument("--max", type=int, default=20, help="massimo di risultati per la ricerca (default 20)")
+    ap.add_argument("--download", action="store_true", help="con --search: scarica anche i risultati")
+    ap.add_argument("--ids-out", help="con --search: scrive gli ID trovati in questo file")
     a = ap.parse_args()
 
     items = list(a.items)
     if a.file:
-        items += [l.strip() for l in Path(a.file).read_text().splitlines() if l.strip() and not l.startswith("#")]
+        for l in Path(a.file).read_text().splitlines():
+            l = l.split("#", 1)[0].strip()  # ignora commenti (anche a fine riga)
+            if l:
+                items.append(l)
+    if a.search:
+        try:
+            res, total = search(a.search, a.max, a.delay)
+        except Exception as e:  # noqa: BLE001
+            print(f"FAIL ricerca: {e}", file=sys.stderr)
+            return 1
+        for iid, cap in res:
+            print(f"{iid}\t{cap}")
+        if total > len(res):
+            print(f"... mostrati {len(res)} di {total} (usa --max per averne di piu')", file=sys.stderr)
+        if a.ids_out:
+            Path(a.ids_out).write_text("".join(f"{i}  # {c}\n" for i, c in res))
+        if a.download:
+            items += [i for i, _ in res]
+        else:
+            return 0
+        if items:
+            time.sleep(a.delay)
     if not items:
-        ap.error("indica almeno un ID o URL")
+        ap.error("indica almeno un ID/URL oppure --search")
 
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
