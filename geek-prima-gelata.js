@@ -94,16 +94,22 @@
       tip.style.left = Math.min(r.width - 150, Math.max(4, e.clientX - r.left + 12)) + "px"; tip.style.top = Math.max(0, e.clientY - r.top - 54) + "px"; }
     // riepilogo
     const rec = V.reduce((a, b) => (TP === "aut" ? a.x <= b.x : a.x >= b.x) ? a : b);
+    const opp = V.reduce((a, b) => (TP === "aut" ? a.x >= b.x : a.x <= b.x) ? a : b);
     const med = V.reduce((s, o) => s + o.x, 0) / V.length, md = Math.round(med), mm = (() => { let m = 0; while (m < 11 && doy(m + 1, 1) <= md) m++; return { m, d: md - doy(m, 1) + 1 }; })();
     const rec10 = V.filter(o => o.y >= y1 - 29), m10 = rec10.length ? rec10.reduce((s, o) => s + o.x, 0) / rec10.length : null;
     const dd = x => { x = Math.round(x); let m = 0; while (m < 11 && doy(m + 1, 1) <= x) m++; return (x - doy(m, 1) + 1) + " " + MES[m]; };
-    $("gl-kpi").innerHTML = `<div>Più ${TP === "aut" ? "precoce" : "tardiva"}<b>${dataIt(rec)} ${rec.y}</b></div><div>Data media (${V.length} anni)<b>${dd(med)}</b></div>` +
+    $("gl-kpi").innerHTML = `<div>Più ${TP === "aut" ? "precoce" : "tardiva"}<b>${dataIt(rec)} ${rec.y}</b></div><div>Più ${TP === "aut" ? "tardiva" : "precoce"}<b>${dataIt(opp)} ${opp.y}</b></div><div>Data media (${V.length} anni)<b>${dd(med)}</b></div>` +
       `<div>Ultimi 30 anni<b>${m10 == null ? "–" : dd(m10)}</b></div><div>Tendenza<b>${T ? (T.dec > 0 ? "+" : "") + fmt(T.dec) + " giorni/decennio" : "–"}</b></div>`;
     const senza = P.filter(o => o.senza).length;
     $("gl-info").textContent = V.length + " anni con gelata" + (senza ? " · " + senza + " senza gelata nel periodo (cerchio vuoto in alto)" : "") + " · retta tratteggiata = tendenza lineare" + (S.y1 - S.y0 + 1 - P.length > 0 ? " · " + (S.y1 - S.y0 + 1 - P.length) + " anni esclusi per dati insufficienti o periodo non concluso" : "");
-    const ord = V.slice().sort((a, b) => TP === "aut" ? a.x - b.x : b.x - a.x), est = ord.slice(0, 5), ult = ord.slice(-1)[0];
-    $("gl-tab").innerHTML = "<tr><th>#</th><th>ANNO</th><th>DATA</th><th>MINIMA</th></tr>" + est.map((o, i) => `<tr><td>${i + 1}</td><td>${o.y}</td><td>${dataIt(o)}</td><td>${fmt(o.v)} °C</td></tr>`).join("") +
-      `<tr><td colspan="4" style="color:var(--ink-faint);font-size:12px">All'estremo opposto: ${dataIt(ult)} ${ult.y}</td></tr>`;
+    const ord = V.slice().sort((a, b) => TP === "aut" ? a.x - b.x || a.y - b.y : b.x - a.x || a.y - b.y), n10 = Math.min(10, Math.floor(ord.length / 2));
+    const righe = (L, off) => L.map((o, i) => `<tr><td>${off + i}</td><td>${o.y}</td><td>${dataIt(o)}</td><td>${fmt(o.v)} °C</td></tr>`).join("");
+    const ultimi = ord.slice(-n10).reverse();
+    $("gl-t1").textContent = (TP === "aut" ? "I 10 autunni con la gelata più precoce" : "Le 10 primavere con l'ultima gelata più tardiva");
+    $("gl-t2").textContent = (TP === "aut" ? "I 10 autunni con la gelata più tardiva" : "Le 10 primavere con l'ultima gelata più precoce");
+    const th = "<tr><th>#</th><th>ANNO</th><th>DATA</th><th>MINIMA</th></tr>";
+    $("gl-tab").innerHTML = th + righe(ord.slice(0, n10), 1);
+    $("gl-tab2").innerHTML = th + righe(ultimi, 1);
     leggi(P);
   }
   function leggi(P) { const o = P.find(p => p.y === SEL), s = $("gl-sel");
