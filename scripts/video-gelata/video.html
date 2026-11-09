@@ -1,0 +1,70 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#0a1620}canvas{display:block}</style><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const W=1080,H=1920,c=document.getElementById('c'),g=c.getContext('2d');
+let DATI=null;const DUR=24;
+const COL=[['#3d8bff','anni 50'],['#ffffff','anni 60'],['#8f9aa6','anni 70'],['#ffd23f','anni 80'],['#ff8a1f','anni 90'],['#ff3b30','dal 2000']];
+const colDec=y=>y<1960?0:y<1970?1:y<1980?2:y<1990?3:y<2000?4:5;
+const MES=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'],MESL=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+const doy=(m,d)=>Math.round((Date.UTC(2001,m,d)-Date.UTC(2001,0,1))/864e5);
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),ease=t=>1-Math.pow(1-cl(t),3),eio=t=>{t=cl(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+const seg=(t,a,b)=>cl((t-a)/(b-a));
+const L=130,R=1030,T=560,B=1470,LO=270,HI=364,Y0=1951,Y1=2025;
+const X=y=>L+(y-Y0)/(Y1-Y0)*(R-L),Y=v=>T+(v-LO)/(HI-LO)*(B-T);
+function txt(s,x,y,sz,col,al='left',w=600,a=1){g.globalAlpha=a;g.fillStyle=col;g.font=w+' '+sz+'px Inter, DejaVu Sans, sans-serif';g.textAlign=al;g.fillText(s,x,y);g.globalAlpha=1}
+function rr(x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r)}
+// tempo di comparsa di ogni punto: anni in sequenza tra 3.2 e 15 s
+const tp=y=>3.2+(y-Y0)/(Y1-Y0)*11.8;
+function draw(t){
+ const bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#0c1c2b');bg.addColorStop(1,'#07101a');g.fillStyle=bg;g.fillRect(0,0,W,H);
+ // titolo
+ const ti=ease(seg(t,.2,1.2)), tout=t>3?1:1;
+ txt('MUGELLO METEO & CLIMA',L,150,28,'#6fd0a8','left',700,ti);
+ txt('Quando arriva',L,260,92,'#fff','left',800,ti);
+ txt('la prima gelata?',L,360,92,'#fff','left',800,ease(seg(t,.5,1.5)));
+ txt('Borgo San Lorenzo · ogni anno dal 1951',L,430,36,'#9fb2c4','left',500,ease(seg(t,1.2,2.2)));
+ const ca=ease(seg(t,1.8,2.8));
+ txt('Un punto = la prima notte sotto 0 °C, da agosto in poi',L,490,30,'#9fb2c4','left',500,ca);
+ // griglia
+ const ga=ease(seg(t,2,3));
+ g.globalAlpha=ga;
+ for(let m=8;m<=11;m++)for(const d of [1,15]){const v=doy(m,d);if(v<LO+3||v>HI)continue;g.strokeStyle='rgba(255,255,255,.12)';g.lineWidth=1.5;g.beginPath();g.moveTo(L,Y(v));g.lineTo(R,Y(v));g.stroke();
+  txt(d+' '+MES[m],L-14,Y(v)+10,26,'#8aa0b4','right',500);}
+ for(let y=1960;y<=2020;y+=10){txt(y,X(y),B+52,26,'#8aa0b4','center',500);g.strokeStyle='rgba(255,255,255,.08)';g.beginPath();g.moveTo(X(y),T);g.lineTo(X(y),B);g.stroke();}
+ g.globalAlpha=1;
+ // punti
+ let ult=null;
+ DATI.pts.forEach(o=>{const s=seg(t,tp(o.y),tp(o.y)+.45);if(s<=0)return;const e=ease(s);const r=(s<1?1+.9*(1-e)*2:1)*13;
+  const col=COL[colDec(o.y)][0];g.globalAlpha=.25*e;g.fillStyle=col;g.beginPath();g.arc(X(o.y),Y(o.x),r*2.2,0,7);g.fill();
+  g.globalAlpha=e;g.fillStyle=col;g.beginPath();g.arc(X(o.y),Y(o.x),r,0,7);g.fill();g.globalAlpha=1;ult=o;});
+ // contatore anno
+ if(t>=3.2&&t<=15.4){const y=Math.min(Y1,Math.round(Y0+(t-3.2)/11.8*(Y1-Y0)));txt(String(y),R,1655,130,COL[colDec(y)][0],'right',800);}
+ // legenda decenni
+ const la=ease(seg(t,3,4));
+ COL.forEach((k,i)=>{const x=L+i*148,on=t>=tp(i===0?1951:[0,1960,1970,1980,1990,2000][i]);g.globalAlpha=la*(on?1:.28);g.fillStyle=k[0];g.beginPath();g.arc(x+12,1770,12,0,7);g.fill();txt(k[1],x+34,1780,24,'#d6e0ea','left',600,la*(on?1:.28));});
+ g.globalAlpha=1;
+ // record
+ const rec=DATI.pts.reduce((a,b)=>a.x<=b.x?a:b),tar=DATI.pts.reduce((a,b)=>a.x>=b.x?a:b);
+ const ra=seg(t,15.6,16.4),rb=seg(t,15.6+0,17);
+ if(t>15.6&&t<19){
+  const pu=1+.25*Math.sin(t*9);
+  [[rec,'La più precoce',1],[tar,'La più tardiva',2]].forEach(([o,lab,k])=>{const a=ease(seg(t,15.6+(k-1)*1.4,16.4+(k-1)*1.4));if(a<=0)return;
+   g.globalAlpha=a;g.strokeStyle='#fff';g.lineWidth=4;g.beginPath();g.arc(X(o.y),Y(o.x),28*pu,0,7);g.stroke();
+   const bx=k===1?X(o.y)+50:X(o.y)-420,by=Y(o.x)+(k===1?-10:-90);g.fillStyle='rgba(8,18,28,.92)';rr(bx,by,370,118,18);g.fill();g.strokeStyle='rgba(255,255,255,.35)';g.lineWidth=2;g.stroke();
+   txt(lab.toUpperCase(),bx+22,by+38,22,'#9fb2c4','left',700,a);txt(o.d+' '+MESL[o.m]+' '+o.y,bx+22,by+82,34,'#fff','left',800,a);g.globalAlpha=1;});}
+ // tendenza
+ const tr=eio(seg(t,18.6,20.6));
+ if(tr>0){const xa=X(Y0),xb=X(Y0+(Y1-Y0)*tr);g.strokeStyle='#ff6b4a';g.lineWidth=7;g.setLineDash([22,14]);g.beginPath();g.moveTo(xa,Y(DATI.a+DATI.b*Y0));g.lineTo(xb,Y(DATI.a+DATI.b*(Y0+(Y1-Y0)*tr)));g.stroke();g.setLineDash([]);}
+ const ta=ease(seg(t,19.6,20.8));
+ if(ta>0&&t<21.8){g.globalAlpha=ta;g.fillStyle='rgba(8,18,28,.93)';rr(L,1550,W-2*L,140,24);g.fill();g.globalAlpha=1;txt('+1,4 giorni ogni 10 anni',L+36,1610,52,'#ff6b4a','left',800,ta);txt("la prima gelata d'autunno arriva sempre più tardi",L+36,1660,28,'#d6e0ea','left',500,ta);}
+ // outro
+ const oa=ease(seg(t,21.6,22.6));
+ if(oa>0){g.globalAlpha=oa;g.fillStyle='rgba(7,16,26,.9)';g.fillRect(0,0,W,H);g.globalAlpha=1;
+  txt('MeteoGeek',W/2,820,110,'#fff','center',800,oa);txt("La prima gelata dell'autunno",W/2,900,44,'#6fd0a8','center',700,oa);
+  txt('Borgo San Lorenzo e Firenzuola',W/2,970,34,'#9fb2c4','center',500,oa);
+  txt('anno per anno, dal 1951',W/2,1020,34,'#9fb2c4','center',500,oa);
+  txt('Mugello Meteo & Clima',W/2,1200,46,'#fff','center',700,oa);txt('lucavarlani-max.github.io/mugello_meteoeclima',W/2,1260,28,'#9fb2c4','center',500,oa);
+  txt('Dati: SIR Toscana · elaborazione L. Varlani',W/2,1780,24,'#6c8299','center',500,oa);}
+}
+fetch('dati.json').then(r=>r.json()).then(d=>{DATI=d;window.pronto=true;draw(0)});
+window.frame=t=>draw(t);
+</script>
