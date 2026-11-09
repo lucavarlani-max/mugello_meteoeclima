@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v98';
+const CACHE = 'mmc-v99';
 const SHELL = [
   './',
   './index.html',
@@ -15,6 +15,8 @@ const SHELL = [
   './meteogeek.html',
   './geek-gelo-1929.html',
   './data/geek/gelo-1929.json',
+  './geek-gelo-1985.html',
+  './data/geek/gelo-1985.json',
   './ecmwf-carte.js',
   './piogge-estreme.html',
   './piogge-estreme.js',
