@@ -39,6 +39,23 @@
   ],
   "esperimenti": [
     {
+      "id": "prima-gelata",
+      "titolo": "La prima gelata dell'autunno: anno per anno",
+      "tipo": "grafico",
+      "tema": "clima",
+      "data": "2026-11-09",
+      "stato": "nuovo",
+      "testo": "Quando è arrivata la prima notte sotto zero dell'autunno e l'ultima della primavera, per ogni anno, a Borgo San Lorenzo (dal 1951) e Firenzuola (dal 1961), con la tendenza nel tempo. Si aggiorna da solo con i dati del sito.",
+      "link": "geek-prima-gelata.html",
+      "tag": [
+        "gelo",
+        "gelata",
+        "temperatura minima",
+        "serie storica",
+        "SIR"
+      ]
+    },
+    {
       "id": "ridgeline-temperature",
       "titolo": "Ridgeline delle temperature: un crinale per ogni anno",
       "tipo": "grafico",
