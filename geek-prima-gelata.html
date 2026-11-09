@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Prima gelata dell'autunno e ultima della primavera · Borgo San Lorenzo e Firenzuola</title>
+<meta name="description" content="Per ogni anno la data della prima notte sotto zero dell'autunno e dell'ultima della primavera a Borgo San Lorenzo (dal 1951) e Firenzuola (dal 1961), con la tendenza nel tempo.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-prima-gelata.html">
+<meta property="og:title" content="Prima gelata dell'autunno e ultima della primavera · Borgo San Lorenzo e Firenzuola">
+<meta property="og:description" content="Per ogni anno la data della prima notte sotto zero dell'autunno e dell'ultima della primavera a Borgo San Lorenzo (dal 1951) e Firenzuola (dal 1961), con la tendenza nel tempo.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-prima-gelata.html">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="L. Varlani">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  .rg-top{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-bottom:10px}
+<style>
+  .rg-top{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-bottom:10px}
+  #gl{position:relative;margin-top:6px;min-height:200px}
+  #gl svg{display:block;width:100%;height:auto;overflow:visible} #gl svg text{font-family:var(--mono)}
+  #gl .pt{cursor:pointer} #gl .pt:hover{stroke:var(--ink);stroke-width:1.5}
+  #gl-sel,#gl-info{font-size:13px;color:var(--ink-soft);margin-top:8px;min-height:20px}
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+  .kpi div{border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 11px;font-size:12px;color:var(--ink-soft)}
+  .kpi b{display:block;font-family:var(--mono);font-size:15px;color:var(--ink);margin-top:2px}
+  table.cl{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px} table.cl td,table.cl th{padding:5px 8px;border-bottom:1px solid var(--line-soft);text-align:left}
+  table.cl th{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);letter-spacing:.05em;font-weight:600}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Prima gelata</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · esperimento · clima e temperature</div>
+      <h1>La prima gelata dell'autunno</h1>
+      <p class="lead">Per ogni anno, la data della prima notte con minima sotto 0 °C (agosto–dicembre) e quella dell'ultima gelata di primavera (gennaio–giugno), a Borgo San Lorenzo e a Firenzuola. Più il punto è in alto, più la gelata è precoce (autunno) o tardiva (primavera).</p>
+    </header>
+    <div class="card">
+      <div class="rg-top">
+        <div class="seg" id="gl-st" role="group" aria-label="Stazione"><button type="button" data-s="borgo" aria-pressed="true">Borgo San Lorenzo</button><button type="button" data-s="firenzuola" aria-pressed="false">Firenzuola</button></div>
+        <div class="seg" id="gl-tp" role="group" aria-label="Stagione"><button type="button" data-t="aut" aria-pressed="true">Prima gelata d'autunno</button><button type="button" data-t="pri" aria-pressed="false">Ultima gelata di primavera</button></div>
+      </div>
+      <div class="rg-top" style="margin:0"><div class="lab" id="gl-tit">&nbsp;</div><div class="lab" id="agg"></div></div>
+      <div id="gl"><div class="tip" id="gl-tip"></div><div class="loading">Carico i dati…</div></div>
+      <div id="gl-info"></div>
+      <div class="kpi" id="gl-kpi"></div>
+      <div id="gl-sel" aria-live="polite">Tocca o clicca un punto per leggere l'anno.</div>
+    </div>
+    <section>
+      <div class="sh"><h2 id="gl-t1">Classifica</h2></div>
+      <div class="card"><table class="cl" id="gl-tab"></table></div>
+      <div class="sh" style="margin-top:18px"><h2 id="gl-t2">Classifica</h2></div>
+      <div class="card"><table class="cl" id="gl-tab2"></table></div>
+    </section>
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note met">
+          <li><b>Gelata:</b> notte con temperatura minima giornaliera sotto 0 °C. La «prima gelata d'autunno» è la prima data da agosto in poi; l'«ultima di primavera» è l'ultima fino a giugno.</li>
+          <li><b>Dati:</b> Borgo San Lorenzo, stazione SIR Toscana a 196 m (dal 1951; i giorni mancanti sono riempiti con la seconda stazione corretta per scarto mensile, come nella <a href="borgo-serie-lunghe.html">serie lunga</a>), da <code>data/borgo-serie-lunghe.json</code>. Firenzuola: griglia ARPAE (dal 1961), da <code>data/serie/firenzuola.csv</code>.</li>
+          <li><b>Anni validi:</b> si usa un anno solo se nella finestra ci sono almeno il 90% dei giorni con dato; se nel periodo non c'è nessuna gelata l'anno è segnato come «senza gelata» e non entra nella tendenza. L'anno in corso compare quando la gelata c'è già stata o il periodo è finito.</li>
+          <li><b>Tendenza:</b> retta dei minimi quadrati sugli anni validi, espressa in giorni per decennio. È un indicatore descrittivo: la data della prima gelata varia molto da un anno all'altro, quindi la retta va letta con cautela e senza test di significatività.</li>
+          <li><b>Limiti:</b> serie non omogeneizzate; una singola notte può dipendere da strumento e collocazione. Il fondovalle di Borgo risente dell'inversione termica notturna. I valori recenti dell'anno in corso sono dati grezzi.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR Toscana (CC BY-SA 4.0) e ARPAE</div></footer>
+<script src="geek-prima-gelata.js"></script>
+</body>
+</html>

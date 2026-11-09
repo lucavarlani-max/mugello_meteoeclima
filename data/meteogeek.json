@@ -39,6 +39,23 @@
   ],
   "esperimenti": [
     {
+      "id": "prima-gelata",
+      "titolo": "La prima gelata dell'autunno: anno per anno",
+      "tipo": "grafico",
+      "tema": "clima",
+      "data": "2026-11-09",
+      "stato": "nuovo",
+      "testo": "Quando è arrivata la prima notte sotto zero dell'autunno e l'ultima della primavera, per ogni anno, a Borgo San Lorenzo (dal 1951) e Firenzuola (dal 1961), con la tendenza nel tempo. Si aggiorna da solo con i dati del sito.",
+      "link": "geek-prima-gelata.html",
+      "tag": [
+        "gelo",
+        "gelata",
+        "temperatura minima",
+        "serie storica",
+        "SIR"
+      ]
+    },
+    {
       "id": "gelo-1985",
       "titolo": "Il grande gelo del gennaio 1985: Firenzuola al suo record assoluto",
       "tipo": "esperimento",
@@ -55,6 +72,40 @@
         "Borgo San Lorenzo",
         "SIR",
         "ARPAE"
+      ]
+    },
+    {
+      "id": "ridgeline-temperature",
+      "titolo": "Ridgeline delle temperature: un crinale per ogni anno",
+      "tipo": "grafico",
+      "tema": "clima",
+      "data": "2026-11-06",
+      "stato": "nuovo",
+      "testo": "Un crinale per ogni anno dal 1951: la distribuzione di tutte le temperature giornaliere di Borgo San Lorenzo (medie, massime e minime), per vedere come si spostano e si deformano le creste, non solo la media. Si aggiorna da solo quando un anno si conclude.",
+      "link": "geek-ridgeline-temperature.html",
+      "tag": [
+        "ridgeline",
+        "distribuzione",
+        "temperatura",
+        "joyplot",
+        "SIR"
+      ]
+    },
+    {
+      "id": "ridgeline-precipitazioni",
+      "titolo": "Ridgeline delle precipitazioni: come piove, anno per anno",
+      "tipo": "grafico",
+      "tema": "pioggia",
+      "data": "2026-11-06",
+      "stato": "nuovo",
+      "testo": "Un crinale per ogni anno dal 1992: la distribuzione dei totali mensili e della pioggia nei giorni umidi a Borgo San Lorenzo, per capire se piove in modo regolare o a colpi di giorni molto intensi.",
+      "link": "geek-ridgeline-precipitazioni.html",
+      "tag": [
+        "ridgeline",
+        "distribuzione",
+        "pioggia",
+        "giorni umidi",
+        "SIR"
       ]
     },
     {
