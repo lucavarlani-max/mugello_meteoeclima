@@ -2228,6 +2228,8 @@
    "cielo": "nuvoloso"
   },
   "2026-11-09": {
+   "ora": "07:11",
+   "dopo_alba": 11,
    "nebbia": null,
    "previsione_sera": {
     "v": 3,
@@ -2250,7 +2252,55 @@
     "crossover": -0.3,
     "pioggia_24h": 0.0,
     "emessa": "2026-11-09T02:59"
-   }
+   },
+   "termo_ora": "2026-11-09T07:00",
+   "tmin_borgo": 9.4,
+   "tmin_giovi": 6.8,
+   "inversione": -2.6,
+   "umidita_max": {
+    "TOS11000017": 86.0,
+    "TOS01000926": 92.0,
+    "TOS11000089": 100.0,
+    "TOS01000921": 85.0,
+    "TOS03001001": 97.0
+   },
+   "umidita_ora": {
+    "TOS11000017": 86.0,
+    "TOS01000926": 92.0,
+    "TOS11000089": 100.0,
+    "TOS01000921": 85.0,
+    "TOS03001001": 97.0
+   },
+   "vento_max": {
+    "TOS11000017": 1.0,
+    "TOS01000926": 1.3,
+    "TOS03001001": 4.4
+   },
+   "cfr_ora": "2026-11-09T07:00",
+   "rugiada_ora": 7.1,
+   "scarto_ora": 2.2,
+   "previsione": {
+    "v": 3,
+    "scarto_min": 0.0,
+    "vento_medio": 0.4,
+    "nuvole_medie": 95,
+    "ore_soglie": 0,
+    "ore": 13,
+    "alba": "07:00",
+    "scarto_alba": 0.9,
+    "vento_alba": 0.4,
+    "dp_alba": 7.0,
+    "ur_alba": 94,
+    "pressione": 1026,
+    "crossover": -0.2,
+    "pioggia_24h": 0.0
+   },
+   "hash": "bf43912a7a61572d",
+   "ferma": false,
+   "luce": 144.1,
+   "contrasto": 0.36,
+   "contrasto_sfondo": 0.133,
+   "foto": "reports/nebbia/2026-11-09.jpg"
   }
  }
 }
