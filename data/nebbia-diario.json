@@ -2390,11 +2390,16 @@
     "scarto_alba": 0.3,
     "vento_alba": 0.6,
     "dp_alba": 13.6,
-    "suolo_alba": 0.272,
+    "nuvole_alte": 74,
+    "nubi_basse_alba": 94,
+    "ur_alba": 98,
+    "suolo_alba": 0.291,
     "inv850_alba": -4.4,
+    "blh_alba": 30,
     "pressione": 1011,
     "crossover": -1.1,
-    "emessa": "2026-11-10T14:04"
+    "pioggia_24h": 18.9,
+    "emessa": "2026-11-10T14:35"
    }
   }
  }
