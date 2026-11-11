@@ -335,15 +335,24 @@ browser, se `previsioni.json` mancasse, ripiega su Open-Meteo da solo.
 
 Il banner in cima alla home legge `data/allerta.json`, aggiornato
 **automaticamente** dalla GitHub Action: `scripts/fetch_allerta.py` scarica il
-Bollettino di Valutazione delle Criticità del CFR Toscana (PDF), legge la
-sezione "DESCRIZIONE DELLE CRITICITÀ PREVISTE" e ne ricava il livello
-(`verde` | `gialla` | `arancione` | `rossa`) e il testo. Con `verde` il banner
-mostra "nessuna criticità".
+Bollettino di Valutazione delle Criticità del CFR Toscana (PDF) e legge la
+tabella ZONE DI ALLERTA / RISCHIO / TEMPI / CRITICITA' della sezione
+"DESCRIZIONE DELLE CRITICITÀ PREVISTE", tenendo solo le righe che contengono
+la zona **M - Mugello-Val di Sieve**: il livello (`verde` | `gialla` |
+`arancione` | `rossa`) è il massimo fra quelle righe, con il relativo rischio
+e la validità. Se M non compare in nessuna riga il livello è `verde`, anche con
+allerte in altre zone della Toscana.
+
+Se c'è una criticità ma la tabella non viene riconosciuta (formato del PDF
+cambiato), lo script **non** usa il livello massimo regionale: scrive
+`"livello": "avviso"` e un testo che rimanda al bollettino ufficiale (il banner
+mostra "AVVISO").
 
 Si può anche forzare a mano modificando `data/allerta.json` (matita "Edit" su
 GitHub); alla successiva esecuzione dell'Action verrà rigenerato dal bollettino.
-Quando in futuro capiterà un bollettino con criticità, il parser può essere
-affinato per filtrare la sola zona "M - Mugello-Val di Sieve".
+
+Test del parser (bollettino dell'11/11/2026): `python -m unittest discover -s tests`.
+Per provare un PDF scaricato: `python scripts/fetch_allerta.py bollettino.pdf`.
 
 ## Pubblicare / aggiornare
 

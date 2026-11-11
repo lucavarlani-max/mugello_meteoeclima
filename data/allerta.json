@@ -1,8 +1,8 @@
 {
-  "livello": "rossa",
-  "rischio": "",
-  "testo": "Sulla base delle previsioni meteorologiche odierne e delle valutazioni dei possibili effetti al suolo effettuate, si prefigurano i seguenti scenari di criticità: ZONE DI ALLERTA RISCHIO TEMPI CRITICIT…",
-  "validita": "",
+  "livello": "gialla",
+  "rischio": "temporali forti con rischio idrogeologico-idraulico reticolo minore",
+  "testo": "Allerta gialla sul Mugello: temporali forti con rischio idrogeologico-idraulico reticolo minore — dalle ore 09.00 Giovedì, 12 Novembre 2026 alle ore 23.59 Giovedì, 12 Novembre 2026",
+  "validita": "dalle ore 09.00 Giovedì, 12 Novembre 2026 alle ore 23.59 Giovedì, 12 Novembre 2026",
   "link": "https://www.cfr.toscana.it/index.php?IDS=2&IDSS=76",
-  "aggiornato": "2026-11-11T15:07"
+  "aggiornato": "2026-11-11T20:38"
 }
