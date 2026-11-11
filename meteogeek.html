@@ -82,7 +82,28 @@
   .crediti ul{margin:0;padding-left:18px;columns:2 320px;column-gap:28px}
   .crediti li{break-inside:avoid;margin-bottom:3px}
   .crediti a{color:var(--ink-soft)}
-  @media(max-width:640px){.temi{grid-template-columns:repeat(2,minmax(0,1fr))}.tema-b small{display:none}}
+  @media(max-width:640px){
+    /* temi: due colonne, l'ultimo se resta solo occupa tutta la riga */
+    .temi{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .tema-b small{display:none}
+    .tema-b:last-child:nth-child(odd){grid-column:1/-1}
+    /* panoramica: le prove di ogni tema in una fila che scorre di lato */
+    .grp{margin-top:22px}
+    .grp .exps{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+      margin:0 -16px;padding:2px 16px 12px;scroll-padding-left:16px;scrollbar-width:none}
+    .grp .exps::-webkit-scrollbar{display:none}
+    .grp .exps .exp{flex:0 0 78%;scroll-snap-align:start}
+    .grp .exps .exp p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .grp .exps .exp .tags{display:none}
+    .grp .exps .exp .go{margin-top:auto;padding-top:6px}
+    /* elenchi filtrati: schede compatte, foto a sinistra e titolo a destra */
+    #exps.exps{grid-template-columns:1fr;gap:10px}
+    #exps.exps .exp{flex-direction:row;align-items:stretch;min-height:92px}
+    #exps.exps .exp .img{flex:0 0 108px;width:108px;height:auto;aspect-ratio:auto;align-self:stretch;border-bottom:0;border-right:1px solid var(--line)}
+    #exps.exps .exp .bd{padding:10px 12px;gap:4px;min-width:0;justify-content:center}
+    #exps.exps .exp h3{font-size:15.5px;margin:0}
+    #exps.exps .exp p,#exps.exps .exp .tags,#exps.exps .exp .go{display:none}
+  }
 </style>
 <script src="analytics.js" defer></script>
 <script src="menu.js" defer></script>
