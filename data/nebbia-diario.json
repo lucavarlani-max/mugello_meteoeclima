@@ -2230,7 +2230,7 @@
   "2026-11-09": {
    "ora": "07:11",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": true,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.3,
@@ -2300,7 +2300,8 @@
    "luce": 144.1,
    "contrasto": 0.36,
    "contrasto_sfondo": 0.133,
-   "foto": "reports/nebbia/2026-11-09.jpg"
+   "foto": "reports/nebbia/2026-11-09.jpg",
+   "cielo": "nebbia"
   },
   "2026-11-10": {
    "ora": "07:12",
