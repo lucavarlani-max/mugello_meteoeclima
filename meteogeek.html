@@ -48,7 +48,7 @@
   .exp{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;
     text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
   a.exp:hover{transform:translateY(-2px);box-shadow:0 2px 6px rgba(16,38,31,.07),0 20px 44px -20px rgba(16,38,31,.28)}
-  .exp .img{aspect-ratio:16/8;background:var(--line-soft) center/cover no-repeat;border-bottom:1px solid var(--line)}
+  .exp .img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;background:var(--line-soft);border-bottom:1px solid var(--line)}
   .exp .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
   .exp .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
   .exp .tipo{color:var(--c,var(--pine));font-weight:600}
@@ -76,6 +76,12 @@
   .grp h2{font-family:var(--serif);font-size:20px;margin:0;letter-spacing:-.01em}
   .grp .gh a{font-size:13px;font-weight:600;color:var(--pine);text-decoration:none;margin-left:auto}
   .grp .gd{color:var(--ink-soft);font-size:13.5px;margin:0 0 12px}
+  .crediti{margin:26px 0 0;font-size:12.5px;color:var(--ink-faint)}
+  .crediti summary{cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+  .crediti p{margin:8px 0 6px}
+  .crediti ul{margin:0;padding-left:18px;columns:2 320px;column-gap:28px}
+  .crediti li{break-inside:avoid;margin-bottom:3px}
+  .crediti a{color:var(--ink-soft)}
   @media(max-width:640px){.temi{grid-template-columns:repeat(2,minmax(0,1fr))}.tema-b small{display:none}}
 </style>
 <script src="analytics.js" defer></script>
@@ -98,6 +104,11 @@
       <input type="search" id="q" placeholder="Cerca…" aria-label="Cerca tra le sperimentazioni">
     </div>
     <div class="exps" id="exps"><div class="vuoto">Carico il laboratorio…</div></div>
+    <details class="crediti" id="crediti" hidden>
+      <summary>Crediti delle foto</summary>
+      <p>Le immagini delle schede vengono da Wikimedia Commons, con licenza libera. Alcune sono state ritagliate.</p>
+      <ul id="crediti-l"></ul>
+    </details>
   </main>
 
   <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · MeteoGeek · elaborazioni L. Varlani · <a href="index.html">torna alla home</a></div></footer>
@@ -111,13 +122,18 @@
   const MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
   const dIt=s=>{if(!s)return"";const [y,m,d]=s.split("-").map(Number);return d+" "+MES[m-1]+" "+y;};
   const TEMA_ALTRO={id:"altro",icona:"🧩",nome:"Altre prove",testo:"Esperimenti che non rientrano ancora in un tema.",colore:"#6f7c74"};
+  const NUOVO_GG=30;
   let E=[], TEMI=[], tipo="", q="", tema="";
 
   fetch("./data/meteogeek.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{
     E=(d.esperimenti||[]).slice().sort((a,b)=>(b.data||"").localeCompare(a.data||""));
     TEMI=(d.temi||[]).slice();
     const noti=new Set(TEMI.map(t=>t.id));
-    E.forEach(e=>{if(!noti.has(e.tema)) e.tema="altro";});
+    // "nuovo" si assegna da solo: una prova lo è per NUOVO_GG giorni dalla sua data
+    const oggi=Date.now();
+    E.forEach(e=>{if(!noti.has(e.tema)) e.tema="altro";
+      const g=e.data?(oggi-Date.parse(e.data))/864e5:NaN; e.nuovo=g>=-1&&g<=NUOVO_GG;});
+    crediti();
     if(E.some(e=>e.tema==="altro")) TEMI.push(TEMA_ALTRO);
     const sp=new URLSearchParams(location.search), t0=sp.get("tipo"), th=sp.get("tema");
     if(TIPI[t0]) tipo=t0;
@@ -130,7 +146,7 @@
   function url(){const sp=new URLSearchParams();if(tema)sp.set("tema",tema);if(tipo)sp.set("tipo",tipo);
     try{history.replaceState(null,"",location.pathname+(sp.toString()?"?"+sp:""));}catch(_){}}
   function temi(){
-    $("temi").innerHTML=TEMI.map(t=>{const n=E.filter(e=>e.tema===t.id&&match(e,false)).length, nuovi=E.filter(e=>e.tema===t.id&&match(e,false)&&e.stato==="nuovo").length;
+    $("temi").innerHTML=TEMI.map(t=>{const n=E.filter(e=>e.tema===t.id&&match(e,false)).length, nuovi=E.filter(e=>e.tema===t.id&&match(e,false)&&e.nuovo).length;
       return `<button class="tema-b" data-t="${esc(t.id)}" style="--c:${esc(t.colore||"#0f6b52")}" aria-pressed="${t.id===tema}"${n?"":" disabled"}>
         <span class="ic" aria-hidden="true">${t.icona||""}</span><b>${esc(t.nome)}</b><small>${esc(t.testo||"")}</small>
         <span class="cnt">${n} ${n===1?"prova":"prove"}${nuovi?`<i>${nuovi} ${nuovi===1?"nuova":"nuove"}</i>`:""}</span></button>`;}).join("");
@@ -146,14 +162,21 @@
     const ext=/^https?:/.test(e.link||""), file=/\.(pdf|csv|xlsx?|zip|json)$/i.test(e.link||"");
     const tag=e.link?"a":"div", attr=e.link?` href="${esc(e.link)}"${ext||file?' target="_blank" rel="noopener"':""}`:"";
     return `<${tag} class="exp" style="--c:${t[2]}"${attr}>
-      ${e.anteprima?`<div class="img" style="background-image:url('${esc(e.anteprima)}')"></div>`:""}
+      ${e.anteprima?`<img class="img" src="${esc(e.anteprima)}" alt="" loading="lazy" decoding="async" width="800" height="400">`:""}
       <div class="bd">
-        <div class="meta"><span class="tipo">${t[0]} ${t[1]}</span>${e.data?`<span>${dIt(e.data)}</span>`:""}${e.stato?`<span class="stato">${e.stato==="in-corso"?"in corso":esc(e.stato)}</span>`:""}</div>
+        <div class="meta"><span class="tipo">${t[0]} ${t[1]}</span>${e.data?`<span>${dIt(e.data)}</span>`:""}${e.nuovo?`<span class="stato">nuovo</span>`:""}${e.stato==="in-corso"?`<span class="stato">in corso</span>`:""}</div>
         <h3>${esc(e.titolo)}</h3>
         <p>${esc(e.testo)}</p>
         <div class="tags">${(e.tag||[]).map(x=>`<span>#${esc(x)}</span>`).join("")}</div>
         ${e.link?`<span class="go">${file?"Apri il file →":"Apri →"}</span>`:""}
       </div></${tag}>`;}
+  function crediti(){
+    const L=E.filter(e=>e.anteprima&&e.foto);
+    if(!L.length)return;
+    $("crediti").hidden=false;
+    $("crediti-l").innerHTML=L.map(e=>{const f=e.foto;
+      return `<li>${esc(e.titolo)}: ${f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.autore||"foto")}</a>`:esc(f.autore||"")}${f.licenza?", "+esc(f.licenza):""}</li>`;}).join("");
+  }
   const PREVIEW=3;
   function disegna(){
     url();temi();filtri();
