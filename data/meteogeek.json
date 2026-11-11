@@ -46,6 +46,8 @@
       "data": "2026-11-09",
       "testo": "Quando è arrivata la prima notte sotto zero dell'autunno e l'ultima della primavera, per ogni anno, a Borgo San Lorenzo (dal 1951) e Firenzuola (dal 1961), con la tendenza nel tempo. Si aggiorna da solo con i dati del sito.",
       "link": "geek-prima-gelata.html",
+      "anteprima": "img/geek/prima-gelata.jpg",
+      "foto": {"autore": "W.carter", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Frost_on_grass_and_reed_leaves.jpg"},
       "tag": [
         "gelo",
         "gelata",
@@ -62,6 +64,8 @@
       "data": "2026-11-07",
       "testo": "Tra il 2 e il 19 gennaio 1985 un'irruzione di aria artica portò Firenzuola al minimo della sua intera serie storica, -24,9°C l'8 gennaio, e Borgo San Lorenzo a -22,0°C l'11. Cronologia giorno per giorno dalle serie ARPAE Eraclito e SIR Toscana, confronto diretto con gli altri 14 giorni più freddi mai registrati a Firenzuola. Primo di una serie di casi di studio su singoli eventi meteorologici rilevanti per il Mugello.",
       "link": "geek-gelo-1985.html",
+      "anteprima": "img/geek/gelo-1985.jpg",
+      "foto": {"autore": "VSchagow", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:2014012601_Eiszapfen_Dachrinne_-_icicle_-_2014.jpg"},
       "tag": [
         "casi di studio",
         "1985",
@@ -80,6 +84,8 @@
       "data": "2026-11-06",
       "testo": "Un crinale per ogni anno dal 1951: la distribuzione di tutte le temperature giornaliere di Borgo San Lorenzo (medie, massime e minime), per vedere come si spostano e si deformano le creste, non solo la media. Si aggiorna da solo quando un anno si conclude.",
       "link": "geek-ridgeline-temperature.html",
+      "anteprima": "img/geek/ridgeline-temperature.jpg",
+      "foto": {"autore": "GiancarloFabi", "licenza": "CC BY-SA 3.0", "url": "https://commons.wikimedia.org/wiki/File:Panorama_alta_valle_e_crinale_appennino_3.jpg"},
       "tag": [
         "ridgeline",
         "distribuzione",
@@ -96,6 +102,8 @@
       "data": "2026-11-06",
       "testo": "Un crinale per ogni anno dal 1992: la distribuzione dei totali mensili e della pioggia nei giorni umidi a Borgo San Lorenzo, per capire se piove in modo regolare o a colpi di giorni molto intensi.",
       "link": "geek-ridgeline-precipitazioni.html",
+      "anteprima": "img/geek/ridgeline-precipitazioni.jpg",
+      "foto": {"autore": "U.S. Fish and Wildlife Service, Alaska", "licenza": "pubblico dominio", "url": "https://commons.wikimedia.org/wiki/File:Small_rain_shower_%286728425747%29.jpg"},
       "tag": [
         "ridgeline",
         "distribuzione",
@@ -112,6 +120,8 @@
       "data": "2026-10-29",
       "testo": "Quanti record giornalieri di caldo, di freddo e di pioggia battono ogni anno le stazioni del Mugello, contro quanti se ne aspetterebbero in un clima stabile. Nel 2026, fino a fine ottobre, 191 record di massima più alta contro 12 di massima più bassa, con circa 80 attesi per parte; anno per anno e per decennio dal 1974.",
       "link": "geek-record.html",
+      "anteprima": "img/geek/record-giornalieri.jpg",
+      "foto": {"autore": "Nakonana", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:40_degrees_Celsius_in_Yashaltinsky_District%2C_Kalmykia%2C_Russia_2017-06-28_150104.jpg"},
       "tag": [
         "record",
         "temperatura",
@@ -129,6 +139,8 @@
       "data": "2026-10-29",
       "testo": "La spirale climatica alla Ed Hawkins con le misure vere della stazione SIR di Borgo San Lorenzo: anomalie mensili e annuali rispetto alla normale 1991-2020, animazione, strisce del clima, tendenza e analisi per decennio. Si aggiorna ogni mattina.",
       "link": "geek-spirale.html",
+      "anteprima": "img/geek/spirale.jpg",
+      "foto": {"autore": "Massimilianogalardi", "licenza": "CC BY-SA 3.0", "url": "https://commons.wikimedia.org/wiki/File:Battiloro_panorama_2.jpg"},
       "tag": [
         "spirale climatica",
         "anomalia",
@@ -146,6 +158,8 @@
       "data": "2026-10-28",
       "testo": "Temperature minime e massime di febbraio 1929 trascritte a mano dagli Annali Idrologici (Sezione di Milano) per 60 stazioni tra Piemonte, Lombardia, Trentino e Ticino: mappa, correlazione con la quota, mappa del gelo giorno per giorno, gradi-gelo accumulati, giorni di gelo intenso e tutti i dati, con ogni caveat sulle stazioni ancora da leggere.",
       "link": "geek-gelo-1929.html",
+      "anteprima": "img/geek/gelo-1929.jpg",
+      "foto": {"autore": "autore sconosciuto, 1929", "licenza": "pubblico dominio", "url": "https://commons.wikimedia.org/wiki/File:Mannheim_%E2%80%93_Winter_1929_-_Der_zugefrorene_Rhein_-_Bild_2.jpg"},
       "tag": [
         "1929",
         "ondata di gelo",
@@ -164,6 +178,8 @@
       "data": "2026-10-27",
       "testo": "La distribuzione di Gumbel sui massimi annui di pioggia: di 1, 3, 6, 12 e 24 ore per le stazioni orarie ARPAE dell'alto Mugello dal 2006, di 1-5 giorni per i pluviometri SIR della valle dal 1992. Tempo di ritorno di una pioggia a scelta, intervalli di confidenza, carta di Gumbel e linee segnalatrici di possibilità pluviometrica.",
       "link": "geek-tempi-ritorno.html",
+      "anteprima": "img/geek/tempi-ritorno.jpg",
+      "foto": {"autore": "Anna.Massini", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Fiume_Arno_rompe_gli_argini_06nov2016_-_Rignano_sull%27Arno_1.jpg"},
       "tag": [
         "tempo di ritorno",
         "Gumbel",
@@ -181,6 +197,8 @@
       "data": "2026-10-27",
       "testo": "La temperatura media di ieri confrontata con tutti i giorni dello stesso periodo dal 1991 al 2020, per sette stazioni del Servizio Idrologico Regionale nel Mugello, e la pioggia degli ultimi 7, 30 o 90 giorni confrontata con gli stessi periodi per tredici pluviometri: percentili e distribuzioni. Si aggiorna ogni mattina.",
       "link": "geek-percentili.html",
+      "anteprima": "img/geek/percentili.jpg",
+      "foto": {"autore": "A. Kardaś", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Klatka_i_stacja_meteo.jpg"},
       "tag": [
         "percentile",
         "anomalia",
@@ -198,6 +216,8 @@
       "data": "2026-10-26",
       "testo": "Un diagramma di flusso su 9.605 giorni di Borgo San Lorenzo (2000-2026): ogni giorno è una «giornata tipo», dalla gelata all'afa estrema, e il flusso mostra in cosa si trasforma il giorno dopo. Con le stagioni in cui cade ogni tipo.",
       "link": "geek-giornate-tipo.html",
+      "anteprima": "img/geek/giornate-tipo.jpg",
+      "foto": {"autore": "Toby Hudson", "licenza": "CC BY-SA 3.0", "url": "https://commons.wikimedia.org/wiki/File:Cumulus_humilis_clouds.jpg"},
       "tag": [
         "giornate tipo",
         "Sankey",
@@ -214,6 +234,8 @@
       "data": "2026-10-21",
       "testo": "La temperatura attuale delle 197 capitali su una mappa, con le dieci più calde e le dieci più fredde del momento e un elenco ricercabile con l'ora locale. Si aggiorna da sola ogni 10 minuti.",
       "link": "geek-capitali.html",
+      "anteprima": "img/geek/capitali.jpg",
+      "foto": {"autore": "NASA GSFC / NOAA NGDC (C. Mayhew, R. Simmon)", "licenza": "pubblico dominio", "url": "https://commons.wikimedia.org/wiki/File:Earth%27s_City_Lights_by_DMSP%2C_1994-1995_%28large%29.jpg"},
       "tag": [
         "capitali",
         "mondo",
@@ -230,6 +252,8 @@
       "data": "2026-10-20",
       "testo": "Humidex, wind chill e UTCI calcolati con le formule ufficiali per San Piero a Sieve, Barberino, Scarperia e il Passo della Futa: adesso, nelle prossime 72 ore e ora per ora negli ultimi 12 mesi, con le misure delle stazioni del Centro Funzionale e la temperatura radiante del sole.",
       "link": "geek-bioclima.html",
+      "anteprima": "img/geek/bioclima.jpg",
+      "foto": {"autore": "Giles Laurent", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:084_Sun_setting_in_the_Namib_desert_Photo_by_Giles_Laurent.jpg"},
       "tag": [
         "humidex",
         "wind chill",
@@ -248,6 +272,8 @@
       "data": "2026-10-12",
       "testo": "I record di temperatura e di pioggia giornaliera delle stazioni del Servizio Idrologico Regionale nel Mugello dal 1951, con un controllo di qualità dichiarato: 41,6 °C a Borgo San Lorenzo nel luglio 1952, −22,0 °C nel gennaio 1985, 175,4 mm a Razzuolo il 14 marzo 2025. Le giornate più estreme e i valori scartati perché sbagliati.",
       "link": "geek-hall-of-fame.html",
+      "anteprima": "img/geek/hall-of-fame.jpg",
+      "foto": {"autore": "LigaDue", "licenza": "CC BY 3.0", "url": "https://commons.wikimedia.org/wiki/File:FirenzuolaPanorama.JPG"},
       "tag": [
         "record",
         "estremi",
@@ -265,6 +291,8 @@
       "data": "2026-10-09",
       "testo": "Perché le nebbie nascono in fondovalle: l'inversione termica notturna misurata dalle stazioni del Centro Funzionale. In quasi metà delle notti Borgo San Lorenzo è più freddo di Monte Giovi, 760 m più in alto; il profilo delle temperature di adesso, il calendario notte per notte e le condizioni previste per le prossime notti.",
       "link": "geek-nebbia.html",
+      "anteprima": "img/geek/nebbia.jpg",
+      "foto": {"autore": "PROPOLI87", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:IL_CASTELLO_DI_POPPI_FRA_LA_NEBBIA_%282%29_%28POPPI_-_AREZZO%29_TOSCANA_ITALIA.jpg"},
       "tag": [
         "nebbia",
         "inversione termica",
@@ -282,6 +310,8 @@
       "data": "2026-10-09",
       "testo": "ECMWF, GFS, ICON, UKMO, Météo-France e GEM ora per ora su Borgo San Lorenzo, più WeatherNext di Google: quanto vanno d'accordo nei prossimi 7 giorni e chi ha previsto meglio la massima e la minima di ieri, verificate con la stazione del Centro Funzionale.",
       "link": "geek-modelli.html",
+      "anteprima": "img/geek/modelli.jpg",
+      "foto": {"autore": "Los Alamos National Laboratory", "licenza": "pubblico dominio", "url": "https://commons.wikimedia.org/wiki/File:Trinity_%28supercomputer%29.jpg"},
       "tag": [
         "modelli",
         "ECMWF",
@@ -299,6 +329,8 @@
       "data": "2026-10-09",
       "testo": "La pioggia sul bacino e la quota del lago giorno per giorno: quanti millimetri servono per far salire Bilancino di 10 cm, dopo quanto arriva l'acqua e perché d'estate la pioggia non basta.",
       "link": "geek-bilancino.html",
+      "anteprima": "img/geek/bilancino.jpg",
+      "foto": {"autore": "Massimilianogalardi", "licenza": "CC BY-SA 3.0", "url": "https://commons.wikimedia.org/wiki/File:Bilancino_01.jpg"},
       "tag": [
         "Bilancino",
         "lago",
@@ -315,6 +347,8 @@
       "data": "2026-10-08",
       "testo": "Ogni giorno ha una massima e una minima: il Weathergami le raggruppa in esagoni colorati per frequenza. Si sceglie la stazione (Borgo San Lorenzo, le stazioni del Mugello e della Toscana, Firenzuola, Genova, Milano, New York e altre) e si filtra per stagione, mese e periodo per confrontare le forme.",
       "link": "geek-weathergami.html",
+      "anteprima": "img/geek/weathergami.jpg",
+      "foto": {"autore": "Laitche", "licenza": "pubblico dominio", "url": "https://commons.wikimedia.org/wiki/File:Cranes_made_by_Origami_paper.jpg"},
       "tag": [
         "weathergami",
         "temperature",
@@ -332,6 +366,8 @@
       "data": "2026-10-08",
       "testo": "Notti tropicali, giornate sopra i 35 °C, giorni di gelo e di ghiaccio: quanti ce n'erano ogni anno e quanti ce ne sono oggi? Il conteggio per anno e per decennio a Borgo San Lorenzo, Firenzuola e altre stazioni storiche, con il confronto dell'anno in corso.",
       "link": "geek-giorni-estremi.html",
+      "anteprima": "img/geek/giorni-estremi.jpg",
+      "foto": {"autore": "Ibrahim Achiri", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Dry_cracked_soil_ground.jpg"},
       "tag": [
         "notti tropicali",
         "gelo",
@@ -348,6 +384,8 @@
       "data": "2026-10-07",
       "testo": "Il profilo della temperatura da 196 a 960 metri in tempo reale con otto stazioni della Regione, ISCARP2 e Netatmo a confronto nelle ultime 24 ore, e quante notti d'inversione termica ci sono state dal 1992: a Borgo la minima è più bassa di quella a 820 m in oltre metà delle notti.",
       "link": "geek-microclima.html",
+      "anteprima": "img/geek/microclima.jpg",
+      "foto": {"autore": "Little Mountain 5", "licenza": "CC BY-SA 3.0", "url": "https://commons.wikimedia.org/wiki/File:Rogue_Valley_Inversion_2.jpg"},
       "tag": [
         "microclima",
         "inversione termica",
@@ -364,6 +402,8 @@
       "data": "2026-10-07",
       "testo": "Il diagramma dei meteorologi calcolato dal profilo previsto sopra Borgo San Lorenzo e Firenzuola: temperatura e punto di rugiada a tutte le quote, particella d'aria, CAPE, CIN, base delle nubi, zero termico, vento. Ogni 3 ore per 5 giorni, con la spiegazione in italiano.",
       "link": "geek-skewt.html",
+      "anteprima": "img/geek/skewt.jpg",
+      "foto": {"autore": "NASA GHRC DAAC", "licenza": "pubblico dominio", "url": "https://commons.wikimedia.org/wiki/File:NAMMA_-_TOGA_Radar_on_Praia_%2815595742037%29.jpg"},
       "tag": [
         "skew-T",
         "CAPE",
@@ -380,6 +420,8 @@
       "data": "2026-10-07",
       "testo": "I 51 membri dell'ensemble ECMWF per Borgo San Lorenzo e Firenzuola, fino a 15 giorni: temperatura a 2 m, pioggia cumulata, pressione e temperatura a 850 e 500 hPa (masse d'aria e aria fredda in quota). Quando la previsione è affidabile e quando si apre a ventaglio, con probabilità di pioggia e incertezza giorno per giorno.",
       "link": "geek-ensemble.html",
+      "anteprima": "img/geek/spaghetti-ensemble.jpg",
+      "foto": {"autore": "Reddalo", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_ECMWF_in_Bologna%2C_Italy_-_2024.jpg"},
       "tag": [
         "ECMWF",
         "ensemble",
@@ -397,6 +439,8 @@
       "data": "2026-10-07",
       "testo": "Scegli una data e una stazione: com'era il tempo quel giorno in tutti gli anni di misure? Record di caldo e freddo, tendenza, confronto tra primi e ultimi 30 anni, e se scrivi l'anno in cui sei nato, come era il tuo giorno.",
       "link": "geek-compleanno-clima.html",
+      "anteprima": "img/geek/compleanno-clima.jpg",
+      "foto": {"autore": "Francesca Cesa Bianchi", "licenza": "CC BY-SA 3.0 IT", "url": "https://commons.wikimedia.org/wiki/File:Italy_-_birthday_cake_with_candles_5.jpg"},
       "tag": [
         "compleanno",
         "temperatura",
@@ -413,6 +457,8 @@
       "stato": "in-corso",
       "testo": "WeatherNext 3 e Open-Meteo messi ogni giorno alla prova contro ISCARP2 e il pluviometro SIR di Borgo, con due avversari senza intelligenza: la persistenza e la media del periodo. Errori su massima e minima, probabilità di pioggia e Brier score. L'archivio è appena partito e si arricchisce da solo.",
       "link": "geek-verifica-modello.html",
+      "anteprima": "img/geek/verifica-modello.jpg",
+      "foto": {"autore": "Ka23 13", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Vane_style_anemometer_20141012_085944.jpg"},
       "tag": [
         "previsioni",
         "WeatherNext",
@@ -429,6 +475,8 @@
       "data": "2026-10-07",
       "testo": "Un quadratino per ogni giorno, più scuro quanto più piove, e le statistiche della serie: piove di più di lunedì o di sabato? Quali date non hanno mai visto pioggia? Quanto è probabile che piova nel tuo compleanno? Borgo San Lorenzo, Firenzuola e i pluviometri della Regione Toscana.",
       "link": "geek-pioggia-calendario.html",
+      "anteprima": "img/geek/pioggia-calendario.jpg",
+      "foto": {"autore": "Peter Grima (Flickr)", "licenza": "CC BY-SA 2.0", "url": "https://commons.wikimedia.org/wiki/File:RAIN_DROPS_%283029827142%29.jpg"},
       "tag": [
         "pioggia",
         "calendario",
@@ -447,6 +495,8 @@
       "data": "2026-10-07",
       "testo": "Un colore per ogni anno, dal blu al rosso: la storia del clima di Borgo San Lorenzo, Firenzuola e altre 11 serie lunghe, italiane e mondiali, sulla stessa scala e con download in PNG.",
       "link": "geek-stripes.html",
+      "anteprima": "img/geek/warming-stripes.jpg",
+      "foto": {"autore": "Steffenster", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Warming_Stripes_on_the_Sachsenbr%C3%BCcke_Leipzig.jpg"},
       "tag": [
         "warming stripes",
         "temperatura",
@@ -462,6 +512,8 @@
       "data": "2026-10-07",
       "testo": "Metadati, coordinate, quota, periodo di attività, copertura, climatologia mensile, serie annuale, indicatori e link diretti ai dati ufficiali NOAA per ogni stazione GHCN-Daily.",
       "link": "geek-ghcn-stazione.html?id=IT000016090",
+      "anteprima": "img/geek/ghcn-stazione.jpg",
+      "foto": {"autore": "Famartin", "licenza": "CC BY-SA 3.0", "url": "https://commons.wikimedia.org/wiki/File:2013-10-14_12_33_44_National_Weather_Service_Cooperative_Observer_site.JPG"},
       "tag": [
         "NOAA",
         "GHCN",
@@ -477,6 +529,8 @@
       "data": "2026-10-05",
       "testo": "Climatologia mensile 1991–2020 e medie annuali (massime, minime e medie) di 49 stazioni italiane del catalogo NOAA GHCN-Daily, con il confronto fra più stazioni sullo stesso grafico: da Monte Cimone a Pisa, da Verona a Palermo.",
       "link": "geek-ghcn-climatologia.html",
+      "anteprima": "img/geek/ghcn-climatologia.jpg",
+      "foto": {"autore": "MODIS Land Rapid Response Team, NASA GSFC", "licenza": "pubblico dominio", "url": "https://commons.wikimedia.org/wiki/File:Clear_Skies_over_Italy_%28MODIS_2022-02-24%29.jpg"},
       "tag": [
         "NOAA",
         "GHCN",
@@ -491,6 +545,8 @@
       "data": "2026-10-05",
       "testo": "Tutte le stazioni del catalogo NOAA GHCN-Daily su una mappa interattiva: ricerca per nome o codice, filtro per paese e anni di attività, classifica dei paesi, copertura nel tempo ed esportazione CSV delle stazioni filtrate.",
       "link": "geek-ghcn-stazioni.html",
+      "anteprima": "img/geek/ghcn-stazioni.jpg",
+      "foto": {"autore": "Gianni Careddu", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:La_Maddalena%2C_stazione_meteorologica_di_Guardiavecchia_%2802%29.jpg"},
       "tag": [
         "NOAA",
         "GHCN",
@@ -506,6 +562,8 @@
       "data": "2026-09-28",
       "testo": "Milano, Padova, Genova, New York, San Francisco e le altre sullo stesso grafico: l'anomalia rispetto al 1961–1990 con media mobile su 11 anni, la tendenza dal 1971 e l'anno più caldo di ciascuna.",
       "link": "serie-storiche.html#riscaldamento",
+      "anteprima": "img/geek/riscaldamento-stazioni.jpg",
+      "foto": {"autore": "Sailko", "licenza": "CC BY-SA 3.0", "url": "https://commons.wikimedia.org/wiki/File:Osservatorio_ximeniano%2C_firenze.JPG"},
       "tag": [
         "serie storiche",
         "riscaldamento"
@@ -519,6 +577,8 @@
       "data": "2026-10-01",
       "testo": "Quanta pioggia può cadere in 5 minuti, in un'ora, in un giorno: i record dei pluviografi toscani dal 1923 su un grafico durata–pioggia a scala logaritmica, con il 19 giugno 1996 che li detiene tutti.",
       "link": "piogge-estreme.html",
+      "anteprima": "img/geek/piogge-estreme.jpg",
+      "foto": {"autore": "Sailko", "licenza": "CC BY 3.0", "url": "https://commons.wikimedia.org/wiki/File:Palazzo_della_camera_di_commercio_a_Firenze%2C_lapide_alluvione_del_1966_sul_pianerottolo_delle_scale_02.jpg"},
       "tag": [
         "Toscana",
         "pioggia",
@@ -533,6 +593,8 @@
       "data": "2026-09-20",
       "testo": "Geopotenziale a 500 hPa, temperatura a 850 hPa e pressione al suolo sull'Europa, disegnati direttamente nel browser dai dati del modello ECMWF in proiezione conica di Lambert, ogni 12 ore fino a 5 giorni.",
       "link": "radar.html#carte",
+      "anteprima": "img/geek/carte-sinottiche.jpg",
+      "foto": {"autore": "UK Met Office", "licenza": "Open Government Licence", "url": "https://commons.wikimedia.org/wiki/File:Pressure_chart_easterly_geostrophic_flow.jpg"},
       "tag": [
         "modelli",
         "Europa"
@@ -546,6 +608,8 @@
       "data": "2026-09-28",
       "testo": "Alba, tramonto, crepuscoli, ora d'oro, fasi lunari, pianeti visibili ed equinozi calcolati con gli algoritmi astronomici di Meeus, per qualsiasi giorno dal 1950 al 2050.",
       "link": "effemeridi.html",
+      "anteprima": "img/geek/effemeridi.jpg",
+      "foto": {"autore": "kuhnmi (Flickr)", "licenza": "CC BY 2.0", "url": "https://commons.wikimedia.org/wiki/File:Tuscany_right_after_Sunset_-_Flickr_-_kuhnmi.jpg"},
       "tag": [
         "astronomia",
         "Sole",
@@ -560,6 +624,8 @@
       "data": "2026-09-26",
       "testo": "Il catalogo dell'Organizzazione meteorologica mondiale delle stazioni che misurano da oltre cento anni, con mappa, filtri e scheda di ciascuna: 22 sono in Italia.",
       "link": "stazioni-centenarie.html",
+      "anteprima": "img/geek/stazioni-centenarie.jpg",
+      "foto": {"autore": "Isiwal", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Kremsm%C3%BCnster_Sternwarte_Gymnasium_Stift-8876.jpg"},
       "tag": [
         "OMM",
         "serie storiche"
@@ -573,6 +639,8 @@
       "data": "2026-10-03",
       "testo": "Il posto più caldo, il più freddo (con una sola stazione in Antartide) e il più piovoso della Terra, dai bollettini delle stazioni sinottiche di tutto il mondo, aggiornati più volte al giorno.",
       "link": "radar.html#estremi",
+      "anteprima": "img/geek/estremi-mondo.jpg",
+      "foto": {"autore": "Christian David", "licenza": "CC BY-SA 4.0", "url": "https://commons.wikimedia.org/wiki/File:Boardwalk_at_Badwater_Basin%2C_Death_Valley_National_Park%2C_California.jpg"},
       "tag": [
         "mondo",
         "record"
