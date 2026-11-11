@@ -2,6 +2,15 @@
  "nota": "Foto scelte dalle webcam del Mugello (scripts/webcam_scatti.py).",
  "foto": [
   {
+   "file": "reports/webcam/galleria/2026-11-08-tramonto-valle-del-diaterna-1.jpg",
+   "data": "2026-11-08",
+   "momento": "tramonto",
+   "categoria": "alba",
+   "webcam": "Valle del Diaterna 1 (770 m)",
+   "fonte": "Meteo-Project",
+   "link": "https://stazioni.meteoproject.it/webcam/vallediaterna1/vallediaterna.jpg"
+  },
+  {
    "file": "reports/webcam/galleria/2026-11-01-tramonto-rifugio-monte-secchieta.jpg",
    "data": "2026-11-01",
    "momento": "tramonto",
