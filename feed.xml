@@ -6,7 +6,15 @@
     <atom:link href="https://lucavarlani-max.github.io/mugello_meteoeclima/feed.xml" rel="self" type="application/rss+xml"/>
     <description>La rassegna quotidiana di meteo, clima e curiosità dal Mugello e dal mondo.</description>
     <language>it-it</language>
-    <lastBuildDate>Fri, 06 Nov 2026 07:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 07:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Toscana, giovedì allerta rossa sul nord-ovest; nel Mugello gialla per temporali</title>
+      <link>https://lucavarlani-max.github.io/mugello_meteoeclima/notizie.html#n-2026-11-11</link>
+      <guid isPermaLink="true">https://lucavarlani-max.github.io/mugello_meteoeclima/notizie.html#n-2026-11-11</guid>
+      <pubDate>Wed, 11 Nov 2026 07:00:00 +0000</pubDate>
+      <category>temporali</category>
+      <description><![CDATA[<p><b>Toscana, giovedì allerta rossa sul nord-ovest; nel Mugello gialla per temporali</b>. Il Centro Funzionale regionale ha emesso alle 13:04 di mercoledì 11 novembre un avviso di criticità valido fino alle 23:59 di giovedì 12. Su Lunigiana, Serchio-Garfagnana-Lima e Reno il codice per rischio idrogeologico e idraulico del reticolo minore è arancione dalle 17 di mercoledì e rosso dalle 10 di giovedì, con piogge medie intorno a 100 mm e massimi fino a 150–200 mm sui rilievi. Per il Mugello-Val di Sieve e la Romagna-Toscana il codice è giallo per temporali forti dalle 9 alle 23:59 di giovedì: attesi in media circa 40 mm, localmente di più, con massimi fino a 80–100 mm sui rilievi appenninici.</p><p><b>Il numero del giorno: 89,8 mm</b>. La pioggia caduta martedì 10 novembre al Passo della Futa (963 m), la più abbondante fra le otto stazioni in montagna intorno al Mugello.</p><ul><li>Sul crinale ha già piovuto molto: quasi 90 mm in un giorno alla Futa</li><li>Copernicus: ottobre 2026 è l'ottobre più caldo mai registrato</li><li>Kilauea, l'episodio 56 è durato meno di sei ore</li></ul>]]></description>
+    </item>
     <item>
       <title>Sul crinale venerdì freddo e piovoso: massima non oltre 6,9 °C</title>
       <link>https://lucavarlani-max.github.io/mugello_meteoeclima/notizie.html#n-2026-11-06</link>
@@ -158,14 +166,6 @@
       <pubDate>Wed, 14 Oct 2026 07:00:00 +0000</pubDate>
       <category>vulcani</category>
       <description><![CDATA[<p><b>Un pianeta inquieto: 24 vulcani attivi in una settimana</b>. Il bollettino del Global Volcanism Program dall'1 al 7 ottobre elenca 24 vulcani attivi: l'Ambrym in allerta 3 su 5, oltre 170 eruzioni freatiche al Rincón de la Vieja, una colata piroclastica al Merapi, Etna e Stromboli in allerta gialla.</p><p><b>Il numero del giorno: 29,70 °C</b>. La temperatura superficiale media di settembre nella regione Niño 3.4 del Pacifico: massimo storico assoluto, oltre i picchi dei grandi El Niño del 1982-83, 1997-98 e 2015-16.</p><ul><li>Settembre 2026, il secondo più caldo mai registrato</li><li>Mari ai massimi</li><li>Isaias, primo uragano atlantico del 2026</li><li>Magnitudo 6,7 sulla Dorsale medio-atlantica</li><li>Etna e Stromboli, attività in corso</li><li>Fiumi europei in secca</li></ul>]]></description>
-    </item>
-    <item>
-      <title>Magnitudo 6,0 nel Pacifico panamense</title>
-      <link>https://lucavarlani-max.github.io/mugello_meteoeclima/notizie.html#n-2026-10-13</link>
-      <guid isPermaLink="true">https://lucavarlani-max.github.io/mugello_meteoeclima/notizie.html#n-2026-10-13</guid>
-      <pubDate>Tue, 13 Oct 2026 07:00:00 +0000</pubDate>
-      <category>terremoti</category>
-      <description><![CDATA[<p><b>Magnitudo 6,0 nel Pacifico panamense</b>. La scossa del 10 ottobre, a 7 km da La Tronosa (Panama) e a 10 km di profondità, ha dato uno scuotimento «severo» (7,6 sulla scala Mercalli modificata). Il sistema PAGER dell'USGS ha emesso un'allerta gialla; dieci repliche in tre giorni.</p><p><b>Il numero del giorno: 29,70 °C</b>. La temperatura media della superficie del mare nella regione Niño 3.4 del Pacifico a settembre 2026: un record assoluto, segno di un El Niño intenso.</p><ul><li>Settembre 2026, il secondo più caldo di sempre</li><li>Pacifico ai massimi, El Niño si rafforza</li><li>Ambrym, allerta di livello 3</li><li>Atlantico: otto tempeste, nessun uragano</li><li>Rincón de la Vieja, oltre 170 esplosioni in una settimana</li><li>Ghiaccio marino sotto la media ai due poli</li></ul>]]></description>
     </item>
   </channel>
 </rss>
