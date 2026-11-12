@@ -1,7 +1,139 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-11-06",
+ "aggiornato": "2026-11-11",
  "numeri": [
+  {
+   "data": "2026-11-11",
+   "apertura": {
+    "cat": "temporali",
+    "titolo": "Toscana, giovedì allerta rossa sul nord-ovest; nel Mugello gialla per temporali",
+    "testo": "Il Centro Funzionale regionale ha emesso alle 13:04 di mercoledì 11 novembre un avviso di criticità valido fino alle 23:59 di giovedì 12. Su Lunigiana, Serchio-Garfagnana-Lima e Reno il codice per rischio idrogeologico e idraulico del reticolo minore è arancione dalle 17 di mercoledì e rosso dalle 10 di giovedì, con piogge medie intorno a 100 mm e massimi fino a 150–200 mm sui rilievi. Per il Mugello-Val di Sieve e la Romagna-Toscana il codice è giallo per temporali forti dalle 9 alle 23:59 di giovedì: attesi in media circa 40 mm, localmente di più, con massimi fino a 80–100 mm sui rilievi appenninici.",
+    "fonte": "Bollettino di valutazione delle criticità · Centro Funzionale Regione Toscana",
+    "url": "https://www.cfr.toscana.it/index.php?IDS=2&IDSS=76",
+    "foto": "fulmine"
+   },
+   "numero": {
+    "valore": "89,8 mm",
+    "testo": "La pioggia caduta martedì 10 novembre al Passo della Futa (963 m), la più abbondante fra le otto stazioni in montagna intorno al Mugello."
+   },
+   "storie": [
+    {
+     "cat": "mugello",
+     "titolo": "Sul crinale ha già piovuto molto: quasi 90 mm in un giorno alla Futa",
+     "testo": "Martedì 10 novembre le stazioni in montagna intorno al Mugello hanno raccolto 89,8 mm al Passo della Futa, 64,9 a Barco, 59,6 a Monte di Fò, 49,8 al Passo del Giogo e 38,4 a Montegiovi, dove la raffica più forte è stata di 68,1 km/h. Mercoledì 11, fino alle 16, se ne sono aggiunti 26,0 a Barco e 24,8 alla Futa. Alla stessa ora la Sieve a Fornacina era a 0,55 metri, livello normale.",
+     "fonte": "Stazioni in montagna · Mugello Meteo & Clima",
+     "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+     "foto": "bilancino"
+    },
+    {
+     "cat": "terremoti",
+     "titolo": "Tirreno meridionale, scossa di magnitudo 4.1 all'alba",
+     "testo": "Alle 6:12 di mercoledì 11 novembre la Sala Sismica INGV di Roma ha localizzato in mare, nel Tirreno meridionale, un terremoto di magnitudo ML 4.1 a 8 km di profondità. È la stessa area in cui nei giorni scorsi era stato segnalato uno sciame; nel pomeriggio, alle 14:56, è seguita una scossa di magnitudo 2.2.",
+     "fonte": "INGV · Osservatorio Nazionale Terremoti",
+     "url": "https://terremoti.ingv.it/event/47900072",
+     "foto": "sismo2"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Mercoledì 11 novembre, San Martino: giornata mite e piovosa, con una minima di 14,0 °C e una massima di 18,0 °C a Borgo San Lorenzo e 12–13 °C sul crinale. Giovedì è attesa la pioggia più abbondante, poi da venerdì l'aria si raffredda.",
+     "fonte": "Centro Funzionale Regione Toscana · Stazioni in montagna · Mugello Meteo & Clima"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:05 e tramonta alle 16:55, circa 9 ore e 50 minuti di luce, circa 2 minuti meno di ieri. La Luna è una sottile falce crescente, illuminata al 5%; il primo quarto è martedì 17 novembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-11-10",
+   "apertura": {
+    "cat": "mugello",
+    "titolo": "Torna la pioggia sul crinale e la notte si fa mite: 14,2 °C di minima a Borgo",
+    "testo": "Lunedì 9 novembre le stazioni in montagna intorno al Mugello hanno raccolto 18,2 mm a Barco, 17,8 a Monte di Fò, 17,2 al Passo della Futa e 12,2 al Passo del Giogo, dove la raffica più forte è stata di 60,8 km/h. Con l'aria più umida e mite la minima di martedì 10 a Borgo San Lorenzo è stata di 14,2 °C, contro i 5,3 °C di domenica; a Monte Giovi 9,3 °C.",
+    "fonte": "Stazioni in montagna e diario della nebbia · Mugello Meteo & Clima",
+    "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+    "foto": "bilancino"
+   },
+   "numero": {
+    "valore": "14,2 °C",
+    "testo": "La minima di martedì 10 novembre a Borgo San Lorenzo: quasi 9 gradi più di domenica 8."
+   },
+   "storie": [
+    {
+     "cat": "temporali",
+     "titolo": "Toscana, codice giallo fino a mercoledì",
+     "testo": "L'allerta gialla per rischio idrogeologico e temporali forti in Toscana è stata prorogata fino alle 12 di mercoledì 11 novembre; fra le zone interessate ci sono Lunigiana, Versilia e Serchio-Garfagnana.",
+     "fonte": "OK Mugello, su dati della Regione Toscana",
+     "url": "https://www.okmugello.it/articolo/allerta-gialla-toscana-maltempo-novembre_263412/",
+     "foto": "fulmine"
+    },
+    {
+     "cat": "uragani",
+     "titolo": "Il tifone Cempaka entra nell'area delle Filippine, ma resta in mare",
+     "testo": "Il tifone Cempaka, chiamato Samuel nelle Filippine, è entrato nell'area di responsabilità filippina alle 8:40 locali di lunedì 9 novembre. Secondo il servizio meteorologico PAGASA non sono attesi effetti sul Paese: la traiettoria resta sull'oceano aperto.",
+     "fonte": "PAGASA (via Rappler)",
+     "url": "https://rappler.com/philippines/weather/typhoon-samuel-northeast-monsoon-update-pagasa-forecast-november-9-2026-11am",
+     "foto": "uragano2"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Martedì 10 novembre: alba nuvolosa e senza nebbia a Bilancino, aria mite e umida; sul crinale piove già da lunedì e le piogge sono attese in intensificazione.",
+     "fonte": "Diario della nebbia · Stazioni in montagna · Mugello Meteo & Clima"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:04 e tramonta alle 16:56, circa 9 ore e 52 minuti di luce, circa 2 minuti meno di ieri. La Luna è una sottilissima falce crescente, illuminata al 2%; il primo quarto è martedì 17 novembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-11-09",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "Copernicus: ottobre 2026 è l'ottobre più caldo mai registrato",
+    "testo": "Secondo il bollettino mensile del Copernicus Climate Change Service la temperatura media globale dell'aria è stata di 15,35 °C, 0,90 °C sopra la media 1991–2020 e 1,75 °C sopra il livello preindustriale: è il terzo mese consecutivo oltre 1,5 °C. Record per il mese anche la temperatura superficiale dei mari, 20,95 °C. Per il servizio il 2026 sarà con ogni probabilità il secondo anno più caldo, dopo il 2024.",
+    "fonte": "Copernicus Climate Change Service (ECMWF)",
+    "url": "https://climate.copernicus.eu/copernicus-warmest-october-record-2026-virtually-certain-exceed-15degc",
+    "foto": "terra2"
+   },
+   "numero": {
+    "valore": "1,75 °C",
+    "testo": "Lo scarto di ottobre 2026 rispetto al livello preindustriale (1850–1900), secondo Copernicus: terzo mese consecutivo oltre 1,5 °C."
+   },
+   "storie": [
+    {
+     "cat": "vulcani",
+     "titolo": "Kilauea, l'episodio 56 è durato meno di sei ore",
+     "testo": "Le fontane di lava attese da giorni all'Halemaʻumaʻu sono cominciate alle 12:10 ora hawaiana del 5 novembre e si sono fermate di colpo alle 18:01, dopo aver raggiunto circa 200 metri di altezza al north vent ed emesso, secondo la stima preliminare dell'osservatorio, circa 6 milioni di metri cubi di lava. Il prossimo episodio è atteso fra alcune settimane; nell'avviso del 6 novembre il livello di allerta restava Watch (codice arancione).",
+     "fonte": "USGS Hawaiian Volcano Observatory",
+     "url": "https://www.usgs.gov/observatories/hvo/news/photo-video-chronology-episode-56-lava-fountaining-summit-kilauea",
+     "foto": "kilauea2"
+    },
+    {
+     "cat": "mugello",
+     "titolo": "Fine settimana sul crinale: sabato freddo, domenica quasi 12 °C",
+     "testo": "Sabato 7 novembre le otto stazioni in montagna intorno al Mugello non hanno superato i 7,8 °C di Monte di Fò, con qualche millimetro di pioggia (5,6 a Barco). Domenica 8 è stata quasi asciutta e più mite, fino a 11,8 °C a Bibbiana. Lunedì 9 all'alba la webcam di Bilancino ha registrato la prima nebbia di novembre, con una minima di 9,4 °C a Borgo San Lorenzo.",
+     "fonte": "Stazioni in montagna e diario della nebbia · Mugello Meteo & Clima",
+     "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+     "foto": "bilancino"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Lunedì 9 novembre: alba con nebbia in valle a Bilancino dopo un fine settimana prima freddo e poi più mite; sul crinale tornano le nuvole e le prime piogge.",
+     "fonte": "Diario della nebbia · Stazioni in montagna · Mugello Meteo & Clima"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:02 e tramonta alle 16:57, circa 9 ore e 55 minuti di luce, circa 2 minuti meno di ieri. Oggi è Luna nuova, alle 8:02; il primo quarto è martedì 17 novembre."
+    }
+   ]
+  },
   {
    "data": "2026-11-06",
    "apertura": {
