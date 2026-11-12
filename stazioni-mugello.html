@@ -309,6 +309,8 @@
   .arch-head{margin-bottom:12px}
   .dl{font-family:var(--mono);font-size:12.5px;white-space:nowrap}.dl.pos{color:var(--amber)}.dl.neg{color:var(--sky)}
   #tA td small{color:var(--ink-faint)} #tA .grp th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--ink-faint);text-align:center}
+  .sub-h{font-family:var(--serif);font-size:22px;font-weight:700;margin:26px 0 10px}
+  .tabwrap#tPA{max-width:760px}
 </style>
 <script src="analytics.js" defer></script>
 <script src="menu.js" defer></script>
@@ -350,6 +352,9 @@
     </div>
     <div class="tabwrap wideT" id="tA"></div>
     <p class="tabnote" id="nA"></p>
+    <h3 class="sub-h" id="hPA" hidden>E la pioggia?</h3>
+    <div class="tabwrap" id="tPA" hidden></div>
+    <p class="tabnote" id="nPA" hidden></p>
   </div></section>
 
   <section class="blk" id="pioggia"><div class="wrap">
@@ -485,8 +490,31 @@ function adesso(){
       <tr><th>Stazione</th><th class="n">Quota</th><th class="n">Adesso</th><th class="n">Min</th><th class="n">Max</th><th class="n">Min</th><th class="n">Δ</th><th class="n">Max</th><th class="n">Δ</th></tr></thead><tbody>`+
       R.map(({s,nx,nn})=>`<tr><td>${esc(s.nome)}</td><td class="n">${fmt(s.quota)} m</td><td class="n">${fresco(s)?fmt(s.t,1):"–"}</td><td class="n">${fmt(s.min,1)}</td><td class="n">${fmt(s.max,1)}</td>
         <td class="n">${fmt(s.ieri_min,1)}</td><td class="n">${delta(s.ieri_min,nn)}</td><td class="n">${fmt(s.ieri_max,1)}</td><td class="n">${delta(s.ieri_max,nx)}</td></tr>`).join("")+`</tbody></table>`;
+    pioggiaAdesso(L);
     $("#nA").textContent="Dati grezzi non validati del Centro Funzionale Regione Toscana, aggiornati ogni 30 minuti. La norma è la media storica di tutta la serie della stazione per il mese; dove non c'è una serie storica nell'archivio SIR il confronto non è disponibile (–). «Adesso» compare solo se il dato è delle ultime 3 ore.";
   }).catch(()=>{$("#txtA").innerHTML="<p>Temperature di adesso momentaneamente non disponibili: riprova tra qualche minuto.</p>";});
+}
+
+
+/* pioggia recente dai CSV giornalieri del SIR (ultimi ~60 giorni, richiesta parziale se il server la supporta) */
+async function pioggiaRecente(id){
+  try{
+    const r=await fetch(`data/sir/${id}/prec024.csv`,{headers:{Range:"bytes=-1400"}});
+    if(!r.ok)return null;
+    const righe=(await r.text()).trim().split("\n").map(l=>l.trim().split(";")).filter(c=>/^\d{4}-\d{2}-\d{2}$/.test(c[0])&&c[1]!==""&&isFinite(+c[1])).map(c=>[c[0],+c[1]]);
+    return righe.length?righe:null;
+  }catch(e){return null;}
+}
+async function pioggiaAdesso(L){
+  const R=(await Promise.all(L.map(async s=>({s,o:D.find(x=>x.id===s.id),g:await pioggiaRecente(s.id)})))).filter(r=>r.g&&r.o&&r.o.pioggia&&r.o.pioggia.mensile);
+  if(!R.length)return;
+  const ult=R.map(r=>r.g[r.g.length-1][0]).sort().pop(),mese=ult.slice(0,7),m=+ult.slice(5,7)-1,gg=iso=>+iso.slice(8,10)+" "+MESI[+iso.slice(5,7)-1];
+  const righe=R.map(r=>{const g=r.g.filter(x=>x[0]<=ult),l=g[g.length-1],s7=g.slice(-7).reduce((a,x)=>a+x[1],0),sm=g.filter(x=>x[0].startsWith(mese)).reduce((a,x)=>a+x[1],0),n=r.o.pioggia.mensile[m];
+    return `<tr><td>${esc(r.s.nome)}</td><td class="n">${fmt(r.s.quota)} m</td><td class="n">${l[0]===ult?fmt(l[1],1):"–"}</td><td class="n">${g.length>=7?fmt(s7,1):"–"}</td><td class="n">${fmt(sm,1)}</td><td class="n">${n?fmt(sm/n*100)+" %":"–"}</td></tr>`;}).join("");
+  $("#hPA").hidden=$("#tPA").hidden=$("#nPA").hidden=false;
+  $("#hPA").textContent=`E la pioggia? Dati fino all'${gg(ult)}`;
+  $("#tPA").innerHTML=`<table><thead><tr><th>Stazione</th><th class="n">Quota</th><th class="n">${gg(ult)}</th><th class="n">7 giorni</th><th class="n">${MESI[m]} finora</th><th class="n">% norma di ${MESI[m]}</th></tr></thead><tbody>${righe}</tbody></table>`;
+  $("#nPA").textContent="Millimetri di pioggia nelle 24 ore, dall'archivio giornaliero del SIR: arrivano con circa un giorno di ritardo e sono pre-validati, quindi possono essere corretti. La norma è la media storica del totale del mese di ogni stazione: a mese in corso la percentuale è parziale.";
 }
 
 /* ---------- 02 pioggia ---------- */
