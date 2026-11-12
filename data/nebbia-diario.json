@@ -2529,6 +2529,31 @@
    "contrasto": 0.362,
    "contrasto_sfondo": 0.174,
    "foto": "reports/nebbia/2026-11-12.jpg"
+  },
+  "2026-11-13": {
+   "nebbia": null,
+   "previsione_sera": {
+    "v": 3,
+    "scarto_min": 1.1,
+    "vento_medio": 3.6,
+    "nuvole_medie": 94,
+    "ore_soglie": 0,
+    "ore": 13,
+    "alba": "07:05",
+    "scarto_alba": 2.0,
+    "vento_alba": 2.7,
+    "dp_alba": 12.9,
+    "nuvole_alte": 85,
+    "nubi_basse_alba": 85,
+    "ur_alba": 88,
+    "suolo_alba": 0.329,
+    "inv850_alba": -5.4,
+    "blh_alba": 305,
+    "pressione": 993,
+    "crossover": -0.8,
+    "pioggia_24h": 37.9,
+    "emessa": "2026-11-12T14:20"
+   }
   }
  }
 }
