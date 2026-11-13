@@ -204,6 +204,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   `scripts/fetch_arpae_stazioni.py` legge l'archivio mensile delle osservazioni ARPAE (BUFR-JSON) e scrive
   `data/arpae/stazioni.csv` e `data/arpae/<id>/temp.csv`, `prec024.csv` nel formato del SIR (una volta al giorno;
   `--dal 2006-01` ricostruisce tutto).
+- **Ricerca analoghi** (`geek-analoghi.html`, MeteoGeek) — i giorni dal 1951 più simili a un giorno scelto (per
+  default oggi) e che cosa è successo nei tre giorni successivi. Confronta la pressione al livello del mare su 12 punti
+  intorno all'Italia più temperatura, pioggia, vento e umidità a Borgo San Lorenzo (distanza euclidea pesata, calcolata
+  nel browser). Dati: `data/geek/analoghi-archivio.json` (rianalisi ERA5 dal 1951 e misure SIR di Borgo, circa 2 MB,
+  si allunga da solo quando è indietro di oltre 40 giorni) e `data/analoghi-oggi.json` (ultimi 92 giorni e previsione,
+  ogni 3 ore), generati da `scripts/build_analoghi.py` con Open-Meteo. La carta usa `data/sinottica-mappa.json`.
 - **Giornate tipo** (`geek-giornate-tipo.html`, MeteoGeek) — diagramma di flusso (Sankey) fra le 13 «giornate tipo» (gelata,
   caldo secco, afa estrema, piovoso…) di Borgo San Lorenzo, 2000-2026 (9.605 giorni, SIR): come un tipo di giornata si trasforma
   nel giorno dopo, con persistenza, cambi più frequenti e stagionalità. Dati in `data/geek/giornate-tipo.json` (conteggi per tipo,

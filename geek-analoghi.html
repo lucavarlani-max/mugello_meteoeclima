@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ricerca analoghi: i giorni che assomigliano a oggi · MeteoGeek · Mugello Meteo & Clima</title>
+<meta name="description" content="I giorni dal 1951 in cui pressione, vento, temperatura e pioggia erano più simili a oggi sul Mugello, e che cosa è successo nei tre giorni successivi.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-analoghi.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Ricerca analoghi: i giorni che assomigliano a oggi · MeteoGeek">
+<meta property="og:description" content="I giorni dal 1951 più simili a oggi sul Mugello, e che cosa è successo dopo.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-analoghi.html">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  section{margin-top:26px}
+  .lab-head{position:relative;margin-top:14px;padding:24px 24px 20px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+  .lab-head::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+    background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:22px 22px}
+  .lab-head > *{position:relative}
+  .lab-head h1{font-size:40px}
+  .lab-head .lead{margin-bottom:0;max-width:760px}
+  .cmd{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:12px;overflow-wrap:anywhere}
+  .cmd b{color:var(--pine)} .cmd i{font-style:normal;color:var(--amber)}
+  .ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .ctl input[type=date]{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px}
+  .btn{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 12px;cursor:pointer}
+  .btn:hover{border-color:var(--pine);color:var(--pine)}
+  .btn[aria-pressed="true"]{background:var(--pine);border-color:var(--pine);color:#fff}
+  .rif{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;align-items:start}
+  .mappa{position:relative;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;background:var(--panel-2)}
+  .mappa canvas{display:block;width:100%}
+  .mappa .et{position:absolute;left:8px;top:8px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--ink-soft)}
+  .tiles3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .tl{border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;background:var(--panel-2);min-width:0}
+  .tl .lab{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint)}
+  .tl .v{font-family:var(--serif);font-weight:800;font-size:21px;letter-spacing:-.01em;line-height:1.2;margin-top:2px}
+  .tl .s{font-size:11.5px;color:var(--ink-faint)}
+  .lettura{margin-top:12px;border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:var(--r-sm);padding:10px 12px;font-size:13px;color:var(--ink-soft);background:var(--amber-tint)}
+  .lettura b{color:var(--ink)}
+  .pesi{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:22px;align-items:center}
+  .pesi input[type=range]{width:100%;accent-color:var(--pine)}
+  .pesi .capi{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:11.5px;font-weight:600}
+  .pesi .scala{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ink-faint)}
+  .barre{display:grid;gap:6px;font-size:12.5px}
+  .barre .r{display:grid;grid-template-columns:150px 1fr 38px;gap:8px;align-items:center}
+  .barre .b{height:8px;border-radius:99px;background:var(--line-soft);overflow:hidden}
+  .barre .b i{display:block;height:100%;border-radius:99px;background:var(--c,var(--pine))}
+  .barre .n{font-family:var(--mono);font-size:11px;text-align:right;color:var(--ink-soft)}
+  .ana{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .an{display:flex;flex-direction:column;gap:10px}
+  .an .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .an .rk{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-faint)}
+  .an h3{font-family:var(--serif);font-weight:800;font-size:20px;letter-spacing:-.01em;margin:2px 0 0;line-height:1.15}
+  .an .gs{font-size:12px;color:var(--ink-faint)}
+  .an .sc{font-family:var(--serif);font-weight:800;font-size:40px;line-height:1;letter-spacing:-.02em}
+  .an .sc small{font-size:18px;color:var(--ink-faint)}
+  .an .di{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);text-align:right}
+  .an .pb{height:9px;border-radius:99px;background:var(--line-soft);overflow:hidden}
+  .an .pb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--amber),var(--pine))}
+  .ev{width:100%;border-collapse:collapse;font-size:12.5px}
+  .ev th{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;text-align:right;padding:3px 4px;border-bottom:1px solid var(--line)}
+  .ev th:first-child,.ev td:first-child{text-align:left}
+  .ev td{padding:4px;border-bottom:1px solid var(--line-soft);text-align:right;font-variant-numeric:tabular-nums}
+  .ev tr.z td{color:var(--ink-faint)}
+  .sub{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);margin:2px 0 4px}
+  .due{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start}
+  .leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink-soft);margin-top:8px}
+  .leg span{display:inline-flex;align-items:center;gap:6px}
+  .leg i{display:inline-block;width:14px;height:10px;border-radius:2px}
+  .leg i.l{height:0;border-top:3px solid;border-radius:0;width:18px}
+  .formula{font-family:var(--mono);font-size:12px;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;color:var(--pine-deep);overflow-wrap:anywhere}
+  .cl{max-height:340px;overflow:auto;margin-top:8px}
+  .cl table{width:100%;border-collapse:collapse;font-size:12.5px}
+  .cl td{padding:5px 4px;border-bottom:1px solid var(--line-soft);font-variant-numeric:tabular-nums}
+  .cl td:nth-child(n+3){text-align:right}
+  .cl button{font:inherit;font-weight:600;color:var(--pine);background:none;border:0;padding:0;cursor:pointer;text-align:left}
+  .cl button:hover{text-decoration:underline}
+  .stato{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding:26px 0}
+  @media(max-width:900px){.rif,.pesi,.due{grid-template-columns:1fr}.ana{grid-template-columns:1fr}}
+  @media(max-width:640px){.lab-head h1{font-size:30px}.tiles3{grid-template-columns:repeat(2,minmax(0,1fr))}.barre .r{grid-template-columns:118px 1fr 34px}}
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Ricerca analoghi</div>
+    <header class="lab-head">
+      <div class="eyebrow">MeteoGeek · esperimento</div>
+      <h1>Giorni che assomigliano a oggi</h1>
+      <p class="lead">Oggi non è unico: la stessa disposizione di alte e basse pressioni è già passata sul Mugello molte altre volte. Qui cerco, fra tutti i giorni dal 1951, quelli più simili al giorno scelto e guardo che cosa è successo nei tre giorni successivi.</p>
+      <div class="cmd" id="cmd">$ ./analoghi --carico-archivio…</div>
+    </header>
+
+    <div class="stato" id="stato">Carico l'archivio (circa 2 MB, 75 anni di giorni)…</div>
+
+    <div id="app" hidden>
+    <section>
+      <div class="sh"><h2>Il giorno di riferimento</h2>
+        <div class="ctl">
+          <button class="btn" id="b-prec" aria-label="Giorno precedente">←</button>
+          <input type="date" id="giorno" aria-label="Giorno di riferimento">
+          <button class="btn" id="b-succ" aria-label="Giorno successivo">→</button>
+          <button class="btn" id="b-oggi">Oggi</button>
+          <button class="btn" data-g="1966-11-04">Alluvione 1966</button>
+          <button class="btn" data-g="1985-01-11">Gelo 1985</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="rif">
+          <div>
+            <div class="mappa"><canvas id="m-rif" role="img" aria-label="Carta della pressione al livello del mare nel giorno di riferimento"></canvas><span class="et" id="m-rif-et">Pressione al suolo</span></div>
+            <p class="note" style="margin-bottom:0">Colori e isobare (ogni 4 hPa): pressione media del giorno al livello del mare, ricostruita da 12 punti (i pallini). Blu = bassa pressione, arancio = alta. La freccia è il vento medio a Borgo San Lorenzo.</p>
+          </div>
+          <div>
+            <div class="sub" id="rif-tit"></div>
+            <div class="tiles3" id="rif-tiles"></div>
+            <div class="lettura" id="lettura"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Pesa la somiglianza</h2><span class="src">i risultati si aggiornano subito</span></div>
+      <div class="card">
+        <div class="pesi">
+          <div>
+            <div class="capi"><span style="color:var(--sky)">Temperatura · <span id="w-t"></span>%</span><span style="color:var(--amber)">Pioggia · <span id="w-p"></span>%</span></div>
+            <input type="range" id="peso" min="5" max="95" step="5" value="50" aria-label="Peso della pioggia rispetto alla temperatura">
+            <div class="scala"><span>quasi solo temperatura</span><span>equilibrio</span><span>quasi solo pioggia</span></div>
+            <p class="note">La pressione, il vento e l'umidità hanno un peso fisso. Il cursore divide il resto fra temperatura e pioggia: se conta di più la pioggia, cambia la classifica?</p>
+            <div class="ctl" style="margin-top:8px">
+              <div class="seg" id="seg-stag" role="group" aria-label="Periodo dell'anno">
+                <button data-s="1" aria-pressed="true">Stessa stagione (±30 giorni)</button><button data-s="0" aria-pressed="false">Tutto l'anno</button>
+              </div>
+            </div>
+          </div>
+          <div class="barre" id="barre-pesi"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>I tre giorni più simili</h2><span class="src" id="ana-src"></span></div>
+      <div class="ana" id="ana"></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Che cosa è successo dopo?</h2>
+        <div class="seg" id="seg-n" role="group" aria-label="Quanti analoghi nella media">
+          <button data-n="3" aria-pressed="false">Media dei primi 3</button><button data-n="10" aria-pressed="true">dei primi 10</button>
+        </div>
+      </div>
+      <div class="due">
+        <div class="card">
+          <div id="grafico"></div>
+          <div class="leg" id="leg"></div>
+          <p class="note" id="dopo-nota" style="margin-bottom:0"></p>
+        </div>
+        <div class="card">
+          <div class="sub">In breve</div>
+          <div id="breve" style="font-size:13.5px;color:var(--ink-soft)"></div>
+          <details style="margin-top:12px"><summary style="cursor:pointer;font-weight:600">La classifica completa (primi 50)</summary>
+            <div class="cl"><table id="classifica"></table></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <div class="formula">punteggio = 100 − 35 · √( Σ pesoᵢ · Δᵢ² ) &nbsp; · &nbsp; Δ = differenza divisa per la variabilità tipica di quel periodo dell'anno</div>
+        <ul class="note">
+          <li><b>Che cosa si confronta:</b> la pressione media giornaliera al livello del mare in 12 punti fra le Isole britanniche e l'Egeo, divisa in due parti: la <i>disposizione</i> (dove stanno depressioni e anticicloni rispetto alla media dell'area, quindi da dove arriva l'aria) e il <i>livello</i> medio. In più temperatura media, pioggia, vento e umidità a Borgo San Lorenzo. Per la pioggia si usa la radice quadrata dei millimetri, così un giorno da 60 mm non pesa come sei giorni da 10.</li>
+          <li><b>Come si sceglie:</b> ogni differenza è divisa per la sua variabilità tipica, poi si sommano i quadrati con i pesi qui sopra (distanza euclidea pesata). Due giorni presi a caso stanno intorno a 50 punti; sopra 80 la somiglianza è stretta. Si scartano i giorni a meno di 60 giorni dal riferimento e, fra giorni dello stesso episodio (meno di 7 giorni di distanza), si tiene solo il migliore.</li>
+          <li><b>Fonte:</b> rianalisi ERA5 di Copernicus/ECMWF dal 1951 (via Open-Meteo), cella di circa 25 km sopra Borgo San Lorenzo; per oggi e per i prossimi giorni i modelli di previsione, sempre via Open-Meteo. La pioggia e le temperature «misurate» sono quelle della stazione di Borgo San Lorenzo del Servizio Idrologico Regionale (temperature dal 1951, pioggia dal 1991).</li>
+          <li><b>Limiti:</b> è un esperimento, non una previsione. Si guarda la pressione al suolo e non le correnti in quota, la griglia è larga e una cella di rianalisi smussa i temporali: la pioggia ERA5 di un giorno può essere molto diversa da quella caduta davvero nel pluviometro. Gli analoghi dicono che cosa è plausibile, non che cosa succederà; per le decisioni valgono i bollettini ufficiali.</li>
+        </ul>
+      </div>
+    </section>
+    </div>
+  </main>
+
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  const $=id=>document.getElementById(id);
+  const G0=Date.UTC(1951,0,1), GG=864e5;
+  const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  const MES=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const SETT=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+  // nomi dei 12 punti della griglia (righe da nord a sud, colonne da ovest a est)
+  const ZONE=["le Isole britanniche","i Paesi Bassi","la Polonia","la Bielorussia","il Golfo di Biscaglia","la Provenza","l'Adriatico","la Romania","Gibilterra","la costa algerina","il Canale di Sicilia","l'Egeo"];
+  const VENTI=["nord","nord-est","est","sud-est","sud","sud-ovest","ovest","nord-ovest"];
+  const W_FISSI={p:.40,l:.10,w:.10,h:.05}, W_TP=.35, K=35, LONTANO=60, EPISODIO=7, FINESTRA=30;
+  const VOCI={p:"Pressione (disposizione)",l:"Pressione (livello)",t:"Temperatura",r:"Pioggia",w:"Vento",h:"Umidità"};
+  const COL={p:"var(--pine)",l:"var(--pine-deep)",t:"var(--sky)",r:"var(--amber)",w:"#7a5bc0",h:"var(--ink-faint)"};
+
+  let A=null, O=null, M=null, land=null;     // archivio, ultimi giorni + previsione, base cartografica
+  let nA=0, o0=0, nO=0, oggi=-1, ultimo=0, DOY=null;
+  let rif=0, pesoP=50, stagione=true, nMedia=10, RIS=null;
+
+  const iso=i=>new Date(G0+i*GG).toISOString().slice(0,10);
+  const idx=s=>Math.round((Date.parse(s+"T00:00:00Z")-G0)/GG);
+  const dt=i=>new Date(G0+i*GG);
+  const lunga=i=>{const d=dt(i);return d.getUTCDate()+" "+MESI[d.getUTCMonth()]+" "+d.getUTCFullYear();};
+  const corta=i=>{const d=dt(i);return d.getUTCDate()+" "+MES[d.getUTCMonth()];};
+  const n1=(x,d)=>x==null||!isFinite(x)?"n.d.":x.toFixed(d==null?1:d).replace(".",",").replace(/^-/,"−");
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+  // --- accesso ai dati: l'archivio fin dove arriva, poi il file degli ultimi giorni ---
+  function col(k,i,j){
+    if(i>=0&&i<nA){const a=j==null?A[k]:A[k][j];const v=a[i];return v==null?null:v;}
+    if(O&&i>=o0&&i<o0+nO){const a=j==null?O[k]:O[k][j];if(!a)return null;const v=a[i-o0];return v==null?null:v;}
+    return null;
+  }
+  function giorno(i){   // valori fisici di un giorno, null se incompleto
+    const p=[];for(let j=0;j<12;j++){const v=col("p",i,j);if(v==null)return null;p.push(1000+v/10);}
+    const t=col("t",i),pr=col("pr",i),u=col("u",i),v=col("v",i),rh=col("rh",i);
+    if(t==null||pr==null||u==null||v==null||rh==null)return null;
+    return {i,p,t:t/10,pr:pr/10,u:u/10,v:v/10,rh};
+  }
+  const misure=i=>i<nA?{max:A.ox[i]==null?null:A.ox[i]/10,min:A.on[i]==null?null:A.on[i]/10,mm:A.op[i]==null?null:A.op[i]/10}:{max:null,min:null,mm:null};
+  const pBorgo=p=>p[5]+(p[6]-p[5])*((11.386-5)/10);          // pressione a Borgo, fra i punti a 5 e 15 °E del parallelo 44
+  function vento(u,v){const s=Math.hypot(u,v), d=(Math.atan2(-u,-v)*180/Math.PI+360)%360; return {s,d,nome:VENTI[Math.round(d/45)%8]};}
+
+  // --- la ricerca ---
+  function cerca(){
+    const R=giorno(rif); if(!R) return null;
+    const dR=DOYdi(rif), cand=[];
+    for(let i=0;i<nA-3;i++){
+      if(Math.abs(i-rif)<LONTANO) continue;
+      if(stagione){let dd=Math.abs(DOY[i]-dR); if(dd>183) dd=366-dd; if(dd>FINESTRA) continue;}
+      cand.push(i);
+    }
+    // variabilità tipica fra i candidati
+    // la pressione si divide in due: il livello medio sull'area e la disposizione (scarti dal livello medio),
+    // cioè dove stanno alte e basse: è questa che decide da dove arriva l'aria
+    const scomp=g=>{g.pm=g.p.reduce((s,x)=>s+x,0)/12; g.pa=g.p.map(x=>x-g.pm);};
+    const st={p:0,l:0,t:0,r:0,w:0,h:0}; let n=0; const m={pa:new Array(12).fill(0),l:0,t:0,r:0,u:0,v:0,h:0}, G=[];
+    cand.forEach(i=>{const g=giorno(i); if(!g||giorno(i+1)==null||giorno(i+2)==null||giorno(i+3)==null) return; g.s=Math.sqrt(g.pr); scomp(g); G.push(g); n++;
+      for(let j=0;j<12;j++) m.pa[j]+=g.pa[j]; m.l+=g.pm; m.t+=g.t; m.r+=g.s; m.u+=g.u; m.v+=g.v; m.h+=g.rh;});
+    if(n<30) return {R,vuoto:true};
+    for(let j=0;j<12;j++) m.pa[j]/=n; m.l/=n; m.t/=n; m.r/=n; m.u/=n; m.v/=n; m.h/=n;
+    G.forEach(g=>{for(let j=0;j<12;j++) st.p+=(g.pa[j]-m.pa[j])**2/12; st.l+=(g.pm-m.l)**2; st.t+=(g.t-m.t)**2; st.r+=(g.s-m.r)**2; st.w+=(g.u-m.u)**2+(g.v-m.v)**2; st.h+=(g.rh-m.h)**2;});
+    Object.keys(st).forEach(k=>st[k]=Math.max(1e-6,st[k]/n));       // varianze
+    const W=pesi(), sR=Math.sqrt(R.pr); scomp(R);
+    G.forEach(g=>{
+      let dp=0; for(let j=0;j<12;j++) dp+=(g.pa[j]-R.pa[j])**2/12;
+      const q={p:dp/st.p, l:(g.pm-R.pm)**2/st.l, t:(g.t-R.t)**2/st.t, r:(g.s-sR)**2/st.r, w:((g.u-R.u)**2+(g.v-R.v)**2)/st.w, h:(g.rh-R.rh)**2/st.h};
+      let D2=0; for(const k in q) D2+=W[k]*q[k];
+      g.q=q; g.D=Math.sqrt(D2); g.score=Math.max(0,Math.round(100-K*g.D));
+    });
+    G.sort((a,b)=>a.D-b.D);
+    const scelti=[]; for(const g of G){ if(scelti.every(s=>Math.abs(s.i-g.i)>=EPISODIO)) scelti.push(g); if(scelti.length>=50) break; }
+    return {R,scelti,n,W};
+  }
+  function pesi(){const p=W_TP*pesoP/100; return {p:W_FISSI.p,l:W_FISSI.l,t:W_TP-p,r:p,w:W_FISSI.w,h:W_FISSI.h};}
+  function DOYdi(i){ if(i<nA) return DOY[i]; const d=dt(i); return Math.round((Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-Date.UTC(d.getUTCFullYear(),0,1))/GG); }
+
+  // --- carta della pressione (stessa base cartografica delle carte sinottiche del sito) ---
+  const NI=()=>M.lats.length, NJ=()=>M.lons.length;
+  function pos(lat,lon){
+    const fi=(lat-M.lats[0])/(M.lats[1]-M.lats[0]), fj=(lon-M.lons[0])/(M.lons[1]-M.lons[0]);
+    const i=Math.max(0,Math.min(NI()-2,Math.floor(fi))), j=Math.max(0,Math.min(NJ()-2,Math.floor(fj))), a=fi-i, b=fj-j, xy=M.xy, nj=NJ();
+    const p00=xy[i*nj+j],p01=xy[i*nj+j+1],p10=xy[(i+1)*nj+j],p11=xy[(i+1)*nj+j+1];
+    return [(1-a)*((1-b)*p00[0]+b*p01[0])+a*((1-b)*p10[0]+b*p11[0]), (1-a)*((1-b)*p00[1]+b*p01[1])+a*((1-b)*p10[1]+b*p11[1])];
+  }
+  const LA=[52,44,36], LO=[-5,5,15,25];
+  function cr(p0,p1,p2,p3,t){return .5*((2*p1)+(-p0+p2)*t+(2*p0-5*p1+4*p2-p3)*t*t+(-p0+3*p1-3*p2+p3)*t*t*t);}
+  function campo(P,fr,fc){   // interpolazione bicubica sui 3x4 punti; fr 0..2 (nord→sud), fc 0..3 (ovest→est)
+    const r=Math.max(0,Math.min(1,Math.floor(fr))), c=Math.max(0,Math.min(2,Math.floor(fc))), tr=fr-r, tc=fc-c, riga=[];
+    for(let k=-1;k<=2;k++){const rr=Math.max(0,Math.min(2,r+k)), v=q=>P[rr*4+Math.max(0,Math.min(3,q))]; riga.push(cr(v(c-1),v(c),v(c+1),v(c+2),tc));}
+    return cr(riga[0],riga[1],riga[2],riga[3],tr);
+  }
+  function tinta(p,scuro){   // blu sotto 1015 hPa, arancio sopra
+    const t=Math.max(-1,Math.min(1,(p-1015)/22)), a=Math.abs(t);
+    const S=scuro?[[47,99,168],[38,48,43],[200,85,44]]:[[47,111,184],[244,241,234],[200,85,44]];
+    const A0=S[1], B=t<0?S[0]:S[2];
+    return "rgb("+A0.map((x,k)=>Math.round(x+(B[k]-x)*Math.pow(a,.8))).join(",")+")";
+  }
+  function carta(cv,P,opt){
+    opt=opt||{};
+    const css=getComputedStyle(document.documentElement), scuro=(css.getPropertyValue("--bg").trim().toLowerCase()!=="#f4f6f2");
+    const linea=css.getPropertyValue("--ink").trim(), alone=css.getPropertyValue("--panel").trim(), tenue=css.getPropertyValue("--ink-faint").trim();
+    // riquadro: il dominio dei dati più un margine
+    const bordo=[]; for(let k=0;k<=20;k++){const f=k/20; bordo.push(pos(55,-9+38*f),pos(33,-9+38*f),pos(55-22*f,-9),pos(55-22*f,29));}
+    const x0=Math.max(...[pos(55,-9)[0],pos(33,-9)[0]]), x1=Math.min(pos(55,29)[0],pos(33,29)[0]);
+    const y0=Math.max(pos(55,-9)[1],pos(55,29)[1],pos(55,10)[1]), y1=Math.min(...bordo.map(b=>b[1]).filter((y,k)=>k%4===1));
+    const W=cv.clientWidth||320, H=Math.round(W*(y1-y0)/(x1-x0)), dpr=Math.min(2.5,window.devicePixelRatio||1);
+    cv.style.height=H+"px"; cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+    const g=cv.getContext("2d"), s=W/(x1-x0)*dpr; g.setTransform(s,0,0,s,-x0*s,-y0*s);
+    const u=(x1-x0)/W;
+    g.fillStyle=scuro?"#16211c":"#f7f9f6"; g.fillRect(x0,y0,x1-x0,y1-y0);
+    g.fillStyle=scuro?"#26332c":"#e7ece4"; g.fill(land);
+    // campo colorato
+    const NR=20, NC=36, F=[];
+    for(let a=0;a<=NR;a++){F.push([]);for(let b=0;b<=NC;b++)F[a].push(campo(P,a/NR*2,b/NC*3));}
+    const ll=(a,b)=>pos(52-16*a/NR,-5+30*b/NC);
+    g.globalAlpha=.78;
+    for(let a=0;a<NR;a++)for(let b=0;b<NC;b++){
+      g.fillStyle=tinta((F[a][b]+F[a+1][b]+F[a][b+1]+F[a+1][b+1])/4,scuro);
+      const p1=ll(a,b),p2=ll(a,b+1),p3=ll(a+1,b+1),p4=ll(a+1,b);
+      g.beginPath();g.moveTo(p1[0],p1[1]);g.lineTo(p2[0],p2[1]);g.lineTo(p3[0],p3[1]);g.lineTo(p4[0],p4[1]);g.closePath();g.fill();g.strokeStyle=g.fillStyle;g.lineWidth=.5;g.stroke();
+    }
+    g.globalAlpha=1;
+    g.strokeStyle=scuro?"rgba(232,239,233,.75)":"rgba(27,42,34,.7)"; g.lineWidth=.9*u; g.stroke(land);
+    // isobare ogni 4 hPa (marching squares)
+    let mn=1e9,mx=-1e9; F.forEach(r=>r.forEach(v=>{mn=Math.min(mn,v);mx=Math.max(mx,v);}));
+    g.strokeStyle=linea; g.lineWidth=(opt.mini?1:1.3)*u; g.font=`600 ${10.5*u}px 'IBM Plex Mono',monospace`; g.textAlign="center"; g.textBaseline="middle";
+    for(let L=Math.ceil(mn/4)*4;L<=mx;L+=4){
+      const segs=[];
+      for(let a=0;a<NR;a++)for(let b=0;b<NC;b++){
+        const A1=F[a][b],B1=F[a][b+1],C1=F[a+1][b+1],D1=F[a+1][b];
+        const code=(A1>=L?8:0)|(B1>=L?4:0)|(C1>=L?2:0)|(D1>=L?1:0); if(code===0||code===15)continue;
+        const t=(p,q)=>(L-p)/(q-p), top=[a,b+t(A1,B1)], right=[a+t(B1,C1),b+1], bottom=[a+1,b+t(D1,C1)], left=[a+t(A1,D1),b];
+        ({1:[[left,bottom]],2:[[bottom,right]],3:[[left,right]],4:[[top,right]],5:[[left,top],[bottom,right]],6:[[top,bottom]],7:[[left,top]],
+          8:[[left,top]],9:[[top,bottom]],10:[[left,bottom],[top,right]],11:[[top,right]],12:[[left,right]],13:[[bottom,right]],14:[[left,bottom]]}[code]).forEach(x=>segs.push(x));
+      }
+      if(!segs.length) continue;
+      g.globalAlpha=.8; g.beginPath(); segs.forEach(([p,q])=>{const a1=ll(p[0],p[1]),b1=ll(q[0],q[1]);g.moveTo(a1[0],a1[1]);g.lineTo(b1[0],b1[1]);}); g.stroke(); g.globalAlpha=1;
+      if(!opt.mini){const md=segs[Math.floor(segs.length*.38)], c=ll((md[0][0]+md[1][0])/2,(md[0][1]+md[1][1])/2); c[0]=Math.max(x0+18*u,Math.min(x1-18*u,c[0])); c[1]=Math.max(y0+10*u,Math.min(y1-10*u,c[1]));
+        g.lineWidth=3*u; g.strokeStyle=alone; g.strokeText(String(L),c[0],c[1]); g.fillStyle=linea; g.fillText(String(L),c[0],c[1]); g.strokeStyle=linea; g.lineWidth=1.3*u;}
+    }
+    // punti della griglia, massimo (A) e minimo (B)
+    let jmin=0,jmax=0; P.forEach((v,j)=>{if(v<P[jmin])jmin=j;if(v>P[jmax])jmax=j;});
+    if(!opt.mini){g.fillStyle=tenue; P.forEach((v,j)=>{const c=pos(LA[Math.floor(j/4)],LO[j%4]);g.beginPath();g.arc(c[0],c[1],2*u,0,7);g.fill();});}
+    const lettera=(j,t,colr)=>{const c=pos(LA[Math.floor(j/4)],LO[j%4]); const xx=Math.max(x0+16*u,Math.min(x1-16*u,c[0])), yy=Math.max(y0+18*u,Math.min(y1-18*u,c[1]));
+      g.font=`800 ${(opt.mini?17:22)*u}px 'Bricolage Grotesque',sans-serif`; g.lineWidth=4*u; g.strokeStyle=alone; g.strokeText(t,xx,yy-5*u); g.fillStyle=colr; g.fillText(t,xx,yy-5*u);
+      g.font=`600 ${10*u}px 'IBM Plex Mono',monospace`; g.lineWidth=3*u; g.strokeText(Math.round(P[j]),xx,yy+10*u); g.fillStyle=linea; g.fillText(Math.round(P[j]),xx,yy+10*u);};
+    if(P[jmax]-P[jmin]>=3){ lettera(jmax,"A","#b3261e"); lettera(jmin,"B",scuro?"#8fb6e0":"#1d4f9c"); }
+    // Borgo e vento
+    const [bx,by]=M.mugello;
+    if(opt.vento&&opt.vento.s>1){const w=opt.vento, len=Math.min(70,14+w.s*2.4)*u, ang=(w.d+180)*Math.PI/180, ex=bx+Math.sin(ang)*len, ey=by-Math.cos(ang)*len;
+      g.strokeStyle=alone; g.lineWidth=5*u; g.lineCap="round"; g.beginPath(); g.moveTo(bx,by); g.lineTo(ex,ey); g.stroke();
+      g.strokeStyle=linea; g.fillStyle=linea; g.lineWidth=2.2*u; g.beginPath(); g.moveTo(bx,by); g.lineTo(ex,ey); g.stroke();
+      const h=7*u; g.beginPath(); g.moveTo(ex,ey); g.lineTo(ex-Math.sin(ang-.45)*h,ey+Math.cos(ang-.45)*h); g.lineTo(ex-Math.sin(ang+.45)*h,ey+Math.cos(ang+.45)*h); g.closePath(); g.fill();}
+    g.beginPath(); g.arc(bx,by,(opt.mini?3.5:4.5)*u,0,7); g.fillStyle="#0f6b52"; g.fill(); g.lineWidth=2*u; g.strokeStyle=alone; g.stroke();
+  }
+
+  // --- disegno della pagina ---
+  function tile(lab,v,s){return `<div class="tl"><div class="lab">${lab}</div><div class="v">${v}</div><div class="s">${s||""}</div></div>`;}
+  function tipo(i){ if(oggi<0) return i<nA?"rianalisi ERA5":""; if(i>oggi) return "previsione del modello"; if(i===oggi) return "oggi · analisi e previsione del modello"; return i<nA?"rianalisi ERA5":"analisi del modello"; }
+  function leggi(R){
+    let jmin=0,jmax=0; R.p.forEach((v,j)=>{if(v<R.p[jmin])jmin=j;if(v>R.p[jmax])jmax=j;});
+    const w=vento(R.u,R.v), dp=R.p[jmax]-R.p[jmin];
+    let s=dp<5?"Pressione quasi livellata su tutta l'area: nessuna depressione o anticiclone ben definito.":`Pressione più bassa verso <b>${ZONE[jmin]}</b> (${Math.round(R.p[jmin])} hPa) e più alta verso <b>${ZONE[jmax]}</b> (${Math.round(R.p[jmax])} hPa).`;
+    s+=w.s<4?" A Borgo San Lorenzo vento debole, senza una direzione prevalente netta.":` A Borgo San Lorenzo vento medio da <b>${w.nome}</b>, ${n1(w.s,0)} km/h.`;
+    s+=R.pr>=1?` Pioggia: ${n1(R.pr)} mm.`:" Giornata asciutta.";
+    return s;
+  }
+  function disegna(){
+    RIS=cerca();
+    const R=RIS&&RIS.R;
+    $("giorno").value=iso(rif);
+    document.querySelectorAll(".ctl .btn[data-g]").forEach(b=>b.setAttribute("aria-pressed",idx(b.dataset.g)===rif));
+    $("b-oggi").setAttribute("aria-pressed",rif===oggi); $("b-oggi").hidden=oggi<0;
+    $("b-prec").disabled=rif<=0; $("b-succ").disabled=rif>=ultimo;
+    try{history.replaceState(null,"",location.pathname+(rif===(oggi>=0?oggi:nA-1)?"":"?g="+iso(rif)));}catch(_){}
+    if(!R){ $("rif-tit").textContent=lunga(rif); $("rif-tiles").innerHTML=""; $("lettura").textContent="Per questo giorno mancano i dati."; $("ana").innerHTML=""; return; }
+    const d=dt(rif), w=vento(R.u,R.v), ms=misure(rif);
+    $("rif-tit").textContent=SETT[d.getUTCDay()]+" "+lunga(rif)+" · "+tipo(rif);
+    $("m-rif-et").textContent="Pressione al suolo · "+corta(rif)+" "+d.getUTCFullYear();
+    $("rif-tiles").innerHTML=
+      tile("T media",n1(R.t)+" °C",ms.max!=null?`misurate: ${n1(ms.min)} / ${n1(ms.max)} °C`:"")+
+      tile("Pioggia",n1(R.pr)+" mm",ms.mm!=null?`pluviometro: ${n1(ms.mm)} mm`:"nelle 24 ore")+
+      tile("Pressione",Math.round(pBorgo(R.p))+" hPa","stima a Borgo")+
+      tile("Vento",w.s<1?"calma":n1(w.s,0)+" km/h",w.s<1?"":"da "+w.nome)+
+      tile("Umidità",R.rh+"%","media del giorno")+
+      tile("Confrontati",RIS.vuoto?"—":RIS.n.toLocaleString("it-IT"),stagione?"giorni di stagione":"giorni dal 1951");
+    $("lettura").innerHTML=`<b>Lettura.</b> `+leggi(R);
+    carta($("m-rif"),R.p,{vento:w});
+    $("cmd").innerHTML=`$ ./analoghi <b>--giorno=${iso(rif)}</b> <i>--finestra=${stagione?"±30gg":"anno"}</i> --pioggia=${pesoP}% <span style="opacity:.7">→ ${RIS.vuoto?0:RIS.n.toLocaleString("it-IT")} giorni confrontati</span>`;
+    // pesi
+    const W=pesi(); $("w-t").textContent=100-pesoP; $("w-p").textContent=pesoP;
+    $("barre-pesi").innerHTML=`<div class="sub">Pesi applicati</div>`+Object.keys(VOCI).map(k=>`<div class="r"><span>${VOCI[k]}</span><span class="b"><i style="width:${Math.round(W[k]*100/.40)}%;--c:${COL[k]}"></i></span><span class="n">${Math.round(W[k]*100)}%</span></div>`).join("");
+    if(RIS.vuoto){ $("ana").innerHTML='<div class="card">Troppo pochi giorni confrontabili per questo riferimento.</div>'; $("grafico").innerHTML=""; return; }
+    const S=RIS.scelti;
+    $("ana-src").textContent=`${RIS.n.toLocaleString("it-IT")} giorni confrontati · ${iso(0).slice(0,4)}–${iso(nA-1).slice(0,4)}`;
+    $("ana").innerHTML=S.slice(0,3).map((g,k)=>{
+      const dd=dt(g.i), wv=vento(g.u,g.v), tot=Object.keys(g.q).reduce((s,x)=>s+RIS.W[x]*g.q[x],0)||1;
+      const contr=Object.keys(g.q).map(x=>[x,Math.round(RIS.W[x]*g.q[x]/tot*100)]).sort((a,b)=>b[1]-a[1]).slice(0,3);
+      const righe=[0,1,2,3].map(j=>{const x=giorno(g.i+j), mi=misure(g.i+j);
+        return `<tr${j?"":' class="z"'}><td>${j?"+"+j+" · ":""}${corta(g.i+j)}</td><td>${x?n1(x.t)+"°":"n.d."}</td><td>${x?n1(x.pr):"n.d."}</td><td>${mi.mm!=null?n1(mi.mm):"–"}</td></tr>`;}).join("");
+      return `<article class="card an">
+        <div class="top"><div><div class="rk">ANALOGO #${k+1}</div><h3>${lunga(g.i)}</h3><div class="gs">${SETT[dd.getUTCDay()]} · vento da ${wv.s<1?"—":wv.nome} · ${Math.round(pBorgo(g.p))} hPa</div></div>
+          <div><div class="sc">${g.score}<small>/100</small></div><div class="di">distanza ${n1(g.D,2)}</div></div></div>
+        <div class="pb"><i style="width:${g.score}%"></i></div>
+        <div class="mappa"><canvas data-k="${k}" role="img" aria-label="Carta della pressione al suolo del ${lunga(g.i)}"></canvas></div>
+        <div><div class="sub">Quel giorno e i tre successivi</div>
+          <table class="ev"><thead><tr><th>Giorno</th><th>T media</th><th>Pioggia mm</th><th>Pluviometro</th></tr></thead><tbody>${righe}</tbody></table></div>
+        <div><div class="sub">Dove differisce di più dal riferimento</div>
+          <div class="barre">${contr.map(([x,p])=>`<div class="r"><span>${VOCI[x]}</span><span class="b"><i style="width:${p}%;--c:${COL[x]}"></i></span><span class="n">${p}%</span></div>`).join("")}</div></div>
+        <button class="btn" data-rif="${g.i}" style="align-self:flex-start">Usa come riferimento →</button>
+      </article>`;}).join("");
+    $("ana").querySelectorAll("canvas").forEach(cv=>carta(cv,S[+cv.dataset.k].p,{mini:true}));
+    $("ana").querySelectorAll("[data-rif]").forEach(b=>b.addEventListener("click",()=>{rif=+b.dataset.rif;disegna();scrollTo({top:0,behavior:"smooth"});}));
+    $("classifica").innerHTML=S.map((g,k)=>`<tr><td>${k+1}</td><td><button data-rif="${g.i}">${lunga(g.i)}</button></td><td>${n1(g.t)}°</td><td>${n1(g.pr)} mm</td><td><b>${g.score}</b></td></tr>`).join("");
+    $("classifica").querySelectorAll("[data-rif]").forEach(b=>b.addEventListener("click",()=>{rif=+b.dataset.rif;disegna();scrollTo({top:0,behavior:"smooth"});}));
+    dopo();
+  }
+
+  function dopo(){
+    const S=RIS.scelti.slice(0,nMedia), R=RIS.R;
+    const an=[0,1,2,3].map(j=>{const g=S.map(s=>giorno(s.i+j)).filter(Boolean), t=g.map(x=>x.t), p=g.map(x=>x.pr), m=a=>a.reduce((s,x)=>s+x,0)/a.length;
+      return {t:m(t),p:m(p),tmin:Math.min(...t),tmax:Math.max(...t),pmin:Math.min(...p),pmax:Math.max(...p),piovosi:p.filter(x=>x>=10).length,n:g.length};});
+    const rf=[0,1,2,3].map(j=>giorno(rif+j));
+    const futuro=oggi>=0&&rif+1>oggi, nomeRif=futuro?"previsione del modello":"che cosa è successo davvero";
+    // grafico SVG
+    const Wd=640,Hd=300,ml=40,mr=40,mt=14,mb=30,pw=Wd-ml-mr,ph=Hd-mt-mb;
+    const pmax=Math.max(5,...an.map(a=>a.pmax),...rf.map(x=>x?x.pr:0))*1.08;
+    const ts=an.flatMap(a=>[a.tmin,a.tmax]).concat(rf.filter(Boolean).map(x=>x.t)), t0=Math.floor(Math.min(...ts)-1), t1=Math.ceil(Math.max(...ts)+1);
+    const X=j=>ml+pw*(j+.5)/4, YP=v=>mt+ph*(1-v/pmax), YT=v=>mt+ph*(1-(v-t0)/(t1-t0)), bw=pw/4*.26;
+    let s=`<svg viewBox="0 0 ${Wd} ${Hd}" width="100%" role="img" aria-label="Pioggia e temperatura nel giorno di riferimento e nei tre successivi: media degli analoghi a confronto con ${nomeRif}" style="display:block;font-family:var(--mono);font-size:11px">`;
+    for(let k=0;k<=4;k++){const v=pmax*k/4,y=YP(v); s+=`<line x1="${ml}" x2="${Wd-mr}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/><text x="${ml-6}" y="${y+4}" text-anchor="end" fill="var(--ink-faint)">${Math.round(v)}</text><text x="${Wd-mr+6}" y="${y+4}" fill="var(--ink-faint)">${n1(t0+(t1-t0)*k/4,0)}°</text>`;}
+    
+    an.forEach((a,j)=>{const x=X(j);
+      s+=`<rect x="${x-bw-2}" y="${YP(a.p)}" width="${bw}" height="${Math.max(0,mt+ph-YP(a.p))}" rx="3" fill="var(--sky)" opacity=".75"/>`;
+      s+=`<line x1="${x-bw/2-2}" x2="${x-bw/2-2}" y1="${YP(a.pmax)}" y2="${YP(a.pmin)}" stroke="var(--sky)" stroke-width="1.5"/>`;
+      if(rf[j]) s+=`<rect x="${x+2}" y="${YP(rf[j].pr)}" width="${bw}" height="${Math.max(0,mt+ph-YP(rf[j].pr))}" rx="3" fill="var(--amber)" opacity=".8"/>`;
+      s+=`<text x="${x}" y="${Hd-10}" text-anchor="middle" fill="var(--ink-soft)">${j?"+"+j+" · ":""}${corta(rif+j)}</text>`;});
+    s+=`<path d="M${an.map((a,j)=>X(j)+","+YT(a.tmax)).join("L")}L${an.map((a,j)=>X(j)+","+YT(a.tmin)).reverse().join("L")}Z" fill="var(--pine)" opacity=".13"/>`;
+    s+=`<path d="M${an.map((a,j)=>X(j)+","+YT(a.t)).join("L")}" fill="none" stroke="var(--pine)" stroke-width="2.6"/>`+an.map((a,j)=>`<circle cx="${X(j)}" cy="${YT(a.t)}" r="4" fill="var(--pine)"/>`).join("");
+    const rr=rf.map((x,j)=>x?[X(j),YT(x.t)]:null).filter(Boolean);
+    if(rr.length>1) s+=`<path d="M${rr.map(p=>p.join(",")).join("L")}" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>`;
+    s+=rr.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"/>`).join("")+"</svg>";
+    $("grafico").innerHTML=s;
+    $("leg").innerHTML=`<span><i style="background:var(--sky)"></i>pioggia in mm (scala a sinistra), media dei ${S.length} analoghi; la riga è l'intervallo</span><span><i style="background:var(--amber)"></i>pioggia, ${nomeRif}</span><span><i class="l" style="border-color:var(--pine)"></i>T media degli analoghi in °C (scala a destra); fascia: dal più freddo al più caldo</span><span><i class="l" style="border-color:var(--ink);border-top-style:dashed"></i>T media, ${nomeRif}</span>`;
+    $("dopo-nota").textContent=futuro?"Il primo gruppo è il giorno di riferimento. Se le colonne arancioni e la linea tratteggiata restano dentro l'intervallo degli analoghi, la previsione sta facendo quello che la storia suggerisce; se ne esce, questa volta l'atmosfera va per un'altra strada.":"Il primo gruppo è il giorno di riferimento. Per un giorno del passato il confronto è una piccola verifica del metodo: le colonne arancioni e la linea tratteggiata sono quello che accadde davvero.";
+    const tot=an.slice(1).reduce((s,a)=>s+a.p,0), sing=S.map(g=>[1,2,3].reduce((s,j)=>{const x=giorno(g.i+j);return s+(x?x.pr:0);},0));
+    const dT=an[3].t-an[0].t, primo=RIS.scelti[0];
+    let b=`<p style="margin:0 0 8px">Il giorno più simile è il <b>${lunga(primo.i)}</b>, con ${primo.score} punti su 100${primo.score>=80?": una somiglianza stretta":primo.score>=65?": una somiglianza discreta":": nessun giorno gli assomiglia davvero"}.</p>`;
+    b+=`<p style="margin:0 0 8px">Nei tre giorni dopo i ${S.length} analoghi sono caduti in media <b>${n1(tot)} mm</b> (da ${n1(Math.min(...sing))} a ${n1(Math.max(...sing))}); il giorno dopo ha piovuto almeno 10 mm in <b>${an[1].piovosi} casi su ${an[1].n}</b>.</p>`;
+    b+=`<p style="margin:0 0 8px">Dopo tre giorni la temperatura media era ${Math.abs(dT)<0.5?"circa la stessa":(dT>0?"più alta":"più bassa")+" di <b>"+n1(Math.abs(dT))+" °C</b>"} (${n1(an[0].t)} → ${n1(an[3].t)} °C).</p>`;
+    if(rf[1]&&rf[2]&&rf[3]){const pr=rf[1].pr+rf[2].pr+rf[3].pr; b+=`<p style="margin:0">${futuro?"La previsione del modello dà":"In realtà caddero"} <b>${n1(pr)} mm</b> in tre giorni: ${pr>Math.max(...sing)?"più di tutti gli analoghi":pr<Math.min(...sing)?"meno di tutti gli analoghi":"dentro l'intervallo degli analoghi"}.</p>`;}
+    $("breve").innerHTML=b;
+  }
+
+  // --- avvio ---
+  function avvia(){
+    nA=A.n; DOY=new Int16Array(nA);
+    let y=1951, d0=G0; for(let i=0;i<nA;i++){const t=G0+i*GG, dd=new Date(t); if(dd.getUTCFullYear()!==y){y=dd.getUTCFullYear(); d0=Date.UTC(y,0,1);} DOY[i]=Math.round((t-d0)/GG);}
+    ultimo=nA-1;
+    if(O&&O.n){ o0=idx(O.inizio); nO=O.n; if(o0<=nA){ ultimo=Math.max(ultimo,o0+nO-1); const t=idx(O.oggi); if(t>=0&&t<=ultimo&&giorno(t)) oggi=t; } else { O=null; } }
+    rif=oggi>=0?oggi:nA-1;
+    const g=new URLSearchParams(location.search).get("g"); if(g&&/^\d{4}-\d\d-\d\d$/.test(g)){const i=idx(g); if(i>=0&&i<=ultimo) rif=i;}
+    $("giorno").min=iso(0); $("giorno").max=iso(ultimo);
+    $("stato").hidden=true; $("app").hidden=false;
+    disegna();
+    $("giorno").addEventListener("change",e=>{if(!e.target.value)return; const i=idx(e.target.value); if(i>=0&&i<=ultimo){rif=i;disegna();}});
+    $("b-prec").addEventListener("click",()=>{if(rif>0){rif--;disegna();}});
+    $("b-succ").addEventListener("click",()=>{if(rif<ultimo){rif++;disegna();}});
+    $("b-oggi").addEventListener("click",()=>{rif=oggi;disegna();});
+    document.querySelectorAll(".ctl .btn[data-g]").forEach(b=>b.addEventListener("click",()=>{rif=idx(b.dataset.g);disegna();}));
+    $("peso").addEventListener("input",e=>{pesoP=+e.target.value;disegna();});
+    $("seg-stag").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;stagione=b.dataset.s==="1";$("seg-stag").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));disegna();});
+    $("seg-n").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;nMedia=+b.dataset.n;$("seg-n").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));if(RIS&&!RIS.vuoto)dopo();});
+    let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(disegna,180);});
+    new MutationObserver(disegna).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+    if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",disegna);
+  }
+  Promise.all([
+    fetch("./data/geek/analoghi-archivio.json").then(r=>{if(!r.ok)throw 0;return r.json();}),
+    fetch("./data/analoghi-oggi.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null),
+    fetch("./data/sinottica-mappa.json").then(r=>r.json())
+  ]).then(([a,o,m])=>{A=a;O=o;M=m;land=new Path2D(m.land);avvia();})
+    .catch(()=>{$("stato").textContent="L'archivio degli analoghi non è raggiungibile in questo momento.";});
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
+</body>
+</html>
