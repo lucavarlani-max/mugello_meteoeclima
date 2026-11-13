@@ -1,7 +1,85 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-11-11",
+ "aggiornato": "2026-11-13",
  "numeri": [
+  {
+   "data": "2026-11-13",
+   "apertura": {
+    "cat": "temporali",
+    "titolo": "Venerdì arancione sul Mugello per il rischio idrogeologico fino alle 18; piogge in esaurimento in serata",
+    "testo": "Il Centro Funzionale regionale ha emesso alle 12:55 di venerdì 13 novembre un avviso di criticità valido fino alle 23:59. Per il Mugello-Val di Sieve il codice per rischio idrogeologico e idraulico del reticolo minore è arancione fino alle 18 e poi giallo fino a mezzanotte; per il rischio idraulico del reticolo principale è giallo fino alle 8 di sabato 14. Sulle province di Prato, Firenze e Arezzo sono attesi dalle 13 cumulati medi di 10–20 mm e massimi fino a 30–40 mm, con intensità fino a 10–15 mm all'ora; dopo le 18 i fenomeni tendono a cessare.",
+    "fonte": "Bollettino di valutazione delle criticità · Centro Funzionale Regione Toscana",
+    "url": "https://www.cfr.toscana.it/index.php?IDS=2&IDSS=76",
+    "foto": "fulmine"
+   },
+   "numero": {
+    "valore": "101,2 km/h",
+    "testo": "La raffica più forte registrata a Montegiovi (722 m) nelle prime ore di venerdì 13 novembre, fino alle 8:42: la più alta fra le otto stazioni in montagna intorno al Mugello."
+   },
+   "storie": [
+    {
+     "cat": "mugello",
+     "titolo": "Da martedì quasi 270 mm alla Futa: sul crinale è piovuto come in un mese e mezzo",
+     "testo": "Sommando i giorni dal 10 novembre a venerdì 13, fino alle 13, le stazioni in montagna intorno al Mugello hanno raccolto 267,8 mm al Passo della Futa, 230,7 a Barco, 213,4 a Monte di Fò e 170,4 al Passo del Giogo. Giovedì 12 la pioggia più abbondante è stata quella della Futa, 102,8 mm fino alle 20:51, seguita da Barco con 94,7; la raffica più forte di giovedì è stata di 81,7 km/h al Giogo. Venerdì alle 12:55 la Sieve a Fornacina era a 1,43 metri, livello ancora normale.",
+     "fonte": "Stazioni in montagna · Idrometri Regione Toscana · Mugello Meteo & Clima",
+     "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+     "foto": "bilancino"
+    },
+    {
+     "cat": "cielo",
+     "titolo": "Leonidi, il picco nella notte fra martedì 17 e mercoledì 18 novembre",
+     "testo": "Lo sciame delle Leonidi, che deriva dalla cometa 55P/Tempel-Tuttle, è visibile dal 6 al 30 novembre e raggiunge il massimo fra il 17 e il 18, con circa 10–15 meteore all'ora in un cielo buio. Quest'anno non si attende un'esplosione di stelle cadenti e la Luna al primo quarto disturberà le meteore più deboli fino a metà notte circa; il radiante, nella costellazione del Leone, sorge verso mezzanotte e il momento migliore è quello prima dell'alba.",
+     "fonte": "Star Walk · Instituto Geográfico Nacional",
+     "url": "https://starwalk.space/it/news/leonid-meteor-shower"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Venerdì 13 novembre: giornata ancora piovosa sul crinale, con massime di 12–15 °C e minime di 8–10 °C nelle stazioni in montagna, e una raffica a 65,9 km/h al Passo del Giogo. Il tempo migliora in serata, con la fine delle piogge.",
+     "fonte": "Stazioni in montagna · Centro Funzionale Regione Toscana"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:08 e tramonta alle 16:53, circa 9 ore e 45 minuti di luce, circa 2 minuti meno di ieri. La Luna è una falce crescente illuminata per poco meno di un quinto; il primo quarto è martedì 17 novembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-11-12",
+   "apertura": {
+    "cat": "mugello",
+    "titolo": "Giovedì sul crinale oltre 100 mm alla Futa e raffiche a 82 km/h al Giogo",
+    "testo": "Giovedì 12 novembre le stazioni in montagna intorno al Mugello hanno raccolto 102,8 mm al Passo della Futa (fino alle 20:51), 94,7 a Barco, 87,5 a Monte di Fò, 70,0 al Passo del Giogo e 51,1 a Bibbiana; a Montegiovi sono caduti 35,5 mm con una raffica di 75,3 km/h, al Giogo 81,7 km/h alle 18:15. Le temperature sono rimaste miti: massime fra 13 e 16 °C e minime attorno a 10–12 °C.",
+    "fonte": "Stazioni in montagna · Mugello Meteo & Clima",
+    "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+    "foto": "fulmine"
+   },
+   "numero": {
+    "valore": "102,8 mm",
+    "testo": "La pioggia caduta giovedì 12 novembre al Passo della Futa (963 m) fino alle 20:51: la più abbondante fra le otto stazioni in montagna intorno al Mugello."
+   },
+   "storie": [
+    {
+     "cat": "clima",
+     "titolo": "COP31 ad Antalya: il vertice dei leader fra l'11 e il 12 novembre",
+     "testo": "La conferenza delle Nazioni Unite sul clima si tiene ad Antalya, in Turchia, dal 9 al 20 novembre. La presidenza è turca, mentre i negoziati sono guidati dall'Australia. È la prima COP dopo l'uscita degli Stati Uniti dall'Accordo di Parigi, entrata in vigore a gennaio 2026; fra i temi in discussione ci sono il futuro del programma di lavoro sulla mitigazione e la transizione giusta.",
+     "fonte": "Earth Negotiations Bulletin · IISD",
+     "url": "https://enb.iisd.org/antalya-un-climate-change-conference-cop31"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Giovedì 12 novembre: giornata piovosa e mite sul crinale, con minime di 10–12 °C e massime di 13–16 °C. Venerdì le piogge proseguono fino a sera, poi tendono a cessare.",
+     "fonte": "Stazioni in montagna · Centro Funzionale Regione Toscana"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:07 e tramonta alle 16:54, circa 9 ore e 47 minuti di luce, circa 3 minuti meno di ieri. La Luna è una sottile falce crescente, illuminata per circa un decimo; il primo quarto è martedì 17 novembre."
+    }
+   ]
+  },
   {
    "data": "2026-11-11",
    "apertura": {
