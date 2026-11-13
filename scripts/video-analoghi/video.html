@@ -1,0 +1,189 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#0a1620}canvas{display:block}</style><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+/* Video verticale (1080x1920, 26 s) che presenta la pagina MeteoGeek «Ricerca analoghi».
+   Dati veri: dati.json (scripts/video-analoghi/prepara.py) e la base cartografica data/sinottica-mappa.json.
+   render.js chiama window.frame(t) per ogni fotogramma. */
+const W=1080,H=1920,c=document.getElementById('c'),g=c.getContext('2d');
+let D=null,M=null,land=null;const DUR=26;
+const MESL=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+const VENTI=['nord','nord-est','est','sud-est','sud','sud-ovest','ovest','nord-ovest'];
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),ease=t=>1-Math.pow(1-cl(t),3),eio=t=>{t=cl(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+const seg=(t,a,b)=>cl((t-a)/(b-a));
+const L=70,R=1010;
+const mig=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const n1=x=>x.toFixed(1).replace('.',',').replace(/^-/,'−');
+const lunga=s=>{const [y,m,d]=s.split('-').map(Number);return d+' '+MESL[m-1]+' '+y};
+function txt(s,x,y,sz,col,al='left',w=600,a=1){if(a<=0)return;g.globalAlpha=a;g.fillStyle=col;g.font=w+' '+sz+'px Inter, DejaVu Sans, sans-serif';g.textAlign=al;g.textBaseline='alphabetic';g.fillText(s,x,y);g.globalAlpha=1}
+function rr(x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r)}
+
+// --- carta della pressione: stessa proiezione e stessa interpolazione della pagina ---
+function pos(lat,lon){const NI=M.lats.length,NJ=M.lons.length,fi=(lat-M.lats[0])/(M.lats[1]-M.lats[0]),fj=(lon-M.lons[0])/(M.lons[1]-M.lons[0]);
+  const i=Math.max(0,Math.min(NI-2,Math.floor(fi))),j=Math.max(0,Math.min(NJ-2,Math.floor(fj))),a=fi-i,b=fj-j,xy=M.xy;
+  const p00=xy[i*NJ+j],p01=xy[i*NJ+j+1],p10=xy[(i+1)*NJ+j],p11=xy[(i+1)*NJ+j+1];
+  return [(1-a)*((1-b)*p00[0]+b*p01[0])+a*((1-b)*p10[0]+b*p11[0]),(1-a)*((1-b)*p00[1]+b*p01[1])+a*((1-b)*p10[1]+b*p11[1])]}
+const LA=[52,44,36],LO=[-5,5,15,25];
+const cr=(p0,p1,p2,p3,t)=>.5*((2*p1)+(-p0+p2)*t+(2*p0-5*p1+4*p2-p3)*t*t+(-p0+3*p1-3*p2+p3)*t*t*t);
+function campo(P,fr,fc){const r=Math.max(0,Math.min(1,Math.floor(fr))),k=Math.max(0,Math.min(2,Math.floor(fc))),tr=fr-r,tc=fc-k,riga=[];
+  for(let q=-1;q<=2;q++){const rr2=Math.max(0,Math.min(2,r+q)),v=z=>P[rr2*4+Math.max(0,Math.min(3,z))];riga.push(cr(v(k-1),v(k),v(k+1),v(k+2),tc))}
+  return cr(riga[0],riga[1],riga[2],riga[3],tr)}
+function tinta(p){const t=Math.max(-1,Math.min(1,(p-1015)/22)),a=Math.pow(Math.abs(t),.8),A0=[30,44,58],B=t<0?[52,120,205]:[226,104,52];
+  return 'rgb('+A0.map((x,k)=>Math.round(x+(B[k]-x)*a)).join(',')+')'}
+let BOX=null;
+function riquadro(){const x0=Math.max(pos(55,-9)[0],pos(33,-9)[0]),x1=Math.min(pos(55,29)[0],pos(33,29)[0]);let y1=1e9;
+  for(let k=0;k<=20;k++)y1=Math.min(y1,pos(33,-9+38*k/20)[1]);
+  const y0=Math.max(pos(55,-9)[1],pos(55,29)[1],pos(55,10)[1]);BOX={x0,x1,y0,y1,asp:(y1-y0)/(x1-x0)}}
+function carta(P,x,y,w,o){ // o: {a: opacità, wipe: 0..1 comparsa da sinistra, mini, vento, et}
+  o=o||{};const a=o.a==null?1:o.a;if(a<=0)return;const h=w*BOX.asp,s=w/(BOX.x1-BOX.x0),u=1/s;
+  g.save();g.globalAlpha=a;rr(x,y,w,h,o.mini?18:26);g.clip();
+  g.fillStyle='#0f2231';g.fillRect(x,y,w,h);
+  g.translate(x-BOX.x0*s,y-BOX.y0*s);g.scale(s,s);
+  g.fillStyle='#1b3345';g.fill(land);
+  const wipe=o.wipe==null?1:o.wipe;
+  if(wipe>0){
+    g.save();g.beginPath();g.rect(BOX.x0,BOX.y0,(BOX.x1-BOX.x0)*wipe,BOX.y1-BOX.y0);g.clip();
+    const NR=20,NC=36,F=[];for(let i=0;i<=NR;i++){F.push([]);for(let j=0;j<=NC;j++)F[i].push(campo(P,i/NR*2,j/NC*3))}
+    const ll=(i,j)=>pos(52-16*i/NR,-5+30*j/NC);
+    g.globalAlpha=a*.82;
+    for(let i=0;i<NR;i++)for(let j=0;j<NC;j++){g.fillStyle=tinta((F[i][j]+F[i+1][j]+F[i][j+1]+F[i+1][j+1])/4);
+      const p1=ll(i,j),p2=ll(i,j+1),p3=ll(i+1,j+1),p4=ll(i+1,j);g.beginPath();g.moveTo(p1[0],p1[1]);g.lineTo(p2[0],p2[1]);g.lineTo(p3[0],p3[1]);g.lineTo(p4[0],p4[1]);g.closePath();g.fill();g.strokeStyle=g.fillStyle;g.lineWidth=.6;g.stroke()}
+    g.globalAlpha=a;g.strokeStyle='rgba(232,240,246,.7)';g.lineWidth=(o.mini?1.6:1.3)*u;g.stroke(land);
+    let mn=1e9,mx=-1e9;F.forEach(r=>r.forEach(v=>{mn=Math.min(mn,v);mx=Math.max(mx,v)}));
+    g.strokeStyle='#ffffff';g.lineWidth=(o.mini?2.2:2.4)*u;
+    for(let Lv=Math.ceil(mn/4)*4;Lv<=mx;Lv+=4){const sg=[];
+      for(let i=0;i<NR;i++)for(let j=0;j<NC;j++){const A1=F[i][j],B1=F[i][j+1],C1=F[i+1][j+1],D1=F[i+1][j];
+        const code=(A1>=Lv?8:0)|(B1>=Lv?4:0)|(C1>=Lv?2:0)|(D1>=Lv?1:0);if(code===0||code===15)continue;
+        const t=(p,q)=>(Lv-p)/(q-p),top=[i,j+t(A1,B1)],right=[i+t(B1,C1),j+1],bottom=[i+1,j+t(D1,C1)],left=[i+t(A1,D1),j];
+        ({1:[[left,bottom]],2:[[bottom,right]],3:[[left,right]],4:[[top,right]],5:[[left,top],[bottom,right]],6:[[top,bottom]],7:[[left,top]],8:[[left,top]],9:[[top,bottom]],10:[[left,bottom],[top,right]],11:[[top,right]],12:[[left,right]],13:[[bottom,right]],14:[[left,bottom]]}[code]).forEach(z=>sg.push(z))}
+      if(!sg.length)continue;g.globalAlpha=a*.85;g.beginPath();sg.forEach(([p,q])=>{const a1=ll(p[0],p[1]),b1=ll(q[0],q[1]);g.moveTo(a1[0],a1[1]);g.lineTo(b1[0],b1[1])});g.stroke();g.globalAlpha=a;
+      if(!o.mini){const md=sg[Math.floor(sg.length*.38)],cc=ll((md[0][0]+md[1][0])/2,(md[0][1]+md[1][1])/2);
+        cc[0]=Math.max(BOX.x0+34*u,Math.min(BOX.x1-34*u,cc[0]));cc[1]=Math.max(BOX.y0+20*u,Math.min(BOX.y1-20*u,cc[1]));
+        g.font='700 '+22*u+'px DejaVu Sans Mono, monospace';g.textAlign='center';g.textBaseline='middle';g.lineWidth=7*u;g.strokeStyle='#0f2231';g.strokeText(String(Lv),cc[0],cc[1]);g.fillStyle='#fff';g.fillText(String(Lv),cc[0],cc[1]);g.strokeStyle='#fff';g.lineWidth=2.4*u}}
+    let jmin=0,jmax=0;P.forEach((v,j)=>{if(v<P[jmin])jmin=j;if(v>P[jmax])jmax=j});
+    const lettera=(j,t,col)=>{const p=pos(LA[Math.floor(j/4)],LO[j%4]),m=(o.mini?34:44)*u,xx=Math.max(BOX.x0+m,Math.min(BOX.x1-m,p[0])),yy=Math.max(BOX.y0+m*1.1,Math.min(BOX.y1-m*1.1,p[1]));
+      g.textAlign='center';g.textBaseline='middle';g.font='800 '+(o.mini?40:54)*u+'px Inter, DejaVu Sans, sans-serif';g.lineWidth=9*u;g.strokeStyle='#0f2231';g.strokeText(t,xx,yy-12*u);g.fillStyle=col;g.fillText(t,xx,yy-12*u);
+      g.font='700 '+(o.mini?19:22)*u+'px DejaVu Sans Mono, monospace';g.lineWidth=6*u;g.strokeText(Math.round(P[j]),xx,yy+(o.mini?20:26)*u);g.fillStyle='#fff';g.fillText(Math.round(P[j]),xx,yy+(o.mini?20:26)*u)};
+    if(P[jmax]-P[jmin]>=3){lettera(jmax,'A','#ff6b5a');lettera(jmin,'B','#7fb8ff')}
+    g.restore();
+  }
+  const [bx,by]=M.mugello;
+  if(o.vento&&o.vento.s>1&&wipe>=1){const len=Math.min(150,40+o.vento.s*6)*u,ang=(o.vento.d+180)*Math.PI/180,ex=bx+Math.sin(ang)*len,ey=by-Math.cos(ang)*len,hd=18*u;
+    g.strokeStyle='#0f2231';g.lineWidth=11*u;g.lineCap='round';g.beginPath();g.moveTo(bx,by);g.lineTo(ex,ey);g.stroke();
+    g.strokeStyle='#fff';g.fillStyle='#fff';g.lineWidth=5*u;g.beginPath();g.moveTo(bx,by);g.lineTo(ex,ey);g.stroke();
+    g.beginPath();g.moveTo(ex,ey);g.lineTo(ex-Math.sin(ang-.45)*hd,ey+Math.cos(ang-.45)*hd);g.lineTo(ex-Math.sin(ang+.45)*hd,ey+Math.cos(ang+.45)*hd);g.closePath();g.fill()}
+  g.beginPath();g.arc(bx,by,(o.mini?8:10)*u,0,7);g.fillStyle='#3ddc97';g.fill();g.lineWidth=4*u;g.strokeStyle='#0f2231';g.stroke();
+  g.restore();
+  g.globalAlpha=a;g.strokeStyle='rgba(255,255,255,.22)';g.lineWidth=2;rr(x,y,w,h,o.mini?18:26);g.stroke();g.globalAlpha=1;
+  return h}
+
+function chip(s,x,y,a,col='#6fd0a8'){if(a<=0)return;g.font='700 24px DejaVu Sans Mono, monospace';const w=g.measureText(s).width+36;g.globalAlpha=a;g.fillStyle='rgba(8,18,28,.9)';rr(x,y,w,46,23);g.fill();g.strokeStyle='rgba(255,255,255,.25)';g.lineWidth=2;g.stroke();g.globalAlpha=1;txt(s,x+18,y+32,24,col,'left',700,a);g.font='700 24px DejaVu Sans Mono, monospace';return w}
+function casella(lab,val,x,y,w,a){if(a<=0)return;g.globalAlpha=a;g.fillStyle='rgba(255,255,255,.06)';rr(x,y,w,128,20);g.fill();g.strokeStyle='rgba(255,255,255,.14)';g.lineWidth=2;g.stroke();g.globalAlpha=1;
+  txt(lab.toUpperCase(),x+22,y+42,22,'#8aa0b4','left',700,a);txt(val,x+22,y+100,46,'#fff','left',800,a)}
+
+function draw(t){
+  const bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#0c1c2b');bg.addColorStop(1,'#07101a');g.fillStyle=bg;g.fillRect(0,0,W,H);
+  const rif=D.rif,[y0,y1]=D.anni;
+  // ---------- testata (sempre) ----------
+  const ti=ease(seg(t,.2,1.1));
+  txt('MUGELLO METEO & CLIMA · METEOGEEK',L,140,27,'#6fd0a8','left',700,ti);
+  // ---------- scena 1: titolo (0-3,4) ----------
+  const s1=ease(seg(t,.3,1.3))*(1-ease(seg(t,3,3.6)));
+  txt('Oggi non è',L,640,104,'#fff','left',800,s1);
+  txt('un giorno unico.',L,760,104,'#fff','left',800,ease(seg(t,.7,1.6))*(1-ease(seg(t,3,3.6))));
+  txt('La stessa disposizione di alte e basse',L,880,38,'#9fb2c4','left',500,ease(seg(t,1.4,2.3))*(1-ease(seg(t,3,3.6))));
+  txt('pressioni è già passata sul Mugello.',L,932,38,'#9fb2c4','left',500,ease(seg(t,1.6,2.5))*(1-ease(seg(t,3,3.6))));
+  txt('Quando?',L,1110,128,'#ffd23f','left',800,ease(seg(t,2,2.8))*(1-ease(seg(t,3,3.6))));
+  // ---------- scena 2: il giorno di riferimento (3,4-9) ----------
+  const in2=ease(seg(t,3.5,4.3)), out2=1-ease(seg(t,8.6,9.2)), a2=in2*out2;
+  if(a2>0){
+    txt('IL GIORNO DI RIFERIMENTO',L,330,26,'#8aa0b4','left',700,a2);
+    txt(lunga(rif.data),L,420,84,'#fff','left',800,a2);
+    const mh=carta(rif.p,L,480,R-L,{a:a2,wipe:eio(seg(t,4,6)),vento:rif.vento});
+    txt('Pressione al livello del mare · isobare ogni 4 hPa',L,480+mh+46,28,'#8aa0b4','left',500,a2*ease(seg(t,5.6,6.4)));
+    const cy=480+mh+86,cw=(R-L-2*18)/3,v=rif.vento;
+    casella('T media',n1(rif.t)+' °C',L,cy,cw,a2*ease(seg(t,6,6.6)));
+    casella('Pioggia',n1(rif.pr)+' mm',L+cw+18,cy,cw,a2*ease(seg(t,6.3,6.9)));
+    casella('Vento da',VENTI[Math.round(v.d/45)%8],L+2*(cw+18),cy,cw,a2*ease(seg(t,6.6,7.2)));
+    txt('A Borgo San Lorenzo, rianalisi ERA5',L,cy+178,28,'#8aa0b4','left',500,a2*ease(seg(t,6.9,7.5)));
+  }
+  // ---------- scena 3: la ricerca nell'archivio (9-15,6) ----------
+  const in3=ease(seg(t,9,9.8)), out3=1-ease(seg(t,15.2,15.8)), a3=in3*out3;
+  if(a3>0){
+    const T0=9.8,T1=13.6, scan=seg(t,T0,T1), annoF=y0+(y1-y0+1)*scan;
+    txt('LA RICERCA',L,250,26,'#8aa0b4','left',700,a3);
+    txt('Cerco fra tutti',L,335,78,'#fff','left',800,a3);
+    txt('i giorni dal '+y0,L,425,78,'#fff','left',800,a3);
+    // mini carta di riferimento in alto a destra
+    const top=540,bot=1380,X=y=>L+60+(y-y0)/(y1+1-y0)*(R-L-60),Y=s=>bot-(s/100)*(bot-top);
+    g.globalAlpha=a3;
+    for(let s=0;s<=100;s+=20){g.strokeStyle='rgba(255,255,255,.10)';g.lineWidth=1.5;g.beginPath();g.moveTo(L+60,Y(s));g.lineTo(R,Y(s));g.stroke()}
+    g.globalAlpha=1;
+    for(let s=0;s<=100;s+=20)txt(String(s),L+46,Y(s)+9,24,'#8aa0b4','right',500,a3);
+    for(let y=1960;y<=2020;y+=10)txt(String(y),X(y),bot+44,24,'#8aa0b4','center',500,a3);
+    txt('somiglianza con il '+lunga(rif.data)+' (0-100)',L+60,top-26,26,'#8aa0b4','left',500,a3);
+    let visti=0;const soglia=D.primi[2].score;
+    for(const [yf,sc] of D.punti){if(yf>annoF)continue;visti++;const eta=(annoF-yf)/(y1+1-y0)*(T1-T0), e=ease(cl(eta/.35));
+      const forte=sc>=soglia;g.globalAlpha=a3*(forte?1:.5)*e;g.fillStyle=forte?'#3ddc97':sc>=70?'#ffd23f':'#5d87b3';g.beginPath();g.arc(X(yf),Y(sc),(forte?9:4.2)*(eta<.35?1+1.2*(1-e):1),0,7);g.fill()}
+    g.globalAlpha=1;
+    if(scan<1){const xs=X(Math.min(annoF,y1+1));g.globalAlpha=a3*.9;g.strokeStyle='#ffd23f';g.lineWidth=3;g.beginPath();g.moveTo(xs,top-6);g.lineTo(xs,bot+6);g.stroke();g.globalAlpha=1}
+    txt(String(Math.min(y1,Math.floor(annoF))),R,1575,130,'#fff','right',800,a3);
+    txt(mig(visti)+' giorni',L,1520,56,'#fff','left',800,a3);
+    txt('confrontati (stessa stagione)',L,1568,28,'#8aa0b4','left',500,a3);
+    const af=ease(seg(t,13.8,14.5))*a3;
+    if(af>0){g.globalAlpha=af;g.fillStyle='rgba(8,18,28,.94)';rr(L,1620,R-L,150,24);g.fill();g.strokeStyle='rgba(61,220,151,.6)';g.lineWidth=3;g.stroke();g.globalAlpha=1;
+      txt('I punti verdi sono i più simili',L+34,1685,46,'#3ddc97','left',800,af);txt('pressione, vento, temperatura e pioggia quasi uguali',L+34,1736,28,'#d6e0ea','left',500,af)}
+  }
+  // ---------- scena 4: i tre giorni più simili (15,6-21) ----------
+  const in4=ease(seg(t,15.7,16.4)), out4=1-ease(seg(t,20.6,21.2)), a4=in4*out4;
+  if(a4>0){
+    txt('IL RISULTATO',L,250,26,'#8aa0b4','left',700,a4);
+    txt('I tre giorni più simili',L,335,78,'#fff','left',800,a4);
+    const mw=400, mh=mw*BOX.asp, passo=mh+72;
+    D.primi.forEach((p,k)=>{const a=a4*ease(seg(t,16.2+k*.8,17+k*.8)); if(a<=0)return; const y=400+k*passo, dx=(1-ease(seg(t,16.2+k*.8,17+k*.8)))*80;
+      g.globalAlpha=a;g.fillStyle='rgba(255,255,255,.05)';rr(L+dx,y,R-L,mh+40,28);g.fill();g.strokeStyle='rgba(255,255,255,.14)';g.lineWidth=2;g.stroke();g.globalAlpha=1;
+      carta(p.p,L+20+dx,y+20,mw,{a,mini:true});
+      const tx=L+20+mw+34+dx;
+      txt('ANALOGO #'+(k+1),tx,y+70,26,'#8aa0b4','left',700,a);
+      txt(lunga(p.data),tx,y+136,48,'#fff','left',800,a);
+      txt(n1(p.t)+' °C · '+n1(p.pr)+' mm',tx,y+188,32,'#9fb2c4','left',500,a);
+      const sc=Math.round(p.score*ease(seg(t,16.6+k*.8,17.6+k*.8)));
+      txt(String(sc),tx,y+322,124,'#3ddc97','left',800,a);g.font='800 124px Inter, DejaVu Sans, sans-serif';const wsc=g.measureText(String(sc)).width;
+      txt('/100',tx+wsc+12,y+322,44,'#8aa0b4','left',700,a);
+      const bw=R-L-20-(tx-L-dx)-20;g.globalAlpha=a;g.fillStyle='rgba(255,255,255,.12)';rr(tx,y+mh-8,bw,14,7);g.fill();
+      const gr=g.createLinearGradient(tx,0,tx+bw,0);gr.addColorStop(0,'#ffb347');gr.addColorStop(1,'#3ddc97');g.fillStyle=gr;rr(tx,y+mh-8,bw*sc/100,14,7);g.fill();g.globalAlpha=1});
+  }
+  // ---------- scena 5: che cosa è successo dopo (21-26) ----------
+  const in5=ease(seg(t,21.2,21.9)), a5=in5;
+  if(a5>0){
+    const dm=D.dopo_mm;
+    txt('E DOPO?',L,250,26,'#8aa0b4','left',700,a5);
+    txt('Che cosa è successo',L,335,78,'#fff','left',800,a5);
+    txt('nei tre giorni successivi',L,425,78,'#fff','left',800,a5);
+    txt('Media dei '+dm.n+' giorni più simili · pioggia a Borgo San Lorenzo',L,490,28,'#8aa0b4','left',500,a5);
+    const top=590,bot=1060,pm=Math.max(5,...D.dopo.map(d=>d.pmax))*1.1,YP=v=>bot-(v/pm)*(bot-top),bw=150,gap=(R-L-4*bw)/3;
+    g.strokeStyle='rgba(255,255,255,.2)';g.lineWidth=2;g.globalAlpha=a5;g.beginPath();g.moveTo(L,bot);g.lineTo(R,bot);g.stroke();g.globalAlpha=1;
+    D.dopo.forEach((d,j)=>{const e=eio(seg(t,21.8+j*.35,22.8+j*.35)),x=L+j*(bw+gap),cx=x+bw/2;
+      g.globalAlpha=a5;g.fillStyle=j?'#4f9dff':'#5d7a96';rr(x,YP(d.p*e),bw,Math.max(2,bot-YP(d.p*e)),12);g.fill();
+      g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=4;g.beginPath();g.moveTo(cx,YP(d.pmax*e));g.lineTo(cx,YP(d.pmin*e));g.stroke();
+      g.beginPath();g.moveTo(cx-16,YP(d.pmax*e));g.lineTo(cx+16,YP(d.pmax*e));g.stroke();g.globalAlpha=1;
+      txt(n1(d.p*e)+' mm',cx,Math.min(YP(d.p*e),YP(d.pmax*e))-22,36,'#fff','center',800,a5);
+      txt(j?'+'+j+(j===1?' giorno':' giorni'):'quel giorno',cx,bot+50,28,'#9fb2c4','center',600,a5);
+      txt(n1(d.t)+' °C',cx,bot+96,30,'#ffd23f','center',700,a5*ease(seg(t,22.6+j*.2,23.2+j*.2)))});
+    txt('la riga bianca va dal caso più asciutto al più piovoso',L,bot+160,26,'#8aa0b4','left',500,a5*ease(seg(t,22.8,23.4)));
+    const ab=ease(seg(t,23.2,24));
+    if(ab>0){g.globalAlpha=ab;g.fillStyle='rgba(8,18,28,.94)';rr(L,1290,R-L,190,24);g.fill();g.strokeStyle='rgba(79,157,255,.6)';g.lineWidth=3;g.stroke();g.globalAlpha=1;
+      txt('In media '+n1(dm.media)+' mm in tre giorni',L+34,1368,52,'#fff','left',800,ab);
+      txt('da '+n1(dm.min)+' a '+n1(dm.max)+' mm: gli analoghi dicono che cosa è plausibile,',L+34,1418,27,'#d6e0ea','left',500,ab);
+      txt('non che cosa succederà.',L+34,1454,27,'#d6e0ea','left',500,ab)}
+    const ao=ease(seg(t,24,24.8));
+    txt('Prova con qualsiasi giorno dal '+y0,L,1590,48,'#ffd23f','left',800,ao);
+    txt("anche con l'alluvione del 1966",L,1646,34,'#d6e0ea','left',500,ao);
+    txt('MeteoGeek → Ricerca analoghi',L,1752,34,'#6fd0a8','left',700,ease(seg(t,24.4,25.2)));
+    txt('lucavarlani-max.github.io/mugello_meteoeclima',L,1800,28,'#8aa0b4','left',500,ease(seg(t,24.4,25.2)));
+  }
+  // barra di avanzamento
+  g.fillStyle='rgba(255,255,255,.12)';g.fillRect(0,H-8,W,8);g.fillStyle='#3ddc97';g.fillRect(0,H-8,W*cl(t/DUR),8);
+}
+window.frame=t=>draw(t);
+Promise.all([fetch('dati.json').then(r=>r.json()),fetch('/data/sinottica-mappa.json').then(r=>r.json())]).then(([d,m])=>{D=d;M=m;land=new Path2D(m.land);riquadro();draw(0);window.pronto=true;
+  if(!navigator.webdriver){const t0=performance.now();(function loop(){draw(((performance.now()-t0)/1000)%DUR);requestAnimationFrame(loop)})()}});
+</script>
