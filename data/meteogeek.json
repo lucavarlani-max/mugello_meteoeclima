@@ -39,6 +39,24 @@
   ],
   "esperimenti": [
     {
+      "id": "analoghi",
+      "titolo": "Ricerca analoghi: i giorni che assomigliano a oggi",
+      "tipo": "esperimento",
+      "tema": "previsioni",
+      "data": "2026-11-13",
+      "testo": "Fra tutti i giorni dal 1951, quali avevano pressione, vento, temperatura e pioggia più simili a oggi sul Mugello? Classifica dei giorni più somiglianti con la loro carta della pressione, peso regolabile fra pioggia e temperatura, e che cosa è successo nei tre giorni successivi a confronto con la previsione. Si può partire da qualsiasi giorno, anche dall'alluvione del 1966.",
+      "link": "geek-analoghi.html",
+      "anteprima": "img/geek/analoghi.jpg",
+      "foto": {"autore": "Jean-Marie Muggianu", "licenza": "CC BY-SA 3.0", "url": "https://commons.wikimedia.org/wiki/File:Barograph_01.jpg"},
+      "tag": [
+        "analoghi",
+        "ERA5",
+        "pressione",
+        "previsioni",
+        "k-nearest neighbours"
+      ]
+    },
+    {
       "id": "prima-gelata",
       "titolo": "La prima gelata dell'autunno: anno per anno",
       "tipo": "grafico",
