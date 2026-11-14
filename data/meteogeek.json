@@ -39,6 +39,27 @@
   ],
   "esperimenti": [
     {
+      "id": "proverbi",
+      "titolo": "I proverbi del tempo alla prova dei dati",
+      "tipo": "statistica",
+      "tema": "clima",
+      "data": "2026-11-14",
+      "testo": "L'estate di San Martino esiste? I giorni della merla sono i più freddi? Se piove per Santa Bibiana piove quaranta giorni? Dodici proverbi messi alla prova con le serie di Borgo San Lorenzo (dal 1951) e Firenzuola (dal 1961): per ognuno un grafico, i numeri e un verdetto (vero, in parte, falso) che si ricalcola da solo con i dati del sito.",
+      "link": "geek-proverbi.html",
+      "tag": [
+        "proverbi",
+        "San Martino",
+        "giorni della merla",
+        "santi di ghiaccio",
+        "Candelora",
+        "Santa Bibiana",
+        "Santa Lucia",
+        "statistica",
+        "SIR",
+        "ARPAE"
+      ]
+    },
+    {
       "id": "analoghi",
       "titolo": "Ricerca analoghi: i giorni che assomigliano a oggi",
       "tipo": "esperimento",

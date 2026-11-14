@@ -204,6 +204,13 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   `scripts/fetch_arpae_stazioni.py` legge l'archivio mensile delle osservazioni ARPAE (BUFR-JSON) e scrive
   `data/arpae/stazioni.csv` e `data/arpae/<id>/temp.csv`, `prec024.csv` nel formato del SIR (una volta al giorno;
   `--dal 2006-01` ricostruisce tutto).
+- **Proverbi alla prova dei dati** (`geek-proverbi.html` + `geek-proverbi.js`, MeteoGeek) — dodici proverbi del tempo
+  (San Martino, giorni della merla, santi di ghiaccio, Candelora, Santa Bibiana, Santa Lucia…) verificati con le serie di
+  Borgo San Lorenzo (`data/borgo-serie-lunghe.json`, pioggia da `data/sir/TOS01000999/prec99.csv`) e Firenzuola
+  (`data/serie/firenzuola.csv`): scarto dalla curva stagionale liscia per i proverbi legati a una data, test di
+  permutazione per quelli «se… allora», classifica dei mesi, astronomia (`astro.js`) per Santa Lucia. Nessun file di dati
+  né Action: grafici, numeri e verdetti si ricalcolano nel browser a ogni visita. Per aggiungere un proverbio: un elemento
+  nell'elenco `PROVERBI` di `geek-proverbi.js`.
 - **Ricerca analoghi** (`geek-analoghi.html`, MeteoGeek) — i giorni dal 1951 più simili a un giorno scelto (per
   default oggi) e che cosa è successo nei tre giorni successivi. Confronta la pressione al livello del mare su 12 punti
   intorno all'Italia più temperatura, pioggia, vento e umidità a Borgo San Lorenzo (distanza euclidea pesata, calcolata
