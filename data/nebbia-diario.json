@@ -2610,7 +2610,7 @@
   "2026-11-14": {
    "ora": "07:18",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.2,
@@ -2679,7 +2679,8 @@
    "luce": 122.2,
    "contrasto": 0.467,
    "contrasto_sfondo": 0.279,
-   "foto": "reports/nebbia/2026-11-14.jpg"
+   "foto": "reports/nebbia/2026-11-14.jpg",
+   "cielo": "sereno"
   }
  }
 }
