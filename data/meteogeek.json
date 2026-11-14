@@ -46,6 +46,12 @@
       "data": "2026-11-14",
       "testo": "Quanto è secco il periodo attuale rispetto al normale? L'indice di siccità SPI a 1, 3, 6, 12 e 24 mesi per tredici pluviometri del Mugello e Firenzuola, la classifica delle siccità più pesanti e la serie più lunga di giorni senza pioggia di ogni anno. Si aggiorna da solo con i dati del sito.",
       "link": "geek-siccita.html",
+      "anteprima": "img/geek/siccita.jpg",
+      "foto": {
+        "autore": "Andrew Cattoir (Lake Mead National Recreation Area)",
+        "licenza": "pubblico dominio",
+        "url": "https://commons.wikimedia.org/wiki/File:Dry_Cracked_Mud_(4957b8b2-f52c-43b0-acc2-ead42cf6f03b).jpg"
+      },
       "tag": [
         "siccità",
         "SPI",
