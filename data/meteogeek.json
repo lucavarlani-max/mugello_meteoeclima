@@ -39,6 +39,24 @@
   ],
   "esperimenti": [
     {
+      "id": "siccita",
+      "titolo": "Siccità e serie secche: quanto manca la pioggia?",
+      "tipo": "statistica",
+      "tema": "pioggia",
+      "data": "2026-11-14",
+      "testo": "Quanto è secco il periodo attuale rispetto al normale? L'indice di siccità SPI a 1, 3, 6, 12 e 24 mesi per tredici pluviometri del Mugello e Firenzuola, la classifica delle siccità più pesanti e la serie più lunga di giorni senza pioggia di ogni anno. Si aggiorna da solo con i dati del sito.",
+      "link": "geek-siccita.html",
+      "tag": [
+        "siccità",
+        "SPI",
+        "giorni senza pioggia",
+        "serie secche",
+        "pioggia",
+        "SIR",
+        "ARPAE"
+      ]
+    },
+    {
       "id": "proverbi",
       "titolo": "I proverbi del tempo alla prova dei dati",
       "tipo": "statistica",
