@@ -204,6 +204,12 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   `scripts/fetch_arpae_stazioni.py` legge l'archivio mensile delle osservazioni ARPAE (BUFR-JSON) e scrive
   `data/arpae/stazioni.csv` e `data/arpae/<id>/temp.csv`, `prec024.csv` nel formato del SIR (una volta al giorno;
   `--dal 2006-01` ricostruisce tutto).
+- **Siccità e serie secche** (`geek-siccita.html` + `geek-siccita.js`, MeteoGeek) — indice di siccità SPI a 1, 3, 6, 12 e
+  24 mesi (distribuzione gamma per ogni mese del calendario, metodo di Thom), situazione attuale sugli ultimi 30, 90, 180
+  e 365 giorni, classifica degli episodi di siccità e serie più lunga di giorni consecutivi sotto 1 mm di ogni anno.
+  Stazioni: Borgo San Lorenzo, Firenzuola (`data/serie/firenzuola.csv`, dal 1961) e i pluviometri di
+  `data/sir/mugello.json` con una serie dal 1995 o prima che arriva a oggi (`data/sir/<id>/prec99.csv`). Nessun file di
+  dati né Action: tutto si ricalcola nel browser.
 - **Proverbi alla prova dei dati** (`geek-proverbi.html` + `geek-proverbi.js`, MeteoGeek) — dodici proverbi del tempo
   (San Martino, giorni della merla, santi di ghiaccio, Candelora, Santa Bibiana, Santa Lucia…) verificati con le serie di
   Borgo San Lorenzo (`data/borgo-serie-lunghe.json`, pioggia da `data/sir/TOS01000999/prec99.csv`) e Firenzuola
