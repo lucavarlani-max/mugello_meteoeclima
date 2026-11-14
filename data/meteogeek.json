@@ -64,6 +64,12 @@
       "data": "2026-11-14",
       "testo": "L'estate di San Martino esiste? I giorni della merla sono i più freddi? Se piove per Santa Bibiana piove quaranta giorni? Dodici proverbi messi alla prova con le serie di Borgo San Lorenzo (dal 1951) e Firenzuola (dal 1961): per ognuno un grafico, i numeri e un verdetto (vero, in parte, falso) che si ricalcola da solo con i dati del sito.",
       "link": "geek-proverbi.html",
+      "anteprima": "img/geek/proverbi.jpg",
+      "foto": {
+        "autore": "Tim Green from Bradford",
+        "licenza": "CC BY 2.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Rooster_weather_vane_of_St_Andrew%27s_Church,_Holmfield,_Halifax.jpg"
+      },
       "tag": [
         "proverbi",
         "San Martino",
