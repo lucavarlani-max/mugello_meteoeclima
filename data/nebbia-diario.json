@@ -2681,6 +2681,81 @@
    "contrasto_sfondo": 0.279,
    "foto": "reports/nebbia/2026-11-14.jpg",
    "cielo": "sereno"
+  },
+  "2026-11-15": {
+   "ora": "07:19",
+   "dopo_alba": 11,
+   "nebbia": null,
+   "previsione_sera": {
+    "v": 3,
+    "scarto_min": 1.8,
+    "vento_medio": 0.7,
+    "nuvole_medie": 100,
+    "ore_soglie": 0,
+    "ore": 13,
+    "alba": "07:08",
+    "scarto_alba": 1.8,
+    "vento_alba": 0.7,
+    "dp_alba": 5.2,
+    "nuvole_alte": 97,
+    "nubi_basse_alba": 100,
+    "ur_alba": 88,
+    "suolo_alba": 0.309,
+    "inv850_alba": -3.0,
+    "blh_alba": 225,
+    "pressione": 1022,
+    "crossover": 2.8,
+    "pioggia_24h": 0.7,
+    "emessa": "2026-11-15T02:19"
+   },
+   "termo_ora": "2026-11-15T07:05",
+   "tmin_borgo": 4.5,
+   "tmin_giovi": 2.1,
+   "inversione": -2.4,
+   "umidita_max": {
+    "TOS11000017": 87.0,
+    "TOS01000926": 87.0,
+    "TOS11000089": 99.0,
+    "TOS01000921": 85.0,
+    "TOS03001001": 99.0
+   },
+   "umidita_ora": {
+    "TOS11000017": 81.0,
+    "TOS01000926": 82.0,
+    "TOS11000089": 98.0,
+    "TOS01000921": 82.0,
+    "TOS03001001": 99.0
+   },
+   "vento_max": {
+    "TOS11000017": 3.7,
+    "TOS01000926": 2.5,
+    "TOS03001001": 2.8
+   },
+   "cfr_ora": "2026-11-15T07:00",
+   "rugiada_ora": 4.4,
+   "scarto_ora": 3.1,
+   "previsione": {
+    "v": 3,
+    "scarto_min": 1.7,
+    "vento_medio": 0.5,
+    "nuvole_medie": 94,
+    "ore_soglie": 0,
+    "ore": 13,
+    "alba": "07:08",
+    "scarto_alba": 1.7,
+    "vento_alba": 0.6,
+    "dp_alba": 6.0,
+    "ur_alba": 89,
+    "pressione": 1022,
+    "crossover": 0.8,
+    "pioggia_24h": 0.4
+   },
+   "hash": "8713095ba9185eaa",
+   "ferma": false,
+   "luce": 134.9,
+   "contrasto": 0.382,
+   "contrasto_sfondo": 0.215,
+   "foto": "reports/nebbia/2026-11-15.jpg"
   }
  }
 }
