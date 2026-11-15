@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""Calcola i prossimi passaggi della ISS visibili a occhio nudo da Borgo San Lorenzo.
+"""Calcola i prossimi passaggi visibili di ISS e Tiangong da Borgo San Lorenzo.
 
-Fonte TLE: Celestrak (NORAD 25544). Propagazione e geometria: Skyfield.
-Criterio di visibilità: ISS sopra 10°, Sole sotto -6° e ISS illuminata dal Sole.
-Il file data/iss-passaggi.json viene letto da scripts/build_iss_statico.js.
+Fonte TLE: Celestrak (NORAD 25544 e 48274). Propagazione e geometria: Skyfield.
+Criterio di visibilità: oggetto sopra 10°, Sole sotto -6° e oggetto illuminato.
+Il file data/passaggi-stazioni.json viene letto da scripts/build_stazioni_statiche.js.
 """
 from __future__ import annotations
 
 import json
-import math
-import os
 import sys
 import urllib.request
 from datetime import datetime, timezone
@@ -20,8 +18,7 @@ import numpy as np
 from skyfield.api import EarthSatellite, Loader, wgs84
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "data" / "iss-passaggi.json"
-TLE_URL = "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE"
+DATA = ROOT / "data" / "passaggi-stazioni.json"
 ROME = ZoneInfo("Europe/Rome")
 LAT, LON, ELEV = 43.955, 11.386, 196.0
 HORIZON_DAYS = 14
@@ -29,7 +26,11 @@ MIN_ALT = 10.0
 MIN_SUN_ALT = -6.0
 MAX_PASSES = 8
 STEP_SECONDS = 10
-
+TLE_URL = "https://celestrak.org/NORAD/elements/gp.php?CATNR={norad}&FORMAT=TLE"
+STATIONS = [
+    {"id": "iss", "nome": "ISS", "norad": 25544},
+    {"id": "tiangong", "nome": "Tiangong (CSS)", "norad": 48274},
+]
 AZ = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
       "S", "SSO", "SO", "OSO", "O", "ONO", "NO", "NNO"]
 
@@ -46,14 +47,15 @@ def fmt_rome(dt: datetime) -> str:
     return dt.astimezone(ROME).strftime("%H:%M")
 
 
-def read_tle() -> tuple[str, str, str]:
-    req = urllib.request.Request(TLE_URL, headers={"User-Agent": "MugelloMeteo/1.0 (effemeridi ISS)"})
+def read_tle(norad: int) -> tuple[str, str, str, str]:
+    url = TLE_URL.format(norad=norad)
+    req = urllib.request.Request(url, headers={"User-Agent": "MugelloMeteo/1.0 (passaggi stazioni)"})
     with urllib.request.urlopen(req, timeout=30) as response:
         text = response.read().decode("utf-8", errors="replace")
     lines = [x.strip() for x in text.splitlines() if x.strip()]
     if len(lines) < 3 or not lines[1].startswith("1 ") or not lines[2].startswith("2 "):
-        raise RuntimeError(f"Risposta TLE non valida: {text[:160]!r}")
-    return lines[0], lines[1], lines[2]
+        raise RuntimeError(f"Risposta TLE non valida per NORAD {norad}: {text[:160]!r}")
+    return lines[0], lines[1], lines[2], url
 
 
 def visible_segments(mask: np.ndarray) -> list[np.ndarray]:
@@ -63,29 +65,11 @@ def visible_segments(mask: np.ndarray) -> list[np.ndarray]:
     return np.split(idx, np.flatnonzero(np.diff(idx) > 1) + 1)
 
 
-def main() -> int:
-    try:
-        name, line1, line2 = read_tle()
-    except Exception as exc:
-        print(f"Errore nel recupero TLE: {exc}", file=sys.stderr)
-        if DATA.exists():
-            print("Mantengo il dataset ISS esistente.", file=sys.stderr)
-            return 0
-        return 1
-
-    loader = Loader(Path.home() / ".skyfield")
-    ts = loader.timescale()
-    eph = loader("de421.bsp")
-    earth, sun = eph["earth"], eph["sun"]
-    sat = EarthSatellite(line1, line2, name, ts)
-    observer = wgs84.latlon(LAT, LON, elevation_m=ELEV)
-
+def compute_passes(sat, station, ts, eph, earth, sun, observer) -> list[dict]:
     t0 = ts.now()
     t1 = ts.tt_jd(t0.tt + HORIZON_DAYS)
     times, events = sat.find_events(observer, t0, t1, altitude_degrees=MIN_ALT)
     passes: list[dict] = []
-
-    # find_events restituisce 0 = sorgere, 1 = culmine, 2 = tramonto.
     i = 0
     while i + 2 < len(events):
         if list(events[i:i + 3]) != [0, 1, 2]:
@@ -116,10 +100,11 @@ def main() -> int:
             continue
         direction = f"da {az_dir(float(az.degrees[start_idx]))} verso {az_dir(float(az.degrees[end_idx]))}"
         quality = "radente" if max_alt < 20 else "alto"
-        note = (f"{'Passaggio radente' if quality == 'radente' else 'Passaggio visibile a occhio nudo'}: "
-                f"{direction}, massimo {max_alt:.0f}° alle {fmt_rome(peak_dt)}, per {duration:.0f} minuti.")
+        label = "Passaggio radente" if quality == "radente" else "Passaggio visibile a occhio nudo"
+        note = (f"{label} di {station['nome']}: {direction}, "
+                f"massimo {max_alt:.0f}° alle {fmt_rome(peak_dt)}, per {duration:.0f} minuti.")
         passes.append({
-            "id": f"iss-{start_dt.astimezone(ROME).strftime('%Y%m%d-%H%M')}",
+            "id": f"{station['id']}-{start_dt.astimezone(ROME).strftime('%Y%m%d-%H%M')}",
             "inizio": iso_rome(start_dt),
             "fine": iso_rome(end_dt),
             "massimo": iso_rome(peak_dt),
@@ -131,28 +116,64 @@ def main() -> int:
         })
         if len(passes) >= MAX_PASSES:
             break
+    return passes
+
+
+def main() -> int:
+    existing = None
+    if DATA.exists():
+        try:
+            existing = json.loads(DATA.read_text(encoding="utf-8"))
+        except Exception:
+            existing = None
+
+    loader = Loader(Path.home() / ".skyfield")
+    ts = loader.timescale()
+    eph = loader("de421.bsp")
+    earth, sun = eph["earth"], eph["sun"]
+    observer = wgs84.latlon(LAT, LON, elevation_m=ELEV)
+
+    try:
+        stations = []
+        for station in STATIONS:
+            name, line1, line2, url = read_tle(station["norad"])
+            sat = EarthSatellite(line1, line2, name, ts)
+            passes = compute_passes(sat, station, ts, eph, earth, sun, observer)
+            stations.append({
+                "id": station["id"],
+                "nome": station["nome"],
+                "norad": station["norad"],
+                "tle": {"nome": name, "line1": line1, "line2": line2},
+                "url_tle": url,
+                "passaggi": passes,
+            })
+    except Exception as exc:
+        print(f"Errore nel recupero o nel calcolo dei passaggi: {exc}", file=sys.stderr)
+        if existing and existing.get("stazioni"):
+            print("Mantengo il dataset esistente delle stazioni.", file=sys.stderr)
+            return 0
+        return 1
 
     payload = {
         "generato": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "luogo": {"nome": "Borgo San Lorenzo", "lat": LAT, "lon": LON, "elevazione_m": ELEV},
         "fonte": {
-            "tle": "Celestrak, NORAD 25544",
+            "tle": "Celestrak",
             "calcolo": "Skyfield",
-            "url_tle": TLE_URL,
         },
-        "tle": {"nome": name, "line1": line1, "line2": line2},
         "criterio": {
             "altezza_minima_gradi": MIN_ALT,
             "sole_sotto_gradi": MIN_SUN_ALT,
             "finestra_giorni": HORIZON_DAYS,
         },
-        "passaggi": passes,
+        "stazioni": stations,
     }
     DATA.parent.mkdir(parents=True, exist_ok=True)
     DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"ISS: {len(passes)} passaggi visibili salvati in {DATA.relative_to(ROOT)}")
-    for p in passes:
-        print(f"  {p['inizio'][:16]}  {p['direzione']}  max {p['altezza']}°  {p['durata']:.0f} min")
+    for station in stations:
+        print(f"{station['nome']}: {len(station['passaggi'])} passaggi visibili")
+        for p in station["passaggi"]:
+            print(f"  {p['inizio'][:16]}  {p['direzione']}  max {p['altezza']}°  {p['durata']:.0f} min")
     return 0
 
 

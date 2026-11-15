@@ -17,7 +17,7 @@
   let tick=0;                                      // aggiornamenti periodici
   let eventiCorrenti=[];
   let specialiData=null;
-  let issData=null;
+  let stazioniData=null;
   const LUOGHI=[
     {id:"borgo",nome:"Borgo San Lorenzo",lat:43.955,lon:11.386},
     {id:"barberino",nome:"Barberino di Mugello",lat:43.9908,lon:11.2386},
@@ -330,18 +330,21 @@
   }
   function iss(){
     const root=$("iss");if(!root)return;
-    const now=new Date();let next=null;
-    root.querySelectorAll(".iss-pass").forEach(row=>{
-      const start=new Date(row.dataset.issInizio),fine=new Date(row.dataset.issFine),passato=fine<now;
-      row.hidden=passato;
-      if(!passato&&(!next||start<next.start))next={start,fine};
+    const now=new Date();
+    root.querySelectorAll(".sat-block").forEach(block=>{
+      let next=null;
+      block.querySelectorAll(".iss-pass").forEach(row=>{
+        const start=new Date(row.dataset.issInizio),fine=new Date(row.dataset.issFine),passato=fine<now;
+        row.hidden=passato;
+        if(!passato&&(!next||start<next.start))next={start,fine};
+      });
+      const status=block.querySelector(".iss-next");if(!status)return;
+      if(!next){status.textContent="Nessun passaggio futuro nei dati aggiornati; la pagina si aggiorna ogni giorno.";return;}
+      const quando=`${new Intl.DateTimeFormat("it-IT",{weekday:"short",day:"numeric",month:"short"}).format(next.start)} alle ${A.ora(next.start)}`;
+      if(next.start<=now&&now<=next.fine){status.textContent=`Passaggio in corso: ${quando}, fino alle ${A.ora(next.fine)}.`;return;}
+      const min=Math.max(1,Math.ceil((next.start-now)/6e4));
+      status.textContent=`Prossimo passaggio: ${quando}, tra ${min<60?min+" min":Math.floor(min/60)+" h "+String(min%60).padStart(2,"0")+" min"}.`;
     });
-    const status=$("iss-prossimo");if(!status)return;
-    if(!next){status.textContent="Nessun passaggio futuro nei dati aggiornati; la pagina si aggiorna ogni giorno.";return;}
-    const quando=`${new Intl.DateTimeFormat("it-IT",{weekday:"short",day:"numeric",month:"short"}).format(next.start)} alle ${A.ora(next.start)}`;
-    if(next.start<=now&&now<=next.fine){status.textContent=`Passaggio in corso: ${quando}, fino alle ${A.ora(next.fine)}.`;return;}
-    const min=Math.max(1,Math.ceil((next.start-now)/6e4));
-    status.textContent=`Prossimo passaggio: ${quando}, tra ${min<60?min+" min":Math.floor(min/60)+" h "+String(min%60).padStart(2,"0")+" min"}.`;
   }
   function eventi(){
     const t0=midOf(Y,M,D),E=A.eventi(t0,9);
@@ -371,12 +374,13 @@
   $("cal-events").addEventListener("click",e=>{const b=e.target.closest("button[data-d]");if(b)imposta(Y,M,+b.dataset.d);});
   $("evs").addEventListener("click",e=>{const b=e.target.closest("button[data-ics]");if(!b)return;const ev=eventiCorrenti[+b.dataset.ics];if(ev)scaricaIcs(ev);});
   try{const el=$("eff-speciali-data");if(el)specialiData=JSON.parse(el.textContent);}catch(e){}
-  try{const el=$("eff-iss-data");if(el)issData=JSON.parse(el.textContent);}catch(e){}
+  try{const el=$("eff-stazioni-data");if(el)stazioniData=JSON.parse(el.textContent);}catch(e){}
   const issRoot=$("iss");
   if(issRoot)issRoot.addEventListener("click",e=>{
     const b=e.target.closest("button[data-iss-ics]");if(!b)return;
-    const p=(issData&&issData.passaggi||[]).find(x=>x.id===b.dataset.issIcs);
-    if(p)scaricaIcs({nome:"Passaggio ISS",data:new Date(p.inizio),fine:new Date(p.fine),nota:p.nota,ora:true,luogo:"Borgo San Lorenzo",uid:`iss-${p.id}@lucavarlani-max.github.io`});
+    const block=b.closest(".sat-block"),station=block&&(stazioniData&&stazioniData.stazioni||[]).find(x=>x.id===block.dataset.station);
+    const p=station&&station.passaggi.find(x=>x.id===b.dataset.issIcs);
+    if(p)scaricaIcs({nome:`Passaggio ${station.nome}`,data:new Date(p.inizio),fine:new Date(p.fine),nota:p.nota,ora:true,luogo:"Borgo San Lorenzo",uid:`${p.id}@lucavarlani-max.github.io`});
   });
   iss();
   const speciali=$("speciali");
