@@ -67,13 +67,15 @@ var GA_ID = "G-QQFBDGK1X1";   // es. "G-AB12CD34EF" (Google Analytics > Amminist
         document.cookie = n + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/" + (d ? "; domain=" + d : ""); }); });
   }
 
-  var css = ".mmc-ck{position:fixed;left:12px;right:12px;bottom:12px;z-index:5000;max-width:560px;margin:0 auto;" +
-    "background:var(--panel,#fff);color:var(--ink,#16261f);border:1px solid var(--line,#e3e8e1);border-radius:14px;" +
-    "box-shadow:0 12px 40px -12px rgba(0,0,0,.35);padding:14px 16px;font:14px/1.45 'IBM Plex Sans',system-ui,sans-serif}" +
-    ".mmc-ck p{margin:0 0 10px} .mmc-ck a{color:var(--pine,#0f6b52)}" +
+  var css = ".mmc-ck{position:fixed;left:8px;right:8px;bottom:8px;z-index:5000;max-width:620px;margin:0 auto;" +
+    "background:var(--panel,#fff);color:var(--ink,#16261f);border:1px solid var(--line,#e3e8e1);border-radius:12px;" +
+    "box-shadow:0 12px 40px -12px rgba(0,0,0,.35);padding:10px 12px;font:13px/1.4 'IBM Plex Sans',system-ui,sans-serif}" +
+    ".mmc-ck p{margin:0 0 7px} .mmc-ck a{color:var(--pine,#0f6b52)}" +
+    ".mmc-ck .more{display:none;margin:0 0 8px;font-size:12px;color:var(--ink-soft,#48584f)}" +
+    ".mmc-ck .more[hidden]{display:none} .mmc-ck .more:not([hidden]){display:block}" +
     ".mmc-ck .b{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}" +
-    ".mmc-ck button{font:inherit;font-weight:600;font-size:13.5px;border-radius:999px;padding:8px 16px;cursor:pointer;border:1px solid var(--pine,#0f6b52)}" +
-    ".mmc-ck .si{background:var(--pine,#0f6b52);color:#fff} .mmc-ck .no{background:transparent;color:var(--pine,#0f6b52)}" +
+    ".mmc-ck button{font:inherit;font-weight:600;font-size:12.5px;border-radius:999px;padding:6px 12px;min-height:34px;cursor:pointer;border:1px solid var(--pine,#0f6b52)}" +
+    ".mmc-ck .si{background:var(--pine,#0f6b52);color:#fff} .mmc-ck .no{background:transparent;color:var(--pine,#0f6b52)} .mmc-ck .dt{background:transparent;color:var(--ink-soft,#48584f);border-color:var(--line,#e3e8e1)}" +
     ":root[data-theme=\"dark\"] .mmc-ck .si{color:#0e1613}" +
     "@media (prefers-color-scheme:dark){:root:not([data-theme=\"light\"]) .mmc-ck .si{color:#0e1613}}" +
     ".mmc-pref{cursor:pointer;text-decoration:underline;color:inherit;background:none;border:0;font:inherit;padding:0}" +
@@ -82,11 +84,11 @@ var GA_ID = "G-QQFBDGK1X1";   // es. "G-AB12CD34EF" (Google Analytics > Amminist
     if(document.querySelector(".mmc-ck")) return;
     if(!document.getElementById("mmc-ck-css")){ var st = document.createElement("style"); st.id = "mmc-ck-css"; st.textContent = css; document.head.appendChild(st); }
     var b = document.createElement("div"); b.className = "mmc-ck"; b.setAttribute("role", "dialog"); b.setAttribute("aria-label", "Consenso ai cookie statistici");
-    b.innerHTML = "<p>Vorremmo usare <b>Google Analytics</b> per capire quante persone usano il sito e quali pagine sono più utili. " +
-      "Google Analytics usa cookie statistici e i dati sono trattati da Google. Le visite sono già contate in forma anonima, senza cookie; " +
-      "il sito funziona allo stesso modo anche se rifiuti. <a href=\"https://policies.google.com/technologies/partner-sites?hl=it\" target=\"_blank\" rel=\"noopener\">Come Google usa i dati</a>.</p>" +
-      "<div class=\"b\"><button class=\"no\" type=\"button\">Rifiuta</button><button class=\"si\" type=\"button\">Accetta</button></div>";
+    b.innerHTML = "<p><b>Statistiche anonime sempre attive.</b> Con il consenso attiviamo Google Analytics per migliorare il sito.</p>" +
+      "<div class=\"more\" id=\"mmc-ck-more\" hidden>Google Analytics usa cookie statistici e i dati sono trattati da Google. Le visite sono già contate in forma anonima, senza cookie; il sito funziona allo stesso modo anche se rifiuti. <a href=\"https://policies.google.com/technologies/partner-sites?hl=it\" target=\"_blank\" rel=\"noopener\">Come Google usa i dati</a>.</div>" +
+      "<div class=\"b\"><button class=\"no\" type=\"button\">Rifiuta</button><button class=\"dt\" type=\"button\" aria-expanded=\"false\" aria-controls=\"mmc-ck-more\">Dettagli</button><button class=\"si\" type=\"button\">Accetta</button></div>";
     document.body.appendChild(b);
+    b.querySelector(".dt").onclick = function(){ var more=b.querySelector(".more"), open=more.hidden; more.hidden=!open; this.setAttribute("aria-expanded",String(open)); this.textContent=open?"Meno dettagli":"Dettagli"; };
     b.querySelector(".si").onclick = function(){ scrivi("si"); b.remove(); attiva(); };
     b.querySelector(".no").onclick = function(){ var prima = leggi(); scrivi("no"); b.remove(); togliCookie(); if(prima === "si") location.reload(); };
   }

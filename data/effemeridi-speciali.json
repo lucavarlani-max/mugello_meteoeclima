@@ -1,0 +1,3473 @@
+{
+  "generato": "2026-11-15T19:40:31.898Z",
+  "luogo": {
+    "nome": "Borgo San Lorenzo",
+    "lat": 43.955,
+    "lon": 11.386
+  },
+  "fonte": "Astronomy Engine 2.1.19 (VSOP87/ELP2000), coordinate geocentriche, orizzonte di Borgo San Lorenzo; confronto con cataloghi NASA GSFC.",
+  "eclissi": [
+    {
+      "id": "ecl-solare-2026-08-12-parziale",
+      "tipo": "solare",
+      "sottotipo": "parziale",
+      "tipoGlobale": "parziale",
+      "inizio": "2026-08-12T17:29:40.781Z",
+      "massimo": "2026-08-12T18:21:59.812Z",
+      "fine": "2026-08-12T19:11:38.132Z",
+      "inizioFase": null,
+      "fineFase": null,
+      "altezza": 0,
+      "altezzaInizio": 8.5,
+      "altezzaFine": -8,
+      "copertura": 0.932,
+      "visibile": true,
+      "visibilita": "solo fase iniziale",
+      "nota": "Eclissi solare parziale non visibile nella fase centrale da Borgo: si vede solo la fase parziale a partire dalle 19:29 fino al tramonto; la fase prosegue sotto l'orizzonte fino alle 21:11. Il massimo cade sotto l'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2026-08-28-parziale",
+      "tipo": "lunare",
+      "sottotipo": "parziale",
+      "tipoGlobale": "parziale",
+      "inizio": "2026-08-28T01:23:36.001Z",
+      "massimo": "2026-08-28T04:12:49.076Z",
+      "fine": "2026-08-28T07:02:02.150Z",
+      "inizioFase": "2026-08-28T02:33:23.786Z",
+      "fineFase": "2026-08-28T05:52:14.365Z",
+      "altezza": 3.7,
+      "altezzaInizio": 27.3,
+      "altezzaFine": -24.6,
+      "copertura": 0.966,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi lunare parziale, disco coperto al 97%; massimo alle 06:12 con la Luna a 3.7° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2027-02-20-penombrale",
+      "tipo": "lunare",
+      "sottotipo": "penombrale",
+      "tipoGlobale": "penombrale",
+      "inizio": "2027-02-20T21:11:52.109Z",
+      "massimo": "2027-02-20T23:12:44.142Z",
+      "fine": "2027-02-21T01:13:36.174Z",
+      "inizioFase": null,
+      "fineFase": null,
+      "altezza": 55.1,
+      "altezzaInizio": 45.5,
+      "altezzaFine": 48,
+      "copertura": 0,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi lunare penombrale; massimo alle 00:12 con la Luna a 55.1° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-solare-2027-08-02-parziale",
+      "tipo": "solare",
+      "sottotipo": "parziale",
+      "tipoGlobale": "parziale",
+      "inizio": "2027-08-02T08:02:44.561Z",
+      "massimo": "2027-08-02T09:10:53.008Z",
+      "fine": "2027-08-02T10:22:20.735Z",
+      "inizioFase": null,
+      "fineFase": null,
+      "altezza": 52.2,
+      "altezzaInizio": 41.1,
+      "altezzaFine": 61.1,
+      "copertura": 0.668,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi solare parziale vista da Borgo: Sole coperto al 67%, massimo alle 11:10 con il Sole a 52.2° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2028-01-12-parziale",
+      "tipo": "lunare",
+      "sottotipo": "parziale",
+      "tipoGlobale": "parziale",
+      "inizio": "2028-01-12T02:07:16.967Z",
+      "massimo": "2028-01-12T04:13:00.859Z",
+      "fine": "2028-01-12T06:18:44.750Z",
+      "inizioFase": "2028-01-12T03:43:52.796Z",
+      "fineFase": "2028-01-12T04:42:08.921Z",
+      "altezza": 27.1,
+      "altezzaInizio": 49,
+      "altezzaFine": 6,
+      "copertura": 0.027,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi lunare parziale, disco coperto al 3%; massimo alle 05:13 con la Luna a 27.1° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-solare-2028-01-26-parziale",
+      "tipo": "solare",
+      "sottotipo": "parziale",
+      "tipoGlobale": "anulare",
+      "inizio": "2028-01-26T15:43:47.052Z",
+      "massimo": "2028-01-26T16:55:30.999Z",
+      "fine": "2028-01-26T18:00:41.022Z",
+      "inizioFase": "2028-01-26T16:52:17.148Z",
+      "fineFase": "2028-01-26T16:58:45.706Z",
+      "altezza": -6.8,
+      "altezzaInizio": 4.4,
+      "altezzaFine": -18.3,
+      "copertura": 0.82,
+      "visibile": true,
+      "visibilita": "solo fase iniziale",
+      "nota": "Eclissi solare anulare non visibile nella fase centrale da Borgo: si vede solo la fase parziale a partire dalle 16:43 fino al tramonto; la fase prosegue sotto l'orizzonte fino alle 19:00. Il massimo cade sotto l'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2028-07-06-parziale",
+      "tipo": "lunare",
+      "sottotipo": "parziale",
+      "tipoGlobale": "parziale",
+      "inizio": "2028-07-06T15:43:55.421Z",
+      "massimo": "2028-07-06T18:19:38.379Z",
+      "fine": "2028-07-06T20:55:21.336Z",
+      "inizioFase": "2028-07-06T17:08:19.584Z",
+      "fineFase": "2028-07-06T19:30:57.173Z",
+      "altezza": -6.3,
+      "altezzaInizio": -32.5,
+      "altezzaFine": 13.9,
+      "copertura": 0.332,
+      "visibile": true,
+      "visibilita": "solo fase finale",
+      "nota": "Eclissi lunare parziale non visibile al massimo da Borgo: la Luna è sotto l'orizzonte. Si vede solo la fase finale, fino alle 22:55; il massimo cade sotto l'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2028-12-31-totale",
+      "tipo": "lunare",
+      "sottotipo": "totale",
+      "tipoGlobale": "totale",
+      "inizio": "2028-12-31T14:03:27.574Z",
+      "massimo": "2028-12-31T16:51:54.549Z",
+      "fine": "2028-12-31T19:40:21.523Z",
+      "inizioFase": "2028-12-31T16:15:46.662Z",
+      "fineFase": "2028-12-31T17:28:02.435Z",
+      "altezza": 10.7,
+      "altezzaInizio": -12.2,
+      "altezzaFine": 39.2,
+      "copertura": 1,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi lunare totale, disco coperto al 100%; massimo alle 17:51 con la Luna a 10.7° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2029-06-26-totale",
+      "tipo": "lunare",
+      "sottotipo": "totale",
+      "tipoGlobale": "totale",
+      "inizio": "2029-06-26T00:34:13.021Z",
+      "massimo": "2029-06-26T03:22:06.538Z",
+      "fine": "2029-06-26T06:10:00.054Z",
+      "inizioFase": "2029-06-26T02:30:51.174Z",
+      "fineFase": "2029-06-26T04:13:21.901Z",
+      "altezza": 1.8,
+      "altezzaInizio": 19,
+      "altezzaFine": -24.3,
+      "copertura": 1,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi lunare totale, disco coperto al 100%; massimo alle 05:22 con la Luna a 1.8° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2029-12-20-totale",
+      "tipo": "lunare",
+      "sottotipo": "totale",
+      "tipoGlobale": "totale",
+      "inizio": "2029-12-20T19:42:34.436Z",
+      "massimo": "2029-12-20T22:41:54.610Z",
+      "fine": "2029-12-21T01:41:14.783Z",
+      "inizioFase": "2029-12-20T22:14:26.175Z",
+      "fineFase": "2029-12-20T23:09:23.044Z",
+      "altezza": 67.9,
+      "altezzaInizio": 43.1,
+      "altezzaFine": 53.5,
+      "copertura": 1,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi lunare totale, disco coperto al 100%; massimo alle 23:41 con la Luna a 67.9° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-solare-2030-06-01-parziale",
+      "tipo": "solare",
+      "sottotipo": "parziale",
+      "tipoGlobale": "parziale",
+      "inizio": "2030-06-01T04:06:08.794Z",
+      "massimo": "2030-06-01T05:07:34.417Z",
+      "fine": "2030-06-01T06:15:16.093Z",
+      "inizioFase": null,
+      "fineFase": null,
+      "altezza": 14.4,
+      "altezzaInizio": 4.2,
+      "altezzaFine": 26.2,
+      "copertura": 0.696,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi solare parziale vista da Borgo: Sole coperto al 70%, massimo alle 07:07 con il Sole a 14.4° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2030-06-15-parziale",
+      "tipo": "lunare",
+      "sottotipo": "parziale",
+      "tipoGlobale": "parziale",
+      "inizio": "2030-06-15T16:13:48.134Z",
+      "massimo": "2030-06-15T18:33:14.732Z",
+      "fine": "2030-06-15T20:52:41.329Z",
+      "inizioFase": "2030-06-15T17:20:39.848Z",
+      "fineFase": "2030-06-15T19:45:49.615Z",
+      "altezza": -2.9,
+      "altezzaInizio": -25.6,
+      "altezzaFine": 14.5,
+      "copertura": 0.471,
+      "visibile": true,
+      "visibilita": "solo fase finale",
+      "nota": "Eclissi lunare parziale non visibile al massimo da Borgo: la Luna è sotto l'orizzonte. Si vede solo la fase finale, fino alle 22:52; il massimo cade sotto l'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    },
+    {
+      "id": "ecl-lunare-2030-12-09-penombrale",
+      "tipo": "lunare",
+      "sottotipo": "penombrale",
+      "tipoGlobale": "penombrale",
+      "inizio": "2030-12-09T20:07:30.214Z",
+      "massimo": "2030-12-09T22:27:32.805Z",
+      "fine": "2030-12-10T00:47:35.395Z",
+      "inizioFase": null,
+      "fineFase": null,
+      "altezza": 66.2,
+      "altezzaInizio": 47.3,
+      "altezzaFine": 59.9,
+      "copertura": 0,
+      "visibile": true,
+      "visibilita": "visibile",
+      "nota": "Eclissi lunare penombrale; massimo alle 23:27 con la Luna a 66.2° sull'orizzonte.",
+      "fonte": "Astronomy Engine 2.1.19 · orizzonte Borgo San Lorenzo"
+    }
+  ],
+  "congiunzioni": [
+    {
+      "id": "cong-2026-01-04-luna-giove",
+      "data": "2026-01-04T17:50:00.000Z",
+      "minimo": "2026-01-04T14:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.85,
+      "separazioneMinima": 0.75,
+      "altezza": 6.4,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -20.3,
+      "nota": "Luna e Giove a 0.85° di distanza apparente alle 18:50, osservabili con il Sole sotto l'orizzonte, alti 6.4° verso ENE. Minimo di 0.75° alle 15:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-01-22-luna-saturno",
+      "data": "2026-01-22T19:35:00.000Z",
+      "minimo": "2026-01-22T22:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.01,
+      "separazioneMinima": 0.49,
+      "altezza": 6.5,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -36,
+      "nota": "Luna e Saturno a 1.01° di distanza apparente alle 20:35, osservabili con il Sole sotto l'orizzonte, alti 6.5° verso OSO. Minimo di 0.49° alle 23:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-02-01-luna-giove",
+      "data": "2026-02-01T01:25:00.000Z",
+      "minimo": "2026-02-01T01:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.89,
+      "separazioneMinima": 0.89,
+      "altezza": 50.5,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -53.3,
+      "nota": "Luna e Giove a 0.89° di distanza apparente alle 02:25, osservabili con il Sole sotto l'orizzonte, alti 50.5° verso OSO. Minimo di 0.89° alle 02:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-02-28-luna-giove",
+      "data": "2026-02-28T02:50:00.000Z",
+      "minimo": "2026-02-28T05:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.05,
+      "separazioneMinima": 0.87,
+      "altezza": 14.2,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -32.8,
+      "nota": "Luna e Giove a 1.05° di distanza apparente alle 03:50, osservabili con il Sole sotto l'orizzonte, alti 14.2° verso ONO. Minimo di 0.87° alle 06:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-03-27-luna-giove",
+      "data": "2026-03-27T18:10:00.000Z",
+      "minimo": "2026-03-27T09:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.29,
+      "separazioneMinima": 0.91,
+      "altezza": 64.5,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -6.4,
+      "nota": "Luna e Giove a 1.29° di distanza apparente alle 19:10, osservabili con il Sole sotto l'orizzonte, alti 64.5° verso SE. Minimo di 0.91° alle 10:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-04-18-luna-venere",
+      "data": "2026-04-18T18:45:00.000Z",
+      "minimo": "2026-04-18T09:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.79,
+      "separazioneMinima": 0.83,
+      "altezza": 9,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -7.5,
+      "nota": "Luna e Venere a 1.79° di distanza apparente alle 20:45, osservabili con il Sole sotto l'orizzonte, alti 9.0° verso ONO. Minimo di 0.83° alle 11:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-04-23-luna-giove",
+      "data": "2026-04-23T19:55:00.000Z",
+      "minimo": "2026-04-23T19:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.81,
+      "separazioneMinima": 0.81,
+      "altezza": 51.4,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -17.2,
+      "nota": "Luna e Giove a 0.81° di distanza apparente alle 21:55, osservabili con il Sole sotto l'orizzonte, alti 51.4° verso OSO. Minimo di 0.81° alle 21:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-05-03-venere-giove",
+      "data": "2026-05-03T20:10:00.000Z",
+      "minimo": "2026-05-04T00:10:00.000Z",
+      "corpi": [
+        "Venere",
+        "Giove"
+      ],
+      "separazione": 2.63,
+      "separazioneMinima": 2.63,
+      "altezza": 5.6,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -16.8,
+      "nota": "Venere e Giove a 2.63° di distanza apparente alle 22:10, osservabili con il Sole sotto l'orizzonte, alti 5.6° verso ONO. Minimo di 2.63° alle 02:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-05-17-luna-venere",
+      "data": "2026-05-17T19:20:00.000Z",
+      "minimo": "2026-05-17T07:35:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.78,
+      "separazioneMinima": 1.64,
+      "altezza": 5.5,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -6.9,
+      "nota": "Luna e Venere a 1.78° di distanza apparente alle 21:20, osservabili con il Sole sotto l'orizzonte, alti 5.5° verso ONO. Minimo di 1.64° alle 09:35.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-05-20-luna-giove",
+      "data": "2026-05-20T21:45:00.000Z",
+      "minimo": "2026-05-21T02:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.13,
+      "separazioneMinima": 0.53,
+      "altezza": 10.9,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -22.5,
+      "nota": "Luna e Giove a 1.13° di distanza apparente alle 23:45, osservabili con il Sole sotto l'orizzonte, alti 10.9° verso ONO. Minimo di 0.53° alle 04:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-05-27-mercurio-venere",
+      "data": "2026-05-27T19:25:00.000Z",
+      "minimo": "2026-05-27T15:55:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Venere"
+      ],
+      "separazione": 1.29,
+      "separazioneMinima": 1.29,
+      "altezza": 5.9,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -6,
+      "nota": "Mercurio e Venere a 1.29° di distanza apparente alle 21:25, osservabili con il Sole sotto l'orizzonte, alti 5.9° verso ONO. Minimo di 1.29° alle 17:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-06-12-luna-marte",
+      "data": "2026-06-12T02:25:00.000Z",
+      "minimo": "2026-06-11T21:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.49,
+      "separazioneMinima": 0.87,
+      "altezza": 14.4,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -9.4,
+      "nota": "Luna e Marte a 1.49° di distanza apparente alle 04:25, osservabili con il Sole sotto l'orizzonte, alti 14.4° verso ENE. Minimo di 0.87° alle 23:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-06-16-venere-giove",
+      "data": "2026-06-16T19:45:00.000Z",
+      "minimo": "2026-06-16T18:30:00.000Z",
+      "corpi": [
+        "Venere",
+        "Giove"
+      ],
+      "separazione": 0.47,
+      "separazioneMinima": 0.47,
+      "altezza": 17.4,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -6.7,
+      "nota": "Venere e Giove a 0.47° di distanza apparente alle 21:45, osservabili con il Sole sotto l'orizzonte, alti 17.4° verso ONO. Minimo di 0.47° alle 20:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-06-16-luna-mercurio",
+      "data": "2026-06-16T19:55:00.000Z",
+      "minimo": "2026-06-17T08:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 1.84,
+      "separazioneMinima": 0.59,
+      "altezza": 7.7,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -8,
+      "nota": "Luna e Mercurio a 1.84° di distanza apparente alle 21:55, osservabili con il Sole sotto l'orizzonte, alti 7.7° verso ONO. Minimo di 0.59° alle 10:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-06-17-luna-venere",
+      "data": "2026-06-17T19:50:00.000Z",
+      "minimo": "2026-06-17T18:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.27,
+      "separazioneMinima": 0.1,
+      "altezza": 15.6,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -7.3,
+      "nota": "Luna e Venere a 0.27° di distanza apparente alle 21:50, osservabili con il Sole sotto l'orizzonte, alti 15.6° verso ONO. Minimo di 0.10° alle 20:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-06-17-luna-giove",
+      "data": "2026-06-17T19:50:00.000Z",
+      "minimo": "2026-06-17T18:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.61,
+      "separazioneMinima": 0.4,
+      "altezza": 15.6,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -7.3,
+      "nota": "Luna e Giove a 0.61° di distanza apparente alle 21:50, osservabili con il Sole sotto l'orizzonte, alti 15.6° verso ONO. Minimo di 0.40° alle 20:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-06-18-mercurio-venere",
+      "data": "2026-06-18T20:00:00.000Z",
+      "minimo": "2026-06-19T02:45:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Venere"
+      ],
+      "separazione": 1.75,
+      "separazioneMinima": 1.75,
+      "altezza": 5.4,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -8.5,
+      "nota": "Mercurio e Venere a 1.75° di distanza apparente alle 22:00, osservabili con il Sole sotto l'orizzonte, alti 5.4° verso ONO. Minimo di 1.75° alle 04:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-06-22-mercurio-giove",
+      "data": "2026-06-22T19:45:00.000Z",
+      "minimo": "2026-06-22T15:15:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Giove"
+      ],
+      "separazione": 0.28,
+      "separazioneMinima": 0.28,
+      "altezza": 6,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -6.4,
+      "nota": "Mercurio e Giove a 0.28° di distanza apparente alle 21:45, osservabili con il Sole sotto l'orizzonte, alti 6.0° verso ONO. Minimo di 0.28° alle 17:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-07-06-luna-saturno",
+      "data": "2026-07-06T23:30:00.000Z",
+      "minimo": "2026-07-06T22:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 0.78,
+      "separazioneMinima": 0.73,
+      "altezza": 13.6,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -22.9,
+      "nota": "Luna e Saturno a 0.78° di distanza apparente alle 01:30, osservabili con il Sole sotto l'orizzonte, alti 13.6° verso E. Minimo di 0.73° alle 00:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-07-10-luna-marte",
+      "data": "2026-07-10T02:55:00.000Z",
+      "minimo": "2026-07-10T03:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.34,
+      "separazioneMinima": 1.33,
+      "altezza": 35.1,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -6.9,
+      "nota": "Luna e Marte a 1.34° di distanza apparente alle 04:55, osservabili con il Sole sotto l'orizzonte, alti 35.1° verso E. Minimo di 1.33° alle 05:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-07-16-luna-venere",
+      "data": "2026-07-16T19:40:00.000Z",
+      "minimo": "2026-07-17T05:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 2.43,
+      "separazioneMinima": 0.32,
+      "altezza": 6.9,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -7,
+      "nota": "Luna e Venere a 2.43° di distanza apparente alle 21:40, osservabili con il Sole sotto l'orizzonte, alti 6.9° verso O. Minimo di 0.32° alle 07:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-08-03-luna-saturno",
+      "data": "2026-08-03T03:20:00.000Z",
+      "minimo": "2026-08-03T03:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 0.83,
+      "separazioneMinima": 0.83,
+      "altezza": 48.4,
+      "direzione": "SSO",
+      "visibile": true,
+      "sole": -7.2,
+      "nota": "Luna e Saturno a 0.83° di distanza apparente alle 05:20, osservabili con il Sole sotto l'orizzonte, alti 48.4° verso SSO. Minimo di 0.83° alle 05:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-08-05-mercurio-marte",
+      "data": "2026-08-05T03:15:00.000Z",
+      "minimo": "2026-08-04T17:45:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Marte"
+      ],
+      "separazione": 3.72,
+      "separazioneMinima": 3.72,
+      "altezza": 6.2,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -8.4,
+      "nota": "Mercurio e Marte a 3.72° di distanza apparente alle 05:15, osservabili con il Sole sotto l'orizzonte, alti 6.2° verso ENE. Minimo di 3.72° alle 19:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-08-07-luna-marte",
+      "data": "2026-08-07T01:05:00.000Z",
+      "minimo": "2026-08-07T00:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 2.06,
+      "separazioneMinima": 2.05,
+      "altezza": 29.9,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -24.5,
+      "nota": "Luna e Marte a 2.06° di distanza apparente alle 03:05, osservabili con il Sole sotto l'orizzonte, alti 29.9° verso E. Minimo di 2.05° alle 02:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-09-07-luna-marte",
+      "data": "2026-09-07T04:10:00.000Z",
+      "minimo": "2026-09-07T12:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.39,
+      "separazioneMinima": 0.63,
+      "altezza": 41.2,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -6.3,
+      "nota": "Luna e Marte a 1.39° di distanza apparente alle 06:10, osservabili con il Sole sotto l'orizzonte, alti 41.2° verso E. Minimo di 0.63° alle 14:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-09-09-luna-giove",
+      "data": "2026-09-09T03:20:00.000Z",
+      "minimo": "2026-09-08T18:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.97,
+      "separazioneMinima": 0.03,
+      "altezza": 7.3,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -15.2,
+      "nota": "Luna e Giove a 1.97° di distanza apparente alle 05:20, osservabili con il Sole sotto l'orizzonte, alti 7.3° verso ENE. Minimo di 0.03° alle 20:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-10-05-luna-marte",
+      "data": "2026-10-05T04:35:00.000Z",
+      "minimo": "2026-10-05T09:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.91,
+      "separazioneMinima": 0.11,
+      "altezza": 54.8,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -7.7,
+      "nota": "Luna e Marte a 0.91° di distanza apparente alle 06:35, osservabili con il Sole sotto l'orizzonte, alti 54.8° verso ESE. Minimo di 0.11° alle 11:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-10-06-luna-giove",
+      "data": "2026-10-06T04:45:00.000Z",
+      "minimo": "2026-10-06T09:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.93,
+      "separazioneMinima": 0.06,
+      "altezza": 44.3,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -6.1,
+      "nota": "Luna e Giove a 0.93° di distanza apparente alle 06:45, osservabili con il Sole sotto l'orizzonte, alti 44.3° verso ESE. Minimo di 0.06° alle 11:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-10-23-luna-saturno",
+      "data": "2026-10-23T22:35:00.000Z",
+      "minimo": "2026-10-23T22:35:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.32,
+      "separazioneMinima": 1.32,
+      "altezza": 44.1,
+      "direzione": "SSO",
+      "visibile": true,
+      "sole": -57.1,
+      "nota": "Luna e Saturno a 1.32° di distanza apparente alle 00:35, osservabili con il Sole sotto l'orizzonte, alti 44.1° verso SSO. Minimo di 1.32° alle 00:35.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-11-02-luna-marte",
+      "data": "2026-11-02T05:15:00.000Z",
+      "minimo": "2026-11-02T07:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.58,
+      "separazioneMinima": 0.26,
+      "altezza": 62.7,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -6.6,
+      "nota": "Luna e Marte a 0.58° di distanza apparente alle 06:15, osservabili con il Sole sotto l'orizzonte, alti 62.7° verso SSE. Minimo di 0.26° alle 08:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-11-03-luna-giove",
+      "data": "2026-11-03T00:00:00.000Z",
+      "minimo": "2026-11-02T17:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.4,
+      "separazioneMinima": 0.2,
+      "altezza": 5.6,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -57.9,
+      "nota": "Luna e Giove a 1.40° di distanza apparente alle 01:00, osservabili con il Sole sotto l'orizzonte, alti 5.6° verso ENE. Minimo di 0.20° alle 18:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-11-07-luna-venere",
+      "data": "2026-11-07T04:55:00.000Z",
+      "minimo": "2026-11-07T04:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.24,
+      "separazioneMinima": 0.19,
+      "altezza": 7.6,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -11.2,
+      "nota": "Luna e Venere a 0.24° di distanza apparente alle 05:55, osservabili con il Sole sotto l'orizzonte, alti 7.6° verso ESE. Minimo di 0.19° alle 05:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-11-12-mercurio-venere",
+      "data": "2026-11-12T05:30:00.000Z",
+      "minimo": "2026-11-12T13:30:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Venere"
+      ],
+      "separazione": 1.11,
+      "separazioneMinima": 1.11,
+      "altezza": 7.1,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -6.1,
+      "nota": "Mercurio e Venere a 1.11° di distanza apparente alle 06:30, osservabili con il Sole sotto l'orizzonte, alti 7.1° verso ESE. Minimo di 1.11° alle 14:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-11-26-marte-giove",
+      "data": "2026-11-26T05:35:00.000Z",
+      "minimo": "2026-11-26T12:50:00.000Z",
+      "corpi": [
+        "Marte",
+        "Giove"
+      ],
+      "separazione": 0.27,
+      "separazioneMinima": 0.27,
+      "altezza": 58.9,
+      "direzione": "SSO",
+      "visibile": true,
+      "sole": -8.1,
+      "nota": "Marte e Giove a 0.27° di distanza apparente alle 06:35, osservabili con il Sole sotto l'orizzonte, alti 58.9° verso SSO. Minimo di 0.27° alle 13:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-11-30-luna-giove",
+      "data": "2026-11-30T02:25:00.000Z",
+      "minimo": "2026-11-30T02:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.22,
+      "separazioneMinima": 0.22,
+      "altezza": 50.4,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -42.6,
+      "nota": "Luna e Giove a 0.22° di distanza apparente alle 03:25, osservabili con il Sole sotto l'orizzonte, alti 50.4° verso SE. Minimo di 0.22° alle 03:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-11-30-luna-marte",
+      "data": "2026-11-30T03:55:00.000Z",
+      "minimo": "2026-11-30T03:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.52,
+      "separazioneMinima": 0.52,
+      "altezza": 58.4,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -26.4,
+      "nota": "Luna e Marte a 0.52° di distanza apparente alle 04:55, osservabili con il Sole sotto l'orizzonte, alti 58.4° verso SSE. Minimo di 0.52° alle 04:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-12-04-luna-venere",
+      "data": "2026-12-04T03:25:00.000Z",
+      "minimo": "2026-12-03T22:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.6,
+      "separazioneMinima": 1.07,
+      "altezza": 13.5,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -32.5,
+      "nota": "Luna e Venere a 1.60° di distanza apparente alle 04:25, osservabili con il Sole sotto l'orizzonte, alti 13.5° verso ESE. Minimo di 1.07° alle 23:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-12-27-luna-giove",
+      "data": "2026-12-27T06:10:00.000Z",
+      "minimo": "2026-12-27T08:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.87,
+      "separazioneMinima": 0.37,
+      "altezza": 33.1,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -6.2,
+      "nota": "Luna e Giove a 0.87° di distanza apparente alle 07:10, osservabili con il Sole sotto l'orizzonte, alti 33.1° verso OSO. Minimo di 0.37° alle 09:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2026-12-27-luna-marte",
+      "data": "2026-12-27T21:30:00.000Z",
+      "minimo": "2026-12-27T19:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.96,
+      "separazioneMinima": 0.76,
+      "altezza": 13,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -59.9,
+      "nota": "Luna e Marte a 0.96° di distanza apparente alle 22:30, osservabili con il Sole sotto l'orizzonte, alti 13.0° verso E. Minimo di 0.76° alle 20:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-01-01-luna-venere",
+      "data": "2027-01-01T04:35:00.000Z",
+      "minimo": "2027-01-01T04:35:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.84,
+      "separazioneMinima": 1.84,
+      "altezza": 26.9,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -22.7,
+      "nota": "Luna e Venere a 1.84° di distanza apparente alle 05:35, osservabili con il Sole sotto l'orizzonte, alti 26.9° verso SSE. Minimo di 1.84° alle 05:35.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-01-23-luna-giove",
+      "data": "2027-01-23T18:25:00.000Z",
+      "minimo": "2027-01-23T15:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.67,
+      "separazioneMinima": 0.3,
+      "altezza": 6.9,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -23.2,
+      "nota": "Luna e Giove a 0.67° di distanza apparente alle 19:25, osservabili con il Sole sotto l'orizzonte, alti 6.9° verso ENE. Minimo di 0.30° alle 16:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-01-24-luna-marte",
+      "data": "2027-01-24T02:25:00.000Z",
+      "minimo": "2027-01-24T02:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.95,
+      "separazioneMinima": 0.95,
+      "altezza": 52.3,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -45.1,
+      "nota": "Luna e Marte a 0.95° di distanza apparente alle 03:25, osservabili con il Sole sotto l'orizzonte, alti 52.3° verso SO. Minimo di 0.95° alle 03:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-02-08-luna-mercurio",
+      "data": "2027-02-08T17:15:00.000Z",
+      "minimo": "2027-02-08T08:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 2,
+      "separazioneMinima": 0.18,
+      "altezza": 12.9,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -7.3,
+      "nota": "Luna e Mercurio a 2.00° di distanza apparente alle 18:15, osservabili con il Sole sotto l'orizzonte, alti 12.9° verso OSO. Minimo di 0.18° alle 09:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-02-19-luna-giove",
+      "data": "2027-02-19T23:10:00.000Z",
+      "minimo": "2027-02-19T23:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.26,
+      "separazioneMinima": 0.26,
+      "altezza": 60.6,
+      "direzione": "SSO",
+      "visibile": true,
+      "sole": -56.7,
+      "nota": "Luna e Giove a 0.26° di distanza apparente alle 00:10, osservabili con il Sole sotto l'orizzonte, alti 60.6° verso SSO. Minimo di 0.26° alle 00:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-02-19-luna-marte",
+      "data": "2027-02-19T23:55:00.000Z",
+      "minimo": "2027-02-19T23:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.93,
+      "separazioneMinima": 0.93,
+      "altezza": 56.7,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -56.4,
+      "nota": "Luna e Marte a 0.93° di distanza apparente alle 00:55, osservabili con il Sole sotto l'orizzonte, alti 56.7° verso SO. Minimo di 0.93° alle 00:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-02-22-marte-giove",
+      "data": "2027-02-22T19:10:00.000Z",
+      "minimo": "2027-02-22T19:10:00.000Z",
+      "corpi": [
+        "Marte",
+        "Giove"
+      ],
+      "separazione": 0.65,
+      "separazioneMinima": 0.65,
+      "altezza": 31,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -24.8,
+      "nota": "Marte e Giove a 0.65° di distanza apparente alle 20:10, osservabili con il Sole sotto l'orizzonte, alti 31.0° verso E. Minimo di 0.65° alle 20:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-03-18-luna-marte",
+      "data": "2027-03-18T22:45:00.000Z",
+      "minimo": "2027-03-18T22:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.77,
+      "separazioneMinima": 0.77,
+      "altezza": 50.4,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -45.7,
+      "nota": "Luna e Marte a 0.77° di distanza apparente alle 23:45, osservabili con il Sole sotto l'orizzonte, alti 50.4° verso OSO. Minimo di 0.77° alle 23:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-03-19-luna-giove",
+      "data": "2027-03-19T02:55:00.000Z",
+      "minimo": "2027-03-19T03:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.32,
+      "separazioneMinima": 0.31,
+      "altezza": 7.5,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -25.6,
+      "nota": "Luna e Giove a 0.32° di distanza apparente alle 03:55, osservabili con il Sole sotto l'orizzonte, alti 7.5° verso ONO. Minimo di 0.31° alle 04:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-04-14-marte-giove",
+      "data": "2027-04-14T18:45:00.000Z",
+      "minimo": "2027-04-14T13:15:00.000Z",
+      "corpi": [
+        "Marte",
+        "Giove"
+      ],
+      "separazione": 0.35,
+      "separazioneMinima": 0.35,
+      "altezza": 61.5,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -8.5,
+      "nota": "Marte e Giove a 0.35° di distanza apparente alle 20:45, osservabili con il Sole sotto l'orizzonte, alti 61.5° verso SSE. Minimo di 0.35° alle 15:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-04-15-luna-marte",
+      "data": "2027-04-15T01:10:00.000Z",
+      "minimo": "2027-04-15T07:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.59,
+      "separazioneMinima": 0.63,
+      "altezza": 5.2,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -29.9,
+      "nota": "Luna e Marte a 1.59° di distanza apparente alle 03:10, osservabili con il Sole sotto l'orizzonte, alti 5.2° verso ONO. Minimo di 0.63° alle 09:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-04-15-luna-giove",
+      "data": "2027-04-15T01:10:00.000Z",
+      "minimo": "2027-04-15T06:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.42,
+      "separazioneMinima": 0.3,
+      "altezza": 5.2,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -29.9,
+      "nota": "Luna e Giove a 1.42° di distanza apparente alle 03:10, osservabili con il Sole sotto l'orizzonte, alti 5.2° verso ONO. Minimo di 0.30° alle 08:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-05-12-luna-giove",
+      "data": "2027-05-12T19:15:00.000Z",
+      "minimo": "2027-05-12T14:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.05,
+      "separazioneMinima": 0.26,
+      "altezza": 50.6,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -7.2,
+      "nota": "Luna e Giove a 1.05° di distanza apparente alle 21:15, osservabili con il Sole sotto l'orizzonte, alti 50.6° verso SO. Minimo di 0.26° alle 16:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-05-12-luna-marte",
+      "data": "2027-05-12T23:30:00.000Z",
+      "minimo": "2027-05-13T02:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.06,
+      "separazioneMinima": 0.62,
+      "altezza": 7.3,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -27.2,
+      "nota": "Luna e Marte a 1.06° di distanza apparente alle 01:30, osservabili con il Sole sotto l'orizzonte, alti 7.3° verso ONO. Minimo di 0.62° alle 04:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-05-31-luna-saturno",
+      "data": "2027-05-31T02:45:00.000Z",
+      "minimo": "2027-05-31T05:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.2,
+      "separazioneMinima": 1.01,
+      "altezza": 21.9,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -7.5,
+      "nota": "Luna e Saturno a 1.20° di distanza apparente alle 04:45, osservabili con il Sole sotto l'orizzonte, alti 21.9° verso ESE. Minimo di 1.01° alle 07:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-06-06-luna-mercurio",
+      "data": "2027-06-06T19:35:00.000Z",
+      "minimo": "2027-06-07T00:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 1.11,
+      "separazioneMinima": 0.75,
+      "altezza": 12.9,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -6.1,
+      "nota": "Luna e Mercurio a 1.11° di distanza apparente alle 21:35, osservabili con il Sole sotto l'orizzonte, alti 12.9° verso ONO. Minimo di 0.75° alle 02:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-06-08-luna-giove",
+      "data": "2027-06-08T21:35:00.000Z",
+      "minimo": "2027-06-08T23:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.76,
+      "separazioneMinima": 0.44,
+      "altezza": 6.6,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -18.9,
+      "nota": "Luna e Giove a 0.76° di distanza apparente alle 23:35, osservabili con il Sole sotto l'orizzonte, alti 6.6° verso ONO. Minimo di 0.44° alle 01:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-06-09-luna-marte",
+      "data": "2027-06-09T22:10:00.000Z",
+      "minimo": "2027-06-10T04:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.77,
+      "separazioneMinima": 0.62,
+      "altezza": 5.5,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -21,
+      "nota": "Luna e Marte a 1.77° di distanza apparente alle 00:10, osservabili con il Sole sotto l'orizzonte, alti 5.5° verso O. Minimo di 0.62° alle 06:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-06-28-luna-saturno",
+      "data": "2027-06-28T00:40:00.000Z",
+      "minimo": "2027-06-27T17:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 2.13,
+      "separazioneMinima": 1.08,
+      "altezza": 16.9,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -19.6,
+      "nota": "Luna e Saturno a 2.13° di distanza apparente alle 02:40, osservabili con il Sole sotto l'orizzonte, alti 16.9° verso E. Minimo di 1.08° alle 19:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-07-06-luna-giove",
+      "data": "2027-07-06T19:45:00.000Z",
+      "minimo": "2027-07-06T15:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.29,
+      "separazioneMinima": 0.46,
+      "altezza": 9.8,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -6.7,
+      "nota": "Luna e Giove a 1.29° di distanza apparente alle 21:45, osservabili con il Sole sotto l'orizzonte, alti 9.8° verso O. Minimo di 0.46° alle 17:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-07-25-luna-saturno",
+      "data": "2027-07-25T00:25:00.000Z",
+      "minimo": "2027-07-25T00:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.12,
+      "separazioneMinima": 1.12,
+      "altezza": 34.3,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -24.2,
+      "nota": "Luna e Saturno a 1.12° di distanza apparente alle 02:25, osservabili con il Sole sotto l'orizzonte, alti 34.3° verso ESE. Minimo di 1.12° alle 02:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-08-05-luna-marte",
+      "data": "2027-08-05T19:15:00.000Z",
+      "minimo": "2027-08-05T22:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.06,
+      "separazioneMinima": 0.84,
+      "altezza": 6.8,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -6.8,
+      "nota": "Luna e Marte a 1.06° di distanza apparente alle 21:15, osservabili con il Sole sotto l'orizzonte, alti 6.8° verso OSO. Minimo di 0.84° alle 00:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-08-21-luna-saturno",
+      "data": "2027-08-21T03:45:00.000Z",
+      "minimo": "2027-08-21T06:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.31,
+      "separazioneMinima": 1.21,
+      "altezza": 45.9,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.9,
+      "nota": "Luna e Saturno a 1.31° di distanza apparente alle 05:45, osservabili con il Sole sotto l'orizzonte, alti 45.9° verso SO. Minimo di 1.21° alle 08:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-09-28-luna-giove",
+      "data": "2027-09-28T04:00:00.000Z",
+      "minimo": "2027-09-27T21:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.79,
+      "separazioneMinima": 0.66,
+      "altezza": 9.9,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -12.5,
+      "nota": "Luna e Giove a 1.79° di distanza apparente alle 06:00, osservabili con il Sole sotto l'orizzonte, alti 9.9° verso E. Minimo di 0.66° alle 23:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-11-04-luna-marte",
+      "data": "2027-11-04T16:40:00.000Z",
+      "minimo": "2027-11-04T03:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 2.67,
+      "separazioneMinima": 2.41,
+      "altezza": 22.5,
+      "direzione": "S",
+      "visibile": true,
+      "sole": -6.9,
+      "nota": "Luna e Marte a 2.67° di distanza apparente alle 17:40, osservabili con il Sole sotto l'orizzonte, alti 22.5° verso S. Minimo di 2.41° alle 04:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-11-10-luna-saturno",
+      "data": "2027-11-10T18:30:00.000Z",
+      "minimo": "2027-11-10T18:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.12,
+      "separazioneMinima": 1.12,
+      "altezza": 45.8,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -27.8,
+      "nota": "Luna e Saturno a 1.12° di distanza apparente alle 19:30, osservabili con il Sole sotto l'orizzonte, alti 45.8° verso SE. Minimo di 1.12° alle 19:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-11-20-venere-marte",
+      "data": "2027-11-20T16:25:00.000Z",
+      "minimo": "2027-11-20T07:10:00.000Z",
+      "corpi": [
+        "Venere",
+        "Marte"
+      ],
+      "separazione": 0.17,
+      "separazioneMinima": 0.17,
+      "altezza": 5.9,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.9,
+      "nota": "Venere e Marte a 0.17° di distanza apparente alle 17:25, osservabili con il Sole sotto l'orizzonte, alti 5.9° verso SO. Minimo di 0.17° alle 08:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-11-22-luna-giove",
+      "data": "2027-11-22T01:05:00.000Z",
+      "minimo": "2027-11-22T00:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.79,
+      "separazioneMinima": 0.77,
+      "altezza": 13,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -54.5,
+      "nota": "Luna e Giove a 0.79° di distanza apparente alle 02:05, osservabili con il Sole sotto l'orizzonte, alti 13.0° verso E. Minimo di 0.77° alle 01:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-12-01-luna-venere",
+      "data": "2027-12-01T16:25:00.000Z",
+      "minimo": "2027-12-01T01:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.12,
+      "separazioneMinima": 0.44,
+      "altezza": 14.4,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -7.8,
+      "nota": "Luna e Venere a 1.12° di distanza apparente alle 17:25, osservabili con il Sole sotto l'orizzonte, alti 14.4° verso SO. Minimo di 0.44° alle 02:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-12-01-luna-marte",
+      "data": "2027-12-01T16:25:00.000Z",
+      "minimo": "2027-12-01T03:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.1,
+      "separazioneMinima": 0.78,
+      "altezza": 14.4,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -7.8,
+      "nota": "Luna e Marte a 1.10° di distanza apparente alle 17:25, osservabili con il Sole sotto l'orizzonte, alti 14.4° verso SO. Minimo di 0.78° alle 04:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-12-08-luna-saturno",
+      "data": "2027-12-08T00:10:00.000Z",
+      "minimo": "2027-12-08T01:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.21,
+      "separazioneMinima": 1.17,
+      "altezza": 5.6,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -64.8,
+      "nota": "Luna e Saturno a 1.21° di distanza apparente alle 01:10, osservabili con il Sole sotto l'orizzonte, alti 5.6° verso O. Minimo di 1.17° alle 02:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-12-29-luna-marte",
+      "data": "2027-12-29T16:25:00.000Z",
+      "minimo": "2027-12-29T14:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.4,
+      "separazioneMinima": 0.04,
+      "altezza": 7.1,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.7,
+      "nota": "Luna e Marte a 0.40° di distanza apparente alle 17:25, osservabili con il Sole sotto l'orizzonte, alti 7.1° verso SO. Minimo di 0.04° alle 15:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2027-12-30-luna-venere",
+      "data": "2027-12-30T16:25:00.000Z",
+      "minimo": "2027-12-30T11:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.86,
+      "separazioneMinima": 0.37,
+      "altezza": 16.1,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.5,
+      "nota": "Luna e Venere a 0.86° di distanza apparente alle 17:25, osservabili con il Sole sotto l'orizzonte, alti 16.1° verso SO. Minimo di 0.37° alle 12:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-01-11-mercurio-marte",
+      "data": "2028-01-11T16:35:00.000Z",
+      "minimo": "2028-01-11T03:50:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Marte"
+      ],
+      "separazione": 0.2,
+      "separazioneMinima": 0.11,
+      "altezza": 6.4,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.3,
+      "nota": "Mercurio e Marte a 0.20° di distanza apparente alle 17:35, osservabili con il Sole sotto l'orizzonte, alti 6.4° verso SO. Minimo di 0.11° alle 04:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-01-15-luna-giove",
+      "data": "2028-01-15T21:50:00.000Z",
+      "minimo": "2028-01-15T17:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.53,
+      "separazioneMinima": 0.9,
+      "altezza": 12.3,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -59.8,
+      "nota": "Luna e Giove a 1.53° di distanza apparente alle 22:50, osservabili con il Sole sotto l'orizzonte, alti 12.3° verso E. Minimo di 0.90° alle 18:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-01-29-luna-venere",
+      "data": "2028-01-29T17:05:00.000Z",
+      "minimo": "2028-01-29T14:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.85,
+      "separazioneMinima": 0.64,
+      "altezza": 21.7,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -7.8,
+      "nota": "Luna e Venere a 0.85° di distanza apparente alle 18:05, osservabili con il Sole sotto l'orizzonte, alti 21.7° verso OSO. Minimo di 0.64° alle 15:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-01-31-luna-saturno",
+      "data": "2028-01-31T18:30:00.000Z",
+      "minimo": "2028-01-31T18:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.17,
+      "separazioneMinima": 1.17,
+      "altezza": 29.1,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -22.5,
+      "nota": "Luna e Saturno a 1.17° di distanza apparente alle 19:30, osservabili con il Sole sotto l'orizzonte, alti 29.1° verso OSO. Minimo di 1.17° alle 19:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-02-12-luna-giove",
+      "data": "2028-02-12T01:10:00.000Z",
+      "minimo": "2028-02-12T01:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.94,
+      "separazioneMinima": 0.94,
+      "altezza": 48.3,
+      "direzione": "SSO",
+      "visibile": true,
+      "sole": -52.7,
+      "nota": "Luna e Giove a 0.94° di distanza apparente alle 02:10, osservabili con il Sole sotto l'orizzonte, alti 48.3° verso SSO. Minimo di 0.94° alle 02:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-02-21-venere-saturno",
+      "data": "2028-02-21T20:00:00.000Z",
+      "minimo": "2028-02-22T06:00:00.000Z",
+      "corpi": [
+        "Venere",
+        "Saturno"
+      ],
+      "separazione": 0.55,
+      "separazioneMinima": 0.51,
+      "altezza": 6.8,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -33.8,
+      "nota": "Venere e Saturno a 0.55° di distanza apparente alle 21:00, osservabili con il Sole sotto l'orizzonte, alti 6.8° verso O. Minimo di 0.51° alle 07:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-02-27-luna-saturno",
+      "data": "2028-02-27T18:40:00.000Z",
+      "minimo": "2028-02-28T05:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 2.63,
+      "separazioneMinima": 1.08,
+      "altezza": 5.8,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -18.3,
+      "nota": "Luna e Saturno a 2.63° di distanza apparente alle 19:40, osservabili con il Sole sotto l'orizzonte, alti 5.8° verso O. Minimo di 1.08° alle 06:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-02-28-luna-venere",
+      "data": "2028-02-28T19:35:00.000Z",
+      "minimo": "2028-02-28T20:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.62,
+      "separazioneMinima": 0.62,
+      "altezza": 7,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -27.8,
+      "nota": "Luna e Venere a 0.62° di distanza apparente alle 20:35, osservabili con il Sole sotto l'orizzonte, alti 7.0° verso O. Minimo di 0.62° alle 21:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-03-29-luna-venere",
+      "data": "2028-03-29T20:50:00.000Z",
+      "minimo": "2028-03-30T03:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.64,
+      "separazioneMinima": 0.02,
+      "altezza": 5.6,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -31.3,
+      "nota": "Luna e Venere a 0.64° di distanza apparente alle 22:50, osservabili con il Sole sotto l'orizzonte, alti 5.6° verso ONO. Minimo di 0.02° alle 05:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-05-03-luna-giove",
+      "data": "2028-05-03T19:05:00.000Z",
+      "minimo": "2028-05-03T17:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.02,
+      "separazioneMinima": 0.88,
+      "altezza": 51.5,
+      "direzione": "S",
+      "visibile": true,
+      "sole": -7.3,
+      "nota": "Luna e Giove a 1.02° di distanza apparente alle 21:05, osservabili con il Sole sotto l'orizzonte, alti 51.5° verso S. Minimo di 0.88° alle 19:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-05-18-mercurio-venere",
+      "data": "2028-05-18T19:35:00.000Z",
+      "minimo": "2028-05-19T01:20:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Venere"
+      ],
+      "separazione": 2.36,
+      "separazioneMinima": 2.35,
+      "altezza": 5.1,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -8.8,
+      "nota": "Mercurio e Venere a 2.36° di distanza apparente alle 21:35, osservabili con il Sole sotto l'orizzonte, alti 5.1° verso ONO. Minimo di 2.35° alle 03:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-05-30-luna-giove",
+      "data": "2028-05-30T22:30:00.000Z",
+      "minimo": "2028-05-30T22:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 0.98,
+      "separazioneMinima": 0.98,
+      "altezza": 9.2,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -22.9,
+      "nota": "Luna e Giove a 0.98° di distanza apparente alle 00:30, osservabili con il Sole sotto l'orizzonte, alti 9.2° verso O. Minimo di 0.98° alle 00:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-06-17-luna-saturno",
+      "data": "2028-06-17T02:40:00.000Z",
+      "minimo": "2028-06-17T06:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.54,
+      "separazioneMinima": 1.31,
+      "altezza": 30.9,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -7.4,
+      "nota": "Luna e Saturno a 1.54° di distanza apparente alle 04:40, osservabili con il Sole sotto l'orizzonte, alti 30.9° verso ESE. Minimo di 1.31° alle 08:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-06-26-luna-giove",
+      "data": "2028-06-26T20:45:00.000Z",
+      "minimo": "2028-06-27T07:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 2.99,
+      "separazioneMinima": 0.91,
+      "altezza": 7.2,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -13.7,
+      "nota": "Luna e Giove a 2.99° di distanza apparente alle 22:45, osservabili con il Sole sotto l'orizzonte, alti 7.2° verso O. Minimo di 0.91° alle 09:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-07-03-venere-saturno",
+      "data": "2028-07-03T02:10:00.000Z",
+      "minimo": "2028-07-03T18:10:00.000Z",
+      "corpi": [
+        "Venere",
+        "Saturno"
+      ],
+      "separazione": 4.99,
+      "separazioneMinima": 4.99,
+      "altezza": 6.1,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -11.9,
+      "nota": "Venere e Saturno a 4.99° di distanza apparente alle 04:10, osservabili con il Sole sotto l'orizzonte, alti 6.1° verso ENE. Minimo di 4.99° alle 20:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-07-14-luna-saturno",
+      "data": "2028-07-14T23:55:00.000Z",
+      "minimo": "2028-07-14T19:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.67,
+      "separazioneMinima": 1.29,
+      "altezza": 18.3,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -23.6,
+      "nota": "Luna e Saturno a 1.67° di distanza apparente alle 01:55, osservabili con il Sole sotto l'orizzonte, alti 18.3° verso E. Minimo di 1.29° alle 21:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-07-16-luna-venere",
+      "data": "2028-07-16T01:50:00.000Z",
+      "minimo": "2028-07-16T00:35:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 2.4,
+      "separazioneMinima": 2.38,
+      "altezza": 33.5,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -15.8,
+      "nota": "Luna e Venere a 2.40° di distanza apparente alle 03:50, osservabili con il Sole sotto l'orizzonte, alti 33.5° verso E. Minimo di 2.38° alle 02:35.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-07-20-luna-marte",
+      "data": "2028-07-20T02:20:00.000Z",
+      "minimo": "2028-07-20T15:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.9,
+      "separazioneMinima": 0.53,
+      "altezza": 6,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -13,
+      "nota": "Luna e Marte a 0.90° di distanza apparente alle 04:20, osservabili con il Sole sotto l'orizzonte, alti 6.0° verso ENE. Minimo di 0.53° alle 17:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-08-11-luna-saturno",
+      "data": "2028-08-11T02:25:00.000Z",
+      "minimo": "2028-08-11T02:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.38,
+      "separazioneMinima": 1.38,
+      "altezza": 57.7,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -16.8,
+      "nota": "Luna e Saturno a 1.38° di distanza apparente alle 04:25, osservabili con il Sole sotto l'orizzonte, alti 57.7° verso SSE. Minimo di 1.38° alle 04:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-08-17-luna-marte",
+      "data": "2028-08-17T03:40:00.000Z",
+      "minimo": "2028-08-17T12:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.97,
+      "separazioneMinima": 0.28,
+      "altezza": 31.2,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -7,
+      "nota": "Luna e Marte a 0.97° di distanza apparente alle 05:40, osservabili con il Sole sotto l'orizzonte, alti 31.2° verso E. Minimo di 0.28° alle 14:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-08-18-luna-venere",
+      "data": "2028-08-18T03:45:00.000Z",
+      "minimo": "2028-08-18T04:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.06,
+      "separazioneMinima": 1.06,
+      "altezza": 19.9,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -6.4,
+      "nota": "Luna e Venere a 1.06° di distanza apparente alle 05:45, osservabili con il Sole sotto l'orizzonte, alti 19.9° verso E. Minimo di 1.06° alle 06:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-09-02-venere-marte",
+      "data": "2028-09-02T04:00:00.000Z",
+      "minimo": "2028-09-02T04:30:00.000Z",
+      "corpi": [
+        "Venere",
+        "Marte"
+      ],
+      "separazione": 2.11,
+      "separazioneMinima": 2.11,
+      "altezza": 31.6,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -7.1,
+      "nota": "Venere e Marte a 2.11° di distanza apparente alle 06:00, osservabili con il Sole sotto l'orizzonte, alti 31.6° verso E. Minimo di 2.11° alle 06:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-09-07-luna-saturno",
+      "data": "2028-09-07T04:00:00.000Z",
+      "minimo": "2028-09-07T11:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.73,
+      "separazioneMinima": 1.36,
+      "altezza": 41.6,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -8.1,
+      "nota": "Luna e Saturno a 1.73° di distanza apparente alle 06:00, osservabili con il Sole sotto l'orizzonte, alti 41.6° verso OSO. Minimo di 1.36° alle 13:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-09-15-luna-marte",
+      "data": "2028-09-15T01:30:00.000Z",
+      "minimo": "2028-09-14T18:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.28,
+      "separazioneMinima": 0.7,
+      "altezza": 9.1,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -33.2,
+      "nota": "Luna e Marte a 1.28° di distanza apparente alle 03:30, osservabili con il Sole sotto l'orizzonte, alti 9.1° verso ENE. Minimo di 0.70° alle 20:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-09-15-luna-venere",
+      "data": "2028-09-15T04:10:00.000Z",
+      "minimo": "2028-09-15T10:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.21,
+      "separazioneMinima": 0.3,
+      "altezza": 36.2,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -8.1,
+      "nota": "Luna e Venere a 1.21° di distanza apparente alle 06:10, osservabili con il Sole sotto l'orizzonte, alti 36.2° verso E. Minimo di 0.30° alle 12:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-10-13-luna-marte",
+      "data": "2028-10-13T04:15:00.000Z",
+      "minimo": "2028-10-13T04:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.8,
+      "separazioneMinima": 0.8,
+      "altezza": 47.3,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -13.2,
+      "nota": "Luna e Marte a 0.80° di distanza apparente alle 06:15, osservabili con il Sole sotto l'orizzonte, alti 47.3° verso ESE. Minimo di 0.80° alle 06:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-10-16-luna-mercurio",
+      "data": "2028-10-16T04:40:00.000Z",
+      "minimo": "2028-10-15T19:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 2.79,
+      "separazioneMinima": 1.11,
+      "altezza": 12.8,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -9.3,
+      "nota": "Luna e Mercurio a 2.79° di distanza apparente alle 06:40, osservabili con il Sole sotto l'orizzonte, alti 12.8° verso ESE. Minimo di 1.11° alle 21:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-10-24-mercurio-giove",
+      "data": "2028-10-24T04:55:00.000Z",
+      "minimo": "2028-10-24T08:40:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Giove"
+      ],
+      "separazione": 0.18,
+      "separazioneMinima": 0.16,
+      "altezza": 7.1,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -8.3,
+      "nota": "Mercurio e Giove a 0.18° di distanza apparente alle 06:55, osservabili con il Sole sotto l'orizzonte, alti 7.1° verso ESE. Minimo di 0.16° alle 10:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-10-31-luna-saturno",
+      "data": "2028-10-31T16:50:00.000Z",
+      "minimo": "2028-10-31T16:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.29,
+      "separazioneMinima": 1.28,
+      "altezza": 20.7,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -8,
+      "nota": "Luna e Saturno a 1.29° di distanza apparente alle 17:50, osservabili con il Sole sotto l'orizzonte, alti 20.7° verso E. Minimo di 1.28° alle 17:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-11-10-luna-marte",
+      "data": "2028-11-10T05:15:00.000Z",
+      "minimo": "2028-11-10T10:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.56,
+      "separazioneMinima": 1.07,
+      "altezza": 56.4,
+      "direzione": "S",
+      "visibile": true,
+      "sole": -8.4,
+      "nota": "Luna e Marte a 1.56° di distanza apparente alle 06:15, osservabili con il Sole sotto l'orizzonte, alti 56.4° verso S. Minimo di 1.07° alle 11:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-11-11-venere-giove",
+      "data": "2028-11-11T05:20:00.000Z",
+      "minimo": "2028-11-11T10:50:00.000Z",
+      "corpi": [
+        "Venere",
+        "Giove"
+      ],
+      "separazione": 0.14,
+      "separazioneMinima": 0.11,
+      "altezza": 20.3,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -7.8,
+      "nota": "Venere e Giove a 0.14° di distanza apparente alle 06:20, osservabili con il Sole sotto l'orizzonte, alti 20.3° verso ESE. Minimo di 0.11° alle 11:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-11-13-luna-giove",
+      "data": "2028-11-13T03:40:00.000Z",
+      "minimo": "2028-11-12T22:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.77,
+      "separazioneMinima": 1.08,
+      "altezza": 13.3,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -26,
+      "nota": "Luna e Giove a 1.77° di distanza apparente alle 04:40, osservabili con il Sole sotto l'orizzonte, alti 13.3° verso ESE. Minimo di 1.08° alle 23:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-11-13-luna-venere",
+      "data": "2028-11-13T04:05:00.000Z",
+      "minimo": "2028-11-13T00:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.47,
+      "separazioneMinima": 1.19,
+      "altezza": 17.1,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -21.5,
+      "nota": "Luna e Venere a 1.47° di distanza apparente alle 05:05, osservabili con il Sole sotto l'orizzonte, alti 17.1° verso ESE. Minimo di 1.19° alle 01:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-11-27-luna-saturno",
+      "data": "2028-11-27T19:05:00.000Z",
+      "minimo": "2028-11-27T19:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.33,
+      "separazioneMinima": 1.33,
+      "altezza": 56.2,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -36.1,
+      "nota": "Luna e Saturno a 1.33° di distanza apparente alle 20:05, osservabili con il Sole sotto l'orizzonte, alti 56.2° verso SSE. Minimo di 1.33° alle 20:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-12-12-luna-venere",
+      "data": "2028-12-12T05:55:00.000Z",
+      "minimo": "2028-12-12T14:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.92,
+      "separazioneMinima": 1.58,
+      "altezza": 24.6,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -7.4,
+      "nota": "Luna e Venere a 1.92° di distanza apparente alle 06:55, osservabili con il Sole sotto l'orizzonte, alti 24.6° verso SSE. Minimo di 1.58° alle 15:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2028-12-24-luna-saturno",
+      "data": "2028-12-24T23:55:00.000Z",
+      "minimo": "2028-12-25T03:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.44,
+      "separazioneMinima": 1.32,
+      "altezza": 5.5,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -67.7,
+      "nota": "Luna e Saturno a 1.44° di distanza apparente alle 00:55, osservabili con il Sole sotto l'orizzonte, alti 5.5° verso O. Minimo di 1.32° alle 04:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-01-07-luna-giove",
+      "data": "2029-01-07T00:55:00.000Z",
+      "minimo": "2029-01-06T22:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.4,
+      "separazioneMinima": 1.18,
+      "altezza": 16.5,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -60.7,
+      "nota": "Luna e Giove a 1.40° di distanza apparente alle 01:55, osservabili con il Sole sotto l'orizzonte, alti 16.5° verso ESE. Minimo di 1.18° alle 23:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-02-02-luna-marte",
+      "data": "2029-02-02T03:30:00.000Z",
+      "minimo": "2029-02-02T03:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.45,
+      "separazioneMinima": 1.45,
+      "altezza": 38.5,
+      "direzione": "SSO",
+      "visibile": true,
+      "sole": -32.3,
+      "nota": "Luna e Marte a 1.45° di distanza apparente alle 04:30, osservabili con il Sole sotto l'orizzonte, alti 38.5° verso SSO. Minimo di 1.45° alle 04:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-02-03-luna-giove",
+      "data": "2029-02-03T05:45:00.000Z",
+      "minimo": "2029-02-03T06:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.32,
+      "separazioneMinima": 1.3,
+      "altezza": 22.9,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -7.8,
+      "nota": "Luna e Giove a 1.32° di distanza apparente alle 06:45, osservabili con il Sole sotto l'orizzonte, alti 22.9° verso SO. Minimo di 1.30° alle 07:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-02-17-luna-saturno",
+      "data": "2029-02-17T20:30:00.000Z",
+      "minimo": "2029-02-18T00:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.37,
+      "separazioneMinima": 1.26,
+      "altezza": 5.7,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -39.6,
+      "nota": "Luna e Saturno a 1.37° di distanza apparente alle 21:30, osservabili con il Sole sotto l'orizzonte, alti 5.7° verso O. Minimo di 1.26° alle 01:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-03-17-luna-saturno",
+      "data": "2029-03-17T18:10:00.000Z",
+      "minimo": "2029-03-17T10:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.78,
+      "separazioneMinima": 1.21,
+      "altezza": 17.9,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -8.6,
+      "nota": "Luna e Saturno a 1.78° di distanza apparente alle 19:10, osservabili con il Sole sotto l'orizzonte, alti 17.9° verso O. Minimo di 1.21° alle 11:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-03-29-luna-giove",
+      "data": "2029-03-29T21:50:00.000Z",
+      "minimo": "2029-03-29T21:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.23,
+      "separazioneMinima": 1.23,
+      "altezza": 35.5,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -37.9,
+      "nota": "Luna e Giove a 1.23° di distanza apparente alle 23:50, osservabili con il Sole sotto l'orizzonte, alti 35.5° verso SSE. Minimo di 1.23° alle 23:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-04-09-mercurio-saturno",
+      "data": "2029-04-09T18:35:00.000Z",
+      "minimo": "2029-04-08T15:20:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Saturno"
+      ],
+      "separazione": 1.09,
+      "separazioneMinima": 0.63,
+      "altezza": 5.3,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -7.8,
+      "nota": "Mercurio e Saturno a 1.09° di distanza apparente alle 20:35, osservabili con il Sole sotto l'orizzonte, alti 5.3° verso ONO. Minimo di 0.63° alle 17:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-04-15-luna-mercurio",
+      "data": "2029-04-15T18:45:00.000Z",
+      "minimo": "2029-04-15T04:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 1.61,
+      "separazioneMinima": 0.27,
+      "altezza": 10.6,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -8.1,
+      "nota": "Luna e Mercurio a 1.61° di distanza apparente alle 20:45, osservabili con il Sole sotto l'orizzonte, alti 10.6° verso ONO. Minimo di 0.27° alle 06:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-04-26-luna-giove",
+      "data": "2029-04-26T01:50:00.000Z",
+      "minimo": "2029-04-26T04:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.39,
+      "separazioneMinima": 1.27,
+      "altezza": 7.2,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -21.7,
+      "nota": "Luna e Giove a 1.39° di distanza apparente alle 03:50, osservabili con il Sole sotto l'orizzonte, alti 7.2° verso OSO. Minimo di 1.27° alle 06:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-05-21-luna-marte",
+      "data": "2029-05-21T23:05:00.000Z",
+      "minimo": "2029-05-21T23:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.13,
+      "separazioneMinima": 1.13,
+      "altezza": 10.8,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -25.2,
+      "nota": "Luna e Marte a 1.13° di distanza apparente alle 01:05, osservabili con il Sole sotto l'orizzonte, alti 10.8° verso O. Minimo di 1.13° alle 01:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-05-23-luna-giove",
+      "data": "2029-05-23T00:00:00.000Z",
+      "minimo": "2029-05-23T09:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 2.47,
+      "separazioneMinima": 1.19,
+      "altezza": 5.6,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -24,
+      "nota": "Luna e Giove a 2.47° di distanza apparente alle 02:00, osservabili con il Sole sotto l'orizzonte, alti 5.6° verso O. Minimo di 1.19° alle 11:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-06-18-luna-marte",
+      "data": "2029-06-18T21:20:00.000Z",
+      "minimo": "2029-06-18T21:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.04,
+      "separazioneMinima": 1.04,
+      "altezza": 13.2,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -17.1,
+      "nota": "Luna e Marte a 1.04° di distanza apparente alle 23:20, osservabili con il Sole sotto l'orizzonte, alti 13.2° verso OSO. Minimo di 1.04° alle 23:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-07-05-luna-saturno",
+      "data": "2029-07-05T02:45:00.000Z",
+      "minimo": "2029-07-05T15:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 2.01,
+      "separazioneMinima": 1.35,
+      "altezza": 39.4,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -7.7,
+      "nota": "Luna e Saturno a 2.01° di distanza apparente alle 04:45, osservabili con il Sole sotto l'orizzonte, alti 39.4° verso ESE. Minimo di 1.35° alle 17:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-07-11-marte-giove",
+      "data": "2029-07-11T19:40:00.000Z",
+      "minimo": "2029-07-11T10:10:00.000Z",
+      "corpi": [
+        "Marte",
+        "Giove"
+      ],
+      "separazione": 0.27,
+      "separazioneMinima": 0.26,
+      "altezza": 26.9,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.5,
+      "nota": "Marte e Giove a 0.27° di distanza apparente alle 21:40, osservabili con il Sole sotto l'orizzonte, alti 26.9° verso SO. Minimo di 0.26° alle 12:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-07-16-luna-marte",
+      "data": "2029-07-16T20:30:00.000Z",
+      "minimo": "2029-07-17T03:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.7,
+      "separazioneMinima": 0.92,
+      "altezza": 6.4,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -13.5,
+      "nota": "Luna e Marte a 1.70° di distanza apparente alle 22:30, osservabili con il Sole sotto l'orizzonte, alti 6.4° verso OSO. Minimo di 0.92° alle 05:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-07-16-luna-giove",
+      "data": "2029-07-16T20:35:00.000Z",
+      "minimo": "2029-07-16T22:35:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.31,
+      "separazioneMinima": 1.24,
+      "altezza": 5.5,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -14.1,
+      "nota": "Luna e Giove a 1.31° di distanza apparente alle 22:35, osservabili con il Sole sotto l'orizzonte, alti 5.5° verso OSO. Minimo di 1.24° alle 00:35.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-08-01-luna-saturno",
+      "data": "2029-08-01T23:50:00.000Z",
+      "minimo": "2029-08-01T23:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.32,
+      "separazioneMinima": 1.32,
+      "altezza": 24.6,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -27.5,
+      "nota": "Luna e Saturno a 1.32° di distanza apparente alle 01:50, osservabili con il Sole sotto l'orizzonte, alti 24.6° verso E. Minimo di 1.32° alle 01:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-08-14-luna-marte",
+      "data": "2029-08-14T19:05:00.000Z",
+      "minimo": "2029-08-14T12:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.59,
+      "separazioneMinima": 0.85,
+      "altezza": 9.9,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -7.6,
+      "nota": "Luna e Marte a 1.59° di distanza apparente alle 21:05, osservabili con il Sole sotto l'orizzonte, alti 9.9° verso OSO. Minimo di 0.85° alle 14:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-08-29-luna-saturno",
+      "data": "2029-08-29T04:00:00.000Z",
+      "minimo": "2029-08-29T13:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.64,
+      "separazioneMinima": 1.33,
+      "altezza": 57.5,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.2,
+      "nota": "Luna e Saturno a 1.64° di distanza apparente alle 06:00, osservabili con il Sole sotto l'orizzonte, alti 57.5° verso SO. Minimo di 1.33° alle 15:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-09-03-venere-giove",
+      "data": "2029-09-03T18:40:00.000Z",
+      "minimo": "2029-09-03T20:10:00.000Z",
+      "corpi": [
+        "Venere",
+        "Giove"
+      ],
+      "separazione": 0.27,
+      "separazioneMinima": 0.27,
+      "altezza": 5.1,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -9.5,
+      "nota": "Venere e Giove a 0.27° di distanza apparente alle 20:40, osservabili con il Sole sotto l'orizzonte, alti 5.1° verso OSO. Minimo di 0.27° alle 22:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-09-11-luna-marte",
+      "data": "2029-09-11T18:05:00.000Z",
+      "minimo": "2029-09-12T05:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.79,
+      "separazioneMinima": 0.69,
+      "altezza": 5.8,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -6.1,
+      "nota": "Luna e Marte a 1.79° di distanza apparente alle 20:05, osservabili con il Sole sotto l'orizzonte, alti 5.8° verso OSO. Minimo di 0.69° alle 07:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-09-25-luna-saturno",
+      "data": "2029-09-25T20:00:00.000Z",
+      "minimo": "2029-09-25T18:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.32,
+      "separazioneMinima": 1.26,
+      "altezza": 20.3,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -30.3,
+      "nota": "Luna e Saturno a 1.32° di distanza apparente alle 22:00, osservabili con il Sole sotto l'orizzonte, alti 20.3° verso E. Minimo di 1.26° alle 20:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-10-05-luna-mercurio",
+      "data": "2029-10-05T04:40:00.000Z",
+      "minimo": "2029-10-05T09:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 1.57,
+      "separazioneMinima": 1.2,
+      "altezza": 23.6,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -6.9,
+      "nota": "Luna e Mercurio a 1.57° di distanza apparente alle 06:40, osservabili con il Sole sotto l'orizzonte, alti 23.6° verso ESE. Minimo di 1.20° alle 11:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-10-09-venere-marte",
+      "data": "2029-10-09T17:45:00.000Z",
+      "minimo": "2029-10-09T18:00:00.000Z",
+      "corpi": [
+        "Venere",
+        "Marte"
+      ],
+      "separazione": 0.6,
+      "separazioneMinima": 0.6,
+      "altezza": 5.4,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -11.8,
+      "nota": "Venere e Marte a 0.60° di distanza apparente alle 19:45, osservabili con il Sole sotto l'orizzonte, alti 5.4° verso SO. Minimo di 0.60° alle 20:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-10-10-luna-venere",
+      "data": "2029-10-10T17:15:00.000Z",
+      "minimo": "2029-10-11T06:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.71,
+      "separazioneMinima": 0.25,
+      "altezza": 6.7,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.7,
+      "nota": "Luna e Venere a 0.71° di distanza apparente alle 19:15, osservabili con il Sole sotto l'orizzonte, alti 6.7° verso SO. Minimo di 0.25° alle 08:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-10-11-luna-marte",
+      "data": "2029-10-11T18:20:00.000Z",
+      "minimo": "2029-10-11T05:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.9,
+      "separazioneMinima": 0.39,
+      "altezza": 5.2,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -18.7,
+      "nota": "Luna e Marte a 0.90° di distanza apparente alle 20:20, osservabili con il Sole sotto l'orizzonte, alti 5.2° verso SO. Minimo di 0.39° alle 07:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-10-22-luna-saturno",
+      "data": "2029-10-22T20:10:00.000Z",
+      "minimo": "2029-10-22T20:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.3,
+      "separazioneMinima": 1.3,
+      "altezza": 42.5,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -40.9,
+      "nota": "Luna e Saturno a 1.30° di distanza apparente alle 22:10, osservabili con il Sole sotto l'orizzonte, alti 42.5° verso ESE. Minimo di 1.30° alle 22:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-11-08-luna-marte",
+      "data": "2029-11-08T16:45:00.000Z",
+      "minimo": "2029-11-08T16:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.88,
+      "separazioneMinima": 0.88,
+      "altezza": 7.7,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -8.7,
+      "nota": "Luna e Marte a 0.88° di distanza apparente alle 17:45, osservabili con il Sole sotto l'orizzonte, alti 7.7° verso SO. Minimo di 0.88° alle 17:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-11-18-luna-saturno",
+      "data": "2029-11-18T22:20:00.000Z",
+      "minimo": "2029-11-18T22:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.34,
+      "separazioneMinima": 1.34,
+      "altezza": 58.8,
+      "direzione": "SSO",
+      "visibile": true,
+      "sole": -63.9,
+      "nota": "Luna e Saturno a 1.34° di distanza apparente alle 23:20, osservabili con il Sole sotto l'orizzonte, alti 58.8° verso SSO. Minimo di 1.34° alle 23:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-12-02-luna-giove",
+      "data": "2029-12-02T05:45:00.000Z",
+      "minimo": "2029-12-02T14:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.88,
+      "separazioneMinima": 1.25,
+      "altezza": 25.4,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -7.5,
+      "nota": "Luna e Giove a 1.88° di distanza apparente alle 06:45, osservabili con il Sole sotto l'orizzonte, alti 25.4° verso SSE. Minimo di 1.25° alle 15:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-12-07-luna-marte",
+      "data": "2029-12-07T16:20:00.000Z",
+      "minimo": "2029-12-07T14:35:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.94,
+      "separazioneMinima": 0.9,
+      "altezza": 10.6,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -7.2,
+      "nota": "Luna e Marte a 0.94° di distanza apparente alle 17:20, osservabili con il Sole sotto l'orizzonte, alti 10.6° verso SO. Minimo di 0.90° alle 15:35.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-12-07-luna-venere",
+      "data": "2029-12-07T16:25:00.000Z",
+      "minimo": "2029-12-07T08:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.97,
+      "separazioneMinima": 1.43,
+      "altezza": 10,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -8,
+      "nota": "Luna e Venere a 1.97° di distanza apparente alle 17:25, osservabili con il Sole sotto l'orizzonte, alti 10.0° verso SO. Minimo di 1.43° alle 09:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-12-15-venere-marte",
+      "data": "2029-12-15T17:15:00.000Z",
+      "minimo": "2029-12-16T01:00:00.000Z",
+      "corpi": [
+        "Venere",
+        "Marte"
+      ],
+      "separazione": 1.25,
+      "separazioneMinima": 1.25,
+      "altezza": 5,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -16.3,
+      "nota": "Venere e Marte a 1.25° di distanza apparente alle 18:15, osservabili con il Sole sotto l'orizzonte, alti 5.0° verso SO. Minimo di 1.25° alle 02:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-12-16-luna-saturno",
+      "data": "2029-12-16T01:40:00.000Z",
+      "minimo": "2029-12-16T05:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.34,
+      "separazioneMinima": 1.28,
+      "altezza": 7.2,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -52.8,
+      "nota": "Luna e Saturno a 1.34° di distanza apparente alle 02:40, osservabili con il Sole sotto l'orizzonte, alti 7.2° verso ONO. Minimo di 1.28° alle 06:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2029-12-30-luna-giove",
+      "data": "2029-12-30T04:25:00.000Z",
+      "minimo": "2029-12-30T04:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.24,
+      "separazioneMinima": 1.24,
+      "altezza": 22.3,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -24.5,
+      "nota": "Luna e Giove a 1.24° di distanza apparente alle 05:25, osservabili con il Sole sotto l'orizzonte, alti 22.3° verso SSE. Minimo di 1.24° alle 05:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-01-05-luna-marte",
+      "data": "2030-01-05T16:30:00.000Z",
+      "minimo": "2030-01-05T16:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 0.93,
+      "separazioneMinima": 0.93,
+      "altezza": 10.4,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -6.4,
+      "nota": "Luna e Marte a 0.93° di distanza apparente alle 17:30, osservabili con il Sole sotto l'orizzonte, alti 10.4° verso SO. Minimo di 0.93° alle 17:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-01-09-mercurio-giove",
+      "data": "2030-01-09T06:05:00.000Z",
+      "minimo": "2030-01-08T22:20:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Giove"
+      ],
+      "separazione": 3.99,
+      "separazioneMinima": 3.99,
+      "altezza": 5.5,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -7.2,
+      "nota": "Mercurio e Giove a 3.99° di distanza apparente alle 07:05, osservabili con il Sole sotto l'orizzonte, alti 5.5° verso SE. Minimo di 3.99° alle 23:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-01-12-luna-saturno",
+      "data": "2030-01-12T16:45:00.000Z",
+      "minimo": "2030-01-12T10:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.71,
+      "separazioneMinima": 1.18,
+      "altezza": 59.3,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -7.7,
+      "nota": "Luna e Saturno a 1.71° di distanza apparente alle 17:45, osservabili con il Sole sotto l'orizzonte, alti 59.3° verso SSE. Minimo di 1.18° alle 11:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-01-21-venere-giove",
+      "data": "2030-01-21T05:55:00.000Z",
+      "minimo": "2030-01-21T11:40:00.000Z",
+      "corpi": [
+        "Venere",
+        "Giove"
+      ],
+      "separazione": 3.26,
+      "separazioneMinima": 3.26,
+      "altezza": 9.2,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -8,
+      "nota": "Venere e Giove a 3.26° di distanza apparente alle 06:55, osservabili con il Sole sotto l'orizzonte, alti 9.2° verso SE. Minimo di 3.26° alle 12:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-01-27-luna-giove",
+      "data": "2030-01-27T02:10:00.000Z",
+      "minimo": "2030-01-26T19:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.79,
+      "separazioneMinima": 1.16,
+      "altezza": 12.9,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -47.2,
+      "nota": "Luna e Giove a 1.79° di distanza apparente alle 03:10, osservabili con il Sole sotto l'orizzonte, alti 12.9° verso SE. Minimo di 1.16° alle 20:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-02-08-luna-saturno",
+      "data": "2030-02-08T21:45:00.000Z",
+      "minimo": "2030-02-08T21:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.21,
+      "separazioneMinima": 1.21,
+      "altezza": 12.3,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -53.2,
+      "nota": "Luna e Saturno a 1.21° di distanza apparente alle 22:45, osservabili con il Sole sotto l'orizzonte, alti 12.3° verso O. Minimo di 1.21° alle 22:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-02-23-luna-giove",
+      "data": "2030-02-23T03:15:00.000Z",
+      "minimo": "2030-02-23T03:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.26,
+      "separazioneMinima": 1.26,
+      "altezza": 27.4,
+      "direzione": "S",
+      "visibile": true,
+      "sole": -30,
+      "nota": "Luna e Giove a 1.26° di distanza apparente alle 04:15, osservabili con il Sole sotto l'orizzonte, alti 27.4° verso S. Minimo di 1.26° alle 04:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-03-01-luna-venere",
+      "data": "2030-03-01T04:50:00.000Z",
+      "minimo": "2030-03-01T01:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.59,
+      "separazioneMinima": 0.49,
+      "altezza": 6.8,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -11.3,
+      "nota": "Luna e Venere a 0.59° di distanza apparente alle 05:50, osservabili con il Sole sotto l'orizzonte, alti 6.8° verso ESE. Minimo di 0.49° alle 02:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-03-08-luna-saturno",
+      "data": "2030-03-08T17:50:00.000Z",
+      "minimo": "2030-03-08T09:35:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.59,
+      "separazioneMinima": 1.06,
+      "altezza": 40,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -7.1,
+      "nota": "Luna e Saturno a 1.59° di distanza apparente alle 18:50, osservabili con il Sole sotto l'orizzonte, alti 40.0° verso OSO. Minimo di 1.06° alle 10:35.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-03-22-luna-giove",
+      "data": "2030-03-22T22:45:00.000Z",
+      "minimo": "2030-03-22T15:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.87,
+      "separazioneMinima": 1.1,
+      "altezza": 11,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -44.1,
+      "nota": "Luna e Giove a 1.87° di distanza apparente alle 23:45, osservabili con il Sole sotto l'orizzonte, alti 11.0° verso SE. Minimo di 1.10° alle 16:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-03-23-mercurio-marte",
+      "data": "2030-03-23T18:05:00.000Z",
+      "minimo": "2030-03-23T16:05:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Marte"
+      ],
+      "separazione": 0.16,
+      "separazioneMinima": 0.15,
+      "altezza": 5.6,
+      "direzione": "O",
+      "visibile": true,
+      "sole": -6.4,
+      "nota": "Mercurio e Marte a 0.16° di distanza apparente alle 19:05, osservabili con il Sole sotto l'orizzonte, alti 5.6° verso O. Minimo di 0.15° alle 17:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-03-29-luna-venere",
+      "data": "2030-03-29T04:20:00.000Z",
+      "minimo": "2030-03-29T08:35:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.87,
+      "separazioneMinima": 0.52,
+      "altezza": 15.5,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -7.6,
+      "nota": "Luna e Venere a 0.87° di distanza apparente alle 05:20, osservabili con il Sole sotto l'orizzonte, alti 15.5° verso SE. Minimo di 0.52° alle 09:35.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-04-04-luna-mercurio",
+      "data": "2030-04-04T18:30:00.000Z",
+      "minimo": "2030-04-04T11:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 0.68,
+      "separazioneMinima": 0.11,
+      "altezza": 10.7,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -8.1,
+      "nota": "Luna e Mercurio a 0.68° di distanza apparente alle 20:30, osservabili con il Sole sotto l'orizzonte, alti 10.7° verso ONO. Minimo di 0.11° alle 13:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-04-04-luna-saturno",
+      "data": "2030-04-04T18:55:00.000Z",
+      "minimo": "2030-04-05T02:25:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.35,
+      "separazioneMinima": 0.97,
+      "altezza": 6.6,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -12.4,
+      "nota": "Luna e Saturno a 1.35° di distanza apparente alle 20:55, osservabili con il Sole sotto l'orizzonte, alti 6.6° verso ONO. Minimo di 0.97° alle 04:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-04-13-mercurio-saturno",
+      "data": "2030-04-13T18:35:00.000Z",
+      "minimo": "2030-04-13T10:20:00.000Z",
+      "corpi": [
+        "Mercurio",
+        "Saturno"
+      ],
+      "separazione": 1.13,
+      "separazioneMinima": 1.13,
+      "altezza": 6.4,
+      "direzione": "ONO",
+      "visibile": true,
+      "sole": -7,
+      "nota": "Mercurio e Saturno a 1.13° di distanza apparente alle 20:35, osservabili con il Sole sotto l'orizzonte, alti 6.4° verso ONO. Minimo di 1.13° alle 12:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-04-18-luna-giove",
+      "data": "2030-04-18T20:55:00.000Z",
+      "minimo": "2030-04-18T19:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.17,
+      "separazioneMinima": 1.15,
+      "altezza": 15.8,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -26.1,
+      "nota": "Luna e Giove a 1.17° di distanza apparente alle 22:55, osservabili con il Sole sotto l'orizzonte, alti 15.8° verso SE. Minimo di 1.15° alle 21:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-04-27-luna-venere",
+      "data": "2030-04-27T03:25:00.000Z",
+      "minimo": "2030-04-27T15:10:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 2.41,
+      "separazioneMinima": 1.01,
+      "altezza": 18.2,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -8,
+      "nota": "Luna e Venere a 2.41° di distanza apparente alle 05:25, osservabili con il Sole sotto l'orizzonte, alti 18.2° verso ESE. Minimo di 1.01° alle 17:10.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-05-16-luna-giove",
+      "data": "2030-05-16T01:50:00.000Z",
+      "minimo": "2030-05-16T04:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.22,
+      "separazioneMinima": 1.2,
+      "altezza": 7.1,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -16.7,
+      "nota": "Luna e Giove a 1.22° di distanza apparente alle 03:50, osservabili con il Sole sotto l'orizzonte, alti 7.1° verso OSO. Minimo di 1.20° alle 06:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-05-27-luna-venere",
+      "data": "2030-05-27T02:55:00.000Z",
+      "minimo": "2030-05-27T13:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.98,
+      "separazioneMinima": 1.11,
+      "altezza": 21.3,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -6.6,
+      "nota": "Luna e Venere a 1.98° di distanza apparente alle 04:55, osservabili con il Sole sotto l'orizzonte, alti 21.3° verso E. Minimo di 1.11° alle 15:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-06-11-luna-giove",
+      "data": "2030-06-11T23:50:00.000Z",
+      "minimo": "2030-06-12T09:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.94,
+      "separazioneMinima": 1.06,
+      "altezza": 6.3,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -21.9,
+      "nota": "Luna e Giove a 1.94° di distanza apparente alle 01:50, osservabili con il Sole sotto l'orizzonte, alti 6.3° verso OSO. Minimo di 1.06° alle 11:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-06-24-venere-saturno",
+      "data": "2030-06-24T02:25:00.000Z",
+      "minimo": "2030-06-23T20:40:00.000Z",
+      "corpi": [
+        "Venere",
+        "Saturno"
+      ],
+      "separazione": 0.11,
+      "separazioneMinima": 0.09,
+      "altezza": 6.2,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -9.5,
+      "nota": "Venere e Saturno a 0.11° di distanza apparente alle 04:25, osservabili con il Sole sotto l'orizzonte, alti 6.2° verso ENE. Minimo di 0.09° alle 22:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-06-27-luna-saturno",
+      "data": "2030-06-27T02:15:00.000Z",
+      "minimo": "2030-06-26T20:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.29,
+      "separazioneMinima": 0.94,
+      "altezza": 12.9,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -10.8,
+      "nota": "Luna e Saturno a 1.29° di distanza apparente alle 04:15, osservabili con il Sole sotto l'orizzonte, alti 12.9° verso ENE. Minimo di 0.94° alle 22:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-06-27-luna-venere",
+      "data": "2030-06-27T02:20:00.000Z",
+      "minimo": "2030-06-27T01:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 0.84,
+      "separazioneMinima": 0.82,
+      "altezza": 13.8,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -10.2,
+      "nota": "Luna e Venere a 0.84° di distanza apparente alle 04:20, osservabili con il Sole sotto l'orizzonte, alti 13.8° verso ENE. Minimo di 0.82° alle 03:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-07-09-luna-giove",
+      "data": "2030-07-09T19:40:00.000Z",
+      "minimo": "2030-07-09T13:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.51,
+      "separazioneMinima": 1.06,
+      "altezza": 25.3,
+      "direzione": "SSO",
+      "visibile": true,
+      "sole": -6.3,
+      "nota": "Luna e Giove a 1.51° di distanza apparente alle 21:40, osservabili con il Sole sotto l'orizzonte, alti 25.3° verso SSO. Minimo di 1.06° alle 15:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-07-24-luna-saturno",
+      "data": "2030-07-24T03:05:00.000Z",
+      "minimo": "2030-07-24T03:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 1.02,
+      "separazioneMinima": 1.02,
+      "altezza": 42.8,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -7.6,
+      "nota": "Luna e Saturno a 1.02° di distanza apparente alle 05:05, osservabili con il Sole sotto l'orizzonte, alti 42.8° verso ESE. Minimo di 1.02° alle 05:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-07-27-luna-venere",
+      "data": "2030-07-27T03:05:00.000Z",
+      "minimo": "2030-07-27T07:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.29,
+      "separazioneMinima": 1.18,
+      "altezza": 19,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -8.1,
+      "nota": "Luna e Venere a 1.29° di distanza apparente alle 05:05, osservabili con il Sole sotto l'orizzonte, alti 19.0° verso ENE. Minimo di 1.18° alle 09:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-07-27-luna-marte",
+      "data": "2030-07-27T03:15:00.000Z",
+      "minimo": "2030-07-27T07:45:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.88,
+      "separazioneMinima": 1.76,
+      "altezza": 20.7,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -6.7,
+      "nota": "Luna e Marte a 1.88° di distanza apparente alle 05:15, osservabili con il Sole sotto l'orizzonte, alti 20.7° verso E. Minimo di 1.76° alle 09:45.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-07-31-venere-marte",
+      "data": "2030-07-31T03:10:00.000Z",
+      "minimo": "2030-07-31T05:25:00.000Z",
+      "corpi": [
+        "Venere",
+        "Marte"
+      ],
+      "separazione": 0.53,
+      "separazioneMinima": 0.53,
+      "altezza": 8.5,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -8.2,
+      "nota": "Venere e Marte a 0.53° di distanza apparente alle 05:10, osservabili con il Sole sotto l'orizzonte, alti 8.5° verso ENE. Minimo di 0.53° alle 07:25.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-08-05-luna-giove",
+      "data": "2030-08-05T20:35:00.000Z",
+      "minimo": "2030-08-06T01:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.15,
+      "separazioneMinima": 1.02,
+      "altezza": 5,
+      "direzione": "OSO",
+      "visibile": true,
+      "sole": -18,
+      "nota": "Luna e Giove a 1.15° di distanza apparente alle 22:35, osservabili con il Sole sotto l'orizzonte, alti 5.0° verso OSO. Minimo di 1.02° alle 03:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-08-09-venere-saturno",
+      "data": "2030-08-09T03:25:00.000Z",
+      "minimo": "2030-08-09T16:55:00.000Z",
+      "corpi": [
+        "Venere",
+        "Saturno"
+      ],
+      "separazione": 3.62,
+      "separazioneMinima": 3.62,
+      "altezza": 8.2,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -7.7,
+      "nota": "Venere e Saturno a 3.62° di distanza apparente alle 05:25, osservabili con il Sole sotto l'orizzonte, alti 8.2° verso ENE. Minimo di 3.62° alle 18:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-08-19-marte-saturno",
+      "data": "2030-08-19T03:00:00.000Z",
+      "minimo": "2030-08-18T20:00:00.000Z",
+      "corpi": [
+        "Marte",
+        "Saturno"
+      ],
+      "separazione": 3.75,
+      "separazioneMinima": 3.75,
+      "altezza": 7.1,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -13.6,
+      "nota": "Marte e Saturno a 3.75° di distanza apparente alle 05:00, osservabili con il Sole sotto l'orizzonte, alti 7.1° verso ENE. Minimo di 3.75° alle 22:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-08-20-luna-saturno",
+      "data": "2030-08-20T23:05:00.000Z",
+      "minimo": "2030-08-20T20:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 0.91,
+      "separazioneMinima": 0.85,
+      "altezza": 15.3,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -33.4,
+      "nota": "Luna e Saturno a 0.91° di distanza apparente alle 01:05, osservabili con il Sole sotto l'orizzonte, alti 15.3° verso ENE. Minimo di 0.85° alle 22:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-08-25-luna-marte",
+      "data": "2030-08-25T03:50:00.000Z",
+      "minimo": "2030-08-25T03:50:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.46,
+      "separazioneMinima": 1.46,
+      "altezza": 30,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -7,
+      "nota": "Luna e Marte a 1.46° di distanza apparente alle 05:50, osservabili con il Sole sotto l'orizzonte, alti 30.0° verso E. Minimo di 1.46° alle 05:50.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-08-26-luna-venere",
+      "data": "2030-08-26T03:55:00.000Z",
+      "minimo": "2030-08-26T05:55:00.000Z",
+      "corpi": [
+        "Luna",
+        "Venere"
+      ],
+      "separazione": 1.26,
+      "separazioneMinima": 1.24,
+      "altezza": 20.5,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -6.3,
+      "nota": "Luna e Venere a 1.26° di distanza apparente alle 05:55, osservabili con il Sole sotto l'orizzonte, alti 20.5° verso E. Minimo di 1.24° alle 07:55.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-09-02-luna-giove",
+      "data": "2030-09-02T18:30:00.000Z",
+      "minimo": "2030-09-02T10:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 1.5,
+      "separazioneMinima": 0.91,
+      "altezza": 11.2,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -7.4,
+      "nota": "Luna e Giove a 1.50° di distanza apparente alle 20:30, osservabili con il Sole sotto l'orizzonte, alti 11.2° verso SO. Minimo di 0.91° alle 12:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-09-17-luna-saturno",
+      "data": "2030-09-17T04:10:00.000Z",
+      "minimo": "2030-09-17T14:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 0.96,
+      "separazioneMinima": 0.77,
+      "altezza": 62,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -8.4,
+      "nota": "Luna e Saturno a 0.96° di distanza apparente alle 06:10, osservabili con il Sole sotto l'orizzonte, alti 62.0° verso SO. Minimo di 0.77° alle 16:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-09-23-luna-marte",
+      "data": "2030-09-23T02:30:00.000Z",
+      "minimo": "2030-09-23T00:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.37,
+      "separazioneMinima": 1.34,
+      "altezza": 18.4,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -26.7,
+      "nota": "Luna e Marte a 1.37° di distanza apparente alle 04:30, osservabili con il Sole sotto l'orizzonte, alti 18.4° verso E. Minimo di 1.34° alle 02:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-09-25-luna-mercurio",
+      "data": "2030-09-25T04:30:00.000Z",
+      "minimo": "2030-09-24T22:30:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 1.66,
+      "separazioneMinima": 1.3,
+      "altezza": 16.7,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -6.5,
+      "nota": "Luna e Mercurio a 1.66° di distanza apparente alle 06:30, osservabili con il Sole sotto l'orizzonte, alti 16.7° verso E. Minimo di 1.30° alle 00:30.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-09-30-luna-giove",
+      "data": "2030-09-30T17:40:00.000Z",
+      "minimo": "2030-09-30T04:40:00.000Z",
+      "corpi": [
+        "Luna",
+        "Giove"
+      ],
+      "separazione": 2.05,
+      "separazioneMinima": 0.77,
+      "altezza": 7.1,
+      "direzione": "SO",
+      "visibile": true,
+      "sole": -7.9,
+      "nota": "Luna e Giove a 2.05° di distanza apparente alle 19:40, osservabili con il Sole sotto l'orizzonte, alti 7.1° verso SO. Minimo di 0.77° alle 06:40.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-10-14-luna-saturno",
+      "data": "2030-10-14T19:30:00.000Z",
+      "minimo": "2030-10-14T17:15:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 0.78,
+      "separazioneMinima": 0.72,
+      "altezza": 13.7,
+      "direzione": "ENE",
+      "visibile": true,
+      "sole": -31.8,
+      "nota": "Luna e Saturno a 0.78° di distanza apparente alle 21:30, osservabili con il Sole sotto l'orizzonte, alti 13.7° verso ENE. Minimo di 0.72° alle 19:15.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-10-22-luna-marte",
+      "data": "2030-10-22T02:15:00.000Z",
+      "minimo": "2030-10-21T20:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.67,
+      "separazioneMinima": 1.3,
+      "altezza": 17.4,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -36.2,
+      "nota": "Luna e Marte a 1.67° di distanza apparente alle 04:15, osservabili con il Sole sotto l'orizzonte, alti 17.4° verso E. Minimo di 1.30° alle 22:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-11-10-luna-saturno",
+      "data": "2030-11-10T18:05:00.000Z",
+      "minimo": "2030-11-10T18:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 0.79,
+      "separazioneMinima": 0.79,
+      "altezza": 20.2,
+      "direzione": "E",
+      "visibile": true,
+      "sole": -23.3,
+      "nota": "Luna e Saturno a 0.79° di distanza apparente alle 19:05, osservabili con il Sole sotto l'orizzonte, alti 20.2° verso E. Minimo di 0.79° alle 19:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-11-19-luna-marte",
+      "data": "2030-11-19T05:35:00.000Z",
+      "minimo": "2030-11-19T14:05:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 2.06,
+      "separazioneMinima": 1.29,
+      "altezza": 49.3,
+      "direzione": "S",
+      "visibile": true,
+      "sole": -6.7,
+      "nota": "Luna e Marte a 2.06° di distanza apparente alle 06:35, osservabili con il Sole sotto l'orizzonte, alti 49.3° verso S. Minimo di 1.29° alle 15:05.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-12-07-luna-saturno",
+      "data": "2030-12-07T18:20:00.000Z",
+      "minimo": "2030-12-07T18:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Saturno"
+      ],
+      "separazione": 0.85,
+      "separazioneMinima": 0.85,
+      "altezza": 43.9,
+      "direzione": "ESE",
+      "visibile": true,
+      "sole": -28.1,
+      "nota": "Luna e Saturno a 0.85° di distanza apparente alle 19:20, osservabili con il Sole sotto l'orizzonte, alti 43.9° verso ESE. Minimo di 0.85° alle 19:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-12-18-luna-marte",
+      "data": "2030-12-18T04:00:00.000Z",
+      "minimo": "2030-12-18T04:00:00.000Z",
+      "corpi": [
+        "Luna",
+        "Marte"
+      ],
+      "separazione": 1.2,
+      "separazioneMinima": 1.2,
+      "altezza": 38.8,
+      "direzione": "SSE",
+      "visibile": true,
+      "sole": -28,
+      "nota": "Luna e Marte a 1.20° di distanza apparente alle 05:00, osservabili con il Sole sotto l'orizzonte, alti 38.8° verso SSE. Minimo di 1.20° alle 05:00.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    },
+    {
+      "id": "cong-2030-12-23-luna-mercurio",
+      "data": "2030-12-23T06:05:00.000Z",
+      "minimo": "2030-12-22T01:20:00.000Z",
+      "corpi": [
+        "Luna",
+        "Mercurio"
+      ],
+      "separazione": 2.83,
+      "separazioneMinima": 1.65,
+      "altezza": 6.7,
+      "direzione": "SE",
+      "visibile": true,
+      "sole": -6.8,
+      "nota": "Luna e Mercurio a 2.83° di distanza apparente alle 07:05, osservabili con il Sole sotto l'orizzonte, alti 6.7° verso SE. Minimo di 1.65° alle 02:20.",
+      "fonte": "Astronomy Engine 2.1.19 · coordinate equatoriali geocentriche"
+    }
+  ]
+}

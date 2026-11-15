@@ -16,6 +16,7 @@
   let annoCache=null;                              // SVG del grafico annuale riusato nello stesso anno
   let tick=0;                                      // aggiornamenti periodici
   let eventiCorrenti=[];
+  let specialiData=null;
   const LUOGHI=[
     {id:"borgo",nome:"Borgo San Lorenzo",lat:43.955,lon:11.386},
     {id:"barberino",nome:"Barberino di Mugello",lat:43.9908,lon:11.2386},
@@ -241,15 +242,18 @@
   function calendario(){
     const n=giorniMese(Y,M),first=new Date(Date.UTC(Y,M-1,1)).getUTCDay(),lead=(first+6)%7;
     const t0=midOf(Y,M,1),fasi=A.prossimeFasi(t0,6),[ty,tm,td]=oggi();
+    const eventiMese=fasi.filter(f=>{const [fy,fm]=A.partiRoma(f.data);return fy===Y&&fm===M;});
     $("cal-title").textContent=`Il calendario lunare di ${MESI[M-1]} ${Y}`;
     let h=["lun","mar","mer","gio","ven","sab","dom"].map(d=>`<div class="dw">${d}</div>`).join("")+"<div></div>".repeat(lead);
     for(let d=1;d<=n;d++){
       const a=midOf(Y,M,d),b=A.mezzanotte(new Date(a.valueOf()+30*36e5)),il=A.moonIllumination(new Date(a.valueOf()+21*36e5));
       const ev=fasi.find(f=>f.data>=a&&f.data<b);
-      h+=`<button type="button" data-d="${d}" class="${d===D?"sel":""}${Y===ty&&M===tm&&d===td?" today":""}"${d===D?' aria-current="date"':''} aria-label="${d} ${MESI[M-1]}: ${A.nomeFase(il.phase)[0]}, ${Math.round(il.fraction*100)}%">`+
-         `<span class="n">${d}</span>${moonSvg(ev?ev.f:il.phase,26)}${ev?`<span class="ev">${ev.nome}<br>${ora(ev.data)}</span>`:`<span class="p">${Math.round(il.fraction*100)}%</span>`}</button>`;
+      const evTxt=ev?`, ${ev.nome} alle ${ora(ev.data)}`:"";
+      h+=`<button type="button" data-d="${d}" class="${d===D?"sel":""}${Y===ty&&M===tm&&d===td?" today":""}"${d===D?' aria-current="date"':''} aria-label="${d} ${MESI[M-1]}: ${A.nomeFase(il.phase)[0]}, ${Math.round(il.fraction*100)}%${evTxt}">`+
+         `<span class="n">${d}</span>${moonSvg(ev?ev.f:il.phase,26)}${ev?'<span class="dot" aria-hidden="true"></span>':`<span class="p">${Math.round(il.fraction*100)}%</span>`}</button>`;
     }
     $("cal").innerHTML=h;
+    $("cal-events").innerHTML=eventiMese.length?`<h4>Eventi del mese</h4><ul>${eventiMese.map(f=>{const [fy,fm,fd]=A.partiRoma(f.data);return `<li><button type="button" data-d="${fd}"><span>${f.nome}</span><time datetime="${f.data.toISOString()}">${fd} ${MESI[M-1]} · ${ora(f.data)}</time></button></li>`;}).join("")}</ul>`:`<p class="note">Nessuna fase principale questo mese.</p>`;
   }
 
   /* ---------- pianeti ---------- */
@@ -315,6 +319,12 @@
     const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`mugello-${slug}.ics`;document.body.appendChild(a);a.click();
     setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
   }
+  function scaricaIcsSpeciale(chiave){
+    if(!specialiData)return;
+    const [tipo,id]=chiave.split(":"),lista=tipo==="eclissi"?specialiData.eclissi:specialiData.congiunzioni;
+    const e=(lista||[]).find(x=>x.id===id);
+    if(e)scaricaIcs({nome:e.nome,data:new Date(e.data),nota:e.nota,ora:true});
+  }
   function eventi(){
     const t0=midOf(Y,M,D),E=A.eventi(t0,9);
     eventiCorrenti=E;
@@ -340,7 +350,14 @@
 
   dataInit();
   $("cal").addEventListener("click",e=>{const b=e.target.closest("button[data-d]");if(b)imposta(Y,M,+b.dataset.d);});
+  $("cal-events").addEventListener("click",e=>{const b=e.target.closest("button[data-d]");if(b)imposta(Y,M,+b.dataset.d);});
   $("evs").addEventListener("click",e=>{const b=e.target.closest("button[data-ics]");if(!b)return;const ev=eventiCorrenti[+b.dataset.ics];if(ev)scaricaIcs(ev);});
+  try{const el=$("eff-speciali-data");if(el)specialiData=JSON.parse(el.textContent);}catch(e){}
+  const speciali=$("speciali");
+  if(speciali)speciali.addEventListener("click",e=>{
+    const ics=e.target.closest("button[data-spec-ics]");if(ics){scaricaIcsSpeciale(ics.dataset.specIcs);return;}
+    const b=e.target.closest("button[data-date]");if(b){const [y,m,d]=b.dataset.date.split("-").map(Number);imposta(y,m,d);}
+  });
   $("sky-t").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("sky-t").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));skyT=b.dataset.t;pianeti();});
   let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(disegna,150);});
   let ini=oggi();try{const q=new URLSearchParams(location.search).get("d");
