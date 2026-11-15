@@ -15,6 +15,18 @@
   let skyT="sera";
   let annoCache=null;                              // SVG del grafico annuale riusato nello stesso anno
   let tick=0;                                      // aggiornamenti periodici
+  let eventiCorrenti=[];
+  const LUOGHI=[
+    {id:"borgo",nome:"Borgo San Lorenzo",lat:43.955,lon:11.386},
+    {id:"barberino",nome:"Barberino di Mugello",lat:43.9908,lon:11.2386},
+    {id:"dicomano",nome:"Dicomano",lat:43.8917,lon:11.5222},
+    {id:"firenzuola",nome:"Firenzuola",lat:44.1206,lon:11.3789},
+    {id:"marradi",nome:"Marradi",lat:44.0722,lon:11.6142},
+    {id:"palazzuolo",nome:"Palazzuolo sul Senio",lat:44.1131,lon:11.5433},
+    {id:"scarperia",nome:"Scarperia e San Piero",lat:43.9928,lon:11.3549},
+    {id:"vicchio",nome:"Vicchio",lat:43.9339,lon:11.465}
+  ];
+  let luogo=LUOGHI[0];
 
   /* ---------- utilità ---------- */
   const noonOf=(y,m,d)=>A.mezzogiorno(y,m,d);
@@ -25,6 +37,12 @@
   const giorniMese=(y,m)=>new Date(Date.UTC(y,m,0)).getUTCDate();
   function tipIn(el){let t=el.querySelector(".tip");if(!t){t=document.createElement("div");t.className="tip";el.appendChild(t);}return t;}
   function place(el,tip,x,y){tip.style.opacity=1;const tw=tip.offsetWidth,W=el.clientWidth;let lx=x+14;if(lx+tw>W)lx=x-tw-14;tip.style.left=Math.max(0,lx)+"px";tip.style.top=Math.max(0,y-10)+"px";}
+  function aggiornaEtichette(){
+    const lat=luogo.lat.toFixed(2).replace(".",","),lon=luogo.lon.toFixed(2).replace(".",",");
+    const lab=$("eff-luogo-label");if(lab)lab.textContent=`${luogo.nome} · ${lat}° N · ${lon}° E · ora italiana`;
+    const testo=$("luogo-testo");if(testo)testo.textContent=luogo.nome;
+    const src=$("p-src");if(src)src.textContent=`posizioni per ${luogo.nome}`;
+  }
 
   // disco lunare: p = fase 0..1 (0 nuova, .5 piena); lato illuminato a destra quando cresce
   function moonSvg(p,size,cls){
@@ -45,9 +63,15 @@
     $("d-a").innerHTML=Array.from({length:A1-A0+1},(_,i)=>`<option>${A0+i}</option>`).join("");
     const leggi=()=>{const y=+$("d-a").value,m=+$("d-m").value,d=Math.min(+$("d-g").value,giorniMese(y,m));imposta(y,m,d);};
     ["d-g","d-m","d-a"].forEach(id=>$(id).addEventListener("change",leggi));
+    $("luogo").innerHTML=LUOGHI.map(x=>`<option value="${x.id}">${x.nome}</option>`).join("");
+    $("luogo").addEventListener("change",()=>{luogo=LUOGHI.find(x=>x.id===$("luogo").value)||LUOGHI[0];imposta(Y,M,D);});
     const passo=k=>{const t=new Date(Date.UTC(Y,M-1,D)+k*DAY);imposta(t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate());};
     $("d-prev").addEventListener("click",()=>passo(-1));$("d-next").addEventListener("click",()=>passo(1));
-    $("d-oggi").addEventListener("click",()=>imposta(...oggi()));
+    $("d-date").addEventListener("change",()=>{const v=$("d-date").value;if(!v)return;const [y,m,d]=v.split("-").map(Number);imposta(y,m,d);});
+    document.querySelectorAll(".quick [data-g]").forEach(b=>b.addEventListener("click",()=>{
+      const [ty,tm,td]=oggi(),t=new Date(Date.UTC(ty,tm-1,td+Number(b.dataset.g)));
+      imposta(t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate());
+    }));
   }
   function imposta(y,m,d,noHist){
     y=Math.round(Number(y));m=Math.round(Number(m));d=Math.round(Number(d));
@@ -58,8 +82,16 @@
     Y=y;M=m;D=d;
     const n=giorniMese(y,m);$("d-g").innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${pad(i+1)}</option>`).join("");
     $("d-g").value=d;$("d-m").value=m;$("d-a").value=y;
+    $("d-date").value=`${y}-${pad(m)}-${pad(d)}`;
+    $("luogo").value=luogo.id;
+    const [ty,tm,td]=oggi();
+    document.querySelectorAll(".quick [data-g]").forEach(b=>{
+      const t=new Date(Date.UTC(ty,tm-1,td+Number(b.dataset.g)));
+      b.setAttribute("aria-pressed",String(t.getUTCFullYear()===y&&t.getUTCMonth()+1===m&&t.getUTCDate()===d));
+    });
     $("d-prev").disabled=(y===A0&&m===1&&d===1);$("d-next").disabled=(y===A1&&m===12&&d===31);
-    if(!noHist){try{const u=new URL(location.href);if(isOggi())u.searchParams.delete("d");else u.searchParams.set("d",`${y}-${pad(m)}-${pad(d)}`);history.replaceState(null,"",u);}catch(e){}}
+    if(!noHist){try{const u=new URL(location.href);if(isOggi())u.searchParams.delete("d");else u.searchParams.set("d",`${y}-${pad(m)}-${pad(d)}`);if(luogo.id==="borgo")u.searchParams.delete("l");else u.searchParams.set("l",luogo.id);history.replaceState(null,"",u);}catch(e){}}
+    aggiornaEtichette();
     disegna();
   }
 
@@ -71,11 +103,11 @@
     return {nome:cur.n,giorno:g1,tot};
   }
   function sole(){
-    const noon=noonOf(Y,M,D),s=A.sunTimes(noon),ieri=A.sunTimes(new Date(noon-DAY));
+    const noon=noonOf(Y,M,D),s=A.sunTimes(noon,luogo.lat,luogo.lon),ieri=A.sunTimes(new Date(noon-DAY),luogo.lat,luogo.lon);
     const off=A.offsetMin(noon);
     $("quando").textContent=dayName(noon)+" · "+(off===120?"ora legale (UTC+2)":"ora solare (UTC+1)");
     $("t-alba").textContent=ora(s.alba);$("t-tram").textContent=ora(s.tramonto);
-    const za=A.sunPosition(s.alba),zt=A.sunPosition(s.tramonto);
+    const za=A.sunPosition(s.alba,luogo.lat,luogo.lon),zt=A.sunPosition(s.tramonto,luogo.lat,luogo.lon);
     $("t-alba-az").textContent=`all'orizzonte a ${deg(A.gradiAz(za.azimuth))} (${A.direzione(za.azimuth)})`;
     $("t-tram-az").textContent=`all'orizzonte a ${deg(A.gradiAz(zt.azimuth))} (${A.direzione(zt.azimuth)})`;
     const len=(s.tramonto-s.alba)/6e4,dif=Math.round((len-(ieri.tramonto-ieri.alba)/6e4)*10)/10;
@@ -94,7 +126,7 @@
     zone(s);giornata(s);anno();
   }
   function zone(s){
-    const dom=A.sunTimes(noonOf(...A.partiRoma(new Date(noonOf(Y,M,D).valueOf()+DAY))));
+    const dom=A.sunTimes(noonOf(...A.partiRoma(new Date(noonOf(Y,M,D).valueOf()+DAY))),luogo.lat,luogo.lon);
     const iv=(a,b)=>a&&b?`${ora(a)}–${ora(b)}`:"—";
     const Z=[
       ["var(--sk-gold)","Ora d'oro","luce calda e radente, ombre lunghe",iv(s.bluMattinaFine,s.oroMattinaFine),iv(s.oroSeraInizio,s.bluSeraInizio)],
@@ -109,7 +141,7 @@
   function giornata(s){
     const el=$("ch-day"),W=el.clientWidth,H=el.clientHeight,m={l:38,r:12,t:10,b:26},iw=W-m.l-m.r,ih=H-m.t-m.b;
     const t0=midOf(Y,M,D),t1=A.mezzanotte(new Date(t0.valueOf()+30*36e5)),span=t1-t0;
-    const P=[];for(let t=t0.valueOf();t<=t1.valueOf();t+=5*6e4){const p=A.sunPosition(new Date(t));P.push({t,h:p.altitude/rad,az:p.azimuth});}
+    const P=[];for(let t=t0.valueOf();t<=t1.valueOf();t+=5*6e4){const p=A.sunPosition(new Date(t),luogo.lat,luogo.lon);P.push({t,h:p.altitude/rad,az:p.azimuth});}
     const lo=Math.min(...P.map(p=>p.h)),hi=Math.max(...P.map(p=>p.h));
     const y0=Math.floor((lo-4)/10)*10,y1=Math.ceil((hi+4)/10)*10;
     const X=t=>m.l+(t-t0)/span*iw,Yh=h=>m.t+ih-(h-y0)/(y1-y0)*ih,cl=h=>Math.max(y0,Math.min(y1,h));
@@ -124,7 +156,7 @@
     [[s.alba,"alba"],[s.tramonto,"tramonto"]].forEach(([t,n])=>{if(t)g+=`<circle cx="${X(t)}" cy="${Yh(-0.83)}" r="4.5" fill="var(--amber)" stroke="var(--panel)" stroke-width="2"/>`;});
     if(s.mezzogiorno)g+=`<text class="vlab" x="${X(s.mezzogiorno)}" y="${Yh(s.altezzaMax)-10}" text-anchor="middle" style="font-family:var(--sans);font-size:12px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--panel);stroke-width:4px">${deg(s.altezzaMax)} alle ${ora(s.mezzogiorno)}</text>`;
     const now=Date.now();
-    if(now>=t0&&now<t1){const p=A.sunPosition(new Date(now)),x=X(now);g+=`<line class="now" x1="${x}" x2="${x}" y1="${m.t}" y2="${m.t+ih}"/><circle cx="${x}" cy="${Yh(p.altitude/rad)}" r="7" fill="var(--amber)" stroke="var(--ink)" stroke-width="2"/><text class="axl" x="${x+6}" y="${m.t+12}">adesso</text>`;}
+    if(now>=t0&&now<t1){const p=A.sunPosition(new Date(now),luogo.lat,luogo.lon),x=X(now);g+=`<line class="now" x1="${x}" x2="${x}" y1="${m.t}" y2="${m.t+ih}"/><circle cx="${x}" cy="${Yh(p.altitude/rad)}" r="7" fill="var(--amber)" stroke="var(--ink)" stroke-width="2"/><text class="axl" x="${x+6}" y="${m.t+12}">adesso</text>`;}
     g+=`<line class="cross" id="dx" x1="-9999" x2="-9999" y1="${m.t}" y2="${m.t+ih}"/><circle id="dp" r="5" cx="-9999" cy="0" fill="var(--panel)" stroke="var(--amber)" stroke-width="2.5"/>`;
     el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Altezza del Sole sull'orizzonte nel corso della giornata">${g}</svg>`;
     const svg=el.querySelector("svg"),tip=tipIn(el),cx=svg.querySelector("#dx"),dp=svg.querySelector("#dp");
@@ -154,7 +186,7 @@
       if(tip)tip.style.opacity=0;if(cx){cx.setAttribute("x1",-9999);cx.setAttribute("x2",-9999);}
       return;
     }
-    for(let i=0;i<n;i++){const d=new Date(Date.UTC(Y,0,1+i)),y=d.getUTCFullYear(),mm=d.getUTCMonth()+1,dd=d.getUTCDate(),s=A.sunTimes(noonOf(y,mm,dd));
+    for(let i=0;i<n;i++){const d=new Date(Date.UTC(Y,0,1+i)),y=d.getUTCFullYear(),mm=d.getUTCMonth()+1,dd=d.getUTCDate(),s=A.sunTimes(noonOf(y,mm,dd),luogo.lat,luogo.lon);
       R.push({i,mm,dd,s,a:hLoc(s.alba),t:hLoc(s.tramonto),ca:s.civileInizio?hLoc(s.civileInizio):null,ct:s.civileFine?hLoc(s.civileFine):null,len:(s.tramonto-s.alba)/6e4});}
     const lo=Math.floor(Math.min(...R.map(r=>r.ca??r.a)))-1,hi=Math.ceil(Math.max(...R.map(r=>r.ct??r.t)))+1;
     const X=i=>m.l+i/n*iw,Yh=h=>m.t+(h-lo)/(hi-lo)*ih,bw=iw/n+0.6;   // ore crescenti verso il basso: il mattino in alto
@@ -187,7 +219,7 @@
   /* ---------- Luna ---------- */
   function luna(){
     const t0=midOf(Y,M,D),t=isOggi()?new Date():new Date(t0.valueOf()+21*36e5);
-    const il=A.moonIllumination(t),[nome]=A.nomeFase(il.phase),mt=A.moonTimes(noonOf(Y,M,D)),pos=A.moonPosition(t);
+    const il=A.moonIllumination(t),[nome]=A.nomeFase(il.phase),mt=A.moonTimes(noonOf(Y,M,D),luogo.lat,luogo.lon),pos=A.moonPosition(t,luogo.lat,luogo.lon);
     $("l-disc").innerHTML=moonSvg(il.phase,180);
     $("l-lab").textContent=isOggi()?"adesso, "+ora(t):"alle 21:00 del "+gg(t);
     $("l-nome").textContent=nome;
@@ -196,9 +228,9 @@
     const F=[
       ["Illuminata",Math.round(il.fraction*100)+"%",il.phase<0.5?"in crescita":"in calo"],
       ["Età",eta!=null?(Math.round(eta*10)/10).toString().replace(".",",")+" giorni":"—","dalla luna nuova"],
-      ["Sorge",mt.sorge?ora(mt.sorge):mt.sempreSu?"sempre su":"—",mt.sorge?"a "+A.direzione(A.moonPosition(mt.sorge).azimuth):"non sorge in questo giorno"],
-      ["Tramonta",mt.tramonta?ora(mt.tramonta):mt.sempreGiu?"—":"—",mt.tramonta?"a "+A.direzione(A.moonPosition(mt.tramonta).azimuth):"non tramonta in questo giorno"],
-      ["Distanza",num(dist)+" km",dist<362000?"molto vicina: se è piena è una «superluna»":dist>403000?"vicina al punto più lontano":dist<384400?"più vicina della media":"più lontana della media"],
+      ["Sorge",mt.sorge?ora(mt.sorge):mt.sempreSu?"sempre su":"—",mt.sorge?"a "+A.direzione(A.moonPosition(mt.sorge,luogo.lat,luogo.lon).azimuth):"non sorge in questo giorno"],
+      ["Tramonta",mt.tramonta?ora(mt.tramonta):mt.sempreGiu?"—":"—",mt.tramonta?"a "+A.direzione(A.moonPosition(mt.tramonta,luogo.lat,luogo.lon).azimuth):"non tramonta in questo giorno"],
+      ["Distanza",num(dist)+" km",dist<362000?"molto vicina: se è piena è una «superluna»":dist>403000?"verso l'apogeo, il punto più lontano":dist<384400?"più vicina della media":"più lontana della media"],
       [full?"Luna piena":"Prossima fase",full?gg(full.data,{day:"numeric",month:"short"}):"—",full?`alle ${ora(full.data)} · tra ${Math.max(0,Math.round((full.data-t)/DAY))} giorni`:""]
     ];
     $("l-facts").innerHTML=F.map(([l,v,s])=>`<div class="f"><div class="lab">${l}</div><b>${v}</b><span>${s}</span></div>`).join("");
@@ -222,9 +254,9 @@
 
   /* ---------- pianeti ---------- */
   function pianeti(){
-    const s=A.sunTimes(noonOf(Y,M,D)),t0=midOf(Y,M,D);
+    const s=A.sunTimes(noonOf(Y,M,D),luogo.lat,luogo.lon),t0=midOf(Y,M,D);
     const T={sera:new Date(s.tramonto.valueOf()+36e5),"23":new Date(t0.valueOf()+23*36e5),mattino:new Date(s.alba.valueOf()-36e5)};
-    const pos=t=>A.PIANETI.map(p=>Object.assign({nome:p},A.planetPosition(p,t)));
+    const pos=t=>A.PIANETI.map(p=>Object.assign({nome:p},A.planetPosition(p,t,luogo.lat,luogo.lon)));
     const sera=pos(T.sera),matt=pos(T.mattino),notte=pos(T["23"]);
     const cella=p=>p.altitude/rad<0?`<span class="m">sotto l'orizzonte</span>`:`<b>${deg(p.altitude/rad)}</b> <span class="m">a ${A.direzione(p.azimuth)}</span>`;
     $("p-body").innerHTML=sera.map((p,i)=>{const q=matt[i],hs=p.altitude/rad,hm=q.altitude/rad,hn=notte[i].altitude/rad;let c;
@@ -238,9 +270,9 @@
   }
   function cielo(t){
     const el=$("ch-sky"),W=el.clientWidth,H=el.clientHeight,m={l:10,r:10,t:14,b:36},iw=W-m.l-m.r,ih=H-m.t-m.b;
-    const O=A.PIANETI.map(p=>{const q=A.planetPosition(p,t);return {nome:p,h:q.altitude/rad,az:A.gradiAz(q.azimuth)};});
-    const lp=A.moonPosition(t),il=A.moonIllumination(t);O.push({nome:"Luna",h:lp.altitude/rad,az:A.gradiAz(lp.azimuth),luna:true});
-    const sp=A.sunPosition(t);if(sp.altitude>0)O.push({nome:"Sole",h:sp.altitude/rad,az:A.gradiAz(sp.azimuth),sole:true});
+    const O=A.PIANETI.map(p=>{const q=A.planetPosition(p,t,luogo.lat,luogo.lon);return {nome:p,h:q.altitude/rad,az:A.gradiAz(q.azimuth)};});
+    const lp=A.moonPosition(t,luogo.lat,luogo.lon),il=A.moonIllumination(t);O.push({nome:"Luna",h:lp.altitude/rad,az:A.gradiAz(lp.azimuth),luna:true});
+    const sp=A.sunPosition(t,luogo.lat,luogo.lon);if(sp.altitude>0)O.push({nome:"Sole",h:sp.altitude/rad,az:A.gradiAz(sp.azimuth),sole:true});
     const vis=O.filter(o=>o.h>-1),hmax=Math.max(60,Math.ceil((Math.max(0,...vis.map(o=>o.h))+10)/10)*10);
     const X=az=>m.l+az/360*iw,Yh=h=>m.t+ih-Math.max(0,h)/hmax*ih;
     let g=`<rect x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="var(--sk-night)" opacity=".9" rx="6"/>`;
@@ -266,28 +298,57 @@
   }
 
   /* ---------- eventi ---------- */
+  function icsData(d){return d.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}Z$/,"Z");}
+  function icsGiorno(d){const [y,m,dd]=A.partiRoma(d);return `${y}${pad(m)}${pad(dd)}`;}
+  function icsEsc(s){return String(s).replace(/\\/g,"\\\\").replace(/\n/g,"\\n").replace(/,/g,"\\,").replace(/;/g,"\\;");}
+  function scaricaIcs(e){
+    const slug=e.nome.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").toLowerCase();
+    const [y,m,dd]=A.partiRoma(e.data),stamp=icsData(new Date()),timed=e.ora||e.tipo==="ora";
+    let start,end;
+    if(timed){start=`DTSTART:${icsData(e.data)}`;end=`DTEND:${icsData(new Date(e.data.valueOf()+36e5))}`;}
+    else{start=`DTSTART;VALUE=DATE:${icsGiorno(e.data)}`;end=`DTEND;VALUE=DATE:${icsGiorno(new Date(Date.UTC(y,m-1,dd+1,12)))}`;}
+    const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Mugello Meteo & Clima//Effemeridi//IT","CALSCALE:GREGORIAN","BEGIN:VEVENT",
+      `UID:eff-${y}${pad(m)}${pad(dd)}-${slug}@lucavarlani-max.github.io`,`DTSTAMP:${stamp}`,start,end,
+      `SUMMARY:${icsEsc(e.nome)}`,`DESCRIPTION:${icsEsc(e.nota+" · "+luogo.nome+" · Mugello Meteo & Clima")}`,
+      `LOCATION:${icsEsc(luogo.nome+", Mugello")}`,"URL:https://lucavarlani-max.github.io/mugello_meteoeclima/effemeridi.html","END:VEVENT","END:VCALENDAR"];
+    const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`mugello-${slug}.ics`;document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
+  }
   function eventi(){
     const t0=midOf(Y,M,D),E=A.eventi(t0,9);
+    eventiCorrenti=E;
     $("e-src").textContent=isOggi()?"da oggi":"dal "+gg(t0,{day:"numeric",month:"long",year:"numeric"});
-    $("evs").innerHTML=E.map(e=>{
+    $("evs").innerHTML=E.map((e,i)=>{
       const gi=Math.round((A.mezzanotte(e.data)-t0)/DAY),quando=gi===0?"oggi":gi===1?"domani":`tra ${gi} giorni`;
       let extra="";
-      if(e.tipo==="sciame"){const notte=new Date(A.mezzanotte(e.data).valueOf()+(24+3)*36e5),f=A.moonIllumination(notte).fraction,lh=A.moonPosition(notte).altitude/rad;
+      if(e.tipo==="sciame"){const notte=new Date(A.mezzanotte(e.data).valueOf()+(24+3)*36e5),f=A.moonIllumination(notte).fraction,lh=A.moonPosition(notte,luogo.lat,luogo.lon).altitude/rad;
         extra=lh<0||f<0.25?"🌑 Luna non di disturbo: buone condizioni":f<0.6?`🌓 Luna al ${Math.round(f*100)}%: disturbo moderato`:`🌕 Luna al ${Math.round(f*100)}%: disturba l'osservazione`;}
-      const dt=gg(e.data,{weekday:"short",day:"numeric",month:"short",year:"numeric"})+(e.ora?" · "+ora(e.data):"")+(e.notte?" · notte":"");
-      return `<div class="card ev"><div class="ic" aria-hidden="true">${e.ic}</div><div><div class="d">${dt}</div><h3>${e.nome}</h3><p>${e.nota}</p><div class="fra">${quando}${extra?" · "+extra:""}</div></div></div>`;}).join("");
+      const dt=gg(e.data,{weekday:"short",day:"numeric",month:"short",year:"numeric"})+((e.ora||e.tipo==="ora")?" · "+(e.oraTesto||ora(e.data)):"")+(e.notte?" · notte":"");
+      return `<div class="card ev"><div class="ic" aria-hidden="true">${e.ic}</div><div><div class="d">${dt}</div><h3>${e.nome}</h3><p>${e.nota}</p><div class="fra">${quando}${extra?" · "+extra:""} <button type="button" class="ics" data-ics="${i}" aria-label="Aggiungi ${e.nome} al calendario">Aggiungi al calendario</button></div></div></div>`;}).join("");
   }
 
-  function disegna(){sole();luna();pianeti();eventi();}
+  /* ---------- riepilogo "Stasera in breve" ---------- */
+  function riepilogo(){
+    const R=window.EffemeridiRiepilogo;if(!R)return;
+    const s=R.sintesi(A,noonOf(Y,M,D),luogo),box=$("eff-oggi-contenuto"),wrap=$("eff-oggi");
+    if(box)box.innerHTML=R.contenuto(A,s);
+    if(wrap)wrap.dataset.aggiornato=`${Y}-${pad(M)}-${pad(D)}`;
+  }
+
+  function disegna(){sole();luna();pianeti();riepilogo();eventi();}
 
   dataInit();
   $("cal").addEventListener("click",e=>{const b=e.target.closest("button[data-d]");if(b)imposta(Y,M,+b.dataset.d);});
+  $("evs").addEventListener("click",e=>{const b=e.target.closest("button[data-ics]");if(!b)return;const ev=eventiCorrenti[+b.dataset.ics];if(ev)scaricaIcs(ev);});
   $("sky-t").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("sky-t").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));skyT=b.dataset.t;pianeti();});
   let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(disegna,150);});
   let ini=oggi();try{const q=new URLSearchParams(location.search).get("d");
+    const l=new URLSearchParams(location.search).get("l"),trov=LUOGHI.find(x=>x.id===l);if(trov)luogo=trov;
     if(q&&/^\d{4}-\d{2}-\d{2}$/.test(q)){const [y,m,d]=q.split("-").map(Number);
       if(y>=A0&&y<=A1&&m>=1&&m<=12&&d>=1&&d<=giorniMese(y,m))ini=[y,m,d];}
   }catch(e){}
+  aggiornaEtichette();
   imposta(...ini,true);
   setInterval(()=>{if(!isOggi())return;sole();if(++tick%3===0){luna();pianeti();}},5*6e4);
 })();

@@ -74,6 +74,8 @@ var GA_ID = "G-QQFBDGK1X1";   // es. "G-AB12CD34EF" (Google Analytics > Amminist
     ".mmc-ck .b{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}" +
     ".mmc-ck button{font:inherit;font-weight:600;font-size:13.5px;border-radius:999px;padding:8px 16px;cursor:pointer;border:1px solid var(--pine,#0f6b52)}" +
     ".mmc-ck .si{background:var(--pine,#0f6b52);color:#fff} .mmc-ck .no{background:transparent;color:var(--pine,#0f6b52)}" +
+    ":root[data-theme=\"dark\"] .mmc-ck .si{color:#0e1613}" +
+    "@media (prefers-color-scheme:dark){:root:not([data-theme=\"light\"]) .mmc-ck .si{color:#0e1613}}" +
     ".mmc-pref{cursor:pointer;text-decoration:underline;color:inherit;background:none;border:0;font:inherit;padding:0}" +
     "@media print{.mmc-ck{display:none}}";
   function banner(){

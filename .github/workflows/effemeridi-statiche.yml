@@ -1,0 +1,42 @@
+name: Effemeridi statiche (aggiornamento quotidiano)
+# Rigenera il blocco "Stasera in breve" nell'HTML iniziale di effemeridi.html
+# con lo stesso astro.js usato dalla pagina. Serve ai motori di ricerca e a chi
+# arriva senza JavaScript; la pagina aggiorna poi i valori del giorno scelto.
+on:
+  schedule:
+    # due tentativi: GitHub può ritardare o saltare le esecuzioni programmate
+    - cron: "17 0,6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: effemeridi-statiche
+  cancel-in-progress: false
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Rigenera il blocco statico
+        run: node scripts/build_effemeridi_statiche.js
+      - name: Commit se cambiato
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add effemeridi.html sitemap.xml
+          if git diff --cached --quiet; then echo "nessuna variazione"; exit 0; fi
+          git commit -q -m "effemeridi: aggiorna il blocco statico di oggi"
+          for i in 1 2 3 4; do
+            git pull -q --rebase origin main && git push -q && exit 0
+            sleep 15
+          done
+          exit 1
