@@ -13,6 +13,8 @@
   const dayName=d=>gg(d,{weekday:"long",day:"numeric",month:"long",year:"numeric"});
   let Y,M,D;                                       // giorno scelto (calendario italiano)
   let skyT="sera";
+  let annoCache=null;                              // SVG del grafico annuale riusato nello stesso anno
+  let tick=0;                                      // aggiornamenti periodici
 
   /* ---------- utilità ---------- */
   const noonOf=(y,m,d)=>A.mezzogiorno(y,m,d);
@@ -48,7 +50,11 @@
     $("d-oggi").addEventListener("click",()=>imposta(...oggi()));
   }
   function imposta(y,m,d,noHist){
-    if(y<A0){y=A0;m=1;d=1;} if(y>A1){y=A1;m=12;d=31;}
+    y=Math.round(Number(y));m=Math.round(Number(m));d=Math.round(Number(d));
+    if(!Number.isFinite(y))y=A0; if(!Number.isFinite(m))m=1; if(!Number.isFinite(d))d=1;
+    y=Math.min(A1,Math.max(A0,y));
+    m=Math.min(12,Math.max(1,m));
+    d=Math.min(giorniMese(y,m),Math.max(1,d));
     Y=y;M=m;D=d;
     const n=giorniMese(y,m);$("d-g").innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${pad(i+1)}</option>`).join("");
     $("d-g").value=d;$("d-m").value=m;$("d-a").value=y;
@@ -83,6 +89,8 @@
     $("t-alt").textContent=deg(s.altezzaMax);
     const st=stagioneDi(noon);$("t-alt-d").innerHTML=`<b>${st.nome}</b> astronomico: giorno ${st.giorno} di ${st.tot}`;
     $("s-src").textContent=`${ora(s.alba)} – ${ora(s.tramonto)} · ${dur(len)} di luce`;
+    const live=$("eff-live"),riepilogo=`${dayName(noon)}: alba ${ora(s.alba)}, tramonto ${ora(s.tramonto)}, ${dur(len)} di luce.`;
+    if(live&&live.textContent!==riepilogo)live.textContent=riepilogo;
     zone(s);giornata(s);anno();
   }
   function zone(s){
@@ -121,14 +129,31 @@
     el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Altezza del Sole sull'orizzonte nel corso della giornata">${g}</svg>`;
     const svg=el.querySelector("svg"),tip=tipIn(el),cx=svg.querySelector("#dx"),dp=svg.querySelector("#dp");
     const fase=h=>h>6?"giorno":h>0?"ora d'oro":h>-6?"crepuscolo civile":h>-12?"crepuscolo nautico":h>-18?"crepuscolo astronomico":"notte";
-    svg.addEventListener("pointermove",e=>{const rb=svg.getBoundingClientRect(),f=(e.clientX-rb.left-m.l)/iw;if(f<0||f>1){tip.style.opacity=0;return;}
-      const p=P[Math.round(f*(P.length-1))],x=X(p.t),y=Yh(p.h);cx.setAttribute("x1",x);cx.setAttribute("x2",x);dp.setAttribute("cx",x);dp.setAttribute("cy",y);
-      tip.innerHTML=`<b>${ora(new Date(p.t))}</b> · ${fase(p.h)}<br>Sole a <b>${(Math.round(p.h*10)/10).toString().replace(".",",").replace("-","−")}°</b> <span class="m">verso ${A.direzione(p.az)} (${deg(A.gradiAz(p.az))})</span>`;place(el,tip,x,m.t);});
-    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;cx.setAttribute("x1",-9999);cx.setAttribute("x2",-9999);dp.setAttribute("cx",-9999);});
+    let idx=Math.round(P.length/2);
+    function mostra(p,annuncia){
+      const x=X(p.t),y=Yh(p.h);cx.setAttribute("x1",x);cx.setAttribute("x2",x);dp.setAttribute("cx",x);dp.setAttribute("cy",y);
+      tip.innerHTML=`<b>${ora(new Date(p.t))}</b> · ${fase(p.h)}<br>Sole a <b>${(Math.round(p.h*10)/10).toString().replace(".",",").replace("-","−")}°</b> <span class="m">verso ${A.direzione(p.az)} (${deg(A.gradiAz(p.az))})</span>`;place(el,tip,x,m.t);
+      if(annuncia){const live=$("ch-day-live");if(live)live.textContent=`${ora(new Date(p.t))}: Sole a ${(Math.round(p.h*10)/10).toString().replace(".",",").replace("-","−")}°, ${fase(p.h)}.`;}
+    }
+    function daEvento(e,annuncia){const rb=svg.getBoundingClientRect(),f=(e.clientX-rb.left-m.l)/iw;if(f<0||f>1){tip.style.opacity=0;return;}
+      idx=Math.max(0,Math.min(P.length-1,Math.round(f*(P.length-1))));mostra(P[idx],annuncia);}
+    svg.addEventListener("pointermove",e=>daEvento(e,false));
+    svg.addEventListener("click",e=>daEvento(e,true));
+    el.onkeydown=e=>{if(e.key!=="ArrowLeft"&&e.key!=="ArrowRight")return;e.preventDefault();idx=Math.max(0,Math.min(P.length-1,idx+(e.key==="ArrowRight"?1:-1)));mostra(P[idx],true);};
+    el.onfocus=()=>mostra(P[idx],true);
+    el.onblur=()=>{tip.style.opacity=0;cx.setAttribute("x1",-9999);cx.setAttribute("x2",-9999);dp.setAttribute("cx",-9999);};
+    svg.addEventListener("pointerleave",()=>{if(matchMedia("(hover:hover)").matches){tip.style.opacity=0;cx.setAttribute("x1",-9999);cx.setAttribute("x2",-9999);dp.setAttribute("cx",-9999);}});
   }
   function anno(){
     const el=$("ch-year"),W=el.clientWidth,H=el.clientHeight,m={l:40,r:12,t:10,b:26},iw=W-m.l-m.r,ih=H-m.t-m.b;
     const n=(Y%4===0&&Y%100!==0)||Y%400===0?366:365,R=[];
+    if(annoCache&&annoCache.Y===Y&&annoCache.W===W&&annoCache.H===H){
+      const bw=iw/n+0.6,sel=Math.round((Date.UTC(Y,M-1,D)-Date.UTC(Y,0,1))/DAY),x=m.l+sel/n*iw+bw/2,line=el.querySelector(".selv");
+      if(line){line.setAttribute("x1",x);line.setAttribute("x2",x);}
+      const tip=el.querySelector(".tip"),cx=el.querySelector("#yx");
+      if(tip)tip.style.opacity=0;if(cx){cx.setAttribute("x1",-9999);cx.setAttribute("x2",-9999);}
+      return;
+    }
     for(let i=0;i<n;i++){const d=new Date(Date.UTC(Y,0,1+i)),y=d.getUTCFullYear(),mm=d.getUTCMonth()+1,dd=d.getUTCDate(),s=A.sunTimes(noonOf(y,mm,dd));
       R.push({i,mm,dd,s,a:hLoc(s.alba),t:hLoc(s.tramonto),ca:s.civileInizio?hLoc(s.civileInizio):null,ct:s.civileFine?hLoc(s.civileFine):null,len:(s.tramonto-s.alba)/6e4});}
     const lo=Math.floor(Math.min(...R.map(r=>r.ca??r.a)))-1,hi=Math.ceil(Math.max(...R.map(r=>r.ct??r.t)))+1;
@@ -150,11 +175,13 @@
       tip.innerHTML=`<b>${r.dd} ${MESI[r.mm-1]}</b><br>alba <b>${ora(r.s.alba)}</b> · tramonto <b>${ora(r.s.tramonto)}</b><br><span class="m">${dur(r.len)} di luce · crepuscolo ${ora(r.s.civileInizio)}–${ora(r.s.civileFine)}</span>`;place(el,tip,x,m.t);});
     svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;cx.setAttribute("x1",-9999);cx.setAttribute("x2",-9999);});
     svg.addEventListener("click",e=>{const rb=svg.getBoundingClientRect(),i=Math.floor((e.clientX-rb.left-m.l)/iw*n);if(i>=0&&i<n)imposta(Y,R[i].mm,R[i].dd);});
+    el.onkeydown=e=>{if(e.key!=="ArrowLeft"&&e.key!=="ArrowRight")return;e.preventDefault();const cur=Math.round((Date.UTC(Y,M-1,D)-Date.UTC(Y,0,1))/DAY),i=Math.max(0,Math.min(n-1,cur+(e.key==="ArrowRight"?1:-1)));imposta(Y,R[i].mm,R[i].dd);};
     // curiosità dell'anno
     const by=(k,f)=>R.reduce((a,b)=>f(b[k],a[k])?b:a);
     const lg=by("len",(x,y)=>x>y),sh=by("len",(x,y)=>x<y),ea=by("a",(x,y)=>x<y),la=by("a",(x,y)=>x>y),lt=by("t",(x,y)=>x>y),et=by("t",(x,y)=>x<y);
     const dd=r=>`${r.dd===1||r.dd===8||r.dd===11?"l'":"il "}${r.dd} ${MESI[r.mm-1]}`;
     $("y-note").innerHTML=`Nel ${Y} il giorno più lungo è ${dd(lg)} (<b>${dur(lg.len)}</b>), il più corto ${dd(sh)} (<b>${dur(sh.len)}</b>). Curiosamente l'alba più precoce non cade al solstizio ma ${dd(ea)} (${ora(ea.s.alba)}) e il tramonto più tardo ${dd(lt)} (${ora(lt.s.tramonto)}); d'inverno il tramonto più precoce arriva già ${dd(et)} (${ora(et.s.tramonto)}), mentre l'alba più tardiva è ${dd(la)} (${ora(la.s.alba)}). È l'effetto dell'equazione del tempo. I salti di un'ora sono i cambi tra ora solare e legale. Tocca il grafico per scegliere un giorno.`;
+    annoCache={Y,W,H};
   }
 
   /* ---------- Luna ---------- */
@@ -187,7 +214,7 @@
     for(let d=1;d<=n;d++){
       const a=midOf(Y,M,d),b=A.mezzanotte(new Date(a.valueOf()+30*36e5)),il=A.moonIllumination(new Date(a.valueOf()+21*36e5));
       const ev=fasi.find(f=>f.data>=a&&f.data<b);
-      h+=`<button type="button" data-d="${d}" class="${d===D?"sel":""}${Y===ty&&M===tm&&d===td?" today":""}" aria-label="${d} ${MESI[M-1]}: ${A.nomeFase(il.phase)[0]}, ${Math.round(il.fraction*100)}%">`+
+      h+=`<button type="button" data-d="${d}" class="${d===D?"sel":""}${Y===ty&&M===tm&&d===td?" today":""}"${d===D?' aria-current="date"':''} aria-label="${d} ${MESI[M-1]}: ${A.nomeFase(il.phase)[0]}, ${Math.round(il.fraction*100)}%">`+
          `<span class="n">${d}</span>${moonSvg(ev?ev.f:il.phase,26)}${ev?`<span class="ev">${ev.nome}<br>${ora(ev.data)}</span>`:`<span class="p">${Math.round(il.fraction*100)}%</span>`}</button>`;
     }
     $("cal").innerHTML=h;
@@ -229,10 +256,13 @@
     el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Posizione di Luna e pianeti nel cielo">${g}</svg>`;
     $("sky-when").textContent=`${gg(t,{weekday:"long",day:"numeric",month:"long"})}, ore ${ora(t)} · altezza sull'orizzonte e direzione`;
     const svg=el.querySelector("svg"),tip=tipIn(el);
-    svg.addEventListener("pointermove",e=>{const rb=svg.getBoundingClientRect(),px=e.clientX-rb.left,py=e.clientY-rb.top;let b=null,bd=24*24;
+    function mostra(e){const rb=svg.getBoundingClientRect(),px=e.clientX-rb.left,py=e.clientY-rb.top;let b=null,bd=24*24;
       vis.forEach(o=>{const d=(X(o.az)-px)**2+(Yh(o.h)-py)**2;if(d<bd){bd=d;b=o;}});if(!b){tip.style.opacity=0;return;}
-      tip.innerHTML=`<b>${b.nome}</b><br>altezza <b>${deg(b.h)}</b> · direzione <b>${A.direzione((b.az-180)*rad)}</b> <span class="m">(${deg(b.az)})</span>`+(b.luna?`<br><span class="m">illuminata al ${Math.round(il.fraction*100)}%</span>`:"");place(el,tip,X(b.az),Yh(b.h));});
-    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;});
+      tip.innerHTML=`<b>${b.nome}</b><br>altezza <b>${deg(b.h)}</b> · direzione <b>${A.direzione((b.az-180)*rad)}</b> <span class="m">(${deg(b.az)})</span>`+(b.luna?`<br><span class="m">illuminata al ${Math.round(il.fraction*100)}%</span>`:"");place(el,tip,X(b.az),Yh(b.h));}
+    svg.addEventListener("pointermove",mostra);
+    svg.addEventListener("click",mostra);
+    svg.addEventListener("pointerleave",()=>{if(matchMedia("(hover:hover)").matches)tip.style.opacity=0;});
+    el.onfocus=()=>{const live=$("ch-sky-live");if(live)live.textContent=vis.length?`Oggetti sopra l'orizzonte: ${vis.map(o=>o.nome).join(", ")}. I dati sono nella tabella dei pianeti.`:"Nessun pianeta sopra l'orizzonte.";};
   }
 
   /* ---------- eventi ---------- */
@@ -245,7 +275,7 @@
       if(e.tipo==="sciame"){const notte=new Date(A.mezzanotte(e.data).valueOf()+(24+3)*36e5),f=A.moonIllumination(notte).fraction,lh=A.moonPosition(notte).altitude/rad;
         extra=lh<0||f<0.25?"🌑 Luna non di disturbo: buone condizioni":f<0.6?`🌓 Luna al ${Math.round(f*100)}%: disturbo moderato`:`🌕 Luna al ${Math.round(f*100)}%: disturba l'osservazione`;}
       const dt=gg(e.data,{weekday:"short",day:"numeric",month:"short",year:"numeric"})+(e.ora?" · "+ora(e.data):"")+(e.notte?" · notte":"");
-      return `<div class="card ev"><div class="ic">${e.ic}</div><div><div class="d">${dt}</div><h3>${e.nome}</h3><p>${e.nota}</p><div class="fra">${quando}${extra?" · "+extra:""}</div></div></div>`;}).join("");
+      return `<div class="card ev"><div class="ic" aria-hidden="true">${e.ic}</div><div><div class="d">${dt}</div><h3>${e.nome}</h3><p>${e.nota}</p><div class="fra">${quando}${extra?" · "+extra:""}</div></div></div>`;}).join("");
   }
 
   function disegna(){sole();luna();pianeti();eventi();}
@@ -254,7 +284,10 @@
   $("cal").addEventListener("click",e=>{const b=e.target.closest("button[data-d]");if(b)imposta(Y,M,+b.dataset.d);});
   $("sky-t").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("sky-t").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));skyT=b.dataset.t;pianeti();});
   let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(disegna,150);});
-  let ini=oggi();try{const q=new URLSearchParams(location.search).get("d");if(q&&/^\d{4}-\d{2}-\d{2}$/.test(q))ini=q.split("-").map(Number);}catch(e){}
+  let ini=oggi();try{const q=new URLSearchParams(location.search).get("d");
+    if(q&&/^\d{4}-\d{2}-\d{2}$/.test(q)){const [y,m,d]=q.split("-").map(Number);
+      if(y>=A0&&y<=A1&&m>=1&&m<=12&&d>=1&&d<=giorniMese(y,m))ini=[y,m,d];}
+  }catch(e){}
   imposta(...ini,true);
-  setInterval(()=>{if(isOggi()){sole();}},5*6e4);
+  setInterval(()=>{if(!isOggi())return;sole();if(++tick%3===0){luna();pianeti();}},5*6e4);
 })();

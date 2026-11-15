@@ -94,7 +94,8 @@
     document.querySelectorAll(".top,.site-top,.topbar,a.mmc-back").forEach(el=>{
       if(el.matches("a.mmc-back")||el.querySelector("a.back")) el.remove();
     });
-    document.body.insertBefore(h,document.body.firstChild);
+    const skip=document.querySelector('body > .skip');
+    document.body.insertBefore(h,skip?skip.nextSibling:document.body.firstChild);
     const b=h.querySelector(".mm-btn");
     b.addEventListener("click",()=>{const o=h.classList.toggle("open");b.setAttribute("aria-expanded",o);b.textContent=o?"✕":"☰";
       h.querySelectorAll(".mm-dd.open").forEach(y=>y.classList.remove("open"));

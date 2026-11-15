@@ -41,7 +41,7 @@
   .pick .quando{font-size:13px;color:var(--ink-soft)}
   .tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
   .tile .who b{color:var(--ink)}
-  .up{color:var(--pine)} .down{color:var(--amber)}
+  .up{color:var(--pine)} .down{color:var(--amber-ink)}
   .chart.day{height:300px} .chart.year{height:320px} .chart.sky{height:250px}
   svg .z{shape-rendering:crispEdges}
   svg .sun{stroke:var(--amber);stroke-width:2.5;fill:none;stroke-linejoin:round}
@@ -80,26 +80,43 @@
   .cal .n{font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
   .cal svg{width:26px;height:26px}
   .cal .p{font-family:var(--mono);font-size:10px;color:var(--ink-faint)}
-  .cal .ev{font-size:10px;font-weight:600;color:var(--amber);line-height:1.1;text-align:center}
+  .cal .ev{font-size:10px;font-weight:600;color:var(--amber-ink);line-height:1.1;text-align:center}
   .ptab td,.ptab th{padding:9px 6px}
   .chip{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
-  .chip.ok{background:var(--pine-tint);color:var(--pine-deep)} .chip.warn{background:var(--amber-tint);color:var(--amber)} .chip.off{background:var(--line-soft);color:var(--ink-faint)}
+  .chip.ok{background:var(--pine-tint);color:var(--pine-deep)} .chip.warn{background:var(--amber-tint);color:var(--amber-ink)} .chip.off{background:var(--line-soft);color:var(--ink-faint)}
   .evs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
   .ev{display:flex;gap:12px;align-items:flex-start}
   .ev .ic{font-size:26px;line-height:1}
-  .ev .d{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  .ev .d{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber-ink);font-weight:600}
   .ev h3{margin:2px 0 3px;font-size:16px}
   .ev p{margin:0;font-size:12.5px;color:var(--ink-soft)}
   .ev .fra{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:4px}
+  .skip{position:absolute;left:-9999px;top:0;z-index:9999;background:var(--panel);color:var(--ink);padding:10px 14px;border:2px solid var(--pine);border-radius:10px;font-weight:600;text-decoration:none}
+  .skip:focus{left:12px;top:12px}
+  .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .chart:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:12px}
+  .tbl:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:8px}
+  section{scroll-margin-top:72px}
+  #sole:focus{outline:none}
+  .tbl-hint{display:none}
+  :root[data-theme="dark"] .cal button.sel .n,
+  :root[data-theme="dark"] .cal button.today .n,
+  :root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#0e1613}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .cal button.sel .n,
+    :root:not([data-theme="light"]) .cal button.today .n,
+    :root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#0e1613}
+  }
   @media (max-width:980px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.evs{grid-template-columns:1fr 1fr}.phases{grid-template-columns:1fr 1fr}}
   @media (max-width:760px){.moonhero{grid-template-columns:1fr}.moonhero svg{max-width:160px;margin:0 auto}.ztab{grid-template-columns:1fr 1fr}.facts4{grid-template-columns:1fr 1fr}}
-  @media (max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.chart.day,.chart.year{height:260px}.evs{grid-template-columns:1fr}.cal{gap:3px}.cal svg{width:20px;height:20px}.cal .p{display:none}.ztab{grid-template-columns:1fr}}
+  @media (max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.chart.day,.chart.year{height:260px}.evs{grid-template-columns:1fr}.cal{gap:3px}.cal svg{width:20px;height:20px}.cal .p{display:none}.ztab{grid-template-columns:1fr}.tbl-hint{display:block;font-size:12px;color:var(--ink-soft);margin:6px 0 0}}
   @media (max-width:400px){.phases{grid-template-columns:1fr}}
 </style>
 <script src="analytics.js" defer></script>
 <script src="menu.js" defer></script>
 </head>
 <body>
+  <a class="skip" href="#sole">Vai ai dati</a>
   <div class="top"><div class="wrap">
     <a class="back" href="index.html">← Home</a>
     <span class="brand">Mugello <b>Meteo &amp; Clima</b></span>
@@ -111,6 +128,7 @@
       <div class="eyebrow">Borgo San Lorenzo · 43,96° N · 11,39° E · ora italiana</div>
       <h1>Effemeridi del Mugello</h1>
       <p class="lead">Quando sorge e tramonta il Sole, quanto dura la luce, a che ora finisce il crepuscolo e comincia il buio vero; la Luna, i pianeti e i prossimi appuntamenti del cielo. Tutto calcolato per Borgo San Lorenzo, in ora italiana, per il giorno che scegli.</p>
+      <p id="eff-live" class="sr-only" aria-live="polite"></p>
       <div class="pick">
         <div class="dpick" role="group" aria-label="Giorno">
           <button type="button" class="arr" id="d-prev" aria-label="Giorno precedente">‹</button>
@@ -122,8 +140,8 @@
       </div>
     </header>
 
-    <section id="sole">
-      <div class="sh"><h2>☀️ Il Sole</h2><span class="src" id="s-src"></span></div>
+    <section id="sole" tabindex="-1">
+      <div class="sh"><h2><span aria-hidden="true">☀️</span> Il Sole</h2><span class="src" id="s-src"></span></div>
       <div class="tiles" style="margin-top:8px">
         <div class="tile"><div class="lab">Alba</div><div class="big" id="t-alba">—</div><div class="who" id="t-alba-az"></div></div>
         <div class="tile"><div class="lab">Tramonto</div><div class="big" id="t-tram">—</div><div class="who" id="t-tram-az"></div></div>
@@ -135,20 +153,21 @@
       <div class="card" style="margin-top:14px">
         <h3>La giornata del Sole</h3>
         <div class="legend"><span><i class="th" style="background:var(--amber)"></i>altezza del Sole sull'orizzonte</span><span><span class="sw" style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-gold);vertical-align:-1px;margin-right:6px"></span>ora d'oro</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-civ);vertical-align:-1px;margin-right:6px"></span>crepuscolo civile</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-nau);vertical-align:-1px;margin-right:6px"></span>nautico</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-ast);vertical-align:-1px;margin-right:6px"></span>astronomico</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-night);vertical-align:-1px;margin-right:6px"></span>notte</span></div>
-        <div class="chart day" id="ch-day"></div>
+        <div class="chart day" id="ch-day" tabindex="0" aria-label="Grafico dell'altezza del Sole sull'orizzonte. Usa le frecce sinistra e destra per esplorare i valori."></div>
+        <p id="ch-day-live" class="sr-only" aria-live="polite"></p>
         <div class="ztab" id="ztab"></div>
       </div>
 
       <div class="card" style="margin-top:14px">
         <h3 id="y-title">Alba e tramonto nell'anno</h3>
         <div class="legend"><span><i class="th" style="background:var(--amber)"></i>alba</span><span><i class="th" style="background:var(--sky)"></i>tramonto</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-day);vertical-align:-1px;margin-right:6px"></span>ore di luce</span><span><span style="display:inline-block;width:22px;height:10px;border-radius:3px;background:var(--sk-civ);vertical-align:-1px;margin-right:6px"></span>crepuscolo civile</span><span><i style="background:var(--ink);width:2px;height:12px;vertical-align:-2px"></i>il giorno scelto</span></div>
-        <div class="chart year" id="ch-year"></div>
+        <div class="chart year" id="ch-year" tabindex="0" aria-label="Grafico di alba e tramonto giorno per giorno. Usa le frecce sinistra e destra per cambiare giorno."></div>
         <p class="note" id="y-note"></p>
       </div>
     </section>
 
     <section id="luna">
-      <div class="sh"><h2>🌙 La Luna</h2><span class="src" id="l-src"></span></div>
+      <div class="sh"><h2><span aria-hidden="true">🌙</span> La Luna</h2><span class="src" id="l-src"></span></div>
       <div class="card moonhero">
         <div id="l-disc"></div>
         <div>
@@ -166,7 +185,7 @@
     </section>
 
     <section id="pianeti">
-      <div class="sh"><h2>🪐 I pianeti a occhio nudo</h2><span class="src">posizioni per Borgo San Lorenzo</span></div>
+      <div class="sh"><h2><span aria-hidden="true">🪐</span> I pianeti a occhio nudo</h2><span class="src">posizioni per Borgo San Lorenzo</span></div>
       <div class="card">
         <div class="ctrl">
           <div class="seg" id="sky-t" role="group" aria-label="Ora">
@@ -174,16 +193,19 @@
           </div>
           <span class="m" id="sky-when"></span>
         </div>
-        <div class="chart sky" id="ch-sky"></div>
-        <div class="tbl" style="margin-top:10px"><table class="ptab">
-          <thead><tr><th>Pianeta</th><th>Dopo il tramonto</th><th>Prima dell'alba</th><th>Distanza dal Sole</th><th>Quando cercarlo</th></tr></thead>
+        <div class="chart sky" id="ch-sky" tabindex="0" aria-label="Posizione di Luna e pianeti nel cielo. I dati sono nella tabella sottostante."></div>
+        <p id="ch-sky-live" class="sr-only" aria-live="polite"></p>
+        <p class="tbl-hint" aria-hidden="true">Scorri la tabella per vedere tutte le colonne →</p>
+        <div class="tbl" style="margin-top:10px" tabindex="0" role="region" aria-label="Tabella dei pianeti visibili; scorri orizzontalmente per vedere tutte le colonne"><table class="ptab">
+          <thead><tr><th>Pianeta</th><th>Dopo il tramonto</th><th>Prima dell'alba</th><th>Elongazione dal Sole</th><th>Quando cercarlo</th></tr></thead>
           <tbody id="p-body"></tbody>
         </table></div>
+        <p class="note" style="margin:6px 0 0">L'elongazione è la distanza angolare apparente dal Sole; non è la distanza in chilometri.</p>
       </div>
     </section>
 
     <section id="eventi">
-      <div class="sh"><h2>📅 I prossimi appuntamenti</h2><span class="src" id="e-src"></span></div>
+      <div class="sh"><h2><span aria-hidden="true">📅</span> I prossimi appuntamenti</h2><span class="src" id="e-src"></span></div>
       <div class="evs" id="evs"></div>
     </section>
 
