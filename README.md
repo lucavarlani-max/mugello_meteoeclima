@@ -264,20 +264,6 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   elemento per numero (link a `notizie.html#n-AAAA-MM-GG`). Generato da `data/notizie.json` con
   `python scripts/build_rss.py` e rigenerato dall'Action; non va modificato a mano. È deterministico: se
   `notizie.json` non cambia, `feed.xml` non cambia. Le pagine lo annunciano con il tag `<link rel="alternate">`.
-- **Video «La pioggia sul Mugello»** (`scripts/video-pioggia/`) — video verticale 1080×1920 di 26 s, pronto per Storie
-  e Reel, in cui la pioggia cumulata di un evento cresce in 3D giorno per giorno sopra il Mugello. Tre file:
-  `build_dati.py` mette insieme la pioggia giornaliera dei 16 pluviometri SIR (da `data/verifica/pluvio-mugello.json`,
-  coordinate e quota comprese) e delle 4 stazioni ARPAE dell'Alto Mugello, e ne ricava una griglia 104×80 interpolata
-  con l'IDW **corretta per la quota** (si interpola il rapporto fra la pioggia misurata e quella attesa a quella
-  altitudine, perché in questi eventi la pioggia cresce con la quota); `video.html` disegna il rilievo su canvas 2D
-  puro, con luce direzionale e algoritmo del pittore (celle della superficie e pareti del perimetro nella stessa lista
-  ordinata per profondità); `render.js` lo registra in MP4 con Playwright e ffmpeg.
-
-      python3 scripts/video-pioggia/build_dati.py 2026-11-09 2026-11-13
-      node scripts/video-pioggia/render.js /percorso/video.mp4
-
-  Per un altro evento bastano le due date: il titolo, la scala, l'etichetta del massimo e il confronto finale fra la
-  stazione più piovosa e quella meno piovosa si ricalcolano da soli.
 - **Crea post** (`fb-post.html`) — genera l'immagine-previsione pronta da scaricare e pubblicare su Facebook e
   Instagram: **Feed 4:5** (1080×1350), **Quadrato** (1080×1080) e **Storie 9:16** (1080×1920, con le zone alta e bassa
   lasciate libere dall'interfaccia di Instagram). Il **canale** (Facebook/Instagram) cambia la didascalia: su Facebook
