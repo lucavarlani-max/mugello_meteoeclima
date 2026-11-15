@@ -20,7 +20,18 @@ const stations = (data.stazioni || []).map(st => ({
 const icsStations = stations.map(st => ({
   id: st.id,
   nome: st.nome,
-  passaggi: st.passaggi.map(p => ({ id: p.id, inizio: p.inizio, fine: p.fine, nota: p.nota }))
+  passaggi: st.passaggi.map(p => ({
+    id: p.id,
+    inizio: p.inizio,
+    fine: p.fine,
+    massimo: p.massimo,
+    altezza: p.altezza,
+    direzione: p.direzione,
+    durata: p.durata,
+    qualita: p.qualita,
+    nota: p.nota,
+    punti: p.punti || []
+  }))
 }));
 
 function row(p, station) {
@@ -53,6 +64,10 @@ const block = `<!-- EFF-STAZIONI:INIZIO -->
       <div class="sh"><h2 id="iss-title"><span aria-hidden="true">🛰️</span> Passaggi di ISS e Tiangong</h2><span class="src">Borgo San Lorenzo · aggiornato ${esc(updated)}</span></div>
       <div class="card iss-card">
         <p class="note">ISS e Tiangong sono le due stazioni spaziali abitate. Attraversano il cielo come punti luminosi, senza lampeggiare: questi sono i prossimi passaggi visibili a occhio nudo da Borgo San Lorenzo. Tiangong può risultare meno luminosa dell'ISS, soprattutto nei passaggi radenti; non serve un telescopio, basta un orizzonte libero.</p>
+        <div class="pass-map-wrap" id="pass-map-wrap" hidden>
+          <div class="pass-map-head"><h3>Mappa del cielo</h3><label for="pass-map-select">Passaggio <select id="pass-map-select" aria-label="Scegli il passaggio da mostrare sulla mappa"></select></label></div>
+          <div class="pass-map-layout"><div class="pass-map-svg" id="pass-map"></div><div class="pass-map-info" id="pass-map-info"></div></div>
+        </div>
         ${stations.map(stationBlock).join('')}
         <details class="hubble-note"><summary>Perché non c'è Hubble?</summary><p>Il telescopio Hubble ha un'inclinazione orbitale di 28,5°: da Borgo San Lorenzo non supera circa 9° di altezza sull'orizzonte, sotto la soglia di 10° usata qui. Resta quindi troppo basso e immerso nell'atmosfera per una sezione di passaggi visibili; non lo elenchiamo.</p></details>
         <p class="note iss-fonte">Dati TLE: <a href="https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&amp;FORMAT=TLE" target="_blank" rel="noopener">Celestrak, ISS NORAD 25544</a> e <a href="https://celestrak.org/NORAD/elements/gp.php?CATNR=48274&amp;FORMAT=TLE" target="_blank" rel="noopener">Tiangong NORAD 48274</a>; calcoli con <a href="https://rhodesmill.org/skyfield/" target="_blank" rel="noopener">Skyfield</a>. Sono elencati solo i passaggi con oggetto sopra 10°, Sole sotto −6° e oggetto illuminato. Nel resto del Mugello gli orari cambiano di pochi secondi; in montagna un orizzonte libero può nascondere i passaggi più bassi. <a href="https://spotthestation.nasa.gov/" target="_blank" rel="noopener">NASA Spot the Station</a>.</p>

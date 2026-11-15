@@ -98,6 +98,13 @@ def compute_passes(sat, station, ts, eph, earth, sun, observer) -> list[dict]:
         duration = (end_dt - start_dt).total_seconds() / 60.0
         if duration < 1.0:
             continue
+        n_points = min(16, max(4, len(best)))
+        point_idx = sorted(set(int(round(x)) for x in np.linspace(best[0], best[-1], n_points)))
+        points = [{
+            "t": iso_rome(samples[i].utc_datetime()),
+            "az": round(float(az.degrees[i]), 1),
+            "alt": round(float(alt.degrees[i]), 1),
+        } for i in point_idx]
         direction = f"da {az_dir(float(az.degrees[start_idx]))} verso {az_dir(float(az.degrees[end_idx]))}"
         quality = "radente" if max_alt < 20 else "alto"
         label = "Passaggio radente" if quality == "radente" else "Passaggio visibile a occhio nudo"
@@ -113,6 +120,7 @@ def compute_passes(sat, station, ts, eph, earth, sun, observer) -> list[dict]:
             "durata": round(duration, 1),
             "qualita": quality,
             "nota": note,
+            "punti": points,
         })
         if len(passes) >= MAX_PASSES:
             break

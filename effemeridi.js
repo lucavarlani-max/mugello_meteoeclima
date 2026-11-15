@@ -328,6 +328,57 @@
     const e=(lista||[]).find(x=>x.id===id);
     if(e)scaricaIcs({nome:e.nome,data:new Date(e.data),nota:e.nota,ora:true});
   }
+  const escMap=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  function passMapXY(az,alt,cx,cy,R){
+    const r=R*(90-Math.max(0,Math.min(90,Number(alt)||0)))/90,a=(Number(az)||0)*Math.PI/180;
+    return [cx+r*Math.sin(a),cy-r*Math.cos(a)];
+  }
+  function passMapSvg(st,p){
+    const pts=(p.punti||[]).map(q=>{const [x,y]=passMapXY(q.az,q.alt,160,160,128);return {...q,x,y};});
+    if(pts.length<2)return '<p class="note">Traccia non disponibile per questo passaggio.</p>';
+    const W=320,H=320,cx=160,cy=160,R=128;
+    const path=pts.map((q,i)=>`${i?"L":"M"}${q.x.toFixed(1)} ${q.y.toFixed(1)}`).join(" ");
+    const peak=pts.reduce((a,b)=>b.alt>a.alt?b:a,pts[0]);
+    let g=`<circle class="pm-horizon" cx="${cx}" cy="${cy}" r="${R}"/>`;
+    [30,60].forEach(alt=>{const r=R*(90-alt)/90;g+=`<circle class="pm-ring" cx="${cx}" cy="${cy}" r="${r.toFixed(1)}"/><text class="pm-horizon-label" x="${cx+4}" y="${(cy-r).toFixed(1)}">${alt}°</text>`;});
+    g+=`<line class="pm-cross" x1="${cx}" y1="${cy-R}" x2="${cx}" y2="${cy+R}"/><line class="pm-cross" x1="${cx-R}" y1="${cy}" x2="${cx+R}" y2="${cy}"/>`;
+    [["N",0],["NE",45],["E",90],["SE",135],["S",180],["SO",225],["O",270],["NO",315]].forEach(([n,az])=>{const a=az*Math.PI/180,x=cx+(R+17)*Math.sin(a),y=cy-(R+17)*Math.cos(a);g+=`<text class="pm-cardinal" x="${x.toFixed(1)}" y="${(y+3).toFixed(1)}" text-anchor="middle">${n}</text>`;});
+    g+=`<text class="pm-horizon-label" x="${cx}" y="${cy+R-4}" text-anchor="middle">orizzonte</text>`;
+    g+=`<path class="pm-path" d="${path}"/>`;
+    pts.forEach(q=>{g+=`<circle class="pm-dot" cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="1.8"/>`;});
+    const start=pts[0],end=pts[pts.length-1];
+    g+=`<circle class="pm-start" cx="${start.x.toFixed(1)}" cy="${start.y.toFixed(1)}" r="4"/>`;
+    g+=`<circle class="pm-end" cx="${end.x.toFixed(1)}" cy="${end.y.toFixed(1)}" r="4"/>`;
+    g+=`<circle class="pm-peak" cx="${peak.x.toFixed(1)}" cy="${peak.y.toFixed(1)}" r="3.5"/>`;
+    const label=(q,text,dy,anchor)=>`<text class="pm-card" x="${(q.x+(anchor==="end"?-5:anchor==="start"?5:0)).toFixed(1)}" y="${(q.y+dy).toFixed(1)}" text-anchor="${anchor}">${escMap(text)}</text>`;
+    const radente=Number(p.altezza)<20;
+    g+=label(start,`inizio ${ora(new Date(start.t))}`,radente?-7:14,radente?"end":"start");
+    if(!radente)g+=label(peak,`max ${Math.round(p.altezza)}°`,-7,"middle");
+    g+=label(end,`fine ${ora(new Date(end.t))}`,radente?18:14,radente?"start":"end");
+    return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${escMap(`Mappa del cielo del passaggio di ${st.nome}: direzione ${p.direzione}, massimo ${Math.round(p.altezza)} gradi.`)}">${g}</svg>`;
+  }
+  function passMapInfo(st,p){
+    return `<p class="map-kicker">${escMap(st.nome)} · ${escMap(gg(new Date(p.inizio),{weekday:"short",day:"numeric",month:"short"}))}</p><p class="map-time">${escMap(ora(new Date(p.inizio)))}–${escMap(ora(new Date(p.fine)))}</p><p class="map-direction">${escMap(p.direzione.charAt(0).toUpperCase()+p.direzione.slice(1))} · massimo <b>${Math.round(p.altezza)}°</b></p><p class="note">La linea indica la traccia vista da Borgo San Lorenzo; il cerchio esterno è l'orizzonte, il centro è lo zenit. Il punto verde è l'inizio, quello ambra la fine.</p>`;
+  }
+  function aggiornaMappa(){
+    const wrap=$("pass-map-wrap"),sel=$("pass-map-select"),box=$("pass-map"),info=$("pass-map-info");
+    if(!wrap||!sel||!box||!info||!stazioniData)return;
+    const now=new Date(),opts=[];
+    (stazioniData.stazioni||[]).forEach(st=>(st.passaggi||[]).forEach(p=>{if(new Date(p.fine)>=now)opts.push({st,p});}));
+    opts.sort((a,b)=>new Date(a.p.inizio)-new Date(b.p.inizio));
+    const key=opts.map(o=>o.p.id).join("|");
+    if(sel.dataset.key!==key){
+      let html="";
+      (stazioniData.stazioni||[]).forEach(st=>{const items=opts.filter(o=>o.st.id===st.id);if(items.length){html+=`<optgroup label="${escMap(st.nome)}">`;items.forEach(o=>{html+=`<option value="${escMap(o.p.id)}">${escMap(gg(new Date(o.p.inizio),{weekday:"short",day:"numeric",month:"short"}))} · ${escMap(ora(new Date(o.p.inizio)))}–${escMap(ora(new Date(o.p.fine)))}</option>`;});html+="</optgroup>";}});
+      sel.innerHTML=html;sel.dataset.key=key;
+    }
+    const selected=opts.find(o=>o.p.id===sel.value)||opts[0];
+    wrap.hidden=false;
+    if(!selected){box.innerHTML='<p class="note">Nessun passaggio futuro nei dati aggiornati.</p>';info.innerHTML="";return;}
+    sel.value=selected.p.id;
+    box.innerHTML=passMapSvg(selected.st,selected.p);
+    info.innerHTML=passMapInfo(selected.st,selected.p);
+  }
   function iss(){
     const root=$("iss");if(!root)return;
     const now=new Date();
@@ -382,7 +433,10 @@
     const p=station&&station.passaggi.find(x=>x.id===b.dataset.issIcs);
     if(p)scaricaIcs({nome:`Passaggio ${station.nome}`,data:new Date(p.inizio),fine:new Date(p.fine),nota:p.nota,ora:true,luogo:"Borgo San Lorenzo",uid:`${p.id}@lucavarlani-max.github.io`});
   });
+  const mapSel=$("pass-map-select");
+  if(mapSel)mapSel.addEventListener("change",aggiornaMappa);
   iss();
+  aggiornaMappa();
   const speciali=$("speciali");
   if(speciali)speciali.addEventListener("click",e=>{
     const ics=e.target.closest("button[data-spec-ics]");if(ics){scaricaIcsSpeciale(ics.dataset.specIcs);return;}
@@ -397,5 +451,5 @@
   }catch(e){}
   aggiornaEtichette();
   imposta(...ini,true);
-  setInterval(()=>{iss();if(!isOggi())return;sole();if(++tick%3===0){luna();pianeti();}},5*6e4);
+  setInterval(()=>{iss();aggiornaMappa();if(!isOggi())return;sole();if(++tick%3===0){luna();pianeti();}},5*6e4);
 })();
