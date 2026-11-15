@@ -17,6 +17,7 @@
   let tick=0;                                      // aggiornamenti periodici
   let eventiCorrenti=[];
   let specialiData=null;
+  let issData=null;
   const LUOGHI=[
     {id:"borgo",nome:"Borgo San Lorenzo",lat:43.955,lon:11.386},
     {id:"barberino",nome:"Barberino di Mugello",lat:43.9908,lon:11.2386},
@@ -308,13 +309,15 @@
   function scaricaIcs(e){
     const slug=e.nome.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").toLowerCase();
     const [y,m,dd]=A.partiRoma(e.data),stamp=icsData(new Date()),timed=e.ora||e.tipo==="ora";
+    const dove=e.luogo||luogo.nome;
     let start,end;
-    if(timed){start=`DTSTART:${icsData(e.data)}`;end=`DTEND:${icsData(new Date(e.data.valueOf()+36e5))}`;}
+    if(timed){const fine=e.fine?new Date(e.fine):new Date(e.data.valueOf()+36e5);start=`DTSTART:${icsData(e.data)}`;end=`DTEND:${icsData(fine)}`;}
     else{start=`DTSTART;VALUE=DATE:${icsGiorno(e.data)}`;end=`DTEND;VALUE=DATE:${icsGiorno(new Date(Date.UTC(y,m-1,dd+1,12)))}`;}
+    const uid=e.uid||`eff-${y}${pad(m)}${pad(dd)}-${slug}@lucavarlani-max.github.io`;
     const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Mugello Meteo & Clima//Effemeridi//IT","CALSCALE:GREGORIAN","BEGIN:VEVENT",
-      `UID:eff-${y}${pad(m)}${pad(dd)}-${slug}@lucavarlani-max.github.io`,`DTSTAMP:${stamp}`,start,end,
-      `SUMMARY:${icsEsc(e.nome)}`,`DESCRIPTION:${icsEsc(e.nota+" · "+luogo.nome+" · Mugello Meteo & Clima")}`,
-      `LOCATION:${icsEsc(luogo.nome+", Mugello")}`,"URL:https://lucavarlani-max.github.io/mugello_meteoeclima/effemeridi.html","END:VEVENT","END:VCALENDAR"];
+      `UID:${uid}`,`DTSTAMP:${stamp}`,start,end,
+      `SUMMARY:${icsEsc(e.nome)}`,`DESCRIPTION:${icsEsc(e.nota+" · "+dove+" · Mugello Meteo & Clima")}`,
+      `LOCATION:${icsEsc(dove+", Mugello")}`,"URL:https://lucavarlani-max.github.io/mugello_meteoeclima/effemeridi.html","END:VEVENT","END:VCALENDAR"];
     const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
     const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`mugello-${slug}.ics`;document.body.appendChild(a);a.click();
     setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
@@ -324,6 +327,21 @@
     const [tipo,id]=chiave.split(":"),lista=tipo==="eclissi"?specialiData.eclissi:specialiData.congiunzioni;
     const e=(lista||[]).find(x=>x.id===id);
     if(e)scaricaIcs({nome:e.nome,data:new Date(e.data),nota:e.nota,ora:true});
+  }
+  function iss(){
+    const root=$("iss");if(!root)return;
+    const now=new Date();let next=null;
+    root.querySelectorAll(".iss-pass").forEach(row=>{
+      const start=new Date(row.dataset.issInizio),fine=new Date(row.dataset.issFine),passato=fine<now;
+      row.hidden=passato;
+      if(!passato&&(!next||start<next.start))next={start,fine};
+    });
+    const status=$("iss-prossimo");if(!status)return;
+    if(!next){status.textContent="Nessun passaggio futuro nei dati aggiornati; la pagina si aggiorna ogni giorno.";return;}
+    const quando=`${new Intl.DateTimeFormat("it-IT",{weekday:"short",day:"numeric",month:"short"}).format(next.start)} alle ${A.ora(next.start)}`;
+    if(next.start<=now&&now<=next.fine){status.textContent=`Passaggio in corso: ${quando}, fino alle ${A.ora(next.fine)}.`;return;}
+    const min=Math.max(1,Math.ceil((next.start-now)/6e4));
+    status.textContent=`Prossimo passaggio: ${quando}, tra ${min<60?min+" min":Math.floor(min/60)+" h "+String(min%60).padStart(2,"0")+" min"}.`;
   }
   function eventi(){
     const t0=midOf(Y,M,D),E=A.eventi(t0,9);
@@ -353,6 +371,14 @@
   $("cal-events").addEventListener("click",e=>{const b=e.target.closest("button[data-d]");if(b)imposta(Y,M,+b.dataset.d);});
   $("evs").addEventListener("click",e=>{const b=e.target.closest("button[data-ics]");if(!b)return;const ev=eventiCorrenti[+b.dataset.ics];if(ev)scaricaIcs(ev);});
   try{const el=$("eff-speciali-data");if(el)specialiData=JSON.parse(el.textContent);}catch(e){}
+  try{const el=$("eff-iss-data");if(el)issData=JSON.parse(el.textContent);}catch(e){}
+  const issRoot=$("iss");
+  if(issRoot)issRoot.addEventListener("click",e=>{
+    const b=e.target.closest("button[data-iss-ics]");if(!b)return;
+    const p=(issData&&issData.passaggi||[]).find(x=>x.id===b.dataset.issIcs);
+    if(p)scaricaIcs({nome:"Passaggio ISS",data:new Date(p.inizio),fine:new Date(p.fine),nota:p.nota,ora:true,luogo:"Borgo San Lorenzo",uid:`iss-${p.id}@lucavarlani-max.github.io`});
+  });
+  iss();
   const speciali=$("speciali");
   if(speciali)speciali.addEventListener("click",e=>{
     const ics=e.target.closest("button[data-spec-ics]");if(ics){scaricaIcsSpeciale(ics.dataset.specIcs);return;}
@@ -367,5 +393,5 @@
   }catch(e){}
   aggiornaEtichette();
   imposta(...ini,true);
-  setInterval(()=>{if(!isOggi())return;sole();if(++tick%3===0){luna();pianeti();}},5*6e4);
+  setInterval(()=>{iss();if(!isOggi())return;sole();if(++tick%3===0){luna();pianeti();}},5*6e4);
 })();

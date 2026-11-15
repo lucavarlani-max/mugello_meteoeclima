@@ -1,5 +1,5 @@
 name: Effemeridi statiche (aggiornamento quotidiano)
-# Rigenera il blocco "Stasera in breve" e la sezione eclissi/congiunzioni
+# Rigenera "Stasera in breve", i passaggi ISS e la sezione eclissi/congiunzioni
 # nell'HTML iniziale di effemeridi.html. Serve ai motori di ricerca e a chi
 # arriva senza JavaScript; la pagina aggiorna poi i valori del giorno scelto.
 on:
@@ -26,15 +26,27 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache effemeridi Skyfield
+        uses: actions/cache@v4
+        with:
+          path: ~/.skyfield
+          key: skyfield-de421-${{ runner.os }}
+      - name: Installa Skyfield
+        run: python3 -m pip install --quiet skyfield
       - name: Rigenera i blocchi statici
         run: |
+          python3 scripts/iss_passes.py
+          node scripts/build_iss_statico.js
           node scripts/build_effemeridi_statiche.js
           node scripts/build_eventi_speciali.js
       - name: Commit se cambiato
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add effemeridi.html sitemap.xml
+          git add effemeridi.html data/iss-passaggi.json sitemap.xml
           if git diff --cached --quiet; then echo "nessuna variazione"; exit 0; fi
           git commit -q -m "effemeridi: aggiorna il blocco statico di oggi"
           for i in 1 2 3 4; do
