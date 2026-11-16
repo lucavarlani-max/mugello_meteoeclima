@@ -278,6 +278,23 @@
   @media (max-width:760px){.speciali-grid{grid-template-columns:1fr}}
   @media (max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.chart.day,.chart.year{height:260px}.evs{grid-template-columns:1fr}.cal{gap:3px}.cal svg{width:20px;height:20px}.cal .p{display:none}.ztab{grid-template-columns:1fr}.tbl-hint{display:block;font-size:12px;color:var(--ink-soft);margin:6px 0 0}.eff-oggi-grid{grid-template-columns:1fr}.moon-row{align-items:flex-start;flex-direction:column;gap:2px}.iss-pass{flex-wrap:wrap}.iss-date{flex:0 0 100%;display:flex;gap:8px;align-items:baseline}.iss-date b{margin-top:0}.iss-info{flex:1 1 100%}.iss-pass .ics{margin-left:0;width:auto;justify-content:center}}
   @media (max-width:400px){.phases{grid-template-columns:1fr}}
+  .vy-lead{font-size:15px;line-height:1.55;margin:0 0 14px;max-width:80ch}
+  .vy-tiles{display:grid;grid-template-columns:1.25fr 1.25fr 1fr;gap:10px}
+  .vy-tiles .f b{font-variant-numeric:tabular-nums;font-size:clamp(20px,2.6vw,27px);overflow-wrap:anywhere}
+  .vy-tiles .vy-big{border-color:var(--amber);background:var(--amber-tint)}
+  .vy-tiles .vy-big b{font-family:var(--mono);font-weight:600;font-size:clamp(28px,4.4vw,42px);letter-spacing:0}
+  .vy-testo{font-size:14.5px;line-height:1.6;margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line-soft);max-width:82ch}
+  .vy-h{font-family:var(--serif);font-size:17px;font-weight:700;margin:0 0 10px}
+  .vy-due{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+  .vy-tappe{list-style:none;margin:0;padding:0 0 0 16px;border-left:2px solid var(--line)}
+  .vy-tappe li{position:relative;font-size:13.5px;line-height:1.45;color:var(--ink-soft);padding:0 0 12px}
+  .vy-tappe li:last-child{padding-bottom:0}
+  .vy-tappe li::before{content:"";position:absolute;left:-22px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--panel);border:2px solid var(--pine)}
+  .vy-tappe li b{display:block;color:var(--ink);font-family:var(--mono);font-size:11.5px;letter-spacing:.03em}
+  .vy-tappe li.vy-ora::before{background:var(--amber);border-color:var(--amber)} .vy-tappe li.vy-ora{color:var(--ink);font-weight:600}
+  #vy-scala td,#vy-scala th{text-align:left;white-space:normal;vertical-align:top} #vy-scala td:nth-child(2),#vy-scala td:nth-child(3){white-space:nowrap}
+  #vy-scala tr.vy-io td{background:var(--amber-tint);font-weight:600}
+  @media (max-width:760px){.vy-tiles,.vy-due{grid-template-columns:minmax(0,1fr)} #vy-scala th:nth-child(2),#vy-scala td:nth-child(2){display:none}}
 </style>
 <script src="analytics.js" defer></script>
 <script src="menu.js" defer></script>
@@ -390,6 +407,52 @@
           <tbody id="p-body"></tbody>
         </table></div>
         <p class="note" style="margin:6px 0 0">L'elongazione è la distanza angolare apparente dal Sole; non è la distanza in chilometri.</p>
+      </div>
+    </section>
+
+    <section id="voyager">
+      <div class="sh"><h2>🛰️ Voyager 1: a un giorno-luce da casa</h2><span class="src">calcolato adesso, nel tuo browser</span></div>
+      <div class="card">
+        <p class="vy-lead">Lanciata nel 1977, la sonda Voyager 1 è l'oggetto costruito dall'uomo più lontano dalla Terra. Nel novembre 2026 taglia un traguardo che nessuna macchina aveva mai raggiunto: la sua luce, e i suoi segnali radio, impiegano <b>più di 24 ore</b> per arrivare fino a noi.</p>
+        <div class="vy-tiles">
+          <div class="f vy-big"><span class="lab">Tempo-luce dalla Terra</span><b id="vy-luce" aria-live="off">–</b><span id="vy-luce-n">&nbsp;</span></div>
+          <div class="f"><span class="lab">Distanza dalla Terra (km)</span><b id="vy-km">–</b><span id="vy-ua">&nbsp;</span></div>
+          <div class="f"><span class="lab">Velocità rispetto alla Terra</span><b id="vy-vel">–</b><span id="vy-vel-n">&nbsp;</span></div>
+        </div>
+        <p class="vy-testo" id="vy-stato"></p>
+        <p class="vy-testo" id="vy-segnale"></p>
+        <p class="vy-testo" id="vy-dove"></p>
+      </div>
+
+      <div class="two vy-due" style="margin-top:14px">
+        <div class="card">
+          <h3 class="vy-h">La scala della luce</h3>
+          <div id="vy-luce-g"></div>
+          <p class="note" style="margin-bottom:0">Quanto impiega la luce ad arrivare fin lì. L'asse è logaritmico: ogni tacca vale decine di volte la precedente, altrimenti la Luna e una stella non starebbero nello stesso disegno.</p>
+        </div>
+        <div class="card">
+          <h3 class="vy-h">Le tappe del viaggio</h3>
+          <ol class="vy-tappe">
+            <li><b>5 settembre 1977</b> Il lancio da Cape Canaveral.</li>
+            <li><b>5 marzo 1979</b> Sorvolo di Giove: i vulcani attivi di Io.</li>
+            <li><b>12 novembre 1980</b> Sorvolo di Saturno e di Titano; la sonda esce dal piano dei pianeti.</li>
+            <li><b>14 febbraio 1990</b> Si volta e fotografa la Terra da 6 miliardi di km: il «pallido puntino azzurro».</li>
+            <li><b>25 agosto 2012</b> Esce dall'eliosfera: è il primo oggetto umano nello spazio interstellare.</li>
+            <li class="vy-ora"><b>Novembre 2026</b> Un giorno-luce dalla Terra.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 class="vy-h">Il Sistema solare sulla carta del Mugello</h3>
+        <p class="note" style="margin-top:0">Rimpiccioliamo tutto un miliardo e mezzo di volte: <b>la distanza fra il Sole e la Terra diventa 100 metri</b>, e il Sole sta in piazza a Borgo San Lorenzo.</p>
+        <div class="tbl"><table class="ptab" id="vy-scala"></table></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 class="vy-h">Un traguardo a scalini: la rincorsa della Terra</h3>
+        <div id="vy-anno-g"></div>
+        <p class="vy-testo" id="vy-anno-t" style="border-top:0;padding-top:0"></p>
       </div>
     </section>
 
@@ -519,8 +582,12 @@
           <li><b>Alba e tramonto:</b> il bordo superiore del Sole tocca l'orizzonte astronomico, con la rifrazione atmosferica standard (−0,833°). <b>Crepuscoli:</b> il centro del Sole è 6° (civile), 12° (nautico) e 18° (astronomico) sotto l'orizzonte. <b>Ora d'oro:</b> Sole tra 6° sopra e 4° sotto l'orizzonte; <b>ora blu:</b> tra 4° e 6° sotto.</li>
           <li><b>Mezzogiorno vero:</b> il Sole passa esattamente a sud. La differenza con il mezzogiorno "medio" di Borgo (12:14 in ora solare) è l'equazione del tempo, dovuta all'orbita ellittica della Terra e all'inclinazione del suo asse.</li>
           <li><b>Metodi:</b> Sole con le formule di SunCalc (V. Agafonkin), Luna con la formula a bassa precisione dell'<i>Astronomical Almanac</i>, fasi lunari, equinozi e solstizi con gli algoritmi di J. Meeus (<i>Astronomical Algorithms</i>), pianeti con gli elementi orbitali del JPL. Precisione tipica: un minuto per il Sole, pochi minuti per la Luna e le fasi.</li>
+<<<<<<< Updated upstream
           <li><b>Eclissi e congiunzioni:</b> date globali confrontate con i cataloghi NASA GSFC; circostanze locali, copertura e altezza sull'orizzonte calcolate con Astronomy Engine 2.1.19 per Borgo San Lorenzo. Una congiunzione è considerata osservabile quando entrambi i corpi sono almeno 5° sopra l'orizzonte e il Sole è sotto i −6°.</li>
           <li><b>Passaggi di ISS e Tiangong:</b> TLE aggiornati da Celestrak (NORAD 25544 e 48274) e propagazione con Skyfield. Sono mostrati solo i passaggi con oggetto sopra 10°, Sole sotto −6° e oggetto illuminato dal Sole; gli orari possono variare di qualche secondo con l'aggiornamento orbitale.</li>
+=======
+          <li><b>Voyager 1:</b> la sonda si allontana dal Sole quasi in linea retta, a 16,9 km/s (3,57 unità astronomiche l'anno), verso un punto di Ofiuco. La distanza dalla Terra è la differenza fra la sua posizione e quella della Terra sull'orbita. Il modello è calibrato sulla data stimata dalla NASA per il giorno-luce, il 15 novembre 2026, e restituisce i valori pubblicati per il 2012 e il 2025; l'istante esatto del traguardo ha comunque un'incertezza di qualche giorno. Un giorno-luce sono 25.902.068.371 km, cioè 173,14 unità astronomiche.</li>
+>>>>>>> Stashed changes
           <li><b>Sciami meteorici:</b> date di picco medie (International Meteor Organization); il numero di meteore è quello teorico sotto un cielo perfettamente buio, nella realtà se ne vedono molte meno, soprattutto con la Luna alta.</li>
         </ul>
         <p class="note">Calcoli eseguiti nel browser, nessun servizio esterno · elaborazioni L. Varlani.</p>
@@ -547,6 +614,7 @@
 <script src="astro.js"></script>
 <script src="effemeridi-riepilogo.js"></script>
 <script src="effemeridi.js"></script>
+<script src="voyager.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
 </body>
 </html>
