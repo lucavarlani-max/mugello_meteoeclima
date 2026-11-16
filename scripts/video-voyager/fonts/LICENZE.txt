@@ -1,0 +1,2 @@
+Space Grotesk (Florian Karsten) e JetBrains Mono (JetBrains): SIL Open Font License 1.1.
+File woff2 dai pacchetti npm @fontsource/space-grotesk e @fontsource/jetbrains-mono.

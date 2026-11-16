@@ -278,6 +278,37 @@
   @media (max-width:760px){.speciali-grid{grid-template-columns:1fr}}
   @media (max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.chart.day,.chart.year{height:260px}.evs{grid-template-columns:1fr}.cal{gap:3px}.cal svg{width:20px;height:20px}.cal .p{display:none}.ztab{grid-template-columns:1fr}.tbl-hint{display:block;font-size:12px;color:var(--ink-soft);margin:6px 0 0}.eff-oggi-grid{grid-template-columns:1fr}.moon-row{align-items:flex-start;flex-direction:column;gap:2px}.iss-pass{flex-wrap:wrap}.iss-date{flex:0 0 100%;display:flex;gap:8px;align-items:baseline}.iss-date b{margin-top:0}.iss-info{flex:1 1 100%}.iss-pass .ics{margin-left:0;width:auto;justify-content:center}}
   @media (max-width:400px){.phases{grid-template-columns:1fr}}
+  .vy-banner{position:relative;margin:0;border-radius:var(--r);overflow:hidden;background:#1b1140;box-shadow:var(--shadow)}
+  .vy-banner img{display:block;width:100%;height:clamp(240px,36vw,420px);object-fit:cover;object-position:50% 45%}
+  .vy-banner figcaption{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:clamp(14px,3vw,28px);color:#fff;background:linear-gradient(180deg,rgba(15,8,40,0) 30%,rgba(15,8,40,.55) 62%,rgba(15,8,40,.9) 100%)}
+  .vy-b-occhiello{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#e7dcff}
+  .vy-banner strong{font-family:var(--serif);font-weight:800;font-size:clamp(21px,3.6vw,38px);line-height:1.1;letter-spacing:-.01em;max-width:22ch;text-wrap:balance;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+  .vy-b-conto{font-size:clamp(13px,1.6vw,16px);color:#f1eaff} .vy-b-conto b{font-family:var(--mono);font-weight:600;font-size:1.25em;color:#ffd79a;font-variant-numeric:tabular-nums;margin-left:4px;white-space:nowrap}
+  .vy-banner small{position:absolute;top:10px;right:12px;font-size:10.5px;color:rgba(255,255,255,.8);background:rgba(15,8,40,.45);padding:2px 8px;border-radius:999px}
+  @media (max-width:560px){.vy-banner img{height:360px;object-position:42% 30%} .vy-b-conto b{display:block;margin-left:0} .vy-banner figcaption{background:linear-gradient(180deg,rgba(15,8,40,0) 22%,rgba(15,8,40,.6) 52%,rgba(15,8,40,.92) 100%)}}
+  .vy-foto{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .vy-foto figure{margin:0;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .vy-foto img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:#0d0d18}
+  .vy-foto figcaption{padding:10px 12px 11px;font-size:12.5px;line-height:1.45;color:var(--ink-soft)}
+  .vy-foto figcaption b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+  .vy-foto figcaption small{display:block;margin-top:5px;font-family:var(--mono);font-size:10px;color:var(--ink-faint)}
+  .vy-lead{font-size:15px;line-height:1.55;margin:0 0 14px;max-width:80ch}
+  .vy-tiles{display:grid;grid-template-columns:1.25fr 1.25fr 1fr;gap:10px}
+  .vy-tiles .f b{font-variant-numeric:tabular-nums;font-size:clamp(20px,2.6vw,27px);overflow-wrap:anywhere}
+  .vy-tiles .vy-big{border-color:var(--amber);background:var(--amber-tint)}
+  .vy-tiles .vy-big b{font-family:var(--mono);font-weight:600;font-size:clamp(28px,4.4vw,42px);letter-spacing:0}
+  .vy-testo{font-size:14.5px;line-height:1.6;margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line-soft);max-width:82ch}
+  .vy-h{font-family:var(--serif);font-size:17px;font-weight:700;margin:0 0 10px}
+  .vy-due{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+  .vy-tappe{list-style:none;margin:0;padding:0 0 0 16px;border-left:2px solid var(--line)}
+  .vy-tappe li{position:relative;font-size:13.5px;line-height:1.45;color:var(--ink-soft);padding:0 0 12px}
+  .vy-tappe li:last-child{padding-bottom:0}
+  .vy-tappe li::before{content:"";position:absolute;left:-22px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--panel);border:2px solid var(--pine)}
+  .vy-tappe li b{display:block;color:var(--ink);font-family:var(--mono);font-size:11.5px;letter-spacing:.03em}
+  .vy-tappe li.vy-ora::before{background:var(--amber);border-color:var(--amber)} .vy-tappe li.vy-ora{color:var(--ink);font-weight:600}
+  #vy-scala td,#vy-scala th{text-align:left;white-space:normal;vertical-align:top} #vy-scala td:nth-child(2),#vy-scala td:nth-child(3){white-space:nowrap}
+  #vy-scala tr.vy-io td{background:var(--amber-tint);font-weight:600}
+  @media (max-width:760px){.vy-tiles,.vy-due{grid-template-columns:minmax(0,1fr)} #vy-scala th:nth-child(2),#vy-scala td:nth-child(2){display:none}}
 </style>
 <script src="analytics.js" defer></script>
 <script src="menu.js" defer></script>
@@ -325,7 +356,7 @@
     <!-- EFF-OGGI:FINE -->
 
     <nav class="eff-nav" aria-label="Sezioni della pagina">
-      <a href="#sole">Sole</a><a href="#luna">Luna</a><a href="#pianeti">Pianeti</a><a href="#eventi">Eventi</a><a href="#iss">ISS</a><a href="#speciali">Eclissi</a><a href="#faq">FAQ</a>
+      <a href="#sole">Sole</a><a href="#luna">Luna</a><a href="#pianeti">Pianeti</a><a href="#voyager">Voyager</a><a href="#eventi">Eventi</a><a href="#iss">ISS</a><a href="#speciali">Eclissi</a><a href="#faq">FAQ</a>
     </nav>
 
     <section id="sole" tabindex="-1">
@@ -390,6 +421,71 @@
           <tbody id="p-body"></tbody>
         </table></div>
         <p class="note" style="margin:6px 0 0">L'elongazione è la distanza angolare apparente dal Sole; non è la distanza in chilometri.</p>
+      </div>
+    </section>
+
+    <section id="voyager">
+      <div class="sh"><h2><span aria-hidden="true">🌌</span> Voyager 1: a un giorno-luce da casa</h2><span class="src">calcolato adesso, nel tuo browser</span></div>
+      <figure class="vy-banner">
+        <img src="img/cielo/voyager-banner.jpg" alt="La sonda Voyager, con la grande antenna parabolica bianca, in volo su uno sfondo viola di particelle interstellari (illustrazione)" width="1600" height="640" decoding="async">
+        <figcaption>
+          <span class="vy-b-occhiello">18–19 novembre 2026 · un primato mai raggiunto</span>
+          <strong>Il primo oggetto costruito dall'uomo a un giorno-luce dalla Terra</strong>
+          <span class="vy-b-conto">La sua luce ci raggiunge dopo <b id="vy-luce-b">24:00:00</b></span>
+          <small>Illustrazione: NASA/JPL-Caltech</small>
+        </figcaption>
+      </figure>
+      <div class="card" style="margin-top:14px">
+        <p class="vy-lead">Lanciata nel 1977, la sonda Voyager 1 è l'oggetto costruito dall'uomo più lontano dalla Terra. Nella notte fra il 18 e il 19 novembre 2026 taglia un traguardo che nessuna macchina aveva mai raggiunto: la sua luce, e i suoi segnali radio, impiegano <b>più di 24 ore</b> per arrivare fino a noi.</p>
+        <div class="vy-tiles">
+          <div class="f vy-big"><span class="lab">Tempo-luce dalla Terra</span><b id="vy-luce" aria-live="off">–</b><span id="vy-luce-n">&nbsp;</span></div>
+          <div class="f"><span class="lab">Distanza dalla Terra (km)</span><b id="vy-km">–</b><span id="vy-ua">&nbsp;</span></div>
+          <div class="f"><span class="lab">Velocità rispetto alla Terra</span><b id="vy-vel">–</b><span id="vy-vel-n">&nbsp;</span></div>
+        </div>
+        <p class="vy-testo" id="vy-stato"></p>
+        <p class="vy-testo" id="vy-segnale"></p>
+        <p class="vy-testo" id="vy-dove"></p>
+      </div>
+
+      <div class="two vy-due" style="margin-top:14px">
+        <div class="card">
+          <h3 class="vy-h">La scala della luce</h3>
+          <div id="vy-luce-g"></div>
+          <p class="note" style="margin-bottom:0">Quanto impiega la luce ad arrivare fin lì. L'asse è logaritmico: ogni tacca vale decine di volte la precedente, altrimenti la Luna e una stella non starebbero nello stesso disegno.</p>
+        </div>
+        <div class="card">
+          <h3 class="vy-h">Le tappe del viaggio</h3>
+          <ol class="vy-tappe">
+            <li><b>5 settembre 1977</b> Il lancio da Cape Canaveral.</li>
+            <li><b>5 marzo 1979</b> Sorvolo di Giove: i vulcani attivi di Io.</li>
+            <li><b>12 novembre 1980</b> Sorvolo di Saturno e di Titano; la sonda esce dal piano dei pianeti.</li>
+            <li><b>14 febbraio 1990</b> Si volta e fotografa la Terra da 6 miliardi di km: il «pallido puntino azzurro».</li>
+            <li><b>25 agosto 2012</b> Esce dall'eliosfera: è il primo oggetto umano nello spazio interstellare.</li>
+            <li class="vy-ora"><b>19 novembre 2026, ore 3:17</b> Un giorno-luce dalla Terra.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 class="vy-h">Le immagini del viaggio</h3>
+        <div class="vy-foto">
+          <figure><img src="img/cielo/voyager-lancio.jpg" alt="Il razzo Titan IIIE-Centaur si alza fra il fumo dalla rampa 41 di Cape Canaveral" width="720" height="540" loading="lazy" decoding="async"><figcaption><b>1977 · Il lancio</b>Il 5 settembre un razzo Titan IIIE-Centaur porta via Voyager 1 dalla rampa 41 di Cape Canaveral.<small>NASA</small></figcaption></figure>
+          <figure><img src="img/cielo/voyager-giove.jpg" alt="La Grande Macchia Rossa di Giove fra bande di nubi turbolente" width="720" height="540" loading="lazy" decoding="async"><figcaption><b>1979 · Giove da vicino</b>La Grande Macchia Rossa, una tempesta più larga della Terra, ripresa dalla sonda in avvicinamento.<small>NASA/JPL</small></figcaption></figure>
+          <figure><img src="img/cielo/voyager-puntino.jpg" alt="La Terra come un minuscolo punto chiaro dentro un raggio di luce solare" width="720" height="540" loading="lazy" decoding="async"><figcaption><b>1990 · Il pallido puntino azzurro</b>La Terra da 6 miliardi di chilometri: meno di un pixel dentro un raggio di sole.<small>NASA/JPL-Caltech</small></figcaption></figure>
+          <figure><img src="img/cielo/voyager-disco.jpg" alt="La custodia dorata del disco di Voyager, incisa con diagrammi e istruzioni" width="720" height="540" loading="lazy" decoding="async"><figcaption><b>A bordo · Il disco d'oro</b>Suoni, musiche e saluti in 55 lingue, con le istruzioni incise per chi lo trovasse.<small>NASA/JPL</small></figcaption></figure>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 class="vy-h">Il Sistema solare sulla carta del Mugello</h3>
+        <p class="note" style="margin-top:0">Rimpiccioliamo tutto un miliardo e mezzo di volte: <b>la distanza fra il Sole e la Terra diventa 100 metri</b>, e il Sole sta in piazza a Borgo San Lorenzo.</p>
+        <div class="tbl"><table class="ptab" id="vy-scala"></table></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 class="vy-h">Un traguardo a scalini: la rincorsa della Terra</h3>
+        <div id="vy-anno-g"></div>
+        <p class="vy-testo" id="vy-anno-t" style="border-top:0;padding-top:0"></p>
       </div>
     </section>
 
@@ -521,6 +617,7 @@
           <li><b>Metodi:</b> Sole con le formule di SunCalc (V. Agafonkin), Luna con la formula a bassa precisione dell'<i>Astronomical Almanac</i>, fasi lunari, equinozi e solstizi con gli algoritmi di J. Meeus (<i>Astronomical Algorithms</i>), pianeti con gli elementi orbitali del JPL. Precisione tipica: un minuto per il Sole, pochi minuti per la Luna e le fasi.</li>
           <li><b>Eclissi e congiunzioni:</b> date globali confrontate con i cataloghi NASA GSFC; circostanze locali, copertura e altezza sull'orizzonte calcolate con Astronomy Engine 2.1.19 per Borgo San Lorenzo. Una congiunzione è considerata osservabile quando entrambi i corpi sono almeno 5° sopra l'orizzonte e il Sole è sotto i −6°.</li>
           <li><b>Passaggi di ISS e Tiangong:</b> TLE aggiornati da Celestrak (NORAD 25544 e 48274) e propagazione con Skyfield. Sono mostrati solo i passaggi con oggetto sopra 10°, Sole sotto −6° e oggetto illuminato dal Sole; gli orari possono variare di qualche secondo con l'aggiornamento orbitale.</li>
+          <li><b>Voyager 1:</b> posizione e velocità della sonda rispetto al Sole vengono dal sistema <b>Horizons del Jet Propulsion Laboratory</b> della NASA, la fonte ufficiale per le effemeridi delle sonde. A quella distanza il moto è praticamente rettilineo (16,9 km/s verso Ofiuco), quindi la pagina prolunga quei valori e ne sottrae la posizione della Terra, tenendo conto del giorno che la luce impiega ad arrivare. Rispetto a Horizons lo scarto è inferiore a 0,3 secondi-luce fino a tutto il 2027. Il tempo-luce supera le 24 ore il 19 novembre 2026 alle 02:17 del tempo universale: le 03:17 in Italia, la sera del 18 novembre in California, ed è per questo che molte fonti indicano il 18. Un giorno-luce sono 25.902.068.371 km, cioè 173,14 unità astronomiche.</li>
           <li><b>Sciami meteorici:</b> date di picco medie (International Meteor Organization); il numero di meteore è quello teorico sotto un cielo perfettamente buio, nella realtà se ne vedono molte meno, soprattutto con la Luna alta.</li>
         </ul>
         <p class="note">Calcoli eseguiti nel browser, nessun servizio esterno · elaborazioni L. Varlani.</p>
@@ -547,6 +644,7 @@
 <script src="astro.js"></script>
 <script src="effemeridi-riepilogo.js"></script>
 <script src="effemeridi.js"></script>
+<script src="voyager.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}</script>
 </body>
 </html>

@@ -77,6 +77,21 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   sciami meteorici, cambio dell'ora). Calcoli nel browser con `astro.js` (SunCalc, Meeus,
   elementi orbitali JPL), sempre in ora italiana; `cielo.js` usa gli stessi calcoli per il box
   della home.
+  **Voyager 1 a un giorno-luce** (`voyager.js`, sezione `#voyager` della stessa pagina): contatore in tempo reale del
+  tempo-luce e della distanza dalla Terra, orario di arrivo di un segnale inviato adesso, punto del cielo in cui si trova
+  la sonda visto da Borgo, scala dei tempi-luce, tappe del viaggio, Sistema solare in scala sul Mugello (1 UA = 100 m) e
+  curva della distanza da settembre 2026 a dicembre 2027. Posizione e velocità eliocentriche da JPL Horizons
+  (epoca 1° gennaio 2027) prolungate in linea retta, con il tempo di viaggio della luce: scarto da Horizons sotto 0,3
+  secondi-luce fino a fine 2027; traguardo il 19 novembre 2026 alle 02:17 UT (03:17 in Italia, sera del 18 in California).
+  Nessun servizio esterno a pagina aperta: i due vettori sono costanti in `voyager.js`.
+  Banner e fotografie in `img/cielo/voyager-*.jpg`: immagini NASA/JPL-Caltech di pubblico dominio, da Wikimedia Commons.
+  Video di presentazione per i social (1080×1920, 32 s) in `scripts/video-voyager/`: `video.html` anima sei scene
+  (apertura, quadrante delle 24 ore, scala logaritmica della luce, centro di Borgo con le orbite dei pianeti in scala,
+  cartina in scala del Mugello, pagina del sito in un telefono) con caratteri Space Grotesk e JetBrains Mono (OFL, in
+  `fonts/`). `borgo-osm.jpg` è un mosaico di tessere OpenStreetMap a zoom 17 (© OpenStreetMap contributors, ODbL),
+  `pianeti/` contiene le fotografie scontornate (NASA, pubblico dominio; Marte ESA/MPS, CC BY-SA 3.0 IGO), `pagina.jpg`
+  è una schermata della sezione;
+  `node scripts/video-voyager/render.js voyager.mp4` le registra con Playwright e ffmpeg (`--prova 3,7,14` per i soli fotogrammi).
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
   **Kremsmünster 1767–2026** (`kremsmuenster.html` + `kremsmuenster.js`, dati mensili di GeoSphere Austria: stazione
