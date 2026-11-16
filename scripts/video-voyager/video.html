@@ -14,7 +14,9 @@
   #cielo,#neb{position:absolute;inset:-60px}
   #neb{background:radial-gradient(900px 700px at 18% 22%,rgba(110,70,255,.30),transparent 62%),radial-gradient(800px 800px at 92% 70%,rgba(255,140,60,.13),transparent 60%),radial-gradient(700px 600px at 30% 96%,rgba(60,190,170,.12),transparent 60%)}
   .sc{position:absolute;inset:0;opacity:0}
-  .testa{position:absolute;left:72px;right:72px;top:92px;display:flex;justify-content:space-between;font-family:"JetBrains Mono";font-weight:500;font-size:23px;letter-spacing:.16em;color:var(--soft);z-index:5}
+  .testa{position:absolute;left:72px;right:72px;top:70px;display:flex;justify-content:space-between;align-items:center;font-family:"JetBrains Mono";font-weight:500;font-size:23px;letter-spacing:.16em;color:var(--soft);z-index:5}
+  .marchio{display:inline-flex;align-items:center;gap:16px} .marchio b{font-family:"Space Grotesk";font-weight:700;font-size:34px;letter-spacing:-.02em;color:#fff} .marchio i{font-style:normal;color:#6fb1f0}
+  .logo{width:58px;height:58px;display:block;flex:none}
   #avanz{position:absolute;left:72px;right:72px;top:148px;display:flex;gap:10px;z-index:5} #avanz i{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.18);overflow:hidden} #avanz b{display:block;height:100%;width:0;background:#fff;border-radius:3px}
   .occ{font-family:"JetBrains Mono";font-weight:500;font-size:27px;letter-spacing:.16em;text-transform:uppercase;color:var(--lilla)}
   h1,h2{font-family:"Space Grotesk";font-weight:700;margin:0;letter-spacing:-.035em}
@@ -41,7 +43,7 @@
   #vista .scuro{position:absolute;inset:0;background:radial-gradient(closest-side,rgba(6,5,26,0) 55%,rgba(6,5,26,.55) 100%)}
   #orb{position:absolute;left:0;top:0}
   .osmc{position:absolute;right:16px;bottom:12px;font-size:17px;color:rgba(244,241,255,.85);background:rgba(6,5,26,.7);padding:4px 10px;border-radius:8px}
-  .bott{display:inline-flex;align-items:center;gap:16px;padding:26px 40px;border-radius:999px;background:var(--oro);color:#1a0f2e;font-family:"Space Grotesk";font-weight:700;font-size:40px;letter-spacing:-.02em}
+  .bott{display:inline-flex;align-items:center;gap:18px;padding:20px 40px 20px 22px;border-radius:999px;background:var(--oro);color:#1a0f2e;font-family:"Space Grotesk";font-weight:700;font-size:40px;letter-spacing:-.02em}
   .cred{position:absolute;left:0;right:0;bottom:64px;text-align:center;font-family:"JetBrains Mono";font-size:19px;letter-spacing:.08em;color:var(--tenue)}
 </style>
 <div id="v">
@@ -59,7 +61,7 @@
 
   <!-- 2 · il quadrante -->
   <div class="sc" id="s2">
-    <div class="b" style="top:240px"><div class="occ" id="b1">Tempo-luce dalla Terra</div><h2 id="b2" style="margin-top:16px;font-size:76px">La sua luce viaggia<br>per <span class="oro">24 ore</span></h2></div>
+    <div class="b" style="top:240px"><div class="occ" id="b1">Quanto è lontana dalla Terra</div><h2 id="b2" style="margin-top:16px;font-size:70px">25,9 miliardi di km:<br>anche la luce ci mette <span class="oro">24 ore</span></h2></div>
     <svg id="quad" width="1080" height="760" viewBox="0 0 1080 760" style="position:absolute;left:0;top:480px">
       <defs><linearGradient id="gq" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b7a6ff"/><stop offset="1" stop-color="#ffb84d"/></linearGradient>
         <filter id="alone" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter></defs>
@@ -69,12 +71,12 @@
       <circle id="arco" cx="540" cy="380" r="318" fill="none" stroke="url(#gq)" stroke-width="20" stroke-linecap="round" transform="rotate(-90 540 380)"/>
       <circle id="onda" cx="540" cy="380" r="318" fill="none" stroke="#ffb84d" stroke-width="4" opacity="0"/>
       <text id="conto" x="540" y="408" text-anchor="middle" style="font-family:'JetBrains Mono';font-weight:700;font-size:112px;letter-spacing:-2px" fill="#fff">23:59:57</text>
-      <text x="540" y="290" text-anchor="middle" style="font-family:'JetBrains Mono';font-weight:500;font-size:22px;letter-spacing:5px" fill="rgba(244,241,255,.5)">ORE : MIN : SEC</text>
+      <text x="540" y="290" text-anchor="middle" style="font-family:'JetBrains Mono';font-weight:500;font-size:19px;letter-spacing:3px" fill="rgba(244,241,255,.55)">TEMPO DI VIAGGIO DELLA LUCE</text>
       <text id="esito" x="540" y="482" text-anchor="middle" style="font-family:'Space Grotesk';font-weight:700;font-size:34px" fill="#ffb84d" opacity="0">UN GIORNO-LUCE</text>
     </svg>
     <div class="b dati" id="b3" style="top:1268px">
       <div class="dato"><span>Quando</span><b>19 nov</b><em>ore 3:17 in Italia</em></div>
-      <div class="dato"><span>Distanza</span><b>25,9 <small style="font-size:30px">mld km</small></b><em>dalla Terra</em></div>
+      <div class="dato"><span>Distanza</span><b>173 <small style="font-size:30px">volte</small></b><em>quella Terra–Sole</em></div>
       <div class="dato"><span>Velocità</span><b>16,9 <small style="font-size:30px">km/s</small></b><em>rispetto al Sole</em></div>
     </div>
     <div class="b" id="b4" style="top:1492px"><p style="font-size:26px;color:var(--tenue);font-family:'JetBrains Mono';letter-spacing:.06em">FONTE · NASA JPL HORIZONS · SORPASSO RICOSTRUITO</p></div></div>
@@ -110,10 +112,10 @@
   <div class="sc" id="s5">
     <div class="b" style="top:240px"><div class="occ" id="e1">Sul sito · pagina «Cielo»</div><h2 id="e2" style="margin-top:16px">Seguila <span class="oro">in diretta</span></h2></div>
     <div class="tel" id="e3"><img id="pag" src="pagina.jpg" alt=""></div>
-    <div class="b" id="e4" style="top:1470px;text-align:center"><span class="bott">Mugello Meteo &amp; Clima <span style="font-size:44px">→</span></span></div>
+    <div class="b" id="e4" style="top:1470px;text-align:center"><span class="bott"><svg viewBox="0 0 100 100" class="logo" style="width:64px;height:64px"><rect width="100" height="100" rx="24" fill="#f4f6f2"/><g transform="translate(7 5.92) scale(2.15)" fill="none"><path d="M2 18 L11 8 L18 15 L27 6 L38 18" stroke="#0f6b52" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 35 C12 27 15 35 21 30 C27 25 31 33 37 25" stroke="#2f7cc4" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></g></svg>Mugello Meteo &amp; Clima <span style="font-size:44px">→</span></span></div>
     <div class="cred" style="line-height:1.6">IMMAGINI NASA/JPL-CALTECH · MARTE: ESA/MPS, CC BY-SA 3.0 IGO<br>MAPPA © OPENSTREETMAP · DATI JPL HORIZONS</div></div>
 
-  <div class="testa"><span>MUGELLO METEO &amp; CLIMA</span><span>CIELO</span></div>
+  <div class="testa"><span class="marchio"><svg viewBox="0 0 100 100" class="logo"><rect width="100" height="100" rx="24" fill="#f4f6f2"/><g transform="translate(7 5.92) scale(2.15)" fill="none"><path d="M2 18 L11 8 L18 15 L27 6 L38 18" stroke="#0f6b52" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 35 C12 27 15 35 21 30 C27 25 31 33 37 25" stroke="#2f7cc4" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></g></svg><b>Mugello Meteo <i>&amp;</i> Clima</b></span><span>CIELO</span></div>
   <div id="avanz"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
 </div>
 <script>
@@ -161,7 +163,7 @@ const KM=24,BX=540,BY=1068,P=(la,lo)=>[BX+(lo-11.386)*80.14*KM,BY-(la-43.955)*11
     el("circle",{cx:x,cy:y,r:6,fill:"rgba(244,241,255,.75)"},G);tx(G,n,{x:d==="e"?x-12:d==="w"?x+13:x,y:d==="s"?y+30:d==="n"?y-14:y+7,"text-anchor":d==="e"?"end":d==="w"?"start":"middle",style:"font-size:22px;font-weight:500",fill:"rgba(244,241,255,.7)"});});
   const F=P(44.119,11.380);el("circle",{cx:F[0],cy:F[1],r:9,fill:"#fff"},G);tx(G,"Firenzuola",{x:F[0]-18,y:F[1]+8,"text-anchor":"end",style:"font-family:'Space Grotesk';font-weight:700;font-size:30px",fill:"#fff"});
   el("line",{id:"raggio",x1:BX,y1:BY,x2:BX,y2:BY,stroke:"#ffb84d","stroke-width":3,"stroke-dasharray":"4 8","stroke-linecap":"round"},G);
-  el("circle",{cx:BX,cy:BY,r:54,fill:"url(#gs)",id:"sole"},G);el("circle",{cx:BX,cy:BY,r:13,fill:"#fff6d6"},G);
+  el("circle",{cx:BX,cy:BY,r:54,fill:"url(#gs)",id:"sole"},G);el("image",{href:"pianeti/sole.png",x:BX-26,y:BY-26,width:52,height:52},G);
   tx(G,"Borgo San Lorenzo",{x:BX,y:BY+90,"text-anchor":"middle",style:"font-family:'Space Grotesk';font-weight:700;font-size:30px;paint-order:stroke;stroke:#0b0a24;stroke-width:9px;stroke-linejoin:round",fill:"#fff"});
   tx(G,"IL SOLE",{x:BX,y:BY+116,"text-anchor":"middle",style:"font-family:'JetBrains Mono';font-weight:500;font-size:19px;letter-spacing:3px",fill:"#ffd9a0"});
   const g=el("g",{id:"sonda"},G);el("circle",{cx:BX,cy:BY-17.2*KM,r:30,fill:"#ffb84d",opacity:.25},g);el("circle",{cx:BX,cy:BY-17.2*KM,r:13,fill:"#ffb84d",stroke:"#fff","stroke-width":3},g);
@@ -171,7 +173,7 @@ const KM=24,BX=540,BY=1068,P=(la,lo)=>[BX+(lo-11.386)*80.14*KM,BY-(la-43.955)*11
 /* ---- 4 · orbite sul centro di Borgo: 1 UA = 100 m; la mappa OSM è a 0,8598 metri per pixel, piazza Dante al centro ---- */
 const MPP=.8598,PIAN=[["Mercurio",38.7,"#c9c2b8",-62,46,46],["Venere",72.3,"#f2d9a0",24,58,58],["Terra",100,"#6fb6ff",152,62,62],["Marte",152.4,"#ff8f6b",-128,52,52],["Giove",520.3,"#f0c08a",38,112,112],["Saturno",958,"#e8d48a",-68,196,80]].map(([n,m,col,a,w,h])=>({n,m,col,a,w,h}));
 (function(){const G=$("og");PIAN.forEach(p=>{p.c=el("circle",{cx:468,cy:500,r:0,fill:"none",stroke:p.col,"stroke-width":3,opacity:0},G);});
-  el("circle",{id:"osole",cx:468,cy:500,r:30,fill:"url(#gs2)"},G);el("circle",{cx:468,cy:500,r:7,fill:"#fff6d6"},G);
+  el("circle",{id:"osole",cx:468,cy:500,r:30,fill:"url(#gs2)"},G);el("image",{id:"isole",href:"pianeti/sole.png",x:440,y:472,width:56,height:56},G);
   PIAN.forEach(p=>{p.g=el("g",{opacity:0},G);el("circle",{r:p.h*.62,fill:p.col,opacity:.22,filter:"url(#sfoc)"},p.g);
     el("image",{href:"pianeti/"+p.n.toLowerCase()+".png",x:-p.w/2,y:-p.h/2,width:p.w,height:p.h},p.g);
     const dx=Math.cos(p.a*Math.PI/180)>=0?1:-1,st="paint-order:stroke;stroke:#0b0a24;stroke-width:8px;stroke-linejoin:round";
@@ -204,8 +206,8 @@ function frame(t){
   $("osm").style.transform=`translate(${468-1200*sc}px,${500-1200*sc}px) scale(${sc})`;
   PIAN.forEach((p,i)=>{const r=p.m/MPP*sc,vis=cl((r-16)/14)*cl((640-r)/60)*ease(seg(t,17.3+Math.min(i,3)*.22,17.9+Math.min(i,3)*.22)),a=p.a*Math.PI/180,x=468+r*Math.cos(a),y=500+r*Math.sin(a);
     p.c.setAttribute("r",r);p.c.setAttribute("opacity",vis*.95);p.g.setAttribute("opacity",vis*cl((560-r)/40));const k=cl(r/100,.28,1);
-    p.g.setAttribute("transform",`translate(${x} ${y}) scale(${k})`);p.g.querySelectorAll("text").forEach(e=>e.setAttribute("opacity",cl((r-62)/26)));});
-  $("osole").setAttribute("r",Math.max(16,34*Math.sqrt(sc))+3*Math.sin(t*3));
+    p.g.setAttribute("transform",`translate(${x} ${y}) scale(${k})`);p.g.querySelectorAll("text").forEach(e=>e.setAttribute("opacity",cl((r-44)/20)));});
+  const rs=Math.max(13,23*Math.sqrt(sc));$("osole").setAttribute("r",rs*2.1+3*Math.sin(t*3));["x","y"].forEach((k,i)=>$("isole").setAttribute(k,(i?500:468)-rs));$("isole").setAttribute("width",rs*2);$("isole").setAttribute("height",rs*2);
   entra($("f3x"),t,21.3);
   // 5 e 6: gli stessi movimenti di prima, spostati di 6,6 secondi
   const T=t-6.6;
