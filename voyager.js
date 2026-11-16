@@ -1,17 +1,18 @@
 /* Cielo · Voyager 1 a un giorno-luce dalla Terra (sezione di effemeridi.html).
-   Tutto calcolato nel browser, senza servizi esterni. La sonda si allontana dal Sole quasi in linea retta:
-   distanza dal Sole = R0 + V·(anni dal 1° gennaio 2026), nella direzione eclittica (LON, LAT) J2000.
-   È una stima, non un'effemeride: R0 è calibrato perché la distanza dalla Terra tocchi un giorno-luce il
-   18 novembre 2026, la data indicata per il traguardo. Per cambiarla basta ritoccare R0 (0,015 UA per ogni giorno).
-   Lo stesso modello dà circa 121,6 UA dal Sole il 25 agosto 2012 (ingresso nello spazio interstellare) e 166,4 UA
-   dalla Terra nel febbraio 2025, vicino ai valori pubblicati. La Terra è sull'orbita ellittica media (errore < 0,01 UA). */
+   Tutto calcolato nel browser, senza servizi esterni, a partire dai dati ufficiali del JPL.
+   Posizione e velocità eliocentriche della sonda vengono da JPL Horizons (soluzione Voyager_1_ST+refit2022, eclittica
+   J2000, epoca 1° gennaio 2027): lontano dal Sole il moto è praticamente rettilineo, quindi basta prolungarle.
+   La distanza dalla Terra tiene conto del tempo di viaggio della luce (vediamo la sonda dov'era un giorno prima).
+   Confronto con Horizons, un punto al giorno da settembre 2026 a dicembre 2027: scarto massimo 0,3 secondi-luce.
+   Una correzione costante K (15 km) porta il sorpasso del giorno-luce sull'istante di Horizons: 19 novembre 2026,
+   02:17 UT, cioè le 03:17 in Italia e la sera del 18 novembre in California. La Terra è sull'orbita ellittica media. */
 (function () {
   "use strict";
   const $ = id => document.getElementById(id); if (!$("voyager")) return;
   const NS = "http://www.w3.org/2000/svg", RAD = Math.PI / 180, UA = 149597870.7, C = 299792.458, GL = C * 86400 / UA;   // un giorno-luce in UA
-  const LON = 255.9, LAT = 34.9, R0 = 169.2399, V = 3.57, T0 = Date.UTC(2026, 0, 1), J2000 = Date.UTC(2000, 0, 1, 12);
+  const P0 = [-32.27297982113355, -137.5478303570665, 99.51762401924661], V0 = [-1.194816646505571e-3, -7.861270873580961e-3, 5.677905497949306e-3];   // UA e UA/giorno
+  const T0 = Date.UTC(2027, 0, 1), K = .000098, J2000 = Date.UTC(2000, 0, 1, 12);
   const LUOGO = { lat: 43.955, lon: 11.386 }, TZ = "Europe/Rome", EPS = 23.4393 * RAD;
-  const U = [Math.cos(LAT * RAD) * Math.cos(LON * RAD), Math.cos(LAT * RAD) * Math.sin(LON * RAD), Math.sin(LAT * RAD)];
   const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
   const testo = (p, s, a) => { const t = el("text", a, p); t.textContent = s; return t; };
   const n = (v, d = 0) => v.toLocaleString("it-IT", { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -24,9 +25,11 @@
     const lam = (280.460 + .9856474 * d + 1.915 * Math.sin(g) + .020 * Math.sin(2 * g) - .0000382 * d) * RAD, r = 1.00014 - .01671 * Math.cos(g) - .00014 * Math.cos(2 * g);
     return [-r * Math.cos(lam), -r * Math.sin(lam), 0];
   }
-  const sole = ms => R0 + V * (ms - T0) / (365.25 * 864e5);                 // distanza dal Sole (UA)
+  const sonda = ms => { const g = (ms - T0) / 864e5; return [P0[0] + V0[0] * g, P0[1] + V0[1] * g, P0[2] + V0[2] * g]; };   // posizione eliocentrica (UA)
   function stato(ms) {
-    const r = sole(ms), E = terra(ms), x = r * U[0] - E[0], y = r * U[1] - E[1], z = r * U[2] - E[2], d = Math.hypot(x, y, z);
+    const E = terra(ms), r = Math.hypot(...sonda(ms)); let x, y, z, d = 173;
+    for (let i = 0; i < 3; i++) { const p = sonda(ms - d / GL * 864e5); x = p[0] - E[0]; y = p[1] - E[1]; z = p[2] - E[2]; d = Math.hypot(x, y, z); }   // la sonda dov'era quando è partita la luce
+    d += K;
     // eclittiche → equatoriali → altezza e azimut a Borgo San Lorenzo
     const ye = y * Math.cos(EPS) - z * Math.sin(EPS), ze = y * Math.sin(EPS) + z * Math.cos(EPS), ra = Math.atan2(ye, x), dec = Math.asin(ze / d);
     const gg = (ms - J2000) / 864e5, H = (280.46061837 + 360.98564736629 * gg + LUOGO.lon) * RAD - ra, f = LUOGO.lat * RAD;
@@ -49,9 +52,9 @@
     $("vy-ua").textContent = n(S.d, 3) + " UA · " + n(S.r, 2) + " dal Sole";
     $("vy-vel").textContent = (vel >= 0 ? "+" : "−") + n(Math.abs(vel), 1) + " km/s";
     $("vy-vel-n").textContent = vel >= 0 ? "si allontana dalla Terra; dal Sole a 16,9 km/s" : "in questi mesi la Terra le corre dietro più veloce";
-    const g = Math.abs(ora - TRAGUARDO) / 864e5, data = quando(TRAGUARDO, { day: "numeric", month: "long", year: "numeric" });
-    $("vy-stato").innerHTML = dopo ? `<b>Traguardo superato.</b> Secondo questo calcolo Voyager 1 è a più di un giorno-luce dalla Terra dal ${data}: ${g < 1 ? "da meno di un giorno" : "da " + n(Math.floor(g)) + (Math.floor(g) === 1 ? " giorno" : " giorni")}. È il primo oggetto costruito dall'uomo ad arrivarci.`
-      : `<b>Traguardo in vista.</b> Secondo questo calcolo Voyager 1 arriverà a un giorno-luce dalla Terra intorno al ${data}: ${g < 1 ? "fra poche ore" : g < 1.5 ? "domani" : "fra " + n(Math.round(g)) + " giorni"}. Sarà il primo oggetto costruito dall'uomo ad arrivarci.`;
+    const g = Math.abs(ora - TRAGUARDO) / 864e5, data = quando(TRAGUARDO, { day: "numeric", month: "long", year: "numeric" }) + ", alle " + quando(TRAGUARDO, { hour: "2-digit", minute: "2-digit" }) + " ora italiana";
+    $("vy-stato").innerHTML = dopo ? `<b>Traguardo superato.</b> Voyager 1 è a più di un giorno-luce dalla Terra dal ${data} (in California era ancora la sera del 18): ${g < 1 ? "da meno di un giorno" : "da " + n(Math.floor(g)) + (Math.floor(g) === 1 ? " giorno" : " giorni")}. È il primo oggetto costruito dall'uomo ad arrivarci.`
+      : `<b>Traguardo in vista.</b> Voyager 1 arriverà a un giorno-luce dalla Terra il ${data} (in California sarà ancora la sera del 18): ${g < 1 ? "fra poche ore" : g < 1.5 ? "domani" : "fra " + n(Math.round(g)) + " giorni"}. Sarà il primo oggetto costruito dall'uomo ad arrivarci.`;
     // il segnale: parte adesso, arriva fra «luce» secondi; la risposta torna dopo altrettanto
     const arr = new Date(ora + S.luce * 1000), rit = new Date(ora + 2 * stato(ora + S.luce * 1000).luce * 1000), f = { weekday: "long", hour: "2-digit", minute: "2-digit" };
     $("vy-segnale").innerHTML = `Un segnale radio inviato <b>adesso</b> da Borgo San Lorenzo, alla velocità della luce, raggiungerebbe Voyager 1 <b>${quando(arr, f)}</b>. La risposta tornerebbe <b>${quando(rit, f)}</b>: quasi due giorni per un «pronto?» e un «sì, ci sono».`;

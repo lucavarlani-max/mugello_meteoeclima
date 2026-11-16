@@ -80,8 +80,10 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   **Voyager 1 a un giorno-luce** (`voyager.js`, sezione `#voyager` della stessa pagina): contatore in tempo reale del
   tempo-luce e della distanza dalla Terra, orario di arrivo di un segnale inviato adesso, punto del cielo in cui si trova
   la sonda visto da Borgo, scala dei tempi-luce, tappe del viaggio, Sistema solare in scala sul Mugello (1 UA = 100 m) e
-  curva della distanza da settembre 2026 a dicembre 2027. Modello rettilineo (16,9 km/s verso Ofiuco) calibrato sulla
-  data indicata per il traguardo, 18 novembre 2026 (stima, non effemeride); nessun file di dati né servizio esterno.
+  curva della distanza da settembre 2026 a dicembre 2027. Posizione e velocità eliocentriche da JPL Horizons
+  (epoca 1° gennaio 2027) prolungate in linea retta, con il tempo di viaggio della luce: scarto da Horizons sotto 0,3
+  secondi-luce fino a fine 2027; traguardo il 19 novembre 2026 alle 02:17 UT (03:17 in Italia, sera del 18 in California).
+  Nessun servizio esterno a pagina aperta: i due vettori sono costanti in `voyager.js`.
   Banner e fotografie in `img/cielo/voyager-*.jpg`: immagini NASA/JPL-Caltech di pubblico dominio, da Wikimedia Commons.
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
