@@ -283,8 +283,9 @@
   .vy-banner figcaption{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:clamp(14px,3vw,28px);color:#fff;background:linear-gradient(180deg,rgba(15,8,40,0) 30%,rgba(15,8,40,.55) 62%,rgba(15,8,40,.9) 100%)}
   .vy-b-occhiello{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#e7dcff}
   .vy-banner strong{font-family:var(--serif);font-weight:800;font-size:clamp(21px,3.6vw,38px);line-height:1.1;letter-spacing:-.01em;max-width:22ch;text-wrap:balance;text-shadow:0 1px 12px rgba(0,0,0,.45)}
-  .vy-b-conto{font-size:clamp(13px,1.6vw,16px);color:#f1eaff} .vy-b-conto b{font-family:var(--mono);font-weight:600;font-size:1.25em;color:#ffd79a;font-variant-numeric:tabular-nums;margin-left:4px}
+  .vy-b-conto{font-size:clamp(13px,1.6vw,16px);color:#f1eaff} .vy-b-conto b{font-family:var(--mono);font-weight:600;font-size:1.25em;color:#ffd79a;font-variant-numeric:tabular-nums;margin-left:4px;white-space:nowrap}
   .vy-banner small{position:absolute;top:10px;right:12px;font-size:10.5px;color:rgba(255,255,255,.8);background:rgba(15,8,40,.45);padding:2px 8px;border-radius:999px}
+  @media (max-width:560px){.vy-banner img{height:360px;object-position:42% 30%} .vy-b-conto b{display:block;margin-left:0} .vy-banner figcaption{background:linear-gradient(180deg,rgba(15,8,40,0) 22%,rgba(15,8,40,.6) 52%,rgba(15,8,40,.92) 100%)}}
   .vy-foto{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
   .vy-foto figure{margin:0;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
   .vy-foto img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:#0d0d18}
