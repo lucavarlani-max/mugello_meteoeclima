@@ -1,14 +1,15 @@
 /* Cielo · Voyager 1 a un giorno-luce dalla Terra (sezione di effemeridi.html).
    Tutto calcolato nel browser, senza servizi esterni. La sonda si allontana dal Sole quasi in linea retta:
    distanza dal Sole = R0 + V·(anni dal 1° gennaio 2026), nella direzione eclittica (LON, LAT) J2000.
-   R0 è calibrato perché la distanza dalla Terra tocchi un giorno-luce il 15 novembre 2026, data stimata dalla NASA;
-   lo stesso modello dà 121,6 UA dal Sole il 25 agosto 2012 (ingresso nello spazio interstellare) e 166,4 UA dalla
-   Terra nel febbraio 2025, in accordo con i valori pubblicati. La Terra è sull'orbita ellittica media (errore < 0,01 UA). */
+   È una stima, non un'effemeride: R0 è calibrato perché la distanza dalla Terra tocchi un giorno-luce il
+   18 novembre 2026, la data indicata per il traguardo. Per cambiarla basta ritoccare R0 (0,015 UA per ogni giorno).
+   Lo stesso modello dà circa 121,6 UA dal Sole il 25 agosto 2012 (ingresso nello spazio interstellare) e 166,4 UA
+   dalla Terra nel febbraio 2025, vicino ai valori pubblicati. La Terra è sull'orbita ellittica media (errore < 0,01 UA). */
 (function () {
   "use strict";
   const $ = id => document.getElementById(id); if (!$("voyager")) return;
   const NS = "http://www.w3.org/2000/svg", RAD = Math.PI / 180, UA = 149597870.7, C = 299792.458, GL = C * 86400 / UA;   // un giorno-luce in UA
-  const LON = 255.9, LAT = 34.9, R0 = 169.2844, V = 3.57, T0 = Date.UTC(2026, 0, 1), J2000 = Date.UTC(2000, 0, 1, 12);
+  const LON = 255.9, LAT = 34.9, R0 = 169.2399, V = 3.57, T0 = Date.UTC(2026, 0, 1), J2000 = Date.UTC(2000, 0, 1, 12);
   const LUOGO = { lat: 43.955, lon: 11.386 }, TZ = "Europe/Rome", EPS = 23.4393 * RAD;
   const U = [Math.cos(LAT * RAD) * Math.cos(LON * RAD), Math.cos(LAT * RAD) * Math.sin(LON * RAD), Math.sin(LAT * RAD)];
   const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
@@ -50,7 +51,7 @@
     $("vy-vel-n").textContent = vel >= 0 ? "si allontana dalla Terra; dal Sole a 16,9 km/s" : "in questi mesi la Terra le corre dietro più veloce";
     const g = Math.abs(ora - TRAGUARDO) / 864e5, data = quando(TRAGUARDO, { day: "numeric", month: "long", year: "numeric" });
     $("vy-stato").innerHTML = dopo ? `<b>Traguardo superato.</b> Secondo questo calcolo Voyager 1 è a più di un giorno-luce dalla Terra dal ${data}: ${g < 1 ? "da meno di un giorno" : "da " + n(Math.floor(g)) + (Math.floor(g) === 1 ? " giorno" : " giorni")}. È il primo oggetto costruito dall'uomo ad arrivarci.`
-      : `<b>Traguardo in vista.</b> Secondo questo calcolo Voyager 1 arriverà a un giorno-luce dalla Terra intorno al ${data}: ${g < 1 ? "fra poche ore" : "fra " + n(Math.ceil(g)) + " giorni"}. Sarà il primo oggetto costruito dall'uomo ad arrivarci.`;
+      : `<b>Traguardo in vista.</b> Secondo questo calcolo Voyager 1 arriverà a un giorno-luce dalla Terra intorno al ${data}: ${g < 1 ? "fra poche ore" : g < 1.5 ? "domani" : "fra " + n(Math.round(g)) + " giorni"}. Sarà il primo oggetto costruito dall'uomo ad arrivarci.`;
     // il segnale: parte adesso, arriva fra «luce» secondi; la risposta torna dopo altrettanto
     const arr = new Date(ora + S.luce * 1000), rit = new Date(ora + 2 * stato(ora + S.luce * 1000).luce * 1000), f = { weekday: "long", hour: "2-digit", minute: "2-digit" };
     $("vy-segnale").innerHTML = `Un segnale radio inviato <b>adesso</b> da Borgo San Lorenzo, alla velocità della luce, raggiungerebbe Voyager 1 <b>${quando(arr, f)}</b>. La risposta tornerebbe <b>${quando(rit, f)}</b>: quasi due giorni per un «pronto?» e un «sì, ci sono».`;
