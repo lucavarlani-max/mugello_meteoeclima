@@ -36,6 +36,11 @@
   .tel::before{content:"";position:absolute;left:50%;top:16px;width:120px;height:26px;margin-left:-60px;border-radius:14px;background:#06051a;z-index:2}
   .tel img{position:absolute;left:12px;top:12px;width:516px;border-radius:52px 52px 0 0}
   .tel::after{content:"";position:absolute;inset:auto 0 0 0;height:160px;background:linear-gradient(180deg,transparent,#0d0c22)}
+  #vista{position:absolute;left:72px;top:520px;width:936px;height:1000px;border-radius:44px;overflow:hidden;border:2px solid rgba(255,255,255,.2);background:#0b0a24;box-shadow:0 30px 90px rgba(90,60,220,.35)}
+  #osm{position:absolute;left:0;top:0;width:2400px;height:2400px;transform-origin:0 0;filter:invert(1) hue-rotate(205deg) saturate(.5) brightness(.82) contrast(1.05)}
+  #vista .scuro{position:absolute;inset:0;background:radial-gradient(closest-side,rgba(6,5,26,0) 55%,rgba(6,5,26,.55) 100%)}
+  #orb{position:absolute;left:0;top:0}
+  .osmc{position:absolute;right:16px;bottom:12px;font-size:17px;color:rgba(244,241,255,.85);background:rgba(6,5,26,.7);padding:4px 10px;border-radius:8px}
   .bott{display:inline-flex;align-items:center;gap:16px;padding:26px 40px;border-radius:999px;background:var(--oro);color:#1a0f2e;font-family:"Space Grotesk";font-weight:700;font-size:40px;letter-spacing:-.02em}
   .cred{position:absolute;left:0;right:0;bottom:64px;text-align:center;font-family:"JetBrains Mono";font-size:19px;letter-spacing:.08em;color:var(--tenue)}
 </style>
@@ -84,9 +89,17 @@
     </svg>
     <div class="b" id="c3" style="top:1440px"><p>Un «pronto?» inviato adesso arriva <b style="color:#fff">domani</b>.<br>La risposta, dopodomani.</p></div></div>
 
-  <!-- 4 · la cartina -->
+  <!-- 4 · il centro di Borgo su OpenStreetMap -->
+  <div class="sc" id="s6">
+    <div class="b" style="top:240px"><div class="occ" id="f1x">In scala · 1 unità astronomica = 100 metri</div><h2 id="f2x" style="margin-top:16px;font-size:72px">Il Sole in piazza Dante,<br>i pianeti <span class="oro">a Borgo</span></h2></div>
+    <div id="vista"><img id="osm" src="borgo-osm.jpg" alt=""><div class="scuro"></div>
+      <svg id="orb" width="936" height="1000" viewBox="0 0 936 1000"><defs><filter id="sfoc" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="9"/></filter><radialGradient id="gs2"><stop offset="0" stop-color="#fff3c4"/><stop offset=".3" stop-color="#ffc24d"/><stop offset="1" stop-color="#ffb84d" stop-opacity="0"/></radialGradient></defs><g id="og"></g></svg>
+      <span class="osmc">© OpenStreetMap contributors</span><span class="osmc" style="right:auto;left:16px;font-family:'JetBrains Mono';font-size:15px;letter-spacing:.06em">DISTANZE IN SCALA · PIANETI INGRANDITI</span></div>
+    <div class="b" id="f3x" style="top:1548px"><p style="font-size:30px">Urano starebbe a 1,9 km, Nettuno a 3 km.<br>Per Voyager serve <b style="color:#fff">tutta la valle</b>.</p></div></div>
+
+  <!-- 5 · la cartina -->
   <div class="sc" id="s4">
-    <div class="b" style="top:240px"><div class="occ" id="d1">In scala sul Mugello</div><h2 id="d2" style="margin-top:16px;font-size:72px">Se il Sole fosse a Borgo<br>e la Terra a <span class="oro">100 metri</span>…</h2></div>
+    <div class="b" style="top:240px"><div class="occ" id="d1">Stessa scala, tutta la valle</div><h2 id="d2" style="margin-top:16px;font-size:72px">Nettuno a 3 km,<br>Voyager a <span class="oro">17</span></h2></div>
     <svg id="mappa" width="1080" height="1100" viewBox="0 500 1080 1100" style="position:absolute;left:0;top:500px">
       <defs><radialGradient id="gs"><stop offset="0" stop-color="#fff3c4"/><stop offset=".35" stop-color="#ffc24d"/><stop offset="1" stop-color="#ffb84d" stop-opacity="0"/></radialGradient></defs>
       <g id="mg"></g>
@@ -98,15 +111,15 @@
     <div class="b" style="top:240px"><div class="occ" id="e1">Sul sito · pagina «Cielo»</div><h2 id="e2" style="margin-top:16px">Seguila <span class="oro">in diretta</span></h2></div>
     <div class="tel" id="e3"><img id="pag" src="pagina.jpg" alt=""></div>
     <div class="b" id="e4" style="top:1470px;text-align:center"><span class="bott">Mugello Meteo &amp; Clima <span style="font-size:44px">→</span></span></div>
-    <div class="cred">IMMAGINI NASA/JPL-CALTECH · DATI JPL HORIZONS</div></div>
+    <div class="cred" style="line-height:1.6">IMMAGINI NASA/JPL-CALTECH · MARTE: ESA/MPS, CC BY-SA 3.0 IGO<br>MAPPA © OPENSTREETMAP · DATI JPL HORIZONS</div></div>
 
   <div class="testa"><span>MUGELLO METEO &amp; CLIMA</span><span>CIELO</span></div>
-  <div id="avanz"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+  <div id="avanz"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
 </div>
 <script>
 const $=i=>document.getElementById(i),NS="http://www.w3.org/2000/svg",cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),seg=(t,a,b)=>cl((t-a)/(b-a)),ease=t=>1-Math.pow(1-cl(t),3),eio=t=>{t=cl(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
 const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e},tx=(p,s,a)=>{const e=el("text",a,p);e.textContent=s;return e};
-const DUR=26,SC=[["s1",0,5],["s2",5,11.6],["s3",11.6,16.4],["s4",16.4,21.6],["s5",21.6,DUR]],DISS=.5;
+const DUR=32.4,SC=[["s1",0,5],["s2",5,11.6],["s3",11.6,16.4],["s6",16.4,23],["s4",23,28.2],["s5",28.2,DUR]],DISS=.5;
 const entra=(e,t,t0,dy=44,d=.75)=>{const k=ease(seg(t,t0,t0+d));e.style.opacity=k;e.style.transform=`translateY(${(1-k)*dy}px)`};
 
 /* ---- cielo stellato (sempre uguale: generatore con seme) ---- */
@@ -142,7 +155,8 @@ const KM=24,BX=540,BY=1068,P=(la,lo)=>[BX+(lo-11.386)*80.14*KM,BY-(la-43.955)*11
   el("path",{d:pt([[43.985,11.262],[43.962,11.325],[43.948,11.386],[43.930,11.466],[43.892,11.522]]),fill:"none",stroke:"rgba(95,224,189,.5)","stroke-width":4,"stroke-linecap":"round","stroke-linejoin":"round"},G);
   tx(G,"Sieve",{x:P(43.898,11.462)[0],y:P(43.898,11.462)[1],style:"font-size:20px;font-style:italic",fill:"rgba(95,224,189,.75)"});
   [["nett",3,"#b7a6ff","NETTUNO · 3 km"],["voy",17.2,"#ffb84d",""]].forEach(([id,km,c])=>el("circle",{id:"an-"+id,cx:BX,cy:BY,r:km*KM,fill:id==="voy"?"rgba(255,184,77,.05)":"none",stroke:c,"stroke-width":id==="voy"?4:2.5,"stroke-dasharray":id==="voy"?"":"6 8"},G));
-  tx(G,"NETTUNO · 3 km",{id:"et-nett",x:BX+58,y:BY-64,style:"font-family:'JetBrains Mono';font-weight:500;font-size:20px;letter-spacing:1px",fill:"#b7a6ff"});
+  el("image",{id:"im-nett",href:"pianeti/nettuno.png",x:BX+3*KM*.72-21,y:BY-3*KM*.69-21,width:42,height:42},G);
+  tx(G,"NETTUNO · 3 km",{id:"et-nett",x:BX+86,y:BY-52,style:"font-family:'JetBrains Mono';font-weight:500;font-size:20px;letter-spacing:1px",fill:"#b7a6ff"});
   [["Scarperia",43.994,11.355,"e"],["San Piero",43.962,11.325,"e"],["Barberino",44.001,11.238,"s"],["Vicchio",43.934,11.466,"w"],["Dicomano",43.892,11.522,"s"],["Marradi",44.076,11.612,"e"],["Palazzuolo",44.113,11.546,"n"]].forEach(([n,la,lo,d])=>{const [x,y]=P(la,lo);
     el("circle",{cx:x,cy:y,r:6,fill:"rgba(244,241,255,.75)"},G);tx(G,n,{x:d==="e"?x-12:d==="w"?x+13:x,y:d==="s"?y+30:d==="n"?y-14:y+7,"text-anchor":d==="e"?"end":d==="w"?"start":"middle",style:"font-size:22px;font-weight:500",fill:"rgba(244,241,255,.7)"});});
   const F=P(44.119,11.380);el("circle",{cx:F[0],cy:F[1],r:9,fill:"#fff"},G);tx(G,"Firenzuola",{x:F[0]-18,y:F[1]+8,"text-anchor":"end",style:"font-family:'Space Grotesk';font-weight:700;font-size:30px",fill:"#fff"});
@@ -153,6 +167,16 @@ const KM=24,BX=540,BY=1068,P=(la,lo)=>[BX+(lo-11.386)*80.14*KM,BY-(la-43.955)*11
   const g=el("g",{id:"sonda"},G);el("circle",{cx:BX,cy:BY-17.2*KM,r:30,fill:"#ffb84d",opacity:.25},g);el("circle",{cx:BX,cy:BY-17.2*KM,r:13,fill:"#ffb84d",stroke:"#fff","stroke-width":3},g);
   tx(g,"VOYAGER 1",{x:BX+30,y:BY-17.2*KM+2,style:"font-family:'JetBrains Mono';font-weight:700;font-size:26px;letter-spacing:1px",fill:"#ffb84d"});tx(g,"17,2 km",{x:BX+30,y:BY-17.2*KM+32,style:"font-family:'JetBrains Mono';font-weight:500;font-size:23px",fill:"#ffd9a0"});
   el("line",{x1:888,x2:888+5*KM,y1:1470,y2:1470,stroke:"rgba(244,241,255,.6)","stroke-width":3},G);tx(G,"5 km",{x:888+2.5*KM,y:1500,"text-anchor":"middle",style:"font-family:'JetBrains Mono';font-size:19px",fill:"rgba(244,241,255,.6)"});})();
+
+/* ---- 4 · orbite sul centro di Borgo: 1 UA = 100 m; la mappa OSM è a 0,8598 metri per pixel, piazza Dante al centro ---- */
+const MPP=.8598,PIAN=[["Mercurio",38.7,"#c9c2b8",-62,46,46],["Venere",72.3,"#f2d9a0",24,58,58],["Terra",100,"#6fb6ff",152,62,62],["Marte",152.4,"#ff8f6b",-128,52,52],["Giove",520.3,"#f0c08a",38,112,112],["Saturno",958,"#e8d48a",-68,196,80]].map(([n,m,col,a,w,h])=>({n,m,col,a,w,h}));
+(function(){const G=$("og");PIAN.forEach(p=>{p.c=el("circle",{cx:468,cy:500,r:0,fill:"none",stroke:p.col,"stroke-width":3,opacity:0},G);});
+  el("circle",{id:"osole",cx:468,cy:500,r:30,fill:"url(#gs2)"},G);el("circle",{cx:468,cy:500,r:7,fill:"#fff6d6"},G);
+  PIAN.forEach(p=>{p.g=el("g",{opacity:0},G);el("circle",{r:p.h*.62,fill:p.col,opacity:.22,filter:"url(#sfoc)"},p.g);
+    el("image",{href:"pianeti/"+p.n.toLowerCase()+".png",x:-p.w/2,y:-p.h/2,width:p.w,height:p.h},p.g);
+    const dx=Math.cos(p.a*Math.PI/180)>=0?1:-1,st="paint-order:stroke;stroke:#0b0a24;stroke-width:8px;stroke-linejoin:round";
+    tx(p.g,p.n,{x:dx*(p.w/2+12),y:-2,"text-anchor":dx>0?"start":"end",style:"font-family:'Space Grotesk';font-weight:700;font-size:31px;"+st,fill:"#fff"});
+    tx(p.g,(p.m<100?p.m.toFixed(0):Math.round(p.m))+" m",{x:dx*(p.w/2+12),y:27,"text-anchor":dx>0?"start":"end",style:"font-family:'JetBrains Mono';font-weight:500;font-size:22px;"+st,fill:p.col});});})();
 
 function frame(t){
   SC.forEach(([id,a,b],i)=>{$(id).style.opacity=Math.min(i?seg(t,a,a+DISS):1,i<SC.length-1?1-seg(t,b,b+DISS):1);document.querySelectorAll("#avanz b")[i].style.width=(seg(t,a,b)*100)+"%";});
@@ -174,19 +198,29 @@ function frame(t){
   document.querySelectorAll("#righe .riga").forEach((g,i)=>{const k=ease(seg(t,12.5+i*.38,12.5+i*.38+.4)),w=eio(seg(t,12.6+i*.38,13.5+i*.38+(i===4?.5:0))),b=g.querySelector(".bar"),x=72+(+b.dataset.x-72)*w;
     g.style.opacity=k;b.setAttribute("x2",x);g.querySelectorAll("circle").forEach(c=>c.setAttribute("cx",x));g.querySelector(".capo2").setAttribute("r",(i===4?30:22)*(1+.18*Math.sin(t*5+i)));});
   entra($("c3"),t,15.0);
-  // 4
+  // 4: il centro di Borgo. Si parte stretti sui pianeti interni, poi si allarga fino a Saturno
+  entra($("f1x"),t,16.7,30);entra($("f2x"),t,16.9);
+  const z=eio(seg(t,18.6,21.4)),sc=Math.exp(Math.log(1.55)+(Math.log(.386)-Math.log(1.55))*z);          // pixel a schermo per pixel di mappa
+  $("osm").style.transform=`translate(${468-1200*sc}px,${500-1200*sc}px) scale(${sc})`;
+  PIAN.forEach((p,i)=>{const r=p.m/MPP*sc,vis=cl((r-16)/14)*cl((640-r)/60)*ease(seg(t,17.3+Math.min(i,3)*.22,17.9+Math.min(i,3)*.22)),a=p.a*Math.PI/180,x=468+r*Math.cos(a),y=500+r*Math.sin(a);
+    p.c.setAttribute("r",r);p.c.setAttribute("opacity",vis*.95);p.g.setAttribute("opacity",vis*cl((560-r)/40));const k=cl(r/100,.28,1);
+    p.g.setAttribute("transform",`translate(${x} ${y}) scale(${k})`);p.g.querySelectorAll("text").forEach(e=>e.setAttribute("opacity",cl((r-62)/26)));});
+  $("osole").setAttribute("r",Math.max(16,34*Math.sqrt(sc))+3*Math.sin(t*3));
+  entra($("f3x"),t,21.3);
+  // 5 e 6: gli stessi movimenti di prima, spostati di 6,6 secondi
+  const T=t-6.6;
   entra($("d1"),t,16.7,30);entra($("d2"),t,16.9);
-  $("mappa").style.opacity=ease(seg(t,17.0,17.8));
-  const kn=ease(seg(t,17.7,18.5)),kv=eio(seg(t,18.3,19.9));
-  $("an-nett").setAttribute("r",3*KM*kn);$("et-nett").setAttribute("opacity",seg(t,18.3,18.8));
+  $("mappa").style.opacity=ease(seg(T,17.0,17.8));
+  const kn=ease(seg(T,17.7,18.5)),kv=eio(seg(T,18.3,19.9));
+  $("an-nett").setAttribute("r",3*KM*kn);$("et-nett").setAttribute("opacity",seg(T,18.3,18.8));$("im-nett").setAttribute("opacity",seg(T,18.3,18.8));
   $("an-voy").setAttribute("r",17.2*KM*kv);$("raggio").setAttribute("y2",BY-17.2*KM*kv);
-  $("sonda").setAttribute("opacity",seg(t,19.7,20.2));$("sonda").setAttribute("transform",`translate(0 ${(1-ease(seg(t,19.7,20.3)))*-20})`);
+  $("sonda").setAttribute("opacity",seg(T,19.7,20.2));$("sonda").setAttribute("transform",`translate(0 ${(1-ease(seg(T,19.7,20.3)))*-20})`);
   $("sole").setAttribute("r",54+5*Math.sin(t*3));
   entra($("d3"),t,20.0);
   // 5
   entra($("e1"),t,21.9,30);entra($("e2"),t,22.1);
-  const ke=ease(seg(t,22.2,23.2));$("e3").style.opacity=ke;$("e3").style.transform=`translateY(${(1-ke)*120}px) rotate(${-2.5+2.5*ke}deg)`;
-  $("pag").style.transform=`translateY(${-eio(seg(t,23.2,25.6))*195}px)`;
+  const ke=ease(seg(T,22.2,23.2));$("e3").style.opacity=ke;$("e3").style.transform=`translateY(${(1-ke)*120}px) rotate(${-2.5+2.5*ke}deg)`;
+  $("pag").style.transform=`translateY(${-eio(seg(T,23.2,25.6))*195}px)`;
   entra($("e4"),t,23.6);
 }
 window.frame=frame;window.DUR=DUR;
