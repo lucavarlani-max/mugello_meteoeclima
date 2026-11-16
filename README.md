@@ -85,7 +85,9 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   secondi-luce fino a fine 2027; traguardo il 19 novembre 2026 alle 02:17 UT (03:17 in Italia, sera del 18 in California).
   Nessun servizio esterno a pagina aperta: i due vettori sono costanti in `voyager.js`.
   Banner e fotografie in `img/cielo/voyager-*.jpg`: immagini NASA/JPL-Caltech di pubblico dominio, da Wikimedia Commons.
-  Video di presentazione per i social (1080×1920, 25 s) in `scripts/video-voyager/`: `video.html` anima cinque scene e
+  Video di presentazione per i social (1080×1920, 26 s) in `scripts/video-voyager/`: `video.html` anima cinque scene
+  (apertura, quadrante delle 24 ore, scala logaritmica della luce, cartina in scala del Mugello, pagina del sito in un
+  telefono) con caratteri Space Grotesk e JetBrains Mono (OFL, in `fonts/`); `pagina.jpg` è una schermata della sezione;
   `node scripts/video-voyager/render.js voyager.mp4` le registra con Playwright e ffmpeg (`--prova 3,7,14` per i soli fotogrammi).
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e

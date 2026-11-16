@@ -3,7 +3,7 @@
 //   node scripts/video-voyager/render.js /cartella --prova 1,7,13       solo alcuni fotogrammi (PNG), per controllare
 const {chromium}=require('playwright');const http=require('http'),fs=require('fs'),path=require('path'),cp=require('child_process');
 const dir=__dirname,out=process.argv[2],prova=process.argv[3]==='--prova'?process.argv[4].split(',').map(Number):null,fps=30;
-const tipi={'.html':'text/html','.jpg':'image/jpeg','.png':'image/png'};
+const tipi={'.html':'text/html','.jpg':'image/jpeg','.png':'image/png','.woff2':'font/woff2'};
 const srv=http.createServer((q,r)=>{const f=path.join(dir,decodeURIComponent(q.url.split('?')[0]));if(!f.startsWith(dir)||!fs.existsSync(f)||fs.statSync(f).isDirectory()){r.statusCode=404;return r.end()}r.setHeader('content-type',tipi[path.extname(f)]||'application/octet-stream');r.end(fs.readFileSync(f))}).listen(0,async()=>{
   const b=await chromium.launch(),p=await b.newPage({viewport:{width:1080,height:1920}});p.on('pageerror',e=>console.log('ERR',e.message));
   await p.goto('http://localhost:'+srv.address().port+'/video.html');await p.waitForFunction('window.pronto');
