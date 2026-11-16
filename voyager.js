@@ -42,6 +42,7 @@
   function contatore() {
     const ora = Date.now(), S = stato(ora), dopo = ora >= TRAGUARDO, vel = (stato(ora + 36e5).km - stato(ora - 36e5).km) / 7200;
     $("vy-luce").textContent = hms(S.luce);
+    if ($("vy-luce-b")) $("vy-luce-b").textContent = hms(S.luce).replace(/^(\d+):(\d+):(\d+)$/, "$1 h $2 min $3 s");
     $("vy-luce-n").textContent = dopo ? "oltre un giorno-luce: +" + n(S.luce - 86400) + " secondi" : "al giorno-luce mancano " + n(86400 - S.luce) + " secondi";
     $("vy-km").textContent = n(S.km);
     $("vy-ua").textContent = n(S.d, 3) + " UA · " + n(S.r, 2) + " dal Sole";

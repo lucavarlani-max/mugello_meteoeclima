@@ -82,6 +82,7 @@ Sito statico su GitHub Pages. Il file principale è `index.html` (foto e codice 
   la sonda visto da Borgo, scala dei tempi-luce, tappe del viaggio, Sistema solare in scala sul Mugello (1 UA = 100 m) e
   curva della distanza da settembre 2026 a dicembre 2027. Modello rettilineo (16,9 km/s verso Ofiuco) calibrato sulla
   data stimata dalla NASA per il traguardo, 15 novembre 2026; nessun file di dati né servizio esterno.
+  Banner e fotografie in `img/cielo/voyager-*.jpg`: immagini NASA/JPL-Caltech di pubblico dominio, da Wikimedia Commons.
 - **Serie storiche** (`serie-storiche.html`) — sezione dedicata alle stazioni centenarie,
   una pagina per stazione: **Milano Brera 1763–2024** (`milano-brera.html`) e
   **Kremsmünster 1767–2026** (`kremsmuenster.html` + `kremsmuenster.js`, dati mensili di GeoSphere Austria: stazione

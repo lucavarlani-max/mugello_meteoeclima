@@ -278,6 +278,19 @@
   @media (max-width:760px){.speciali-grid{grid-template-columns:1fr}}
   @media (max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.chart.day,.chart.year{height:260px}.evs{grid-template-columns:1fr}.cal{gap:3px}.cal svg{width:20px;height:20px}.cal .p{display:none}.ztab{grid-template-columns:1fr}.tbl-hint{display:block;font-size:12px;color:var(--ink-soft);margin:6px 0 0}.eff-oggi-grid{grid-template-columns:1fr}.moon-row{align-items:flex-start;flex-direction:column;gap:2px}.iss-pass{flex-wrap:wrap}.iss-date{flex:0 0 100%;display:flex;gap:8px;align-items:baseline}.iss-date b{margin-top:0}.iss-info{flex:1 1 100%}.iss-pass .ics{margin-left:0;width:auto;justify-content:center}}
   @media (max-width:400px){.phases{grid-template-columns:1fr}}
+  .vy-banner{position:relative;margin:0;border-radius:var(--r);overflow:hidden;background:#1b1140;box-shadow:var(--shadow)}
+  .vy-banner img{display:block;width:100%;height:clamp(240px,36vw,420px);object-fit:cover;object-position:50% 45%}
+  .vy-banner figcaption{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:clamp(14px,3vw,28px);color:#fff;background:linear-gradient(180deg,rgba(15,8,40,0) 30%,rgba(15,8,40,.55) 62%,rgba(15,8,40,.9) 100%)}
+  .vy-b-occhiello{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#e7dcff}
+  .vy-banner strong{font-family:var(--serif);font-weight:800;font-size:clamp(21px,3.6vw,38px);line-height:1.1;letter-spacing:-.01em;max-width:22ch;text-wrap:balance;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+  .vy-b-conto{font-size:clamp(13px,1.6vw,16px);color:#f1eaff} .vy-b-conto b{font-family:var(--mono);font-weight:600;font-size:1.25em;color:#ffd79a;font-variant-numeric:tabular-nums;margin-left:4px}
+  .vy-banner small{position:absolute;top:10px;right:12px;font-size:10.5px;color:rgba(255,255,255,.8);background:rgba(15,8,40,.45);padding:2px 8px;border-radius:999px}
+  .vy-foto{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .vy-foto figure{margin:0;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .vy-foto img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:#0d0d18}
+  .vy-foto figcaption{padding:10px 12px 11px;font-size:12.5px;line-height:1.45;color:var(--ink-soft)}
+  .vy-foto figcaption b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+  .vy-foto figcaption small{display:block;margin-top:5px;font-family:var(--mono);font-size:10px;color:var(--ink-faint)}
   .vy-lead{font-size:15px;line-height:1.55;margin:0 0 14px;max-width:80ch}
   .vy-tiles{display:grid;grid-template-columns:1.25fr 1.25fr 1fr;gap:10px}
   .vy-tiles .f b{font-variant-numeric:tabular-nums;font-size:clamp(20px,2.6vw,27px);overflow-wrap:anywhere}
@@ -412,7 +425,16 @@
 
     <section id="voyager">
       <div class="sh"><h2><span aria-hidden="true">🌌</span> Voyager 1: a un giorno-luce da casa</h2><span class="src">calcolato adesso, nel tuo browser</span></div>
-      <div class="card">
+      <figure class="vy-banner">
+        <img src="img/cielo/voyager-banner.jpg" alt="La sonda Voyager, con la grande antenna parabolica bianca, in volo su uno sfondo viola di particelle interstellari (illustrazione)" width="1600" height="640" decoding="async">
+        <figcaption>
+          <span class="vy-b-occhiello">Novembre 2026 · un primato mai raggiunto</span>
+          <strong>Il primo oggetto costruito dall'uomo a un giorno-luce dalla Terra</strong>
+          <span class="vy-b-conto">La sua luce ci raggiunge dopo <b id="vy-luce-b">24:00:00</b></span>
+          <small>Illustrazione: NASA/JPL-Caltech</small>
+        </figcaption>
+      </figure>
+      <div class="card" style="margin-top:14px">
         <p class="vy-lead">Lanciata nel 1977, la sonda Voyager 1 è l'oggetto costruito dall'uomo più lontano dalla Terra. Nel novembre 2026 taglia un traguardo che nessuna macchina aveva mai raggiunto: la sua luce, e i suoi segnali radio, impiegano <b>più di 24 ore</b> per arrivare fino a noi.</p>
         <div class="vy-tiles">
           <div class="f vy-big"><span class="lab">Tempo-luce dalla Terra</span><b id="vy-luce" aria-live="off">–</b><span id="vy-luce-n">&nbsp;</span></div>
@@ -440,6 +462,15 @@
             <li><b>25 agosto 2012</b> Esce dall'eliosfera: è il primo oggetto umano nello spazio interstellare.</li>
             <li class="vy-ora"><b>Novembre 2026</b> Un giorno-luce dalla Terra.</li>
           </ol>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3 class="vy-h">Le immagini del viaggio</h3>
+        <div class="vy-foto">
+          <figure><img src="img/cielo/voyager-lancio.jpg" alt="Il razzo Titan IIIE-Centaur si alza fra il fumo dalla rampa 41 di Cape Canaveral" width="720" height="540" loading="lazy" decoding="async"><figcaption><b>1977 · Il lancio</b>Il 5 settembre un razzo Titan IIIE-Centaur porta via Voyager 1 dalla rampa 41 di Cape Canaveral.<small>NASA</small></figcaption></figure>
+          <figure><img src="img/cielo/voyager-giove.jpg" alt="La Grande Macchia Rossa di Giove fra bande di nubi turbolente" width="720" height="540" loading="lazy" decoding="async"><figcaption><b>1979 · Giove da vicino</b>La Grande Macchia Rossa, una tempesta più larga della Terra, ripresa dalla sonda in avvicinamento.<small>NASA/JPL</small></figcaption></figure>
+          <figure><img src="img/cielo/voyager-puntino.jpg" alt="La Terra come un minuscolo punto chiaro dentro un raggio di luce solare" width="720" height="540" loading="lazy" decoding="async"><figcaption><b>1990 · Il pallido puntino azzurro</b>La Terra da 6 miliardi di chilometri: meno di un pixel dentro un raggio di sole.<small>NASA/JPL-Caltech</small></figcaption></figure>
         </div>
       </div>
 
