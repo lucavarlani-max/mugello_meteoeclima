@@ -2768,19 +2768,19 @@
     "ore_soglie": 0,
     "ore": 13,
     "alba": "07:09",
-    "scarto_alba": 0.1,
-    "vento_alba": 0.9,
+    "scarto_alba": 0.3,
+    "vento_alba": 0.7,
     "dp_alba": 10.1,
     "nuvole_alte": 94,
     "nubi_basse_alba": 100,
-    "ur_alba": 99,
-    "suolo_alba": 0.321,
-    "inv850_alba": -4.6,
+    "ur_alba": 98,
+    "suolo_alba": 0.318,
+    "inv850_alba": -5.0,
     "blh_alba": 10,
     "pressione": 1015,
     "crossover": 1.7,
-    "pioggia_24h": 6.7,
-    "emessa": "2026-11-15T22:02"
+    "pioggia_24h": 4.7,
+    "emessa": "2026-11-16T02:00"
    }
   }
  }
