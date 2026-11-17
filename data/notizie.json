@@ -1,7 +1,94 @@
 {
  "testata": "Terra & Cielo",
- "aggiornato": "2026-11-13",
+ "aggiornato": "2026-11-17",
  "numeri": [
+  {
+   "data": "2026-11-17",
+   "apertura": {
+    "cat": "mugello",
+    "titolo": "Martedì di libeccio: raffiche a 71,6 km/h a Montegiovi, ma niente allerta sul Mugello",
+    "testo": "Alle 10 di martedì 17 novembre la raffica più forte fra le stazioni in montagna intorno al Mugello era di 71,6 km/h a Montegiovi, seguita dai 61,2 km/h del Passo del Giogo (alle 6:45); a Barco erano già caduti 11,4 mm di pioggia. Il Centro Funzionale ha emesso per oggi un codice arancione per rischio idrogeologico dalle 11 su Lunigiana, Versilia e Serchio e un giallo su Bisenzio, Reno, Valdarno inferiore e Serchio-Costa: la zona M (Mugello-Val di Sieve) non è in allerta. Piogge sparse e possibili temporali isolati fra pomeriggio e sera, in esaurimento in serata.",
+    "fonte": "Stazioni in montagna · Bollettino di valutazione delle criticità, Centro Funzionale Regione Toscana",
+    "url": "https://www.cfr.toscana.it/index.php?IDS=2&IDSS=76",
+    "foto": "fulmine"
+   },
+   "numero": {
+    "valore": "12,9 °C",
+    "testo": "La minima della notte a Borgo San Lorenzo, martedì 17 novembre: oltre 9 gradi più di sabato 14 (3,8 °C), portata dal libeccio."
+   },
+   "storie": [
+    {
+     "cat": "cielo",
+     "titolo": "Stanotte il massimo delle Leonidi: meglio guardare dopo mezzanotte",
+     "testo": "Fra martedì 17 e mercoledì 18 novembre le Leonidi, figlie della cometa 55P/Tempel-Tuttle, raggiungono il massimo con una quindicina di meteore all'ora in un cielo buio. Il radiante, nel Leone, sorge verso mezzanotte, quando anche la Luna, al primo quarto da oggi alle 12:48, è ormai bassa: le ore migliori sono quelle prima dell'alba, se le nubi del libeccio lasceranno qualche schiarita.",
+     "fonte": "Effemeridi · Mugello Meteo & Clima",
+     "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/effemeridi.html",
+     "foto": "tramonto2"
+    },
+    {
+     "cat": "clima",
+     "titolo": "COP31, da oggi tocca ai ministri",
+     "testo": "Ad Antalya comincia martedì 17 novembre la parte ad alto livello della conferenza sul clima, con i ministri chiamati a sciogliere i nodi della bozza pubblicata lunedì su combustibili fossili, adattamento e finanza. Alla chiusura, prevista venerdì 20, mancano quattro giorni; fra le iniziative a margine, l'impegno sull'intelligenza artificiale lanciato dalla Turchia ha raccolto 80 adesioni.",
+     "fonte": "UN News",
+     "url": "https://news.un.org/en/story/2026/11/1168812"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Martedì 17 novembre: notte mite, con minime di 7–11 °C sul crinale e 12,9 °C a Borgo, vento forte di libeccio sui passi e piogge sparse, più probabili dal pomeriggio sull'Appennino; in serata le precipitazioni tendono a cessare.",
+     "fonte": "Stazioni in montagna · Centro Funzionale Regione Toscana"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:12 e tramonta alle 16:48, circa 9 ore e 36 minuti di luce, circa 2 minuti meno di ieri. La Luna è al primo quarto alle 12:48; la Luna piena è martedì 24 novembre."
+    }
+   ]
+  },
+  {
+   "data": "2026-11-16",
+   "apertura": {
+    "cat": "clima",
+    "titolo": "COP31, pubblicata la prima bozza dell'accordo: divisi su fossili e finanza",
+    "testo": "Lunedì 16 novembre, ad Antalya, i negoziatori hanno pubblicato la prima bozza del testo finale della COP31, con l'obiettivo di avvicinare le posizioni dei Paesi su combustibili fossili e finanza per il clima. L'australiano Chris Bowen, che guida i negoziati nella presidenza condivisa con la Turchia, ha avvertito che la bozza contiene clausole già respinte da alcuni Paesi. Martedì comincia la parte ad alto livello con i ministri; la conferenza chiude venerdì 20 e ogni decisione richiede il consenso di quasi 200 Paesi.",
+    "fonte": "Reuters (via U.S. News) · UN News",
+    "url": "https://www.usnews.com/news/world/articles/2026-11-16/first-draft-of-cop31-deal-signals-tough-negotiations-to-come",
+    "foto": "terra"
+   },
+   "numero": {
+    "valore": "73,4 km/h",
+    "testo": "La raffica più forte di lunedì 16 novembre fra le otto stazioni in montagna intorno al Mugello, misurata a Montegiovi (722 m)."
+   },
+   "storie": [
+    {
+     "cat": "mugello",
+     "titolo": "Dal freddo del weekend alla pioggia di lunedì: 23,7 mm a Barco, la Sieve sale e poi cala",
+     "testo": "Sabato 14 alba serena a Bilancino e minima di 3,8 °C a Borgo San Lorenzo; domenica mattina sul crinale si è scesi a 1,4 °C al Passo della Futa e a 1,8 °C al Giogo. Lunedì 16 è tornata la pioggia: 23,7 mm a Barco, 22,5 al Passo del Giogo, 16,8 a Monte di Fò e 16,0 a Bibbiana, con la notte più mite (minima 8,8 °C a Borgo). La Sieve a Fornacina è passata da 0,59 metri di domenica sera a 1,43 lunedì alle 13:30, sempre su livelli normali, e martedì mattina era già scesa a 0,82.",
+     "fonte": "Stazioni in montagna · Diario della nebbia · Idrometri Regione Toscana",
+     "url": "https://lucavarlani-max.github.io/mugello_meteoeclima/stazioni-montagna.html",
+     "foto": "bilancino"
+    },
+    {
+     "cat": "vulcani",
+     "titolo": "Kilauea di nuovo in pausa dopo l'episodio 56",
+     "testo": "Dopo le fontane di lava dell'episodio 56, il 5 novembre, l'eruzione al cratere Halemaʻumaʻu del Kilauea è di nuovo in pausa: secondo l'Osservatorio vulcanologico delle Hawaii (USGS), il 16 novembre il codice per l'aviazione era giallo. È il seguito dell'allerta di cui Terra & Cielo aveva scritto il 5 novembre.",
+     "fonte": "USGS Hawaiian Volcano Observatory",
+     "url": "https://www.usgs.gov/volcanoes/kilauea/volcano-updates",
+     "foto": "kilauea2"
+    }
+   ],
+   "rubriche": [
+    {
+     "tipo": "mugello",
+     "testo": "Lunedì 16 novembre: pioggia moderata sul crinale, fra 11 e 24 mm in quasi tutte le stazioni, temperature fra 3 e 12 °C e vento forte a Montegiovi. Il bollettino del Centro Funzionale non prevede criticità sul Mugello per martedì, ma annuncia libeccio fino a 70–80 km/h sull'Appennino.",
+     "fonte": "Stazioni in montagna · Centro Funzionale Regione Toscana"
+    },
+    {
+     "tipo": "almanacco",
+     "testo": "Oggi a Borgo San Lorenzo il Sole sorge alle 7:11 e tramonta alle 16:49, circa 9 ore e 38 minuti di luce, circa 2 minuti meno di ieri. La Luna è una falce crescente illuminata per circa il 40%; il primo quarto è domani, martedì 17 novembre."
+    }
+   ]
+  },
   {
    "data": "2026-11-13",
    "apertura": {
