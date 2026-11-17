@@ -6,8 +6,8 @@
    "data": "2026-11-17",
    "apertura": {
     "cat": "mugello",
-    "titolo": "Martedì di libeccio: raffiche a 71,6 km/h a Montegiovi, ma niente allerta sul Mugello",
-    "testo": "Alle 10 di martedì 17 novembre la raffica più forte fra le stazioni in montagna intorno al Mugello era di 71,6 km/h a Montegiovi, seguita dai 61,2 km/h del Passo del Giogo (alle 6:45); a Barco erano già caduti 11,4 mm di pioggia. Il Centro Funzionale ha emesso per oggi un codice arancione per rischio idrogeologico dalle 11 su Lunigiana, Versilia e Serchio e un giallo su Bisenzio, Reno, Valdarno inferiore e Serchio-Costa: la zona M (Mugello-Val di Sieve) non è in allerta. Piogge sparse e possibili temporali isolati fra pomeriggio e sera, in esaurimento in serata.",
+    "titolo": "Martedì di libeccio: raffiche a 77,1 km/h a Montegiovi e oltre 20 mm sul crinale, ma niente allerta sul Mugello",
+    "testo": "Martedì 17 novembre la raffica più forte fra le stazioni in montagna intorno al Mugello è stata di 77,1 km/h a Montegiovi, seguita dai 71,6 km/h del Passo del Giogo alle 11:30. Fino alle 17–18 la pioggia ha raggiunto 22,8 mm a Barco, 21,0 a Monte di Fò, 18,8 a Montegiovi e 17,0 al Giogo; la Sieve a Bilancino è risalita da 0,91 a 1,03 metri fra le 13:45 e le 17:45, livello normale. Il Centro Funzionale, con il bollettino delle 12:38, conferma fino a mezzanotte il codice arancione per rischio idrogeologico su Lunigiana, Versilia e Serchio e il giallo su Bisenzio, Reno, Valdarno inferiore e Serchio-Costa: la zona M (Mugello-Val di Sieve) non è in allerta. Mercoledì 18 miglioramento, con residue piogge deboli sui rilievi.",
     "fonte": "Stazioni in montagna · Bollettino di valutazione delle criticità, Centro Funzionale Regione Toscana",
     "url": "https://www.cfr.toscana.it/index.php?IDS=2&IDSS=76",
     "foto": "fulmine"
@@ -36,8 +36,8 @@
    "rubriche": [
     {
      "tipo": "mugello",
-     "testo": "Martedì 17 novembre: notte mite, con minime di 7–11 °C sul crinale e 12,9 °C a Borgo, vento forte di libeccio sui passi e piogge sparse, più probabili dal pomeriggio sull'Appennino; in serata le precipitazioni tendono a cessare.",
-     "fonte": "Stazioni in montagna · Centro Funzionale Regione Toscana"
+     "testo": "Martedì 17 novembre: giornata mite e ventosa, con massime di 10–14 °C sul crinale e una minima di 12,9 °C a Borgo; fra 17 e 23 mm di pioggia sui rilievi più esposti e raffiche oltre i 70 km/h al Giogo e a Montegiovi. Mercoledì il tempo migliora, con qualche debole pioggia residua sull'Appennino.",
+     "fonte": "Stazioni in montagna · Idrometri · Centro Funzionale Regione Toscana"
     },
     {
      "tipo": "almanacco",
