@@ -26,7 +26,10 @@
   function url(canale){
     var c=document.querySelector('link[rel="canonical"]'), u;
     try{ u=new URL(c?c.href:location.href.split("#")[0]); }catch(e){ return location.href; }
-    if(!c&&location.search) u.search=location.search;       // pagine senza canonical (comune.html?c=…)
+    if(location.search){                                    // conserva lo stato della pagina (es. ?d=2026-12-25)
+      var q=new URLSearchParams(location.search);
+      q.forEach(function(v,k){ if(!/^utm_/.test(k)) u.searchParams.set(k,v); });
+    }
     u.hash=location.hash&&/^#n-/.test(location.hash)?location.hash:"";  // i numeri di Terra & Cielo si aprono dal #
     u.searchParams.set("utm_source",canale);
     u.searchParams.set("utm_medium","social");

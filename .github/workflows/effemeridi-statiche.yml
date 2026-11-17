@@ -1,0 +1,56 @@
+name: Effemeridi statiche (aggiornamento quotidiano)
+# Rigenera "Stasera in breve", i passaggi di ISS/Tiangong e la sezione eclissi/congiunzioni
+# nell'HTML iniziale di effemeridi.html. Serve ai motori di ricerca e a chi
+# arriva senza JavaScript; la pagina aggiorna poi i valori del giorno scelto.
+on:
+  schedule:
+    # due tentativi: GitHub può ritardare o saltare le esecuzioni programmate
+    - cron: "17 0,6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: effemeridi-statiche
+  cancel-in-progress: false
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache effemeridi Skyfield
+        uses: actions/cache@v4
+        with:
+          path: ~/.skyfield
+          key: skyfield-de421-${{ runner.os }}
+      - name: Installa Skyfield
+        run: python3 -m pip install --quiet skyfield
+      - name: Rigenera i blocchi statici
+        run: |
+          python3 scripts/passaggi_stazioni.py
+          node scripts/build_stazioni_statiche.js
+          node scripts/build_effemeridi_statiche.js
+          node scripts/build_eventi_speciali.js
+      - name: Commit se cambiato
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add effemeridi.html data/passaggi-stazioni.json sitemap.xml
+          if git diff --cached --quiet; then echo "nessuna variazione"; exit 0; fi
+          git commit -q -m "effemeridi: aggiorna il blocco statico di oggi"
+          for i in 1 2 3 4; do
+            git pull -q --rebase origin main && git push -q && exit 0
+            sleep 15
+          done
+          exit 1

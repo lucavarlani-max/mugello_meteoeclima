@@ -158,7 +158,18 @@
     ["Perseidi",8,12,100,"le «lacrime di San Lorenzo», il patrono di Borgo"],["Draconidi",10,8,10,"radiante nel Dragone, prima serata"],
     ["Orionidi",10,21,20,"altri detriti della cometa di Halley"],["Leonidi",11,17,15,"radiante nel Leone, dopo mezzanotte"],
     ["Geminidi",12,14,150,"lo sciame più ricco dell'anno"],["Ursidi",12,22,10,"radiante vicino all'Orsa Minore"]];
-  const ultimaDomenica=(y,m)=>{const d=new Date(Date.UTC(y,m,0));return d.getUTCDate()-d.getUTCDay();};
+  function transizioniOra(y){
+    const out=[];
+    for(let m=0;m<12;m++){
+      const a=Date.UTC(y,m,1,12),b=Date.UTC(y,m+1,1,12),oa=offsetMin(new Date(a)),ob=offsetMin(new Date(b));
+      if(oa===ob)continue;
+      let lo=a,hi=b;
+      while(hi-lo>6e4){const mid=Math.floor((lo+hi)/2/6e4)*6e4;if(offsetMin(new Date(mid))===oa)lo=mid;else hi=mid;}
+      const when=new Date(hi),avanti=ob>oa,locale=new Date(when.valueOf()+oa*6e4);
+      out.push({data:when,nome:avanti?"Torna l'ora legale":"Torna l'ora solare",ic:"🕑",nota:avanti?"le lancette avanzano di un'ora":"le lancette tornano indietro di un'ora",tipo:"ora",oraTesto:`${String(locale.getUTCHours()).padStart(2,"0")}:${String(locale.getUTCMinutes()).padStart(2,"0")}`});
+    }
+    return out;
+  }
   function eventi(da,n=6){
     const out=[],[y0]=partiRoma(da);
     for(const y of [y0,y0+1]){
@@ -166,8 +177,7 @@
        [180,"Equinozio d'autunno","🍂","inizia l'autunno astronomico"],[270,"Solstizio d'inverno","❄️","il giorno più corto dell'anno"]]
         .forEach(([g,nome,ic,nota])=>out.push({data:stagione(y,g),nome,ic,nota,tipo:"stagione",ora:true}));
       SCIAMI.forEach(([nome,m,d,zhr,nota])=>out.push({data:mezzogiorno(y,m,d),nome:"Picco delle "+nome,ic:"☄️",nota:nota+" · fino a "+zhr+" meteore/ora",tipo:"sciame",notte:true}));
-      out.push({data:new Date(Date.UTC(y,2,ultimaDomenica(y,3),1)),nome:"Torna l'ora legale",ic:"🕑",nota:"alle 2 le lancette avanzano di un'ora",tipo:"ora"});
-      out.push({data:new Date(Date.UTC(y,9,ultimaDomenica(y,10),1)),nome:"Torna l'ora solare",ic:"🕑",nota:"alle 3 le lancette tornano indietro di un'ora",tipo:"ora"});
+      out.push(...transizioniOra(y));
     }
     const oggi=mezzanotte(da);
     return out.filter(e=>e.data>=oggi).sort((a,b)=>a.data-b.data).slice(0,n);

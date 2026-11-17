@@ -1,5 +1,5 @@
 /* Mugello Meteo & Clima - service worker */
-const CACHE = 'mmc-v99';
+const CACHE = 'mmc-v108';
 const SHELL = [
   './',
   './index.html',
@@ -50,6 +50,7 @@ const SHELL = [
   './borgo-storico.js',
   './serie-confronto.js',
   './effemeridi.html',
+  './effemeridi-riepilogo.js',
   './effemeridi.js',
   './astro.js',
   './cielo.js',

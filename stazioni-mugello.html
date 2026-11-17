@@ -307,6 +307,10 @@
   td small{color:var(--ink-faint);font-size:11.5px}
   .tabwrap#tT{max-width:680px}
   .arch-head{margin-bottom:12px}
+  .dl{font-family:var(--mono);font-size:12.5px;white-space:nowrap}.dl.pos{color:var(--amber)}.dl.neg{color:var(--sky)}
+  #tA td small{color:var(--ink-faint)} #tA .grp th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--ink-faint);text-align:center}
+  .sub-h{font-family:var(--serif);font-size:22px;font-weight:700;margin:26px 0 10px}
+  .tabwrap#tPA{max-width:760px}
 </style>
 <script src="analytics.js" defer></script>
 <script src="menu.js" defer></script>
@@ -321,7 +325,7 @@
     <div class="wrap">
       <div class="eyebrow">Dati · Servizio Idrologico Regionale</div>
       <h1>Le stazioni<br><em>del Mugello.</em></h1>
-      <p class="intro">Pioggia e temperature di <span id="nst">47</span> stazioni dei comuni del Mugello a confronto: quanto piove sul crinale e quanto in fondovalle, quanto cambia la temperatura salendo di quota.</p>
+      <p class="intro">Pioggia e temperature di <span id="nst">47</span> stazioni dei comuni del Mugello a confronto: quanto piove sul crinale e quanto in fondovalle, quanto cambia la temperatura salendo di quota, e com'è la giornata di oggi rispetto alla norma di ogni stazione.</p>
       <div class="hero-actions">
         <a href="#confronto" class="btn">Confronta le stazioni
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
@@ -340,8 +344,21 @@
     <div class="stats" id="stats"></div>
   </div>
 
+  <section class="blk" id="adesso"><div class="wrap">
+    <div class="sec-kicker">01 / Adesso</div>
+    <div class="intro-grid">
+      <h2>Com'è oggi,<br><em>rispetto alla norma.</em></h2>
+      <div id="txtA"><p>Carico le temperature di adesso…</p></div>
+    </div>
+    <div class="tabwrap wideT" id="tA"></div>
+    <p class="tabnote" id="nA"></p>
+    <h3 class="sub-h" id="hPA" hidden>E la pioggia?</h3>
+    <div class="tabwrap" id="tPA" hidden></div>
+    <p class="tabnote" id="nPA" hidden></p>
+  </div></section>
+
   <section class="blk" id="pioggia"><div class="wrap">
-    <div class="sec-kicker">01 / La pioggia</div>
+    <div class="sec-kicker">02 / La pioggia</div>
     <div class="intro-grid">
       <h2>Più si sale,<br><em>più piove.</em></h2>
       <div id="txtP"></div>
@@ -351,7 +368,7 @@
   </div></section>
 
   <section class="blk" id="temp"><div class="wrap">
-    <div class="sec-kicker">02 / Le temperature</div>
+    <div class="sec-kicker">03 / Le temperature</div>
     <div class="intro-grid">
       <h2>Il freddo<br><em>sale con la quota.</em></h2>
       <div id="txtT"></div>
@@ -361,7 +378,7 @@
   </div></section>
 
   <section class="blk" id="confronto"><div class="wrap">
-    <div class="sec-kicker">03 / Il confronto</div>
+    <div class="sec-kicker">04 / Il confronto</div>
     <div class="intro-grid">
       <h2>Scegli le stazioni,<br><em>guarda la differenza.</em></h2>
       <div><p>Seleziona fino a quattro stazioni: i grafici mostrano come cambiano nel corso dell'anno la pioggia e le temperature, e anno per anno la pioggia totale.</p>
@@ -376,7 +393,7 @@
   </div></section>
 
   <section class="blk" id="elenco"><div class="wrap">
-    <div class="sec-kicker">04 / L'elenco</div>
+    <div class="sec-kicker">05 / L'elenco</div>
     <h2 style="font-size:clamp(24px,3vw,34px);font-weight:700;margin-bottom:16px">Tutte le <em>stazioni.</em></h2>
     <div class="arch-head"><label class="chk"><input type="checkbox" id="soloAttive" checked> Solo stazioni attive</label>
       <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="q" type="search" placeholder="Cerca stazione o comune…" aria-label="Cerca stazione"></label></div>
@@ -450,10 +467,57 @@ function avvia(){
     <div class="stat"><strong>${att.length}</strong><span>ancora attive nel 2025–26</span></div>
     <div class="stat"><strong>${Math.min(...qs)}–${Math.max(...qs)}</strong><span>metri di quota</span></div>
     <div class="stat note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-10 4 6 3-4 5 8z"/></svg><span>Dal 1916 ad oggi:<br>oltre un secolo di dati</span></div>`;
-  pioggia();temperature();chips();tabella();confronto();
+  adesso();pioggia();temperature();chips();tabella();confronto();
 }
 
-/* ---------- 01 pioggia ---------- */
+
+/* ---------- 01 adesso (rete termometrica regionale, stazioni del Mugello) ---------- */
+function adesso(){
+  fetch("data/termo.json?t="+Date.now(),{cache:"no-store"}).then(r=>{if(!r.ok)throw 0;return r.json();}).then(d=>{
+    const ids=new Set(D.map(s=>s.id)),RIF=d.aggiornato,min=h=>+h.slice(0,2)*60+ +h.slice(3,5);
+    const L=d.stazioni.filter(s=>s.zona==="M"||ids.has(s.id)).sort((a,b)=>a.quota-b.quota);
+    const ieri=new Date(new Date(RIF).getTime()-864e5),m=ieri.getMonth();
+    const fresco=s=>s.t!=null&&s.ora&&(min(RIF.slice(11))-min(s.ora))>=0&&(min(RIF.slice(11))-min(s.ora))<=180;
+    const delta=(v,n)=>v==null||n==null?"–":`<span class="dl ${v-n>=0?"pos":"neg"}">${v-n>=0?"+":"−"}${fmt(Math.abs(v-n),1)}</span>`;
+    const R=L.map(s=>{const o=D.find(x=>x.id===s.id),t=o&&o.temp;return {s,nx:t?t.max_mensile[m]:null,nn:t?t.min_mensile[m]:null};});
+    const dm=R.filter(r=>r.s.ieri_max!=null&&r.nx!=null).map(r=>r.s.ieri_max-r.nx);
+    const dn=R.filter(r=>r.s.ieri_min!=null&&r.nn!=null).map(r=>r.s.ieri_min-r.nn);
+    const dt=new Date(RIF),mn=(a)=>a.length?mean(a):null,sg=v=>(v>=0?"+":"−")+fmt(Math.abs(v),1);
+    $("#txtA").innerHTML=`<p>Le temperature di <b>${L.length} stazioni</b> della rete regionale (aggiornate al ${dt.getDate()} ${MESI[dt.getMonth()]}, ore ${RIF.slice(11)}, ora solare), confrontate con la media storica del mese di ciascuna stazione.</p>`+
+      (dm.length?`<p>Ieri, in media, le massime sono state di <b>${sg(mn(dm))} °C</b> e le minime di <b>${sg(mn(dn))} °C</b> rispetto alla norma del mese.</p>`:"")+
+      `<p><a class="tlink" href="temperature-toscana.html">Tutta la Toscana: oggi e ieri in 250 stazioni<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>`;
+    $("#tA").innerHTML=`<table><thead><tr class="grp"><th></th><th></th><th colspan="3">Oggi</th><th colspan="4">Ieri rispetto alla norma di ${MESI[m]}</th></tr>
+      <tr><th>Stazione</th><th class="n">Quota</th><th class="n">Adesso</th><th class="n">Min</th><th class="n">Max</th><th class="n">Min</th><th class="n">Δ</th><th class="n">Max</th><th class="n">Δ</th></tr></thead><tbody>`+
+      R.map(({s,nx,nn})=>`<tr><td>${esc(s.nome)}</td><td class="n">${fmt(s.quota)} m</td><td class="n">${fresco(s)?fmt(s.t,1):"–"}</td><td class="n">${fmt(s.min,1)}</td><td class="n">${fmt(s.max,1)}</td>
+        <td class="n">${fmt(s.ieri_min,1)}</td><td class="n">${delta(s.ieri_min,nn)}</td><td class="n">${fmt(s.ieri_max,1)}</td><td class="n">${delta(s.ieri_max,nx)}</td></tr>`).join("")+`</tbody></table>`;
+    pioggiaAdesso(L);
+    $("#nA").textContent="Dati grezzi non validati del Centro Funzionale Regione Toscana, aggiornati ogni 30 minuti. La norma è la media storica di tutta la serie della stazione per il mese; dove non c'è una serie storica nell'archivio SIR il confronto non è disponibile (–). «Adesso» compare solo se il dato è delle ultime 3 ore.";
+  }).catch(()=>{$("#txtA").innerHTML="<p>Temperature di adesso momentaneamente non disponibili: riprova tra qualche minuto.</p>";});
+}
+
+
+/* pioggia recente dai CSV giornalieri del SIR (ultimi ~60 giorni, richiesta parziale se il server la supporta) */
+async function pioggiaRecente(id){
+  try{
+    const r=await fetch(`data/sir/${id}/prec024.csv`,{headers:{Range:"bytes=-1400"}});
+    if(!r.ok)return null;
+    const righe=(await r.text()).trim().split("\n").map(l=>l.trim().split(";")).filter(c=>/^\d{4}-\d{2}-\d{2}$/.test(c[0])&&c[1]!==""&&isFinite(+c[1])).map(c=>[c[0],+c[1]]);
+    return righe.length?righe:null;
+  }catch(e){return null;}
+}
+async function pioggiaAdesso(L){
+  const R=(await Promise.all(L.map(async s=>({s,o:D.find(x=>x.id===s.id),g:await pioggiaRecente(s.id)})))).filter(r=>r.g&&r.o&&r.o.pioggia&&r.o.pioggia.mensile);
+  if(!R.length)return;
+  const ult=R.map(r=>r.g[r.g.length-1][0]).sort().pop(),mese=ult.slice(0,7),m=+ult.slice(5,7)-1,gg=iso=>+iso.slice(8,10)+" "+MESI[+iso.slice(5,7)-1];
+  const righe=R.map(r=>{const g=r.g.filter(x=>x[0]<=ult),l=g[g.length-1],s7=g.slice(-7).reduce((a,x)=>a+x[1],0),sm=g.filter(x=>x[0].startsWith(mese)).reduce((a,x)=>a+x[1],0),n=r.o.pioggia.mensile[m];
+    return `<tr><td>${esc(r.s.nome)}</td><td class="n">${fmt(r.s.quota)} m</td><td class="n">${l[0]===ult?fmt(l[1],1):"–"}</td><td class="n">${g.length>=7?fmt(s7,1):"–"}</td><td class="n">${fmt(sm,1)}</td><td class="n">${n?fmt(sm/n*100)+" %":"–"}</td></tr>`;}).join("");
+  $("#hPA").hidden=$("#tPA").hidden=$("#nPA").hidden=false;
+  $("#hPA").textContent=`E la pioggia? Dati fino all'${gg(ult)}`;
+  $("#tPA").innerHTML=`<table><thead><tr><th>Stazione</th><th class="n">Quota</th><th class="n">${gg(ult)}</th><th class="n">7 giorni</th><th class="n">${MESI[m]} finora</th><th class="n">% norma di ${MESI[m]}</th></tr></thead><tbody>${righe}</tbody></table>`;
+  $("#nPA").textContent="Millimetri di pioggia nelle 24 ore, dall'archivio giornaliero del SIR: arrivano con circa un giorno di ritardo e sono pre-validati, quindi possono essere corretti. La norma è la media storica del totale del mese di ogni stazione: a mese in corso la percentuale è parziale.";
+}
+
+/* ---------- 02 pioggia ---------- */
 function pioggia(){
   const S=D.filter(s=>s.pioggia&&s.pioggia.media_rif).sort((a,b)=>b.pioggia.media_rif-a.pioggia.media_rif);
   const pts=S.map(s=>[s.quota,s.pioggia.media_rif]),R=regr(pts);

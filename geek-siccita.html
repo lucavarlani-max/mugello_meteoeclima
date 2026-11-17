@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Siccità e serie secche nel Mugello · indice SPI e giorni senza pioggia</title>
+<meta name="description" content="Quanto è secco il periodo attuale nel Mugello? Indice di siccità SPI a 1, 3, 6, 12 e 24 mesi, le siccità più pesanti e le serie più lunghe di giorni senza pioggia, anno per anno, per i pluviometri del Mugello e Firenzuola.">
+<link rel="canonical" href="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-siccita.html">
+<meta property="og:title" content="Siccità e serie secche nel Mugello">
+<meta property="og:description" content="Indice di siccità SPI, le siccità più pesanti e le serie più lunghe di giorni senza pioggia, anno per anno, per i pluviometri del Mugello.">
+<meta property="og:url" content="https://lucavarlani-max.github.io/mugello_meteoeclima/geek-siccita.html">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="L. Varlani">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mugello Meteo &amp; Clima">
+<meta property="og:locale" content="it_IT">
+<meta property="og:image" content="https://lucavarlani-max.github.io/mugello_meteoeclima/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="serie-storica.css">
+<style>
+  .sc-top{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-bottom:10px}
+  .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  #sc-st{max-width:100%}
+  #sc-ora{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:6px}
+  .tl{border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 13px;display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0}
+  .tl b{font-family:var(--serif);font-size:32px;line-height:1.05;font-variant-numeric:tabular-nums}
+  .tl b small{font-size:15px;font-weight:600;color:var(--ink-soft)}
+  .tl .tn{font-size:12px;color:var(--ink-soft);line-height:1.45}
+  .cs{display:inline-block;border-radius:var(--r-pill);padding:2px 9px;font-size:11.5px;font-weight:600;border:1px solid var(--line);color:var(--ink-soft)}
+  .cs-s1{border-color:var(--amber);color:var(--amber);background:var(--amber-tint)}
+  .cs-s2,.cs-s3{border-color:var(--warm);color:#fff;background:var(--warm)}
+  .cs-u1{border-color:var(--sky);color:var(--sky);background:var(--sky-tint)}
+  .cs-u2,.cs-u3{border-color:var(--cold);color:#fff;background:var(--cold)}
+  #sc-frase{font-size:15px;line-height:1.55;margin:14px 0 0;max-width:80ch}
+  .sc-g{position:relative;min-height:120px;margin-top:4px;touch-action:pan-y}
+  .sc-g svg{display:block;max-width:100%;height:auto;overflow:visible}
+  .sc-g .tip{white-space:normal;max-width:min(300px,92%)}
+  .sc-info{font-size:12px;color:var(--ink-faint);margin:6px 0 0}
+  .sc-testo{font-size:14.5px;line-height:1.6;margin:12px 0 0;max-width:80ch;border-top:1px solid var(--line-soft);padding-top:12px}
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:12px}
+  .kpi div{border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 11px;font-size:12px;color:var(--ink-soft)}
+  .kpi b{display:block;font-family:var(--mono);font-size:15px;color:var(--ink);margin:2px 0}
+  .kpi span{font-size:11.5px;color:var(--ink-faint)}
+  .sc-scorri{overflow-x:auto}
+  table.cl{width:100%;border-collapse:collapse;font-size:13px}
+  table.cl td,table.cl th{padding:6px 8px;border-bottom:1px solid var(--line-soft);border-top:0;text-align:left;white-space:normal;vertical-align:top}
+  table.cl th{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);letter-spacing:.05em;font-weight:600}
+  table.cl .m{white-space:nowrap}
+  .sc-n{color:var(--ink-soft)}
+  @media (max-width:640px){ table.cl .sc-n{display:none} }
+</style>
+<script src="analytics.js" defer></script>
+<script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="meteogeek.html">MeteoGeek</a> / Siccità</div>
+    <header class="head">
+      <div class="eyebrow">MeteoGeek · statistica · pioggia e acqua</div>
+      <h1>Siccità e serie secche</h1>
+      <p class="lead">Quanto è secco il periodo che stiamo vivendo, rispetto a quello che è normale qui e in questa stagione? L'indice SPI misura la pioggia mancante su finestre da uno a ventiquattro mesi; le serie secche contano i giorni di fila senza una goccia. Tutto dai pluviometri del Mugello, aggiornato con i dati del sito.</p>
+    </header>
+
+    <div class="card">
+      <div class="sc-top">
+        <label class="lab" for="sc-st">Stazione <select id="sc-st" style="margin-left:6px;text-transform:none;letter-spacing:0"><option>Borgo San Lorenzo</option></select></label>
+        <div class="lab" id="agg">&nbsp;</div>
+      </div>
+      <div id="sc-ora"><div class="loading">Carico i dati…</div></div>
+      <p id="sc-frase" aria-live="polite"></p>
+      <p class="note" style="margin-bottom:0">Ogni riquadro confronta la pioggia caduta fino all'ultimo giorno disponibile con quella caduta nello stesso periodo di tutti gli altri anni.</p>
+    </div>
+
+    <section>
+      <div class="sh"><h2>L'indice SPI nel tempo</h2><span class="src">sotto zero più secco del normale, sopra più piovoso</span></div>
+      <div class="card">
+        <div class="sc-top" style="margin-bottom:4px">
+          <div class="seg" id="sc-scala" role="group" aria-label="Scala dell'indice"><button type="button" data-k="1" aria-pressed="false">1 mese</button><button type="button" data-k="3" aria-pressed="false">3 mesi</button><button type="button" data-k="6" aria-pressed="true">6 mesi</button><button type="button" data-k="12" aria-pressed="false">12 mesi</button><button type="button" data-k="24" aria-pressed="false">24 mesi</button></div>
+        </div>
+        <div class="sc-g" id="sc-spi"><div class="tip"></div></div>
+        <p class="sc-info" id="sc-spi-info">&nbsp;</p>
+        <p class="sc-testo" id="sc-spi-testo"></p>
+        <p class="note" style="margin-bottom:0">Le scale brevi (1–3 mesi) raccontano la siccità che sentono i campi e i boschi; quelle a 6–12 mesi le sorgenti e i fiumi; quella a 24 mesi le falde e gli invasi come <a href="geek-bilancino.html">Bilancino</a>.</p>
+      </div>
+      <div class="sh" style="margin-top:18px"><h2 id="sc-ep-tit">Le siccità più pesanti</h2></div>
+      <div class="card"><div class="sc-scorri"><table class="cl" id="sc-ep"></table></div>
+        <p class="note" style="margin-bottom:0">Un episodio comincia quando l'indice scende sotto zero, conta solo se tocca almeno −1 e finisce quando torna positivo. La classifica è per «peso»: la somma degli scarti negativi di tutti i mesi dell'episodio.</p></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Le serie secche, anno per anno</h2><span class="src">giorni consecutivi con meno di 1 mm</span></div>
+      <div class="card">
+        <div class="sc-g" id="sc-cdd"><div class="tip"></div></div>
+        <p class="sc-info" id="sc-cdd-info">&nbsp;</p>
+        <div class="kpi" id="sc-cdd-kpi"></div>
+        <p class="sc-testo" id="sc-cdd-testo"></p>
+      </div>
+      <div class="sh" style="margin-top:18px"><h2>Le dieci serie secche più lunghe</h2></div>
+      <div class="card"><div class="sc-scorri"><table class="cl" id="sc-top"></table></div></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2>Dati e metodo</h2></div>
+      <div class="card">
+        <ul class="note met">
+          <li><b>Dati:</b> pioggia giornaliera dei pluviometri del Servizio Idrologico Regionale della Toscana (dal novembre 1991, in <code>data/sir/&lt;stazione&gt;/prec99.csv</code>); per Firenzuola la griglia ARPAE dal 1961 (<code>data/serie/firenzuola.csv</code>), più lunga e quindi più adatta a un indice statistico. Un giorno è «piovoso» con almeno 1 mm.</li>
+          <li><b>SPI (Standardized Precipitation Index):</b> è l'indice di siccità raccomandato dall'Organizzazione meteorologica mondiale. Si somma la pioggia degli ultimi <i>k</i> mesi, si adatta una distribuzione gamma ai totali dello stesso periodo dell'anno in tutta la serie (un adattamento per ogni mese del calendario, parametri stimati con il metodo di Thom) e si trasforma la probabilità ottenuta nel valore corrispondente di una normale standard. Zero è la norma; −1 capita in media un anno su sei, −2 uno su quaranta. L'indice è limitato fra −3 e +3.</li>
+          <li><b>Classi</b> (McKee e altri, 1993): da −1 a −1,5 siccità moderata, da −1,5 a −2 severa, sotto −2 estrema; lo stesso, a segno invertito, per i periodi piovosi.</li>
+          <li><b>«Adesso»:</b> le quattro finestre finiscono all'ultimo giorno con un dato e sono lunghe 30, 90, 180 e 365 giorni; il confronto è con le finestre che finiscono lo stesso giorno negli altri anni. Per questo i valori possono differire dall'ultima barra del grafico, che si ferma all'ultimo mese completo.</li>
+          <li><b>Serie secche:</b> giorni consecutivi sotto 1 mm; ogni serie è attribuita all'anno in cui finisce (convenzione dell'indice CDD dell'ETCCDI), quindi una siccità invernale a cavallo di Capodanno conta per l'anno nuovo. Un giorno senza dato interrompe la serie.</li>
+          <li><b>Dati mancanti:</b> un mese entra nel calcolo con almeno il 90% dei giorni (una finestra «adesso» con il 95%) e il totale è riportato al periodo intero; altrimenti l'indice non viene calcolato.</li>
+          <li><b>Limiti:</b> con 35 anni di dati la coda della distribuzione è incerta: fra −2 e −3 i valori vanno presi come «molto raro», non alla lettera. Lo SPI guarda solo la pioggia e non l'evaporazione, che con estati più calde aggrava la siccità a parità di pioggia. La griglia di Firenzuola è un'interpolazione: tende a dare più giorni di pioggia debole e quindi serie secche più corte di un pluviometro. Serie non omogeneizzate; i dati dell'anno in corso sono grezzi.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="foot"><div class="wrap">Mugello Meteo &amp; Clima · <a href="meteogeek.html">MeteoGeek</a> · elaborazioni L. Varlani · dati SIR Toscana (CC BY-SA 4.0) e ARPAE</div></footer>
+<script src="geek-siccita.js"></script>
+</body>
+</html>
