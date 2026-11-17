@@ -2912,25 +2912,25 @@
    "nebbia": null,
    "previsione_sera": {
     "v": 3,
-    "scarto_min": 1.8,
-    "vento_medio": 2.0,
-    "nuvole_medie": 95,
+    "scarto_min": 1.9,
+    "vento_medio": 2.1,
+    "nuvole_medie": 96,
     "ore_soglie": 0,
     "ore": 13,
     "alba": "07:12",
-    "scarto_alba": 2.0,
-    "vento_alba": 2.0,
+    "scarto_alba": 1.9,
+    "vento_alba": 2.1,
     "dp_alba": 13.0,
-    "nuvole_alte": 71,
-    "nubi_basse_alba": 97,
+    "nuvole_alte": 72,
+    "nubi_basse_alba": 91,
     "ur_alba": 88,
     "suolo_alba": 0.321,
     "inv850_alba": -7.2,
     "blh_alba": 320,
     "pressione": 1002,
-    "crossover": 1.7,
-    "pioggia_24h": 8.0,
-    "emessa": "2026-11-17T14:55"
+    "crossover": 1.6,
+    "pioggia_24h": 8.1,
+    "emessa": "2026-11-17T15:38"
    }
   }
  }
