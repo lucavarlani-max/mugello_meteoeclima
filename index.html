@@ -1811,8 +1811,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const CH={normale:'ok',attenzione:'warn',allarme:'warn'};
     if(j.sieve&&j.sieve.livello_m!=null){ set('sieve-val', dec(j.sieve.livello_m)+' m'); set('sieve-sub','idrometro Fornacina · '+(j.sieve.ora||'')); }
     if(j.bilancino&&j.bilancino.quota_m_slm!=null){ const gg=giorniFa(j.bilancino.data);
-      setChip('bil-val', dec(j.bilancino.quota_m_slm)+' m slm', gg>3?'warn':'info');
-      set('bil-sub','invaso · '+dec(j.bilancino.volume_mmc)+' Mmc · '+(gg>3?'ultimo dato '+(j.bilancino.data||'').slice(0,5)+', fonte in ritardo':(j.bilancino.data||''))); }
+      const _a=!!j.bilancino.arrotondato, _d=v=>_a?String(Math.round(v)):dec(v); setChip('bil-val', _d(j.bilancino.quota_m_slm)+' m slm', gg>3?'warn':'info');
+      set('bil-sub','invaso · '+_d(j.bilancino.volume_mmc)+' Mmc · '+(gg>3?'ultimo dato '+(j.bilancino.data||'').slice(0,5)+', fonte in ritardo':(j.bilancino.data||''))); }
   }
 
 
