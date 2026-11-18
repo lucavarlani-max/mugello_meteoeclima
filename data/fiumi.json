@@ -1,14 +1,16 @@
 {
-  "aggiornato": "2026-11-18T12:55",
+  "aggiornato": "2026-11-18T13:51",
   "sieve": {
     "nome": "Sieve a Fornacina",
-    "livello_m": 1.44,
+    "livello_m": 1.43,
     "stato": "normale",
-    "ora": "18/11 13.50"
+    "ora": "18/11 14.45"
   },
   "bilancino": {
-    "data": "26/10/2026",
-    "quota_m_slm": 245.68,
-    "volume_mmc": 40.34
+    "data": "16/11/2026",
+    "quota_m_slm": 246.0,
+    "volume_mmc": 44.0,
+    "fonte": "Publiacqua",
+    "arrotondato": true
   }
 }
