@@ -10,6 +10,9 @@ Sorgenti:
     stazione TOS01004641 = Sieve a Fornacina (indice 8 = livello m, 13 = data/ora, 6/7 = soglie)
   Bilancino OpenData (CSV ; -> Data;Altezza (m slm);Milioni mc), aggiornato ~quotidiano:
     https://datastore.comune.fi.it/od/livelli_bilancino_<ANNO>.csv
+  Bilancino, seconda fonte (Publiacqua, «La situazione idrica in diretta»: milioni di m³ e quota, ARROTONDATI
+  all'unità): https://www.publiacqua.it/acqua-territorio/situazione-idrica-diretta
+  Se il file del Comune è fermo (a novembre 2026 era fermo al 26 ottobre) si usa il dato più recente di Publiacqua.
 """
 import re, json, os, sys, datetime, urllib.request
 
@@ -17,7 +20,10 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(HERE, "data", "fiumi.json")
 CFR = "https://www.cfr.toscana.it/monitoraggio/stazioni.php?type=idro"
 BIL = "https://datastore.comune.fi.it/od/livelli_bilancino_{year}.csv"
+PUBLIACQUA = "https://www.publiacqua.it/acqua-territorio/situazione-idrica-diretta"
 SIEVE_CODE = "TOS01004641"   # Sieve a Fornacina
+MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre",
+        "ottobre", "novembre", "dicembre"]
 
 
 def _get(url, timeout=45):
@@ -68,6 +74,28 @@ def bilancino_invaso():
     return ultimo, {"anno": year, "serie": serie}
 
 
+def bilancino_publiacqua():
+    """Dato di Bilancino dalla pagina di Publiacqua (valori interi): {data gg/mm/aaaa, quota_m_slm, volume_mmc}."""
+    html = _get(PUBLIACQUA)
+    t = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S)
+    t = re.sub(r"<[^>]+>", " ", t).replace("&nbsp;", " ")
+    t = re.sub(r"\s+", " ", t)
+    m = re.search(r"invasati al (\d{1,2}) ([a-zà]+) (\d{4}) ?: ?(\d+(?:[.,]\d+)?)", t, re.I)
+    a = re.search(r"sul livello del mare ?: ?(\d+(?:[.,]\d+)?)", t, re.I)
+    if not m or not a or m.group(2).lower() not in MESI:
+        return None
+    mese = MESI.index(m.group(2).lower()) + 1
+    return {"data": f"{int(m.group(1)):02d}/{mese:02d}/{m.group(3)}", "quota_m_slm": _f(a.group(1)),
+            "volume_mmc": _f(m.group(4)), "fonte": "Publiacqua", "arrotondato": True}
+
+
+def _giorno(d):
+    try:
+        return datetime.datetime.strptime((d or "").strip(), "%d/%m/%Y").date()
+    except ValueError:
+        return None
+
+
 def carica_precedente():
     try:
         with open(OUT, encoding="utf-8") as f:
@@ -94,6 +122,15 @@ def main():
     out["bilancino"] = b if (b and b["quota_m_slm"] is not None) else prev.get("bilancino")
     if b:
         print("Bilancino: ultimo dato pubblicato dal Comune", b["data"])
+    try:                                   # seconda fonte: vale se è più recente del file del Comune
+        bp_ = bilancino_publiacqua()
+    except Exception as e:
+        print(f"Publiacqua non raggiungibile: {e}", file=sys.stderr); bp_ = None
+    if bp_ and bp_["quota_m_slm"] is not None:
+        print("Bilancino: dato Publiacqua", bp_["data"], bp_["quota_m_slm"], "m,", bp_["volume_mmc"], "Mmc")
+        att, nuovo = _giorno((out.get("bilancino") or {}).get("data")), _giorno(bp_["data"])
+        if nuovo and (att is None or nuovo > att):
+            out["bilancino"] = bp_
 
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)

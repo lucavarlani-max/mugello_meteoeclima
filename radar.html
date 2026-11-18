@@ -482,7 +482,7 @@
       if(b&&b.serie&&b.serie.length>3){const S=b.serie.slice(-60).map((p,i)=>[i,p.q]);const lo=Math.min(...S.map(p=>p[1])),hi=Math.max(...S.map(p=>p[1]))+0.01;
         sp=`<svg viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="ln" d="${S.map((p,i)=>(i?"L":"M")+(p[0]/(S.length-1)*300).toFixed(1)+" "+(60-(p[1]-lo)/(hi-lo)*56).toFixed(1)).join("")}"/></svg>`;}
       if(bi) html+=`<div class="card rv">${banner("bilancino")}<div class="t"><span>Lago di Bilancino</span><span class="chip c-info">quota</span></div>
-        <div class="big">${f1(bi.quota_m_slm)} m</div>${sp}<div class="meta">${bi.volume_mmc!=null?f1(bi.volume_mmc)+" milioni di m³ · ":""}ultimi 60 giorni · dato del ${esc(bi.data)}</div></div>`;
+        <div class="big">${bi.arrotondato?Math.round(bi.quota_m_slm):f1(bi.quota_m_slm)} m</div>${sp}<div class="meta">${bi.volume_mmc!=null?(bi.arrotondato?Math.round(bi.volume_mmc):f1(bi.volume_mmc))+" milioni di m³ · ":""}${bi.fonte?"dato "+esc(bi.fonte)+" del "+esc(bi.data)+" (valori arrotondati)"+(b&&b.serie&&b.serie.length?" · grafico del Comune di Firenze fino al "+esc(b.serie[b.serie.length-1].d):""):"ultimi 60 giorni · dato del "+esc(bi.data)}</div></div>`;
     }catch(e){}
     $("rivers").innerHTML=html;
     const s=fornacina; tile("n-fiumi",s?f2(s.livello)+" m":"—",s?`Sieve a Fornacina · ${s.stato}`:"dato non disponibile",s?({normale:"ok",attenzione:"warn",allarme:"alert"}[s.stato]):"");
