@@ -140,6 +140,10 @@
   .rv .ln{stroke:var(--sky);stroke-width:2;fill:none;vector-effect:non-scaling-stroke}
   .rv .th{stroke:var(--amber);stroke-width:1.2;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
   .rv .th2{stroke:var(--red);stroke-width:1.2;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+  .rv .ph{position:relative;margin:-16px -18px 4px;border-radius:calc(var(--r) - 1px) calc(var(--r) - 1px) 0 0;overflow:hidden;background:var(--line-soft);aspect-ratio:16/7}
+  .rv .ph img{display:block;width:100%;height:100%;object-fit:cover}
+  .rv .ph .cr{position:absolute;right:0;bottom:0;max-width:100%;padding:2px 8px;font-size:10px;line-height:1.3;color:#fff;background:rgba(0,0,0,.45);border-radius:8px 0 0 0;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rv .lk{font-size:12px;color:var(--ink-faint)} .rv .lk a{color:inherit}
   .rv .meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
   .trend{font-size:12.5px;color:var(--ink-soft)}
 
@@ -451,8 +455,15 @@
     return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${showTh?`<line class="th" x1="0" x2="${W}" y1="${Y(att)}" y2="${Y(att)}"/>`:""}<path class="ln" d="${pts.map((p,i)=>(i?"L":"M")+X(new Date(p[0]).getTime()).toFixed(1)+" "+Y(p[1]).toFixed(1)).join("")}"/></svg>`;
   }
   const trendTxt=s=>{const d=s.dh3;if(d==null)return "";if(Math.abs(d)<0.02)return "stabile nelle ultime 3 ore";return (d>0?"in crescita: ":"in calo: ")+(d>0?"+":"")+f2(d)+" m in 3 ore";};
+  /* banner con la foto di ogni fiume (Wikimedia Commons, data/fiumi-foto.json) */
+  let FOTO={};
+  const banner=id=>{const f=FOTO[id];if(!f)return "";
+    return `<div class="ph"><img loading="lazy" decoding="async" alt="${esc(f.alt)}" src="https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f.file)}?width=640"${f.pos?` style="object-position:${esc(f.pos)}"`:""}>
+      <a class="cr" href="${esc(f.pagina)}" target="_blank" rel="noopener" title="${esc(f.alt)} · ${esc(f.autore)} · ${esc(f.licenza)}">${esc(f.autore)} · ${esc(f.licenza)}</a></div>`;};
+  const LINK={"TOS30250000":["RiverApp","https://www.riverapp.net/it/station/5817a87eca509c7d1e3d8c93"]};
   async function fiumi(){
     let html="", worst="ok", fornacina=null;
+    FOTO=await getJSON("./data/fiumi-foto.json").catch(()=>({}));
     try{
       const d=await getJSON("./data/idrometri.json?t="+Date.now());
       d.stazioni.forEach(s=>{
@@ -460,9 +471,9 @@
         if(cls==="alert"||(cls==="warn"&&worst==="ok"))worst=cls;
         if(s.id==="TOS01004641")fornacina=s;
         const t=s.ora?new Date(s.ora):null;
-        html+=`<div class="card rv"><div class="t"><span>${esc(s.nome)}</span><span class="chip c-${cls}">${esc(s.stato)}</span></div>
+        html+=`<div class="card rv">${banner(s.id)}<div class="t"><span>${esc(s.nome)}</span><span class="chip c-${cls}">${esc(s.stato)}</span></div>
           <div class="big">${f2(s.livello)} m</div>${spark(s.storia||[],s.attenzione,s.allarme)||`<div class="trend">${trendTxt(s)}</div>`}
-          <div class="meta">${(s.storia||[]).length>=3?trendTxt(s)+" · ":""}attenzione ${f2(s.attenzione)} m · allarme ${f2(s.allarme)} m${t?" · ore "+hm(t):""}</div></div>`;
+          <div class="meta">${(s.storia||[]).length>=3?trendTxt(s)+" · ":""}attenzione ${f2(s.attenzione)} m · allarme ${f2(s.allarme)} m${t?" · ore "+hm(t):""}</div>${LINK[s.id]?`<div class="lk">Vedi anche su <a href="${LINK[s.id][1]}" target="_blank" rel="noopener">${LINK[s.id][0]}</a></div>`:""}</div>`;
       });
     }catch(e){html+=`<div class="card"><span class="loading">Livelli dei fiumi non disponibili al momento.</span></div>`;}
     try{
@@ -470,7 +481,7 @@
       const bi=f.bilancino; let sp="";
       if(b&&b.serie&&b.serie.length>3){const S=b.serie.slice(-60).map((p,i)=>[i,p.q]);const lo=Math.min(...S.map(p=>p[1])),hi=Math.max(...S.map(p=>p[1]))+0.01;
         sp=`<svg viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"><path class="ln" d="${S.map((p,i)=>(i?"L":"M")+(p[0]/(S.length-1)*300).toFixed(1)+" "+(60-(p[1]-lo)/(hi-lo)*56).toFixed(1)).join("")}"/></svg>`;}
-      if(bi) html+=`<div class="card rv"><div class="t"><span>Lago di Bilancino</span><span class="chip c-info">quota</span></div>
+      if(bi) html+=`<div class="card rv">${banner("bilancino")}<div class="t"><span>Lago di Bilancino</span><span class="chip c-info">quota</span></div>
         <div class="big">${f1(bi.quota_m_slm)} m</div>${sp}<div class="meta">${bi.volume_mmc!=null?f1(bi.volume_mmc)+" milioni di m³ · ":""}ultimi 60 giorni · dato del ${esc(bi.data)}</div></div>`;
     }catch(e){}
     $("rivers").innerHTML=html;
