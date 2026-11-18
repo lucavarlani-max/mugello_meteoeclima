@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Aggiorna data/idrometri.json con i livelli dei corsi d'acqua del Mugello (zona di allerta M,
-Mugello-Val di Sieve, più il Lamone a Marradi, zona R2) dal Centro Funzionale Regione Toscana, e tiene lo storico
+Mugello-Val di Sieve, più il Lamone a Marradi e il Santerno a Coniale di Firenzuola, zona R2) dal Centro Funzionale Regione Toscana, e tiene lo storico
 delle ultime 48 ore per i grafici della pagina Radar e dati.
 
 Sorgente (array JS nella pagina, una riga da 22 campi per stazione):
@@ -22,6 +22,7 @@ STAZIONI = {                      # codice -> nome mostrato (in ordine da monte 
     "TOS01004623": "Carza a San Piero a Sieve",
     "TOS01004641": "Sieve a Fornacina",
     "TOS01004625": "Sieve a Dicomano",
+    "TOS03004373": "Santerno a Firenzuola (Coniale)",   # zona R2
     "TOS30250000": "Lamone a Marradi",          # idrometro "Marradi (RADIO)", zona R2; stessi dati di RiverApp
 }
 ORE_STORICO = 48
