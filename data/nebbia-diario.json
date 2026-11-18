@@ -2761,7 +2761,7 @@
   "2026-11-16": {
    "ora": "07:20",
    "dopo_alba": 11,
-   "nebbia": null,
+   "nebbia": false,
    "previsione_sera": {
     "v": 3,
     "scarto_min": 0.1,
@@ -2831,7 +2831,8 @@
    "luce": 137.5,
    "contrasto": 0.369,
    "contrasto_sfondo": 0.196,
-   "foto": "reports/nebbia/2026-11-16.jpg"
+   "foto": "reports/nebbia/2026-11-16.jpg",
+   "cielo": "nuvoloso"
   },
   "2026-11-17": {
    "ora": "07:22",
