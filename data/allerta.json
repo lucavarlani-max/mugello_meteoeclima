@@ -1,8 +1,8 @@
 {
-  "livello": "gialla",
-  "rischio": "idrogeologico idraulico reticolo minore",
-  "testo": "Allerta gialla sul Mugello: idrogeologico idraulico reticolo minore — dalle ore 00.00 Giovedì, 19 Novembre 2026 alle ore 23.59 Giovedì, 19 Novembre 2026",
-  "validita": "dalle ore 00.00 Giovedì, 19 Novembre 2026 alle ore 23.59 Giovedì, 19 Novembre 2026",
+  "livello": "verde",
+  "rischio": "",
+  "testo": "Nessuna criticità meteo in corso sul Mugello (allerte in altre zone della Toscana)",
+  "validita": "",
   "link": "https://www.cfr.toscana.it/index.php?IDS=2&IDSS=76",
-  "aggiornato": "2026-11-19T08:43"
+  "aggiornato": "2026-11-19T12:47"
 }
