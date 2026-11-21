@@ -3226,13 +3226,13 @@
     "nuvole_alte": 65,
     "nubi_basse_alba": 76,
     "ur_alba": 96,
-    "suolo_alba": 0.314,
+    "suolo_alba": 0.311,
     "inv850_alba": -4.5,
-    "blh_alba": 35,
+    "blh_alba": 15,
     "pressione": 1018,
     "crossover": 0.5,
     "pioggia_24h": 1.0,
-    "emessa": "2026-11-21T14:05"
+    "emessa": "2026-11-21T14:33"
    }
   }
  }
